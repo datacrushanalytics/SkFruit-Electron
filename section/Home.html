@@ -4,10 +4,31 @@
     <meta charset="UTF-8" />
     <title></title>
     <link rel="stylesheet" href="C:\Users\admin\Desktop\New folder\skFruit\assets\css\Home.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   </head>
   <body>
-    <h2 align="center">वैभव शिंदे </h2>
-    <hr style="border-top: 5px solid rgb(56, 8, 2);">
+        <h2 align="center">वैभव शिंदे </h2>      
+        <!-- <i class="fas fa-bars"></i> -->
+        <div class="menu-icon-container">
+          <i class="fas fa-bars">
+            <div class="dropdown-content">
+              <a href="C:\Users\admin\Desktop\New folder\skFruit\section\User.html">User</a>
+              <a href="#"></a>
+              <a href="#"></a>
+          </div>
+          </i>
+          <!-- <span class="menu-text"></span> -->
+      </div>
+    <hr style="border-top: 5px solid rgb(56, 8, 2);">  
+
+    <!-- <div class="dropdown"> -->
+    <!-- <button class="button5">Menu</button> -->
+    <!-- <div class="dropdown-content">
+        <a href="#"></a>
+        <a href="#"></a>
+        <a href="#"></a>
+    </div> -->
+   <!-- </div> -->
     
     <div class="container">
       <div>
@@ -23,14 +44,14 @@
         <!-- <img src="" alt="Logo" id="logo"> -->
     
     <div class="container1">
-      <button type="button" onclick="login()"><h3>Purchase</h3></button> 
-      <button type="button" onclick="login()"><h3>Sales</h3></button> 
+      <button type="button" onclick="login()"><a href="../section/Purchase.html"><h3>Purchase</h3></a></button> 
+      <button type="button" onclick="login()"><a href="../section/Sale1.html"><h3>Sales</h3></a></button> 
       <!-- <button type="button" onclick="login()"><a href="../section/Home.html"><b>Login</b></a></button> -->
     </div>
 
     <div class="container2">
-      <button type="button" onclick="login()"><h3>Receipt</h3></button> 
-      <button type="button" onclick="login()"><a href="../section/Payment.html"><h3>Payment</h3></a></button> 
+      <button type="button" onclick="login()"><a href="../section/Receipt1.html"><h3>Receipt</h3></a></button> 
+      <button type="button" onclick="login()"><a href="../section/Payment1.html"><h3>Payment</h3></a></button> 
     </div>
 
 
@@ -62,21 +83,12 @@
     </div>
     <br><br>
     <footer>
-      <!-- 
-          <ul>
-              <li><a href="#">HOME</a></li>
-              <li><a href="#">SALE</a></li>
-              <li><a href="#">ROOT_SALE</a></li>
-              <li><a href="#">RECEIPT</a></li>
-              <li><a href="#">PAYMENT</a></li>
-          </ul>
-      </nav> -->
       
       <div class="navbar">
         <a href="#">HOME</a>
-        <a href="#">SALE</a>
-        <a href="#">ROOT_SALE</a>
-        <a href="#">RECEIPT</a>
+        <a href="../section/Sale.html">SALE</a>
+        <a href="../section/Root_Sale.html">ROOT_SALE</a>
+        <a href="../section/Receipt.html">RECEIPT</a>
         <a href="../section/Payment.html">PAYMENT</a>
       </div>
   </footer>
