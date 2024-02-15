@@ -1,0 +1,99 @@
+body {
+    background-color: #ccffcc;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+    margin: 0;
+    width: 100%;
+    
+    
+  } 
+  
+  #container1{
+    display: flex;
+  }
+  
+  .container {
+    /* width: 300px; */
+    
+    text-align: left;
+    margin: 20px;
+    
+  } 
+  
+  label, input, button {
+    margin: 10px;
+  }
+  
+  #saveBtn {
+    height: 40px;
+    width: 250px;
+    background-color: rgba(0, 128, 49, 0.849);
+    color: #fff;
+    border: none;
+    padding: 10px;
+    margin-left: 340px;
+  }
+  
+  #backBtn{
+  width: 250px;
+  height: 40px;
+  padding: 10px;
+  color: #fff;
+  border: none;
+  background-color: #f44336;
+  justify-content: right;
+  }
+  
+  #Id{
+    width: 50%;
+    height: 20px;
+  }
+  
+  #name{
+    width: 95%;
+    height: 20px;
+  }
+  
+  .first-row{
+    display: flex;
+    width: 90%;
+    margin-left: 40px;
+}
+.from{
+    width: 300%;
+    height: 300;
+    margin-left: 300px;
+    align-items: right;
+    justify-content: space-between;
+}
+.To{
+ margin-right: 400px;
+}
+.customer{
+    margin-left: 340px;
+    width: 300px;
+    height:25px;
+}
+#customer{
+width: 520px;
+height:25px;
+}
+table {
+    width: 47%;
+    border-collapse: collapse;
+    margin-left: 330px;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    width:100px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
