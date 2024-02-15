@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Form in Electron</title>
-    <link rel="stylesheet" href="../assets/css/Root_Sale.css">
+    <link rel="stylesheet" href="../assets/css/Category_Master.css">
 </head>
 <body>
     <div class="container">
-        <h1 align="center">विक्री (वाहन सिलेक्ट करा)</h1> 
+        <h1 align="center">CATEGORY MASTER</h1> 
 
         <!-- <div class="container1"> -->
         <form id="loginForm">
-            <select>
-                <option value="1">Select</option>
-            </select>
-
-        <br>
-
-        <button id="saveBtn">दाखवा</button>
+          <label for="Id"><b>ID.</b></label> <br>
+          <input type="text" id="Id" name="Id"> <br>
+      
+          <label for="name"><b>CATEGORY NAME</b></label> <br>
+          <input type="text" id="name" name="name"> <br>
         
+        <button id="saveBtn" >SAVE</button>
+        <button id="backBtn">BACK</button>
     </form>
     </div>
     <!-- <footer> -->
@@ -34,6 +34,7 @@
             </ul>
         </nav>
     </div>
-
+<!-- </footer> -->
+    
 </body>
 </html>

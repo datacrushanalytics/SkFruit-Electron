@@ -4,22 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Form in Electron</title>
-    <link rel="stylesheet" href="../assets/css/Root_Sale.css">
+    <link rel="stylesheet" href="../assets/css/Add_Root_Details.css">
 </head>
 <body>
     <div class="container">
-        <h1 align="center">विक्री (वाहन सिलेक्ट करा)</h1> 
+        <h1 align="center">ROOT DETAILS</h1> 
 
         <!-- <div class="container1"> -->
         <form id="loginForm">
-            <select>
-                <option value="1">Select</option>
-            </select>
+        <label for="Id"><b>ID.</b></label> <br>
+        <input type="text" id="Id" name="Id"> <br>
+    
+        <label for="name"><b>ROOT NAME</b></label> <br>
+        <input type="text" id="name" name="name"> <br>
 
-        <br>
-
-        <button id="saveBtn">दाखवा</button>
+        <label for="details"><b>DETAILS</b></label> <br>
+        <input type="text" id="details" name="details"> <br>
         
+        <label for="number"><b>MOBILE NO.</b></label> <br> 
+        <input type="number" id="number" name="number"> <br>
+
+        <button id="saveBtn" >SAVE</button>
+        <button id="backBtn"><a href="../section/Root_Details.html">BACK</a></button>
     </form>
     </div>
     <!-- <footer> -->
@@ -34,6 +40,7 @@
             </ul>
         </nav>
     </div>
-
+<!-- </footer> -->
+    
 </body>
 </html>

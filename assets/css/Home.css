@@ -15,16 +15,16 @@ body {
 
 .container2 {
   display: flex;
-  
+ 
 }
 
-.btn{
+/* .btn{
   border-radius: 100px;
   width: 300px;
   height: 115px;
   margin: 5px 10px;
   border: 5px  solid rgb(252, 15, 7);
-}
+} */
 
 button{
   border-radius: 100px;
@@ -34,14 +34,24 @@ button{
   border: 5px  solid rgb(252, 15, 7);
 }
 
-.ellipse {
-  width: 300px; /* Adjust the width as needed */
-  height: 150px; /* Adjust the height as needed */
-  background-color: #fffefb; /* or any other color */
-  border-radius: 200%; /* This makes the element appear as an ellipse */
-  /* border-color: rgb(247, 19, 3); */
-  /* border-radius: 100%; For circle shape, you can adjust this for custom shapes */
-  box-shadow: 0px -15px 5px rgba(253, 5, 5, 0.966);
+/* .button5{
+  border-radius: 25%;
+  margin: 5px 10px;
+  width: 600px;
+  height: 100px;
+  background-color: #fdd1ce; 
+  box-shadow: 0px 20px 3px rgb(56, 8, 2);
+} */
+
+.custom-button
+{
+  border-radius: 25%;
+  margin: 5px 10px;
+  width: 600px;
+  height: 100px;
+  background-color: #fdd1ce; 
+  border: none;
+  box-shadow: 0px 20px 3px rgb(56, 8, 2);
 }
 
 .container {
@@ -63,12 +73,6 @@ button{
   /* background-color: #f0f0f0;  */
   /* box-shadow: 5px 20px 5px rgba(95, 19, 5, 0.5);  */
   box-shadow: 0px 20px 3px rgb(56, 8, 2);
-}
-
-#logo {
-  width: 50px; /* Adjust the width according to your logo size */
-  height: auto; /* Maintain aspect ratio */
-  margin: 10px; /* Adjust margin as needed */
 }
 
 .navbar {
@@ -104,8 +108,9 @@ button{
 .menu-icon-container {
   position: relative;
   float: right; /* Align the icon to the right side */
-  margin-right: 20px; /* Adjust margin as needed */
+  margin-right: 10px; /* Adjust margin as needed */
   line-height: 40px; /* Vertical alignment */
+  margin-top: -45px;
 }
 
 .menu-icon-container i {
@@ -117,3 +122,20 @@ button{
   font-size: 16px; /* Adjust font size as needed */
   color: #333; /* Adjust text color */
   /* Additional styles can be added */
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
