@@ -1,0 +1,22 @@
+ body{
+    background-color: rgb(191, 221, 233);
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+#fromAccount{
+    text-align: center;
+    width: 40%;
+    height: 40px;
+    
+}
+ 
+#SaveButton {
+    font-size: large;
+    width: 30%;
+    padding: 10px;
+    background-color: rgb(216, 38, 38);
+    color: #fff;
+    border: none;
+    cursor : pointer;
+}
