@@ -25,3 +25,28 @@
     
   </body>
 </html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Website</title>
+    <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader" class="preloader">
+        <!-- Loading animation or image goes here -->
+        <div class="loader"></div>
+    </div>
+
+    <script>
+        // JavaScript to hide the preloader after 5 seconds
+        setTimeout(function(){
+            document.getElementById('preloader').classList.add('hide');
+        }, 2000); // 2 seconds in milliseconds
+    </script>
+</body>
+</html>
