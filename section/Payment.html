@@ -15,7 +15,7 @@
             <h4>PID</h4>
             <div class="input-field">
             <input type="text">
-        </div>
+        </div> 
         </div>
         
         <div class="date">
@@ -35,6 +35,8 @@
             <h4>To Account:</h4>
             <select id="toAccount" name="fromAccount">
             <option value="SELECT ACCOUNT">SELECT ACCOUNT</option>
+            <option value="G-PAY">STATE BANK OF INDIA</option>
+            <option value="G-PAY">BANK OF MAHARASHTRA</option>
             </select><br>
 
             <h4>Comment:</h4>
@@ -46,12 +48,12 @@
             <h4>Amount:</h4>
             <input type="number" id="amount" name="amount" required><br> 
          
-            <button id="SaveButton">SAVE</button>
-            <button id="BackButton">BACK</button>
+            <button id="SaveButton" onclick="login5()"> SAVE</button>
+            <button id="BackButton"><a href="../section/payment1.html">BACK</button></a>
             
         </form>
     </div>
 
-    <script src="renderer.js"></script>
+    <script src="../src/Data.js"></script>
 </body>
 </html>
