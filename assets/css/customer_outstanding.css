@@ -8,7 +8,7 @@
 
 body{
     display:flex;
-    background-color:#7ac3de;  
+    background-color:#CCFFCC;  
      align-items: center; 
     height:80vh;
     display: flex;
@@ -51,7 +51,7 @@ th{
 }
 .button3{
     background-color:rgb(231, 184, 126);
-    margin-left:120px;
+    margin-left:150px;
     width: 200px;
     height:40px;
     padding:10px;
