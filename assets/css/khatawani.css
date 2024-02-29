@@ -1,5 +1,6 @@
 *{
-    background-color: aqua;
+    background-color:#ccffcc;
+    
     margin:0;
     padding:0;
     
@@ -33,7 +34,7 @@
   .to{
     width: 700px;
     margin-left:200px;
-    margin-top: -45px;
+    margin-top: -55px;
   }
   
   .roos{
@@ -41,26 +42,26 @@
   }
   #root{
     background-color: aliceblue;
-    width: 350px;
+    width: 365px;
     height: 30px;
   }
   
   .account .input-field input{
     height: 25px;
-    width: 350px;
+    width: 365px;
   }
   
   .button1{
     background-color:green;
-    height: 25px;
-    width: 150px;
+    height: 35px;
+    width: 180px;
     
   }
   
   .button2{
     background-color:red;
-    height: 25px;
-    width: 150px;
+    height: 35px;
+    width: 180px;
     text-decoration: bold;
   }
   
