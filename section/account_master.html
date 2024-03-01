@@ -62,7 +62,7 @@
 </select>
 <br><br>
 
-<h3>Root Details</h3>
+<h3>Route Details</h3>
 <select id="account1" name="SELECT" name="SELECT">
     <option value="1">SELECT</option> 
     <option value="2">किरकोळ व्यापारी</option>
@@ -80,10 +80,10 @@
 <br>
 <br>
 <div class="radio">
-    <input type="radio" id="cr">
+    <input type="radio" id="cr" name="cr_dr_type">
     <label for="cr"><b>CR</b></label><br>
 
-    <input type="radio" id="dr">
+    <input type="radio" id="dr" name="cr_dr_type">
     <label for="dr"><b>DR</b></label><br>
 
 </div>
@@ -91,7 +91,9 @@
 
 <br>
        <div class="container1">
-            <button class="button1" onclick="account()"><h3>SAVE</h3></button>
+            <button class="button1" onclick="insertAccount()">
+                <h3>SAVE</h3>
+            </button>
             <button class="button2"><h3>BACK</h3></button>
         </div>
         <br>
