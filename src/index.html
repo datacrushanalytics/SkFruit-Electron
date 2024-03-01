@@ -1,33 +1,4 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Login Form</title>
-    <link rel="stylesheet" href="../assets/css/Log_in.css" />
-  </head>
-  <body>
-    <div class="login-container">
-      <img src="../assets/img/SK1.jpg" alt="Example Image">
-      <form id="loginForm">
-        <label for="username"><b>User Name</b></label>
-        <input type="text" id="username" name="username" required>
-  
-        <label for="password"><b>Password</b></label>
-        <input type="password" id="password" name="password" required>
-  
-        <!-- <button type="button" onclick="login()"><h2><b>Login</h2></b></button> -->
-        <button type="button" onclick="login()"><a href="../section/Home.html"><b>Login</b></a></button>
-      </form>
-    </div>
-    <div id="footer">
-      <p>SK FRUITS</p>
-  </div>
-    
-  </body>
-</html>
-
-
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -43,9 +14,10 @@
     </div>
 
     <script>
-        // JavaScript to hide the preloader after 5 seconds
+        // JavaScript to hide the preloader after 2 seconds
         setTimeout(function(){
             document.getElementById('preloader').classList.add('hide');
+            window.location.href = '../section/Log_in.html';
         }, 2000); // 2 seconds in milliseconds
     </script>
 </body>
