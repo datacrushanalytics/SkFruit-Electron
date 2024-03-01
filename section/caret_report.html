@@ -27,10 +27,12 @@
         
             <div class="customer">
             <h3>Customer</h3>
-            
-            <select id="customer" name="dropdown" name="SELECT"></select>
+            <select id="customer" name="dropdown" name="SELECT">
+                <option value="ALL">ALL</option>
+            </select>
             </div><br><br><br>
-        <button id="saveBtn" >SHOW</button>
+
+        <button id="saveBtn" onclick="showDetails()" >SHOW</button>
         <button id="backBtn">BACK</button>
     </form>
     <br>
@@ -46,4 +48,5 @@
     </table>
     </div>
 </body>
+<script src="../src/caret_report_bill.js"></script>
 </html>
