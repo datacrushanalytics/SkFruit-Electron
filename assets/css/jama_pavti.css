@@ -142,9 +142,15 @@ width:50px;
 
 .text1{
         margin-left: 340px;
-        width:40%;
-        height:3px;
+        width:20%;
+        height:20px;
 }
 .store{
      display: flex;
 }
+#drop {
+    margin-left:1000%;
+    width:30px;
+    height:30px;
+}
+
