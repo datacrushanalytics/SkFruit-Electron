@@ -1,0 +1,47 @@
+*{
+    margin:0px;
+    padding:0px;
+    justify-content: center;
+    
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  body{
+    width: 90%;
+    height: 30%vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+  }
+  
+  .container{
+     width: 150px;
+    height: 100px;
+    
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .new{
+    height: 55px;
+    width: 300px;
+    text-align:left;
+    background-color: rgb(225, 219, 219);
+  }
+  
+  .grahk .input-field input{
+    height: 30px;
+    width:300px;
+  }
+  
+  #root{
+    height: 30px;
+    width:300px;
+  }
+  
+  .button1{
+    height: 30px;
+    width:300px;
+    background-color: rgb(123, 123, 248);
+  }
