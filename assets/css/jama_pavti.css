@@ -1,0 +1,156 @@
+*{
+    margin:0;
+    padding:0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    display:flex;
+    background-color:#CCFFCC;
+    
+     align-items: center; 
+  
+    height:80vh;
+    display: flex;
+    justify-content: center;
+   
+}
+.container{
+    width:650px;
+    height:500px;
+     justify-content:center ;
+     flex-direction: column;
+     
+     justify-content: left;
+}
+
+.first-row {
+    display: flex;
+    width:90px;
+    margin-right:70px;
+}
+.id{
+    width:300%;
+    height:300;
+    margin-right:-400px;
+    align-items:right;
+    justify-content: space-between;
+}
+.date{
+    margin-left: 350px;
+}
+
+.input-field input{
+    width:90px;   
+    height:25px;
+    text-align: center;
+    
+}
+
+.button1{
+    background-color: rgb(96, 178, 96);
+    width: 300px;
+    height: 40px;
+}
+
+.button2{
+    background-color: rgb(241, 62, 62);
+    margin-left: 10px;
+    width: 300px;
+    height:40px;
+    padding:10px;
+}
+
+#container1{
+    display: flex;
+}
+
+.form input{
+    margin-left: 500px;
+    width:60px;
+    height:25px;
+  
+}
+
+.second-row{
+    display: flex;
+    margin-right: -150px;
+}
+.second-row .input-field input{
+    width:70px;
+    height:30px;
+
+}
+.carrot{
+    width:50px;
+    margin-right:70px;
+}
+.carrot1{
+    width:50px;
+    margin-right: 80px;
+}
+.carrot2{
+width:50px;
+    margin-right:80px;
+}
+
+#comment {
+    width:610px;
+    height: 50px;
+}
+#inaccount{
+    width:610px;
+    height: 25px;
+}
+#fromaccount{
+    width:610px;
+    height: 25px;
+}
+#footerContainer {
+    background-color: #333;
+    color: #fff;
+    text-align: left;
+    padding: 70px 30px 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.footerNav{
+    background-color:white;
+    margin: 30px 0;
+}
+
+.footerNav ul{
+    display: flex;
+    justify-content: center;
+    
+}
+
+.footerNav ul li{
+    color: white;
+    margin: 20px;
+    text-decoration: none;
+    font-size: 1.3rem;
+    opacity: 0.7;
+    transition: 0.56;
+}
+#dropdown{
+    margin-left:1000%;
+    width:30px;
+    height:30px;
+}
+
+.text1{
+        margin-left: 340px;
+        width:20%;
+        height:20px;
+}
+.store{
+     display: flex;
+}
+#drop {
+    margin-left:1000%;
+    width:30px;
+    height:30px;
+}
+

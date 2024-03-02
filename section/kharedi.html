@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PURCHASE</title>
+    <link rel="stylesheet" href="../assets/css/kharedi.css">
+</head>
+<body>
+    <div class="container">
+        <h1 align="center">खरेदी</h1>
+
+
+        
+        <div class="first-row">
+            <div class="no">
+                <h3>नं.</h3>
+                <div class="input-filed">
+                <input type="text">
+            </div>
+            </div>
+        
+            <div class="to">
+                <h3>दिनांक </h3>
+                <div class="input-field">
+                <input type="text" placeholder="date" onfocus="(this.type='date')">
+            </div>
+            </div>
+        </div>
+<br>
+
+        <div class="second-row">
+            <div class="no1">
+                <h3>सप्लायरचे नाव </h3>
+                <div class="input-filed">
+                <select id="no2">
+                    <option value="apple">select</option>
+                    <option value="apple">delhi fruit traders</option>
+                    <option value="apple">k n fruits</option>
+                </select>
+            </div>
+            </div>
+        
+            <div class="to">
+                <h3>गाडी नं.</h3>
+                <div class="input-field">
+                <input type="text">
+            </div>
+            </div>
+        </div>
+<br>
+        <div class="third-row">
+            <div class="product">
+                <h3>Product </h3>
+                <div class="input-filed">
+                <select id="product1">
+                    <option value="apple">select</option>
+                    <option value="apple">mango</option>
+                    <option value="apple">banana</option>
+                </select>
+            </div>
+            </div>
+        
+            <div class="bata">
+                <h3>बटा </h3>
+                <div class="input-field">
+                <input type="text">
+            </div>
+            </div>
+
+            <div class="mark">
+                <h3>मार्क</h3>
+                <div class="input-field">
+                <input type="text">
+            </div>
+            </div>
+        </div>
+<br>
+
+
+        <div class="fourth-row">
+            <div class="purchase">
+                <h3>खरेदी किंमत</h3>
+                <div class="input-field">
+                <input type="text">
+            </div>
+            </div>
+
+            <div class="charge">
+                <h3>विक्री किंमत</h3>
+                <div class="input-field">
+                <input type="text">
+            </div>
+            </div>
+
+            <div class="nag">
+                <h3>नग</h3>
+                <div class="input-field"><br>
+                <input type="text">
+            </div>
+            </div>
+
+            <div class="unit">
+                <h3>युनिट</h3><br>
+                <div class="input-field">
+                    <select id="product3">
+                        <option value="apple">select</option>
+                        <option value="apple">caret</option>
+                        <option value="apple">kg</option>
+                        <option value="apple">bag</option>
+                        <option value="apple">boxes</option>
+                    </select>
+            </div>
+            </div>
+
+            <div class="unit1"><br><br>
+              <button id="btn" onclick="click()"><h3>ADD</h3></button> 
+            </div>
+        </div>
+<br><br>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>प्रॉडक्ट</th>
+                    <th>बटा</th>
+                    <th>मार्क</th>
+                    <th>खरेदी किंमत</th> 
+                    <th>विक्री किंमत</th>  
+                </tr>
+            </thead>
+        </table>
+        <br>
+       
+        <div class="amount">
+            <h3>एकूण रक्कम:</h3>
+            <div class="input-field">
+            <input type="text">
+        </div>
+        </div>
+    <br><br>
+
+    <div class="container1">
+        <button class="button1" onclick="purchaseProductData()"><h3>SAVE</h3></button>
+         <button class="button2"><h3>BACK</h3></button>
+     </div> 
+    </div>
+    <script src="../src/Purchase.js"></script>
+     
+        </body>
+        </html>
+
+
