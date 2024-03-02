@@ -5,18 +5,14 @@
     
 }
 
-
-
 body{
     display:flex;
-    background-color:#7ac3de;
+    background-color:#7ac3de;  
      align-items: center; 
     height:80vh;
     display: flex;
     justify-content: center;
 }
-
-
 .container{
     width:650px;
     height:500px;
@@ -24,21 +20,19 @@ body{
      flex-direction: column;
      justify-content: left;
 }
-
 .first-row {
     display: flex;
     width:90%;
-    margin-right:50px;
+    margin-right:40px;
 }
 .date{
     width:300%;
-    height:30px;
-    margin-right:-600px;
+    height:300;
+    margin-right:-500px;
     align-items:right;
     justify-content: space-between;
 
-} 
-
+}
 table{
     border-collapse: collapse;
     width:90%;
@@ -51,14 +45,4 @@ th,td{
 }
 th{
     background-color: white;
-}
-#container2{
-    display: flex;
-}
-
-.button3{
-    background-color: rgb(96, 178, 96);
-    width: 290px;
-    height: 40px;
-    margin-left:135px;
 }

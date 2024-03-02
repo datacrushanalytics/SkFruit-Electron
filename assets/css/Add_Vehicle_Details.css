@@ -1,6 +1,6 @@
- body {
+body {
   background-color: #ccffcc;
-  font-family: 'Arial', sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,15 +42,23 @@ color: #fff;
 border: none;
 background-color: #f44336;
 }
-
+/* 
 #Id{
-  width: 50%;
-  height: 20px;
-}
+  width: 95%;
+} */
 
 #name{
   width: 95%;
   height: 20px;
+}
+
+#number{
+  width: 95%;
+  height: 20px;
+}
+
+#Id{
+  height: 20px; 
 }
 
 #footer {

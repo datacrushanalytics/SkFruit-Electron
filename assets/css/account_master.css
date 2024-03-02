@@ -1,0 +1,90 @@
+*{
+    margin:0;
+    padding:0;
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+body{
+    display:flex;
+    background-color:#CCFFCC; 
+     align-items: center; 
+    height:80vh;
+    display: flex;
+    justify-content: center;
+}
+
+.container{
+    width:500px;
+    height:500px;
+     justify-content:center ;
+     flex-direction: column;
+     justify-content: left;
+}
+
+
+.first-row {
+    display: flex;
+    width:90%;
+    margin-right:40px;
+}
+.id{
+    width:300%;
+    height:30px;
+    margin-right:-500px;
+    align-items:right;
+    justify-content: space-between;
+
+}
+
+.name .input-field input{
+    height:20px;
+    width:90%;
+}
+
+.address .input-field input{
+    height:30px;
+    width:90%;
+}
+
+#account1{
+    height:20px;
+    width:90%;
+}
+.no{
+    height:20px;
+    width:40%;
+}
+.balance{
+    height:20px;
+    width:40%;
+}
+
+.radio {
+    display: flex;
+    width:50%;
+    margin-right:40px;
+    justify-content: space-between;
+}
+
+#dr{
+    margin-left: 150px;
+}
+
+.button1{
+    background-color: rgb(96, 178, 96);
+    width: 200px;
+    height: 40px;
+    margin-left: 20px;
+}
+
+.button2{
+    background-color: rgb(241, 62, 62);
+    margin-left:20px;
+    width: 200px;
+    height:40px;
+    padding:10px;
+}
+
+.container1 {
+    display: flex;
+}

@@ -1,19 +1,19 @@
 body{
-    background-color: #CCFFCC;
+    background-color: rgb(191, 221, 233);
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
     align-items: center;
     height: 120vh;
     margin: auto;
     padding: 2rem;
-    justify-content: center; 
+    justify-content: center;
     width:40%;
 }
 
-.container { 
+.container {
     align-content: center;
     width: 460px;
-    margin: 0 auto;  
+    margin: 0 auto;
     flex-direction: column;
     justify-content: center;
 }
@@ -47,7 +47,7 @@ body{
 }
 
 
-/* input[type="text"],
+input[type="text"],
 input[type="number"],
 textarea,
 button {
@@ -65,7 +65,7 @@ button {
     width: 101%; 
     height: 40px;
     background-color: red;
-} */
+}
 
 #fromAccount{
     width: 100%; 
