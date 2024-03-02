@@ -47,7 +47,7 @@ body{
 }
 
 
-input[type="text"],
+/* input[type="text"],
 input[type="number"],
 textarea,
 button {
@@ -65,7 +65,7 @@ button {
     width: 101%; 
     height: 40px;
     background-color: red;
-}
+} */
 
 #fromAccount{
     width: 100%; 
@@ -92,7 +92,57 @@ button {
     height: 25px;  
 }
 
+.row{
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+}
 
+.buttons {
+    text-align: center;
+    margin-top: 20px;
+    width: 120%; 
+    height: 40px;
+    margin-left: -45px;
+}
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.buttons button:first-child {
+    background-color:green; /* Green */
+    color: white;
+    width: 40%; 
+    height: 40px;
+}
+.buttons button:last-child {
+    background-color: red;
+    color: black;
+    width: 40%; 
+    height: 40px;
+}
 
+.first-row{
+    display: flex;
+    width: 40%; 
+    height: 40px;
+}
 
+.no{
+    width:300%;
+    height: 30px;
+    margin-right: 100px;
+    align-items: right;
+    justify-content: space-between;
+}
+
+#comment{
+    height: 30px;
+    width: 450px;
+}
+.input-field input{
+    height: 25px;
+}
 
