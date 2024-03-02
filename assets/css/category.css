@@ -26,12 +26,7 @@ th {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-    /* border-radius: 5px;
-    position:absolute;
-    top: 50%;
-    right: 10px;
-    transform: translate(-50%); */
-
+    border-radius: 5px;
 }
 .container{
     width: 100%;
@@ -93,3 +88,7 @@ th {
 .dropdown-content a:hover {
     background-color: #F1F1F1
 }
+
+
+
+
