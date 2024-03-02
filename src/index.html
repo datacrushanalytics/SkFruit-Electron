@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Your Website</title>
+    <link rel="stylesheet" href="index.css" />
 
     <!-- <link rel="stylesheet" href="../assets/css/Log_in.css"> -->
 
@@ -12,6 +13,21 @@
     <!-- <link rel="import" href="../section/Log_in.html"> -->
   </head>
   <body>
+
+       <!-- Preloader -->
+       <div id="preloader" class="preloader">
+        <!-- Loading animation or image goes here -->
+        <div class="loader"></div>
+    </div>
+
+    <script>
+      // JavaScript to hide the preloader after 2 seconds
+      setTimeout(function(){
+          document.getElementById('preloader').classList.add('hide');
+          window.location.href = '../section/Log_in.html';
+      }, 2000); // 2 seconds in milliseconds
+  </script>
+
    <!-- <button>click me</button> -->
 
    <!-- <div class="login-container"> -->
@@ -64,3 +80,9 @@
     <!-- <button type="button" onclick="category()"><a href="C:\Users\Windows 10\Desktop\sk2\skfruits\section\Product.html"><b>Login</b></a></body> -->
     </body>
 </html>
+
+
+ 
+
+   
+

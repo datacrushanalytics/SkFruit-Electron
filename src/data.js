@@ -14,6 +14,4 @@ fetch('http://3.109.121.46/userData')
     .catch(error => {
         console.error('Error:', error);
     });
-
-
 }
