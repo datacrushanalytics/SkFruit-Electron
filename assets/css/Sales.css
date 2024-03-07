@@ -1,0 +1,183 @@
+body{
+    text-align: left;
+    margin:0;
+    padding:0;
+    font-family: sans-serif;
+    background-color: rgb(207, 205, 205); 
+}
+
+.container{
+ /* text-align: left; */
+ /* text-shadow: 2px; */
+ margin-left: 10%;
+}
+
+#bill{
+    border-radius: 8px;
+    height: 15px;
+    width: 150px;
+    border: 1px solid transparent; 
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+}
+#date{
+    border-radius: 8px;
+    height: 15px;
+    width: 250px;
+    border: 1px solid transparent;
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+}
+#number{
+    border-radius: 8px;
+    height: 15px;
+    width: 350px;
+    border: 1px solid transparent;
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+}
+#Grahak{
+  border-radius: 8px;
+  height: 15px;
+  width: 300px;
+  border: 1px solid transparent; 
+padding:  10px;
+box-shadow: 5px 5px 5px grey;
+margin:20px;
+}
+
+#no{
+  border-radius: 8px;
+  height: 15px;
+  width: 50px;
+  border: 1px solid transparent;
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+}
+#no1{
+  border-radius: 8px;
+  height: 15px;
+  width: 150px;
+  border: 1px solid transparent; 
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+}
+
+#address{
+  border-radius: 8px;
+  height: 15px;
+  width: 300px;
+  border: 1px solid transparent; 
+padding:  10px;
+box-shadow: 5px 5px 5px grey;
+margin:20px;
+    
+}
+#sandarbh{
+    border-radius: 8px;
+    height: 15px;
+    width: 300px;
+    border: 1px solid transparent; 
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+}
+#product{
+  border-radius: 8px;
+    height: 15px;
+    width: 300px;
+    border: 1px solid transparent; 
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+}
+
+#bata{
+  border-radius: 8px;
+  height: 15px;
+  width: 100px;
+  border: 1px solid transparent;
+padding:  10px;
+box-shadow: 5px 5px 5px grey;
+margin:20px;
+}
+
+#mark{
+  border-radius: 8px;
+  height: 15px;
+  width: 100px;
+  border: 1px solid transparent; 
+padding:  10px;
+box-shadow: 5px 5px 5px grey;
+margin:20px;
+}
+
+#nag{
+  border-radius: 8px;
+  height: 15px;
+  width: 100px;
+  border: 1px solid transparent; 
+padding:  10px;
+box-shadow: 5px 5px 5px grey;
+margin:20px;
+}
+#kimmat{
+  border-radius: 8px;
+  height: 15px;
+  width: 100px;
+  border: 1px solid transparent; 
+padding:  10px;
+box-shadow: 5px 5px 5px grey;
+margin:20px;
+}
+
+#total{
+  border-radius: 8px;
+  height: 15px;
+  width: 100px;
+  border: 1px solid transparent; 
+padding:  10px;
+box-shadow: 5px 5px 5px grey;
+margin:20px;
+}
+
+#baki{
+  border-radius: 8px;
+  height: 25px;
+  width: 150px;
+  border: 1px solid transparent;
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+}
+ 
+.border-hover {
+  border: 1px solid transparent; 
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  
+}
+
+.border-hover:hover {
+  border-color:blue;
+}
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  margin: 10px;
+  border-radius: 5px;
+  outline: none;
+  margin-bottom: 30%;
+  /* margin-left: 20%;   */
+}
+
+.six-row{
+  margin-left: 40%;  
+  text-align: left;
+}

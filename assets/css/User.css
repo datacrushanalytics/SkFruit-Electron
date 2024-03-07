@@ -1,5 +1,7 @@
-
-/* CSS for the table */
+body{
+    font-family: sans-serif;
+    background-color: rgb(207, 205, 205); 
+}
 table {
     width: 100%;
     border-collapse: collapse;
@@ -21,23 +23,8 @@ th {
     position: relative;
 }
 
-/* CSS for buttons */
-.button {
-    background-color: #00ba8b;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
 .button1 {
-    background-color:#00ba8b;
+    /* background-color:#00ba8b; */
     border: none;
     color: white;
     padding: 10px 20px;
@@ -55,44 +42,29 @@ th {
     transform: translate(-50%);
     cursor: pointer;
 }
-
-.edit-button {
-    background-color: #00ba8b;
-}
-
-.delete-button {
-    background-color: #f44336;
-}
-
-/* CSS for menu */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    z-index: 1;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    padding: 12px 16px;
-    margin: 8px 0;
+.button {
+    border: 1px solid transparent; 
+    padding:  10px;
+    box-shadow: 5px 5px 5px grey;   
+} 
+  .button:hover {
+    border-color:blue;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
     border-radius: 5px;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 6px 0;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
+    outline: none;
+    margin-bottom: 30%;
+  }  
+  .button1 {
+    border: 1px solid transparent; 
+    padding:  10px;
+    box-shadow: 5px 5px 5px grey;   
+} 
+  .button1:hover {
+    border-color:blue;
+  }

@@ -8,48 +8,36 @@
 </head>
 <body>
     <div class="container">
-        <h1 align="center">User Master</h1> 
+        <h1 align="center">User Master</h1> <hr>
 
-        <!-- <div class="container1"> -->
+        <div class="container1">
         <form id="loginForm">
-        <label for="userId"><b>ID</b></label> <br>
-        <input type="text" id="userId" name="userId"> <br>
     
-        <label for="userId"><b>User Type</b></label> <br>
-        <input type="text" id="userId" name="userId"> <br> 
+        <div class="first-row">
+        <input type="text" id="id" name="id" placeholder="ID"> 
+        <input type="text" id="id" name="id" placeholder="User Type">
+        </div>
     
-        <label for="name"><b>Name</b></label> <br>
-        <input type="text" id="name" name="name"> <br>
-        
-        <label for="username"><b>Username</b></label> <br> 
-        <input type="text" id="username" name="username"> <br>
+        <input type="text" id="name" name="name" placeholder="Name"> <br>
+    
+        <input type="text" id="username" name="username" placeholder="Username"> <br>
 
-        <label for="password"><b>Password</b></label> <br>
-        <input type="password" id="password" name="password"> <br>
+        <input type="password" id="password" name="password" placeholder="Password"> <br>
 
-        <input type="checkbox" id="isActive" name="isActive" >
+        <div class="five-row">
+        <input type="radio" id="isActive" name="isActive" >
         <label for="isActive">Active</label>
-       
-        <input type="checkbox" id="isActive" name="isActive" >
-        <label for="isdeActive">Deactive</label> <br>
+        <input type="radio" id="isActive" name="isActive" >
+        <label for="isdeActive">Deactive</label>
+    </div> 
 
-        <button id="saveBtn" >Save</button>
-        <button id="backBtn"><a href="../section/User.html">Back</button></a>
+        <div class="six-row">
+        <button class="border-hover" >Save</button>
+        <button class="border-hover"><a href="../section/User.html">Back</button></a>
+    </div>
     </form>
     </div>
-    <!-- <footer> -->
-    <div id="footer">
-        <nav>
-            <ul>
-                <li><a href="#">HOME</a></li> &nbsp;&nbsp;&nbsp;
-                <li><a href="#">SALE</a></li>
-                <li><a href="#">ROOT_SALE</a></li>
-                <li><a href="#">RECEIPT</a></li>
-                <li><a href="#">PAYMENT</a></li>
-            </ul>
-        </nav>
     </div>
-<!-- </footer> -->
     
 </body>
 </html>

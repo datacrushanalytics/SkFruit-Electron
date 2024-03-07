@@ -1,6 +1,6 @@
 body{
-    background-color:  rgb(191, 221, 233);
-    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(207, 205, 205); 
+    font-family: sans-serif;
 }
 
 table {
@@ -13,7 +13,7 @@ th,td{
     padding: 8px;  
 }
 th{
-    background-color: rgb(233, 24, 59);
+    background-color: rgb(202, 182, 185);
 }
 
 .container{
@@ -24,24 +24,6 @@ th{
 .container input{
     width: 45%;
 }        
-
-.navbar {
-    background-color: #333;
-    overflow: hidden;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .navbar a {
-    color: white;
-    text-decoration: none;
-    padding: 10px 20px; /* Padding between tabs */
-  }
-  
-  .navbar a:hover {
-    background-color: #555;
-  }
-
 img{
     width: 80px;
     height: 80px;
