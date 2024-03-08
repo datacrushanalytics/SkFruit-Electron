@@ -43,7 +43,17 @@ th {
     text-indent: 10%;
   }
   
-  #name{
+  #name1{
+    border-radius: 8px;
+    height: 15px;
+    width: 400px;
+    border: 1px solid transparent; 
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+  }
+  
+  #name2{
     border-radius: 8px;
     height: 15px;
     width: 400px;

@@ -7,8 +7,6 @@ body{
 }
 
 .container{
- /* text-align: left; */
- /* text-shadow: 2px; */
  margin-left: 10%;
 }
 
@@ -58,6 +56,46 @@ margin:20px;
   box-shadow: 5px 5px 5px grey;
   margin:20px;
 }
+
+#bta{
+  border-radius: 8px;
+  height: 15px;
+  width: 50px;
+  border: 1px solid transparent;
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+}
+
+#mark{
+  border-radius: 8px;
+  height: 15px;
+  width: 50px;
+  border: 1px solid transparent;
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+}
+
+#nag{
+  border-radius: 8px;
+  height: 15px;
+  width: 50px;
+  border: 1px solid transparent;
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+}
+
+#kimmat{
+  border-radius: 8px;
+  height: 15px;
+  width: 50px;
+  border: 1px solid transparent;
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+}
 #no1{
   border-radius: 8px;
   height: 15px;
@@ -67,6 +105,35 @@ margin:20px;
   box-shadow: 5px 5px 5px grey;
   margin:20px;
 }
+
+#online{
+  border-radius: 8px;
+  height: 15px;
+  width: 150px;
+  border: 1px solid transparent; 
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+}
+#discount{
+  border-radius: 8px;
+  height: 15px;
+  width: 150px;
+  border: 1px solid transparent; 
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+}
+#bill_cash{
+  border-radius: 8px;
+  height: 15px;
+  width: 150px;
+  border: 1px solid transparent; 
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+}
+
 
 #address{
   border-radius: 8px;
@@ -177,7 +244,7 @@ button {
   /* margin-left: 20%;   */
 }
 
-.six-row{
+.fourth-row{
   margin-left: 40%;  
   text-align: left;
 }

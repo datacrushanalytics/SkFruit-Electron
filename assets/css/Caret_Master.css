@@ -22,6 +22,16 @@ body {
   margin:20px;
 }
 
+#caret{
+  border-radius: 8px;
+  height: 15px;
+  width: 350px;
+  border: 1px solid transparent; 
+padding:  10px;
+box-shadow: 5px 5px 5px grey;
+margin:20px;
+}
+
 .border-hover {
     border: 1px solid transparent; 
     padding:  10px;
@@ -43,7 +53,7 @@ body {
     width: 150px;
   }
   
-  .six-row{
+  .second-row{
     margin-left: 35%;  
     text-align: left;
   }

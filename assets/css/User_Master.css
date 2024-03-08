@@ -14,11 +14,6 @@ body {
     display: flex;
 }
 
-/* .first-row{
-    height: 15px;
-    width: 350px;
-} */
-
 #id{
     border-radius: 8px;
     height: 15px;
@@ -27,6 +22,16 @@ body {
   padding:  10px;
   box-shadow: 5px 5px 5px grey;
   margin:20px;
+}
+
+#usertype{
+  border-radius: 8px;
+  height: 15px;
+  width: 150px;
+  border: 1px solid transparent; 
+padding:  10px;
+box-shadow: 5px 5px 5px grey;
+margin:20px;
 }
 
 #name{
@@ -57,12 +62,10 @@ body {
   margin:20px;
 }
 
-
 .border-hover {
     border: 1px solid transparent; 
     padding:  10px;
-    box-shadow: 5px 5px 5px grey;
-    
+    box-shadow: 5px 5px 5px grey; 
   }
   
   .border-hover:hover {
@@ -77,14 +80,13 @@ body {
     border-radius: 5px;
     outline: none;
     margin-bottom: 30%;
-    /* margin-left: 20%;   */
   }
   
-  .six-row{
+  .third-row{
     margin-left: 40%;  
     text-align: left;
   }
-  .five-row{
+  .second-row{
     margin-left: 35%;  
     text-align: left;
   }
