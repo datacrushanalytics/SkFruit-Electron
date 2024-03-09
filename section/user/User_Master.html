@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Form in Electron</title>
+    <link rel="stylesheet" href="../../assets/css/User_Master.css">
+</head>
+<body>
+    <div class="container">
+        <h1 align="center">User Master</h1> <hr>
+
+        <div class="container1">
+        <form id="loginForm" method="POST">
+    
+        <div class="first-row">
+            <label for="userType">User Type  </label>
+        <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
+        <select id="usertype" name="usertype" placeholder="UserType">
+            <option value="User" selected>User</option>
+            <option value="Admin">Admin</option>
+            <!-- Add more options as needed -->
+        </select>
+        </div>
+        
+
+
+        <label for="userType">Name</label>
+        <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
+        <select id="name" id="name" name="name">
+            <!-- <option value="User" disabled selected>Select Account</option> -->
+        </select>
+    
+        <!-- <input type="text" id="name" name="name" placeholder="Name">  -->
+        <br>
+    
+        <input type="text" id="username" name="username" placeholder="Username"> <br>
+
+        <input type="password" id="password" name="password" placeholder="Password"> <br>
+
+        <div class="second-row">
+        <input type="radio" id="status" name="status" value = 1>
+        <label for="isActive">Active</label>
+        <input type="radio" id="status" name="status" value = 0 >
+        <label for="isdeActive">Deactive</label>
+        <br>
+        <br>
+
+
+    </div> 
+        <div class="third-row">
+        <!-- <button class="border-hover" >Save</button> -->
+        <button type="submit" class="border-hover">Save</button>
+        <a href="./user.html"><button type='button' class="border-hover">Back</button></a>
+    </div>
+    </form>
+    </div>
+    </div>
+
+    <script src="../../src/userMaster.js"></script>
+    
+</body>
+</html>
+
+

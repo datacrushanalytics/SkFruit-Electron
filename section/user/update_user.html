@@ -1,0 +1,174 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Form in Electron</title>
+    <link rel="stylesheet" href="../../assets/css/User_Master.css">
+</head>
+
+
+
+<body>
+    <div class="container">
+        <h1 align="center">User Master</h1> <hr>
+
+        <div class="container1">
+        <form id="loginForm">
+    
+        <div class="first-row">
+        <input type="text" id="id1" name="id1" placeholder="ID" value = ""> 
+        <input type="text" id="usertype1" name="usertype1" placeholder="User Type">
+        </div>
+    
+        <input type="text" id="name1" name="name" placeholder="Name"> <br>
+    
+        <input type="text" id="username1" name="username" placeholder="Username"> <br>
+
+        <input type="password" id="password1" name="password" placeholder="Password"> <br>
+
+        <div class="second-row">
+        <input type="radio" id="isActive1" name="isActive" >
+        <label for="isActive">Active</label>
+        <input type="radio" id="isActive1" name="isActive" >
+        <label for="isdeActive">Deactive</label>
+        <br>
+        <br>
+
+
+    </div> 
+        <div class="third-row">
+        <button class="border-hover" >Update</button>
+        <a href="./user.html"><button type='button' class="border-hover">Back</button></a>
+    </div>
+    </form>
+    </div>
+    </div> -->
+    <!-- <script src="../../src/user.js"></script> -->
+
+    <!-- <script>
+        // Function to parse URL parameters
+        function parseURLParams(url) {
+            var params = {};
+            var parser = document.createElement('a');
+            parser.href = url;
+            var query = parser.search.substring(1);
+            var vars = query.split('&');
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split('=');
+                params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+            }
+            return params;
+        } -->
+
+        <!-- // Get the current URL
+        var currentURL = window.location.href;
+
+        // Parse the URL parameters
+        var queryParams = parseURLParams(currentURL);
+
+        // Access specific parameter values
+        var userData = queryParams['userData']; // Access the 'userData' parameter value
+        console.log(userData)
+
+        // Convert the userData string to an object (assuming it's in JSON format)
+        var userDataObject = JSON.parse(decodeURIComponent(userData));
+
+        // Populate form fields with userDataObject values
+        document.getElementById("id1").value = userDataObject.id;
+        document.getElementById("usertype1").value = userDataObject.usertype;
+        document.getElementById("name1").value = userDataObject.name;
+        document.getElementById("username1").value = userDataObject.username;
+        document.getElementById("password1").value = userDataObject.password;
+        document.getElementById("isActive1").checked = userDataObject.isActive === 'Active';
+        document.getElementById("isActive2").checked = userDataObject.isActive === 'Deactive';
+        
+        // Add event listener for form submission
+        document.getElementById("updateForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            // Handle form submission here
+        }); -->
+    <!-- </script>
+
+
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Update</title>
+    <!-- Your CSS links -->
+</head>
+<body>
+    <div class="container">
+        <h1 align="center">User Update</h1> <hr>
+
+        <div class="container1">
+            <form id="updateForm">
+                <!-- Your form elements go here -->
+                <input type="hidden" id="id1" name="id1" placeholder="ID"> <!-- Use a hidden input for ID -->
+                <input type="text" id="name1" name="name1" placeholder="Name">
+                <input type="text" id="address1" name="address1" placeholder="Address">
+                <input type="text" id="mobile_no1" name="mobile_no1" placeholder="Mobile No">
+                <input type="text" id="username1" name="username1" placeholder="Username">
+                <input type="password" id="password1" name="password1" placeholder="Password">
+                <input type="text" id="status1" name="status1" placeholder="Status">
+                <input type="text" id="usertype1" name="usertype1" placeholder="User Type">
+                <br><br>
+                <button class="border-hover" type="submit">Update</button>
+                <a href="./user.html"><button type='button' class="border-hover">Back</button></a>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Function to parse URL parameters
+        function parseURLParams(url) {
+            var params = {};
+            var urlParts = url.split('?');
+            if (urlParts.length >= 2) {
+                var queryStr = urlParts[urlParts.length - 1];
+                var queryParams = queryStr.split('&');
+                for (var i = 0; i < queryParams.length; i++) {
+                    var pair = queryParams[i].split('=');
+                    params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+                }
+            }
+            return params;
+        }
+
+        // Get the current URL
+        var currentURL = window.location.href;
+
+        // Parse the URL parameters
+        var queryParams = parseURLParams(currentURL);
+
+        // Access specific parameter values
+        var userData = queryParams['userData']; // Access the 'userData' parameter value
+
+        // Decode and parse the userData string
+        var userDataObject = JSON.parse(decodeURIComponent(userData));
+
+        // Populate form fields with userDataObject values
+        document.getElementById("id1").value = userDataObject.id;
+        document.getElementById("name1").value = userDataObject.name;
+        document.getElementById("address1").value = userDataObject.address;
+        document.getElementById("mobile_no1").value = userDataObject.mobile_no;
+        document.getElementById("username1").value = userDataObject.username;
+        document.getElementById("password1").value = userDataObject.password;
+        document.getElementById("status1").value = userDataObject.status;
+        document.getElementById("usertype1").value = userDataObject.usertype;
+
+        // Add event listener for form submission
+        document.getElementById("updateForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            // Handle form submission here
+        });
+    </script>
+</body>
+</html>
+
