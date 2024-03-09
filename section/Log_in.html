@@ -6,29 +6,35 @@
     <link rel="stylesheet" href="../assets/css/Log_in.css" />
   </head>
   <body>
+    <img src="../assets/img/vecteezy_studio-shot-of-various-fruits-and-vegetables-isolated-on_29628395.jpeg" alt="Background image" style="height: 100%; width:100%;">
+    <!-- <div class="opacity"> -->
+
     <div class="login-container">
-      <img src="../assets/img/SK1.jpg" alt="Example Image">
-      <form id="loginForm">
-        <label for="username"><b>User Name</b></label>
-        <input type="text" id="username" name="username" required>
+      <img class="logo" src="../assets/img/logo-01.png" alt="Example Image">
+      <form id="loginForm" action="../src/data.js" method="post">
+        <input type="text" id="username" name="username" required placeholder="User Name">
   
-        <label for="password"><b>Password</b></label>
-        <input type="password" id="password" name="password" required> 
-  
+        <input type="text" id="password" name="password" required placeholder="Password">
+
+        <div class="spider">
+          <div class="checkbox">
+            <input type="checkbox" for="Rememberme"/>
+            <label id="Rememberme">Remember me</label>
+          </div>
+        </div>
         
         <!-- <button type="button" onclick="login()"><h2><b>Login</h2></b></button>  -->
-        <button type="button" onclick="login()"><a href="C:\Users\SHREE\Desktop\SkFruit-Electron\section\Home.html"><b>Login</b></a></button>
-      
+        <button type="submit" onclick="login()" style="text-decoration: none;"><a href="../section/Home.html">LOGIN</a></button>     
       </form>
     </div>
-
-    <script src="data.js"></script>
+    <!-- </div> -->
+    <script src="../src/data.js"></script>
 
     
     <div id="footer">
       <p>SK FRUITS</p>
   </div>
-  <script src="data.js"></script>
+  <script src="../src/data.js"></script>
     
   </body>
 </html>

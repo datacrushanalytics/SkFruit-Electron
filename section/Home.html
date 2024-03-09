@@ -4,56 +4,64 @@
     <meta charset="UTF-8" />
     <title></title>
     <link rel="stylesheet" href="../assets/css/Home.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   </head>
-  <body>
-        <h2 align="center">वैभव शिंदे </h2>      
-        <!-- <i class="fas fa-bars"></i> -->
-        <div class="menu-icon-container">
-          <i class="fas fa-bars">
-            <div class="dropdown-content">
-              <a href="../section/User.html"></a>
-              <a href="#"></a>
-              <a href="#"></a>
-          </div>
-          </i>
-          <!-- <span class="menu-text"></span> -->
-      </div>
-    <hr style="border-top: 5px solid rgb(56, 8, 2);">  
+<body>
+    <img class="bg-img" src="../assets/img/vecteezy_studio-shot-of-various-fruits-and-vegetables-isolated-on_29628395.jpeg" alt="Background image">
+  <div class="hero-section">  
+    <div class="section1">
+      <h3>SK Fruit</h3>
+       <ul>
+        <li>User</li>
+        <li>Product</li>
+        <li>Account</li>
+        <li>Vehicle</li>
+        <li>Rout</li>
+        <li>Purchase</li>
+        <li>Sale</li>
+        <li>Rout Sale</li>
+        <li>Reciept</li>
+        <li>Payment</li>
+        <li>Khatawni</li>
+      </ul>
 
-    <!-- <div class="dropdown"> -->
-    <!-- <button class="button5">Menu</button> -->
-    <!-- <div class="dropdown-content">
-        <a href="#"></a>
-        <a href="#"></a>
-        <a href="#"></a>
-    </div> -->
-   <!-- </div> -->
-    
+      <button type="button" onclick="login()"><a href="../section/Log_in.html"><b>Login</b></a></button>
+    </div>
+    <div class="section2">
+      <img src="../assets/img/logo-01.png" class="logoimg" alt="SK-Fruit Logo">
+       
     <div class="container">
+      <h2>वैभव शिंदे </h2> 
       <div>
         <a href="#date"><b>Date:</b></a>
         <input type="date" >
       </div>
-      <div>
-        <a href="#time"><b>Time:</b></a>
-        <input type="time">
-      </div>
     </div>
     <br>
          <!-- <img src="" alt="Logo" id="logo"> -->
-    
+    <div class="box-container"></div>
     <div class="container1">
-      <button type="button" onclick="login()"><a href="../section/Purchase.html"><h3>Purchase</h3></a></button> 
-      <button type="button" onclick="login()"><a href="../section/Sale1.html"><h3>Sales</h3></a></button> 
-      <!-- <button type="button" onclick="login()"><a href="../section/Home.html"><b>Login</b></a></button> -->
+      <a href="../section/Purchase.html"><button type="button" class="box1" onclick="login()"><h3>Purchase</h3></button></a>
+      <button type="button" class="box1" onclick="login()"><a href="../section/Purchase.html"><h3>Purchase</h3></a></button> 
+      <button type="button" class="box1" onclick="login()"><a href="../section/Sale1.html"><h3>Sales</h3></a></button> 
+      <!--  -->
     </div>
 
     <div class="container2">
-      <button type="button" onclick="login()"><a href="../section/Receipt1.html"><h3>Receipt</h3></a></button> 
-      <button type="button" onclick="login()"><a href="../section/Payment1.html"><h3>Payment</h3></a></button> 
+      <button type="button" class="box1" onclick="login()"><a href="../section/Receipt1.html"><h3>Receipt</h3></a></button>
+      <button type="button" class="box1" onclick="login()"><a href="../section/Receipt1.html"><h3>Receipt</h3></a></button>  
+      <button type="button" class="box1" onclick="login()"><a href="../section/Payment1.html"><h3>Payment</h3></a></button> 
     </div>
-
+    <footer>      
+      <div class="navbar">
+        <a href="#">HOME</a>
+        <a href="../section/Sale.html">SALE</a>
+        <a href="../section/Root_Sale.html">ROOT_SALE</a>
+        <a href="../section/Receipt.html">RECEIPT</a>
+        <a href="../section/Payment.html">PAYMENT</a>
+      </div>
+     </footer>
+  </div>
+      <!-- <div class="userdata">
       <button class="custom-button" onclick="login()"> <a href="../section/Sale1.html">
         <h3>सचिन शिरोळे</h3> </a>
       <b><p>Closing Cash : 0 <br>
@@ -87,18 +95,10 @@
       <b><p>Closing Cash : 0 <br>
       Sale Amount : 0</p></b>
        </button>
+      </div> -->
 
-       <br><br><br>
-    <footer>
-      
-      <div class="navbar">
-        <a href="#">HOME</a>
-        <a href="../section/Sale.html">SALE</a>
-        <a href="../section/Root_Sale.html">ROOT_SALE</a>
-        <a href="../section/Receipt.html">RECEIPT</a>
-        <a href="../section/Payment.html">PAYMENT</a>
-      </div>
-  </footer>
-
-  </body>
+  </div>
+</div>
+</div>
+</body>
 </html>
