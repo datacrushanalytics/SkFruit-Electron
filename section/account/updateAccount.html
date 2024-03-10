@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>account master</title>
+    <link rel="stylesheet" href="../../assets/css/acc-master.css">
+</head>
+
+<body>
+    
+    <div class="container">
+        <h1 align="center">ACCOUNT MASTER</h1> <hr>
+
+        <div class="container1">
+        <form id="loginForm" method="POST">
+        <br>
+        <div class="first-row">
+            <input type="text" id="id" name="id" placeholder="ID" value = ""> 
+            </div>
+
+
+        <!-- <label for="userType">Account Group</label> -->
+        <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
+        <!-- <select class="drop" id="account_group" id="account_group" name="account_group"> -->
+            <input type="text" id="account_group" name="account_group" placeholder="account_group"> <br> 
+            <!-- <option value="User" disabled selected>Select Account</option> -->
+        <!-- </select> -->
+
+
+        <!-- <label for="userType">Route Details</label> -->
+        <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
+        <!-- <select class="drop"  id="route_detail" id="route_detail" name="route_detail"> -->
+            <input type="text" id="route_detail" name="route_detail" placeholder="route_detail"> <br> 
+            <!-- <option value="User" disabled selected>Select Account</option> -->
+        <!-- </select> -->
+
+    
+        <input type="text" id="name" name="name" placeholder="name"> <br>
+        <input type="text" id="address" name="address" placeholder="address"> <br>
+        <input type="text" id="no" name="mobile_no" placeholder="mobile_no"> <br>
+        <input type="text" id="preBalance" name="prev_balance" placeholder="Previous Balance"> <br>
+
+        <div class="second-row">
+        <input type="radio" id="cr" name="cr_dr_type" value = "cr">
+        <label for="isActive">CR</label>
+        <input type="radio" id="dr" name="cr_dr_type" value = "dr" >
+        <label for="isdeActive">DR</label>
+        <br>
+        <br>
+
+    </div> 
+        <div class="third-row">
+        <!-- <button class="border-hover" >Save</button> -->
+        <button type="submit" ID ="updateButton"  class="border-hover">Save</button>
+        <a href="./account.html"><button type='button' class="border-hover">Back</button></a>
+    </div>
+    </form>
+    </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Retrieve user data from localStorage
+            var userData = localStorage.getItem('userData');
+
+            if (userData) {
+                // Parse the user data
+                var user = JSON.parse(userData);
+
+                // Populate form fields with user data
+                document.getElementById("id").value = user.id;
+                document.getElementById("account_group").value = user.account_group;
+                document.getElementById("route_detail").value = user.route_detail;
+                document.getElementById("name").value = user.name;
+                document.getElementById("no").value = user.mobile_no;
+                document.getElementById("address").value = user.address;
+                document.getElementById("preBalance").value = user.preBalance;
+                if (user.cr_dr_type = 'CR'){
+                document.getElementById("cr").checked = true;
+                }else{
+                    document.getElementById("dr").checked = true;
+                }
+                // Clear user data from localStorage (optional)
+                localStorage.removeItem('userData');
+            }
+        });
+
+        function updateUser() {
+            if (document.querySelector('input[name="cr_dr_type"]:checked').value  = 'CR'){
+                var status = "CR"
+                }else{
+                    var status = "DR"
+                }
+            var userData = {
+                id: parseInt(document.getElementById("id").value),
+                account_group: document.getElementById("account_group").value,
+                route_detail: document.getElementById("route_detail").value,
+                address: document.getElementById("address").value,
+                mobile_no: document.getElementById("no").value,
+                cr_dr_type: status,
+                name : document.getElementById("name").value,
+                prev_balance : document.getElementById("preBalance").value,
+            };
+
+            fetch('http://localhost:3000/accountData/updateAccount/'+ parseInt(document.getElementById("id").value), {
+                method: 'PUT',
+                body: JSON.stringify(userData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(result => {
+                console.log('Data added successfully:', result);
+                // Optionally, you can redirect or show a success message here
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Optionally, you can display an error message here
+            });
+
+
+            
+            // Perform the update operation (e.g., send data to server)
+            console.log("Update user:", userData);
+            window.location.href = './account.html';
+        }
+        
+        // Add event listener to the "Update" button
+        document.getElementById("updateButton").addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent form submission
+            updateUser(); // Call the updateUser function to handle the update operation
+        });
+        
+    </script>
+
+
+
+</body>
+
+</html>

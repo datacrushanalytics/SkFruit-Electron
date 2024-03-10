@@ -1,8 +1,8 @@
 
-function product() {
-    console.log("product function executed");
+function route() {
+    console.log("user function executed");
 
-    fetch('http://localhost:3000/productData')
+    fetch('http://localhost:3000/routeData')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -21,7 +21,7 @@ function product() {
 function populateTable(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['name', 'rate'];
+    var columnsToDisplay = ['route_name', 'details','mobile_no'];
     var counter = 1;
     data.forEach(function(item) {
         var row = tbody.insertRow();
@@ -37,12 +37,12 @@ function populateTable(data) {
          var editButton = document.createElement('button');
          editButton.className = 'button edit-button';
          var editLink = document.createElement('a');
-         editLink.href = '../product/update_product.html'; // Edit link destination
+         editLink.href = '../user/update_user.html'; // Edit link destination
          editLink.textContent = 'Edit';
          editButton.appendChild(editLink);
 
         editButton.addEventListener('click', function() {
-            editProduct(item); // Pass the user data to the edit function
+            editRoute(item); // Pass the user data to the edit function
         });
         editCell.appendChild(editButton);
  
@@ -52,13 +52,13 @@ function populateTable(data) {
          deleteButton.className = 'button delete-button';
          deleteButton.textContent = 'Delete';
          deleteButton.addEventListener('click', function() {
-            deleteProduct(item.id); // Pass the user id to the delete function
+            deleteUser(item.id); // Pass the user id to the delete function
         });
         deleteCell.appendChild(deleteButton);
     });
 }
 
-function editProduct(user) {
+function editRoute(user) {
     // Convert user data to JSON and encode it for URL
     // var userData = encodeURIComponent(JSON.stringify(user));
     // console.log("Jell")
@@ -71,14 +71,14 @@ function editProduct(user) {
     // window.location.href = '../user/user_update.html?userData=' + '%7B"id"%3A31%2C"name"%3A"Deepali"%2C"address"%3A"nsk"%2C"mobile_no"%3A1234567890%2C"username"%3A"dee"%2C"password"%3A"asd"%2C"status"%3A"1"%2C"usertype"%3A"Admin"%7D';
     localStorage.setItem('userData', JSON.stringify(user));
      // Redirect to user_update.html
-     window.location.href = '../product/update_product.html';
+     window.location.href = '../user/update.html';
 }
 
 
 
-function deleteProduct(userId) {
+function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('http://localhost:3000/productData/deleteproductId/' + userId, {
+    fetch('http://localhost:3000/userData/deleteUser/' + userId, {
         method: 'DELETE'
     })
     .then(response => {
@@ -87,12 +87,12 @@ function deleteProduct(userId) {
         }
         console.log('User deleted successfully');
         // Refresh the table or update UI as needed
-        product(); // Assuming you want to refresh the table after delete
+        user(); // Assuming you want to refresh the table after delete
     })
     .catch(error => {
         console.error('Error:', error);
     });
 }
 
-product();
+user();
 

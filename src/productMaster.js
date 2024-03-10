@@ -1,6 +1,6 @@
 // Fetch data from API
 document.addEventListener('DOMContentLoaded', function() {
-    fetch('http://localhost:3000/list/Worker')
+    fetch('http://localhost:3000/categoryData')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function populateDropdown(data) {
-    var userNameDropdown = document.getElementById('name');
+    var userNameDropdown = document.getElementById('category');
     userNameDropdown.innerHTML = ''; // Clear existing options
 
     // Create and append new options based on API data
@@ -33,7 +33,7 @@ function populateDropdown(data) {
     // Add a placeholder option
     var placeholderOption = document.createElement('option');
     placeholderOption.value = ""; // Set an empty value
-    placeholderOption.textContent = "Select user type"; // Set placeholder text
+    placeholderOption.textContent = "Select Category"; // Set placeholder text
     placeholderOption.disabled = true; // Disable the option
     placeholderOption.selected = true; // Select the option by default
     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
@@ -67,7 +67,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     });
     console.log(data);
 
-    fetch('http://localhost:3000/userData/insertUser', {
+    fetch('http://localhost:3000/productData/insertProduct', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -82,7 +82,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     })
     .then(result => {
         console.log('Data added successfully:', result);
-        window.location.href = './user.html';
+        window.location.href = './product.html';
         // Optionally, you can redirect or show a success message here
     })
     .catch(error => {

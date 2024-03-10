@@ -95,6 +95,16 @@ av ul li:last-child {
   }
    */
 
+   /* #name{
+  border-radius: 8px;
+  height: 25%;
+  width: 150px;
+  border: 1px solid transparent; 
+padding:  10px;
+box-shadow: 5px 5px 5px grey;
+margin:20px;
+} */
+
 
    body {
     font-family: sans-serif;
@@ -137,15 +147,8 @@ box-shadow: 5px 5px 5px grey;
 margin:20px; 
 }
 
-/* #name{
-  border-radius: 8px;
-  height: 25%;
-  width: 150px;
-  border: 1px solid transparent; 
-padding:  10px;
-box-shadow: 5px 5px 5px grey;
-margin:20px;
-} */
+
+
 #username{
     border-radius: 8px;
     height: 15px;
