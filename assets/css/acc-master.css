@@ -128,7 +128,7 @@ padding:  10px;
 box-shadow: 5px 5px 5px grey;
 margin:20px;
 } */
-#name, #address, #no, #route_detail,#account_group,#preBalance{
+#name, #address, #no,#preBalance{
     border-radius: 8px;
     height: 15px;
     width: 380px;

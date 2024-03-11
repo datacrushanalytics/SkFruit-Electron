@@ -37,7 +37,7 @@ function populateTable(data) {
          var editButton = document.createElement('button');
          editButton.className = 'button edit-button';
          var editLink = document.createElement('a');
-         editLink.href = '../user/update_user.html'; // Edit link destination
+         editLink.href = '../route/update_route.html'; // Edit link destination
          editLink.textContent = 'Edit';
          editButton.appendChild(editLink);
 
@@ -52,7 +52,7 @@ function populateTable(data) {
          deleteButton.className = 'button delete-button';
          deleteButton.textContent = 'Delete';
          deleteButton.addEventListener('click', function() {
-            deleteUser(item.id); // Pass the user id to the delete function
+            deleteRoute(item.id); // Pass the user id to the delete function
         });
         deleteCell.appendChild(deleteButton);
     });
@@ -71,28 +71,28 @@ function editRoute(user) {
     // window.location.href = '../user/user_update.html?userData=' + '%7B"id"%3A31%2C"name"%3A"Deepali"%2C"address"%3A"nsk"%2C"mobile_no"%3A1234567890%2C"username"%3A"dee"%2C"password"%3A"asd"%2C"status"%3A"1"%2C"usertype"%3A"Admin"%7D';
     localStorage.setItem('userData', JSON.stringify(user));
      // Redirect to user_update.html
-     window.location.href = '../user/update.html';
+     window.location.href = '../route/update_route.html';
 }
 
 
 
-function deleteUser(userId) {
+function deleteRoute(userId) {
     // Perform delete operation based on userId
-    fetch('http://localhost:3000/userData/deleteUser/' + userId, {
+    fetch('http://localhost:3000/routeData/deleterouteId/' + userId, {
         method: 'DELETE'
     })
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        console.log('User deleted successfully');
+        console.log('Route deleted successfully');
         // Refresh the table or update UI as needed
-        user(); // Assuming you want to refresh the table after delete
+        route(); // Assuming you want to refresh the table after delete
     })
     .catch(error => {
         console.error('Error:', error);
     });
 }
 
-user();
+route();
 

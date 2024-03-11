@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Form in Electron</title>
+    <link rel="stylesheet" href="../../assets/css/Add_Root_Details.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1 align="center">User Master</h1> <hr>
+
+        <div class="container1">
+        <form id="loginForm" method="POST">
+        </div>
+        
+    
+        <!-- <input type="text" id="name" name="name" placeholder="Name">  -->
+        <br>
+        <input type="text" id="routeId" name="routeId" placeholder="ID"> <br>
+        <input type="text" id="route_name" name="route_name" placeholder="Route Name"> <br>
+
+        <input type="text" id="details" name="details" placeholder="Details"> <br>
+
+        <input type="text" id="mobile_no" name="mobile_no" placeholder="Mobile No"> <br>
+
+
+        <div class="third-row">
+        <!-- <button class="border-hover" >Save</button> -->
+        <button type="Update" id="updateButton" class="border-hover">Save</button>
+        <a href="./Root_Details.html"><button type='button' class="border-hover">Back</button></a>
+    </div>
+    </form>
+    </div>
+    </div>
+
+
+    
+</body>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      // Retrieve user data from localStorage
+      var userData = localStorage.getItem('userData');
+
+      if (userData) {
+          // Parse the user data
+          var user = JSON.parse(userData);
+
+          // Populate form fields with user data
+          document.getElementById("routeId").value = user.id;
+          document.getElementById("route_name").value = user.route_name;
+          document.getElementById("details").value = user.details;
+          document.getElementById("mobile_no").value = user.mobile_no;
+          // Clear user data from localStorage (optional)
+          localStorage.removeItem('userData');
+      }
+  });
+
+  function updateUser() {
+      var userData = {
+        routeId: parseInt(document.getElementById("routeId").value),
+          route_name: document.getElementById("route_name").value,
+          details: document.getElementById("details").value,
+          mobile_no: document.getElementById("mobile_no").value          
+      };
+
+      fetch('http://localhost:3000/routeData/updateRoute/'+ parseInt(document.getElementById("routeId").value), {
+          method: 'PUT',
+          body: JSON.stringify(userData),
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(result => {
+          console.log('Data added successfully:', result);
+          // Optionally, you can redirect or show a success message here
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          // Optionally, you can display an error message here
+      });
+
+
+      
+      // Perform the update operation (e.g., send data to server)
+      console.log("Update Route:", userData);
+      window.location.href = './Root_Details.html';
+  }
+  
+  // Add event listener to the "Update" button
+  document.getElementById("updateButton").addEventListener("click", function(event) {
+      event.preventDefault(); // Prevent form submission
+      updateUser(); // Call the updateUser function to handle the update operation
+  });
+  
+</script>
+</html>

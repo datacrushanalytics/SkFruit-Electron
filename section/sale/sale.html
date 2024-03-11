@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Form in Electron</title>
+    <link rel="stylesheet" href="../../assets/css/Sale.css">
+    <style>
+        /* Add border to the second form */
+        .form1 {
+            border: 1px solid black;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 align="center">विक्री</h1>
+        <hr>
+
+        <div class="container1">
+            <form id="loginForm" method="POST">
+
+                <div class="first-row">
+                    <input type="text" id="bill_no" name="bill_no" placeholder="Bill No">
+                    <input type="text" id="date" name="date" placeholder="yyyy-mm-dd">
+                </div>
+
+                <label for="userType">Name</label>
+                <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
+                <select class="drop" id="name" id="name" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select>
+
+                <!-- <input type="text" id="name" name="name" placeholder="Name">  -->
+                <br>
+
+                <input type="text" id="address" name="address" placeholder="Address"> <br>
+                <input type="text" id="mobile_no" name="mobile_no" placeholder="Mobile Number"> <br>
+                <input type="text" id="route" name="route" placeholder="Route"> <br>
+                <input type="text" id="comment" name="comment" placeholder="संदर्भ"> <br>
+            
+                <form class="form1" id="loginForm1" method="POST">
+                <!-- <form id="loginForm1" method="POST"> -->
+                <div class="first-row">
+                    <input type="hidden" id="bill_no1" name="bill_no" placeholder="Bill No">
+                    <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
+                    <select class="drop" id="bata" id="bata" name="bata">
+                        <!-- <option value="User" disabled selected>Select Account</option> -->
+                    </select>
+                    <input type="text" id="mark" name="mark" placeholder="Mark">
+
+                </div>
+                <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
+                <select class="drop" id="product_name" id="product_name" name="product_name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select>
+                <input type="text" id="quantity" name="quantity" placeholder="quantity">
+
+                <div class="first-row">
+
+                    <input type="text" id="rate" name="rate" placeholder="Rate">
+                    <input type="text" id="price" name="price" placeholder="Price">
+                </div>
+                <div class="third-row">
+                    <!-- <button class="border-hover" >Save</button> -->
+                    <button type="submit" class="border-hover">ADD</button>
+                </div>
+            </form>
+
+            <table>
+                <tr>
+                    <th>प्रॉडक्ट</th>
+                    <th>बटा</th>
+                    <th>मार्क</th>
+                    <th>नग</th>
+                    <th>किंमत</th>
+                    <th>रक्कम</th>
+                    
+                </tr>
+                <!-- <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                
+                </tr> -->
+                <!-- Add more rows as needed -->
+                <tbody id="tableBody1">
+                    <!-- Data will be inserted here -->
+                </tbody>
+            
+            
+            </table>
+
+    
+
+                <div class="third-row">
+                    <!-- <button class="border-hover" >Save</button> -->
+                    <button type="submit" class="border-hover">Save</button>
+                    <a href="./sale.html"><button type='button' class="border-hover">Back</button></a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../../src/sale.js"></script>
+
+</body>
+
+</html>
