@@ -22,7 +22,7 @@
         <hr>
 
         <div class="container1">
-            <form id="loginForm" method="POST">
+            <form id="loginForm">
 
                 <div class="first-row">
                     <input type="text" id="bill_no" name="bill_no" placeholder="Bill No">
@@ -55,7 +55,7 @@
 
                 </div>
                 <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
-                <select class="drop" id="product_name" id="product_name" name="product_name">
+                <select class="drop" id="product" id="product" name="product">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select>
                 <input type="text" id="quantity" name="quantity" placeholder="quantity">
@@ -67,7 +67,7 @@
                 </div>
                 <div class="third-row">
                     <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" class="border-hover">ADD</button>
+                    <button type="submit" onclick="form2()"  class="border-hover">ADD</button>
                 </div>
             </form>
 

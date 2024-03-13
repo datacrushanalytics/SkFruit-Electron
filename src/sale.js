@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
             // Populate dropdown with API data
-            console.log(data);
             populateDropdown(data);
         })
         .catch(error => {
@@ -50,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
             // Populate dropdown with API data
-            console.log(data);
             populateDropdown1(data);
             populateDropdown2(data);
         })
@@ -104,7 +102,7 @@ function populateDropdown1(data) {
 
 
 function populateDropdown2(data) {
-    var userNameDropdown = document.getElementById('product_name');
+    var userNameDropdown = document.getElementById('product');
     userNameDropdown.innerHTML = ''; // Clear existing options
 
     // Create and append new options based on API data
@@ -143,21 +141,26 @@ function populateDropdown2(data) {
 
 // document.addEventListener('DOMContentLoaded', function() {
 //     // Submit event listener for the internal form
-    document.getElementById('loginForm1').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent default form submission
+    // document.getElementById('loginForm1').addEventListener('submit', function(event) {
+        // event.preventDefault(); // Prevent default form submission
+
+function form2(){
+        console.log("lawd7a");
         
         // Collect form data
         var formData = {
+            bill_id: parseInt(document.getElementById('bill_no1').value),
             bata: document.getElementById('bata').value,
             mark: document.getElementById('mark').value,
-            product_name: document.getElementById('product_name').value,
-            quantity: document.getElementById('quantity').value,
-            rate: document.getElementById('rate').value,
-            price: document.getElementById('price').value
+            product: document.getElementById('product').value,
+            quantity: parseInt(document.getElementById('quantity').value),
+            rate: parseInt(document.getElementById('rate').value),
+            price: parseInt(document.getElementById('price').value)
         };
-
+        
+        console.log("hscjhgfhjwgeshvghkvbksdbvkh")
         // Send form data to the backend for database insertion
-        fetch('http://localhost:3000/sale/addEntry', {
+        fetch('http://localhost:3000/saleproductData/insertsaleproduct', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -179,7 +182,8 @@ function populateDropdown2(data) {
             console.error('Error:', error);
             // Optionally, you can display an error message here
         });
-    });
+    }
+    // });
 // });
 
 // Function to update the table with the added entry
