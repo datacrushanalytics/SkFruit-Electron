@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title></title>
+  <link rel="stylesheet" href="../assets/css/Home.css" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+    }
+  
+    #sidebar {
+      width: 250px;
+      background-color: #333;
+      color: white;
+      padding: 20px;
+    }
+  
+    #main {
+      flex: 1;
+      padding: 20px;
+    }
+  
+    .component {
+      cursor: pointer;
+      margin-bottom: 10px;
+      color: #fff;
+      background-color: #555;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+  
+    .component:hover {
+      background-color: #777;
+    }
+  </style>
+</head>
+
+<body>
+  <img class="bg-img"
+    src="../assets/img/vecteezy_studio-shot-of-various-fruits-and-vegetables-isolated-on_29628395.jpeg"
+    alt="Background image">
+  <div class="hero-section">
+    <div class="section1">
+      <h3>SK Fruit</h3>
+
+      <div id="sidebar">
+        <div class="component" onclick="openPage('page1')">Home</div>
+        <div class="component" onclick="openPage('page1')">User</div>
+        <div class="component" onclick="openPage('page2')">Product</div>
+        <div class="component" onclick="openPage('page3')">Account</div>
+        <div class="component" onclick="openPage('page3')">Vehicle</div>
+        <div class="component" onclick="openPage('page3')">Route</div>
+        <div class="component" onclick="openPage('page3')">Purchase</div>
+        <div class="component" onclick="openPage('page3')">Sale</div>
+        <div class="component" onclick="openPage('page3')">Route Sale</div>
+        <div class="component" onclick="openPage('page3')">Reciept</div>
+        <div class="component" onclick="openPage('page3')">Payment</div>
+        <div class="component" onclick="openPage('page3')">Khatawni</div>
+      </div>
+
+
+      <!-- </ul> -->
+
+      <button type="button" onclick="login()"><a href="../section/Log_in.html"><b>Login</b></a></button>
+    </div>
+    <div class="section2">
+      <img src="../assets/img/logo-01.png" class="logoimg" alt="SK-Fruit Logo">
+
+      <div class="container">
+        <h2>वैभव शिंदे </h2>
+        <div>
+          <a href="#date"><b>Date:</b></a>
+          <input type="date">
+        </div>
+      </div>
+      <br>
+      <!-- <img src="" alt="Logo" id="logo"> -->
+      <div class="box-container"></div>
+      <div class="container1">
+        <a href="../section/Purchase.html"><button type="button" class="box1" onclick="login()">
+            <h3>Purchase</h3>
+          </button></a>
+        <button type="button" class="box1" onclick="login()"><a href="../section/Purchase.html">
+            <h3>Purchase</h3>
+          </a></button>
+        <button type="button" class="box1" onclick="login()"><a href="../section/Sale1.html">
+            <h3>Sales</h3>
+          </a></button>
+        <!--  -->
+      </div>
+
+      <div class="container2">
+        <button type="button" class="box1" onclick="login()"><a href="../section/Receipt1.html">
+            <h3>Receipt</h3>
+          </a></button>
+        <button type="button" class="box1" onclick="login()"><a href="../section/Receipt1.html">
+            <h3>Receipt</h3>
+          </a></button>
+        <button type="button" class="box1" onclick="login()"><a href="../section/Payment1.html">
+            <h3>Payment</h3>
+          </a></button>
+      </div>
+
+
+
+      
+
+
+      <footer>
+        <div class="navbar">
+          <a href="./user/user.html">HOME</a>
+          <a href="../section/Sale.html">SALE</a>
+          <a href="../section/Root_Sale.html">ROOT_SALE</a>
+          <a href="../section/Receipt.html">RECEIPT</a>
+          <a href="../section/Payment.html">PAYMENT</a>
+        </div>
+      </footer>
+    </div>
+    <!-- <div class="userdata">
+      <button class="custom-button" onclick="login()"> <a href="../section/Sale1.html">
+        <h3>सचिन शिरोळे</h3> </a>
+      <b><p>Closing Cash : 0 <br>
+      Sale Amount : 0</p></b>
+       </button>
+       <br><br>
+
+       <button class="custom-button" onclick="login()"> <a href="../section/Sale1.html">
+        <h3>रंजित जगताप</h3> </a>
+      <b><p>Closing Cash : 0 <br>
+      Sale Amount : 0</p></b>
+       </button>
+       <br><br>
+
+       <button class="custom-button" onclick="login()"> <a href="../section/Sale1.html">
+        <h3>संतोष चौगुले</h3> </a>
+      <b><p>Closing Cash : 0 <br>
+      Sale Amount : 0</p></b>
+       </button>
+       <br><br>
+
+       <button class="custom-button" onclick="login()"> <a href="../section/Sale1.html">
+        <h3>आकाश वाघ (सोन्या )</h3> </a>
+      <b><p>Closing Cash : 0 <br>
+      Sale Amount : 0</p></b>
+       </button>
+       <br><br>
+
+       <button class="custom-button" onclick="login()"> <a href="../section/Receipt1.html">
+        <h3>MANAS PISOLKAR</h3> </a>
+      <b><p>Closing Cash : 0 <br>
+      Sale Amount : 0</p></b>
+       </button>
+      </div> -->
+
+  </div>
+  </div>
+  </div>
+</body>
+
+</html>

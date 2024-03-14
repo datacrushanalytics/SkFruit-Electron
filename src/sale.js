@@ -55,6 +55,21 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => {
             console.error('Error:', error);
         });
+
+    fetch('http://localhost:3000/saleproductData')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Populate dropdown with API data
+            populateDropdown3(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     });
 
 
@@ -123,83 +138,67 @@ function populateDropdown2(data) {
 }
 
 
-
-// Function to handle form submission
-// function handleSubmit(event) {
-//     event.preventDefault(); // Prevent default form submission
-
-//     var selectedValue = document.getElementById('name').value; // Get the selected value
-//     var selectedValueDisplay = document.getElementById('selectedValue'); // Get element to display selected value
-//     selectedValueDisplay.textContent = "Selected value: " + selectedValue; // Display selected value
-// }
-
-// // Attach event listener to form submit event
-// document.getElementById('userForm').addEventListener('submit', handleSubmit);
-
-// fetchname();
-
-
-// document.addEventListener('DOMContentLoaded', function() {
-//     // Submit event listener for the internal form
-    // document.getElementById('loginForm1').addEventListener('submit', function(event) {
-        // event.preventDefault(); // Prevent default form submission
-
-function form2(){
-        console.log("lawd7a");
-        
-        // Collect form data
-        var formData = {
-            bill_id: parseInt(document.getElementById('bill_no1').value),
-            bata: document.getElementById('bata').value,
-            mark: document.getElementById('mark').value,
-            product: document.getElementById('product').value,
-            quantity: parseInt(document.getElementById('quantity').value),
-            rate: parseInt(document.getElementById('rate').value),
-            price: parseInt(document.getElementById('price').value)
-        };
-        
-        console.log("hscjhgfhjwgeshvghkvbksdbvkh")
-        // Send form data to the backend for database insertion
-        fetch('http://localhost:3000/saleproductData/insertsaleproduct', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(result => {
-            console.log('Entry added successfully:', result);
-            // Update table with the added entry
-            updateTable(result);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            // Optionally, you can display an error message here
+function populateDropdown3(data) {
+    var tbody = document.getElementById('tableBody1');
+    tbody.innerHTML = ''; // Clear existing rows
+    var columnsToDisplay = ['product', 'bata','mark','quantity','rate','price'];
+    data.forEach(function(item) {
+        var row = tbody.insertRow();
+        var cell = row.insertCell();
+        columnsToDisplay.forEach(function(key) {
+            var cell = row.insertCell();
+            cell.textContent = item[key];
         });
-    }
-    // });
-// });
+         // Add Delete button
+         var deleteCell = row.insertCell();
+         var deleteButton = document.createElement('button');
+         deleteButton.className = 'button delete-button';
+         deleteButton.textContent = 'Delete';
+         deleteButton.addEventListener('click', function() {
+            deleteUser(item.id); // Pass the user id to the delete function
+        });
+        deleteCell.appendChild(deleteButton);
 
-// Function to update the table with the added entry
-function updateTable(entry) {
-    var tableBody = document.getElementById('tableBody1');
-    var newRow = document.createElement('tr');
-    newRow.innerHTML = `
-        <td>${entry.product_name}</td>
-        <td>${entry.bata}</td>
-        <td>${entry.mark}</td>
-        <td>${entry.quantity}</td>
-        <td>${entry.rate}</td>
-        <td>${entry.price}</td>
-    `;
-    tableBody.appendChild(newRow);
+    });
 }
 
+function deleteUser(userId) {
+    // Perform delete operation based on userId
+    fetch('http://localhost:3000/saleproductData/deletesaleproduct/' + userId, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        console.log('User deleted successfully');
+        // Refresh the table or update UI as needed
+        user(); // Assuming you want to refresh the table after delete
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+
+    // var userNameDropdown = document.getElementById('product');
+    // userNameDropdown.innerHTML = ''; // Clear existing options
+
+    // // Create and append new options based on API data
+    // data.forEach(function(item) {
+    //     var option = document.createElement('option');
+    //     option.value = item.product_name; // Set the value
+    //     option.textContent = item.product_name; // Set the display text
+    //     userNameDropdown.appendChild(option);
+    // });
+
+    // // Add a placeholder option
+    // var placeholderOption = document.createElement('option');
+    // placeholderOption.value = ""; // Set an empty value
+    // placeholderOption.textContent = "Select Product"; // Set placeholder text
+    // placeholderOption.disabled = true; // Disable the option
+    // placeholderOption.selected = true; // Select the option by default
+    // userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
 
 
