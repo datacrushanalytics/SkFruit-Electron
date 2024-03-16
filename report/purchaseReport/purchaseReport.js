@@ -113,6 +113,61 @@ function populateDropdown2(data) {
 }
 
 
+function getElementValueWithDefault(id, defaultValue) {
+    var element = document.getElementById(id);
+    return element && element.value ? element.value : defaultValue;
+}
+
+function formatDate(dateString) {
+    var date = new Date(dateString);
+    var year = date.getFullYear();
+    var month = ('0' + (date.getMonth() + 1)).slice(-2);
+    var day = ('0' + date.getDate()).slice(-2);
+    return year + '-' + month + '-' + day;
+}
+
+
+
+document.getElementById('loginForm1').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission
+    var data = {
+        from_date : formatDate(document.getElementById("fromdate").value),
+        to_date : formatDate(document.getElementById("todate").value),
+        supplier_name : getElementValueWithDefault('supplier', '*') , 
+        bata : getElementValueWithDefault('bata', '*') , 
+        gadi_number : getElementValueWithDefault('vehicleNumber', '*') 
+    };
+    console.log(data);
+
+    fetch('http://localhost:3000/purchaseReport', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(result => {
+        console.log(result)
+        // Optionally, you can redirect or show a success message here
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Optionally, you can display an error message here
+    });
+});
+
+
+
+
+
+
+
 
 
 
