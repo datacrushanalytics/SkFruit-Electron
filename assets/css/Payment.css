@@ -1,90 +1,89 @@
-body{
-    background-color: rgb(191, 221, 233);
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    align-items: center;
-    height: 120vh;
-    margin: auto;
-    padding: 2rem;
-    justify-content: center;
-    width:40%;
+body {
+    font-family: sans-serif;
+    background-color: rgb(207, 205, 205); 
+    margin: 0;
+    padding: 0;
 }
 
 .container {
+    /* text-align: center; */
     align-content: center;
     width: 460px;
     margin: 0 auto;
     flex-direction: column;
     justify-content: center;
-}
-
-.first-row{
-    
-    display: flex;
     
 }
 
 .first-row{
     width: 25px;
-    margin-right: 30px
+    margin-right: 30px;
+    display: flex;
+    height: 40px;
+    
 }
-
 .payment{
     width:350px;
     height:60px ;
     margin-right:80px;
-
 }
 
+.date .input-field input{
+    width: 250px;
+    height: 30px;
+    box-shadow: 5px 5px 5px grey;
+    border-radius: 8px;
+    
+}
 
 .payment .input-field input{
-    width: 200px;
-    height: 20px;
+    width: 250px;
+    height: 30px;
+    box-shadow: 5px 5px 5px grey;
+    border-radius: 8px;
+    
 }
 .input-field
 {
     box-sizing: border-box;
 }
 
-
-input[type="text"],
-input[type="number"],
-textarea,
-button {
-    margin-bottom: 10px;
-    width: 100%;
-}
-
- #SaveButton {
-    width: 101%; 
-    height: 40px;
-    background-color: rgb(8, 168, 8);
-    
-}
-#BackButton {
-    width: 101%; 
-    height: 40px;
-    background-color: red;
+#comment{
+    /* height: 30px; */
+    width: 580px;
+    border-radius: 8px;
+    border: 1px solid transparent; 
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
 }
 
 #fromAccount{
-    width: 100%; 
-    height: 30px;
+    width: 600px; 
+    height: 25px;
+    border-radius: 8px;
+    box-shadow: 5px 5px 5px grey;
+    border: 1px solid transparent; 
 }
 
 #toAccount{
-    width: 100%;
-    height: 30px;
+    width: 600px; 
+    height: 25px;
+    box-shadow: 5px 5px 5px grey;
+    border: 1px solid transparent; 
+    border-radius: 8px;
 }
 
 #pid{
-    width: 50%;
-    height: 25px; 
+    width: 100%; 
+    height: 30px;
+    box-shadow: 5px 5px 5px grey;
+    border: 1px solid transparent; 
 }
 
 #prevBalance{
     width: 100%;
     height: 25px;
+    
 }
 
 #amount{
@@ -92,57 +91,50 @@ button {
     height: 25px;  
 }
 
-.row{
- display: flex;
- justify-content: space-between;
- align-items: center;
-}
-
-.buttons {
-    text-align: center;
-    margin-top: 20px;
-    width: 120%; 
-    height: 40px;
-    margin-left: -45px;
-}
-button {
+.border-hover {
+    border: 1px solid transparent; 
+    padding:  10px;
+    box-shadow: 5px 5px 5px grey; 
+  }
+  
+  .border-hover:hover {
+    border-color:blue;
+  }
+  button {
     padding: 10px 20px;
+    font-size: 16px;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
-}
-.buttons button:first-child {
-    background-color:green; /* Green */
-    color: white;
-    width: 40%; 
-    height: 40px;
-}
-.buttons button:last-child {
-    background-color: red;
-    color: black;
-    width: 40%; 
-    height: 40px;
-}
-
-.first-row{
-    display: flex;
-    width: 40%; 
-    height: 40px;
-}
+    border-radius: 5px;
+    outline: none;
+    width: 100px;
+  }
+  
+  .third-row{
+    margin-left: 40%;  
+    text-align: left;
+  }
+  .second-row{
+    margin-left: 35%;  
+    text-align: left;
+  }
 
 .no{
-    width:300%;
-    height: 30px;
-    margin-right: 100px;
-    align-items: right;
-    justify-content: space-between;
+    width:350px;
+    height:60px ;
+    margin-right:80px;
 }
 
-#comment{
-    height: 30px;
-    width: 450px;
-}
-.input-field input{
+.to .input-field input{
+    width: 250px;
     height: 25px;
+    box-shadow: 5px 5px 5px grey;
+    border-radius: 8px; 
 }
 
+.no .input-field input{
+    width: 250px;
+    height: 25px;
+    box-shadow: 5px 5px 5px grey;
+    border-radius: 8px;  
+}

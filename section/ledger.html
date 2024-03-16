@@ -1,60 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>sk fruits</title>
-    <link rel="stylesheet" href="../assets//css/ledger.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="../assets/css/ledger.css">
+
 </head>
 <body>
-   
-    
     <div class="container">
-    <h1 align ="center">LEDGER REPORT</h1><br><br>
+        <h1 align="center">LEDGER REPORT</h1> <hr><br>
 
-    <div class="first-row">
-        <div class="from">
-            <h3>FROM</h3>
-            <div class="input-filed">
-            <input type="text" style="background-color: aliceblue; height: 35px; "placeholder="Date" onfocus="(this.type='Date')">
-        </div>
-        </div>
-
-        <div class="to">
-            <h3>TO</h3>
-            <div class="input-field">
-            <input type="text" style="background-color: aliceblue; height: 35px; "placeholder="Date" onfocus="(this.type='Date')">
-        </div>
-        </div>
-        </div>
-         <br>
-        <br>
-         
-           <div class="account">
-                <h3>Account Name</h3>
-                 <div class="input-field">
-                  <input type="text" style="background-color: aliceblue;">
-                    </div>
-                   </div><br><br>
-
-            <button class="button1">SHOW</button> 
-            <button class="button2">BACK</button>
-            <br><br>
-            
+        <div class="container1"> 
+        <form id="Form">
+            <div class="first-row">
+                <input type="text" id="from" name="date" placeholder="From" onfocus="(this.type='date')">
                 
-        <br> 
-        
-        <table>
-         <thead>
-            <tr>
-                <th>तारीख </th>
-                <th>तपशील  </th>
-                <th>कलम  </th>
-                <th>गेलेले कॅरेट  </th>
-                <th>एकूण रक्कम  </th>
-            </tr>
-         </thead>
-        </table>
-</div>
-          
+                <input type="text" id="to" name="date" placeholder="To" onfocus="(this.type='date')">
+                </div><br>
+
+                <input type="text" name="name" id="name" placeholder="Account Name"><br>
+
+                <div class="second-row">
+                    <button class="border-hover">Save</button>
+                    <button class="border-hover">Back</button>
+                  </div><br>
+                <table>
+                    <tr>
+                        <th>तारीख </th>
+                        <th>तपशील </th>
+                        <th>कलम </th>
+                        <th>गेलेले कॅरेट </th>
+                        <th>एकूण कलम </th>
+                        <th>रोख </th>
+                        <th>ऑनलाइन </th>
+                        <th>सूट </th>
+                        <th>जमा कॅरेट </th>
+                        <th>शिल्लक </th>
+                        
+                </table>
+    </form>  
 
 </body>
 </html>
