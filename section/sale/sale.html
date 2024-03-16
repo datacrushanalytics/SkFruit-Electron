@@ -40,15 +40,19 @@
 
                 <input type="text" id="address" name="address" placeholder="Address"> <br>
                 <input type="text" id="mobile_no" name="mobile_no" placeholder="Mobile Number"> <br>
-                <input type="text" id="route" name="route" placeholder="Route"> <br>
+
+                <select class="drop" id="Route" id="Route" name="Route"  placeholder="Route">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select>
+
+
                 <input type="text" id="comment" name="comment" placeholder="संदर्भ"> <br>
             
                 <!-- <form class="form1" id="loginForm1" method="post"> -->
                 <!-- <form id="loginForm1" method="POST"> -->
                 <div class="first-row">
-                    <input type="hidden" id="bill_no1" name="bill_no" placeholder="Bill No">
                     <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
-                    <select class="drop" id="bata" id="bata" name="bata">
+                    <select class="drop" id="bata" id="bata" name="bata" onchange="getProducts()">
                         <!-- <option value="User" disabled selected>Select Account</option> -->
                     </select>
                     <input type="text" id="mark" name="mark" placeholder="Mark">
@@ -58,7 +62,7 @@
                 <select class="drop" id="product" id="product" name="product">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select>
-                <input type="text" id="quantity" name="quantity" placeholder="quantity">
+                <input type="text" id="quantity" name="quantity" placeholder="quantity" onchange="addprice()">
 
                 <div class="first-row">
 
@@ -119,7 +123,7 @@
         event.preventDefault(); 
         
         var formData = {
-            bill_id: parseInt(document.getElementById('bill_no1').value),
+            bill_id: parseInt(document.getElementById('bill_no').value),
             bata: document.getElementById('bata').value,
             mark: document.getElementById('mark').value,
             product: document.getElementById('product').value,
@@ -150,7 +154,7 @@
         .catch(error => {
             console.error('Error:', error);
         });
-        alert('Button clicked!');
+        alert('Product Added');
         // Add your desired functionality here
       }
 
@@ -165,11 +169,11 @@
             <td>${entry.rate}</td>
             <td>${entry.price}</td>
             <td>${entry.price}</td>
-            <td><button type="button" onclick="deleteUser(${result.insertId})">Delete</button></td>
+            <td><button type="button" onclick="deleteUser(${result.insertId}, this.parentNode.parentNode)">Delete</button></td>
         `;
         tableBody.appendChild(newRow);
 
-        function deleteUser(userId) {
+        function deleteUser(userId, row) {
             // Perform delete operation based on userId
             fetch('http://localhost:3000/saleproductData/deletesaleproduct/' + userId, {
                 method: 'DELETE'
@@ -187,6 +191,10 @@
                 console.error('Error:', error);
             });
         }
+    }
+
+    function addprice(){
+        document.getElementById("price").value = parseInt(document.getElementById("quantity").value) * parseInt(document.getElementById("rate").value);
     }
 </script>
 

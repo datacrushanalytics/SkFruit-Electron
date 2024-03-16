@@ -32,7 +32,7 @@ function populateTable(data) {
             cell.textContent = item[key];
         });
 
-         // Add Edit button
+         // Add Edit button~
          var editCell = row.insertCell();
          var editButton = document.createElement('button');
          editButton.className = 'button edit-button';
