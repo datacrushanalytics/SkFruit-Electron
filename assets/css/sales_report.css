@@ -1,77 +1,77 @@
-*{
+body{
+    text-align: left;
     margin:0;
     padding:0;
-    font-family: Arial, Helvetica, sans-serif;
-    
+    font-family: sans-serif;
+    background-color: rgb(207, 205, 205); 
 }
 
-
-
-body{
-    display:flex;
-    background-color:#CCFFCC; 
-     align-items: center; 
-     height:80vh;
-    display: flex;
-    justify-content: center;
-
-}
-
-
-.container{
-    width:650px;
-    height:500px;
-     justify-content:center ;
-     flex-direction: column;
-     justify-content: left;
-}
-
-.first-row {
-    display: flex;
-    width:90%;
-    margin-right:40px;
-}
-.from{
-    width:300%;
-    height:300;
-    margin-right:-500px;
-    align-items:right;
-    justify-content: space-between;
-}
-
-#customer{ 
-    width: 590px;
-    height: 25px;
-}
-
-.button1{
-    background-color: rgb(96, 178, 96);
-    width: 290px;
-    height: 40px;
-}
-
-.button2{
-    background-color: rgb(241, 62, 62);
-    margin-left:0;
-    width: 300px;
-    height:40px;
-    padding:10px;
-}
-
-#container1{
-    display: flex;
-}
-
-table{
+table {
+    width: 100%;
     border-collapse: collapse;
-    width:90%;
 }
 
-th,td{
-    border:1px solid black;
-    text-align: left;
+th, td {
     padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
 }
-th{
-    background-color: white;
+
+th {
+    background-color: #f2f2f2;
 }
+
+.container1{
+    text-align: center;
+}
+
+  #from{
+    border-radius: 8px;
+    height: 30px;
+    width: 250px;
+    box-shadow: 5px 10px 8px grey;
+    border-color: rgb(24, 24, 24);
+    text-indent: 10%;
+  }
+
+  #to{
+    border-radius: 8px;
+    height: 30px;
+    width: 250px;
+    box-shadow: 5px 10px 8px grey;
+    border-color: rgb(24, 24, 24);
+    text-indent: 10%;
+  }
+  
+  #name{
+    border-radius: 8px;
+    height: 15px;
+    width: 500px;
+    border: 1px solid transparent; 
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+  }
+  
+  .border-hover {
+    border: 1px solid transparent; 
+    padding:  10px;
+    box-shadow: 5px 5px 5px grey;
+    
+  }
+  
+  .border-hover:hover {
+    border-color:blue;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    width: 200px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 5px;
+    outline: none;
+    /* margin-bottom: 30%; */
+    /* margin-left: 20%;   */
+  }

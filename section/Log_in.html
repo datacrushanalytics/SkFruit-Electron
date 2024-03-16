@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>Login Form</title>
     <link rel="stylesheet" href="../assets/css/Log_in.css" />
+
   </head>
   <body>
     <img src="../assets/img/vecteezy_studio-shot-of-various-fruits-and-vegetables-isolated-on_29628395.jpeg" alt="Background image" style="height: 100%; width:100%;">
@@ -24,17 +25,41 @@
         </div>
         
         <!-- <button type="button" onclick="login()"><h2><b>Login</h2></b></button>  -->
-        <button type="submit" onclick="login()" style="text-decoration: none;"><a href="../section/Home.html">LOGIN</a></button>     
+        <button type="submit" onclick="return validateForm()" style="text-decoration: none;"><a href="../section/Home.html">LOGIN</button></a> 
       </form>
     </div>
     <!-- </div> -->
-    <script src="../src/data.js"></script>
+    <!-- <script src="../src/data.js"></script> -->
 
     
     <div id="footer">
       <p>SK FRUITS</p>
   </div>
-  <script src="../src/data.js"></script>
+  <script>
+      function validateForm() {
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+
+      var nameRegex = /^[A-Za-z]+$/;
+      var passRegex = /^[0-9]+$/;
+
+      if (!nameRegex.test(username)) {
+        alert("Username should only contain alphabets.");
+        return false;
+      }
+
+      if (password === "") {
+        alert("Please enter a password.");
+        return false;
+      } else if (!passRegex.test(password)) {
+        alert("Password is not valid. It should only contain numbers.");
+        return false;
+      }
+
+      alert("Login successful!");
+      return true;
+    }
+  </script>
     
   </body>
 </html>
