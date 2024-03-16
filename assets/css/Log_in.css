@@ -56,8 +56,11 @@ form {
   height: fit-content;
   display: flex;
 }
+.loginbtn{
+  align-self: center;
+}
 
-button {
+ button {
   height: 45px;
   width: 120px;
   margin-top: 5px;
@@ -66,9 +69,17 @@ button {
   font-style: inherit;
   border-radius: 15px;
   background-color: rgb(255, 255, 255);
-  align-self: center;
 }
-
+button:hover{
+  height: 55px;
+  width: 140px;
+  margin-top: 5px;
+  text-decoration: none;
+  font-size: medium;
+  font-style: inherit;
+  border-radius: 15px;
+  background-color: rgb(90, 255, 25);
+}
 #footer {
     background-color: #333;
     color: #fff;
