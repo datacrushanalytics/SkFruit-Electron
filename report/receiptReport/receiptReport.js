@@ -1,7 +1,7 @@
 // Fetch data from API
 document.addEventListener('DOMContentLoaded', function () {
 
-    fetch('http://localhost:3000/list/Supplier')
+    fetch('http://localhost:3000/list/Customer')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -16,40 +16,12 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
         });
 
-    fetch('http://localhost:3000/purchaseproductData')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Populate dropdown with API data
-            populateDropdown1(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
 
-    fetch('http://localhost:3000/vehicleData')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Populate dropdown with API data
-            populateDropdown2(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
 });
 
 
 function populateDropdown(data) {
-    var userNameDropdown = document.getElementById('supplier');
+    var userNameDropdown = document.getElementById('customer');
     userNameDropdown.innerHTML = ''; // Clear existing options
 
     // Create and append new options based on API data
@@ -63,54 +35,12 @@ function populateDropdown(data) {
     // Add a placeholder option
     var placeholderOption = document.createElement('option');
     placeholderOption.value = ""; // Set an empty value
-    placeholderOption.textContent = "Select Supplier type"; // Set placeholder text
+    placeholderOption.textContent = "Select Customer"; // Set placeholder text
     placeholderOption.disabled = true; // Disable the option
     placeholderOption.selected = true; // Select the option by default
     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
 }
 
-function populateDropdown1(data) {
-    var userNameDropdown = document.getElementById('bata');
-    userNameDropdown.innerHTML = ''; // Clear existing options
-
-    // Create and append new options based on API data
-    data.forEach(function (item) {
-        var option = document.createElement('option');
-        option.value = item.bata; // Set the value
-        option.textContent = item.bata; // Set the display text
-        userNameDropdown.appendChild(option);
-    });
-
-    // Add a placeholder option
-    var placeholderOption = document.createElement('option');
-    placeholderOption.value = ""; // Set an empty value
-    placeholderOption.textContent = "Select Bata"; // Set placeholder text
-    placeholderOption.disabled = true; // Disable the option
-    placeholderOption.selected = true; // Select the option by default
-    userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-}
-
-
-function populateDropdown2(data) {
-    var userNameDropdown = document.getElementById('vehicleNumber');
-    userNameDropdown.innerHTML = ''; // Clear existing options
-
-    // Create and append new options based on API data
-    data.forEach(function (item) {
-        var option = document.createElement('option');
-        option.value = item.vehicle_no; // Set the value
-        option.textContent = item.vehicle_no; // Set the display text
-        userNameDropdown.appendChild(option);
-    });
-
-    // Add a placeholder option
-    var placeholderOption = document.createElement('option');
-    placeholderOption.value = ""; // Set an empty value
-    placeholderOption.textContent = "Select Vehicle"; // Set placeholder text
-    placeholderOption.disabled = true; // Disable the option
-    placeholderOption.selected = true; // Select the option by default
-    userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-}
 
 
 function getElementValueWithDefault(id, defaultValue) {
@@ -133,13 +63,11 @@ document.getElementById('loginForm1').addEventListener('submit', function(event)
     var data = {
         from_date : formatDate(document.getElementById("fromdate").value),
         to_date : formatDate(document.getElementById("todate").value),
-        supplier_name : getElementValueWithDefault('supplier', '*') , 
-        bata : getElementValueWithDefault('bata', '*') , 
-        gadi_number : getElementValueWithDefault('vehicleNumber', '*') 
+        cust_name : getElementValueWithDefault('customer', '*')
     };
     console.log(data);
 
-    fetch('http://localhost:3000/purchaseReport', {
+    fetch('http://localhost:3000/receiptReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -167,7 +95,7 @@ document.getElementById('loginForm1').addEventListener('submit', function(event)
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['id', 'date', 'gadi_number','bata','supplier_name', 'BillAmount','TotalQuantity'];
+    var columnsToDisplay = ['receipt_id', 'date', 'Customer','to_account','note', 'PaidAmt',"onlineAmt",'discount','inCarat','Amt'];
     var counter = 1;
     console.log(data.reports)
     data.reports.forEach(function(item) {
@@ -197,18 +125,6 @@ function populateTable4(data) {
      var totalRow = tbody.insertRow();
      var totalCell = totalRow.insertCell();
      totalCell.colSpan = columnsToDisplay.length;
-     totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Amournt'] + ' (BillAmount), ' + data.Grand['Grand Quantity'] + ' (TotalQuantity)';
+     totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Bill Amount'] + ' (Grand Bill Amount), ' + data.Grand['Grand outCarate'] + ' (Grand outCarate)' + data.Grand['Total Bill Amount'] + ' (Total Bill Amount), ' + data.Grand['Cash'] + ' (Total Cash), '  + data.Grand['Online Amount'] + ' (Online Amount)' + data.Grand['Grand Discount'] + ' (Grand Discount), ' + data.Grand['Grand inCarate'] + ' (Grand inCarate)';
 }
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -1,21 +1,6 @@
 // Fetch data from API
 document.addEventListener('DOMContentLoaded', function () {
 
-    fetch('http://localhost:3000/list/Supplier')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Populate dropdown with API data
-            populateDropdown(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
     fetch('http://localhost:3000/purchaseproductData')
         .then(response => {
             if (!response.ok) {
@@ -26,21 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             // Populate dropdown with API data
             populateDropdown1(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-    fetch('http://localhost:3000/vehicleData')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Populate dropdown with API data
-            populateDropdown2(data);
+            populateDropdown(data);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -49,21 +20,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 function populateDropdown(data) {
-    var userNameDropdown = document.getElementById('supplier');
+    var userNameDropdown = document.getElementById('product');
     userNameDropdown.innerHTML = ''; // Clear existing options
 
     // Create and append new options based on API data
     data.forEach(function (item) {
         var option = document.createElement('option');
-        option.value = item.name; // Set the value
-        option.textContent = item.name; // Set the display text
+        option.value = item.product_name; // Set the value
+        option.textContent = item.product_name; // Set the display text
         userNameDropdown.appendChild(option);
     });
 
     // Add a placeholder option
     var placeholderOption = document.createElement('option');
     placeholderOption.value = ""; // Set an empty value
-    placeholderOption.textContent = "Select Supplier type"; // Set placeholder text
+    placeholderOption.textContent = "Select Product"; // Set placeholder text
     placeholderOption.disabled = true; // Disable the option
     placeholderOption.selected = true; // Select the option by default
     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
@@ -133,13 +104,12 @@ document.getElementById('loginForm1').addEventListener('submit', function(event)
     var data = {
         from_date : formatDate(document.getElementById("fromdate").value),
         to_date : formatDate(document.getElementById("todate").value),
-        supplier_name : getElementValueWithDefault('supplier', '*') , 
-        bata : getElementValueWithDefault('bata', '*') , 
-        gadi_number : getElementValueWithDefault('vehicleNumber', '*') 
+        product : getElementValueWithDefault('product', '*') , 
+        bata : getElementValueWithDefault('bata', '*') 
     };
     console.log(data);
 
-    fetch('http://localhost:3000/purchaseReport', {
+    fetch('http://localhost:3000/stockReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -167,7 +137,7 @@ document.getElementById('loginForm1').addEventListener('submit', function(event)
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['id', 'date', 'gadi_number','bata','supplier_name', 'BillAmount','TotalQuantity'];
+    var columnsToDisplay = ['product_name','bata','purchase', 'opening','purchase','sale','closing' ];
     var counter = 1;
     console.log(data.reports)
     data.reports.forEach(function(item) {
@@ -192,12 +162,6 @@ function populateTable4(data) {
             }
         });
     });
-
-     // Add row for grand total
-     var totalRow = tbody.insertRow();
-     var totalCell = totalRow.insertCell();
-     totalCell.colSpan = columnsToDisplay.length;
-     totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Amournt'] + ' (BillAmount), ' + data.Grand['Grand Quantity'] + ' (TotalQuantity)';
 }
 
 

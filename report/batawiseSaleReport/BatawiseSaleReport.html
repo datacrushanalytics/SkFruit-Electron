@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Form in Electron</title>
+    <link rel="stylesheet" href="../../assets/css/Sale.css">
+    <style>
+        /* Add border to the second form */
+        .form1 {
+            border: 1px solid black;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 align="center">Batawise Sale Report</h1>
+        <hr>
+
+        <div class="container1">
+            <form id="loginForm1">
+
+                <div class="first-row">
+                    <label for="userType">From Date</label>
+                    <input type="date" id="fromdate" name="date" placeholder="From Date">
+                    <br>
+                    <label for="userType">To Date</label>
+                    <input type="date" id="todate" name="date" placeholder="To Date">
+                </div>
+
+                <br>
+
+                <label for="userType"> Product</label>
+                <select class="drop" id="product" id="product" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select>
+
+                <br>
+
+                <label for="userType">Bata</label>
+                <select class="drop" id="bata" id="bata" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select>
+    
+                <div class="third-row">
+                    <!-- <button class="border-hover" >Save</button> -->
+                    <button type="submit" class="border-hover">Submit</button>
+                    <a href="./sale.html"><button type='button' class="border-hover">Back</button></a>
+                </div>
+            </form>
+            <table>
+                <tr>
+                    <th>Sr. No</th>
+                    <th>Bill No</th>
+                    <th>Date</th>
+                    <th>Customer Name</th>
+                    <th>Address</th>
+                    <th>Mobile Number</th>
+                    <th>Note</th>
+                    <th>product_name</th>        
+            <th>Bata</th>
+            <th>mark</th>
+            <th>quantity</th>  
+            <th>rate</th>  
+            <th>price</th>    
+                </tr>
+               
+
+
+                <!-- Add more rows as needed -->
+                <tbody id="tableBody">
+                    <!-- Data will be inserted here -->
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+
+
+</body>
+<script src="./BatawiseSaleReport.js"></script>
+
+
+
+</html>
