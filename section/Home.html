@@ -63,7 +63,19 @@
         <div class="component" onclick="openPage('rout_sale')">Route Sale</div>
         <div class="component" onclick="openPage('receipt')">Reciept</div>
         <div class="component" onclick="openPage('payment')">Payment</div>
+        <div class="component" onclick="openPage('purchaseReport')">Purchase Report</div>
+        <div class="component" onclick="openPage('routewiseSaleReport')">Routewise Sale Report</div>
+        <div class="component" onclick="openPage('stockReport')">Stock Report</div>
         <div class="component" onclick="openPage('khatawani')">Khatawani</div>
+        <div class="component" onclick="openPage('batawiseSaleReport')">batawiseSaleReport</div>
+        <div class="component" onclick="openPage('dailyReport')">Daily Report</div>
+        <div class="component" onclick="openPage('receiptReport')">Receipt Report</div>
+        <div class="component" onclick="openPage('ledgerReport')">Ledger Report</div>
+        <div class="component" onclick="openPage('customerOutstanding')">Customer Outstanding</div>
+        <div class="component" onclick="openPage('supplierOutstanding')">Supplier Outstanding</div>
+        <div class="component" onclick="openPage('carateReport')">Carate Report</div>
+        <div class="component" onclick="openPage('remainder')">Remainder</div>
+        <div class="component" onclick="openPage('profitLoassReport')">Profit Loss Report</div>
       </div>
       <a href="../section/Log_in.html"><button type="button" class="logout" onclick="login()">Log Out</button></a>
     </div>
@@ -106,14 +118,14 @@
         case'receipt':
           pageUrl='./Receipt.html'
           break;
-          case'payment':
+        case'payment':
           pageUrl='./Payment.html'
           break;
-          case'khatawani':
+        case'khatawani':
           pageUrl='./khatawani.html'
           break;
       default:
-          pageUrl = '';
+          pageUrl = './Home2.html';
       }
       document.getElementById('pageContent').src = pageUrl;
     }
