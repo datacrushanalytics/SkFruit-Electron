@@ -1,60 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>sk fruits</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
     <link rel="stylesheet" href="../assets/css/payment_rep.css">
+
 </head>
 <body>
-   
-    
     <div class="container">
-    <h1 align ="center">PAYMENT REPORT </h1><br><br><hr>
-   <br>
+        <h1 align="center">PAYMENT REPORT</h1> <hr><br>
 
+        <div class="container1"> 
+        <form id="Form">
+            <div class="first-row">
+                <input type="text" id="from" name="date" placeholder="From" onfocus="(this.type='date')">
+                
+                <input type="text" id="to" name="date" placeholder="To" onfocus="(this.type='date')">
+                </div><br>
 
-    <div class="first-row">
-        <div class="from">
-            <h3>FROM</h3>
-            <div class="input-filed">
-            <input type="text" style="background-color: aliceblue; height: 32px;  width:25%; "placeholder="Date" onfocus="(this.type='Date')">
-        </div>
-        </div>
-
-        <div class="to">
-            <h3>TO</h3>
-            <div class="input-field">
-            <input type="text" style="background-color: aliceblue; height: 32px; width: 25%; "placeholder="Date" onfocus="(this.type='Date')">
-        </div>
-        </div>
-        </div>
-         <br>
-    
-        
-        <br>
-        
-         <br>
-            <button class="button1">SHOW</button> 
-            <button class="button2">BACK</button>
-            <br>
-           <br>
-            
-           <table>
-            <thead>
-               <tr>
-                   <th>ID </th>
-                   <th>DATE  </th>
-                   <th>FROM A/C  </th>
-                   <th>TO A/C  </th>
-                   <th>COMMENT </th>
-                   <th>AMOUNT</th>
-               </tr>
-            </thead>
-           </table>
-    
-        
-        
-</div>
-       
+                <div class="second-row">
+                    <button class="border-hover">Save</button>
+                    <button class="border-hover">Back</button>
+                  </div><br>
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>DATE</th>
+                        <th>FROM A/C</th>
+                        <th>TO A/C</th>
+                        <th>COMMENT</th>
+                        <th>AMOUNT</th>
+                        
+                </table>
+    </form>  
 
 </body>
 </html>

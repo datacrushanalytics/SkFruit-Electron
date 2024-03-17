@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <title></title>
   <link rel="stylesheet" href="../assets/css/Home.css" />
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -19,7 +20,6 @@
       background-color: #333;
       color: white;
       padding: 20px;
-      height: 100%;
     }
   
     #main {
@@ -52,57 +52,72 @@
       <h3>SK Fruit</h3>
 
       <div id="sidebar">
-        <div class="component" onclick="openPage('Home')">Home</div>
+        <div class="component" onclick="openPage('home')">Home</div>
         <div class="component" onclick="openPage('user')">User</div>
         <div class="component" onclick="openPage('product')">Product</div>
         <div class="component" onclick="openPage('account')">Account</div>
+        <div class="component" onclick="openPage('vehicle')">Vehicle</div>
         <div class="component" onclick="openPage('route')">Route</div>
-        <div class="component" onclick="openPage('page3')">Vehicle</div>
-        <div class="component" onclick="openPage('page3')">Purchase</div>
-        <div class="component" onclick="openPage('page3')">Sale</div>
-        <div class="component" onclick="openPage('page3')">Route Sale</div>
-        <div class="component" onclick="openPage('page3')">Reciept</div>
-        <div class="component" onclick="openPage('page3')">Payment</div>
-        <div class="component" onclick="openPage('page3')">Khatawni</div>
-        <div class="component" onclick="openPage('page3')">Login</div>
+        <div class="component" onclick="openPage('purchase')">Purchase</div>
+        <div class="component" onclick="openPage('sale')">Sale</div>
+        <div class="component" onclick="openPage('rout_sale')">Route Sale</div>
+        <div class="component" onclick="openPage('receipt')">Reciept</div>
+        <div class="component" onclick="openPage('payment')">Payment</div>
+        <div class="component" onclick="openPage('khatawani')">Khatawani</div>
       </div>
+      <a href="../section/Log_in.html"><button type="button" class="logout" onclick="login()">Log Out</button></a>
     </div>
-    <!-- <div class="section2">
-      <img src="../assets/img/logo-01.png" class="logoimg" alt="SK-Fruit Logo">
-
-    </div> -->
     <div id="main">
       <iframe id="pageContent" src="" width="100%" height="100%" frameborder="0"></iframe>
     </div>
-     
-
   </div>
   </div>
   </div>
-</body>
-
-<script>
-  function openPage(pageName) {
-    var pageUrl;
-    switch (pageName) {
-      case 'user':
-        pageUrl = "./user/user.html";
+  <script>
+    function openPage(pageName) {
+      var pageUrl;
+      switch (pageName) {
+        case 'home':
+        pageUrl='./Home2.html';
         break;
-      case 'product':
-        pageUrl = './product/product.html';
-        break;
-      case 'account':
-        pageUrl = './account/account.html';
-        break;
-      case 'route':
-        pageUrl = './route/Root_Details.html';
-        break;
+        case 'user':
+          pageUrl = "./user/user.html";
+          break;
+        case 'product':
+          pageUrl = './product/product.html';
+          break;
+        case 'account':
+          pageUrl = './account/account.html';
+          break;
+        case 'route':
+          pageUrl = './route/Root_Details.html';
+        case 'purchase':
+          pageUrl = './Purchase.html'
+          break;
+        case 'sale':
+          pageUrl = './sale/sale.html'
+          break;
+        case 'vehicle':
+          pageUrl='./Vehicle_Details.html'
+          break;
+        case 'rout_sale':
+          pageUrl='./Root_Sale.html'
+          break;
+        case'receipt':
+          pageUrl='./Receipt.html'
+          break;
+          case'payment':
+          pageUrl='./Payment.html'
+          break;
+          case'khatawani':
+          pageUrl='./khatawani.html'
+          break;
       default:
-        pageUrl = '';
+          pageUrl = '';
+      }
+      document.getElementById('pageContent').src = pageUrl;
     }
-    document.getElementById('pageContent').src = pageUrl;
-  }
-</script>
-
+  </script>
+</body>
 
 </html>

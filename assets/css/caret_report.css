@@ -1,99 +1,75 @@
- body {
-    background-color: #ccffcc;
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 70vh;
-    margin: 0;
-    width: 100%;
-    
-    
-  } 
-  
-  #container1{
-    display: flex;
-  }
-  
-  .container {
-    /* width: 300px; */
-    
-    text-align: left;
-    margin: 20px;
-    
-  } 
-  
-  label, input, button {
-    margin: 10px;
-  }
-  
-  #saveBtn {
-    height: 40px;
-    width: 250px;
-    background-color: rgba(0, 128, 49, 0.849);
-    color: #fff;
-    border: none;
-    padding: 10px;
-    margin-left: 340px;
-  }
-  
-  #backBtn{
-  width: 250px;
-  height: 40px;
-  padding: 10px;
-  color: #fff;
-  border: none;
-  background-color: #f44336;
-  justify-content: right;
-  }
-  
-  #Id{
-    width: 50%;
-    height: 20px;
-  }
-  
-  #name{
-    width: 95%;
-    height: 20px;
-  }
-  
-  .first-row{
-    display: flex;
-    width: 90%;
-    margin-left: 40px;
+body{
+  text-align: left;
+  margin:0;
+  padding:0;
+  font-family: sans-serif;
+  background-color: rgb(207, 205, 205); 
 }
-.from{
-    width: 300%;
-    height: 300;
-    margin-left: 300px;
-    align-items: right;
-    justify-content: space-between;
-}
-.To{
- margin-right: 400px;
-}
-.customer{
-    margin-left: 340px;
-    width: 300px;
-    height:25px;
-}
-#customer{
-width: 520px;
-height:25px;
-}
+
 table {
-    width: 47%;
-    border-collapse: collapse;
-    margin-left: 330px;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 th, td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    width:100px;
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
 th {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
+}
+
+.container1{
+  text-align: center;
+}
+
+#from{
+  border-radius: 8px;
+  height: 30px;
+  width: 225px;
+  box-shadow: 5px 10px 8px grey;
+  border-color: rgb(24, 24, 24);
+  text-indent: 10%;
+}
+
+#to{
+  border-radius: 8px;
+  height: 30px;
+  width: 225px;
+  box-shadow: 5px 10px 8px grey;
+  border-color: rgb(24, 24, 24);
+  text-indent: 10%;
+}
+
+#name{
+  border-radius: 8px;
+  height: 15px;
+  width: 450px;
+  border: 1px solid transparent; 
+padding:  10px;
+box-shadow: 5px 5px 5px grey;
+margin:20px;
+}
+
+.border-hover {
+  border: 1px solid transparent; 
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  
+}
+
+.border-hover:hover {
+  border-color:blue;
+}
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  width: 200px;
+  border: none;
+  cursor: pointer;
+  margin: 10px;
+  border-radius: 5px;
+  outline: none;
 }
