@@ -75,7 +75,7 @@
         <div class="component" onclick="openPage('supplierOutstanding')">Supplier Outstanding</div>
         <div class="component" onclick="openPage('carateReport')">Carate Report</div>
         <div class="component" onclick="openPage('remainder')">Remainder</div>
-        <div class="component" onclick="openPage('profitLoassReport')">Profit Loss Report</div>
+        <div class="component" onclick="openPage('profitLossReport')">Profit Loss Report</div>
       </div>
       <a href="../section/Log_in.html"><button type="button" class="logout" onclick="login()">Log Out</button></a>
     </div>
@@ -121,6 +121,45 @@
           break;
         case'payment':
           pageUrl='./payment/Payment.html'
+          break;
+        case'purchaseReport':
+          pageUrl='../report/purchaseReport/purchaseReport.html'
+          break;
+        case'routewiseSaleReport':
+          pageUrl='../report/routewiseSaleReport/routewiseSaleReport.html'
+          break;
+        case'stockReport':
+          pageUrl='./report/stockReport/stockReport.html'
+          break;
+        case'batawiseSaleReport':
+          pageUrl='../report/batawiseSaleReport/batawiseSaleReport.html'
+          break;
+        case'khatawani':
+          pageUrl='../report/khatawani/khatawani.html'
+          break;
+        case'dailyReport':
+          pageUrl='../report/dailyReport/dailyReport.html'
+          break;
+        case'receiptReport':
+          pageUrl='../report/receiptReport/receiptReport.html'
+          break;
+        case'ledgerReport':
+          pageUrl='../report/ledgerReport/ledgerReport.html'
+          break;
+        case'customerOutstanding':
+          pageUrl='../report/customerOutstanding/customerOutstanding.html'
+          break;
+        case'supplierOutstanding':
+          pageUrl='../report/supplierOutstanding/supplierOutstanding.html'
+          break;
+        case'carateReport':
+          pageUrl='../report/carateReport/carateReport.html'
+          break;
+          case'remainder':
+          pageUrl='../report/remainder/remainder.html'
+          break;
+          case'profitLossReport':
+          pageUrl='../report/profitLossReport/profitLossReport.html'
           break;
       default:
           pageUrl = './Home2.html';
