@@ -1,0 +1,302 @@
+body{
+    text-align: left;
+    margin:0;
+    padding:0;
+    font-family: sans-serif;
+    background-color: rgba(242, 242, 242, 0.8); 
+    margin-top: 0%;
+    margin-bottom: 0%;
+  }
+  
+  .container{
+    margin: 0;
+    padding: 0;
+  margin-left: 10%;
+  }
+  
+  h1{
+    margin-right: 10%;
+  }
+  #bill{
+    height: 40px;
+    width: 250px;
+    border-radius: 8px;
+    text-indent:  10px;
+    margin-left: 18px;
+   
+  }
+  
+  #date{
+    height: 40px;
+    width: 220px;
+    border-radius: 8px;
+    text-indent: 5%;
+    margin: 2%;
+  }
+  
+  #number{
+    height: 40px;
+    width: 220px;
+    border-radius: 8px;
+    text-indent: 5%;
+    margin-left: 10px;
+  }
+  
+  
+  
+  #grahk{
+    text-indent: 3%;
+    border-radius: 6px;
+    height: 40px;
+    width: 450px;
+    margin-left: 20px;
+    /* margin-right: 300px; */
+    
+  }
+  #no{
+    text-indent: 3%;
+    border-radius: 6px;
+    height: 40px;
+    width: 100px;
+    margin-left: 20px;
+    
+  }
+  
+  #bta{
+  border-radius: 8px;
+  height: 15px;
+  width: 50px;
+  
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  margin:20px;
+  }
+  
+  #mark{
+  border-radius: 8px;
+  height: 15px;
+  width: 50px;
+  
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  margin:20px;
+  }
+  
+  #nag{
+  border-radius: 8px;
+  height: 15px;
+  width: 50px;
+  
+  padding:  10px;
+  /* box
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  margin:20px;
+  }
+  #no1{
+  border-radius: 8px;
+  height: 15px;
+  width: 300px;
+  
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  margin:20px;
+  }
+  
+  #online{
+  border-radius: 8px;
+  height: 15px;
+  width: 150px;
+   
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  margin:20px;
+  }
+  #discount{
+  border-radius: 8px;
+  height: 15px;
+  
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  margin:20px;
+  }
+  #bill_cash{
+  border-radius: 8px;
+  height: 15px;
+  width: 150px;
+  
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  margin:20px;
+  }
+  
+  
+  #address{
+  border-radius: 8px;
+  height: 15px;
+  width: 300px;
+  /* border: 1px solid transparent;  */
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  margin:20px;
+    
+  }
+  #sandarbh{
+    border-radius: 8px;
+    height: 15px;
+    width: 300px;
+    
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  margin:20px;
+  }
+  #product{
+  border-radius: 8px;
+    height: 15px;
+    width: 300px;
+   
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  margin:20px;
+  }
+  
+  #bata{
+  border-radius: 8px;
+  height: 15px;
+  width: 100px;
+  
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  margin:20px;
+  }
+  
+  #mark{
+  border-radius: 8px;
+  height: 15px;
+  width: 100px;
+   
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  margin:20px;
+  }
+  
+  #nag{
+  border-radius: 8px;
+  height: 15px;
+  width: 100px;
+  
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  margin:20px;
+  }
+  #kimmat{
+  border-radius: 8px;
+  height: 15px;
+  width: 100px;
+   
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  margin:20px;
+  }
+  
+  #total{
+  border-radius: 8px;
+  height: 15px;
+  width: 150px;
+   
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  margin:20px;
+  }
+  
+  #baki{
+  border-radius: 8px;
+  height: 25px;
+  width: 150px;
+  
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  }
+  
+  .border-hover {
+  
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  
+  }
+  
+  /* .border-hover:hover {
+  border-color:blue;
+  }
+  button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  margin: 10px;
+  border-radius: 5px;
+  outline: none;
+  margin-bottom: 30%;
+  width: 300px;
+  /* margin-left: 20%;   */
+  
+  button{
+    padding: 10px20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 7px;
+    outline: none;
+    margin-bottom: 30%;
+  }
+  .save{
+    border:1px solid transparent;
+    padding:10px;
+    box-shadow: 5px 10px 8px gray;
+    margin:20px;
+    width: 200px;
+   
+  }
+   .save:hover{
+    border-color: blue;
+   }
+  
+   .back{
+    border:1px solid transparent;
+    padding:10px;
+    box-shadow: 5px 10px 8px gray;
+    margin:20px;
+    width: 200px;
+    
+  }
+   .back:hover{
+    border-color: blue;
+   }
+  
+   /* .third-row{
+    margin-left: 30%;  
+    text-align: left;
+  }  */
+  .fourth-row{
+    margin-left: 1%;
+  }
+  table {
+    width : 88%;
+    border-collapse: collapse;
+    border: 2px solid;
+    border-radius: 10px;
+    margin-left: 20px; /* Add margin to the left side */
+    margin-right: 20px; /* Add margin to the right side */
+    margin-top: -28%;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
