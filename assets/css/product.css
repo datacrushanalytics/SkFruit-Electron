@@ -1,4 +1,4 @@
-body{
+/* body{
     font-family: Arial, Helvetica, sans-serif;
     background-color: #CCFFCC;
 }
@@ -13,9 +13,9 @@ th, td {
 }
 th {
     background-color: #F2F2F2;
-}
+} */
 /* CSS for buttons */
-.button {
+/* .button {
     background-color:rgb(204, 204, 13);
     border: none;
     color: white;
@@ -26,14 +26,14 @@ th {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-    /* border-radius: 5px;
+    border-radius: 5px;
     position:absolute;
     top: 50%;
     right: 10px;
-    transform: translate(-50%); */
+    transform: translate(-50%);
 
-}
-.container{
+} */
+/* .container{
     width: 100%;
     padding: 20px;
     position: relative;
@@ -64,9 +64,9 @@ th {
 }
 .delete-button {
     background-color: #F44336;
-}
+} */
 /* CSS for menu */
-.dropdown {
+/* .dropdown {
     position: relative;
     display: inline-block;
 }
@@ -92,4 +92,99 @@ th {
 }
 .dropdown-content a:hover {
     background-color: #F1F1F1
+} */
+
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: grey;
 }
+
+
+
+/* Styles for the edit and delete buttons */
+.edit-button, .delete-button {
+    background-color: #28a745;
+}
+
+.delete-button {
+    background-color: #dc3545;
+}
+
+/* Styles for links */
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+body{
+    font-family: sans-serif;
+    background-color: rgb(207, 205, 205); 
+}
+
+
+.container {
+  width: 100%;
+  padding: 20px;
+  position: relative;
+  text-align: center; /* Center the content */
+}
+
+h1 {
+  display: inline-block; /* Make the heading inline-block */
+  margin-right: 50px; /* Add margin to create space between heading and button */
+}
+
+.button1 {
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: grey;
+  margin-left:  50%;
+}
+
+
+table {
+  width : 94%;
+  border-collapse: collapse;
+  border: 2px solid;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-left: 20px; /* Add margin to the left side */
+  margin-right: 20px; /* Add margin to the right side */
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.set-user-menu-button {
+  display: block;
+  margin: 20px auto; /* Center the button horizontally */
+}
+
+

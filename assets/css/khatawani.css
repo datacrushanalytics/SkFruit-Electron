@@ -1,5 +1,5 @@
 *{
-    background-color:#ccffcc;
+   
     
     margin:0;
     padding:0;
@@ -13,56 +13,96 @@
     display: flex;
     justify-content: center;
     align-items: center;
-   
+    background-color: rgba(242, 242, 242, 0.8);
   }
   
   .container{
-    width: 400px;
-    height: 400px;
-    
+    width: 1030px;
+    height: 450px;
+    border:  2px solid black;;
     flex-direction: column;
     justify-content: center;
   }
   
-  
-  
-  .from{
-    width: 700px;
-    margin-right:500px;
+  .first-row{
+    display: flex;
+    margin-top: 3%;
   }
   
-  .to{
-    width: 700px;
-    margin-left:200px;
-    margin-top: -55px;
-  }
-  
-  .roos{
-    width: 200px;
-  }
-  #root{
-    background-color: aliceblue;
-    width: 365px;
-    height: 30px;
-  }
-  
-  .account .input-field input{
-    height: 25px;
-    width: 365px;
-  }
-  
-  .button1{
-    background-color:green;
+  #fromdate{
+    border-radius: 8px;
     height: 35px;
-    width: 180px;
+    width: 400px;
+    /* margin-right:-1; */
+    margin-left: -0px; 
+  }
+
+  label{
+    margin-left: 4%;
+  }
+  
+  #todate{
+    border-radius: 8px;
+    height: 35px;
+    width: 400px;
+    margin-left: -0px;
+  }
+
+  #customer{
+    border-radius: 8px;
+    height: 35px;
+    width: 600px;
+
+  }
+  
+  #route {
+    border-radius: 8px;
+    height: 25%;
+    width: 600px;
+    border: 1px solid transparent;
+    padding: 10px;
+    box-shadow: 5px 5px 5px grey;
+    margin: 20px;
     
-  }
-  
-  .button2{
-    background-color:red;
+}
+.drop1{
+  margin-left: 50px;
+}
+
+  .third-row{
     height: 35px;
-    width: 180px;
-    text-decoration: bold;
+    width: 200px;
+    display: flex;
+  }
+
+  #button1{
+    border-radius: 8px;
+    height: 35px;
+    width: 300px;
+    margin-left: 18%;
   }
   
+  #button2{
+    border-radius: 8px;
+    height: 35px;
+    width: 300px;
+  }
+   
+  table{
+    border-collapse: collapse;
+    width: 450px;
+    margin-left: 4%;
+  }
+  
+  
+  th,tr{
+    border: 1px solid black;
+    text-align: left;
+    padding: 8px;
+  }
+   th{
+    background-color:rgb(222, 215, 215);
+   }
+  
+
   

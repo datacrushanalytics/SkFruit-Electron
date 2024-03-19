@@ -16,10 +16,13 @@
     }
   
     #sidebar {
+      height: 580px;
       width: 250px;
       background-color: #333;
       color: white;
       padding: 20px;
+      overflow: hidden;
+      overflow-y:scroll ;
     }
   
     #main {
@@ -28,6 +31,8 @@
     }
   
     .component {
+      height: 35px;
+      width: 250px;
       cursor: pointer;
       margin-bottom: 10px;
       color: #fff;
@@ -52,30 +57,30 @@
       <h3>SK Fruit</h3>
 
       <div id="sidebar">
-        <div class="component" onclick="openPage('home')">Home</div>
-        <div class="component" onclick="openPage('user')">User</div>
-        <div class="component" onclick="openPage('product')">Product</div>
-        <div class="component" onclick="openPage('account')">Account</div>
-        <div class="component" onclick="openPage('vehicle')">Vehicle</div>
-        <div class="component" onclick="openPage('route')">Route</div>
-        <div class="component" onclick="openPage('purchase')">Purchase</div>
-        <div class="component" onclick="openPage('sale3')">Sale</div>
-        <div class="component" onclick="openPage('rout_sale')">Route Sale</div>
-        <div class="component" onclick="openPage('receipt')">Reciept</div>
-        <div class="component" onclick="openPage('payment')">Payment</div>
-        <div class="component" onclick="openPage('purchaseReport')">Purchase Report</div>
-        <div class="component" onclick="openPage('routewiseSaleReport')">Routewise Sale Report</div>
-        <div class="component" onclick="openPage('stockReport')">Stock Report</div>
-        <div class="component" onclick="openPage('khatawani')">Khatawani</div>
-        <div class="component" onclick="openPage('batawiseSaleReport')">batawiseSaleReport</div>
-        <div class="component" onclick="openPage('dailyReport')">Daily Report</div>
-        <div class="component" onclick="openPage('receiptReport')">Receipt Report</div>
-        <div class="component" onclick="openPage('ledgerReport')">Ledger Report</div>
-        <div class="component" onclick="openPage('customerOutstanding')">Customer Outstanding</div>
-        <div class="component" onclick="openPage('supplierOutstanding')">Supplier Outstanding</div>
-        <div class="component" onclick="openPage('carateReport')">Carate Report</div>
-        <div class="component" onclick="openPage('remainder')">Remainder</div>
-        <div class="component" onclick="openPage('profitLossReport')">Profit Loss Report</div>
+        <button class="component" onclick="openPage('home')">Home</button>
+        <button class="component" onclick="openPage('user')">User</button>
+        <button class="component" onclick="openPage('product')">Product</button>
+        <button class="component" onclick="openPage('account')">Account</button>
+        <button class="component" onclick="openPage('vehicle')">Vehicle</button>
+        <button class="component" onclick="openPage('route')">Route</button>
+        <button class="component" onclick="openPage('purchase')">Purchase</button>
+        <button class="component" onclick="openPage('sale3')">Sale</button>
+        <button class="component" onclick="openPage('rout_sale')">Route Sale</button>
+        <button class="component" onclick="openPage('receipt')">Reciept</button>
+        <button class="component" onclick="openPage('payment')">Payment</button>
+        <button class="component" onclick="openPage('purchaseReport')">Purchase Report</button>
+        <button class="component" onclick="openPage('routewiseSaleReport')">Routewise Sale Report</button>
+        <button class="component" onclick="openPage('stockReport')">Stock Report</button>
+        <button class="component" onclick="openPage('khatawani')">Khatawani</button>
+        <button class="component" onclick="openPage('batawiseSaleReport')">batawiseSaleReport</button>
+        <button class="component" onclick="openPage('dailyReport')">Daily Report</button>
+        <button class="component" onclick="openPage('receiptReport')">Receipt Report</button>
+        <button class="component" onclick="openPage('ledgerReport')">Ledger Report</button>
+        <button class="component" onclick="openPage('customerOutstanding')">Customer Outstanding</button>
+        <button class="component" onclick="openPage('supplierOutstanding')">Supplier Outstanding</button>
+        <button class="component" onclick="openPage('carateReport')">Carate Report</button>
+        <button class="component" onclick="openPage('remainder')">Remainder</button>
+        <button class="component" onclick="openPage('profitLossReport')">Profit Loss Report</button>
       </div>
       <a href="../section/Log_in.html"><button type="button" class="logout" onclick="login()">Log Out</button></a>
     </div>
@@ -159,7 +164,7 @@
           pageUrl='../report/remainder/remainder.html'
           break;
           case'profitLossReport':
-          pageUrl='../report/profitLossReport/profitLossReport.html'
+          pageUrl='../report/profitLossReport/profit_loss_report.html'
           break;
       default:
           pageUrl = './Home2.html';

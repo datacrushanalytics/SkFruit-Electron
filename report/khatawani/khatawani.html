@@ -5,16 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Form in Electron</title>
-    <link rel="stylesheet" href="../../assets/css/Sale.css">
+    <link rel="stylesheet" href="../../assets/css/khatawani.css">
     <style>
         /* Add border to the second form */
-        .form1 {
+        /* .form1 {
             border: 1px solid black;
             padding: 10px;
             margin-top: 20px;
-        }
+        } */
 
-        #route {
+        /* #route {
             border-radius: 8px;
             height: 25%;
             width: 150px;
@@ -22,13 +22,13 @@
             padding: 10px;
             box-shadow: 5px 5px 5px grey;
             margin: 20px;
-        }
+        } */
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1 align="center">Khatawani</h1>
+        <h1 align="center">Khatawani</h1><br>
         <hr>
 
         <div class="container1">
@@ -52,17 +52,20 @@
                 <br>
 
                 <label for="userType">Route</label>
-                <select class="drop" id="route" name="name">
+                <select class="drop1" id="route" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select>
 
-                <div class="third-row">
+                <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" class="border-hover">Submit</button>
-                    <a href="./sale.html"><button type='button' class="border-hover">Back</button></a>
-                </div>
+                    <button type="submit" id="button1">Submit</button>
+                    <a href="./sale.html"><button type='button' id="button2">Back</button></a>
+                <!-- </div> -->
             </form>
+            <br>
+            <br>
             <table>
+                <thead>
                 <tr>
                     <th>Sr. No</th>
                     <th>BILL NO</th>
@@ -80,6 +83,7 @@
                     <th>Balance</th>
                 
                 </tr>
+                </thead>
                 <!-- Add more rows as needed -->
                 <tbody id="tableBody">
                     <!-- Data will be inserted here -->

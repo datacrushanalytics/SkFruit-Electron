@@ -9,9 +9,13 @@ body{
   }
   
   .container{
+    border:  2px solid black;
+    height: 1180px;
+    width: 1000px;
     margin: 0;
     padding: 0;
   margin-left: 10%;
+    margin-top: 2%;
   }
   
   h1{

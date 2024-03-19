@@ -1,75 +1,92 @@
-body{
-  text-align: left;
+*{ 
   margin:0;
   padding:0;
-  font-family: sans-serif;
-  background-color: rgb(207, 205, 205); 
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-table {
+body{
   width: 100%;
-  border-collapse: collapse;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(242, 242, 242, 0.8);
 }
 
-th, td {
-  padding: 8px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+.container{
+  width: 1030px;
+  height: 450px;
+  border:  2px solid black;;
+  flex-direction: column;
+  justify-content: center;
 }
 
-th {
-  background-color: #f2f2f2;
+.first-row{
+  display: flex;
+  margin-top: 3%;
 }
 
-.container1{
-  text-align: center;
-}
-
-#from{
+#fromdate{
   border-radius: 8px;
-  height: 30px;
-  width: 200px;
-  box-shadow: 5px 10px 8px grey;
-  border-color: rgb(24, 24, 24);
-  text-indent: 10%;
-}
-
-#to{
-  border-radius: 8px;
-  height: 30px;
-  width: 200px;
-  box-shadow: 5px 10px 8px grey;
-  border-color: rgb(24, 24, 24);
-  text-indent: 10%;
-}
-
-#name{
-  border-radius: 8px;
-  height: 15px;
+  height: 35px;
   width: 400px;
-  border: 1px solid transparent; 
-padding:  10px;
-box-shadow: 5px 5px 5px grey;
-margin:20px;
+  /* margin-right:-1; */
+  margin-left: -0px; 
 }
 
-.border-hover {
-  border: 1px solid transparent; 
-  padding:  10px;
-  box-shadow: 5px 5px 5px grey;
-  
+label{
+  margin-left: 4%;
 }
 
-.border-hover:hover {
-  border-color:blue;
+#todate{
+  border-radius: 8px;
+  height: 35px;
+  width: 400px;
+  margin-left: -0px;
 }
-button {
-  padding: 10px 20px;
-  font-size: 16px;
+
+#vehicleNumber{
+  border-radius: 8px;
+  height: 35px;
+  width: 600px;
+
+}
+
+/* .drop1{
+margin-left: 50px;
+} */
+
+.third-row{
+  height: 35px;
   width: 200px;
-  border: none;
-  cursor: pointer;
-  margin: 10px;
-  border-radius: 5px;
-  outline: none;
+  display: flex;
 }
+
+#button1{
+  border-radius: 8px;
+  height: 35px;
+  width: 300px;
+  margin-left: 18%;
+}
+
+#button2{
+  border-radius: 8px;
+  height: 35px;
+  width: 300px;
+}
+ 
+table{
+  border-collapse: collapse;
+  width: 550px;
+  margin-left: 4%;
+}
+
+
+th,tr{
+  border: 1px solid black;
+  text-align: left;
+  padding: 12px;
+}
+ th{
+  background-color:rgb(222, 215, 215);
+ }
