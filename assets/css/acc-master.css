@@ -1,4 +1,4 @@
-*{
+/* *{
     margin:0;
     padding:0;
     font-family: Arial, Helvetica, sans-serif;
@@ -74,7 +74,135 @@ body{
 }
 .container1 {
     display: flex;
+} */
+
+
+
+body {
+    font-family: sans-serif;
+    background-color: rgb(207, 205, 205); 
+    
 }
+
+.container{
+    margin: 10%;
+    margin-left: 35%;
+    margin-right: 35%;
+    border: 2px double;
+    text-align: center;
+    text-shadow: 2px;
+    justify-content: center;
+    /* margin-left: 10%; */
+   }
+
+#container1{
+    display: flex;
+}
+
+#id{
+    border-radius: 8px;
+    height: 15px;
+    width: 150px;
+    border: 1px solid transparent; 
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+}
+
+#usertype{
+  border-radius: 8px;
+  height: 25%;
+  width: 150px;
+  border: 1px solid transparent; 
+padding:  10px;
+box-shadow: 5px 5px 5px grey;
+margin:20px; 
+}
+
+/* #name{
+  border-radius: 8px;
+  height: 25%;
+  width: 150px;
+  border: 1px solid transparent; 
+padding:  10px;
+box-shadow: 5px 5px 5px grey;
+margin:20px;
+} */
+#name, #address, #no,#preBalance{
+    border-radius: 8px;
+    height: 15px;
+    width: 380px;
+    border: 1px solid transparent; 
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+}
+/* #accgroup{
+    border-radius: 8px;
+    height: 25px;
+    width: 380px;
+    border: 1px solid transparent; 
+  padding:  10px;
+  box-shadow: 5px 5px 5px grey;
+  margin:20px;
+} */
+
+.border-hover {
+    border: 1px solid transparent; 
+    padding:  10px;
+    box-shadow: 5px 5px 5px grey; 
+  }
+  
+  .border-hover:hover {
+    border-color:blue;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin: 20px;
+    border-radius: 5px;
+    outline: none;
+    margin-bottom: 30%;
+  }
+  
+  .third-row{
+    margin-left: 30%;  
+    text-align: left;
+  }
+  .second-row{
+    margin-left: 35%;  
+    text-align: left;
+  }
+
+
+
+  .drop {
+    width: 200px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+  }
+  
+  /* Style the options */
+  .drop option {
+    background-color: #f9f9f9;
+    color:white;
+    padding: 5px;
+  }
+  
+  /* Style the selected option */
+  .drop option:checked {
+    background-color: #ccc;
+    color: #fff;
+  } 
+
+
+ 
+
 
 
 

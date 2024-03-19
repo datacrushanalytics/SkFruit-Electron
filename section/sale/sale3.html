@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="../../assets/css/sale3.css">
+
+</head>
+<body>
+    <div class="container">
+        <h1 align="center">विक्री </h1>
+        <hr> 
+
+        <div class="first-row">
+          <input type="text" id="bill" name="number" placeholder="बिल नं."> 
+          <input type="text" id="date" name="date" placeholder="दिनांक:">
+          <input type="text" id="number" name="number" placeholder="मोबाइल नं.">
+        </div> 
+
+        <div>
+            <label for="message" aria-placeholder="Root"></label>
+                <select type="root" id="grahk" name="root">
+                    <option>ग्राहकाचे नाव </option>
+                    <option>Cash Bill-0  </option>
+
+                </select><br>
+           </div>
+
+        <div class="third-row">
+            <input type="text" id="address" name="text" placeholder="पत्ता">
+            <input type="text" id="sandarbh" name="text" placeholder="संदर्भ ">
+        </div> 
+
+        <div>
+          <input type="text" id="product" name="text" placeholder="प्रॉडक्ट">
+          <input type="text" id="bta" name="text" placeholder="बटा">
+          <input type="text" id="mark" name="text" placeholder="मार्क">
+          <input type="text" id="nag" name="text" placeholder="नग">
+          <input type="number" id="kimmat" name="number" placeholder="किंमत">
+          <input type="number" id="total" name="number" placeholder="एकूण रक्कम">
+        </div>
+
+        <div class="fourth-row">
+          <!-- <button class="border-hover" >Save</button> -->
+          <button type="button" onclick="myFunction()" class="border-hover">ADD</button>
+      </div>
+    <table>
+          <tr>
+              <th>प्रॉडक्ट</th>
+              <th>बटा</th>
+              <th>मार्क</th>
+              <th>नग</th>
+              <th>किंमत</th>
+              <th>रक्कम</th>
+            </tr>
+          
+          <!-- Add more rows as needed -->
+          <tbody id="tableBody1">
+              <!-- Data will be inserted here -->
+          </tbody>
+  </table>
+       
+        <div>
+          <input type="number" id="no1" name="number" placeholder="गेलेले कॅरेट">
+          <input type="number" id="no" name="number" placeholder="100">
+          <input type="number" id="no" name="number" placeholder="150">
+          <input type="number" id="no" name="number" placeholder="250">
+          <input type="number" id="no" name="number" placeholder="350"> 
+          <input type="number" id="total" name="number" placeholder="एकूण रक्कम">
+        </div>
+
+        <div>
+          <input type="number" id="bill_cash" name="number" placeholder="बिल रक्कम">
+          <input type="number" id="online" name="number" placeholder="मागील बाकी ">
+          <input type="number" id="discount" name="number" placeholder="एकूण रक्कम ">
+        </div>
+
+        <div>
+            <input type="number" id="bill_cash" name="number" placeholder="रोख जमा">
+            <input type="number" id="online" name="number" placeholder="ऑनलाईन जमा ">
+            <input type="number" id="discount" name="number" placeholder=" सूट रक्कम">
+          </div>
+       
+
+        <div>
+          <input type="number" id="no1" name="number" placeholder="जमा कॅरेट">
+          <input type="number" id="no" name="number" placeholder="100">
+          <input type="number" id="no" name="number" placeholder="150">
+          <input type="number" id="no" name="number" placeholder="250">
+          <input type="number" id="no" name="number" placeholder="350">
+          <input type="number" id="total" name="number" placeholder="जमा कॅरेट रक्कम "> 
+        </div>
+
+        <div>
+          <input type="text" id="sandarbh" name="name" placeholder="संदर्भ">
+          <input type="number" id="baki" name="name" placeholder="मागील बाकी ">
+        </div>
+    
+        
+          <button class="save">Save</button>
+          <button class="back">Back</button>
+          </div>
+        </form>  
+
+</body>
+
+<script>
+  function myFunction() {
+      event.preventDefault(); 
+      
+      var formData = {
+          bill_id: parseInt(document.getElementById('bill_no1').value),
+          bata: document.getElementById('bata').value,
+          mark: document.getElementById('mark').value,
+          product: document.getElementById('product').value,
+          quantity: parseInt(document.getElementById('quantity').value),
+          rate: parseInt(document.getElementById('rate').value),
+          price: parseInt(document.getElementById('price').value)
+      };
+
+      console.log(formData)
+
+      fetch('http://localhost:3000/saleproductData/insertsaleproduct', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(result => {
+          console.log('Entry added successfully:', result);
+          updateTable(formData, result);
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+      alert('Button clicked!');
+      // Add your desired functionality here
+    }
+
+    function updateTable(entry,result) {
+      var tableBody = document.getElementById('tableBody1');
+      var newRow = document.createElement('tr');
+      newRow.innerHTML = `
+          <td>${entry.product}</td>
+          <td>${entry.bata}</td>
+          <td>${entry.mark}</td>
+          <td>${entry.quantity}</td>
+          <td>${entry.rate}</td>
+          <td>${entry.price}</td>
+          <td>${entry.price}</td>
+          <td><button type="button" onclick="deleteUser(${result.insertId})">Delete</button></td>
+      `;
+      tableBody.appendChild(newRow);
+
+      function deleteUser(userId) {
+          // Perform delete operation based on userId
+          fetch('http://localhost:3000/saleproductData/deletesaleproduct/' + userId, {
+              method: 'DELETE'
+          })
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Network response was not ok');
+              }
+              console.log('User deleted successfully');
+              // Refresh the table or update UI as needed
+              //newRow.remove();
+              row.remove();
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+      }
+  }
+</script>
+</html>

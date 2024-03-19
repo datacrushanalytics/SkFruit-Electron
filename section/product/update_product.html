@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Form in Electron</title>
+    <link rel="stylesheet" href="../../assets/css/product_master.css">
+</head>
+<body>
+    <div class="container">
+        <h1 align="center">Product Master</h1> <hr>
+
+        <div class="container1">
+        <form id="loginForm">
+    
+        <input type="text" id="id" name="id" placeholder="ID" value = ""> 
+        <input type="text" id="category" name="category" placeholder="Category">
+    
+        <input type="text" id="name" name="name" placeholder="Name"> <br>
+    
+        <input type="text" id="rate" name="rate" placeholder="Rate"> <br>
+
+        <input type="text" id="w_rate" name="w_rate" placeholder="W Rate"> <br>
+        <input type="text" id="minimum_stock" name="minimum_stock" placeholder="Minimum Stock"> <br>
+
+        <div class="second-row">
+        <input type="checkbox" id="rate_editable" name="rate_editable" value = 1>
+        <label for="isActive">RATE EDITABLE</label>
+        <br>
+        <br>
+
+
+    </div> 
+        <div class="third-row">
+        <button type="submit" id="updateButton" class="border-hover">Update</button>
+        <a href="./user.html"><button type='button' class="border-hover">Back</button></a>
+    </div>
+    </form>
+    </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Retrieve user data from localStorage
+            var userData = localStorage.getItem('userData');
+
+            if (userData) {
+                // Parse the user data
+                var user = JSON.parse(userData);
+
+                // Populate form fields with user data
+                document.getElementById("id").value = user.id;
+                document.getElementById("name").value = user.name;
+                document.getElementById("category").value = user.category;
+                document.getElementById("rate").value = user.rate;
+                document.getElementById("w_rate").value = user.w_rate;
+                document.getElementById("minimum_stock").value = user.minimum_stock;
+                if (user.rate_editable = '1'){
+                document.getElementById("rate_editable").checked = true;
+                }  
+                // Clear user data from localStorage (optional)
+                localStorage.removeItem('userData');
+            }
+        });
+
+        function updateUser() {
+            if(document.querySelector('input[name="rate_editable"]:checked').value = 'on'){
+                var status = '1'
+            }else{
+                var status = '0'
+            }
+            var userData = {
+                id: parseInt(document.getElementById("id").value),
+                name: document.getElementById("name").value,
+                category: document.getElementById("category").value,
+                rate: document.getElementById("rate").value,
+                w_rate: document.getElementById("w_rate").value,
+                minimum_stock: document.getElementById("minimum_stock").value,
+                rate_editable: status
+            };
+
+            fetch('http://localhost:3000/productData/updateProduct/'+ parseInt(document.getElementById("id").value), {
+                method: 'PUT',
+                body: JSON.stringify(userData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(result => {
+                console.log('Data added successfully:', result);
+                // Optionally, you can redirect or show a success message here
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Optionally, you can display an error message here
+            });
+
+
+            
+            // Perform the update operation (e.g., send data to server)
+            console.log("Update user:", userData);
+            window.location.href = './product.html';
+        }
+        
+        // Add event listener to the "Update" button
+        document.getElementById("updateButton").addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent form submission
+            updateUser(); // Call the updateUser function to handle the update operation
+        });
+        
+    </script>
+</body>
+</html>
+
+

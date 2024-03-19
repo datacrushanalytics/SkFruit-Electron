@@ -3,7 +3,7 @@
   "productName": "skfruits",
   "version": "1.0.0",
   "description": "My Electron application description",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
@@ -25,7 +25,6 @@
     "@electron-forge/maker-squirrel": "^7.2.0",
     "@electron-forge/maker-zip": "^7.2.0",
     "@electron-forge/plugin-auto-unpack-natives": "^7.2.0",
-    "electron": "28.2.2",
-    "electron-prebuilt-compile": "^8.2.0"
+    "electron": "28.2.2"
   }
 }

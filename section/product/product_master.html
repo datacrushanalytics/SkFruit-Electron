@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>product master</title>
+    <link rel="stylesheet" href="../../assets/css/Product_Master.css">
+</head>
+
+<body>
+ 
+
+    <div class="container">
+        <h1 align="center">Product Master</h1> <hr>
+
+        <div class="container1">
+        <form id="loginForm" method="POST">
+    
+        <div class="first-row">
+            <label for="userType">Catergory  </label>
+        <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
+        <select id="category" name="category" placeholder="Category">
+            <!-- <option value="User" selected>Catergory</option> -->
+            <!-- Add more options as needed -->
+        </select>
+        </div>
+        
+
+
+        <!-- <label for="userType">Name</label> -->
+        <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
+        <!-- <select id="name" id="name" name="name"> -->
+        <input type="text" id="name" name="name" placeholder="Product name"> <br>
+            <!-- <option value="User" disabled selected>Select Account</option> -->
+        <!-- </select> -->
+    
+        <!-- <input type="text" id="name" name="name" placeholder="Name">  -->
+      
+    
+        <input type="text" id="rate" name="rate" placeholder="Rate"> <br>
+
+        <input type="text" id="w_rate" name="w_rate" placeholder="W Rate"> <br>
+        <input type="text" id="minimum_stock" name="minimum_stock" placeholder="Minimun Stock"> <br>
+
+        <div class="second-row">
+        <input type="checkbox" id="rate_editable" name="rate_editable" value = 1>
+        <label for="isActive">RATE EDITABLE</label>
+        <br>
+
+
+
+    </div> 
+        <div class="third-row">
+        <!-- <button class="border-hover" >Save</button> -->
+        <button type="submit" class="border-hover">Save</button>
+        <a href="./product.html"><button type='button' class="border-hover">Back</button></a>
+    </div>
+    </form>
+    </div>
+    </div>
+ 
+    <script src="./productMaster.js"></script>
+
+</body>
+
+</html>

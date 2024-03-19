@@ -1,13 +1,42 @@
 body {
-  background-color: #ccffcc;
+  margin: 0px;
   font-family: Arial, Helvetica, sans-serif;
-  margin: auto;
-  align-items: center;
-  justify-content: center;
-  max-width: 38rem;
-  padding: 2rem;
 }
-
+.bg-img{
+  height: 100%;
+  width: 100%;
+  position: fixed;
+}
+.logoimg{
+  align-self: center;
+  height: 100px; 
+  width: 100px;
+}
+h3{
+  margin-left: 30px;
+  color: whitesmoke;
+}
+.hero-section{
+  height: 100%;
+  width: 1536px;
+  position: absolute;
+  display: flex;
+}
+.section1{
+  height:100%;
+  width:20%;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: solid black;
+}
+.section2{
+  height: 100%;
+  width: 80%;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: solid black;
+}
+h2{
+  color: #f1f1f1;
+}
 .container1 {
   display: flex;
 }
@@ -16,32 +45,13 @@ body {
   display: flex;
  
 }
-
-/* .btn{
-  border-radius: 100px;
-  width: 300px;
-  height: 115px;
-  margin: 5px 10px;
-  border: 5px  solid rgb(252, 15, 7);
-} */
-
-button{
+.box1{
   border-radius: 100px;
   width: 300px;
   height: 115px;
   margin: 5px 10px;
   border: 5px  solid rgb(252, 15, 7);
 }
-
-/* .button5{
-  border-radius: 25%;
-  margin: 5px 10px;
-  width: 600px;
-  height: 100px;
-  background-color: #fdd1ce; 
-  box-shadow: 0px 20px 3px rgb(56, 8, 2);
-} */
-
 .custom-button
 {
   border-radius: 25%;
@@ -51,6 +61,15 @@ button{
   background-color: #fdd1ce; 
   border: none;
   box-shadow: 0px 20px 3px rgb(56, 8, 2);
+}
+.logout{
+  margin: 5px;
+  margin-left: 40px;
+  height: 50px;
+  width: 150px;
+  background-color: yellowgreen;
+  border-radius: 15px;
+
 }
 
 .container {
@@ -73,8 +92,8 @@ button{
   /* box-shadow: 5px 20px 5px rgba(95, 19, 5, 0.5);  */
   box-shadow: 0px 20px 3px rgb(56, 8, 2);
 }
-
 .navbar {
+  margin-top: 265px;
   background-color: #333;
   overflow: hidden;
   display: flex;
@@ -92,8 +111,6 @@ button{
 }
 
 .container {
-  /* background-color: #333; */
-  /* overflow: hidden; */
   display: flex;
   justify-content: space-around;
 }
@@ -102,39 +119,4 @@ button{
   color: rgb(8, 8, 8);
   text-decoration: none;
   padding: 10px;
-}
-
-.menu-icon-container {
-  position: relative;
-  float: right; /* Align the icon to the right side */
-  margin-right: 10px; /* Adjust margin as needed */
-  line-height: 40px; /* Vertical alignment */
-  margin-top: -45px;
-}
-
-.menu-icon-container i {
-  margin-right: 5px; /* Adjust spacing between icon and text */
-}
-
-/* Additional styles for the text */
-.menu-text {
-  font-size: 16px; /* Adjust font size as needed */
-  color: #333; /* Adjust text color */
-  /* Additional styles can be added */
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
 }

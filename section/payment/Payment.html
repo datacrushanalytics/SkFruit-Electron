@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <link rel="stylesheet" href="../assets/css/Payment.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h2 align="center">PAYMENT DETAILS</h2>
+        <hr>
+        <div class="first-row">
+            <div class="payment">
+                <h4>PID</h4>
+                <div class="input-field">
+                    <input type="text">
+                </div>
+            </div>
+            <div class="date">
+                <h4>Date</h4>
+                <div class="input-field">
+                    <input type="date" placeholder="Date" onfocus="(this.type='Date')">
+                </div>
+            </div>
+        </div><br><br>
+
+        <h4>From Account</h4>
+        <select id="fromAccount" name="fromAccount">
+            <option value="CASH">CASH</option>
+            <option value="G-PAY">G-PAY</option>
+        </select><br>
+
+        <h4>To Account</h4>
+        <select id="toAccount" name="fromAccount">
+            <option value="SELECT ACCOUNT">SELECT ACCOUNT</option>
+            <option value="G-PAY">STATE BANK OF INDIA</option>
+            <option value="G-PAY">BANK OF MAHARASHTRA</option>
+        </select><br>
+
+        <h4>Comment</h4>
+        <textarea id="comment" name="comment"></textarea><br>
+
+        <div class="first-row">
+            <div class="no">
+                <h4>Prev. Balance</h4>
+                <div class="input-field">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="to">
+                <h4>Amount</h4>
+                <div class="input-field">
+                    <input type="text">
+                </div>
+            </div>
+        </div><br><br><br>
+
+        <div class="third-row">
+            <button id="border-hover" onclick="payment()"> SAVE</button>
+            <button id="border-hover">Back</button>
+        </div>
+    </div>
+
+    <script src="../src/payment.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Form in Electron</title>
+    <link rel="stylesheet" href="../../assets/css/supplier_outstanding.css">
+    <style>
+        /* Add border to the second form */
+        .form1 {
+            border: 1px solid black;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        /* #route {
+            border-radius: 8px;
+            height: 25%;
+            width: 150px;
+            border: 1px solid transparent;
+            padding: 10px;
+            box-shadow: 5px 5px 5px grey;
+            margin: 20px;
+        } */
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 align="center">Supplier Outstanding</h1><br>
+        <hr>
+
+        <div class="container1">
+            <form id="loginForm1">
+
+                <br>
+
+                <label for="userType">Supplier Name</label>
+                <select class="drop" id="customer" id="name" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br>
+
+                <br>
+
+
+                <!-- <div class="third-row"> -->
+                    <!-- <button class="border-hover" >Save</button> -->
+                    <button type="submit" id="button1">Submit</button>
+                    <a href="./sale.html"><button type='button' id="button2">Back</button></a>
+                <!-- </div> -->
+            </form>
+            <br>
+            <table>
+                <tr>
+                    <th>Sr. No</th>             
+                    <th>Supplier Name</th>
+                    <th>Address</th>                  
+                    <th>Mobile Number</th>
+                    <th>Amount</th>
+                </tr>
+                
+                <!-- Add more rows as needed -->
+                <tbody id="tableBody">
+                    <!-- Data will be inserted here -->
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+
+
+</body>
+<script src="./supplierOutstanding.js"></script>
+
+
+
+</html>
