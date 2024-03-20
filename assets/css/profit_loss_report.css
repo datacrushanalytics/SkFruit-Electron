@@ -1,4 +1,3 @@
-
 *{ 
     margin:0;
     padding:0;
@@ -6,7 +5,7 @@
   }
   
   body{
-    width: 92%;
+    width: 100%;
     height: 80vh;
     display: flex;
     justify-content: center;
@@ -15,73 +14,90 @@
   }
   
   .container{
-    width: 1000px;
-    height: 400px;
+    width: 1030px;
+    height: 450px;
     border:  2px solid black;;
     flex-direction: column;
     justify-content: center;
-    margin-left: 100px;
+  }
+  
+  .first-row{
+    display: flex;
+    margin-top: 3%;
+  }
+  
+  #fromdate{
+    border-radius: 8px;
+    height: 35px;
+    width: 400px;
+    /* margin-right:-1; */
+    margin-left: -0px; 
   }
 
-.first-row {
+  label{
+    margin-left: 4%;
+  }
+  
+  #todate{
+    border-radius: 8px;
+    height: 35px;
+    width: 400px;
+    margin-left: -0px;
+  }
+
+  #product{
+    border-radius: 8px;
+    height: 35px;
+    width: 600px;
+
+  }
+  
+  #bata {
+    border-radius: 8px;
+    height: 25%;
+    width: 600px;
+    border: 1px solid transparent;
+    padding: 10px;
+    box-shadow: 5px 5px 5px grey;
+    margin: 20px;
+    
+}
+/* .drop1{
+  margin-left: 50px;
+} */
+
+  .third-row{
+    height: 35px;
+    width: 200px;
     display: flex;
-    width:90%;
-    margin-right:40px;
-}
-.date{
-    width:300%;
-    height:300;
-    margin-right:-500px;
-    align-items:right;
-    justify-content: space-between;
+  }
 
-}
-
-.second-row {
-    display: flex;
-    width:90%;
-    margin-right:40px;
-}
-.from{
-    width:300%;
-    height:300;
-    margin-right:-500px;
-    align-items:right;
-    justify-content: space-between;
-
-}
-
-#customer{ 
-    width: 590px;
-    height: 25px;
-}
-
-.button1{
-    /* background-color: rgb(96, 178, 96); */
-    width: 290px;
-    height: 40px;
-}
-
-.button2{
-    /* background-color: rgb(241, 62, 62); */
-    margin-left:0;
+  #button1{
+    border-radius: 8px;
+    height: 35px;
     width: 300px;
-    height:40px;
-    padding:10px;
-}
-
-#container1{
-    display: flex;
-}
-#inaccount{
-    width:600px;
-    height: 25px;
-}
-.button3{
-    background-color:white;
-    margin-left:120px;
+    margin-left: 18%;
+  }
+  
+  #button2{
+    border-radius: 8px;
+    height: 35px;
     width: 300px;
-    height:40px;
-    padding:10px;
-}
-
+  }
+   
+  table{
+    border-collapse: collapse;
+    width: 650px;
+    margin-left: 4%;
+  }
+  
+  
+  th,tr{
+    border: 1px solid black;
+    text-align: left;
+    padding: 16px;
+  }
+   th{
+    background-color:rgb(222, 215, 215);
+   }
+  

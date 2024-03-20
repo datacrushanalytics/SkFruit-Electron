@@ -4,39 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Form in Electron</title>
-    <link rel="stylesheet" href="../assets/css/Add_Vehicle_Details.css">
+    <link rel="stylesheet" href="../../assets/css/Add_Vehicle_Details.css">
 </head>
 <body>
     <div class="container">
-        <h1 align="center">VEHICLE DETAILS</h1> 
+        <h1 align="center">VEHICLE DETAILS</h1> <hr>
 
-        <!-- <div class="container1"> -->
-        <form id="loginForm">
-        <label for="Id"><b>ID.</b></label> <br>
-        <input type="text" id="Id" name="Id"> <br>
+        <div class="container1">
+        <form id="loginForm" method="POST">
     
-        <label for="name"><b>VEHICLE NAME</b></label> <br>
-        <input type="text" id="name" name="name"> <br>
-        
-        <label for="number"><b>VEHICLE NO.</b></label> <br> 
-        <input type="number" id="number" name="number"> <br>
+        <div class="first-row">
 
-        <button id="saveBtn" >SAVE</button>
-        <button id="backBtn"><a href="../section/Vehicle_Details.html">BACK</button></a>
+        <input type="text" id="id" name="id" placeholder="ID"> <br>
+
+        <input type="text" id="name" name="name" placeholder="VEHICLE NAME"> <br>
+
+        <input type="number" id="number" name="number" placeholder="VEHICLE NO"> <br>
+
+    </div> 
+        <div class="third-row">
+        <button type="submit" class="border-hover">Save</button>
+        <a href="./Vehicle_Details.html"><button type='button' class="border-hover">Back</button></a>
+    </div>
     </form>
     </div>
-    <!-- <footer> -->
-    <div id="footer">
-        <nav>
-            <ul>
-                <li><a href="#">HOME</a></li> &nbsp;&nbsp;&nbsp;
-                <li><a href="#">SALE</a></li>
-                <li><a href="#">ROOT_SALE</a></li>
-                <li><a href="#">RECEIPT</a></li>
-                <li><a href="#">PAYMENT</a></li>
-            </ul>
-        </nav>
     </div>
-
+    
 </body>
 </html>

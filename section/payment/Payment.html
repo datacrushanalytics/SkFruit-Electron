@@ -4,69 +4,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Page</title>
-    <link rel="stylesheet" href="../assets/css/Payment.css">
+    <title>User Form in Electron</title>
+    <link rel="stylesheet" href="../../assets/css/Payment.css">
+    <style>
+        /* Add border to the second form */
+        .form1 {
+            border: 1px solid black;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 
 <body>
-
     <div class="container">
-        <h2 align="center">PAYMENT DETAILS</h2>
+        <h1 align="center">Payment</h1><br>
         <hr>
-        <div class="first-row">
-            <div class="payment">
-                <h4>PID</h4>
-                <div class="input-field">
-                    <input type="text">
+
+        <div class="container1">
+            <form id="loginForm1">
+
+                <div class="first-row">
+                    <label for="userType">PID</label>
+                    <input type="number" id="fromdate" name="date" placeholder="From Date">
+                    <br>
+                    <label for="userType">Date</label>
+                    <input type="date" id="todate" name="date" placeholder="To Date">
                 </div>
-            </div>
-            <div class="date">
-                <h4>Date</h4>
-                <div class="input-field">
-                    <input type="date" placeholder="Date" onfocus="(this.type='Date')">
-                </div>
-            </div>
-        </div><br><br>
 
-        <h4>From Account</h4>
-        <select id="fromAccount" name="fromAccount">
-            <option value="CASH">CASH</option>
-            <option value="G-PAY">G-PAY</option>
-        </select><br>
+                <br>
 
-        <h4>To Account</h4>
-        <select id="toAccount" name="fromAccount">
-            <option value="SELECT ACCOUNT">SELECT ACCOUNT</option>
-            <option value="G-PAY">STATE BANK OF INDIA</option>
-            <option value="G-PAY">BANK OF MAHARASHTRA</option>
-        </select><br>
+                <label for="userType"> From Account</label>
+                <select class="drop" id="product" id="product" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select>
 
-        <h4>Comment</h4>
-        <textarea id="comment" name="comment"></textarea><br>
+                <br>
 
-        <div class="first-row">
-            <div class="no">
-                <h4>Prev. Balance</h4>
-                <div class="input-field">
-                    <input type="text">
-                </div>
-            </div>
+                <label for="userType">To Account</label>
+                <select class="drop" id="bata" id="bata" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br>
+    
+                <label>Comment</label>
+                <textarea id="comment" name="comment"></textarea><br>
 
-            <div class="to">
-                <h4>Amount</h4>
-                <div class="input-field">
-                    <input type="text">
-                </div>
-            </div>
-        </div><br><br><br>
+                <div class="second-row">
+                    <label for="userType">Prev. Balance</label>
+                    <input type="number" id="fromdate" name="date" placeholder="From Date">
+                    <br>
+                    <label for="userType">Amount</label>
+                    <input type="date" id="todate" name="date" placeholder="To Date">
+                </div><br>
 
-        <div class="third-row">
-            <button id="border-hover" onclick="payment()"> SAVE</button>
-            <button id="border-hover">Back</button>
+                <!-- <div class="third-row"> -->
+                    <!-- <button class="border-hover" >Save</button> -->
+                    <button type="submit" id="button1">Save</button>
+                    <a href="./payment1.html"><button type='button' id="button2">Back</button></a>
+                <!-- </div> -->
+            </form>
+         
+
         </div>
     </div>
 
-    <script src="../src/payment.js"></script>
+
+
+
 </body>
+<script src="./payment.js"></script>
+
+
 
 </html>

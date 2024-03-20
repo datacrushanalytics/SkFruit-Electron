@@ -29,9 +29,9 @@ body{
 #fromdate{
   border-radius: 8px;
   height: 35px;
-  width: 400px;
+  width: 380px;
   /* margin-right:-1; */
-  margin-left: 1px; 
+  margin-left: 1%; 
 }
 
 label{
@@ -41,8 +41,8 @@ label{
 #todate{
   border-radius: 8px;
   height: 35px;
-  width: 400px;
-  margin-left: -0px;
+  width: 380px;
+  margin-left: 1%;
 }
 
 #customer{

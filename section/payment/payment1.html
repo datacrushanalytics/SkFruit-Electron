@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sk_fruits</title>
-    <link rel="stylesheet" href="../assets/css/payment1.css">
+    <link rel="stylesheet" href="../../assets/css/payment1.css">
 </head>
 <body>
     
@@ -12,24 +12,19 @@
         <h3 align="center">वैभव शिंदे </h3><br>
         <hr><br>
         <div class="first-row">
-            <div class="no">
-                <h3>Date</h3>
-                <div class="input-filed">
-                <input type="text"placeholder="date" onfocus="(this.type='date')">
-            </div>
-            </div>
-        
-            <div class="to">
-                <h3>Time </h3>
-                <div class="input-field">
-               <input type="text"placeholder="time" onfocus="(this.type='time')">
-            </div>
-            </div>
-        </div><br><br>
+            <label for="userType">Date</label>
+            <input type="number" id="fromdate" name="date" placeholder="From Date">
+            <br>
+            <label for="userType">Time</label>
+            <input type="time" id="todate" name="date" placeholder="To Date">
+        </div><br>
+
+        <label for="userType"> Payment</label>
+        <br>
         <table>
             <thead>
                 <tr>
-                    <h3>PAYMENT</h3>
+                    
                     <td>NO</td>
                     <td>FROM A/C</td>
                     <td>TO A/C</td>

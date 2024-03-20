@@ -1,98 +1,61 @@
-
-/* CSS for the table */
-table {
-    width: 100%;
-    border-collapse: collapse;
+body{
+    font-family: sans-serif;
+    text-align: center;
+    background-color: rgba(242, 242, 242, 0.8);
 }
 
-th, td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f2f2f2;
-}
 
 .container{
-    width:100%;
-    padding: 20px;
-    position: relative;
+    margin: 4%;
+  border: 2px double;
+  text-align: center;
+  text-shadow: 2px;
+  justify-content: center;
+  width: 930px;
+  height: 550px;
 }
+       
 
-/* CSS for buttons */
-.button {
-    background-color: #00ba8b;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 5px;
-}
+        .button1-container {
+            margin-bottom: 20px;
+        }
 
-.button1 {
-    background-color:#00ba8b;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-right: -2%;
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translate(-50%);
-    cursor: pointer;
-}
+        .button1 {
+            padding: 12px 24px;
+            text-decoration: none;
+            color: white;
+            background-color: #808080; /* Grey color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 0 10px;
+        }
 
-.edit-button {
-    background-color: #00ba8b;
-}
+        .button1:hover {
+            background-color: #555; /* Darker grey on hover */
+        }
 
-.delete-button {
-    background-color: #f44336;
-}
+        .button1 a {
+            color: white;
+            text-decoration: none;
+        }
 
-/* CSS for menu */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    z-index: 1;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    padding: 12px 16px;
-    margin: 8px 0;
-    border-radius: 5px;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 6px 0;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
+        table {
+            width: 90%;
+            max-width: 800px;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.8); /* Transparent background */
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin: 0 auto;
+        }
+        th,
+        td {
+            border: 1px solid #DDDDDD;
+            text-align: left;
+            padding: 12px;
+        }
+        th {
+            background-color: #F2F2F2;
+        }
