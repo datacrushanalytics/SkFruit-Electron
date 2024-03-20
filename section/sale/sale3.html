@@ -168,13 +168,14 @@
           <td>${entry.quantity}</td>
           <td>${entry.rate}</td>
           <td>${entry.price}</td>
-          <td>${entry.price}</td>
-          <td><button type="button" onclick="deleteUser(${result.insertId})">Delete</button></td>
+          <td><button type="button" onclick="deleteUser(this, ${result.insertId})">Delete</button></td>
       `;
     tableBody.appendChild(newRow);
+  }
 
-    function deleteUser(userId) {
+    function deleteUser(button,userId) {
       // Perform delete operation based on userId
+      var row = button.parentNode.parentNode;
       fetch('http://localhost:3000/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
       })
@@ -191,7 +192,6 @@
           console.error('Error:', error);
         });
     }
-  }
 </script>
 
 </html>
