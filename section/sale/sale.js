@@ -2,10 +2,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Get the current date
     var currentDate = new Date();
-
     // Format the date as mm/dd/yyyy
     var formattedDate = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
-
     // Set the placeholder of the input field to the formatted date
     document.getElementById('date').value = formattedDate;
 
@@ -18,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(data => {
             // Populate dropdown with API data
-            document.getElementById('bill_no').value = parseInt(data[0]['num']) + 1;
+            document.getElementById('bill').value = parseInt(data[0]['num']) + 1;
 
         })
         .catch(error => {
@@ -89,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 function populateDropdown(data) {
-    var userNameDropdown = document.getElementById('name');
+    var userNameDropdown = document.getElementById('grahk');
     userNameDropdown.innerHTML = ''; // Clear existing options
 
     // Create and append new options based on API data
@@ -103,14 +101,14 @@ function populateDropdown(data) {
     // Add a placeholder option
     var placeholderOption = document.createElement('option');
     placeholderOption.value = ""; // Set an empty value
-    placeholderOption.textContent = "Select user type"; // Set placeholder text
+    placeholderOption.textContent = "ग्राहकाचे नाव"; // Set placeholder text
     placeholderOption.disabled = true; // Disable the option
     placeholderOption.selected = true; // Select the option by default
     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
 }
 
 function populateDropdown1(data) {
-    var userNameDropdown = document.getElementById('bata');
+    var userNameDropdown = document.getElementById('bta');
     userNameDropdown.innerHTML = ''; // Clear existing options
 
     // Create and append new options based on API data
@@ -219,20 +217,20 @@ function populateDropdown4(data) {
 
 
 function getProducts() {
-    var bataId = document.getElementById('bata').value;
+    var bataId = document.getElementById('bta').value;
     console.log(bataId)
     fetch('http://localhost:3000/purchaseproductData/getBataProduct/' + bataId)
         .then(response => response.json())
         .then(data => {
             console.log(data[0].product_name)
-            document.getElementById('rate').value = data[0].selling_price;
-            // document.getElementById('product').value = data.product_name
+            document.getElementById('mark').value = data[0].mark;
+            document.getElementById('kimmat').value = data[0].selling_price;
             var productDropdown = document.getElementById('product');
             // Loop through the options in the dropdown
             for (var i = 0; i < productDropdown.options.length; i++) {
-                console.log(data.product_name);
+                console.log(data[0].product_name);
                 // Check if the current option's value matches the fetched data
-                if (productDropdown.options[i].value == data.product_name) {
+                if (productDropdown.options[i].value == data[0].product_name) {
                     // Set the selected attribute of the matched option
                     productDropdown.options[i].selected = true;
                     // Exit the loop since we found the matching option
@@ -245,3 +243,6 @@ function getProducts() {
         });
 }
 
+function updateTotal(){
+    document.getElementById("total").value = document.getElementById("kimmat").value * document.getElementById("nag").value
+}

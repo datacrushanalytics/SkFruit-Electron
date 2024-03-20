@@ -48,7 +48,7 @@ body{
   
   
   
-  #grahk{
+  #grahk, #product, #bta, #Route{
     text-indent: 3%;
     border-radius: 6px;
     height: 40px;
@@ -66,16 +66,15 @@ body{
     
   }
   
-  #bta{
+  /* #bta{
   border-radius: 8px;
   height: 15px;
   width: 50px;
-  
   padding:  10px;
-  /* box-shadow: 5px 5px 5px grey; */
   margin:20px;
-  }
-  
+  } */
+  /* box-shadow: 5px 5px 5px grey; */
+
   #mark{
   border-radius: 8px;
   height: 15px;
@@ -154,15 +153,16 @@ body{
   /* box-shadow: 5px 5px 5px grey; */
   margin:20px;
   }
-  #product{
+  /* #product{
   border-radius: 8px;
     height: 15px;
     width: 300px;
    
   padding:  10px;
-  /* box-shadow: 5px 5px 5px grey; */
+
   margin:20px;
-  }
+  } */
+    /* box-shadow: 5px 5px 5px grey; */
   
   #bata{
   border-radius: 8px;
@@ -223,11 +223,15 @@ body{
   }
   
   .border-hover {
-  
-  padding:  10px;
+    border:1px solid transparent;
+    padding:10px;
+    box-shadow: 5px 10px 8px gray;
   /* box-shadow: 5px 5px 5px grey; */
   
   }
+  .border-hover:hover{
+    border-color: blue;
+   }
   
   /* .border-hover:hover {
   border-color:blue;
