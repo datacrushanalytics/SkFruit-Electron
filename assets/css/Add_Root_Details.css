@@ -1,125 +1,19 @@
-/* body {
-  background-color: #ccffcc;
-  font-family: Arial, Helvetica, sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
-  
-}
-
-#container1{
-  display: flex;
-}
-
-.container {
-  width: 300px;
-  
-  text-align: left;
-  margin: 20px;
-  
-} 
-
-label, input, button {
-  margin: 10px;
-}
-
-#saveBtn {
-  height: 40px;
-  width: 300px;
-  background-color: rgba(0, 128, 49, 0.849);
-  color: #fff;
-  border: none;
-  padding: 10px;
-}
-
-#backBtn{
-width: 300px;
-height: 40px;
-padding: 10px;
-color: #fff;
-border: none;
-background-color: #f44336;
-}
-
-#Id{
-  width: 95%;
-}
-
-#name{
-  width: 95%;
-  height: 20px;
-}
-
-#details{
-  width: 95%;
-  height: 20px;
-}
-
-
-#number{
-  width: 95%;
-  height: 20px;
-}
-
-#Id{
-  height: 20px; 
-}
-
-#footer {
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  padding: 10px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 5%;
-} 
-
-nav ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: flex; 
-  justify-content: space-between;
-}
-
-nav ul li {
-  margin-right: 20px;
-}
-
-av ul li:last-child {
-  margin-right: 0; 
-}
-
-nav ul li a {
-  color: #fff;
-  text-decoration: none;
-  padding: 10px 20px;
-} */
-
-
-
-
-body {
+body{
   font-family: sans-serif;
-  background-color: rgb(207, 205, 205); 
-  
+  text-align: center;
+  background-color: rgba(242, 242, 242, 0.8);
 }
+
 
 .container{
-  margin: 10%;
-  margin-left: 35%;
-  margin-right: 35%;
+  margin: 4%;
   border: 2px double;
   text-align: center;
   text-shadow: 2px;
   justify-content: center;
-  /* margin-left: 10%; */
- }
-
+  width: 930px;
+  height: 550px;
+}
 #container1{
   display: flex;
 }
@@ -146,7 +40,7 @@ margin:20px;
 
 
 
-#route_name, #details, #mobile_no{
+#routeId, #route_name, #details, #mobile_no{
   border-radius: 8px;
   height: 15px;
   width: 380px;
@@ -166,24 +60,25 @@ margin:20px;
 }
 
 .border-hover {
-  border: 1px solid transparent; 
+  border: 1px solid transparent;
   padding:  10px;
-  box-shadow: 5px 5px 5px grey; 
+  box-shadow: 5px 5px 5px grey;
 }
-
 .border-hover:hover {
   border-color:blue;
 }
 button {
   padding: 10px 20px;
   font-size: 16px;
+  width: 150px;
   border: none;
   cursor: pointer;
-  margin: 20px;
+  margin: 10px;
   border-radius: 5px;
   outline: none;
-  margin-bottom: 30%;
 }
+
+
 
 .third-row{
   margin-left: 30%;  
@@ -217,7 +112,3 @@ button {
   background-color: #ccc;
   color: #fff;
 } 
-
-
-
-

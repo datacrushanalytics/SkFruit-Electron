@@ -22,6 +22,15 @@
     margin-left: 8px;
   }
   
+  #customer{
+    border-radius: 8px;
+    height: 35px;
+    width:580px;
+    margin-left: 1%;
+}
+label{
+  margin-left: 10%;
+}
 
   .third-row{
     height: 35px;

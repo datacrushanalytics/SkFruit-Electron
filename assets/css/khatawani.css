@@ -32,9 +32,9 @@
   #fromdate{
     border-radius: 8px;
     height: 35px;
-    width: 400px;
+    width: 380px;
     /* margin-right:-1; */
-    margin-left: -0px; 
+    margin-left: 1%; 
   }
 
   label{
@@ -44,15 +44,15 @@
   #todate{
     border-radius: 8px;
     height: 35px;
-    width: 400px;
-    margin-left: -0px;
+    width: 380px;
+    margin-left: 1%;
   }
 
   #customer{
     border-radius: 8px;
     height: 35px;
     width: 600px;
-
+    margin-left: 1%;
   }
   
   #route {

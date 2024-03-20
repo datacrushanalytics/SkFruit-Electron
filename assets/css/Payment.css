@@ -1,140 +1,123 @@
-body {
-    font-family: sans-serif;
-    background-color: rgb(207, 205, 205); 
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    /* text-align: center; */
-    align-content: center;
-    width: 460px;
-    margin: 0 auto;
+*{ 
+    margin:0;
+    padding:0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  body{
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(242, 242, 242, 0.8);
+    margin: 25px;
+  }
+  
+  .container{
+    width: 1050px;
+    height: 500px;
+    border:  2px solid black;;
     flex-direction: column;
     justify-content: center;
-    
-}
-
-.first-row{
-    width: 25px;
-    margin-right: 30px;
+  }
+  
+  .first-row{
     display: flex;
-    height: 40px;
-    
-}
-.payment{
-    width:350px;
-    height:60px ;
-    margin-right:80px;
-}
-
-.date .input-field input{
-    width: 250px;
-    height: 30px;
-    box-shadow: 5px 5px 5px grey;
+    margin-top: 3%;
+  }
+  
+  #fromdate{
     border-radius: 8px;
-    
-}
+    height: 35px;
+    width: 400px;
+    /* margin-right:-1; */
+    margin-left: 1%; 
+  }
 
-.payment .input-field input{
-    width: 250px;
-    height: 30px;
-    box-shadow: 5px 5px 5px grey;
+  label{
+    margin-left: 4%;
+  }
+  
+  #todate{
     border-radius: 8px;
+    height: 35px;
+    width: 400px;
+    margin-left: 1%;
+  }
+
+  #product{
+    border-radius: 8px;
+    height: 35px;
+    width: 600px;
+
+  }
+  
+  #bata {
+    border-radius: 8px;
+    height: 25%;
+    width: 600px;
+    border: 1px solid transparent;
+    padding: 10px;
+    box-shadow: 5px 5px 5px grey;
+    margin: 20px;
     
 }
-.input-field
-{
-    box-sizing: border-box;
+label{
+    margin-top: 5px;
 }
-
-#comment{
+.second-row{
+    display: flex;
+    margin-top: 3%;
+  }
+  
+  #comment{
     /* height: 30px; */
     width: 580px;
     border-radius: 8px;
-    border: 1px solid transparent; 
-  padding:  10px;
+    border: 1px solid transparent;
+  padding:  8px;
   box-shadow: 5px 5px 5px grey;
+  margin-top: -8px;
 }
-
-#fromAccount{
-    width: 600px; 
-    height: 25px;
-    border-radius: 8px;
-    box-shadow: 5px 5px 5px grey;
-    border: 1px solid transparent; 
-}
-
-#toAccount{
-    width: 600px; 
-    height: 25px;
-    box-shadow: 5px 5px 5px grey;
-    border: 1px solid transparent; 
-    border-radius: 8px;
-}
-
-#pid{
-    width: 100%; 
-    height: 30px;
-    box-shadow: 5px 5px 5px grey;
-    border: 1px solid transparent; 
-}
-
-#prevBalance{
-    width: 100%;
-    height: 25px;
-    
-}
-
-#amount{
-    width: 100%;
-    height: 25px;  
-}
-
-.border-hover {
-    border: 1px solid transparent; 
-    padding:  10px;
-    box-shadow: 5px 5px 5px grey; 
-  }
-  
-  .border-hover:hover {
-    border-color:blue;
-  }
-  button {
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    outline: none;
-    width: 100px;
-  }
-  
+/* .drop1{
+  margin-left: 50px;
+} */
+/* 
   .third-row{
-    margin-left: 40%;  
-    text-align: left;
+    height: 35px;
+    width: 200px;
+    display: flex;
+  } */
+
+  #button1{
+    border-radius: 8px;
+    height: 35px;
+    width: 300px;
+    margin-left: 18%;
   }
-  .second-row{
-    margin-left: 35%;  
-    text-align: left;
+  
+  #button2{
+    border-radius: 8px;
+    height: 35px;
+    width: 300px;
   }
+   
+  table{
+    border-collapse: collapse;
+    width: 550px;
+    margin-left: 4%;
+  }
+  
+  
+  th,tr{
+    border: 1px solid black;
+    text-align: left;
+    padding: 12px;
+  }
+   th{
+    background-color:rgb(222, 215, 215);
+   }
+  
 
-.no{
-    width:350px;
-    height:60px ;
-    margin-right:80px;
-}
-
-.to .input-field input{
-    width: 250px;
-    height: 25px;
-    box-shadow: 5px 5px 5px grey;
-    border-radius: 8px; 
-}
-
-.no .input-field input{
-    width: 250px;
-    height: 25px;
-    box-shadow: 5px 5px 5px grey;
-    border-radius: 8px;  
-}
+  
