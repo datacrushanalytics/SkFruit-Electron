@@ -3,43 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>stock received</title>
-    <link rel="stylesheet" href="../assets/css/Purchase.css">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../assets/css/Purchase.css">
 </head>
 <body>
     <div class="container">
-        <h1 align="center">STOCK RECEIVED</h1>
+        <h1 align="center">खरेदी</h1> <hr>
+    <div class="container1">
+        <form id="Form">
+            <div class="first-row">
+              <input type="number" id="no" name="number" placeholder="नं.">
+              <input type="date" id="date" name="date" placeholder="दिनांक:">
+            </div>
 <br>
-        <div class="first-row">
-            <div class="date">
-                <h3>DATE</h3>
-                <div class="input-filed">
-                <input type="text" placeholder="date" onfocus="(this.type='Date')">
-            </div>
-            </div>
-        
-            <div class="to">
-                <h3>TIME</h3>
-                <div class="input-field">
-                <input type="text"placeholder="time" onfocus="(this.type='time')">
-            </div>
-            </div>
-            </div>
-        <br>
-
-        <table>
-            <thead>
+            <div class="second-row">
+                <!-- <input type="text" id="sup-name" name="name" placeholder=""> -->
+                <select id="dropdown">
+                    <option value="option1">सप्लायरचे नाव </option>
+                    <option value="option2">balaji fruits co.</option>
+                    <option value="option3">delhi fruits traders</option>
+                </select>
+                <input type="number" id="number" name="name" placeholder="गाडी नं.">
+              </div>
+<br>
+              <div class="third-row">
+                <select id="dropdown">
+                    <option value="option1">Product</option>
+                    <option value="option2">अननस </option>
+                    <option value="option3">केळी </option>
+                    <option value="option3">चिक्कू</option>     
+                </select>
+                <input type="text" id="bata" name="name" placeholder="बटा">
+                <input type="text" id="mark" name="name" placeholder="मार्क">
+              </div>
+<br>
+            <div>
+               
+                <input type="number" id="purchase" name="name" placeholder="खरेदी किंमत">
+                <input type="number" id="sale" name="name" placeholder="विक्री किंमत">
+                <input type="number" id="quantity" name="name" placeholder="नग ">
+                <select id="dropdown1">
+                    <option value="option1">यूनिट</option>
+                    <option value="option2">बॉक्स </option>
+                    <option value="option3">किलो</option>
+                    <option value="option3">नग</option>     
+                </select>
+                <button class="back-button">ADD</button></a>
+              </div>
+<br>
+              <table>
                 <tr>
-                    <h3>STOCK RECEIVED</h3>
-                    <th>No.</th>
-                    <th>PRODUCT NAME</th>
-                    <th>STOCK</th>
-                    
-                </tr>
-            </thead>
-        </table>
+                    <th>प्रॉडक्ट </th>
+                    <th>बटा</th>
+                    <th>मार्क</th>
+                    <th>खरेदी किंमत</th>
+                    <th>विक्री किंमत</th>
+                    <th>नग</th>
+                    <th>यूनिट</th>
+                    <th>रक्कम</th>   
+            </table><br>
+            <div>
+            <input type="number" id="total" name="name" placeholder="एकूण रक्कम">
+        </div>
+<br>
+        <div class="four-row">
+            <button class="border-hover" onclick="purchaseProductData()">Save</button>
+            <button class="border-hover">Back</button>
+          </div>
+            </form>
+    </div>
 
-
-</div>
+  
+    <script src="../src/Purchase.js"></script>
 </body>
 </html>

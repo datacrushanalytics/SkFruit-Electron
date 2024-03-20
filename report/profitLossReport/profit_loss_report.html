@@ -1,91 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>profit loss report</title>
-    <link rel="stylesheet" href="../../assets/css/profit_loss_report.css">
+    <title>User Form in Electron</title>
+    <link rel="stylesheet" href="../../assets/css/batawise_sale_report1.css">
+    <style>
+        /* Add border to the second form */
+        .form1 {
+            border: 1px solid black;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
+
 <body>
-    
     <div class="container">
-        <h1 align="center">वैभव शिंदे </h1><hr>
-<br>
-        <div class="first-row">
-            <div class="date">
-                <h3>DATE</h3>
-                <div class="input-filed">
-                <input type="text" placeholder="date" onfocus="(this.type='date')">
-            </div>
-            </div>
-        
-            <div class="to">
-                <h3>TIME</h3>
-                <div class="input-field">
-                <input type="text"placeholder="time" onfocus="(this.type='time')">
-            </div>
-            </div>
-            </div>
-        <br>
+        <h1 align="center">वैभव शिंदे </h1><br>
+        <hr>
 
-        <div class="second-row">
-            <div class="from">
-                <h3>FROM</h3>
-                <div class="input-filed">
-                <input type="text"placeholder="date" onfocus="(this.type='Date')">
-            </div>
-            </div>
-        
-            <div class="to">
-                <h3>TO</h3>
-                <div class="input-field">
-                <input type="text"placeholder="date" onfocus="(this.type='Date')">
-            </div>
-            </div>
-            </div>
-        <br>
-        <h3> Purchase Vehicle No.</h3>
-<select id="inaccount" name="dropdown" name="SELECT">     </select>
-
-<h3> Bata</h3>
-<select id="inaccount" name="dropdown" name="SELECT">     </select>
-    <br><br>
         <div class="container1">
-            <button class="button1"><h3>SAVE</h3></button>
-             <button class="button2"><h3>BACK</h3></button>
-         </div>
-<br>
+            <form id="loginForm1">
 
-<div class="container2">
-    <button class="button3"><h3>Profit loss Report</h3></button>
- </div>
+                <div class="first-row">
+                    <label for="userType">From Date</label>
+                    <input type="date" id="fromdate" name="date" placeholder="From Date">
+                    <br>
+                    <label for="userType">To Date</label>
+                    <input type="date" id="todate" name="date" placeholder="To Date">
+                </div>
 
-</div>
-<hr>
+                <br>
+
+                <label for="userType"> Vehicle No.</label>
+                <select class="drop" id="product" id="product" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select>
+
+                <br>
+
+                <label for="userType">Bata</label>
+                <select class="drop" id="bata" id="bata" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br>
+    
+                <!-- <div class="third-row"> -->
+                    <!-- <button class="border-hover" >Save</button> -->
+                    <button type="submit" id="button1">Submit</button>
+                    <a href="./sale.html"><button type='button' id="button2">Back</button></a>
+                <!-- </div> -->
+            </form>
+          <br>
+            <table>
+                <tr>
+                    <th>Id</th>
+                    <th>Date</th>
+                    <th>From A/C</th>
+                    <th>To A/C </th>
+                    <th>Coment</th>
+                    <th>Paid Amt</th>
+                    <th>Online Amt</th>
+                    <th>Disc Amt</th> 
+                    <th>In Caret</th>   
+                    <th>Amt</th>    
+                    <th>Action</th>
+                    <th>Action</th>
+              
+                </tr>
+               
+
+
+                <!-- Add more rows as needed -->
+                <tbody id="tableBody">
+                    <!-- Data will be inserted here -->
+                </tbody>
+            </table><br>
+
+            <h3 align="center">Profit Loss Report</h3>
+        </div>
+    </div>
+
+
+ 
+
 </body>
+<script src="./BatawiseSaleReport.js"></script>
+
+
+
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
