@@ -75,3 +75,14 @@ th,td{
 td{
     background-color: white;
 }
+
+#previousBalance, #amount{
+  border-radius: 8px;
+  height: 15px;
+  width: 300px;
+  /* border: 1px solid transparent;  */
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  margin:20px;
+
+}

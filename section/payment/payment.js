@@ -1,26 +1,13 @@
-// function login5() {
-//     console.log("login function executed");
+// Fetch data from API
+document.addEventListener('DOMContentLoaded', function () {
+    // Get the current date
+    var currentDate = new Date();
+    // Format the date as mm/dd/yyyy
+    var formattedDate = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
+    // Set the placeholder of the input field to the formatted date
+    document.getElementById('date').value = formattedDate;
 
-// fetch('http://3.109.121.46/paymentData')
-//     .then(response => {
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok');
-//         }
-//         return response.json();
-//     })
-//     .then(data => {
-//         console.log(data);
-//     })
-//     .catch(error => {
-//         console.error('Error:', error);
-//     });
-// }
-
-
-function payment() {
-    console.log("products function executed");
-
-    fetch('http://3.109.121.46/paymentData')
+    fetch('http://localhost:3000/list/Supplier')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -28,30 +15,118 @@ function payment() {
             return response.json();
         })
         .then(data => {
-            console.log(data);
-            populateTable(data);
+            // Populate dropdown with API data
+            populateDropdown(data);
         })
         .catch(error => {
             console.error('Error:', error);
         });
-}
 
-function populateTable(data) {
-    var tbody = document.getElementById('tableBody');
-    tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['from_account', 'to_account','comment','pre_balance','amounr'];
-    var counter = 1;
-    data.forEach(function(item) {
-        var row = tbody.insertRow();
-        var cell = row.insertCell();
-        cell.textContent = counter++;
-        columnsToDisplay.forEach(function(key) {
-            var cell = row.insertCell();
-            cell.textContent = item[key];
+
+    fetch('http://localhost:3000/list/Bank Account')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Populate dropdown with API data
+            populateDropdown1(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
+});
+
+
+function populateDropdown(data) {
+    var userNameDropdown = document.getElementById('bata');
+    userNameDropdown.innerHTML = ''; // Clear existing options
+
+    // Create and append new options based on API data
+    data.forEach(function (item) {
+        var option = document.createElement('option');
+        option.value = item.name; // Set the value
+        option.textContent = item.name; // Set the display text
+        userNameDropdown.appendChild(option);
     });
+
+    // Add a placeholder option
+    var placeholderOption = document.createElement('option');
+    placeholderOption.value = ""; // Set an empty value
+    placeholderOption.textContent = "Select Supplier Name"; // Set placeholder text
+    placeholderOption.disabled = true; // Disable the option
+    placeholderOption.selected = true; // Select the option by default
+    userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
+}
+
+function populateDropdown1(data) {
+    var userNameDropdown = document.getElementById('product');
+    userNameDropdown.innerHTML = ''; // Clear existing options
+    // Add a hardcoded option
+    var hardcodedOption = document.createElement('option');
+    hardcodedOption.value = "CASH"; // Set the value for the hardcoded option
+    hardcodedOption.textContent = "CASH"; // Set the display text for the hardcoded option
+    userNameDropdown.appendChild(hardcodedOption);
+
+    // Create and append new options based on API data
+    data.forEach(function (item) {
+        var option = document.createElement('option');
+        option.value = item.name; // Set the value
+        option.textContent = item.name; // Set the display text
+        userNameDropdown.appendChild(option);
+    });
+
+    // Add a placeholder option
+    var placeholderOption = document.createElement('option');
+    placeholderOption.value = ""; // Set an empty value
+    placeholderOption.textContent = "Select Online Account"; // Set placeholder text
+    placeholderOption.disabled = true; // Disable the option
+    placeholderOption.selected = true; // Select the option by default
+    userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
 }
 
 
-// payment();
+
+document.getElementById('loginForm1').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Prevent default form submission
+console.log("jahsafhfa")
+// function form2(){
+    var formData = {
+        date: document.getElementById('date').value,
+        from_account: document.getElementById('product').value,
+        to_account: document.getElementById('bata').value,
+        comment: document.getElementById('comment').value,
+        prev_balance: parseInt(document.getElementById('previousBalance').value) || 0,
+        amounr: parseInt(document.getElementById('amount').value) || 0        
+    };
+
+
+    await fetch('http://localhost:3000/paymentData/insertPayment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        console.log("DTAASS")
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(result => {
+        console.log('Entry added successfully:', result);
+        alert("Payment Data is added Successfully");
+        window.location.reload();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+});
+
+
 

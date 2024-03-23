@@ -25,11 +25,11 @@
             <form id="loginForm1">
 
                 <div class="first-row">
-                    <label for="userType">PID</label>
-                    <input type="number" id="fromdate" name="date" placeholder="From Date">
+                    <!-- <label for="userType">PID</label>
+                    <input type="number" id="fromdate" name="date" placeholder="From Date"> -->
                     <br>
                     <label for="userType">Date</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date">
+                    <input type="text" id="date" name="date" placeholder="दिनांक:">
                 </div>
 
                 <br>
@@ -42,7 +42,7 @@
                 <br>
 
                 <label for="userType">To Account</label>
-                <select class="drop" id="bata" id="bata" name="name">
+                <select class="drop" id="bata" id="bata" name="name" onchange="previousbalance()">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br>
     
@@ -51,10 +51,12 @@
 
                 <div class="second-row">
                     <label for="userType">Prev. Balance</label>
-                    <input type="number" id="fromdate" name="date" placeholder="From Date">
+                    <input type="number" id="previousBalance" name="number" placeholder="मागील बाकी " readonly>
+                    <!-- <input type="number" id="fromdate" name="date" placeholder="From Date"> -->
                     <br>
                     <label for="userType">Amount</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date">
+                    <!-- <input type="date" id="todate" name="date" placeholder="To Date"> -->
+                    <input type="number" id="amount" name="number" placeholder="Amount" onchange="totalBalance()">
                 </div><br>
 
                 <!-- <div class="third-row"> -->
@@ -69,10 +71,31 @@
     </div>
 
 
-
-
 </body>
 <script src="./payment.js"></script>
+<script>
+
+    function previousbalance(){
+        const name = document.getElementById("bata").value
+        fetch('http://localhost:3000/fetchpv/' + name)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Populate dropdown with API data
+            console.log(data)
+            document.getElementById('previousBalance').value = parseInt(data[0]['current_balance'] || 0);      
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+      
+      }
+
+</script>
 
 
 

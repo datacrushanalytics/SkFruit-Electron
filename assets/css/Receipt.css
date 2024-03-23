@@ -65,7 +65,7 @@ padding:  10px;
 box-shadow: 5px 5px 5px grey;
 margin:20px;
 }
-#input3{
+#input3, #input6, #input8{
 margin-left: 19%;
 width:390px;
 border-radius:3px;
@@ -81,7 +81,7 @@ margin-left: 23%;
 border-radius:3px;
 }
 
-#input2{
+#input2, #input7{
 width: 130px;
 margin-left: 10%;
 border-radius: 3px;
@@ -111,7 +111,7 @@ margin:20px;
 }
 
 
-#no{
+#no, #carate100, #carate150, #carate250,#carate350{
 border-radius: 3px;
 height: 15px;
 width: 85px;

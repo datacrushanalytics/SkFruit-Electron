@@ -39,7 +39,7 @@
     margin-left: 4%;
   }
   
-  #todate{
+  #date{
     border-radius: 8px;
     height: 35px;
     width: 400px;
@@ -119,5 +119,15 @@ label{
     background-color:rgb(222, 215, 215);
    }
   
+
+#previousBalance, #amount {
+  border-radius: 8px;
+  height: 15px;
+  width: 300px;
+  /* border: 1px solid transparent;  */
+  padding:  10px;
+  /* box-shadow: 5px 5px 5px grey; */
+  margin:20px;
+}
 
   
