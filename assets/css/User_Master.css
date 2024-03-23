@@ -116,7 +116,7 @@ margin:20px;
     margin: 10%;
     margin-left: 35%;
     margin-right: 35%;
-    border: 2px double;
+    border: 2px solid black;
     text-align: center;
     text-shadow: 2px;
     justify-content: center;
@@ -152,7 +152,7 @@ margin:20px;
 #username{
     border-radius: 8px;
     height: 15px;
-    width: 380px;
+    width: 200px;
     border: 1px solid transparent; 
   padding:  10px;
   box-shadow: 5px 5px 5px grey;
@@ -161,7 +161,7 @@ margin:20px;
 #password{
     border-radius: 8px;
     height: 15px;
-    width: 380px;
+    width: 200px;
     border: 1px solid transparent; 
   padding:  10px;
   box-shadow: 5px 5px 5px grey;

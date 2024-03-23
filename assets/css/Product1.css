@@ -1,0 +1,97 @@
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgba(242, 242, 242, 0.8); /* Transparent background */
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
+.container {
+        margin: 4%;
+        border: 2px double;
+        text-align: center;
+        text-shadow: 2px;
+        justify-content: center;
+        width: 1050px;
+        height: 550px;
+        
+       
+}
+
+.button-container {
+    margin-bottom: 20px;
+}
+
+.button {
+    padding: 12px 24px;
+    text-decoration: none;
+    color: white;
+    background-color: #808080; /* Grey color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 0 10px;
+}
+
+.button:hover {
+    background-color: #555; /* Darker grey on hover */
+}
+
+.button a {
+    color: white;
+    text-decoration: none;
+}
+.button1 {
+    padding: 12px 24px;
+    text-decoration: none;
+    color: white;
+    background-color: #808080; /* Grey color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 0 10px;
+}
+
+.button1-container {
+    margin-bottom: 20px;
+}
+.button1:hover {
+    background-color: #555; /* Darker grey on hover */
+}
+
+.button1 a {
+    color: white;
+    text-decoration: none;
+}
+
+
+
+table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.8); /* Transparent background */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
+th,
+td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 12px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.set-user-menu-button {
+    margin-top: 20px;
+}
+

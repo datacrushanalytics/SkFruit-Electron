@@ -12,43 +12,73 @@
     <div class="container1">
         <form id="Form">
             <div class="first-row">
-              <input type="number" id="no" name="number" placeholder="नं.">
-              <input type="date" id="date" name="date" placeholder="दिनांक:">
+                <div style="margin-left: 50px;">
+                <label for="no">नं.:</label>
+              <input type="number" id="no" name="number"  placeholder="नं.">
+            </div>
+            <div style="margin-left:200px;">
+              <label for="date">दिनांक:</label>
+              <input type="text" id="date"  name="date" >
+            </div>
             </div>
 <br>
             <div class="second-row">
-                <!-- <input type="text" id="sup-name" name="name" placeholder=""> -->
-                <select id="dropdown">
-                    <option value="option1">सप्लायरचे नाव </option>
-                    <option value="option2">balaji fruits co.</option>
-                    <option value="option3">delhi fruits traders</option>
+                <div style="margin-left: 90px;">
+                <label for="dropdown">सप्लायरचे नाव: </label>
+                <select id="supplier">
+                  
                 </select>
-                <input type="number" id="number" name="name" placeholder="गाडी नं.">
+                </div>
+                <div style="margin-left:200px;">
+                <label for="number">गाडी नं.:</label>
+                <!-- <input type="number" id="number" name="name" placeholder="गाडी नं."> -->
+                <select id="vehicle">
+                  
+                </select>
+            </div>
               </div>
 <br>
               <div class="third-row">
-                <select id="dropdown">
-                    <option value="option1">Product</option>
-                    <option value="option2">अननस </option>
-                    <option value="option3">केळी </option>
-                    <option value="option3">चिक्कू</option>     
+                <div style="margin-left: 15px;">
+                <label for="dropdown">उत्पादन:</label>
+                <select id="product">
+                      
                 </select>
+            </div>
+            <div style="margin-left: 20px;">
+                <label for="bata">बटा:</label>
                 <input type="text" id="bata" name="name" placeholder="बटा">
+            </div>
+            <div style="margin-left: 25px;">
+                <label for="mark">मार्क:</label>
                 <input type="text" id="mark" name="name" placeholder="मार्क">
+            </div>
               </div>
 <br>
-            <div>
-               
+            <div style="display: flex;">
+                <div style="margin-left: 95px;">
+               <label for="purchase">खरेदी किंमत:</label>
                 <input type="number" id="purchase" name="name" placeholder="खरेदी किंमत">
+            </div>
+            <div style=" margin-left: 20px;">
+                <label for="sale">विक्री किंमत:</label>
                 <input type="number" id="sale" name="name" placeholder="विक्री किंमत">
+            </div>
+            <div style="margin-left: 30px;">
+                <label for="quantity">नग:</label>
                 <input type="number" id="quantity" name="name" placeholder="नग ">
-                <select id="dropdown1">
-                    <option value="option1">यूनिट</option>
-                    <option value="option2">बॉक्स </option>
-                    <option value="option3">किलो</option>
-                    <option value="option3">नग</option>     
+            </div>
+            <div>
+                <label for="dropdown1">यूनिट</label>
+                <select id="unit">
+                    <option>यूनिट</option>
+                    <option value="box">बॉक्स </option>
+                    <option value="killo">किलो</option>
+                    <option value="nag">नग</option>     
                 </select>
-                <button class="back-button">ADD</button></a>
+            </div>
+            </div>
+                <button type="submit" class="back-button" onclick="myFunction()" >ADD</button></a>
               </div>
 <br>
               <table>
@@ -60,20 +90,110 @@
                     <th>विक्री किंमत</th>
                     <th>नग</th>
                     <th>यूनिट</th>
-                    <th>रक्कम</th>   
+                    <th>रक्कम</th>
+                </tr>
+                
+                <tbody id="tableBody1">
+                    <!-- Data will be inserted here -->
+                  </tbody>
+                
             </table><br>
-            <div>
+            <div style="margin-left: 400px;">
+                <label for="total">एकूण रक्कम:</label>
             <input type="number" id="total" name="name" placeholder="एकूण रक्कम">
         </div>
 <br>
         <div class="four-row">
-            <button class="border-hover" onclick="purchaseProductData()">Save</button>
-            <button class="border-hover">Back</button>
+            <button class="border-hover" type="submit">Save</button>
           </div>
-            </form>
-    </div>
+</div>
+</form>
+    <script src="./Purchase.js"></script>
+<script>
 
-  
-    <script src="../src/Purchase.js"></script>
+    function myFunction() {
+        event.preventDefault();
+      
+        var formData = {
+          purchase_id: parseInt(document.getElementById('no').value),
+          bata: document.getElementById('bata').value,
+          mark: document.getElementById('mark').value,
+          p_date: document.getElementById('date').value,
+          product_name: document.getElementById('product').value,
+          purchase_price: parseInt(document.getElementById('purchase').value),
+          selling_price: parseInt(document.getElementById('sale').value),
+          quantity: parseInt(document.getElementById('quantity').value),
+          unit: document.getElementById('unit').value,
+          price: parseInt(document.getElementById('purchase').value) * parseInt(document.getElementById('quantity').value)
+        };
+        
+        console.log(formData)
+    
+        fetch('http://localhost:3000/purchaseproductData/insertPurchaseproduct', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(result => {
+            console.log('Entry added successfully:', result);
+            document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) + formData.price;
+            updateTable(formData, result);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+        // Add your desired functionality here
+      }
+    
+      function updateTable(entry, result) {
+        var tableBody = document.getElementById('tableBody1');
+        var newRow = document.createElement('tr');
+        newRow.innerHTML = `
+              <td>${entry.product_name}</td>
+              <td>${entry.bata}</td>
+              <td>${entry.mark}</td>
+              <td>${entry.purchase_price}</td>
+              <td>${entry.selling_price}</td>
+              <td>${entry.quantity}</td>
+              <td>${entry.unit}</td>
+              <td>${entry.price}</td>
+              <td><button type="button" onclick="deleteUser(this, ${result.insertId}, ${entry.price})">Delete</button></td>
+          `;
+        tableBody.appendChild(newRow);
+      }
+    
+        function deleteUser(button,userId,price) {
+          // Perform delete operation based on userId
+          var button = event.target;
+          var row = button.parentNode.parentNode;
+          fetch('http://localhost:3000/purchaseproductData/deletepurchaseproductId/' + userId, {
+            method: 'DELETE'
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              console.log('User deleted successfully');
+              document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) - price;
+              // Refresh the table or update UI as needed
+              //newRow.remove();
+              row.remove();
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+        }
+
+</script>
+
+
 </body>
 </html>

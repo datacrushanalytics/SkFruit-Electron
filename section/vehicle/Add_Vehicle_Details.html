@@ -15,7 +15,7 @@
     
         <div class="first-row">
 
-        <input type="text" id="id" name="id" placeholder="ID"> <br>
+        <!-- <input type="text" id="id" name="id" placeholder="ID"> <br> -->
 
         <input type="text" id="name" name="name" placeholder="VEHICLE NAME"> <br>
 
@@ -31,4 +31,45 @@
     </div>
     
 </body>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
+    
+        var formData = {
+            name: document.getElementById('name').value,
+            vehicle_no: document.getElementById('number').value,
+            is_active: 1
+        };
+    
+    
+        fetch('http://localhost:3000/vehicleData/insertVehicle', {
+            method: 'POST',
+            body: JSON.stringify(formData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(result => {
+            console.log('Data added successfully:', result);
+            window.location.href = './Vehicle_Details.html';
+            // Optionally, you can redirect or show a success message here
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Optionally, you can display an error message here
+        });
+    });
+    
+
+
+</script>
+
+
 </html>
