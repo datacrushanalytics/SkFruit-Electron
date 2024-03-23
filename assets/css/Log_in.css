@@ -31,9 +31,9 @@ body {
   border-radius:40px ;
 }
 #username, #password{
-  font-size: 30px;
-  height: 60px;
-  width:95%;
+  font-size: 20px;
+  height: 40px;
+  width:75%;
   text-align: center;
   align-self: center;
   border: solid 2px #d5caca;
@@ -53,16 +53,20 @@ form {
   justify-content:space-between;
 }
 .checkbox{
-  height: fit-content;
+  margin-left: 35px;
   display: flex;
+}
+#checkbox{
+  height: 15px;
+  width: 15px;
 }
 .loginbtn{
   align-self: center;
 }
 
  button {
-  height: 45px;
-  width: 120px;
+  height: 35px;
+  width: 100px;
   margin-top: 5px;
   text-decoration: none;
   font-size: medium;
@@ -71,14 +75,13 @@ form {
   background-color: rgb(255, 255, 255);
 }
 button:hover{
-  height: 55px;
-  width: 140px;
   margin-top: 5px;
   text-decoration: none;
+  color: #fff;
   font-size: medium;
   font-style: inherit;
   border-radius: 15px;
-  background-color: rgb(90, 255, 25);
+  background-color: rgb(247, 208, 68);
 }
 #footer {
     background-color: #333;

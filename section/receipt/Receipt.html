@@ -12,14 +12,15 @@
         <h1 align="center">जमा पावती</h1> <hr>
 
         <div class="container1"> 
-        <d id="Form">
+        <form id="loginForm1">
         <div class="first-row">
           <input type="number" id="pavti" name="number" placeholder="जमा पावती क्र."> 
-          <input type="text" id="date" name="date" placeholder="तारीख" onfocus="(this.type='date')">
+          <input type="text" id="date" name="date" placeholder="तारीख">
+          <!-- <input type="text" id="date" name="date" placeholder="तारीख" onfocus="(this.type='date')"> -->
         </div> 
 
           <label for="userType">खात्यातून</label>        
-            <select class="drop" id="account_group" id="account_group" name="account_group">
+            <select class="drop" id="account_group" id="account_group" name="account_group" onchange="previousbalance()">
             </select>
 <br><br>
             <label for="userType">खात्याकडे</label>
@@ -30,39 +31,36 @@
         <textarea id="message" name="message"></textarea>
                 <br><br>
                 <label for="userType">मागील बाकी</label>
-                <input type="text" id="input3" name="input1"><br><br>
+                <input type="text" id="input3" name="input1" readonly><br><br>
 
                 <label for="userType">जमा रक्कम</label>
-                <input type="text" id="input3" name="input1"><br><br>
+                <input type="text" id="input6" name="input1" onchange="totalbill()"><br><br>
 
      <div class="five-row">
           <label for="input1">ऑनलाईन जमा</label>
-          <select id="input1" name="input2">
-            <option value="option1">Select Bank</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
+          <select id="input1" name="input2" >
           </select><br><br>
           
            <label for="input2"></label>
-           <input type="text" id="input2" name="input1"><br><br>
+           <input type="text" id="input7" name="input1" onchange="totalbill()"><br><br>
         
         </div>
 <br>
 <div>
         <label for="input3">सूट रक्कम</label>
-        <input type="text" id="input3" name="input1">
+        <input type="text" id="input8" name="input1" onchange="totalbill()">
 
         <div>
-          <label for="name">मागील बाकी</label>
-          <input type="number" id="no" name="number" placeholder="100">
-          <input type="number" id="no" name="number" placeholder="150">
-          <input type="number" id="no" name="number" placeholder="250">
-          <input type="number" id="no" name="number" placeholder="350"> 
+          <label for="name">जमा कॅरेट</label>
+          <input type="number" id="carate100" name="number" placeholder="100" onchange="carate()">
+          <input type="number" id="carate150" name="number" placeholder="150" onchange="carate()">
+          <input type="number" id="carate250" name="number" placeholder="250" onchange="carate()">
+          <input type="number" id="carate350" name="number" placeholder="350" onchange="carate()">
         </div>
 
 
         <label for="input3">जमा कॅरेट रक्कम</label>
-        <input type="text" id="input4" name="input1"><br><br>
+        <input type="text" id="input4" name="input1" onchange="totalbill()"><br><br>
         <label for="input3">येणे बाकी</label>
         <input type="text" id="input5" name="input1"><br><br>
 
@@ -74,4 +72,43 @@
         </div> 
     </form>  
 </body>
+<script src="./receipt.js"></script>
+<script>
+
+  function carate(){
+    var value100 = parseInt(document.getElementById("carate100").value) || 0;
+    var value150 = parseInt(document.getElementById("carate150").value) || 0;
+    var value250 = parseInt(document.getElementById("carate250").value) || 0;
+    var value350 = parseInt(document.getElementById("carate350").value) || 0;
+    document.getElementById("input4").value = value100 * 100 + value150 * 150 + value250 * 250 + value350 * 350;
+    totalbill();
+    //document.getElementById("total1").value = parseInt(document.getElementById("carate100").value) * 100 +  parseInt(document.getElementById("carate150").value) * 150 +  parseInt(document.getElementById("carate250").value) * 250 +  parseInt(document.getElementById("carate350").value) * 350
+  }
+
+  function totalbill(){
+    document.getElementById("input5").value = parseInt(document.getElementById("input3").value || 0) - parseInt(document.getElementById("input6").value || 0) - parseInt(document.getElementById("input7").value || 0) - parseInt(document.getElementById("input8").value || 0) - parseInt(document.getElementById("input4").value || 0);
+  }
+
+
+
+  function previousbalance(){
+    const name = document.getElementById("account_group").value
+    fetch('http://localhost:3000/fetchpv/' + name)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Populate dropdown with API data
+        console.log(data)
+        document.getElementById('input3').value = parseInt(data[0]['current_balance'] || 0);      
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+  
+  }
+</script>
 </html>

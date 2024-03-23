@@ -1,57 +1,77 @@
-document.getElementById('loginForm1').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
+document.getElementById('login').addEventListener('submit', function(event) {
+    // event.preventDefault(); // Prevent default form submission
 
 // function form2(){
+    console.log(document.getElementById('number').value)
     var formData = {
-        bill_id: parseInt(document.getElementById('bill_no1').value),
-        bata: document.getElementById('bata').value,
-        mark: document.getElementById('mark').value,
-        product: document.getElementById('product').value,
-        quantity: parseInt(document.getElementById('quantity').value),
-        rate: parseInt(document.getElementById('rate').value),
-        price: parseInt(document.getElementById('price').value)
+        bill_no: parseInt(document.getElementById('bill').value),
+        date: document.getElementById('date').value,
+        cust_name: document.getElementById('grahk').value,
+        route: document.getElementById('Route').value,
+        address: document.getElementById('address').value,
+        mobile_no: document.getElementById('number').value,
+        comment: document.getElementById('sandarbh').value,
+        amount: parseInt(document.getElementById('bill1').value) || 0,
+        carate_amount: parseInt(document.getElementById('total1').value) || 0,
+        pre_balance: parseInt(document.getElementById('previousBalance').value) || 0,
+        total_amount: parseInt(document.getElementById('totalBill').value) || 0,
+        cash: parseInt(document.getElementById('bill_cash').value) || 0,
+        online_acc: document.getElementById('onlineAcc').value,
+        online_amt: parseInt(document.getElementById('online').value) || 0,
+        discount: parseInt(document.getElementById('discount').value) || 0,
+        inCarate: parseInt(document.getElementById('total2').value) || 0,
+        balance: parseInt(document.getElementById('baki').value) || 0,
+        note: document.getElementById('note').value,
+        in_carate_100: parseInt(document.getElementById('carate100').value) || 0,
+        in_carate_150: parseInt(document.getElementById('carate150').value) || 0,
+        in_carate_250: parseInt(document.getElementById('carate250').value) || 0,
+        in_carate_350: parseInt(document.getElementById('carate350').value) || 0,
+        out_carate_100: parseInt(document.getElementById('carate1100').value) || 0,
+        out_carate_150: parseInt(document.getElementById('carate1150').value) || 0,
+        out_carate_250: parseInt(document.getElementById('carate1250').value) || 0,
+        out_carate_350: parseInt(document.getElementById('carate1350').value) || 0,
     };
     
-    // fetch('http://localhost:3000/saleproductData/insertsaleproduct', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(formData)
-    // })
-    // .then(response => {
-    //     if (!response.ok) {
-    //         throw new Error('Network response was not ok');
-    //     }
-    //     return response.json();
-    // })
-    // .then(result => {
-    //     console.log('Entry added successfully:', result);
-    //     updateTable(formData);
-    // })
-    // .catch(error => {
-    //     console.error('Error:', error);
-    // });
-// }
+    fetch('http://localhost:3000/saleData/insertsale', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(result => {
+        console.log('Entry added successfully:', result);
+        alert("Sale Data is added Successfully")
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
 });
 
 
 
-function updateTable(entry) {
-    var tableBody = document.getElementById('tableBody1');
-    var newRow = document.createElement('tr');
-    newRow.innerHTML = `
-        <td>${entry.product}</td>
-        <td>${entry.bata}</td>
-        <td>${entry.mark}</td>
-        <td>${entry.quantity}</td>
-        <td>${entry.rate}</td>
-        <td>${entry.price}</td>
-    `;
-    tableBody.appendChild(newRow);
-}
+// function updateTable(entry) {
+//     var tableBody = document.getElementById('tableBody1');
+//     var newRow = document.createElement('tr');
+//     newRow.innerHTML = `
+//         <td>${entry.product}</td>
+//         <td>${entry.bata}</td>
+//         <td>${entry.mark}</td>
+//         <td>${entry.quantity}</td>
+//         <td>${entry.rate}</td>
+//         <td>${entry.price}</td>
+//     `;
+//     tableBody.appendChild(newRow);
+// }
 
 
-function form1(){
-    alert('Button clicked!');
-}
+// function form1(){
+//     alert('Button clicked!');
+// }

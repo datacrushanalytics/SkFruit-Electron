@@ -22,6 +22,9 @@ h3{
   position: absolute;
   display: flex;
 }
+div::-webkit-scrollbar{
+  display: none;
+}
 .section1{
   height:100%;
   width:20%;

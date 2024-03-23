@@ -57,7 +57,7 @@ body{
     /* margin-right: 300px; */
     
   }
-  #no{
+  #no, #carate100, #carate150, #carate250, #carate350, #carate1100, #carate1150, #carate1250, #carate1350{
     text-indent: 3%;
     border-radius: 6px;
     height: 40px;
@@ -106,7 +106,7 @@ body{
   margin:20px;
   }
   
-  #online{
+  #online, #previousBalance{
   border-radius: 8px;
   height: 15px;
   width: 150px;
@@ -115,7 +115,7 @@ body{
   /* box-shadow: 5px 5px 5px grey; */
   margin:20px;
   }
-  #discount{
+  #discount, #totalBill{
   border-radius: 8px;
   height: 15px;
   
@@ -123,7 +123,7 @@ body{
   /* box-shadow: 5px 5px 5px grey; */
   margin:20px;
   }
-  #bill_cash{
+  #bill_cash, #bill1{
   border-radius: 8px;
   height: 15px;
   width: 150px;
@@ -131,6 +131,17 @@ body{
   padding:  10px;
   /* box-shadow: 5px 5px 5px grey; */
   margin:20px;
+  }
+
+
+  #onlineAcc{
+    text-indent: 3%;
+    border-radius: 6px;
+    height: 40px;
+    width: 150px;
+    margin-left: 20px;
+    /* margin-right: 300px; */
+    
   }
   
   
@@ -144,7 +155,7 @@ body{
   margin:20px;
     
   }
-  #sandarbh{
+  #sandarbh, #note{
     border-radius: 8px;
     height: 15px;
     width: 300px;
@@ -203,7 +214,7 @@ body{
   margin:20px;
   }
   
-  #total{
+  #total, #total1, #total2{
   border-radius: 8px;
   height: 15px;
   width: 150px;

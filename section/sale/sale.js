@@ -17,6 +17,23 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             // Populate dropdown with API data
             document.getElementById('bill').value = parseInt(data[0]['num']) + 1;
+            fetch('http://localhost:3000/saleproductData/' + (parseInt(data[0]['num']) + 1))
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Populate dropdown with API data
+                    populateDropdown3(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+
+
 
         })
         .catch(error => {
@@ -38,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
         });
 
-    fetch('http://localhost:3000/purchaseproductData')
+    fetch('http://localhost:3000/purchaseproductData/')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -54,20 +71,22 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
         });
 
-    fetch('http://localhost:3000/saleproductData')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Populate dropdown with API data
-            populateDropdown3(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+
+
+    // fetch('http://localhost:3000/saleproductData/' +)
+    //     .then(response => {
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+    //         return response.json();
+    //     })
+    //     .then(data => {
+    //         // Populate dropdown with API data
+    //         populateDropdown3(data);
+    //     })
+    //     .catch(error => {
+    //         console.error('Error:', error);
+    //     });
 
     fetch('http://localhost:3000/routeData')
         .then(response => {
@@ -79,6 +98,21 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             // Populate dropdown with API data
             populateDropdown4(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+    fetch('http://localhost:3000/list/Bank Account')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Populate dropdown with API data
+            populateDropdown5(data);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -216,6 +250,28 @@ function populateDropdown4(data) {
 }
 
 
+function populateDropdown5(data) {
+    var userNameDropdown = document.getElementById('onlineAcc');
+    userNameDropdown.innerHTML = ''; // Clear existing options
+
+    // Create and append new options based on API data
+    data.forEach(function (item) {
+        var option = document.createElement('option');
+        option.value = item.name; // Set the value
+        option.textContent = item.name; // Set the display text
+        userNameDropdown.appendChild(option);
+    });
+
+    // Add a placeholder option
+    var placeholderOption = document.createElement('option');
+    placeholderOption.value = ""; // Set an empty value
+    placeholderOption.textContent = "Select Online Account"; // Set placeholder text
+    placeholderOption.disabled = true; // Disable the option
+    placeholderOption.selected = true; // Select the option by default
+    userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
+}
+
+
 function getProducts() {
     var bataId = document.getElementById('bta').value;
     console.log(bataId)
@@ -243,6 +299,6 @@ function getProducts() {
         });
 }
 
-function updateTotal(){
+function updateTotal() {
     document.getElementById("total").value = document.getElementById("kimmat").value * document.getElementById("nag").value
 }
