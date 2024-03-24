@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="../../assets/css/Root_Sale.css ">
+
+    <style>
+        /* Define your CSS styles here */
+        .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+        }
+
+        .popup h2 {
+            margin-top: 0;
+        }
+
+        .popup button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <h1 align="center">Product Barcode </h1>
+        <hr><br>
+
+        <div class="container1">
+            <form id="Form">
+
+                <label for="userType">Product : </label>
+                <select class="drop" id="grahk" name="account_group" onchange="previousbalance()">
+                </select>
+                <br><br>
+                <label for="userType">Bata : </label>
+                <select class="drop" id="Route" name="route_detail">
+
+                </select><br><br>
+
+                <button id="border-hover">दाखवा </button>
+
+            </form>
+            <br>
+            <br>
+            <br>
+
+
+            <table>
+                <tr>
+                    <th></th>
+                    <th>Purchase Id</th>
+                    <th>Purchase Date</th>
+                    <th>Product Name</th>
+                    <th>Bata</th>
+                    <th>Mark</th>
+                    <th>Purchase Price</th>
+                    <th>Selling Price</th>
+                    <th>Barcode</th>
+
+                </tr>
+                <!-- Add more rows as needed -->
+                <tbody id="tableBody">
+                    <!-- Data will be inserted here -->
+                </tbody>
+
+                <div id="popupContainer"></div>
+
+
+            </table>
+
+
+
+</body>
+<!-- <script src="./barcode.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        fetch('http://13.233.145.228/purchaseproductData/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Populate dropdown with API data
+                populateDropdown1(data);
+                populateDropdown2(data);
+                populateDropdown3(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+    });
+
+
+
+    function populateDropdown1(data) {
+        var userNameDropdown = document.getElementById('Route');
+        userNameDropdown.innerHTML = ''; // Clear existing options
+
+        // Create and append new options based on API data
+        data.forEach(function (item) {
+            var option = document.createElement('option');
+            option.value = item.bata; // Set the value
+            option.textContent = item.bata; // Set the display text
+            userNameDropdown.appendChild(option);
+        });
+
+        // Add a placeholder option
+        var placeholderOption = document.createElement('option');
+        placeholderOption.value = ""; // Set an empty value
+        placeholderOption.textContent = "Select Bata"; // Set placeholder text
+        placeholderOption.disabled = true; // Disable the option
+        placeholderOption.selected = true; // Select the option by default
+        userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
+    }
+
+
+    function populateDropdown2(data) {
+        var userNameDropdown = document.getElementById('grahk');
+        userNameDropdown.innerHTML = ''; // Clear existing options
+
+        // Create and append new options based on API data
+        data.forEach(function (item) {
+            var option = document.createElement('option');
+            option.value = item.product_name; // Set the value
+            option.textContent = item.product_name; // Set the display text
+            userNameDropdown.appendChild(option);
+        });
+
+        // Add a placeholder option
+        var placeholderOption = document.createElement('option');
+        placeholderOption.value = ""; // Set an empty value
+        placeholderOption.textContent = "Select Product"; // Set placeholder text
+        placeholderOption.disabled = true; // Disable the option
+        placeholderOption.selected = true; // Select the option by default
+        userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
+    }
+
+
+
+
+
+    function populateDropdown3(data) {
+        var tbody = document.getElementById('tableBody');
+        tbody.innerHTML = ''; // Clear existing rows
+
+        var columnsToDisplay = ['purchase_id', 'p_date', 'product_name', 'bata', 'mark', 'purchase_price', 'selling_price'];
+        data.forEach(function (item) {
+            var row = tbody.insertRow();
+            var cell = row.insertCell();
+            columnsToDisplay.forEach(function (key) {
+                var cell = row.insertCell();
+                if (key == 'p_date') {
+                    console.log(item[key])
+                    var utcDate = new Date(item[key]);
+                    var options = {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        timeZone: 'Asia/Kolkata'
+                    };
+                    cell.textContent = utcDate.toLocaleString('en-IN', options);
+
+                } else {
+                    cell.textContent = item[key];
+                }
+            });
+
+            // Add Info icon
+            var infoCell = row.insertCell();
+            var infoButton = document.createElement('button');
+            infoButton.textContent = 'Info';
+            infoButton.onclick = function () {
+                displayBarcodePopup(item);
+            };
+            infoCell.appendChild(infoButton);
+
+
+            // Generate barcode for each row
+            //var barcodeCell = row.insertCell();
+            //var barcodeId = 'barcode_' + index;
+            //barcodeCell.innerHTML = '<svg id="' + barcodeId + '"></svg>';
+            //JsBarcode('#' + barcodeId, item.barcode); // Generate barcode using JsBarcode library
+
+
+        });
+    }
+
+
+    function displayBarcodePopup(item) {
+        var barcodeValue = 'Product Name:' + item['product_name'] + ' \nBata:' + item['bata'];
+        var popupContent = `
+            <div class="popup">
+                <h2>Barcode</h2>
+                <canvas id="barcodeCanvas"></canvas>
+                <button id="downloadButton">Download Barcode</button>
+                <button onclick="closePopup()">Close</button>
+            </div>
+        `;
+        document.getElementById('popupContainer').innerHTML = popupContent;
+        JsBarcode('#barcodeCanvas', barcodeValue, {
+            format: "CODE128", // Adjust the barcode format as needed
+            displayValue: false, // Hide text under the barcode 
+            width: 1 // Set the width of the bars
+        });
+
+            // Create a download link for the barcode image
+    var downloadButton = document.getElementById('downloadButton');
+    downloadButton.addEventListener('click', function () {
+        //var svg = document.getElementById('barcodeCanvas');
+        var canvas = document.getElementById('barcodeCanvas');
+        //var svgData = new XMLSerializer().serializeToString(svg);
+        //var image = new Image();
+        var image = canvas.toDataURL('image/png');
+        //image.src = 'data:image/svg+xml;base64,' + btoa(svgData);
+
+        // Trigger download
+        var link = document.createElement('a');
+        link.href = image;
+        link.download = item['product_name'] + '_' + item['bata'] + '_barcode.png'; // Set the filename based on concatenated values
+        //document.body.appendChild(link);
+        link.click();
+        //document.body.removeChild(link);
+    });
+
+        
+        document.querySelector('.popup').style.display = 'block';
+    }
+
+
+
+    function closePopup() {
+        document.querySelector('.popup').style.display = 'none';
+    }
+
+
+
+
+
+
+</script>
+
+</html>
