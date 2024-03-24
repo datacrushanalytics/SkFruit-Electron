@@ -32,7 +32,7 @@ document.getElementById('login').addEventListener('submit', function(event) {
         out_carate_350: parseInt(document.getElementById('carate1350').value) || 0,
     };
     
-    fetch('http://localhost:3000/saleData/insertsale', {
+    fetch('http://13.233.145.228/saleData/insertsale', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
