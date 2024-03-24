@@ -105,7 +105,7 @@
                 prev_balance : document.getElementById("preBalance").value,
             };
 
-            fetch('http://localhost:3000/accountData/updateAccount/'+ parseInt(document.getElementById("id").value), {
+            fetch('http://13.233.145.228/accountData/updateAccount/'+ parseInt(document.getElementById("id").value), {
                 method: 'PUT',
                 body: JSON.stringify(userData),
                 headers: {

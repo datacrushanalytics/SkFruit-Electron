@@ -1,6 +1,6 @@
 {
-  "name": "skfruits",
-  "productName": "skfruits",
+  "name": "skfruits-1.1",
+  "productName": "skfruits-1.1",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": "index.js",
@@ -13,7 +13,7 @@
   },
   "keywords": [],
   "author": {
-    "name":"DatacrushAnalytics"
+    "name": "DatacrushAnalytics"
   },
   "license": "MIT",
   "dependencies": {

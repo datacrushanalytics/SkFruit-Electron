@@ -65,7 +65,7 @@
           mobile_no: document.getElementById("mobile_no").value          
       };
 
-      fetch('http://localhost:3000/routeData/updateRoute/'+ parseInt(document.getElementById("routeId").value), {
+      fetch('http://13.233.145.228/routeData/updateRoute/'+ parseInt(document.getElementById("routeId").value), {
           method: 'PUT',
           body: JSON.stringify(userData),
           headers: {

@@ -1,7 +1,7 @@
 // Fetch data from API
 document.addEventListener('DOMContentLoaded', function () {
 
-    fetch('http://localhost:3000/list/Customer')
+    fetch('http://13.233.145.228/list/Customer')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
 
-    fetch('http://localhost:3000/routeData')
+    fetch('http://13.233.145.228/routeData')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -104,7 +104,7 @@ document.getElementById('loginForm1').addEventListener('submit', function(event)
     };
     console.log(data);
 
-    fetch('http://localhost:3000/ledgerReport', {
+    fetch('http://13.233.145.228/ledgerReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

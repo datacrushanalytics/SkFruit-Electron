@@ -139,7 +139,7 @@
 
 function previousbalance(){
   const name = document.getElementById("grahk").value
-  fetch('http://localhost:3000/fetchpv/' + name)
+  fetch('http://13.233.145.228/fetchpv/' + name)
   .then(response => {
       if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -203,7 +203,7 @@ function totalbill(){
 
     console.log(formData)
 
-    fetch('http://localhost:3000/saleproductData/insertsaleproduct', {
+    fetch('http://13.233.145.228/saleproductData/insertsaleproduct', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -251,7 +251,7 @@ function totalbill(){
       totalBalance()
       var button = event.target;
       var row = button.parentNode.parentNode;
-      fetch('http://localhost:3000/saleproductData/deletesaleproduct/' + userId, {
+      fetch('http://13.233.145.228/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
       })
         .then(response => {
