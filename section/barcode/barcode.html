@@ -44,7 +44,7 @@
             <form id="Form">
 
                 <label for="userType">Product : </label>
-                <select class="drop" id="grahk" name="account_group" onchange="previousbalance()">
+                <select class="drop" id="grahk" name="account_group">
                 </select>
                 <br><br>
                 <label for="userType">Bata : </label>
@@ -52,7 +52,7 @@
 
                 </select><br><br>
 
-                <button id="border-hover">दाखवा </button>
+                <button id="border-hover" type="submit">दाखवा </button>
 
             </form>
             <br>
@@ -157,9 +157,6 @@
     }
 
 
-
-
-
     function populateDropdown3(data) {
         var tbody = document.getElementById('tableBody');
         tbody.innerHTML = ''; // Clear existing rows
@@ -253,7 +250,43 @@
         document.querySelector('.popup').style.display = 'none';
     }
 
+    function getElementValueWithDefault(id, defaultValue) {
+        var element = document.getElementById(id);
+        return element && element.value ? element.value : defaultValue;
+    }
 
+
+    document.getElementById('Form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
+        var data = {
+            product : getElementValueWithDefault('grahk', '*') , 
+            bata : getElementValueWithDefault('Route', '*') 
+        };
+        console.log(data);
+    
+        fetch('http://13.233.145.228/purchaseproductData', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(result => {
+            console.log(result)
+            populateDropdown3(result)
+            // Optionally, you can redirect or show a success message here
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Optionally, you can display an error message here
+        });
+    });
 
 
 

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Form in Electron</title>
     <link rel="stylesheet" href="../../assets/css/batawise_sale_report1.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
     <style>
         /* Add border to the second form */
         .form1 {
@@ -13,6 +14,31 @@
             padding: 10px;
             margin-top: 20px;
         }
+ 
+            /* Define your CSS styles here */
+            .popup {
+                display: none;
+                position: fixed;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #fff;
+                padding: 20px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                z-index: 9999;
+            }
+    
+            .popup h2 {
+                margin-top: 0;
+            }
+    
+            .popup button {
+                margin-top: 10px;
+                padding: 5px 10px;
+                cursor: pointer;
+            }
+   
+    
     </style>
 </head>
 
@@ -67,7 +93,9 @@
             <th>mark</th>
             <th>quantity</th>  
             <th>rate</th>  
-            <th>price</th>    
+            <th>price</th> 
+            <th>Barcode</th>    
+
                 </tr>
                
 
@@ -76,6 +104,7 @@
                 <tbody id="tableBody">
                     <!-- Data will be inserted here -->
                 </tbody>
+                <div id="popupContainer"></div>
             </table>
 
         </div>

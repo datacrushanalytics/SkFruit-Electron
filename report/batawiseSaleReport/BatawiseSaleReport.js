@@ -1,4 +1,6 @@
 // Fetch data from API
+
+
 document.addEventListener('DOMContentLoaded', function () {
 
     fetch('http://13.233.145.228/purchaseproductData')
@@ -140,8 +142,66 @@ function populateTable4(data) {
             cell.textContent = item[key];
             }
         });
+            // Add Info icon
+            var infoCell = row.insertCell();
+            var infoButton = document.createElement('button');
+            infoButton.textContent = 'Info';
+            infoButton.onclick = function () {
+                console.log("Clicked")
+                displayBarcodePopup(item);
+            };
+            infoCell.appendChild(infoButton);
     });
 }
+
+
+function displayBarcodePopup(item) {
+    var barcodeValue = 'Product Name:' + item['product'] + ' \nBata:' + item['bata'];
+    var popupContent = `
+        <div class="popup">
+            <h2>Barcode</h2>
+            <canvas id="barcodeCanvas"></canvas>
+            <button id="downloadButton">Download Barcode</button>
+            <button onclick="closePopup()">Close</button>
+        </div>
+    `;
+    document.getElementById('popupContainer').innerHTML = popupContent;
+    JsBarcode('#barcodeCanvas', barcodeValue, {
+        format: "CODE128", // Adjust the barcode format as needed
+        displayValue: false, // Hide text under the barcode 
+        width: 1 // Set the width of the bars
+    });
+
+        // Create a download link for the barcode image
+var downloadButton = document.getElementById('downloadButton');
+downloadButton.addEventListener('click', function () {
+    //var svg = document.getElementById('barcodeCanvas');
+    var canvas = document.getElementById('barcodeCanvas');
+    //var svgData = new XMLSerializer().serializeToString(svg);
+    //var image = new Image();
+    var image = canvas.toDataURL('image/png');
+    //image.src = 'data:image/svg+xml;base64,' + btoa(svgData);
+
+    // Trigger download
+    var link = document.createElement('a');
+    link.href = image;
+    link.download = item['product_name'] + '_' + item['bata'] + '_barcode.png'; // Set the filename based on concatenated values
+    //document.body.appendChild(link);
+    link.click();
+    //document.body.removeChild(link);
+});
+
+    
+    document.querySelector('.popup').style.display = 'block';
+}
+
+
+
+function closePopup() {
+    document.querySelector('.popup').style.display = 'none';
+}
+
+
 
 
 
