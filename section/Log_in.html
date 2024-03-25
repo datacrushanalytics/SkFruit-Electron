@@ -23,40 +23,52 @@
           </div>
         </div>
         <div class="loginbtn">
-        <a href="../section/Home.html"><button type="button" type="submit" onclick="login()" style="text-decoration: none;">LOGIN</button> </a>  
+        <!-- <a href="../section/Home.html"><button type="button" type="submit" onclick="login()" style="text-decoration: none;">LOGIN</button> </a>  -->
+       <button type="button" type="submit" onclick="login()" style="text-decoration: none;">LOGIN</button>
     </div>  
       </form>
     </div>
     <!-- </div> -->
-    <script src="../src/data.js"></script>
 
     
     <div id="footer">
       <p>SK FRUITS</p>
   </div>
   <script>
-      function validateForm() {
+      function login() {
       var username = document.getElementById("username").value;
       var password = document.getElementById("password").value;
 
-      var nameRegex = /^[A-Za-z]+$/;
-      var passRegex = /^[0-9]+$/;
+      fetch('http://13.233.145.228/user/login', {
+        method: 'POST',
+        body: JSON.stringify({
+          name: document.getElementById("username").value,
+          password : document.getElementById("password").value
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            alert("Please enter valid username and password")
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(result => {
+        console.log(result)
+        document.getElementById("username").value = null
+        document.getElementById("password").value = null
+        window.location.href = './Home.html';
+        // Optionally, you can redirect or show a success message here
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Optionally, you can display an error message here
+    });
 
-      if (!nameRegex.test(username)) {
-        alert("Username should only contain alphabets.");
-        return false;
-      }
-
-      if (password === "") {
-        alert("Please enter a password.");
-        return false;
-      } else if (!passRegex.test(password)) {
-        alert("Password is not valid. It should only contain numbers.");
-        return false;
-      }
-
-      alert("Login successful!");
-      return true;
+     
     }
   </script>
     
