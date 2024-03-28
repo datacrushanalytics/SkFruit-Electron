@@ -129,7 +129,7 @@
         
         console.log(formData)
     
-        fetch('http://13.233.145.228/purchaseproductData/insertPurchaseproduct', {
+        fetch('http://43.205.230.120/purchaseproductData/insertPurchaseproduct', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -174,7 +174,7 @@
           // Perform delete operation based on userId
           var button = event.target;
           var row = button.parentNode.parentNode;
-          fetch('http://13.233.145.228/purchaseproductData/deletepurchaseproductId/' + userId, {
+          fetch('http://43.205.230.120/purchaseproductData/deletepurchaseproductId/' + userId, {
             method: 'DELETE'
           })
             .then(response => {

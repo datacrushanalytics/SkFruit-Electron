@@ -134,7 +134,7 @@
 
         console.log(formData)
 
-        fetch('http://13.233.145.228/saleproductData/insertsaleproduct', {
+        fetch('http://43.205.230.120/saleproductData/insertsaleproduct', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -175,7 +175,7 @@
 
         function deleteUser(userId, row) {
             // Perform delete operation based on userId
-            fetch('http://13.233.145.228/saleproductData/deletesaleproduct/' + userId, {
+            fetch('http://43.205.230.120/saleproductData/deletesaleproduct/' + userId, {
                 method: 'DELETE'
             })
             .then(response => {

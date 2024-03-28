@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Set the placeholder of the input field to the formatted date
     document.getElementById('date').value = formattedDate;
 
-    fetch('http://13.233.145.228/fetchReceiptid')
+    fetch('http://43.205.230.120/fetchReceiptid')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    fetch('http://13.233.145.228/list/Customer')
+    fetch('http://43.205.230.120/list/Customer')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
 
-    fetch('http://13.233.145.228/list/Bank Account')
+    fetch('http://43.205.230.120/list/Bank Account')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -153,7 +153,7 @@ console.log("jahsafhfa")
         remaining: parseInt(document.getElementById('input5').value) || 0,     
     };
 
-    await fetch('http://13.233.145.228/receiptData/insertReceipt', {
+    await fetch('http://43.205.230.120/receiptData/insertReceipt', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

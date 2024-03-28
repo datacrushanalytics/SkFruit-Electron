@@ -1,7 +1,7 @@
 // Fetch data from API
 document.addEventListener('DOMContentLoaded', function () {
 
-    fetch('http://13.233.145.228/purchaseproductData')
+    fetch('http://43.205.230.120/purchaseproductData')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -109,7 +109,7 @@ document.getElementById('loginForm1').addEventListener('submit', function(event)
     };
     console.log(data);
 
-    fetch('http://13.233.145.228/stockReport', {
+    fetch('http://43.205.230.120/stockReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

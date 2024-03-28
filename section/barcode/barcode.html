@@ -92,7 +92,7 @@
 
     document.addEventListener('DOMContentLoaded', function () {
 
-        fetch('http://13.233.145.228/purchaseproductData/')
+        fetch('http://43.205.230.120/purchaseproductData/')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -264,7 +264,7 @@
         };
         console.log(data);
     
-        fetch('http://13.233.145.228/purchaseproductData', {
+        fetch('http://43.205.230.120/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
