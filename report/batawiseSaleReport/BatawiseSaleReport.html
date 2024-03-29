@@ -5,18 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Form in Electron</title>
-    <link rel="stylesheet" href="../../assets/css/batawise_sale_report1.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
     <style>
         /* Add border to the second form */
-        .form1 {
+        /* .form1 {
             border: 1px solid black;
             padding: 10px;
             margin-top: 20px;
-        }
+        } */
  
             /* Define your CSS styles here */
-            .popup {
+            /* .popup {
                 display: none;
                 position: fixed;
                 left: 50%;
@@ -36,9 +35,177 @@
                 margin-top: 10px;
                 padding: 5px 10px;
                 cursor: pointer;
-            }
+            } */
    
+
+            body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(242, 242, 242, 0.8);
+            /* Transparent background */
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            /* Hide horizontal scrollbar */
+        }
+
+        .container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container h1{
+         margin-top: 1%;
+      }
+       
+
+      .first-row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
     
+    .first-row label {
+        margin-right: 10px;
+        margin-top: 9px;
+    }
+    
+    .first-row input,
+    .first-row select {
+        margin-right: 10px;
+    }
+  
+  #fromdate{
+    border-radius: 8px;
+    height: 35px;
+    width: 320px;
+    margin-left: 5%; 
+  }
+
+  label{
+    margin-left: 3%;
+  }
+  
+  #todate{
+    border-radius: 8px;
+    height: 35px;
+    width: 320px;
+    margin-left: 1%;
+  }
+  #product{
+    border-radius: 8px;
+    height: 35px;
+    width: 600px;
+    margin-left: 1%;
+  }
+  
+  #bata {
+    border-radius: 8px;
+    height: 25%;
+    width: 600px;
+    border: 1px solid transparent;
+    padding: 10px;
+    box-shadow: 5px 5px 5px grey;
+    margin: 20px;
+  }
+
+  .drop1{
+  margin-left: 2rem;
+}
+        .button-container {
+            margin-bottom: 20px;
+        }
+
+        .button {
+            padding: 12px 24px;
+            text-decoration: none;
+            color: white;
+            background-color: #808080;
+            /* Grey color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 0 10px;
+        }
+
+        .button:hover {
+            background-color: #555;
+            /* Darker grey on hover */
+        }
+
+        .button a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .table-container {
+            max-width: 100%;
+            overflow-x: auto; /* Enable horizontal scrolling */
+            margin: 0 auto;
+            max-height: calc(100vh - 200px); /* Adjust the height as needed */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 12px;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        .popup {
+            position: fixed; /* Position the popup */
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Center the popup */
+            background-color: #fff; /* Background color */
+            border: 1px solid #ccc; /* Border */
+            border-radius: 5px; /* Rounded corners */
+            padding: 20px; /* Padding */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Box shadow */
+            z-index: 9999; /* Ensure the popup is on top */
+        }
+        
+        .popup h2 {
+            margin-top: 0; /* Remove top margin */
+            color: #333; /* Text color */
+        }
+        
+        #barcodeCanvas {
+            display: block; /* Make the canvas a block element */
+            margin: 20px auto; /* Center the canvas */
+            border: 1px solid #ccc; /* Border */
+            border-radius: 5px; /* Rounded corners */
+        }
+        
+        #downloadButton,
+        button {
+            padding: 10px 20px; /* Padding */
+            margin: 10px; /* Margin */
+            background-color: #808080; /* Background color */
+            color: #fff; /* Text color */
+            border: none; /* Remove border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Cursor on hover */
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+        }
+        
+        #downloadButton:hover,
+        button:hover {
+            background-color: #808080; /* Darker background color on hover */
+        }
+
+        
     </style>
 </head>
 
@@ -61,24 +228,25 @@
                 <br>
 
                 <label for="userType"> Product</label>
-                <select class="drop" id="product" id="product" name="name">
+                <select class="drop" id="product"  name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select>
+                </select><br>
 
                 <br>
 
                 <label for="userType">Bata</label>
-                <select class="drop" id="bata" id="bata" name="name">
+                <select class="drop"  id="bata" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select><br>
+                </select><br><br>
     
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" id="button1">Submit</button>
-                    <a href="./sale.html"><button type='button' id="button2">Back</button></a>
+                    <button type="submit" class="button">Submit</button>
+                    <a href="./sale.html"><button type='button' class="button">Back</button></a>
                 <!-- </div> -->
             </form>
           <br>
+          <div class="table-container">
             <table>
                 <tr>
                     <th>Sr. No</th>
@@ -106,7 +274,7 @@
                 </tbody>
                 <div id="popupContainer"></div>
             </table>
-
+       </div>
         </div>
     </div>
 
