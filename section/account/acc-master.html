@@ -3,48 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>account master</title>
-    <link rel="stylesheet" href="../../assets/css/acc-master.css">
+    <title>Account Master</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .container1 {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .container1 label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .container1 select,
+        .container1 input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .second-row {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    
+
+        .second-row input[type="radio"],
+        .second-row label {
+            display: inline;
+            margin-right: 10px; /* Adjust as needed */
+        }   
+
+
+        .third-row button {
+            padding: 10px 20px;
+            background-color: #808080;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .third-row button:hover {
+            background-color: #555;
+        }
+
+        .third-row a button {
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1 align="center">ACCOUNT MASTER</h1> <hr>
+        <h1>ACCOUNT MASTER</h1>
+        <hr>
         <div class="container1">
-        <form id="loginForm" method="POST">
-        <br>
-        <label for="userType">Account Group</label>
-        <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
-        <select class="drop" id="account_group" id="account_group" name="account_group">
-            <!-- <option value="User" disabled selected>Select Account</option> -->
-        </select>
-        <br>
-        <br>
-        <label for="userType">Route Details</label>
-        <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
-        <select class="drop"  id="route_detail" id="route_detail" name="route_detail">
-            <!-- <option value="User" disabled selected>Select Account</option> -->
-        </select>
-        <br>
-        <input type="text" id="name" name="name" placeholder="name"> <br>
-        <input type="text" id="address" name="address" placeholder="address"> <br>
-        <input type="text" id="no" name="mobile_no" placeholder="mobile_no"> <br>
-        <input type="text" id="preBalance" name="prev_balance" placeholder="Previous Balance"> <br>
-        <div class="second-row">
-        <input type="radio" id="cr" name="cr_dr_type" value = "cr">
-        <label for="isActive">CR</label>
-        <input type="radio" id="dr" name="cr_dr_type" value = "dr" >
-        <label for="isdeActive">DR</label>
-        <br>
-        <br>
+            <form id="loginForm" method="POST">
+                <label for="account_group">Account Group</label>
+                <select class="drop" id="account_group" name="account_group">
+                    <!-- Options will be dynamically populated -->
+                </select>
+                <br>
+                <br>
+                <label for="route_detail">Route Details</label>
+                <select class="drop" id="route_detail" name="route_detail">
+                    <!-- Options will be dynamically populated -->
+                </select>
+                <br>
+                <input type="text" id="name" name="name" placeholder="Name"><br>
+                <input type="text" id="address" name="address" placeholder="Address"> <br>
+                <input type="text" id="no" name="mobile_no" placeholder="Mobile No"> <br>
+                <input type="text" id="preBalance" name="prev_balance" placeholder="Previous Balance"> <br>
+                <div class="second-row">
+                    <input type="radio" id="cr" name="cr_dr_type" value="cr">
+                    <label for="cr">CR</label>
+                    <input type="radio" id="dr" name="cr_dr_type" value="dr">
+                    <label for="dr">DR</label>
+                </div>
+                
+                <div class="third-row">
+                    <button type="submit" class="border-hover">Save</button>
+                    <a href="./account.html"><button type="button" class="border-hover">Back</button></a>
+                </div>
+            </form>
+        </div>
     </div>
-        <div class="third-row">
-        <!-- <button class="border-hover" >Save</button> -->
-        <button type="submit" class="border-hover">Save</button>
-        <a href="./account.html"><button type='button' class="border-hover">Back</button></a>
-    </div>
-    </form>
-    </div>
-    </div>
+
     <script src="./accMaster.js"></script>
 </body>
 </html>

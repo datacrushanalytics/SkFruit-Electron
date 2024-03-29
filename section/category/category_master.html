@@ -4,8 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Form in Electron</title>
-    <link rel="stylesheet" href="../../assets/css/category_master.css">
+   
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        form {
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .second-row {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .third-row {
+            text-align: center;
+        }
+
+        .border-hover {
+            padding: 10px 20px;
+            text-decoration: none;
+            color: white;
+            background-color: #808080;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+        .border-hover:hover {
+            background-color: #555;
+        }
+    </style>
+
+
 </head>
+
+
+
 <body>
     <div class="container">
         <h1 align="center">CATEGORY MASTER</h1> 
@@ -16,9 +100,8 @@
           <label for="name"><b>CATEGORY NAME</b></label> <br>
           <input type="text" id="name" name="name"> <br>
         
-        <button id="addButton" type="submit" >SAVE</button>
-        <button id="backBtn">BACK</button>
-    </form>
+          <button type="submit" class="border-hover">Save</button>
+        <a href="./category.html"><button type="button" class="border-hover">Back</button></a>
     </div>
 
     

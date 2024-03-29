@@ -1,45 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>sk fruits</title>
-    <link rel="stylesheet" href="../../assets/css/account.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Master</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(242, 242, 242, 0.8);
+            /* Transparent background */
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            /* Hide horizontal scrollbar */
+        }
+
+        .container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            padding: 12px 24px;
+            text-decoration: none;
+            color: white;
+            background-color: #808080;
+            /* Grey color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 0 10px;
+        }
+
+        .button:hover {
+            background-color: #555;
+            /* Darker grey on hover */
+        }
+
+        .button a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .table-container {
+            max-width: 100%;
+            overflow-x: auto;
+            /* Enable horizontal scrolling */
+            margin: 0 auto;
+            /* min-width: 600px; */
+            /* Set a minimum width for the table container */
+            max-height: calc(100vh - 200px);
+            /* Set maximum height for the table container */
+            overflow-y: auto;
+            /* Enable vertical scrolling */
+        }
+
+        table {
+            width: auto;
+            min-width: 100%;
+            /* Ensure table expands to fit content */
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.8);
+            /* Transparent background */
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 12px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
+
 <body>
-   
-    
     <div class="container">
-        <div class="root">
-    <h1>ACCOUNT MASTER </h1>
-    <button class="button1"><a href="./acc-master.html">ADD NEW ACCOUNT</button></a>
-    
- 
-    <br><br><hr>
-   <br>
-  </div>
-  <br>
-   <table>
-    <thead>
-       <tr>
-           <th>NO </th>
-           <th>ACCOUNT_NAME</th>
-           <th>GROUP </th>
-           <th>ADDRESS </th>
-           <th>MOBILE_NO </th>
-           <th></th>
-           <th></th>
-        
-           
-       </tr>
-    </thead>
+        <h1>Account Master</h1>
+        <div class="button-container">
+            <button class="button"><a href="./acc-master.html">Add New Account</a></button>
+            <!-- <button class="button"><a href="../SetUserMenu.html">Set User Menu</a></button> -->
+        </div>
+    </div>
+    <div class="table-container">
 
-    <tbody id="tableBody">
-        <!-- Data will be inserted here -->
-    </tbody>
+        <table>
+            <thead>
+                <tr>
+                    <th>NO.</th>
+                    <th>ACCOUNT_NAME</th>
+                    <th>GROUP</th>
+                    <th>ADDRESS</th>
+                    <th>MOBILE_NO</th>
+                   
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+    <script src="./account.js"></script>
+</body>
 
-   </table>
-   
-   
-   </div>
-   <script src="./account.js"></script>
-   </body>
-   </html>
+</html>
