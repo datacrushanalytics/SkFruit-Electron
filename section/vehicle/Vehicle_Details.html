@@ -3,27 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <div class="container"> <h1>VEHICLE DETAILS</h1>
-        <button class="button"><a href="../vehicle/Add_Vehicle_Details.html">ADD NEW VEHICLE</button></a><br><br>
-  
-   
-    <link rel="stylesheet" href="../../assets/css/Vehicle_Details.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(242, 242, 242, 0.8);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            /* margin: 0 auto;
+            max-width: 800px;
+            padding: 20px; */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .button {
+            padding: 12px 24px;
+            text-decoration: none;
+            color: white;
+            background-color: #808080;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 0 10px;
+        }
+        
+        .button:hover {
+            background-color: #555;
+        }
+        
+        .button a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .table-container {
+            max-width: 100%;
+            overflow-x: auto; /* Enable horizontal scrolling */
+            margin: 0 auto;
+            max-height: calc(100vh - 200px); /* Adjust the height as needed */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 12px;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <title>Vehicle Details</title>
 </head>
 <body>
 
-<table>
-    <tr>
-        <th>NO.</th>
-        <th>VEHICLE NAME</th>
-        <th>VEHICLE NO</th>
-        <th></th>
-    </tr>
-    <tbody id="tableBody">
-        <!-- Data will be inserted here -->
-    </tbody>
-</table>
+<div class="container"> 
+    <h1>VEHICLE DETAILS</h1>
+    <div class="button-container">
+        <button class="button"><a href="../vehicle/Add_Vehicle_Details.html">ADD NEW VEHICLE</a></button><br><br>
+    </div>
+    <div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>NO.</th>
+                <th>VEHICLE NAME</th>
+                <th>VEHICLE NO</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- Data will be inserted here -->
+        </tbody>
+    </table>
 </div>
-
+</div>
 </body>
 <script src="./Vehicle_Details.js"></script>
 </html>
