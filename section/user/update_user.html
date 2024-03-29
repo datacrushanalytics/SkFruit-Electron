@@ -3,9 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>User Form in Electron</title>
-    <link rel="stylesheet" href="../../assets/css/User_Master.css">
+
+
+    <style>
+
+        .container {
+            margin: 20px auto;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        hr {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border: 0;
+            border-top: 1px solid #ccc;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        input[type="text"],
+        input[type="password"],
+        select {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+        
+        .first-row,
+        .second-row,
+        .third-row {
+            margin-bottom: 20px;
+        }
+        
+        .container1 {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .button-container {
+            text-align: center;
+        }
+        
+        .border-hover {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+        
+        .border-hover:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .radio-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .radio-container label {
+            margin-right: 10px;
+        }
+        
+        
+        
+        
+            </style>
+        
+
+
+
 </head>
+
+
 <body>
     <div class="container">
         <h1 align="center">User Master</h1> <hr>
@@ -23,17 +116,16 @@
         <input type="text" id="username" name="username" placeholder="Username"> <br>
 
         <input type="password" id="password" name="password" placeholder="Password"> <br>
-
-        <div class="second-row">
+<!-- Your HTML -->
+<div class="second-row">
+    <div class="radio-container">
         <input type="radio" id="isActive" name="isActive" >
         <label for="isActive">Active</label>
         <input type="radio" id="isActive" name="isActive" >
         <label for="isdeActive">Deactive</label>
-        <br>
-        <br>
+    </div>
+</div>
 
-
-    </div> 
         <div class="third-row">
         <button type="submit" id="updateButton" class="border-hover">Update</button>
         <a href="./user.html"><button type='button' class="border-hover">Back</button></a>
@@ -79,7 +171,7 @@
                 status: status
             };
 
-            fetch('http://43.205.230.120/userData/updateUser/'+ parseInt(document.getElementById("id").value), {
+            fetch('http://localhost:3000/userData/updateUser/'+ parseInt(document.getElementById("id").value), {
                 method: 'PUT',
                 body: JSON.stringify(userData),
                 headers: {
@@ -115,6 +207,39 @@
         });
         
     </script>
+
+    <script>
+        // Generate a hash of your inline script
+        function generateScriptHash(script) {
+            const crypto = window.crypto || window.msCrypto;
+            if (!crypto) {
+                console.error('Crypto API not supported.');
+                return '';
+            }
+            const encoder = new TextEncoder();
+            const data = encoder.encode(script);
+            return crypto.subtle.digest('SHA-256', data)
+                .then(hashBuffer => {
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+                    return `'sha256-${hashHex}'`;
+                });
+        }
+
+        // Call the function to generate the hash and update the CSP policy
+        generateScriptHash(document.currentScript.textContent)
+            .then(hash => {
+                // Add the hash to the CSP policy
+                const csp = `default-src 'self'; script-src ${hash}`;
+                document.head.querySelector('meta[http-equiv="Content-Security-Policy"]').setAttribute('content', csp);
+            })
+            .catch(error => {
+                console.error('Error generating script hash:', error);
+            });
+    </script>
+
+
+
 </body>
 </html>
 
