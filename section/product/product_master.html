@@ -4,62 +4,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>product master</title>
-    <link rel="stylesheet" href="../../assets/css/Product_Master1.css">
+    <title>Product Master</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        form {
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .second-row {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .third-row {
+            text-align: center;
+        }
+
+        .border-hover {
+            padding: 10px 20px;
+            text-decoration: none;
+            color: white;
+            background-color: #808080;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+        .border-hover:hover {
+            background-color: #555;
+        }
+    </style>
 </head>
 
 <body>
- 
-
     <div class="container">
-        <h1 align="center">Product Master</h1> <hr>
+        <h1>Product Master</h1>
+        <hr>
 
         <div class="container1">
-        <form id="loginForm" method="POST">
-    
-        <div class="first-row">
-            <label for="userType">Catergory  </label>
-        <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
-        <select id="category" name="category" placeholder="Category">
-            <!-- <option value="User" selected>Catergory</option> -->
-            <!-- Add more options as needed -->
-        </select>
+            <form id="loginForm" method="POST">
+                <div class="first-row">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" placeholder="Category">
+                        <!-- Add options here -->
+                    </select>
+                </div>
+
+                <input type="text" id="name" name="name" placeholder="Product Name">
+                <br>
+
+                <input type="text" id="rate" name="rate" placeholder="Rate">
+                <br>
+
+                <input type="text" id="w_rate" name="w_rate" placeholder="W Rate">
+                <br>
+
+                <input type="text" id="minimum_stock" name="minimum_stock" placeholder="Minimum Stock">
+                <br>
+
+                <div class="second-row">
+                    <input type="checkbox" id="rate_editable" name="rate_editable" value="1">
+                    <label for="rate_editable">Rate Editable</label>
+                    <br>
+                </div>
+
+                <div class="third-row">
+                    <button type="submit" class="border-hover">Save</button>
+                    <a href="./product.html"><button type="button" class="border-hover">Back</button></a>
+                </div>
+            </form>
         </div>
-        
-
-
-        <!-- <label for="userType">Name</label> -->
-        <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
-        <!-- <select id="name" id="name" name="name"> -->
-        <input type="text" id="name" name="name" placeholder="Product name"> <br>
-            <!-- <option value="User" disabled selected>Select Account</option> -->
-        <!-- </select> -->
-    
-        <!-- <input type="text" id="name" name="name" placeholder="Name">  -->
-      
-    
-        <input type="text" id="rate" name="rate" placeholder="Rate"> <br>
-
-        <input type="text" id="w_rate" name="w_rate" placeholder="W Rate"> <br>
-        <input type="text" id="minimum_stock" name="minimum_stock" placeholder="Minimun Stock"> <br>
-
-        <div class="second-row">
-        <input type="checkbox" id="rate_editable" name="rate_editable" value = 1>
-        <label for="isActive">RATE EDITABLE</label>
-        <br>
-
-
-
-    </div> 
-        <div class="third-row">
-        <!-- <button class="border-hover" >Save</button> -->
-        <button type="submit" class="border-hover">Save</button>
-        <a href="./product.html"><button type='button' class="border-hover">Back</button></a>
     </div>
-    </form>
-    </div>
-    </div>
- 
     <script src="./productMaster.js"></script>
 
 </body>
