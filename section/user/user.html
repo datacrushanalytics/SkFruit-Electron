@@ -5,14 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Master</title>
-    <link rel="stylesheet" href="../../assets/css/user.css" />
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: rgba(242, 242, 242, 0.8); /* Transparent background */
+            background-color: rgba(242, 242, 242, 0.8);
+            /* Transparent background */
             margin: 0;
             padding: 20px;
-            overflow-x: hidden; /* Hide horizontal scrollbar */
+            overflow-x: hidden;
+            /* Hide horizontal scrollbar */
         }
 
         .container {
@@ -28,7 +29,8 @@
             padding: 12px 24px;
             text-decoration: none;
             color: white;
-            background-color: #808080; /* Grey color */
+            background-color: #808080;
+            /* Grey color */
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -37,7 +39,8 @@
         }
 
         .button:hover {
-            background-color: #555; /* Darker grey on hover */
+            background-color: #555;
+            /* Darker grey on hover */
         }
 
         .button a {
@@ -45,14 +48,28 @@
             text-decoration: none;
         }
 
+        .table-container {
+            max-width: 100%;
+            overflow-x: auto;
+            /* Enable horizontal scrolling */
+            margin: 0 auto;
+            min-width: 600px;
+            /* Set a minimum width for the table container */
+            max-height: 400px;
+            /* Set maximum height for the table container */
+            overflow-y: auto;
+            /* Enable vertical scrolling */
+        }
+
         table {
-            width: 100%;
-            max-width: 800px;
+            width: auto;
+            min-width: 100%;
+            /* Ensure table expands to fit content */
             border-collapse: collapse;
-            background-color: rgba(255, 255, 255, 0.8); /* Transparent background */
+            background-color: rgba(255, 255, 255, 0.8);
+            /* Transparent background */
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
-            margin: 0 auto;
         }
 
         th,
@@ -65,10 +82,6 @@
         th {
             background-color: #f2f2f2;
         }
-
-        .set-user-menu-button {
-            margin-top: 20px;
-        }
     </style>
 </head>
 
@@ -80,36 +93,26 @@
             <button class="button"><a href="../SetUserMenu.html">Set User Menu</a></button>
         </div>
     </div>
+    <div class="table-container">
 
-    <table>
-        <tr>
-            <th>NO.</th>
-            <th>NAME</th>
-            <th>ADDRESS</th>
-            <th>CONTACT NO</th>
-            <th>USERNAME</th>
-            <th>PASSWORD</th>
-            <th>STATUS</th>
-            <th>TYPE</th>
-        </tr>
-        <!-- <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><button class="button edit-button"><a href="../section/User_Master.html">Edit</button></a></td>
-            <td><button class="button delete-button"> Delete</button></td>
-        </tr> -->
-
-        <tbody id="tableBody">
-            <!-- Data will be inserted here -->
-        </tbody>
-    </table>
-
+        <table>
+            <thead>
+                <tr>
+                    <th>NO.</th>
+                    <th>NAME</th>
+                    <th>ADDRESS</th>
+                    <th>CONTACT NO</th>
+                    <th>USERNAME</th>
+                    <th>PASSWORD</th>
+                    <th>STATUS</th>
+                    <th>TYPE</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
     <script src="./user.js"></script>
 </body>
 

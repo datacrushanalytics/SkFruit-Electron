@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill</title>
+    <style>
+        /* CSS styles can be added here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        
+        .header {
+            background-color: #f9f9f9;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header .logo {
+            width: auto; /* Adjust as needed */
+            margin-right: 20px; /* Adjust as needed */
+        }
+        .header .logo img {
+            height: 80px; /* Adjust as needed */
+        }
+        .header .details {
+            width: 80%; /* Adjust as needed */
+            text-align: right;
+        }
+        .header h1, .header p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 12px; /* Adjust font size */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 6px; /* Adjust padding */
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .total {
+            font-weight: bold;
+        }
+        .details {
+            text-align: center;
+            margin-top: 10px;
+        }
+        @media print {
+            .details {
+                display: none; /* Hide the print button when printing */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="../../assets/img/logo.png" alt="Company Logo">
+        </div>
+        <div class="header-details">
+            <h1>सावता फ्रुट सप्लायर्स</h1>
+            <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
+            <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
+        </div>
+    </div>
+    <div class="container">
+
+        <!-- Bill details -->
+        <table>
+            <tbody>
+                <tr>
+                    <td><b>बिल क्र.:</b></td>
+                    <td>49746</td>
+                </tr>
+                <tr>
+                    <td><b>तारीख:</b></td>
+                    <td>01-03-2024</td>
+                </tr>
+                <tr>
+                    <td><b>ग्राहकाचे नाव:</b></td>
+                    <td>Cash Bill</td>
+                </tr>
+                <tr>
+                    <td><b>संपर्क क्र.:</b></td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td><b>पत्ता:</b></td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <!-- Items table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>अनु क्र.</th>
+                    <th>बटा</th>
+                    <th>मार्क</th>
+                    <th>नग</th>
+                    <th>किंमत</th>
+                    <th>रक्कम</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>k1506</td>
+                    <td>sk</td>
+                    <td>2</td>
+                    <td>400</td>
+                    <td>800</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>k1506</td>
+                    <td>sk</td>
+                    <td>2</td>
+                    <td>400</td>
+                    <td>800</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>k1506</td>
+                    <td>sk</td>
+                    <td>2</td>
+                    <td>400</td>
+                    <td>800</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>k1506</td>
+                    <td>sk</td>
+                    <td>2</td>
+                    <td>400</td>
+                    <td>800</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>k1506</td>
+                    <td>sk</td>
+                    <td>2</td>
+                    <td>400</td>
+                    <td>800</td>
+                </tr>
+            </tbody>
+            <tfoot style="background-color: #e8e6e4;">
+                <tr>
+                    <td align="right" colspan="6"><font color="black">गेलेले कॅरेट : +</font></td>
+                    <td align="right" colspan="1"><font color="black">0</font></td>
+                </tr>	
+                <tr>
+                    <td align="right" colspan="6" style="border-top: 1px solid #999"><font color="black">चालू कलम रक्कम:</font></td>
+                    <td align="right" colspan="1" style="border-top: 1px solid #999"><font color="black">800</font></td>
+                </tr>
+                <tr>
+                    <td align="right" colspan="6"><font color="black">मागील बाकी:</font></td>
+                    <td align="right" colspan="1"><font color="black">0</font></td>
+                </tr>
+                <tr>
+                    <td align="right" colspan="6" style="border-top: 1px solid #999"><font color="black">एकूण रक्कम:</font></td>
+                    <td align="right" colspan="1" style="border-top: 1px solid #999"><font color="black">800</font></td>
+                </tr>
+                <tr>
+                    <td align="right" colspan="6"><font color="black">रोख जमा रक्कम:</font></td>
+                    <td align="right" colspan="1"><font color="black">800</font></td>
+                </tr>
+                <tr>
+                    <td align="right" colspan="6"><font color="black">ऑनलाईन जमा रक्कम:</font></td>
+                    <td align="right" colspan="1"><font color="black">0</font></td>
+                </tr>
+                <tr>
+                    <td align="right" colspan="6"><font color="black">सूट रक्कम:</font></td>
+                    <td align="right" colspan="1"><font color="black">0</font></td>
+                </tr>
+                <tr>
+                    <td align="right" colspan="6"><font color="black">जमा कॅरेट:   -</font></td>
+                    <td align="right" colspan="1"><font color="black">0</font></td>
+                </tr>
+                <tr>
+                    <td align="right" colspan="6" style="border-top: 1px solid #999"><font color="black">आत्ता पर्यंतचे येणे बाकी:</font></td>
+                    <td align="right" colspan="1" style="border-top: 1px solid #999"><font color="black">0</font></td>
+                </tr>
+            </tfoot>
+        </table>
+        
+        <!-- Thank you message -->
+        <div class="details">
+            <h4>Thank you, visit again!</h4>
+            <p><a href="https://datacrushanalytics.com/" style="color: #B1B6BA; font-size: 14px;">www.DataCrushAnalytics.com (Contact No: 7040040015)</a></p>
+        </div>
+    </div>
+    
+    <!-- Print button -->
+    <div class="header-details">
+        <button onclick="window.print()">Print</button>
+    </div>
+</body>
+</html>
