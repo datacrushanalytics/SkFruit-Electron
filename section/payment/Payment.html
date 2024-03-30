@@ -5,16 +5,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Form in Electron</title>
-    <link rel="stylesheet" href="../../assets/css/Payment.css">
     <style>
-        /* Add border to the second form */
-        .form1 {
-            border: 1px solid black;
+        /* Reset default margin and padding */
+        /* Set a background color for the body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
             padding: 10px;
-            margin-top: 20px;
+
         }
+
+        /* Center the container */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        /* Center align the headings */
+        h1 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        /* Style for form elements */
+        label, select, textarea {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            padding: 5px; /* Add some padding for better visual appearance */
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            padding: 5px; /* Add some padding for better visual appearance */
+        }
+
+        /* Style for buttons */
+        button {
+            padding: 12px 24px;
+            text-decoration: none;
+            color: white;
+            background-color: #808080;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 5px;
+        }
+
+        /* Center align the buttons */
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+        }
+
+
     </style>
 </head>
+
 
 <body>
     <div class="container">
@@ -25,11 +83,11 @@
             <form id="loginForm1">
 
                 <div class="first-row">
-                    <label for="userType">PID</label>
-                    <input type="number" id="fromdate" name="date" placeholder="From Date">
+                    <!-- <label for="userType">PID</label>
+                    <input type="number" id="fromdate" name="date" placeholder="From Date"> -->
                     <br>
                     <label for="userType">Date</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date">
+                    <input type="text" id="date" name="date" placeholder="To Date" readonly>
                 </div>
 
                 <br>
@@ -42,7 +100,7 @@
                 <br>
 
                 <label for="userType">To Account</label>
-                <select class="drop" id="bata" id="bata" name="name">
+                <select class="drop" id="bata" id="bata" name="name" onchange="previousbalance()">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br>
     
@@ -51,10 +109,10 @@
 
                 <div class="second-row">
                     <label for="userType">Prev. Balance</label>
-                    <input type="number" id="fromdate" name="date" placeholder="From Date">
+                    <input type="number" id="previousBalance" name="date" >
                     <br>
                     <label for="userType">Amount</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date">
+                    <input type="number" id="amount" name="date" onchange="totalBalance()" >
                 </div><br>
 
                 <!-- <div class="third-row"> -->
@@ -73,6 +131,30 @@
 
 </body>
 <script src="./payment.js"></script>
+
+<script>
+
+    function previousbalance(){
+        const name = document.getElementById("bata").value
+        fetch('http://localhost:3000/fetchpv/' + name)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Populate dropdown with API data
+            console.log(data)
+            document.getElementById('previousBalance').value = parseInt(data[0]['current_balance'] || 0);      
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+      
+      }
+
+</script>
 
 
 
