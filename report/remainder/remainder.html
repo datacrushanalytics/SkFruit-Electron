@@ -3,8 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel="stylesheet" href="../../assets/css/Reminder.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(242, 242, 242, 0.8);
+            /* Transparent background */
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            /* Hide horizontal scrollbar */
+        }
+
+        .container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container h1{
+         margin-top: 1%;
+      }
+
+
+      
+      .button-container {
+            margin-bottom: 20px;
+        }
+
+        .button {
+            padding: 12px 24px;
+            text-decoration: none;
+            color: white;
+            background-color: #808080;
+            /* Grey color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 0 10px;
+        }
+
+        .button:hover {
+            background-color: #555;
+            /* Darker grey on hover */
+        }
+
+        .button a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .table-container {
+            max-width: 100%;
+            overflow-x: auto; /* Enable horizontal scrolling */
+            margin: 0 auto;
+            max-height: calc(100vh - 200px); /* Adjust the height as needed */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 12px;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+
+
+   </style>
 </head>
 <body>
     <div class="container">
@@ -12,7 +87,7 @@
         <hr>
         <br>
       
-    
+ <div class="table-container">  
 <table>
     <tr>
         <th>NO.</th>
@@ -31,17 +106,13 @@
 
 
 </table>
+</div>
 <br>
 
-<button id="printbutton" onclick="button()">Print</button>
+<button class="button" onclick="button()">Print</button>
 
 </div>
 <script src="./remainder.js"></script>
 </body>
 </html>
     
-
-
-
-
-

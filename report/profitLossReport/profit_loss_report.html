@@ -5,22 +5,147 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Form in Electron</title>
-    <link rel="stylesheet" href="../../assets/css/batawise_sale_report1.css">
     <style>
-        /* Add border to the second form */
+        /* Add border to the second form
         .form1 {
             border: 1px solid black;
             padding: 10px;
             margin-top: 20px;
+        } */
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(242, 242, 242, 0.8);
+            /* Transparent background */
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            /* Hide horizontal scrollbar */
         }
+
+        .container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container h1{
+         margin-top: 1%;
+      }
+      .first-row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    
+    .first-row label {
+        margin-right: 10px;
+        margin-top: 9px;
+    }
+    
+    .first-row input,
+    .first-row select {
+        margin-right: 10px;
+    }
+  #fromdate{
+    border-radius: 8px;
+    height: 35px;
+    width: 320px;
+    margin-left: 5%; 
+  }
+
+  label{
+    margin-left: 3%;
+  }
+  
+  #todate{
+    border-radius: 8px;
+    height: 35px;
+    width: 320px;
+    margin-left: 1%;
+  }
+
+  
+  #product{
+    border-radius: 8px;
+    height: 35px;
+    width: 600px;
+
+  }
+  
+  #bata {
+    border-radius: 8px;
+    height: 25%;
+    width: 600px;
+    border: 1px solid transparent;
+    padding: 10px;
+    box-shadow: 5px 5px 5px grey;
+    margin: 20px;
+    
+}
+.drop1{
+  margin-left: 50px;
+}
+.button-container {
+            margin-bottom: 20px;
+        }
+
+        .button {
+            padding: 12px 24px;
+            text-decoration: none;
+            color: white;
+            background-color: #808080;
+            /* Grey color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 0 10px;
+        }
+
+        .button:hover {
+            background-color: #555;
+            /* Darker grey on hover */
+        }
+
+        .button a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .table-container {
+            max-width: 100%;
+            overflow-x: auto; /* Enable horizontal scrolling */
+            margin: 0 auto;
+            max-height: calc(100vh - 200px); /* Adjust the height as needed */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 12px;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+
+
+        
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1 align="center">वैभव शिंदे </h1><br>
-        <hr>
-
+        <h3 align="center">Profit Loss Report</h3>
         <div class="container1">
             <form id="loginForm1">
 
@@ -48,11 +173,11 @@
     
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" id="button1">Submit</button>
-                    <a href="./sale.html"><button type='button' id="button2">Back</button></a>
+                    <button type="submit" class="button">Submit</button>
                 <!-- </div> -->
             </form>
           <br>
+          <div class="table-container">
             <table>
                 <tr>
                     <th>Id</th>
@@ -77,8 +202,8 @@
                     <!-- Data will be inserted here -->
                 </tbody>
             </table><br>
-
-            <h3 align="center">Profit Loss Report</h3>
+          </div>
+           
         </div>
     </div>
 

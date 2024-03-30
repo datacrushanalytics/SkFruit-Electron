@@ -1,39 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Form in Electron</title>
-    <link rel="stylesheet" href="../../assets/css/routewise_sale_report.css">
+    <!-- <link rel="stylesheet" href="../../assets/css/khatawani.css"> -->
     <style>
-        /* Add border to the second form */
-        .form1 {
-            border: 1px solid black;
-            padding: 10px;
-            margin-top: 20px;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(242, 242, 242, 0.8);
+            /* Transparent background */
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            /* Hide horizontal scrollbar */
+        }
+        .container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .container h1{
+         margin-top: 1%;
+      }
+      .first-row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    
+    .first-row label {
+        margin-right: 10px;
+        margin-top: 9px;
+    }
+    
+    .first-row input,
+    .first-row select {
+        margin-right: 10px;
+    }
+  #fromdate{
+    border-radius: 8px;
+    height: 35px;
+    width: 320px;
+    margin-left: 5%;
+  }
+  label{
+    margin-left: 3%;
+  }
+  #todate{
+    border-radius: 8px;
+    height: 35px;
+    width: 320px;
+    margin-left: 1%;
+  }
+
+  .drop, .drop1 {
+    border: 1px solid transparent;
+    box-shadow: 5px 10px 8px grey;
+    border-radius: 8px;
+    width: 60%;
+    height: 35px;
+    text-indent: 10%;
+    margin-left: 4%;
+  }
+
+  #customer, #route {
+    border: 1px solid transparent;
+    box-shadow: 5px 10px 8px grey;
+    border-radius: 8px;
+    width: 60%;
+    height: 35px;
+    text-indent: 10%;
+    margin-left: 4%;
+}
+
+#lable1111{
+    margin-left: 6%;
+}
+        .button-container {
+            margin-bottom: 20px;
+        }
+        .button {
+            padding: 12px 24px;
+            text-decoration: none;
+            color: white;
+            background-color: #808080;
+            /* Grey color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 0 10px;
+        }
+        .button:hover {
+            background-color: #555;
+            /* Darker grey on hover */
         }
 
-        #route {
-            border-radius: 8px;
-            height: 25%;
-            width: 150px;
-            border: 1px solid transparent;
-            padding: 10px;
-            box-shadow: 5px 5px 5px grey;
-            margin: 20px;
+        
+        .button a {
+            color: white;
+            text-decoration: none;
+        }
+        .table-container {
+            max-width: 100%;
+            overflow-x: auto; /* Enable horizontal scrolling */
+            margin: 0 auto;
+            max-height: calc(100vh - 200px); /* Adjust the height as needed */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 12px;
+        }
+        
+        th {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
-
 <body>
     <div class="container">
-        <h1 align="center">Routewise Sale Report</h1>
+        <h1 align="center">Routewise Sale Report</h1><br>
         <hr>
-
         <div class="container1">
             <form id="loginForm1">
-
                 <div class="first-row">
                     <label for="userType">From Date</label>
                     <input type="date" id="fromdate" name="date" placeholder="From Date">
@@ -41,28 +141,27 @@
                     <label for="userType">To Date</label>
                     <input type="date" id="todate" name="date" placeholder="To Date">
                 </div>
-
                 <br>
-
                 <label for="userType">Customer Name</label>
                 <select class="drop" id="customer" id="name" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select>
-
-                <br><br>
-
-                <label for="userType">Route</label>
-                <select class="drop" id="route1" name="name">
+                </select><br>
+                <br>
+                <label id='lable1111' for="userType">Route</label>
+                <select class="drop1" id="route" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select>
-<br><br>
-                <div class="third-row">
+                </select><br><br>
+                <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" class="border-hover">Submit</button>
-                    <a href="./sale.html"><button type='button' class="border-hover">Back</button></a>
-                </div>
+                    <button type="submit" class="button">Submit</button>
+                    <a href="./sale.html"><button type='button' class="button">Back</button></a>
+                <!-- </div> -->
             </form>
+            <br>
+            <br>
+            <div class="table-container">
             <table>
+                <thead>
                 <tr>
                     <th>Sr. No</th>
                     <th>BILL NO</th>
@@ -71,31 +170,24 @@
                     <th>Route</th>
                     <th>Amount</th>
                     <th>Carate Amount</th>
-                    <th>Total Amount</th>
+                    <th>Total Kalam</th>
                     <th>Previous Balance</th>
                     <th>Online Amount</th>
                     <th>Discount</th>
                     <th>In Carte</th>
-                    <th>Paid Amount</th>
                     <th>Balance</th>
+                    <th>Paid Amount</th>
                     <th>Comment</th>
-
                 </tr>
+                </thead>
                 <!-- Add more rows as needed -->
                 <tbody id="tableBody">
                     <!-- Data will be inserted here -->
                 </tbody>
             </table>
-
+        </div>
         </div>
     </div>
-
-
-
-
 </body>
 <script src="./routewiseSaleReport.js"></script>
-
-
-
 </html>

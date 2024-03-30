@@ -5,86 +5,228 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
-    <link rel="stylesheet" href="../../assets/css/Root_Sale.css ">
 
     <style>
         /* Define your CSS styles here */
-        .popup {
-            display: none;
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            z-index: 9999;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(242, 242, 242, 0.8);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+
+        .container {
+            /* margin: 0 auto;
+            max-width: 800px;
+            padding: 20px; */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .drop {
+            text-align: left;
+            width: 100%; /* Full width */
+            height: 40px;
+            border-radius: 8px;
+            box-shadow: 5px 5px 5px grey;
+            margin-bottom: 10px; /* Add some space between dropdowns */
         }
 
-        .popup h2 {
-            margin-top: 0;
-        }
-
-        .popup button {
-            margin-top: 10px;
-            padding: 5px 10px;
+        #border-hover, .button1 {
+            padding: 12px 24px;
+            text-decoration: none;
+            color: white;
+            background-color: #808080;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 0 10px;
+        }
+        
+        #border-hover:hover, .button1 {
+            background-color: #555;
+        }
+        
+       
+        
+        .table-container {
+            max-width: 100%;
+            overflow-x: auto; /* Enable horizontal scrolling */
+            margin: 0 auto;
+            max-height: calc(100vh - 200px); /* Adjust the height as needed */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 12px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            margin-right: 50px;
+        }
+        
+        .input-row label {
+            margin-right: 20px;
+            font-weight: bold;
+            color: #333; /* Label text color */
+        }
+        
+        .popup {
+            position: fixed; /* Position the popup */
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Center the popup */
+            background-color: #fff; /* Background color */
+            border: 1px solid #ccc; /* Border */
+            border-radius: 5px; /* Rounded corners */
+            padding: 20px; /* Padding */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Box shadow */
+            z-index: 9999; /* Ensure the popup is on top */
+        }
+        
+        .popup h2 {
+            margin-top: 0; /* Remove top margin */
+            color: #333; /* Text color */
+        }
+        
+        #barcodeCanvas {
+            display: block; /* Make the canvas a block element */
+            margin: 20px auto; /* Center the canvas */
+            border: 1px solid #ccc; /* Border */
+            border-radius: 5px; /* Rounded corners */
+        }
+        
+        #downloadButton,
+        button {
+            padding: 10px 20px; /* Padding */
+            margin: 10px; /* Margin */
+            background-color: #808080; /* Background color */
+            color: #fff; /* Text color */
+            border: none; /* Remove border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Cursor on hover */
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+        }
+        
+        #downloadButton:hover,
+        button:hover {
+            background-color: #808080; /* Darker background color on hover */
+        }
+        
+      
+        
+        /* table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin: 0 auto;
+        }
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 12px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        } */
+
+        /* Media query for responsiveness */
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 100%; /* Full width on smaller screens */
+            }
         }
     </style>
-
-
 </head>
 
 <body>
-    <div class="container">
-        <h1 align="center">Product Barcode </h1>
-        <hr><br>
+    <body>
+        <div class="container">
+            <h1 align="center">Product Barcode </h1>
+            <hr><br>
+    
+            <div class="container1">
+                <form id="Form">
+    
+                    <!-- <label for="userType">Product : </label>
+                    <select class="drop" id="grahk" name="account_group">
+                    </select>
+                    <br><br>
+                    <label for="userType">Bata : </label>
+                    <select class="drop" id="Route" name="route_detail">
+    
+                    </select>
+                    <br><br> -->
 
-        <div class="container1">
-            <form id="Form">
-
-                <label for="userType">Product : </label>
-                <select class="drop" id="grahk" name="account_group">
-                </select>
-                <br><br>
-                <label for="userType">Bata : </label>
-                <select class="drop" id="Route" name="route_detail">
-
-                </select><br><br>
-
-                <button id="border-hover" type="submit">दाखवा </button>
-
-            </form>
-            <br>
-            <br>
-            <br>
-
-
-            <table>
-                <tr>
-                    <th></th>
-                    <th>Purchase Id</th>
-                    <th>Purchase Date</th>
-                    <th>Product Name</th>
-                    <th>Bata</th>
-                    <th>Mark</th>
-                    <th>Purchase Price</th>
-                    <th>Selling Price</th>
-                    <th>Barcode</th>
-
-                </tr>
-                <!-- Add more rows as needed -->
-                <tbody id="tableBody">
-                    <!-- Data will be inserted here -->
-                </tbody>
-
-                <div id="popupContainer"></div>
-
-
-            </table>
-
-
-
+                    <div class="input-row">
+                        <label for="grahk">Product:  </label>
+                        <select class="drop" id="grahk" name="account_group"></select>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label for="Route">Bata:   </label>
+                        <select class="drop" id="Route" name="route_detail"></select>
+                    </div>
+                    
+                    
+    
+                    <button id="border-hover" type="submit">दाखवा </button>
+    
+                </form>
+                <br>
+                <br>
+                <br>
+    
+                <div class="table-container">
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>Purchase Id</th>
+                        <th>Purchase Date</th>
+                        <th>Product Name</th>
+                        <th>Bata</th>
+                        <th>Mark</th>
+                        <th>Purchase Price</th>
+                        <th>Selling Price</th>
+                        <th>Barcode</th>
+    
+                    </tr>
+                    <!-- Add more rows as needed -->
+                    <tbody id="tableBody">
+                        <!-- Data will be inserted here -->
+                    </tbody>
+    
+                    <div id="popupContainer"></div>
+    
+    
+                </table>
+                </div>
+            </div>
+    
+    
 </body>
 <!-- <script src="./barcode.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
@@ -187,6 +329,7 @@
             var infoCell = row.insertCell();
             var infoButton = document.createElement('button');
             infoButton.textContent = 'Info';
+            infoButton.className = 'button1';
             infoButton.onclick = function () {
                 displayBarcodePopup(item);
             };
@@ -292,5 +435,4 @@
 
 
 </script>
-
 </html>

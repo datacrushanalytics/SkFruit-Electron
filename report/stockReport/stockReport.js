@@ -62,26 +62,26 @@ function populateDropdown1(data) {
 }
 
 
-function populateDropdown2(data) {
-    var userNameDropdown = document.getElementById('vehicleNumber');
-    userNameDropdown.innerHTML = ''; // Clear existing options
+// function populateDropdown2(data) {
+//     var userNameDropdown = document.getElementById('vehicleNumber');
+//     userNameDropdown.innerHTML = ''; // Clear existing options
 
-    // Create and append new options based on API data
-    data.forEach(function (item) {
-        var option = document.createElement('option');
-        option.value = item.vehicle_no; // Set the value
-        option.textContent = item.vehicle_no; // Set the display text
-        userNameDropdown.appendChild(option);
-    });
+//     // Create and append new options based on API data
+//     data.forEach(function (item) {
+//         var option = document.createElement('option');
+//         option.value = item.vehicle_no; // Set the value
+//         option.textContent = item.vehicle_no; // Set the display text
+//         userNameDropdown.appendChild(option);
+//     });
 
-    // Add a placeholder option
-    var placeholderOption = document.createElement('option');
-    placeholderOption.value = ""; // Set an empty value
-    placeholderOption.textContent = "Select Vehicle"; // Set placeholder text
-    placeholderOption.disabled = true; // Disable the option
-    placeholderOption.selected = true; // Select the option by default
-    userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-}
+//     // Add a placeholder option
+//     var placeholderOption = document.createElement('option');
+//     placeholderOption.value = ""; // Set an empty value
+//     placeholderOption.textContent = "Select Vehicle"; // Set placeholder text
+//     placeholderOption.disabled = true; // Disable the option
+//     placeholderOption.selected = true; // Select the option by default
+//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
+// }
 
 
 function getElementValueWithDefault(id, defaultValue) {
