@@ -1,0 +1,119 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgba(242, 242, 242, 0.8);
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden;
+  }
+  
+  .container {
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0 20px;
+  }
+  
+  .table-container {
+    max-width: 100%;
+    overflow-x: auto;
+    margin: 0 auto;
+    min-width: 600px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  table {
+    width: auto;
+    min-width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
+  
+  th,
+  td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 12px;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  .input-label{
+       display: block;
+       text-align: left;
+       margin-bottom: 5px;
+       padding: 6px;
+  }
+  
+  .first-row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Adjusting size for inputs in the second row */
+  .second-row > div:nth-child(2) input[type="text"],
+  .second-row > div:nth-child(3) input[type="text"] {
+    width: 70%; /* Adjust as needed */
+  }
+  
+  /* Align and style inputs */
+  input[type="text"],
+  input[type="number"],
+  select {
+    padding: 10px;
+    margin: 5px;
+    margin-left: 39px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: calc(50% - -45px); /* Adjusted width to accommodate margins */
+    text-align: left; /* Align inputs to the left */
+    display: inline-block; /* Ensures inputs stay on the same line */
+  }
+  
+  
+   
+  /* Style for placeholders */
+  input[type="text"]::placeholder,
+  input[type="number"]::placeholder,
+  select::placeholder {
+    color: #aaa;
+  }
+  
+  /* Centering labels for गाडी नंबर and दिनांक */
+  .second-row > div {
+    text-align: center;
+  }
+  
+  /* Adjusting size for बटा and मार्क */
+  .third-row > div:nth-child(3) input[type="text"],
+  .third-row > div:nth-child(4) input[type="text"] {
+    width: 70%; /* Adjust as needed */
+  }
+  
+  /* Style for buttons */
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  
+  #supplier {
+      text-align: left;
+  }
