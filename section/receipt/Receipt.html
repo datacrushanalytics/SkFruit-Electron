@@ -1,114 +1,257 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
-    <link rel="stylesheet" href="../../assets/css/Receipt.css">
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: rgba(242, 242, 242, 0.8); /* Transparent background */
+          margin: 0;
+          padding: 20px;
+          display: flex;
+          flex-direction: column; /* Align content vertically */
+          justify-content: center; /* Center content vertically */
+          align-items: center; /* Center content horizontally */
+      }
 
+      .container {
+          text-align: center;
+          margin: 0 auto; /* Align container in the center */
+          width: 90%; /* Adjust the width as needed */
+          max-width: 800px; /* Limit the maximum width */
+          margin-bottom: 20px;
+          overflow-x: auto; /* Allow horizontal scrolling if needed */
+          padding: 20px; /* Add padding inside the container */
+          box-sizing: border-box; /* Include padding and border in width */
+      }
+
+      .button-container {
+          margin-top: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center; /* Center buttons vertically */
+      }
+
+      .button {
+          padding: 12px 24px;
+          text-decoration: none;
+          color: white;
+          background-color: #808080; /* Grey color */
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+          margin: 0 10px;
+          min-width: 120px; /* Ensure button width */
+      }
+
+      .button:hover {
+          background-color: #555; /* Darker grey on hover */
+      }
+
+      .button a {
+          color: white;
+          text-decoration: none;
+      }
+
+      table {
+          width: 100%;
+          border-collapse: collapse;
+          background-color: rgba(255, 255, 255, 0.8); /* Transparent background */
+          box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+          border-radius: 5px;
+      }
+      
+
+      th,
+      td {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 12px;
+      }
+
+      th {
+          background-color: #f2f2f2;
+      }
+
+      .input-label {
+          display: block;
+          text-align: left;
+          margin-bottom: 5px;
+          padding: 6px;
+      }
+      .first-row{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      input[type="number"],
+      input[type="text"],
+      select,
+      textarea {
+          width: calc(100% - 24px); /* Make inputs full width minus padding */
+          box-sizing: border-box; /* Include padding and border in width */
+          margin-bottom: 10px; /* Add some spacing between inputs */
+          margin-left: 39px;
+      }
+      
+      @media only screen and (max-width: 600px) {
+          /* Adjustments for smaller screens */
+          th,
+          td {
+              padding: 8px; /* Reduced padding for smaller screens */
+          }
+
+          .container {
+              padding: 10px; /* Reduce padding for smaller screens */
+          }
+
+          .input-label {
+              margin-bottom: 0;
+          }
+
+          input[type="number"],
+          input[type="text"],
+          select,
+          textarea {
+              width: calc(100% - 24px); /* Make inputs full width minus padding */
+              box-sizing: border-box; /* Include padding and border in width */
+              margin-bottom: 10px; /* Add some spacing between inputs */
+              font-size: 14px; /* Adjust font size for smaller screens */
+          }
+
+          .button-container {
+              flex-direction: column; /* Arrange buttons vertically */
+          }
+           /* Adjust the carate input fields */
+           .first-row > input[type="number"] {
+              width: calc(25% * 10px); /* Make inputs one-quarter width minus spacing */
+              margin-right: 5px; /* Add spacing between input fields */
+          }
+      }
+  </style>
 </head>
 <body>
     <div class="container">
-        <h1 align="center">जमा पावती</h1> <hr>
+        <h1 align="center">जमा पावती</h1>
+        <hr>
 
-        <div class="container1"> 
-        <form id="loginForm1">
-        <div class="first-row">
-          <input type="number" id="pavti" name="number" placeholder="जमा पावती क्र."> 
-          <input type="text" id="date" name="date" placeholder="तारीख">
-          <!-- <input type="text" id="date" name="date" placeholder="तारीख" onfocus="(this.type='date')"> -->
-        </div> 
+        <div class="container1">
+            <form id="loginForm1">
+                <div class="first-row">
+                    <label for="pavti" class="input-label">जमा पावती क्र.</label>
+                    <input type="number" id="pavti" name="number" placeholder="जमा पावती क्र.">
+                </div>
 
-          <label for="userType">खात्यातून</label>        
-            <select class="drop" id="account_group" id="account_group" name="account_group" onchange="previousbalance()">
-            </select>
-<br><br>
-            <label for="userType">खात्याकडे</label>
-            <select class="drop"  id="route_detail" id="route_detail" name="route_detail">
-            
-            </select><br><br>
-        <label for="userType">टिप्पणी</label>
-        <textarea id="message" name="message"></textarea>
-                <br><br>
-                <label for="userType">मागील बाकी</label>
-                <input type="text" id="input3" name="input1" readonly><br><br>
+                <div class="first-row">
+                    <label for="date1" class="input-label">तारीख</label>
+                    <input type="text" id="date" name="date" placeholder="तारीख">
+                </div>
 
-                <label for="userType">जमा रक्कम</label>
-                <input type="text" id="input6" name="input1" onchange="totalbill()"><br><br>
 
-     <div class="five-row">
-          <label for="input1">ऑनलाईन जमा</label>
-          <select id="input1" name="input2" >
-          </select><br><br>
-          
-           <label for="input2"></label>
-           <input type="text" id="input7" name="input1" onchange="totalbill()"><br><br>
-        
+                <div class="first-row">
+                    <label for="account_group" class="input-label">खात्यातून</label>
+                    <select class="drop" id="account_group" name="account_group" onchange="previousbalance()"></select>
+                </div>
+
+                <div class="first-row">
+                    <label for="route_detail" class="input-label">खात्याकडे</label>
+                    <select class="drop" id="route_detail" name="route_detail"></select>
+                </div>
+
+                <div class="first-row">
+                    <label for="message" class="input-label">टिप्पणी</label>
+                    <textarea id="message" name="message"></textarea>
+                </div>
+
+                <div class="first-row">
+                    <label for="input3" class="input-label">मागील बाकी</label>
+                    <input type="text" id="input3" name="input1" readonly>
+                </div>
+
+                <div class="first-row">
+                    <label for="input6" class="input-label">जमा रक्कम</label>
+                    <input type="text" id="input6" name="input1" onchange="totalbill()">
+                </div>
+
+                <div class="first-row">
+                    <label for="input1" class="input-label">ऑनलाईन जमा</label>
+                    <select id="input1" name="input2"></select>
+                </div>
+
+                <div class="first-row">
+                    <label for="input7" class="input-label"></label>
+                    <input type="text" id="input7" name="input1" onchange="totalbill()">
+                </div>
+
+                <div class="first-row">
+                    <label for="input8" class="input-label">सूट रक्कम</label>
+                    <input type="text" id="input8" name="input1" onchange="totalbill()">
+                </div>
+
+                <div class="first-row">
+                    <label class="input-label">जमा कॅरेट</label>
+                    <input type="number" id="carate100" name="number" placeholder="100" onchange="carate()">
+                    <input type="number" id="carate150" name="number" placeholder="150" onchange="carate()">
+                    <input type="number" id="carate250" name="number" placeholder="250" onchange="carate()">
+                    <input type="number" id="carate350" name="number" placeholder="350" onchange="carate()">
+                </div>
+
+                <div class="first-row">
+                    <label for="input4" class="input-label">जमा कॅरेट रक्कम</label>
+                    <input type="text" id="input4" name="input1" onchange="totalbill()">
+                </div>
+
+                <div class="first-row">
+                    <label for="input5" class="input-label">येणे बाकी</label>
+                    <input type="text" id="input5" name="input1">
+                </div>
+
+                <div class="button-container">
+                    <button class="border-hover1 button">Save</button>
+                    <button class="border-hover2 button">Back</button>
+                </div>
+            </form>
         </div>
-<br>
-<div>
-        <label for="input3">सूट रक्कम</label>
-        <input type="text" id="input8" name="input1" onchange="totalbill()">
-
-        <div>
-          <label for="name">जमा कॅरेट</label>
-          <input type="number" id="carate100" name="number" placeholder="100" onchange="carate()">
-          <input type="number" id="carate150" name="number" placeholder="150" onchange="carate()">
-          <input type="number" id="carate250" name="number" placeholder="250" onchange="carate()">
-          <input type="number" id="carate350" name="number" placeholder="350" onchange="carate()">
-        </div>
-
-
-        <label for="input3">जमा कॅरेट रक्कम</label>
-        <input type="text" id="input4" name="input1" onchange="totalbill()"><br><br>
-        <label for="input3">येणे बाकी</label>
-        <input type="text" id="input5" name="input1"><br><br>
-
-        <div class="third-row">
-          <button class="border-hover1">Save</button>
-          <button class="border-hover2">Back</button>
-        </div>
-        </div>
-        </div> 
-    </form>  
+    </div>
 </body>
 <script src="./receipt.js"></script>
 <script>
+    function carate() {
+        var value100 = parseInt(document.getElementById("carate100").value) || 0;
+        var value150 = parseInt(document.getElementById("carate150").value) || 0;
+        var value250 = parseInt(document.getElementById("carate250").value) || 0;
+        var value350 = parseInt(document.getElementById("carate350").value) || 0;
+        document.getElementById("input4").value = value100 * 100 + value150 * 150 + value250 * 250 + value350 * 350;
+        totalbill();
+    }
 
-  function carate(){
-    var value100 = parseInt(document.getElementById("carate100").value) || 0;
-    var value150 = parseInt(document.getElementById("carate150").value) || 0;
-    var value250 = parseInt(document.getElementById("carate250").value) || 0;
-    var value350 = parseInt(document.getElementById("carate350").value) || 0;
-    document.getElementById("input4").value = value100 * 100 + value150 * 150 + value250 * 250 + value350 * 350;
-    totalbill();
-    //document.getElementById("total1").value = parseInt(document.getElementById("carate100").value) * 100 +  parseInt(document.getElementById("carate150").value) * 150 +  parseInt(document.getElementById("carate250").value) * 250 +  parseInt(document.getElementById("carate350").value) * 350
-  }
+    function totalbill() {
+        document.getElementById("input5").value = parseInt(document.getElementById("input3").value || 0) - parseInt(document.getElementById("input6").value || 0) - parseInt(document.getElementById("input7").value || 0) - parseInt(document.getElementById("input8").value || 0) - parseInt(document.getElementById("input4").value || 0);
+    }
 
-  function totalbill(){
-    document.getElementById("input5").value = parseInt(document.getElementById("input3").value || 0) - parseInt(document.getElementById("input6").value || 0) - parseInt(document.getElementById("input7").value || 0) - parseInt(document.getElementById("input8").value || 0) - parseInt(document.getElementById("input4").value || 0);
-  }
+    function previousbalance() {
+        const name = document.getElementById("account_group").value
+        fetch('http://43.205.230.120/fetchpv/' + name)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Populate dropdown with API data
+                console.log(data)
+                document.getElementById('input3').value = parseInt(data[0]['current_balance'] || 0);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
 
-
-
-  function previousbalance(){
-    const name = document.getElementById("account_group").value
-    fetch('http://43.205.230.120/fetchpv/' + name)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Populate dropdown with API data
-        console.log(data)
-        document.getElementById('input3').value = parseInt(data[0]['current_balance'] || 0);      
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-  
-  }
+    }
 </script>
-</html>
+</html> 
