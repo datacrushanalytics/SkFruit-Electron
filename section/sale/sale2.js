@@ -1,7 +1,6 @@
-document.getElementById('login').addEventListener('submit', function(event) {
-    // event.preventDefault(); // Prevent default form submission
+document.getElementById('login').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Prevent default form submission
 
-// function form2(){
     console.log(document.getElementById('number').value)
     var formData = {
         bill_no: parseInt(document.getElementById('bill').value),
@@ -31,47 +30,25 @@ document.getElementById('login').addEventListener('submit', function(event) {
         out_carate_250: parseInt(document.getElementById('carate1250').value) || 0,
         out_carate_350: parseInt(document.getElementById('carate1350').value) || 0,
     };
-    
-    fetch('http://43.205.230.120/saleData/insertsale', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-    })
-    .then(response => {
+
+    try {
+        const response = await fetch('http://localhost:3000/saleData/insertsale', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        });
+        
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        return response.json();
-    })
-    .then(result => {
+        
+        const result = await response.json();
         console.log('Entry added successfully:', result);
-        alert("Sale Data is added Successfully")
-    })
-    .catch(error => {
+        alert("Sale Data is added Successfully");
+        window.location.reload(); // Reload the page after displaying the alert
+    } catch (error) {
         console.error('Error:', error);
-    });
-
+    }
 });
-
-
-
-// function updateTable(entry) {
-//     var tableBody = document.getElementById('tableBody1');
-//     var newRow = document.createElement('tr');
-//     newRow.innerHTML = `
-//         <td>${entry.product}</td>
-//         <td>${entry.bata}</td>
-//         <td>${entry.mark}</td>
-//         <td>${entry.quantity}</td>
-//         <td>${entry.rate}</td>
-//         <td>${entry.price}</td>
-//     `;
-//     tableBody.appendChild(newRow);
-// }
-
-
-// function form1(){
-//     alert('Button clicked!');
-// }
