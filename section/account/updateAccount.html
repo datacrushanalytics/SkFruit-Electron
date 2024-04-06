@@ -134,47 +134,42 @@
             }
         });
 
-        function updateUser() {
-            if (document.querySelector('input[name="cr_dr_type"]:checked').value  = 'CR'){
-                var status = "CR"
-                }else{
-                    var status = "DR"
-                }
-            var userData = {
-                id: parseInt(document.getElementById("id").value),
-                account_group: document.getElementById("account_group").value,
-                route_detail: document.getElementById("route_detail").value,
-                address: document.getElementById("address").value,
-                mobile_no: document.getElementById("no").value,
-                cr_dr_type: status,
-                name : document.getElementById("name").value,
-                prev_balance : document.getElementById("preBalance").value,
-            };
-
-            fetch('http://43.205.230.120/accountData/updateAccount/'+ parseInt(document.getElementById("id").value), {
-                method: 'PUT',
-                body: JSON.stringify(userData),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
+        async function updateUser() {
+            try {
+                // Determine status based on radio button value
+                var status = document.querySelector('input[name="cr_dr_type"]:checked').value === 'CR' ? 'CR' : 'DR';
+        
+                var userData = {
+                    id: parseInt(document.getElementById("id").value),
+                    account_group: document.getElementById("account_group").value,
+                    route_detail: document.getElementById("route_detail").value,
+                    address: document.getElementById("address").value,
+                    mobile_no: document.getElementById("no").value,
+                    cr_dr_type: status,
+                    name : document.getElementById("name").value,
+                    prev_balance : document.getElementById("preBalance").value,
+                };
+        
+                const response = await fetch('http://43.205.230.120/accountData/updateAccount/'+ userData.id, {
+                    method: 'PUT',
+                    body: JSON.stringify(userData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+        
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.json();
-            })
-            .then(result => {
+        
+                const result = await response.json();
                 console.log('Data added successfully:', result);
                 // Optionally, you can redirect or show a success message here
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error('Error:', error);
                 // Optionally, you can display an error message here
-            });
-
-
-            
+            }
+        
             // Perform the update operation (e.g., send data to server)
             console.log("Update user:", userData);
             window.location.href = './account.html';

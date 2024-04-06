@@ -150,88 +150,52 @@
             }
         });
 
-        function updateUser() {
-            if(document.querySelector('input[name="rate_editable"]:checked').value = 'on'){
-                var status = '1'
-            }else{
-                var status = '0'
-            }
-            var userData = {
-                id: parseInt(document.getElementById("id").value),
-                name: document.getElementById("name").value,
-                category: document.getElementById("category").value,
-                rate: document.getElementById("rate").value,
-                w_rate: document.getElementById("w_rate").value,
-                minimum_stock: document.getElementById("minimum_stock").value,
-                rate_editable: status
-            };
-
-            fetch('http://43.205.230.120/productData/updateProduct/'+ parseInt(document.getElementById("id").value), {
-                method: 'PUT',
-                body: JSON.stringify(userData),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
+        async function updateUser() {
+            try {
+                var status = document.querySelector('input[name="rate_editable"]:checked').value === 'on' ? '1' : '0';
+                
+                var userData = {
+                    id: parseInt(document.getElementById("id").value),
+                    name: document.getElementById("name").value,
+                    category: document.getElementById("category").value,
+                    rate: document.getElementById("rate").value,
+                    w_rate: document.getElementById("w_rate").value,
+                    minimum_stock: document.getElementById("minimum_stock").value,
+                    rate_editable: status
+                };
+        
+                const response = await fetch('http://43.205.230.120/productData/updateProduct/'+ userData.id, {
+                    method: 'PUT',
+                    body: JSON.stringify(userData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+        
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.json();
-            })
-            .then(result => {
+        
+                const result = await response.json();
                 console.log('Data added successfully:', result);
                 // Optionally, you can redirect or show a success message here
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error('Error:', error);
                 // Optionally, you can display an error message here
-            });
-
-
-            
+            }
+        
             // Perform the update operation (e.g., send data to server)
             console.log("Update user:", userData);
             window.location.href = './product.html';
         }
         
         // Add event listener to the "Update" button
-        document.getElementById("updateButton").addEventListener("click", function(event) {
+        document.getElementById("updateButton").addEventListener("click", async function(event) {
             event.preventDefault(); // Prevent form submission
-            updateUser(); // Call the updateUser function to handle the update operation
+            await updateUser(); // Call the updateUser function to handle the update operation
         });
         
-    </script>
-
-
-    <script>
-        // Generate a hash of your inline script
-        function generateScriptHash(script) {
-            const crypto = window.crypto || window.msCrypto;
-            if (!crypto) {
-                console.error('Crypto API not supported.');
-                return '';
-            }
-            const encoder = new TextEncoder();
-            const data = encoder.encode(script);
-            return crypto.subtle.digest('SHA-256', data)
-                .then(hashBuffer => {
-                    const hashArray = Array.from(new Uint8Array(hashBuffer));
-                    const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-                    return `'sha256-${hashHex}'`;
-                });
-        }
-
-        // Call the function to generate the hash and update the CSP policy
-        generateScriptHash(document.currentScript.textContent)
-            .then(hash => {
-                // Add the hash to the CSP policy
-                const csp = `default-src 'self'; script-src ${hash}`;
-                document.head.querySelector('meta[http-equiv="Content-Security-Policy"]').setAttribute('content', csp);
-            })
-            .catch(error => {
-                console.error('Error generating script hash:', error);
-            });
+        
     </script>
 
 </body>

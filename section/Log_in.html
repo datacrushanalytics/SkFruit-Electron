@@ -11,20 +11,13 @@
     
     <div class="login-container">
       <img class="logo" src="../assets/img/logo-01.png" alt="Example Image">
-      <form id="loginForm" action="../src/data.js" method="post">
+      <form id="loginForm" method="post">
         <input type="text" id="username" name="username" required placeholder="User Name">
   
         <input type="text" id="password" name="password" required placeholder="Password">
-
-        <div class="spider">
-          <div class="checkbox">
-            <input id="checkbox" type="checkbox" for="Rememberme"/>
-            <label id="Rememberme">Remember me</label>
-          </div>
-        </div>
         <div class="loginbtn">
         <!-- <a href="../section/Home.html"><button type="button" type="submit" onclick="login()" style="text-decoration: none;">LOGIN</button> </a>  -->
-       <button type="button" type="submit" onclick="login()" style="text-decoration: none;">LOGIN</button>
+       <button type="button" id= "submitButton" type="submit" onclick="login()" style="text-decoration: none;">LOGIN</button>
     </div>  
       </form>
     </div>
@@ -35,9 +28,16 @@
       <p>SK FRUITS</p>
   </div>
   <script>
+
+    document.getElementById("password").addEventListener("keypress", function(event) {
+      console.log("kbdvkfkj")
+      if (event.keyCode === 13) {
+        event.preventDefault(); // Prevents default form submission behavior
+        document.getElementById("submitButton").click();
+      }
+    });
+
       function login() {
-      var username = document.getElementById("username").value;
-      var password = document.getElementById("password").value;
 
       fetch('http://43.205.230.120/user/login', {
         method: 'POST',

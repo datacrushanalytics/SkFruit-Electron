@@ -102,49 +102,46 @@
             }
         });
 
-        function updateUser() {
-            
-            var userData = {
-                id: parseInt(document.getElementById("id").value),
-                name: document.getElementById("name").value,
-                vehicle_no: document.getElementById("number").value,
-                is_active: 1
-              
-            };
-
-            fetch('http://43.205.230.120/vehicleData/updateVehicle/'+ parseInt(document.getElementById("id").value), {
-                method: 'PUT',
-                body: JSON.stringify(userData),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
+        async function updateUser() {
+            try {
+                var userData = {
+                    id: parseInt(document.getElementById("id").value),
+                    name: document.getElementById("name").value,
+                    vehicle_no: document.getElementById("number").value,
+                    is_active: 1
+                };
+        
+                const response = await fetch('http://43.205.230.120/vehicleData/updateVehicle/' + userData.id, {
+                    method: 'PUT',
+                    body: JSON.stringify(userData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+        
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.json();
-            })
-            .then(result => {
+        
+                const result = await response.json();
                 console.log('Data added successfully:', result);
                 // Optionally, you can redirect or show a success message here
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error('Error:', error);
                 // Optionally, you can display an error message here
-            });
-
+            }
+        
             // Perform the update operation (e.g., send data to server)
             console.log("Update user:", userData);
             window.location.href = './Vehicle_Details.html';
         }
         
         // Add event listener to the "Update" button
-        document.getElementById("updateButton").addEventListener("click", function(event) {
+        document.getElementById("updateButton").addEventListener("click", async function (event) {
             event.preventDefault(); // Prevent form submission
-            updateUser(); // Call the updateUser function to handle the update operation
+            await updateUser(); // Call the updateUser function to handle the update operation
         });
-        
+                
     </script>
 </body>
 </html>
