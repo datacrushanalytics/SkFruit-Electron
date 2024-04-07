@@ -18,8 +18,8 @@
       display: flex;
     }
 
-    h3{
-        margin-left: 30%;
+    h3 {
+      margin-left: 30%;
     }
 
     #sidebar-container {
@@ -45,6 +45,10 @@
       padding: 10px;
       border-radius: 5px;
       transition: background-color 0.3s ease;
+    }
+
+    .component.active {
+      background-color: red; /* Red color for active button */
     }
 
     .component:hover {
@@ -193,6 +197,16 @@
           pageUrl = './Home2.html';
       }
       document.getElementById('pageContent').src = pageUrl;
+
+      // Remove active class from all buttons
+      var buttons = document.querySelectorAll('.component');
+      buttons.forEach(function(button) {
+        button.classList.remove('active');
+      });
+
+      // Add active class to the clicked button
+      var clickedButton = document.querySelector('[onclick="openPage(\'' + pageName + '\')"]');
+      clickedButton.classList.add('active');
     }
   </script>
 </body>

@@ -1,6 +1,6 @@
 {
-  "name": "skfruits",
-  "productName": "skfruits",
+  "name": "skfruits-3",
+  "productName": "skfruits-3",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": "index.js",

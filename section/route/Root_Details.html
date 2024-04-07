@@ -4,105 +4,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-        <!-- <link rel="stylesheet" href="../../assets/css/Root_Details.css" /> -->
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: rgba(242, 242, 242, 0.8);
-                /* Transparent background */
-                margin: 0;
-                padding: 20px;
-                overflow-x: hidden;
-                /* Hide horizontal scrollbar */
-            }
 
-            .container {
-                text-align: center;
-                margin-bottom: 20px;
-            }
+    <style>
+        /* Add this CSS block to override the existing styles */
+        .edit-button {
+            text-decoration: none;
+            padding: 8px 16px;
+            background-color:grey; /* Set background color to grey */
+            color: white; /* Set text color to white */
+            border: 4px solid;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-            .button1-container {
-                margin-bottom: 20px;
-            }
+        .edit-button:hover {
+            background-color:darkgray; /* Change hover color to dark grey */
+        }
 
-            .button1 {
-                padding: 12px 24px;
-                text-decoration: none;
-                color: white;
-                background-color: #808080;
-                /* Grey color */
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background-color 0.3s;
-                margin: 0 10px;
-            }
+        /* New styles for delete button */
+        .delete-button {
+            padding: 12px 24px;
+            text-decoration: none;
+            color: white;
+            background-color:grey; /* grey color for background */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 0 10px;
+        }
 
-            .button1:hover {
-                background-color: #555;
-                /* Darker grey on hover */
-            }
+        .delete-button:hover {
+            background-color: darkgrey; /* Dark grey color on hover */
+        }
+    </style>
 
-            .button1 a {
-                color: white;
-                text-decoration: none;
-            }
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(242, 242, 242, 0.8);
+            /* Transparent background */
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            /* Hide horizontal scrollbar */
+        }
 
-            .table-container {
-                max-width: 100%;
-                overflow-x: auto;
-                /* Enable horizontal scrolling */
-                margin: 0 auto;
-                min-width: 600px;
-                /* Set a minimum width for the table container */
-                max-height: 400px;
-                /* Set maximum height for the table container */
-                overflow-y: auto;
-                /* Enable vertical scrolling */
-            }
+        .container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-            table {
-                width: auto;
-                min-width: 100%;
-                /* Ensure table expands to fit content */
-                border-collapse: collapse;
-                background-color: rgba(255, 255, 255, 0.8);
-                /* Transparent background */
-                box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-                border-radius: 5px;
-            }
+        .button1-container {
+            margin-bottom: 20px;
+        }
 
-            th,
-            td {
-                border: 1px solid #dddddd;
-                text-align: left;
-                padding: 12px;
-            }
+        .button1 {
+            padding: 12px 24px;
+            text-decoration: none;
+            color: white;
+            background-color: hsl(0, 0%, 50%);
+            /* Grey color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 0 10px;
+        }
 
-            th {
-                background-color: #f2f2f2;
-            }
-        </style>
+        .button1:hover {
+            background-color: #555;
+            /* Darker grey on hover */
+        }
+
+        .button1 a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .table-container {
+            max-width: 100%;
+            overflow-x: auto;
+            /* Enable horizontal scrolling */
+            margin: 0 auto;
+            min-width: 600px;
+            /* Set a minimum width for the table container */
+            max-height: 400px;
+            /* Set maximum height for the table container */
+            overflow-y: auto;
+            /* Enable vertical scrolling */
+        }
+
+        table {
+            width: auto;
+            min-width: 100%;
+            /* Ensure table expands to fit content */
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.8);
+            /* Transparent background */
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 12px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>ROOT DETAILS</h1>
+        <h1>Route DETAILS</h1>
         <button class="button1"><a href="./Add_Root_Details.html">ADD NEW ROOT</button></a><br><br>
-    <table>
-        <tr>
-            <th>NO.</th>
-            <th>ROOT NAME</th>
-            <th>DETAILS</th>
-            <th>MOBILE NO</th>
-            <th></th>
-        </tr>
-        <tbody id="tableBody">
-            <!-- Data will be inserted here -->
-        </tbody>
-
-    </table>
+        <table>
+            <tr>
+                <th>NO.</th>
+                <th>ROOT NAME</th>
+                <th>DETAILS</th>
+                <th>MOBILE NO</th>
+                <th>ACTIONS</th>
+            </tr>
+            <tbody id="tableBody">
+                <!-- Data will be inserted here -->
+            </tbody>
+        </table>
     </div>
 </body>
 <script src="./route.js"></script>
