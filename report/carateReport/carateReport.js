@@ -139,7 +139,7 @@ async function exportToExcel() {
         XLSX.utils.book_append_sheet(workbook, grandTotalsWorksheet, 'Grand Totals');
 
         /* generate XLSX file and prompt to download */
-        XLSX.writeFile(workbook, 'api_data.xlsx');
+        XLSX.writeFile(workbook, 'Carate_Report.xlsx');
     } catch (error) {
         console.error('Error exporting to Excel:', error);
     }
