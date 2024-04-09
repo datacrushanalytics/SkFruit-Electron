@@ -58,8 +58,46 @@ function formatDate(dateString) {
 
 
 
+// document.getElementById('loginForm1').addEventListener('submit', function(event) {
+//     event.preventDefault(); // Prevent form submission
+//     var data = {
+//         from_date : formatDate(document.getElementById("fromdate").value),
+//         to_date : formatDate(document.getElementById("todate").value),
+//         cust_name : getElementValueWithDefault('customer', '*')
+//     };
+//     console.log(data);
+
+//     fetch('http://43.205.230.120/receiptReport', {
+//         method: 'POST',
+//         body: JSON.stringify(data),
+//         headers: {
+//             'Content-Type': 'application/json'
+//         }
+//     })
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//         }
+//         return response.json();
+//     })
+//     .then(result => {
+//         console.log(result)
+//         populateTable4(result)
+//         // Optionally, you can redirect or show a success message here
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//         // Optionally, you can display an error message here
+//     });
+// });
+
 document.getElementById('loginForm1').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
+    fetchDataAndProcess();
+});
+
+
+function fetchDataAndProcess() {
     var data = {
         from_date : formatDate(document.getElementById("fromdate").value),
         to_date : formatDate(document.getElementById("todate").value),
@@ -67,7 +105,7 @@ document.getElementById('loginForm1').addEventListener('submit', function(event)
     };
     console.log(data);
 
-    fetch('http://43.205.230.120/receiptReport', {
+    return fetch('http://43.205.230.120/receiptReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -83,13 +121,15 @@ document.getElementById('loginForm1').addEventListener('submit', function(event)
     .then(result => {
         console.log(result)
         populateTable4(result)
+        return result;
         // Optionally, you can redirect or show a success message here
     })
     .catch(error => {
         console.error('Error:', error);
         // Optionally, you can display an error message here
     });
-});
+}
+
 
 
 function populateTable4(data) {
@@ -124,3 +164,45 @@ function populateTable4(data) {
      
 }
 
+
+
+async function exportToExcel() {
+    try {
+        const data = await fetchDataAndProcess();
+
+        const customHeaders = ['receipt_id', 'date', 'Customer','to_account','note', 'PaidAmt',"onlineAmt",'discount','inCarat','Amt'];
+
+        // Create a new worksheet with custom headers
+        const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
+
+        // Append the data to the worksheet
+        data.reports.forEach((report) => {
+            const rowData = [
+                report.receipt_id,
+                report.date,
+                report.Customer,
+                report.to_account,
+                report.note,
+                report.PaidAmt,
+                report.onlineAmt,
+                report.discount,
+                report.inCarat,
+                report.Amt
+            ];
+            XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
+        });
+
+
+        // Create a new workbook
+        const workbook = XLSX.utils.book_new();
+
+        // Add the worksheet with data
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
+
+
+        /* generate XLSX file and prompt to download */
+        XLSX.writeFile(workbook, 'Receipt_Report.xlsx');
+    } catch (error) {
+        console.error('Error exporting to Excel:', error);
+    }
+}

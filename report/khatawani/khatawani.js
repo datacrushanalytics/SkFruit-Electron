@@ -94,17 +94,58 @@ function formatDate(dateString) {
 
 
 
+// document.getElementById('loginForm1').addEventListener('submit', function(event) {
+//     event.preventDefault(); // Prevent form submission
+//     var data = {
+//         from_date : formatDate(document.getElementById("fromdate").value),
+//         to_date : formatDate(document.getElementById("todate").value),
+//         cust_name : getElementValueWithDefault('customer', '*') , 
+//         route : getElementValueWithDefault('route', '*') 
+//     };
+//     console.log(data);
+
+//     fetch('http://43.205.230.120/khatawani', {
+//         method: 'POST',
+//         body: JSON.stringify(data),
+//         headers: {
+//             'Content-Type': 'application/json'
+//         }
+//     })
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//         }
+//         return response.json();
+//     })
+//     .then(result => {
+//         console.log(result)
+//         populateTable4(result)
+//         // Optionally, you can redirect or show a success message here
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//         // Optionally, you can display an error message here
+//     });
+// });
+
+
 document.getElementById('loginForm1').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
+    fetchDataAndProcess();
+});
+
+
+
+
+function fetchDataAndProcess() {
     var data = {
         from_date : formatDate(document.getElementById("fromdate").value),
         to_date : formatDate(document.getElementById("todate").value),
         cust_name : getElementValueWithDefault('customer', '*') , 
         route : getElementValueWithDefault('route', '*') 
     };
-    console.log(data);
 
-    fetch('http://43.205.230.120/khatawani', {
+    return fetch('http://43.205.230.120/khatawani', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -120,13 +161,14 @@ document.getElementById('loginForm1').addEventListener('submit', function(event)
     .then(result => {
         console.log(result)
         populateTable4(result)
+        return result;
         // Optionally, you can redirect or show a success message here
     })
     .catch(error => {
         console.error('Error:', error);
         // Optionally, you can display an error message here
     });
-});
+}
 
 
 function populateTable4(data) {
@@ -165,3 +207,57 @@ function populateTable4(data) {
      totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Bill Amount'] + ' (Grand Bill Amount), ' + data.Grand['Grand outCarate'] + ' (Grand outCarate)' + data.Grand['Total Bill Amount'] + ' (Total Bill Amount), ' + data.Grand['Cash'] + ' (Total Cash), '  + data.Grand['Online Amount'] + ' (Online Amount)' + data.Grand['Grand Discount'] + ' (Grand Discount), ' + data.Grand['Grand inCarate'] + ' (Grand inCarate)';
 }
 
+
+
+
+async function exportToExcel() {
+    try {
+        const data = await fetchDataAndProcess();
+
+        const customHeaders = ['bill_no', 'date', 'cust_name','route','amount', 'carate_amount',"TotalKalam",'pre_balance','cash','online_amt', 'discount','inCarat', 'balance'];
+
+        // Create a new worksheet with custom headers
+        const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
+
+        // Append the data to the worksheet
+        data.reports.forEach((report) => {
+            const rowData = [
+                report.bill_no,
+                report.date,
+                report.cust_name,
+                report.route,
+                report.amount,
+                report.carate_amount,
+                report.TotalKalam,
+                report.pre_balance,
+                report.cash,
+                report.online_amt,
+                report.discount,
+                report.inCarat,
+                report.balance
+            ];
+            XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
+        });
+
+        // Add Grand Totals to a new sheet
+        const grandTotals = [
+            ["Grand Bill Amount", "Grand outCarate", "Total Bill Amount", "Total Cash", "Online Amount", "Grand Discount", "Grand inCarate"],
+            [data.Grand['Grand Bill Amount'], data.Grand['Grand outCarate'], data.Grand['Total Bill Amount'], data.Grand['Cash'], data.Grand['Online Amount'], data.Grand['Grand Discount'], data.Grand['Grand inCarate']]
+        ];
+        const grandTotalsWorksheet = XLSX.utils.aoa_to_sheet(grandTotals);
+
+        // Create a new workbook
+        const workbook = XLSX.utils.book_new();
+
+        // Add the worksheet with data
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
+
+        // Add the worksheet with grand totals
+        XLSX.utils.book_append_sheet(workbook, grandTotalsWorksheet, 'Grand Totals');
+
+        /* generate XLSX file and prompt to download */
+        XLSX.writeFile(workbook, 'Khatawani.xlsx');
+    } catch (error) {
+        console.error('Error exporting to Excel:', error);
+    }
+}

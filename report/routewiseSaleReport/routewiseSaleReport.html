@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src= "https://printjs-4de6.kxcdn.com/print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <!-- <link rel="stylesheet" href="../../assets/css/khatawani.css"> -->
     <style>
         body {
@@ -197,7 +198,7 @@
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
                     <button type="submit" class="button">Submit</button>
-                    <a href="./sale.html"><button type='button' class="button">Back</button></a>
+                    <button type='button' class="button" onclick="exportToExcel()" id="button2">Export</button>
                 <!-- </div> -->
             </form>
             <br>

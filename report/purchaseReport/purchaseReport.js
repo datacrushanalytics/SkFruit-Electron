@@ -128,8 +128,48 @@ function formatDate(dateString) {
 
 
 
+// document.getElementById('loginForm1').addEventListener('submit', function(event) {
+//     event.preventDefault(); // Prevent form submission
+//     var data = {
+//         from_date : formatDate(document.getElementById("fromdate").value),
+//         to_date : formatDate(document.getElementById("todate").value),
+//         supplier_name : getElementValueWithDefault('supplier', '*') , 
+//         bata : getElementValueWithDefault('bata', '*') , 
+//         gadi_number : getElementValueWithDefault('vehicleNumber', '*') 
+//     };
+//     console.log(data);
+
+//     fetch('http://43.205.230.120/purchaseReport', {
+//         method: 'POST',
+//         body: JSON.stringify(data),
+//         headers: {
+//             'Content-Type': 'application/json'
+//         }
+//     })
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//         }
+//         return response.json();
+//     })
+//     .then(result => {
+//         console.log(result)
+//         populateTable4(result)
+//         // Optionally, you can redirect or show a success message here
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//         // Optionally, you can display an error message here
+//     });
+// });
+
+
 document.getElementById('loginForm1').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
+    fetchDataAndProcess();
+});
+
+function fetchDataAndProcess() {
     var data = {
         from_date : formatDate(document.getElementById("fromdate").value),
         to_date : formatDate(document.getElementById("todate").value),
@@ -137,9 +177,8 @@ document.getElementById('loginForm1').addEventListener('submit', function(event)
         bata : getElementValueWithDefault('bata', '*') , 
         gadi_number : getElementValueWithDefault('vehicleNumber', '*') 
     };
-    console.log(data);
 
-    fetch('http://43.205.230.120/purchaseReport', {
+    return fetch('http://43.205.230.120/purchaseReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -155,13 +194,14 @@ document.getElementById('loginForm1').addEventListener('submit', function(event)
     .then(result => {
         console.log(result)
         populateTable4(result)
+        return result;
         // Optionally, you can redirect or show a success message here
     })
     .catch(error => {
         console.error('Error:', error);
         // Optionally, you can display an error message here
     });
-});
+}
 
 
 function populateTable4(data) {
@@ -199,6 +239,55 @@ function populateTable4(data) {
      totalCell.colSpan = columnsToDisplay.length;
      totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Amournt'] + ' (BillAmount), ' + data.Grand['Grand Quantity'] + ' (TotalQuantity)';
 }
+
+
+
+async function exportToExcel() {
+    try {
+        const data = await fetchDataAndProcess();
+
+        const customHeaders = ['id', 'date', 'gadi_number','bata','supplier_name', 'BillAmount','TotalQuantity'];
+
+        // Create a new worksheet with custom headers
+        const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
+
+        // Append the data to the worksheet
+        data.reports.forEach((report) => {
+            const rowData = [
+                report.id,
+                report.date,
+                report.gadi_number,
+                report.bata,
+                report.supplier_name,
+                report.BillAmount,
+                report.TotalQuantity
+            ];
+            XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
+        });
+
+        // Add Grand Totals to a new sheet
+        const grandTotals = [
+            ["BillAmount", "TotalQuantity"],
+            [data.Grand['Grand Amournt'],  data.Grand['Grand Quantity']]
+        ];
+        const grandTotalsWorksheet = XLSX.utils.aoa_to_sheet(grandTotals);
+
+        // Create a new workbook
+        const workbook = XLSX.utils.book_new();
+
+        // Add the worksheet with data
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
+
+        // Add the worksheet with grand totals
+        XLSX.utils.book_append_sheet(workbook, grandTotalsWorksheet, 'Grand Totals');
+
+        /* generate XLSX file and prompt to download */
+        XLSX.writeFile(workbook, 'Purchase_Report.xlsx');
+    } catch (error) {
+        console.error('Error exporting to Excel:', error);
+    }
+}
+
 
 
 
