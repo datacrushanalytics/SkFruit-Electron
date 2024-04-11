@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
-    <script src= "https://printjs-4de6.kxcdn.com/print.min.js"></script>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <style>
-            body {
+        body {
             font-family: Arial, sans-serif;
             background-color: rgba(242, 242, 242, 0.8);
             /* Transparent background */
@@ -24,66 +24,53 @@
         .container {
             text-align: center;
             margin-bottom: 20px;
+            margin-top: 20px; /* Add margin-top to reduce space */
         }
 
-        .container h1{
-         margin-top: 1%;
-      }
-       
+        .container h1 {
+            margin-top: 1%;
+        }
 
-      .first-row {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-    }
-    
-    .first-row label {
-        margin-right: 10px;
-        margin-top: 9px;
-    }
-    
-    .first-row input,
-    .first-row select {
-        margin-right: 10px;
-    }
-  
-  #fromdate{
-    border-radius: 8px;
-    height: 35px;
-    width: 320px;
-    margin-left: 5%; 
-  }
+        .first-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
 
-  label{
-    margin-left: 3%;
-  }
-  
-  #todate{
-    border-radius: 8px;
-    height: 35px;
-    width: 320px;
-    margin-left: 1%;
-  }
-  #product{
-    border-radius: 8px;
-    height: 35px;
-    width: 600px;
-    margin-left: 1%;
-  }
-  
-  #bata {
-    border-radius: 8px;
-    height: 25%;
-    width: 600px;
-    border: 1px solid transparent;
-    padding: 10px;
-    /* box-shadow: 5px 5px 5px grey; */
-    margin: 20px;
-  }
+        .first-row label {
+            margin-right: 10px;
+            margin-top: 9px;
+            display: inline-block; /* Add this line */
+        }
 
-  .drop1{
-  margin-left: 2rem;
-}
+        .first-row input,
+        .first-row select {
+            margin-right: 10px;
+            margin-top: 5px; /* Adjust this value as needed */
+        }
+
+        #fromdate,
+        #todate {
+            /* border-radius: 8px; */
+            height: 35px;
+            width: 160px; /* Adjust width as needed */
+        }
+
+        label {
+            margin-left: 3%;
+        }
+
+        #product,
+        #bata {
+            /* border-radius: 8px; */
+            height: 35px;
+            width: 300px; /* Adjust width as needed */
+        }
+
+        #bata {
+            margin-left: 2rem;
+        }
+
         .button-container {
             margin-bottom: 20px;
         }
@@ -113,12 +100,15 @@
 
         .table-container {
             max-width: 100%;
-            overflow-x: auto; /* Enable horizontal scrolling */
+            overflow-x: auto;
+            /* Enable horizontal scrolling */
             margin: 0 auto;
-            max-height: calc(100vh - 200px); /* Adjust the height as needed */
-            overflow-y: auto; /* Enable vertical scrolling */
+            max-height: calc(100vh - 200px);
+            /* Adjust the height as needed */
+            overflow-y: auto;
+            /* Enable vertical scrolling */
         }
-        
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -126,60 +116,87 @@
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
         }
-        
-        th, td {
+
+        th,
+        td {
             border: 1px solid #dddddd;
             text-align: left;
             padding: 12px;
         }
-        
+
         th {
             background-color: #f2f2f2;
         }
+
         .popup {
-            position: fixed; /* Position the popup */
-            top: 50%; /* Center vertically */
-            left: 50%; /* Center horizontally */
-            transform: translate(-50%, -50%); /* Center the popup */
-            background-color: #fff; /* Background color */
-            border: 1px solid #ccc; /* Border */
-            border-radius: 5px; /* Rounded corners */
-            padding: 20px; /* Padding */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Box shadow */
-            z-index: 9999; /* Ensure the popup is on top */
-        }
-        
-        .popup h2 {
-            margin-top: 0; /* Remove top margin */
-            color: #333; /* Text color */
-        }
-        
-        #barcodeCanvas {
-            display: block; /* Make the canvas a block element */
-            margin: 20px auto; /* Center the canvas */
-            border: 1px solid #ccc; /* Border */
-            border-radius: 5px; /* Rounded corners */
-        }
-        
-        #downloadButton,
-        button {
-            padding: 10px 20px; /* Padding */
-            margin: 10px; /* Margin */
-            background-color: #808080; /* Background color */
-            color: #fff; /* Text color */
-            border: none; /* Remove border */
-            border-radius: 5px; /* Rounded corners */
-            cursor: pointer; /* Cursor on hover */
-            transition: background-color 0.3s, color 0.3s; /* Smooth transition */
-        }
-        
-        #downloadButton:hover,
-        button:hover {
-            background-color: #808080; /* Darker background color on hover */
+            position: fixed;
+            /* Position the popup */
+            top: 50%;
+            /* Center vertically */
+            left: 50%;
+            /* Center horizontally */
+            transform: translate(-50%, -50%);
+            /* Center the popup */
+            background-color: #fff;
+            /* Background color */
+            border: 1px solid #ccc;
+            /* Border */
+            border-radius: 5px;
+            /* Rounded corners */
+            padding: 20px;
+            /* Padding */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            /* Box shadow */
+            z-index: 9999;
+            /* Ensure the popup is on top */
         }
 
-          /* Styles for the modal */
-          .modal {
+        .popup h2 {
+            margin-top: 0;
+            /* Remove top margin */
+            color: #333;
+            /* Text color */
+        }
+
+        #barcodeCanvas {
+            display: block;
+            /* Make the canvas a block element */
+            margin: 20px auto;
+            /* Center the canvas */
+            border: 1px solid #ccc;
+            /* Border */
+            border-radius: 5px;
+            /* Rounded corners */
+        }
+
+        #downloadButton,
+        button {
+            padding: 10px 20px;
+            /* Padding */
+            margin: 10px;
+            /* Margin */
+            background-color: #808080;
+            /* Background color */
+            color: #fff;
+            /* Text color */
+            border: none;
+            /* Remove border */
+            border-radius: 5px;
+            /* Rounded corners */
+            cursor: pointer;
+            /* Cursor on hover */
+            transition: background-color 0.3s, color 0.3s;
+            /* Smooth transition */
+        }
+
+        #downloadButton:hover,
+        button:hover {
+            background-color: #808080;
+            /* Darker background color on hover */
+        }
+
+        /* Styles for the modal */
+        .modal {
             display: none;
             position: fixed;
             z-index: 1;
@@ -188,131 +205,121 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.5);
         }
-        
-  /* Styles for the modal content */
-  .modal-content {
-    background-color: #fefefe;
-    margin: 10% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-    position: relative; /* Position relative for the close button */
-}
 
-    /* Close button style */
-.close {
-    color: #aaa;
-    position: absolute;
-    top: 8px;
-    right: 16px;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
+        /* Styles for the modal content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+            /* Position relative for the close button */
+        }
 
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
-        
+        /* Close button style */
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 8px;
+            right: 16px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-             
-
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1 align="center">Batawise Sale Report</h1><br>
+        <h1 align="center">Batawise Sale Report</h1>
+        <br>
         <hr>
 
         <div class="container1">
             <form id="loginForm1">
 
                 <div class="first-row">
-                    <label for="userType">From Date</label>
+                    <label for="userType">From Date :</label>
                     <input type="date" id="fromdate" name="date" placeholder="From Date">
                     <br>
-                    <label for="userType">To Date</label>
+                    <label for="userType">To Date :</label>
                     <input type="date" id="todate" name="date" placeholder="To Date">
                 </div>
 
                 <br>
 
-                <label for="userType"> Product</label>
-                <select class="drop" id="product"  name="name">
+                <label for="userType"> Product :</label>
+                <select class="drop" id="product" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br>
 
                 <br>
 
-                <label for="userType">Bata</label>
-                <select class="drop"  id="bata" name="name">
+                <label for="userType">Bata :</label>
+                <select class="drop" id="bata" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br><br>
-    
+
                 <!-- <div class="third-row"> -->
-                    <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" class="button">Submit</button>
-                    <button type='button' onclick="exportToExcel()" id="button2">Export</button>
+                <!-- <button class="border-hover" >Save</button> -->
+                <button type="submit" class="button">Submit</button>
+                <button type='button' onclick="exportToExcel()" id="button2">Export</button>
                 <!-- </div> -->
             </form>
-          <br>
-          <div class="table-container">
-            <table>
-                <tr>
-                    <th>Sr. No</th>
-                    <th>Bill No</th>
-                    <th>Date</th>
-                    <th>Customer Name</th>
-                    <th>Address</th>
-                    <th>Mobile Number</th>
-                    <th>Note</th>
-                    <th>product_name</th>        
-            <th>Bata</th>
-            <th>mark</th>
-            <th>quantity</th>  
-            <th>rate</th>  
-            <th>price</th> 
-            <th>Barcode</th> 
-            <th>Bill</th>    
+            <br>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Bill No</th>
+                        <th>Date</th>
+                        <th>Customer Name</th>
+                        <th>Address</th>
+                        <th>Mobile Number</th>
+                        <th>Note</th>
+                        <th>product_name</th>
+                        <th>Bata</th>
+                        <th>mark</th>
+                        <th>quantity</th>
+                        <th>rate</th>
+                        <th>price</th>
+                        <th>Barcode</th>
+                        <th>Bill</th>
+                    </tr>
 
-                </tr>
-               
-
-
-                <!-- Add more rows as needed -->
-                <tbody id="tableBody">
-                    <!-- Data will be inserted here -->
-                </tbody>
-                <div id="popupContainer"></div>
-            </table>
-       </div>
+                    <!-- Add more rows as needed -->
+                    <tbody id="tableBody">
+                        <!-- Data will be inserted here -->
+                    </tbody>
+                    <div id="popupContainer"></div>
+                </table>
+            </div>
         </div>
     </div>
-
-
-
-
 </body>
 <script src="./BatawiseSaleReport.js"></script>
 <!-- Include Print.js library -->
 
 
 <script>
-        
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData', 'product','product_name');
-        fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData', 'bata','bata');
+        fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData', 'product', 'product_name');
+        fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData', 'bata', 'bata');
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
+    function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -322,7 +329,7 @@
             })
             .then(data => {
                 // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId,field);
+                populateDropdownWithSelect2(data, dropdownId, field);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -348,9 +355,6 @@
             allowClear: true
         });
     }
-
 </script>
-
-
 
 </html>

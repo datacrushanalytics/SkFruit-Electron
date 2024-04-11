@@ -42,39 +42,39 @@
         margin-right: 10px;
     }
   #fromdate{
-    border-radius: 8px;
+    /* border-radius: 8px; */
     height: 35px;
     width: 320px;
-    margin-left: 5%;
+    margin-left:0%;
   }
   label{
     margin-left: 3%;
   }
   #todate{
-    border-radius: 8px;
+    /* border-radius: 8px; */
     height: 35px;
     width: 320px;
-    margin-left: 1%;
+    margin-left: 0%;
   }
 
   .drop, .drop1 {
-    border: 1px solid transparent;
+    border: 1px solid;
     /* box-shadow: 5px 10px 8px grey; */
-    border-radius: 8px;
-    width: 60%;
+    /* border-radius: 8px; */
+    width: 40%;
     height: 35px;
     text-indent: 10%;
     margin-left: 4%;
   }
 
   #customer, #route {
-    border: 1px solid transparent;
+    border: 1px solid;
     /* box-shadow: 5px 10px 8px grey; */
-    border-radius: 8px;
-    width: 60%;
+    /* border-radius: 8px; */
+    width:40%;
     height: 35px;
     text-indent: 10%;
-    margin-left: 4%;
+    margin-left: 2%;
 }
 
 #lable1111{
@@ -179,22 +179,23 @@
     <div class="container">
         <h1 align="center">Routewise Sale Report</h1><br>
         <hr>
+        <br>
         <div class="container1">
             <form id="loginForm1">
                 <div class="first-row">
-                    <label for="userType">From Date</label>
+                    <label for="userType">From Date :</label>
                     <input type="date" id="fromdate" name="date" placeholder="From Date">
                     <br>
-                    <label for="userType">To Date</label>
+                    <label for="userType">To Date :</label>
                     <input type="date" id="todate" name="date" placeholder="To Date">
                 </div>
                 <br>
-                <label for="userType">Customer Name</label>
+                <label for="userType">Customer Name :</label>
                 <select class="drop" id="customer" id="name" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br>
                 <br>
-                <label id='lable1111' for="userType">Route</label>
+                <label id='lable1111' for="userType">Route :</label>
                 <select class="drop1" id="route" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br><br>

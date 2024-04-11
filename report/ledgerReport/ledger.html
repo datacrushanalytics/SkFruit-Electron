@@ -60,21 +60,21 @@
         }
 
         #todate {
-            border-radius: 8px;
+            /* border-radius: 8px; */
             height: 30px;
             width: 200px;
-            box-shadow: 5px 10px 8px grey;
-            border-color: rgb(24, 24, 24);
+            /* box-shadow: 5px 10px 8px grey;
+            border-color: rgb(24, 24, 24); */
             text-indent: 10%;
             margin-left: 3px;
         }
 
         #fromdate {
-            border-radius: 8px;
+            /* border-radius: 8px; */
             height: 30px;
             width: 200px;
-            box-shadow: 5px 10px 8px grey;
-            border-color: rgb(24, 24, 24);
+            /* box-shadow: 5px 10px 8px grey;
+            border-color: rgb(24, 24, 24); */
             text-indent: 10%;
             margin-right: 8%;
             margin-left: 10px;
@@ -93,14 +93,23 @@
         }
 
         #route {
-            width: 560px;
+            width: 550px;
         }
 
         .border-hover {
-            border: 1px solid transparent;
-            padding: 10px;
-            box-shadow: 5px 5px 5px grey;
+            padding: 12px 24px;
+            font-size: 16px;
+            /* width: 200px; */
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 5px;
+            outline: none;
+            background-color:grey; /* Grey background color */
+            color: #fff; /* White text color */
+            box-shadow: none; /* Remove box shadow */
         }
+        
 
         .border-hover:hover {
             background-color: #555;
@@ -180,18 +189,18 @@
         <div class="container1">
             <form id="loginForm1">
                 <div class="first-row">
-                    <label for="userType">From Date</label>
+                    <label for="userType">From Date : </label>
                     <input type="date" id="fromdate" name="date" placeholder="From Date">
                     <br>
-                    <label for="userType">To Date</label>
+                    <label for="userType">To Date : </label>
                     <input type="date" id="todate" name="date" placeholder="To Date">
                 </div> <br>
-                <label for="userType">Customer Name</label>
+                <label for="userType">Customer Name : </label>
                 <select class="drop" id="customer" name="name">
                 </select>
                 <!-- <option value="User" disabled selected>Select Account</option> -->
                 <br><br>
-                <label for="userType">Route</label>
+                <label for="userType">Route : </label>
                 <select class="drop" id="route" name="name">
                 </select>
                 <!-- <option value="User" disabled selected>Select Account</option> -->

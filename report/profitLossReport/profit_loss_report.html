@@ -47,7 +47,7 @@
         margin-right: 10px;
     }
   #fromdate{
-    border-radius: 8px;
+    /* border-radius: 8px; */
     height: 35px;
     width: 320px;
     margin-left: 5%; 
@@ -58,7 +58,7 @@
   }
   
   #todate{
-    border-radius: 8px;
+    /* border-radius: 8px; */
     height: 35px;
     width: 320px;
     margin-left: 1%;
@@ -66,22 +66,23 @@
 
   
   #product{
-    border-radius: 8px;
+    /* border-radius: 8px; */
     height: 35px;
     width: 600px;
 
   }
   
   #bata {
-    border-radius: 8px;
+    /* border-radius: 8px; */
     height: 25%;
     width: 600px;
-    border: 1px solid transparent;
+    border: 1px solid;
     padding: 10px;
-    box-shadow: 5px 5px 5px grey;
+    /* box-shadow: 5px 5px 5px grey; */
     margin: 20px;
     
-}
+  }
+
 .drop1{
   margin-left: 50px;
 }
@@ -146,30 +147,33 @@
 <body>
     <div class="container">
         <h3 align="center">Profit Loss Report</h3>
+        
+        <hr>
+        <br>
         <div class="container1">
             <form id="loginForm1">
 
                 <div class="first-row">
-                    <label for="userType">From Date</label>
+                    <label for="userType">From Date :</label>
                     <input type="date" id="fromdate" name="date" placeholder="From Date">
                     <br>
-                    <label for="userType">To Date</label>
+                    <label for="userType">To Date :</label>
                     <input type="date" id="todate" name="date" placeholder="To Date">
                 </div>
 
                 <br>
 
-                <label for="userType"> Vehicle No.</label>
+                <label for="userType"> Vehicle No :</label>
                 <select class="drop" id="product" id="product" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select>
 
                 <br>
 
-                <label for="userType">Bata</label>
+                <label for="userType">Bata :</label>
                 <select class="drop" id="bata" id="bata" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select><br>
+                </select><br> <br>
     
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->

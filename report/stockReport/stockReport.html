@@ -45,36 +45,36 @@
         margin-right: 10px;
     }
   #fromdate{
-    border-radius: 8px;
+    /* border-radius: 8px; */
     height: 35px;
-    width: 320px;
-    margin-left: 5%;
+    width: 250px;
+    margin-left:0%;
   }
   label{
     margin-left: 3%;
   }
   #todate{
-    border-radius: 8px;
+    /* border-radius: 8px; */
     height: 35px;
-    width: 320px;
-    margin-left: 1%;
+    width: 250px;
+    margin-left:0%;
   }
 
   .drop, .drop1 {
-    border: 1px solid transparent;
+    border: 1px solid;
     /* box-shadow: 5px 10px 8px grey; */
-    border-radius: 8px;
-    width: 60%;
+    /* border-radius: 8px; */
+    width: 50%;
     height: 35px;
     text-indent: 10%;
     margin-left: 4%;
   }
 
   #customer, #route {
-    border: 1px solid transparent;
+    border: 1px solid;
     /* box-shadow: 5px 10px 8px grey; */
-    border-radius: 8px;
-    width: 60%;
+    /* border-radius: 8px; */
+    width:30%;
     height: 35px;
     text-indent: 10%;
     margin-left: 4%;
@@ -140,21 +140,21 @@
     <div class="container">
         <h1 align="center">Stock Report</h1>
         <hr>
-
+        <br>
         <div class="container1">
             <form id="loginForm1">
 
                 <div class="first-row">
-                    <label for="userType">From Date</label>
+                    <label for="userType">From Date :</label>
                     <input type="date" id="fromdate" name="date" placeholder="From Date">
                     <br>
-                    <label for="userType">To Date</label>
+                    <label for="userType">To Date :</label>
                     <input type="date" id="todate" name="date" placeholder="To Date">
                 </div>
 
                 <br>
 
-                <label for="userType"> Product</label>
+                <label for="userType"> Product :</label>
                 <select class="drop" id="product" id="product" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select>
@@ -163,7 +163,7 @@
                 <br>
            
 
-                <label for="userType">Bata</label>
+                <label for="userType">Bata :</label>
                 <select class="drop" id="bata" id="bata" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select>
