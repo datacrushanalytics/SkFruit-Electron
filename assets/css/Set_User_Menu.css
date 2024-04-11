@@ -53,3 +53,27 @@ img{
     height: 80px;
     align-items: center;
 }
+
+
+#submitButton {
+    
+    background-color: #808080; /* Grey color */
+    color: #fff; /* White text color */
+    padding: 10px 20px; /* Adjust padding as needed */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+#submitButton:hover {
+    background-color: #606060; /* Darker grey color on hover */
+}
+
+.center {
+    text-align: center;
+}
+
+
+    
+
