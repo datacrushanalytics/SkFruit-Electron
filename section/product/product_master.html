@@ -10,99 +10,94 @@
     <title>Product Master</title>
     <style>
         body {
-    font-family: Arial, sans-serif;
-    background-color: rgba(242, 242, 242, 0.8);
-    /* Transparent background */
-    margin: 0;
-    padding: 20px;
-    overflow-x: hidden;
-    /* Hide horizontal scrollbar */
-}
+            font-family: Arial, sans-serif;
+            background-color: rgba(242, 242, 242, 0.8);
+            /* Transparent background */
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            /* Hide horizontal scrollbar */
+        }
 
-.container {
-    text-align: center;
-    margin-bottom: 20px;
-}
+        .container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-h1 {
-    margin-top: 20px;
-}
+        h1 {
+            margin-top: 20px;
+        }
 
-.container1 {
-    margin-top: 20px;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-   
-}
+        .container1 {
+            margin-top: 20px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
 
-hr {
-    border: 0;
-    height: 1px;
-    background-color: #ddd;
-    margin-bottom: 20px;
-}
+        }
 
-form {
-    text-align: center;
-}
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: #ddd;
+            margin-bottom: 20px;
+        }
 
-label {
-    display: block;
-    margin-bottom: 5px;
-}
+        form {
+            text-align: center;
+        }
 
-input[type="text"],
-input[type="password"],
-select {
-    width: 20%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: center    
-}
+        label {
+            text-align: right;
+            display: inline-block;
+            width: 35%; /* Adjusted width */
+            margin-bottom: 5px;
+            margin-right: 10px; /* Added margin-right */
+        }
 
-input[type="checkbox"] {
-    margin-right: 5px;
-}
+        input[type="text"],
+        input[type="password"],
+        select {
+            width: 40%;
+            padding: 10px;
+            margin-bottom: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center
+        }
 
-/* .first-row{
-    margin-top: 10px;
-    margin-bottom: 20px;
+        input[type="checkbox"] {
+            margin-right: 0px;
+        }
 
-} */
+        .second-row {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
 
+        .third-row {
+            text-align: center;
+        }
 
+        .border-hover {
+            padding: 10px 20px;
+            text-decoration: none;
+            color: white;
+            background-color: #808080;
+            /* Grey color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
 
-.second-row {
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
-
-.third-row {
-    text-align: center;
-}
-
-.border-hover {
-    padding: 10px 20px;
-    text-decoration: none;
-    color: white;
-    background-color: #808080;
-    /* Grey color */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-right: 10px;
-}
-
-.border-hover:hover {
-    background-color: #555;
-    /* Darker grey on hover */
-}
-
+        .border-hover:hover {
+            background-color: #555;
+            /* Darker grey on hover */
+        }
     </style>
 </head>
 
@@ -114,33 +109,35 @@ input[type="checkbox"] {
         <div class="container1">
             <form id="loginForm" method="POST">
                 <div class="first-row">
-                    <label for="category">Category</label>
+                    <label for="category">Category :</label>
                     <select id="category" name="category" placeholder="Category">
                         <br>
                         <br>
-                        
+
                         <!-- Add options here -->
                     </select>
                 </div> <br>
-                <label for="name">Product Name :</label>
-                <input type="text" id="name" name="name" placeholder="Product Name">
-                <br>
-
-                <label for="rate">Rate :</label>
-                <input type="text" id="rate" name="rate" placeholder="Rate">
-                <br>
-
-                <lable for="w_rate">W Rate :</lable>
-                <input type="text" id="w_rate" name="w_rate" placeholder="W Rate">
-                <br>
-
-                <label for="minimum_stock">Minimum Stock :</label>
-                <input type="text" id="minimum_stock" name="minimum_stock" placeholder="Minimum Stock">
-                <br>
-
                 <div class="second-row">
-                    <input type="checkbox" id="rate_editable" name="rate_editable" value="1">
+                    <label for="name">Product Name :</label>
+                    <input type="text" id="name" name="name" placeholder="Product Name">
+                    <br>
+
+                    <label for="rate">Rate :</label>
+                    <input type="text" id="rate" name="rate" placeholder="Rate">
+                    <br>
+
+                    <label for="w_rate">W Rate :</label>
+                    <input type="text" id="w_rate" name="w_rate" placeholder="W Rate">
+                    <br>
+
+                    <label for="minimum_stock">Minimum Stock :</label>
+                    <input type="text" id="minimum_stock" name="minimum_stock" placeholder="Minimum Stock">
+                    <br>
+                </div>
+
+                <div class="second-row"> <!-- Moved the Rate Editable label to the same row -->
                     <label for="rate_editable">Rate Editable</label>
+                    <input type="checkbox" id="rate_editable" name="rate_editable" value="1">
                     <br>
                 </div>
 
@@ -154,51 +151,49 @@ input[type="checkbox"] {
     <script src="./productMaster.js"></script>
 
 
-<script>
-        
-    document.addEventListener('DOMContentLoaded', function () {
-        // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://localhost:3000/categoryData', 'category','name');
-    });
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Fetch data from API and populate Select2 dropdowns
+            fetchAndPopulateDropdown('http://localhost:3000/categoryData', 'category', 'name');
+        });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId,field);
-            })
-            .catch(error => {
-                console.error('Error:', error);
+        function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Populate Select2 dropdown with API data
+                    populateDropdownWithSelect2(data, dropdownId, field);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function populateDropdownWithSelect2(data, dropdownId, field) {
+            var dropdown = $('#' + dropdownId);
+            // Clear existing options
+            dropdown.empty();
+
+            // Add placeholder option
+            dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+
+            // Populate dropdown with API data
+            data.forEach(function (item) {
+                dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
             });
-    }
 
-    function populateDropdownWithSelect2(data, dropdownId, field) {
-        var dropdown = $('#' + dropdownId);
-        // Clear existing options
-        dropdown.empty();
-
-        // Add placeholder option
-        dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
-
-        // Populate dropdown with API data
-        data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
-        });
-
-        // Initialize Select2
-        dropdown.select2({
-            placeholder: "Select " + dropdownId + " type",
-            allowClear: true
-        });
-    }
-
-</script>
+            // Initialize Select2
+            dropdown.select2({
+                placeholder: "Select " + dropdownId + " type",
+                allowClear: true
+            });
+        }
+    </script>
 
 </body>
 
