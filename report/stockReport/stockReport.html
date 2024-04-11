@@ -210,8 +210,8 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://43.205.230.120/purchaseproductData', 'product','product_name');
-        fetchAndPopulateDropdown('http://43.205.230.120/purchaseproductData', 'bata','bata');
+        fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/purchaseproductData', 'product','product_name');
+        fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/purchaseproductData', 'bata','bata');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {

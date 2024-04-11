@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Set the placeholder of the input field to the formatted date
     document.getElementById('date').value = formattedDate;
 
-    fetch('http://43.205.230.120/fetchSaleid')
+    fetch('https://skfruit-backend.onrender.com/fetchSaleid')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             // Populate dropdown with API data
             document.getElementById('bill').value = parseInt(data[0]['num']) + 1;
-            fetch('http://43.205.230.120/saleproductData/' + (parseInt(data[0]['num']) + 1))
+            fetch('https://skfruit-backend.onrender.com/saleproductData/' + (parseInt(data[0]['num']) + 1))
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
         });
 
-    // fetch('http://43.205.230.120/list/Customer')
+    // fetch('https://skfruit-backend.onrender.com/list/Customer')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //         console.error('Error:', error);
     //     });
 
-    // fetch('http://43.205.230.120/purchaseproductData/')
+    // fetch('https://skfruit-backend.onrender.com/purchaseproductData/')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    // fetch('http://43.205.230.120/saleproductData/' +)
+    // fetch('https://skfruit-backend.onrender.com/saleproductData/' +)
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //         console.error('Error:', error);
     //     });
 
-    // fetch('http://43.205.230.120/routeData')
+    // fetch('https://skfruit-backend.onrender.com/routeData')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //         console.error('Error:', error);
     //     });
 
-    // fetch('http://43.205.230.120/list/Bank Account')
+    // fetch('https://skfruit-backend.onrender.com/list/Bank Account')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('http://43.205.230.120/saleproductData/deletesaleproduct/' + userId, {
+    fetch('https://skfruit-backend.onrender.com/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
     })
         .then(response => {
@@ -275,7 +275,7 @@ function deleteUser(userId) {
 function getProducts() {
     var bataId = document.getElementById('bta').value;
     console.log(bataId)
-    fetch('http://43.205.230.120/purchaseproductData/getBataProduct/' + bataId)
+    fetch('https://skfruit-backend.onrender.com/purchaseproductData/getBataProduct/' + bataId)
         .then(response => response.json())
         .then(data => {
             console.log(data[0].product_name)

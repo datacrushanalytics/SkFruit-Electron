@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://43.205.230.120/list/Customer')
+//     fetch('https://skfruit-backend.onrender.com/list/Customer')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -17,7 +17,7 @@
 //         });
 
 
-//     fetch('http://43.205.230.120/routeData')
+//     fetch('https://skfruit-backend.onrender.com/routeData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -104,7 +104,7 @@ function formatDate(dateString) {
 //     };
 //     console.log(data);
 
-//     fetch('http://43.205.230.120/ledgerReport', {
+//     fetch('https://skfruit-backend.onrender.com/ledgerReport', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -144,7 +144,7 @@ function fetchDataAndProcess() {
     };
     console.log(data);
 
-    return fetch('http://43.205.230.120/ledgerReport', {
+    return fetch('https://skfruit-backend.onrender.com/ledgerReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

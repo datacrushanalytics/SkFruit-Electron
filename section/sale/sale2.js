@@ -32,7 +32,7 @@ document.getElementById('login').addEventListener('submit', async function(event
     };
 
     try {
-        const response = await fetch('http://43.205.230.120/saleData/insertsale', {
+        const response = await fetch('https://skfruit-backend.onrender.com/saleData/insertsale', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

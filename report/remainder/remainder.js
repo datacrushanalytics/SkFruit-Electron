@@ -2,7 +2,7 @@
 function remainder() {
     console.log("product function executed");
 
-    return fetch('http://43.205.230.120/remainderReport')
+    return fetch('https://skfruit-backend.onrender.com/remainderReport')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

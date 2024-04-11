@@ -130,9 +130,9 @@
         
       document.addEventListener('DOMContentLoaded', function () {
           // Fetch data from API and populate Select2 dropdowns
-          fetchAndPopulateDropdown('http://43.205.230.120/list/Supplier', 'supplier','name');
-          fetchAndPopulateDropdown('http://43.205.230.120/productData/', 'product','name');
-          fetchAndPopulateDropdown('http://43.205.230.120/vehicleData', 'vehicle','vehicle_no');
+          fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/list/Supplier', 'supplier','name');
+          fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/productData/', 'product','name');
+          fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/vehicleData', 'vehicle','vehicle_no');
       });
   
       function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
@@ -199,7 +199,7 @@
             
             console.log(formData)
         
-            fetch('http://43.205.230.120/purchaseproductData/insertPurchaseproduct', {
+            fetch('https://skfruit-backend.onrender.com/purchaseproductData/insertPurchaseproduct', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -244,7 +244,7 @@
               // Perform delete operation based on userId
               var button = event.target;
               var row = button.parentNode.parentNode;
-              fetch('http://43.205.230.120/purchaseproductData/deletepurchaseproductId/' + userId, {
+              fetch('https://skfruit-backend.onrender.com/purchaseproductData/deletepurchaseproductId/' + userId, {
                 method: 'DELETE'
               })
                 .then(response => {

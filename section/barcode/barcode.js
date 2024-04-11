@@ -1,7 +1,7 @@
 // Fetch data from API
 document.addEventListener('DOMContentLoaded', function () {
 
-    fetch('http://43.205.230.120/purchaseproductData/')
+    fetch('https://skfruit-backend.onrender.com/purchaseproductData/')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -96,7 +96,7 @@ function populateDropdown3(data) {
 
 function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('http://43.205.230.120/saleproductData/deletesaleproduct/' + userId, {
+    fetch('https://skfruit-backend.onrender.com/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
     })
         .then(response => {

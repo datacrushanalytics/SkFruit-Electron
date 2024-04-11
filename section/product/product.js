@@ -2,7 +2,7 @@
 function product() {
     console.log("product function executed");
 
-    fetch('http://43.205.230.120/productData')
+    fetch('https://skfruit-backend.onrender.com/productData')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -78,7 +78,7 @@ function editProduct(user) {
 
 function deleteProduct(userId) {
     // Perform delete operation based on userId
-    fetch('http://43.205.230.120/productData/deleteproductId/' + userId, {
+    fetch('https://skfruit-backend.onrender.com/productData/deleteproductId/' + userId, {
         method: 'DELETE'
     })
     .then(response => {

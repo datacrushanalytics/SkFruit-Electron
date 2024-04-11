@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://43.205.230.120/vehicleData')
+//     fetch('https://skfruit-backend.onrender.com/vehicleData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -64,7 +64,7 @@ function formatDate(dateString) {
 //     };
 //     console.log(data);
 
-//     fetch('http://43.205.230.120/dailyReport', {
+//     fetch('https://skfruit-backend.onrender.com/dailyReport', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -103,7 +103,7 @@ function fetchDataAndProcess() {
         vehicle_no : getElementValueWithDefault('vehicleNumber', '*') 
     };
 
-    return fetch('http://43.205.230.120/dailyReport', {
+    return fetch('https://skfruit-backend.onrender.com/dailyReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

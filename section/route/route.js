@@ -2,7 +2,7 @@
 function route() {
     console.log("user function executed");
 
-    fetch('http://43.205.230.120/routeData')
+    fetch('https://skfruit-backend.onrender.com/routeData')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -37,13 +37,8 @@ function populateTable(data) {
          var editButton = document.createElement('button');
          editButton.className = 'button edit-button';
          var editLink = document.createElement('a');
-         editLink.href = '../route/update_route.html'; // Edit link destination
          editLink.textContent = 'Edit';
          editButton.appendChild(editLink);
-         editLink.textContent = 'Edit';
-        editLink.style.color = 'white'; // Set text color to white
-        editLink.style.textDecoration = 'none'; // Remove underline
-
 
         editButton.addEventListener('click', function() {
             editRoute(item); // Pass the user data to the edit function
@@ -82,7 +77,7 @@ function editRoute(user) {
 
 function deleteRoute(userId) {
     // Perform delete operation based on userId
-    fetch('http://43.205.230.120/routeData/deleterouteId/' + userId, {
+    fetch('https://skfruit-backend.onrender.com/routeData/deleterouteId/' + userId, {
         method: 'DELETE'
     })
     .then(response => {
@@ -99,4 +94,3 @@ function deleteRoute(userId) {
 }
 
 route();
-

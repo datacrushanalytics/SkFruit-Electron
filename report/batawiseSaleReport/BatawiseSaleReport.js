@@ -3,7 +3,7 @@
 
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://43.205.230.120/purchaseproductData')
+//     fetch('https://skfruit-backend.onrender.com/purchaseproductData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -90,7 +90,7 @@ function formatDate(dateString) {
 //     };
 //     console.log(data);
 
-//     fetch('http://43.205.230.120/batawiseSaleReport', {
+//     fetch('https://skfruit-backend.onrender.com/batawiseSaleReport', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -128,7 +128,7 @@ function fetchDataAndProcess() {
     };
     console.log(data);
 
-    return fetch('http://43.205.230.120/batawiseSaleReport', {
+    return fetch('https://skfruit-backend.onrender.com/batawiseSaleReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -302,7 +302,7 @@ function openModal(item) {
     console.log("Opening modal for item:", item.bill_id);
     
 
-    fetch('http://43.205.230.120/bill/' + item.bill_id)
+    fetch('https://skfruit-backend.onrender.com/bill/' + item.bill_id)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

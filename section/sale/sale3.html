@@ -348,11 +348,11 @@
         
   document.addEventListener('DOMContentLoaded', function () {
       // Fetch data from API and populate Select2 dropdowns
-      fetchAndPopulateDropdown('http://43.205.230.120/list/Customer', 'grahk','name');
-      fetchAndPopulateDropdown('http://43.205.230.120/purchaseproductData', 'product','product_name');
-      fetchAndPopulateDropdown('http://43.205.230.120/purchaseproductData', 'bta','bata');
-      fetchAndPopulateDropdown('http://43.205.230.120/routeData', 'Route','route_name');
-      fetchAndPopulateDropdown('http://43.205.230.120/list/Bank Account', 'onlineAcc','name');
+      fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/list/Customer', 'grahk','name');
+      fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/purchaseproductData', 'product','product_name');
+      fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/purchaseproductData', 'bta','bata');
+      fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/routeData', 'Route','route_name');
+      fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/list/Bank Account', 'onlineAcc','name');
   });
 
   function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
@@ -411,7 +411,7 @@
 
 function previousbalance(){
   const name = document.getElementById("grahk").value
-  fetch('http://43.205.230.120/fetchpv/' + name)
+  fetch('https://skfruit-backend.onrender.com/fetchpv/' + name)
   .then(response => {
       if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -475,7 +475,7 @@ function totalbill(){
 
     console.log(formData)
 
-    fetch('http://43.205.230.120/saleproductData/insertsaleproduct', {
+    fetch('https://skfruit-backend.onrender.com/saleproductData/insertsaleproduct', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -523,7 +523,7 @@ function totalbill(){
       totalBalance()
       var button = event.target;
       var row = button.parentNode.parentNode;
-      fetch('http://43.205.230.120/saleproductData/deletesaleproduct/' + userId, {
+      fetch('https://skfruit-backend.onrender.com/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
       })
         .then(response => {

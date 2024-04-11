@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Set the placeholder of the input field to the formatted date
     document.getElementById('date').value = formattedDate;
 
-    fetch('http://43.205.230.120/list/Supplier')
+    fetch('https://skfruit-backend.onrender.com/list/Supplier')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
 
-    fetch('http://43.205.230.120/list/Bank Account')
+    fetch('https://skfruit-backend.onrender.com/list/Bank Account')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -103,7 +103,7 @@ console.log("jahsafhfa")
     };
 
 
-    await fetch('http://43.205.230.120/paymentData/insertPayment', {
+    await fetch('https://skfruit-backend.onrender.com/paymentData/insertPayment', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
