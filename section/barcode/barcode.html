@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <title></title>
 
     <style>
@@ -233,6 +236,8 @@
 <script>
 
     document.addEventListener('DOMContentLoaded', function () {
+        fetchAndPopulateDropdown('http://43.205.230.120/purchaseproductData', 'grahk','product_name');
+        fetchAndPopulateDropdown('http://43.205.230.120/purchaseproductData', 'Route','bata');
 
         fetch('http://43.205.230.120/purchaseproductData/')
             .then(response => {
@@ -243,8 +248,8 @@
             })
             .then(data => {
                 // Populate dropdown with API data
-                populateDropdown1(data);
-                populateDropdown2(data);
+                // populateDropdown1(data);
+                // populateDropdown2(data);
                 populateDropdown3(data);
             })
             .catch(error => {
@@ -254,7 +259,46 @@
     });
 
 
+    function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Populate Select2 dropdown with API data
+                populateDropdownWithSelect2(data, dropdownId,field);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 
+    function populateDropdownWithSelect2(data, dropdownId, field) {
+        var dropdown = $('#' + dropdownId);
+        // Clear existing options
+        dropdown.empty();
+
+        // Add placeholder option
+        dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+
+        // Populate dropdown with API data
+        data.forEach(function (item) {
+            dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
+        });
+
+        // Initialize Select2
+        dropdown.select2({
+            placeholder: "Select " + field + "",
+            allowClear: true
+        });
+    }
+
+
+
+ 
     function populateDropdown1(data) {
         var userNameDropdown = document.getElementById('Route');
         userNameDropdown.innerHTML = ''; // Clear existing options

@@ -7,6 +7,9 @@
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
     <script src= "https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <style>
             body {
             font-family: Arial, sans-serif;
@@ -301,6 +304,52 @@
 <!-- Include Print.js library -->
 
 
+<script>
+        
+    document.addEventListener('DOMContentLoaded', function () {
+        // Fetch data from API and populate Select2 dropdowns
+        fetchAndPopulateDropdown('http://43.205.230.120/purchaseproductData', 'product','product_name');
+        fetchAndPopulateDropdown('http://43.205.230.120/purchaseproductData', 'bata','bata');
+    });
+
+    function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Populate Select2 dropdown with API data
+                populateDropdownWithSelect2(data, dropdownId,field);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function populateDropdownWithSelect2(data, dropdownId, field) {
+        var dropdown = $('#' + dropdownId);
+        // Clear existing options
+        dropdown.empty();
+
+        // Add placeholder option
+        dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+
+        // Populate dropdown with API data
+        data.forEach(function (item) {
+            dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
+        });
+
+        // Initialize Select2
+        dropdown.select2({
+            placeholder: "Select " + dropdownId + " type",
+            allowClear: true
+        });
+    }
+
+</script>
 
 
 

@@ -1,65 +1,65 @@
-// Fetch data from API
-document.addEventListener('DOMContentLoaded', function () {
+// // Fetch data from API
+// document.addEventListener('DOMContentLoaded', function () {
 
-    fetch('http://43.205.230.120/purchaseproductData')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Populate dropdown with API data
-            populateDropdown1(data);
-            populateDropdown(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-});
+//     fetch('http://43.205.230.120/purchaseproductData')
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error('Network response was not ok');
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             // Populate dropdown with API data
+//             populateDropdown1(data);
+//             populateDropdown(data);
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// });
 
 
-function populateDropdown(data) {
-    var userNameDropdown = document.getElementById('product');
-    userNameDropdown.innerHTML = ''; // Clear existing options
+// function populateDropdown(data) {
+//     var userNameDropdown = document.getElementById('product');
+//     userNameDropdown.innerHTML = ''; // Clear existing options
 
-    // Create and append new options based on API data
-    data.forEach(function (item) {
-        var option = document.createElement('option');
-        option.value = item.product_name; // Set the value
-        option.textContent = item.product_name; // Set the display text
-        userNameDropdown.appendChild(option);
-    });
+//     // Create and append new options based on API data
+//     data.forEach(function (item) {
+//         var option = document.createElement('option');
+//         option.value = item.product_name; // Set the value
+//         option.textContent = item.product_name; // Set the display text
+//         userNameDropdown.appendChild(option);
+//     });
 
-    // Add a placeholder option
-    var placeholderOption = document.createElement('option');
-    placeholderOption.value = ""; // Set an empty value
-    placeholderOption.textContent = "Select Product"; // Set placeholder text
-    placeholderOption.disabled = true; // Disable the option
-    placeholderOption.selected = true; // Select the option by default
-    userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-}
+//     // Add a placeholder option
+//     var placeholderOption = document.createElement('option');
+//     placeholderOption.value = ""; // Set an empty value
+//     placeholderOption.textContent = "Select Product"; // Set placeholder text
+//     placeholderOption.disabled = true; // Disable the option
+//     placeholderOption.selected = true; // Select the option by default
+//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
+// }
 
-function populateDropdown1(data) {
-    var userNameDropdown = document.getElementById('bata');
-    userNameDropdown.innerHTML = ''; // Clear existing options
+// function populateDropdown1(data) {
+//     var userNameDropdown = document.getElementById('bata');
+//     userNameDropdown.innerHTML = ''; // Clear existing options
 
-    // Create and append new options based on API data
-    data.forEach(function (item) {
-        var option = document.createElement('option');
-        option.value = item.bata; // Set the value
-        option.textContent = item.bata; // Set the display text
-        userNameDropdown.appendChild(option);
-    });
+//     // Create and append new options based on API data
+//     data.forEach(function (item) {
+//         var option = document.createElement('option');
+//         option.value = item.bata; // Set the value
+//         option.textContent = item.bata; // Set the display text
+//         userNameDropdown.appendChild(option);
+//     });
 
-    // Add a placeholder option
-    var placeholderOption = document.createElement('option');
-    placeholderOption.value = ""; // Set an empty value
-    placeholderOption.textContent = "Select Bata"; // Set placeholder text
-    placeholderOption.disabled = true; // Disable the option
-    placeholderOption.selected = true; // Select the option by default
-    userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-}
+//     // Add a placeholder option
+//     var placeholderOption = document.createElement('option');
+//     placeholderOption.value = ""; // Set an empty value
+//     placeholderOption.textContent = "Select Bata"; // Set placeholder text
+//     placeholderOption.disabled = true; // Disable the option
+//     placeholderOption.selected = true; // Select the option by default
+//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
+// }
 
 
 

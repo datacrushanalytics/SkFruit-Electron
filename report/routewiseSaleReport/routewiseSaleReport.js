@@ -1,80 +1,80 @@
-// Fetch data from API
-document.addEventListener('DOMContentLoaded', function () {
+// // Fetch data from API
+// document.addEventListener('DOMContentLoaded', function () {
 
-    fetch('http://43.205.230.120/list/Customer')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Populate dropdown with API data
-            populateDropdown(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-
-    fetch('http://43.205.230.120/routeData')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Populate dropdown with API data
-            populateDropdown4(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-});
+//     fetch('http://43.205.230.120/list/Customer')
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error('Network response was not ok');
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             // Populate dropdown with API data
+//             populateDropdown(data);
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
 
 
-function populateDropdown(data) {
-    var userNameDropdown = document.getElementById('customer');
-    userNameDropdown.innerHTML = ''; // Clear existing options
+//     fetch('http://43.205.230.120/routeData')
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error('Network response was not ok');
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             // Populate dropdown with API data
+//             populateDropdown4(data);
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// });
 
-    // Create and append new options based on API data
-    data.forEach(function (item) {
-        var option = document.createElement('option');
-        option.value = item.name; // Set the value
-        option.textContent = item.name; // Set the display text
-        userNameDropdown.appendChild(option);
-    });
 
-    // Add a placeholder option
-    var placeholderOption = document.createElement('option');
-    placeholderOption.value = ""; // Set an empty value
-    placeholderOption.textContent = "Select Customer type"; // Set placeholder text
-    placeholderOption.disabled = true; // Disable the option
-    placeholderOption.selected = true; // Select the option by default
-    userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-}
+// function populateDropdown(data) {
+//     var userNameDropdown = document.getElementById('customer');
+//     userNameDropdown.innerHTML = ''; // Clear existing options
 
-function populateDropdown4(data) {
-    var userNameDropdown = document.getElementById('route');
-    userNameDropdown.innerHTML = ''; // Clear existing options
+//     // Create and append new options based on API data
+//     data.forEach(function (item) {
+//         var option = document.createElement('option');
+//         option.value = item.name; // Set the value
+//         option.textContent = item.name; // Set the display text
+//         userNameDropdown.appendChild(option);
+//     });
 
-    // Create and append new options based on API data
-    data.forEach(function (item) {
-        var option = document.createElement('option');
-        option.value = item.route_name; // Set the value
-        option.textContent = item.route_name; // Set the display text
-        userNameDropdown.appendChild(option);
-    });
+//     // Add a placeholder option
+//     var placeholderOption = document.createElement('option');
+//     placeholderOption.value = ""; // Set an empty value
+//     placeholderOption.textContent = "Select Customer type"; // Set placeholder text
+//     placeholderOption.disabled = true; // Disable the option
+//     placeholderOption.selected = true; // Select the option by default
+//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
+// }
 
-    // Add a placeholder option
-    var placeholderOption = document.createElement('option');
-    placeholderOption.value = ""; // Set an empty value
-    placeholderOption.textContent = "Select Route type"; // Set placeholder text
-    placeholderOption.disabled = true; // Disable the option
-    placeholderOption.selected = true; // Select the option by default
-    userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-}
+// function populateDropdown4(data) {
+//     var userNameDropdown = document.getElementById('route');
+//     userNameDropdown.innerHTML = ''; // Clear existing options
+
+//     // Create and append new options based on API data
+//     data.forEach(function (item) {
+//         var option = document.createElement('option');
+//         option.value = item.route_name; // Set the value
+//         option.textContent = item.route_name; // Set the display text
+//         userNameDropdown.appendChild(option);
+//     });
+
+//     // Add a placeholder option
+//     var placeholderOption = document.createElement('option');
+//     placeholderOption.value = ""; // Set an empty value
+//     placeholderOption.textContent = "Select Route type"; // Set placeholder text
+//     placeholderOption.disabled = true; // Disable the option
+//     placeholderOption.selected = true; // Select the option by default
+//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
+// }
 
 
 
