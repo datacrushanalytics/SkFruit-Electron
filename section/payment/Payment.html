@@ -4,134 +4,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-    <title>User Form in Electron</title>
+    <title>Payment</title>
     <style>
-        /* Reset default margin and padding */
-        /* Set a background color for the body */
         body {
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
             margin: 0;
-            padding: 10px;
-
+            padding: 20px;
         }
 
-        /* Center the container */
         .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        /* Center align the headings */
-        h1 {
             text-align: center;
-            margin-top: 0;
             margin-bottom: 20px;
         }
 
-        /* Style for form elements */
-        label, select, textarea {
-            display: block;
-            width: 100%;
-            margin-bottom: 10px;
-            box-sizing: border-box; /* Include padding and border in the element's total width and height */
-            padding: 5px; /* Add some padding for better visual appearance */
+        h1 {
+            text-align: center;
         }
 
-        input {
-            display: block;
-            width: 100%;
-            margin-bottom: 10px;
-            box-sizing: border-box; /* Include padding and border in the element's total width and height */
-            padding: 5px; /* Add some padding for better visual appearance */
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: #ddd;
+            margin-bottom: 20px;
         }
 
-        /* Style for buttons */
-        button {
-            padding: 12px 24px;
+        .container1 {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: -20spx;
+            text-align: left;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 40%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .second-row {
+            text-align: center;
+        }
+        .third-row {
+            text-align: center; 
+        }
+
+        .border-hover {
+            padding: 10px 20px;
             text-decoration: none;
             color: white;
             background-color: #808080;
+            /* Grey color */
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
-            margin: 5px;
+            margin-right: 10px;
         }
 
-        /* Center align the buttons */
-        .button-container {
-            text-align: center;
-            margin-top: 20px;
-            padding: 10px;
+        .border-hover:hover {
+        background-color: #555;
+        /* Darker grey on hover */
         }
-
-
     </style>
 </head>
 
-
 <body>
-    <div class="container">
-        <h1 align="center">Payment</h1><br>
-        <hr>
 
         <div class="container1">
+            <h1>Payment</h1>
+            <hr>
             <form id="loginForm1">
 
                 <div class="first-row">
-                    <!-- <label for="userType">PID</label>
-                    <input type="number" id="fromdate" name="date" placeholder="From Date"> -->
-                    <br>
-                    <label for="userType">Date</label>
-                    <input type="text" id="date" name="date" placeholder="To Date" readonly>
+                    <label for="date">Date</label>
+                    <input type="text" id="date" name="date" placeholder="Date" readonly>
                 </div>
-
                 <br>
-
-                <label for="userType"> From Account</label>
-                <select class="drop" id="product" id="product" name="name">
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                <label for="product">From Account</label>
+                <select id="product" name="from_account">
+                    <!-- Options for from account -->
                 </select>
-
                 <br>
-
-                <label for="userType">To Account</label>
-                <select class="drop" id="bata" id="bata" name="name" onchange="previousbalance()">
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select><br>
-    
-                <label>Comment</label>
+                <label for="bata">To Account</label>
+                <select id="bata" name="to_account" onchange="previousbalance()">
+                    <!-- Options for to account -->
+                </select>
+                <br>
+                <label for="comment">Comment</label>
                 <textarea id="comment" name="comment"></textarea><br>
-
                 <div class="second-row">
-                    <label for="userType">Prev. Balance</label>
-                    <input type="number" id="previousBalance" name="date" >
+                    <label for="previousBalance">Prev. Balance</label>
+                    <input type="number" id="previousBalance" name="previous_balance">
                     <br>
-                    <label for="userType">Amount</label>
-                    <input type="number" id="amount" name="date" onchange="totalBalance()" >
-                </div><br>
-
-                <!-- <div class="third-row"> -->
-                    <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" id="button1">Save</button>
-                    <a href="./payment1.html"><button type='button' id="button2">Back</button></a>
-                <!-- </div> -->
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" name="amount" onchange="totalBalance()">
+                </div>
+                <br>
+                <div class="third-row">
+                    <button type="submit" class="border-hover">Save</button>
+                    <a href="./product.html"><button type="button" class="border-hover">Back</button></a>
+                </div>
             </form>
-         
-
         </div>
     </div>
-
-
-
-
 </body>
 <script src="./payment.js"></script>
 

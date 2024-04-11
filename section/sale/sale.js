@@ -272,6 +272,7 @@ function deleteUser(userId) {
 // }
 
 
+
 function getProducts() {
     var bataId = document.getElementById('bta').value;
     console.log(bataId)
@@ -287,12 +288,29 @@ function getProducts() {
             
             // Set the value of the Select2 dropdown
             $productDropdown.val(data[0].product_name).trigger('change');
+
+            // Update label with additional content
+            var nagLabel = document.getElementById('nagLabel');
+            nagLabel.innerHTML = 'नग: (' + data[0].selling_price + data[0].selling_price + ')'; 
         })
         .catch(error => {
             console.error('Error:', error);
         });
-}
 
+
+    fetch('http://localhost:3000/fetchStock/' + bataId)
+        .then(response => response.json())
+        .then(data => {
+
+            // Update label with additional content
+            var nagLabel = document.getElementById('nagLabel');
+            nagLabel.innerHTML = 'नग: (Remaining : ' + data[0].closing + ')'; 
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    
+}
 
 
 

@@ -39,6 +39,10 @@ function populateTable(data) {
          var editLink = document.createElement('a');
          editLink.textContent = 'Edit';
          editButton.appendChild(editLink);
+         editLink.textContent = 'Edit';
+        editLink.style.color = 'white'; // Set text color to white
+        editLink.style.textDecoration = 'none'; // Remove underline
+
 
         editButton.addEventListener('click', function() {
             editRoute(item); // Pass the user data to the edit function
