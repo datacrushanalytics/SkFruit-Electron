@@ -56,23 +56,23 @@
       }
 
       button {
-        background-color: #808080; 
+        background-color:grey; 
         color: white;
         padding: 10px 20px;
         border: none;
-        border-radius: 5px;
+        /* border-radius: 5px; */
         cursor: pointer;
         transition: background-color 0.3s ease;
       }
       
       button:hover {
-        background-color: #808080; 
+        background-color:darkgrey; 
       }
 
       #bill{
         height: 40px;
         width: 15%;
-        border-radius: 8px;
+        /* border-radius: 8px; */
         text-indent:  10px;
         margin-left: 18px;
        
@@ -80,7 +80,7 @@
       #date{
         height: 40px;
         width: 15%;
-        border-radius: 8px;
+        /* border-radius: 8px; */
         text-indent: 5%;
         margin: 2%;
       }
@@ -88,14 +88,14 @@
       #number{
         height: 40px;
         width: 15%;
-        border-radius: 8px;
+        /* border-radius: 8px; */
         text-indent: 5%;
         margin-left: 10px;
       }
 
       #grahk, #product, #bta, #Route{
         text-indent: 3%;
-        border-radius: 6px;
+        /* border-radius: 6px; */
         height: 40px;
         width: 450px;
         margin-left: 20px;  
@@ -103,7 +103,7 @@
 
       #no, #carate100, #carate150, #carate250, #carate350, #carate1100, #carate1150, #carate1250, #carate1350{
         text-indent: 3%;
-        border-radius: 6px;
+        /* border-radius: 6px; */
         height: 40px;
         width: 100px;
         margin-left: 20px;
@@ -111,7 +111,7 @@
       }
 
       #mark{
-        border-radius: 8px;
+        /* border-radius: 8px; */
         height: 15px;
         width: 50px;     
         padding:  10px;
@@ -119,14 +119,14 @@
         }
 
         #nag{
-            border-radius: 8px;
+            /* border-radius: 8px; */
             height: 15px;
             width: 50px;           
             padding:  10px;
             margin:20px;
             }
             #address{
-                border-radius: 8px;
+                /* border-radius: 8px; */
                 height: 15px;
                 width: 300px;
                 padding:  10px;
@@ -134,7 +134,7 @@
                   
                 }
                 #sandarbh, #note{
-                  border-radius: 8px;
+                  /* border-radius: 8px; */
                   height: 15px;
                   width: 300px;                  
                 padding:  10px;
@@ -142,7 +142,7 @@
                 }        
 
                 #bill_cash, #bill1{
-                    border-radius: 8px;
+                    /* border-radius: 8px; */
                     height: 15px;
                     width: 150px;                    
                     padding:  10px;
@@ -151,14 +151,14 @@
 
                     #onlineAcc{
                         text-indent: 3%;
-                        border-radius: 6px;
+                        /* border-radius: 6px; */
                         height: 40px;
                         width: 150px;
                         margin-left: 20px;
                       }
 
                       #kimmat{
-                        border-radius: 8px;
+                        /* border-radius: 8px; */
                         height: 15px;
                         width: 100px;                        
                         padding:  10px;                       
@@ -166,7 +166,7 @@
                         }
                         
                         #total, #total1, #total2{
-                        border-radius: 8px;
+                        /* border-radius: 8px; */
                         height: 15px;
                         width: 150px;                         
                         padding:  10px;                     
@@ -174,14 +174,14 @@
                         }
                         
                         #baki{
-                        border-radius: 8px;
+                        /* border-radius: 8px; */
                         height: 25px;
                         width: 150px;                       
                         padding:  10px;                    
                         }
 
                         #online, #previousBalance{
-                            border-radius: 8px;
+                            /* border-radius: 8px; */
                             height: 15px;
                             width: 150px;                            
                             padding:  10px;
@@ -189,7 +189,7 @@
                             }
 
                             #discount, #totalBill{
-                                border-radius: 8px;
+                                /* border-radius: 1px; */
                                 height: 15px;
                                 padding:  10px;
                                 margin:20px;
@@ -206,32 +206,44 @@
     <hr>
 <form id="login">
     <div class="first-row">
+      <lable for="bill">बिल नं : </lable>
       <input type="text" id="bill" name="number" placeholder="बिल नं.">
+
+      <lable for="date">दिनांक : </lable>
       <input type="text" id="date" name="date" placeholder="दिनांक:">
+
+      <label for="number">मोबाइल नं : </label>
       <input type="text" id="number" name="number" placeholder="मोबाइल नं.">
     </div>
 
     <div>
-      <label for="message" aria-placeholder="Root"></label>
+      <label for="message" aria-placeholder="Root">ग्राहकाचे नाव :</label>
       <select type="root" id="grahk" name="root" onchange="previousbalance()">
-      </select>
-      <label for="message" aria-placeholder="Root"></label>
+      </select><br>
+      
+      <br>
+      <label for="message" aria-placeholder="Root">रूट :</label>
       <select type="root" id="Route" name="root">
       </select>
       <br>
     </div>
 
     <div class="third-row">
+      <lable for="address">पत्ता : </lable>
       <input type="text" id="address" name="text" placeholder="पत्ता">
+
+      <label for="sandarbh">संदर्भ :</label>
       <input type="text" id="sandarbh" name="text" placeholder="संदर्भ ">
     </div>
 
 
     <div>
-      <label for="message" aria-placeholder="Root"></label>
+      <label for="message" aria-placeholder="Root">बटा :</label>
       <select type="root" id="bta" name="root" onchange="getProducts()">
-      </select>
-      <label for="message" aria-placeholder="Root"></label>
+      </select><br>
+
+      <br>
+      <label for="message" aria-placeholder="Root">Product :</label>
       <select type="root" id="product" name="root">
       </select>
     </div>
@@ -239,9 +251,16 @@
       <input type="text" id="product" name="text" placeholder="प्रॉडक्ट">
       <input type="text" id="bta" name="text" placeholder="बटा">
     </div> -->
+    <lable for="mark">मार्क :</lable>
     <input type="text" id="mark" name="text" placeholder="मार्क">
+
+    <label for="kimmat">किंमत :</label>
     <input type="number" id="kimmat" name="number" placeholder="किंमत">
+
+    <lable for="nag">नग :</lable>
     <input type="text" id="nag" name="text" placeholder="नग" onchange="updateTotal()">
+
+    <label for="total">एकूण रक्कम :</label>
     <input type="number" id="total" name="number" placeholder="एकूण रक्कम">
 
 <br>

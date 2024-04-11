@@ -20,7 +20,7 @@
             width: 150px;
             border: 1px solid transparent;
             padding: 10px;
-            box-shadow: 5px 5px 5px grey;
+            /* box-shadow: 5px 5px 5px grey; */
             margin: 20px;
         }
 
@@ -102,7 +102,28 @@
             background-color: #555;
         }
 
-        button {
+  button[type="submit"] {
+     padding: 12px 24px;
+     font-size: 16px;
+     /* width: 200px; */
+     border: none;
+     cursor: pointer;
+     margin: 10px;
+     border-radius: 5px;
+     outline: none;
+     background-color:grey; /* Grey background color */
+     color: #fff; /* White text color */
+     box-shadow: none; /* Remove box shadow */
+}
+
+   button[type="submit"]:hover {
+      background-color:darkgrey; /* Dark grey background color on hover */
+}
+
+
+
+
+        /* button {
             padding: 10px 20px;
             font-size: 16px;
             width: 200px;
@@ -112,7 +133,7 @@
             border-radius: 5px;
             outline: none;
             margin: 10px;
-        }
+        } */
 
         #container1 {
             display: flex;
