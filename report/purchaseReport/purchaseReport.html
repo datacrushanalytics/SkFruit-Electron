@@ -247,9 +247,9 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://localhost:3000/vehicleData', 'vehicleNumber','vehicle_no');
-        fetchAndPopulateDropdown('http://localhost:3000/list/Supplier', 'supplier','name');
-        fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData', 'bata','bata');
+        fetchAndPopulateDropdown('https://localhost:3000/vehicleData', 'vehicleNumber','vehicle_no');
+        fetchAndPopulateDropdown('https://localhost:3000/list/Supplier', 'supplier','name');
+        fetchAndPopulateDropdown('https://localhost:3000/purchaseproductData', 'bata','bata');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {

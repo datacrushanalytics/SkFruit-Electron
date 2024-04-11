@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Set the placeholder of the input field to the formatted date
     document.getElementById('date').value = formattedDate;
 
-    fetch('http://localhost:3000/list/Supplier')
+    fetch('https://localhost:3000/list/Supplier')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
 
-    fetch('http://localhost:3000/list/Bank Account')
+    fetch('https://localhost:3000/list/Bank Account')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -103,7 +103,7 @@ console.log("jahsafhfa")
     };
 
 
-    await fetch('http://localhost:3000/paymentData/insertPayment', {
+    await fetch('https://localhost:3000/paymentData/insertPayment', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
