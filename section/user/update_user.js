@@ -10,7 +10,6 @@ async function updateUser() {
         };
 
         const response = await fetch('http://localhost:3000/userData/updateUser/'+ parseInt(document.getElementById("id").value), {
-        const response = await fetch('http://skfruit-backend.onrender.com/userData/updateUser/'+ parseInt(document.getElementById("id").value), {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
