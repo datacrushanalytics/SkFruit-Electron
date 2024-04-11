@@ -140,7 +140,7 @@
     function previousbalance(){
         const name = document.getElementById("bata").value
         fetch('http://localhost:3000/fetchpv/' + name)
-        fetch('http://skfruit-backend.onrender.com/fetchpv/' + name)
+        fetch('http://localhost:3000/fetchpv/' + name)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
