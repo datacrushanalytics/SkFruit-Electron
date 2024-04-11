@@ -52,7 +52,10 @@ function login() {
     })
     .then(response => {
         if (!response.ok) {
+          
             alert("Please enter valid username and password")
+            document.getElementById("username").value = null
+            document.getElementById("password").value = null
             throw new Error('Network response was not ok');
         }
 
