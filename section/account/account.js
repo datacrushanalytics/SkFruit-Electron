@@ -1,7 +1,7 @@
 function account() {
   console.log("user function executed");
 
-  fetch('https://localhost:3000/accountData')
+  fetch('http://localhost:3000/accountData')
       .then(response => {
           if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -76,13 +76,14 @@ function editAccount(user) {
 
 function deleteaccount(userId) {
   // Perform delete operation based on userId
-  fetch('https://localhost:3000/accountData/deleteaccountId/' + userId, {
+  fetch('http://localhost:3000/accountData/deleteaccountId/' + userId, {
       method: 'DELETE'
   })
   .then(response => {
       if (!response.ok) {
           throw new Error('Network response was not ok');
       }
+      alert("Account is successfully Deleted");
       console.log('User deleted successfully');
       // Refresh the table or update UI as needed
       account(); // Assuming you want to refresh the table after delete

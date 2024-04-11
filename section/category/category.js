@@ -2,7 +2,7 @@
 function product() {
     console.log("product function executed");
 
-    fetch('https://localhost:3000/categoryData')
+    fetch('http://localhost:3000/categoryData')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -78,7 +78,7 @@ function populateTable(data) {
 
 function deleteProduct(userId) {
     // Perform delete operation based on userId
-    fetch('https://localhost:3000/categoryData/deletecategoryId/' + userId, {
+    fetch('http://localhost:3000/categoryData/deletecategoryId/' + userId, {
         method: 'DELETE'
     })
     .then(response => {
@@ -86,6 +86,7 @@ function deleteProduct(userId) {
             throw new Error('Network response was not ok');
         }
         console.log('User deleted successfully');
+        alert("category is successfully Deleted");
         // Refresh the table or update UI as needed
         product(); // Assuming you want to refresh the table after delete
     })

@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('https://localhost:3000/list/Supplier')
+//     fetch('http://localhost:3000/list/Supplier')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -16,7 +16,7 @@
 //             console.error('Error:', error);
 //         });
 
-//     fetch('https://localhost:3000/purchaseproductData')
+//     fetch('http://localhost:3000/purchaseproductData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -31,7 +31,7 @@
 //             console.error('Error:', error);
 //         });
 
-//     fetch('https://localhost:3000/vehicleData')
+//     fetch('http://localhost:3000/vehicleData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -139,7 +139,7 @@ function formatDate(dateString) {
 //     };
 //     console.log(data);
 
-//     fetch('https://localhost:3000/purchaseReport', {
+//     fetch('http://localhost:3000/purchaseReport', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -178,7 +178,7 @@ function fetchDataAndProcess() {
         gadi_number : getElementValueWithDefault('vehicleNumber', '*') 
     };
 
-    return fetch('https://localhost:3000/purchaseReport', {
+    return fetch('http://localhost:3000/purchaseReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

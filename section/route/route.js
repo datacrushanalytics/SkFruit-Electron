@@ -2,7 +2,7 @@
 function route() {
     console.log("user function executed");
 
-    fetch('https://localhost:3000/routeData')
+    fetch('http://localhost:3000/routeData')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -81,7 +81,7 @@ function editRoute(user) {
 
 function deleteRoute(userId) {
     // Perform delete operation based on userId
-    fetch('https://localhost:3000/routeData/deleterouteId/' + userId, {
+    fetch('http://localhost:3000/routeData/deleterouteId/' + userId, {
         method: 'DELETE'
     })
     .then(response => {
@@ -89,6 +89,7 @@ function deleteRoute(userId) {
             throw new Error('Network response was not ok');
         }
         console.log('Route deleted successfully');
+        alert("Route is successfully Deleted");
         // Refresh the table or update UI as needed
         route(); // Assuming you want to refresh the table after delete
     })

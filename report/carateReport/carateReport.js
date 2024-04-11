@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('https://localhost:3000/list/Customer')
+//     fetch('http://localhost:3000/list/Customer')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -72,7 +72,7 @@ function fetchDataAndProcess() {
         customer_name: getElementValueWithDefault('customer', '*'),
     };
 
-    return fetch('https://localhost:3000/carateReport', {
+    return fetch('http://localhost:3000/carateReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

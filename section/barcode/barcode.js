@@ -1,7 +1,7 @@
 // Fetch data from API
 document.addEventListener('DOMContentLoaded', function () {
 
-    fetch('https://localhost:3000/purchaseproductData/')
+    fetch('http://localhost:3000/purchaseproductData/')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -96,7 +96,7 @@ function populateDropdown3(data) {
 
 function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('https://localhost:3000/saleproductData/deletesaleproduct/' + userId, {
+    fetch('http://localhost:3000/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
     })
         .then(response => {
@@ -104,6 +104,7 @@ function deleteUser(userId) {
                 throw new Error('Network response was not ok');
             }
             console.log('User deleted successfully');
+            alert("Barcode is successfully Deleted");
             // Refresh the table or update UI as needed
             user(); // Assuming you want to refresh the table after delete
         })

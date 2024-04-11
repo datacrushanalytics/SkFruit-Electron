@@ -236,10 +236,10 @@
 <script>
 
     document.addEventListener('DOMContentLoaded', function () {
-        fetchAndPopulateDropdown('https://localhost:3000/purchaseproductData', 'grahk','product_name');
-        fetchAndPopulateDropdown('https://localhost:3000/purchaseproductData', 'Route','bata');
+        fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData', 'grahk','product_name');
+        fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData', 'Route','bata');
 
-        fetch('https://localhost:3000/purchaseproductData/')
+        fetch('http://localhost:3000/purchaseproductData/')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -451,7 +451,7 @@
         };
         console.log(data);
     
-        fetch('https://localhost:3000/purchaseproductData', {
+        fetch('http://localhost:3000/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
