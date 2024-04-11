@@ -44,9 +44,8 @@
 
         label {
             display: block;
-            margin-bottom: -30px;
+            margin-bottom: -20spx;
             text-align: left;
-            padding: 10px
         }
 
         input[type="text"],
@@ -54,7 +53,7 @@
         select,
         textarea {
             width: 40%;
-            padding: 5px;
+            padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -62,6 +61,14 @@
             margin: 0 auto;
             display: block;
         }
+
+        .second-row {
+            text-align: center;
+        }
+        .third-row {
+            text-align: center; 
+        }
+
         .border-hover {
             padding: 10px 20px;
             text-decoration: none;
@@ -73,27 +80,20 @@
             cursor: pointer;
             transition: background-color 0.3s;
             margin-right: 10px;
-        }  
-
-        .second-row {
-            text-align: center;
         }
 
-        .third-row {
-              text-align: center;
+        .border-hover:hover {
+        background-color: #555;
+        /* Darker grey on hover */
         }
-
-        
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Payment</h1>
-        <hr>
 
         <div class="container1">
             <h1>Payment</h1>
+            <hr>
             <form id="loginForm1">
 
                 <div class="first-row">
@@ -121,15 +121,85 @@
                     <input type="number" id="amount" name="amount" onchange="totalBalance()">
                 </div>
                 <br>
-
                 <div class="third-row">
                     <button type="submit" class="border-hover">Save</button>
                     <a href="./product.html"><button type="button" class="border-hover">Back</button></a>
                 </div>
-
             </form>
         </div>
     </div>
 </body>
+<script src="./payment.js"></script>
+
+<script>
+
+    function previousbalance(){
+        const name = document.getElementById("bata").value
+        fetch('http://localhost:3000/fetchpv/' + name)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Populate dropdown with API data
+            console.log(data)
+            document.getElementById('previousBalance').value = parseInt(data[0]['current_balance'] || 0);      
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+      
+      }
+
+</script>
+
+<script>
+        
+    document.addEventListener('DOMContentLoaded', function () {
+        // Fetch data from API and populate Select2 dropdowns
+        fetchAndPopulateDropdown('http://localhost:3000/list/Supplier', 'product');
+        fetchAndPopulateDropdown('http://localhost:3000/list/Bank Account', 'bata');
+    });
+
+    function fetchAndPopulateDropdown(apiUrl, dropdownId) {
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Populate Select2 dropdown with API data
+                populateDropdownWithSelect2(data, dropdownId);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function populateDropdownWithSelect2(data, dropdownId) {
+        var dropdown = $('#' + dropdownId);
+        // Clear existing options
+        dropdown.empty();
+
+        // Add placeholder option
+        dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+
+        // Populate dropdown with API data
+        data.forEach(function (item) {
+            dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
+        });
+
+        // Initialize Select2
+        dropdown.select2({
+            placeholder: "Select Account",
+            allowClear: true
+        });
+    }
+
+</script>
 
 </html>
