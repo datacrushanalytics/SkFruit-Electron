@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://skfruit-backend.onrender.com/list/Customer')
+//     fetch('http://43.205.230.120/list/Customer')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -17,7 +17,7 @@
 //         });
 
 
-//     fetch('http://skfruit-backend.onrender.com/routeData')
+//     fetch('http://43.205.230.120/routeData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -104,7 +104,7 @@ function formatDate(dateString) {
 //     };
 //     console.log(data);
 
-//     fetch('http://skfruit-backend.onrender.com/khatawani', {
+//     fetch('http://43.205.230.120/khatawani', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -145,7 +145,7 @@ function fetchDataAndProcess() {
         route : getElementValueWithDefault('route', '*') 
     };
 
-    return fetch('http://skfruit-backend.onrender.com/khatawani', {
+    return fetch('http://43.205.230.120/khatawani', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
