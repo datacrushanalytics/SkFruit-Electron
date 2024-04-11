@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bill</title>
+    <title>bill</title>
     <style>
         /* CSS styles can be added here */
         body {
@@ -66,11 +66,24 @@
             text-align: center;
             margin-top: 10px;
         }
-        @media print {
-            .details {
-                display: none; /* Hide the print button when printing */
-            }
-        }
+
+        /* CSS styles for the print button */
+.header-details button {
+    padding: 10px 20px;
+    background-color: #808080;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+@media print {
+    .details, .header-details, .close{
+        display: none; /* Hide the print button and header details when printing */
+    }
+}
     </style>
 </head>
 <body>
@@ -78,7 +91,7 @@
         <div class="logo">
             <img src="../../assets/img/logo.png" alt="Company Logo">
         </div>
-        <div class="header-details">
+        <div >
             <h1>सावता फ्रुट सप्लायर्स</h1>
             <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
             <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
@@ -215,7 +228,28 @@
     
     <!-- Print button -->
     <div class="header-details">
-        <button onclick="window.print()">Print</button>
+        <button onclick="window.print()" >Print</button>
     </div>
 </body>
+
+<script>
+    // JavaScript to replace the bill ID placeholder with the actual bill ID
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("HELLO")
+        // Replace '[Bill ID]' with the actual bill ID
+        var billId = getBillId(); // Call a function to get the bill ID
+        
+        var billIdElement = document.getElementById('billIdPlaceholder');
+        if (billIdElement) {
+            billIdElement.textContent = billId;
+        }
+    });
+
+    // Function to get the bill ID (you can replace this with your own logic)
+    function getBillId() {
+        // Retrieve the bill ID from a query parameter in the URL
+        var urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('bill_id');
+    }
+</script>
 </html>

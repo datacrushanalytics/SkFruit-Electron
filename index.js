@@ -64,8 +64,8 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      // Set Content Security Policy (CSP)
-      contentSecurityPolicy: "default-src 'self' http://localhost:*",
+      // Allow all operations on the specified IP address
+      contentSecurityPolicy: "default-src 'self' http://43.205.230.120:*",
     },
   });
 

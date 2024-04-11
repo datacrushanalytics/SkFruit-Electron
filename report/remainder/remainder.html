@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -109,10 +110,49 @@
 </div>
 <br>
 
-<button class="button" onclick="button()">Print</button>
+<button type='button' class="button" onclick="exportToExcel()" id="button2">Export</button>
 
 </div>
 <script src="./remainder.js"></script>
+<script>
+
+    async function exportToExcel() {
+        try {
+            const data = await remainder();
+    
+            const customHeaders = ['name','address','mobile_no', 'Days','current_balance' ];
+    
+            // Create a new worksheet with custom headers
+            const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
+    
+            // Append the data to the worksheet
+            data.reports.forEach((report) => {
+                const rowData = [
+                    report.name,
+                    report.address,
+                    report.mobile_no,
+                    report.Days,
+                    report.current_balance
+                ];
+                XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
+            });
+    
+            // Create a new workbook
+            const workbook = XLSX.utils.book_new();
+    
+            // Add the worksheet with data
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
+    
+    
+            /* generate XLSX file and prompt to download */
+            XLSX.writeFile(workbook, 'Remainder.xlsx');
+        } catch (error) {
+            console.error('Error exporting to Excel:', error);
+        }
+    }
+
+
+</script>
 </body>
 </html>
     

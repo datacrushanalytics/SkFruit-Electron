@@ -1,80 +1,80 @@
-// Fetch data from API
-document.addEventListener('DOMContentLoaded', function () {
+// // Fetch data from API
+// document.addEventListener('DOMContentLoaded', function () {
 
-    fetch('http://43.205.230.120/list/Customer')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Populate dropdown with API data
-            populateDropdown(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-
-    fetch('http://43.205.230.120/routeData')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Populate dropdown with API data
-            populateDropdown4(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-});
+//     fetch('http://43.205.230.120/list/Customer')
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error('Network response was not ok');
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             // Populate dropdown with API data
+//             populateDropdown(data);
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
 
 
-function populateDropdown(data) {
-    var userNameDropdown = document.getElementById('customer');
-    userNameDropdown.innerHTML = ''; // Clear existing options
+//     fetch('http://43.205.230.120/routeData')
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error('Network response was not ok');
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             // Populate dropdown with API data
+//             populateDropdown4(data);
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// });
 
-    // Create and append new options based on API data
-    data.forEach(function (item) {
-        var option = document.createElement('option');
-        option.value = item.name; // Set the value
-        option.textContent = item.name; // Set the display text
-        userNameDropdown.appendChild(option);
-    });
 
-    // Add a placeholder option
-    var placeholderOption = document.createElement('option');
-    placeholderOption.value = ""; // Set an empty value
-    placeholderOption.textContent = "Select Customer type"; // Set placeholder text
-    placeholderOption.disabled = true; // Disable the option
-    placeholderOption.selected = true; // Select the option by default
-    userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-}
+// function populateDropdown(data) {
+//     var userNameDropdown = document.getElementById('customer');
+//     userNameDropdown.innerHTML = ''; // Clear existing options
 
-function populateDropdown4(data) {
-    var userNameDropdown = document.getElementById('route');
-    userNameDropdown.innerHTML = ''; // Clear existing options
+//     // Create and append new options based on API data
+//     data.forEach(function (item) {
+//         var option = document.createElement('option');
+//         option.value = item.name; // Set the value
+//         option.textContent = item.name; // Set the display text
+//         userNameDropdown.appendChild(option);
+//     });
 
-    // Create and append new options based on API data
-    data.forEach(function (item) {
-        var option = document.createElement('option');
-        option.value = item.route_name; // Set the value
-        option.textContent = item.route_name; // Set the display text
-        userNameDropdown.appendChild(option);
-    });
+//     // Add a placeholder option
+//     var placeholderOption = document.createElement('option');
+//     placeholderOption.value = ""; // Set an empty value
+//     placeholderOption.textContent = "Select Customer type"; // Set placeholder text
+//     placeholderOption.disabled = true; // Disable the option
+//     placeholderOption.selected = true; // Select the option by default
+//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
+// }
 
-    // Add a placeholder option
-    var placeholderOption = document.createElement('option');
-    placeholderOption.value = ""; // Set an empty value
-    placeholderOption.textContent = "Select Route type"; // Set placeholder text
-    placeholderOption.disabled = true; // Disable the option
-    placeholderOption.selected = true; // Select the option by default
-    userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-}
+// function populateDropdown4(data) {
+//     var userNameDropdown = document.getElementById('route');
+//     userNameDropdown.innerHTML = ''; // Clear existing options
+
+//     // Create and append new options based on API data
+//     data.forEach(function (item) {
+//         var option = document.createElement('option');
+//         option.value = item.route_name; // Set the value
+//         option.textContent = item.route_name; // Set the display text
+//         userNameDropdown.appendChild(option);
+//     });
+
+//     // Add a placeholder option
+//     var placeholderOption = document.createElement('option');
+//     placeholderOption.value = ""; // Set an empty value
+//     placeholderOption.textContent = "Select Route type"; // Set placeholder text
+//     placeholderOption.disabled = true; // Disable the option
+//     placeholderOption.selected = true; // Select the option by default
+//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
+// }
 
 
 
@@ -94,8 +94,48 @@ function formatDate(dateString) {
 
 
 
+// document.getElementById('loginForm1').addEventListener('submit', function(event) {
+//     event.preventDefault(); // Prevent form submission
+//     var data = {
+//         from_date : formatDate(document.getElementById("fromdate").value),
+//         to_date : formatDate(document.getElementById("todate").value),
+//         customer_name : getElementValueWithDefault('customer', '*') , 
+//         route : getElementValueWithDefault('route', '*') 
+//     };
+//     console.log(data);
+
+//     fetch('http://43.205.230.120/ledgerReport', {
+//         method: 'POST',
+//         body: JSON.stringify(data),
+//         headers: {
+//             'Content-Type': 'application/json'
+//         }
+//     })
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//         }
+//         return response.json();
+//     })
+//     .then(result => {
+//         console.log(result)
+//         populateTable4(result)
+//         // Optionally, you can redirect or show a success message here
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//         // Optionally, you can display an error message here
+//     });
+// });
+
+
 document.getElementById('loginForm1').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
+    fetchDataAndProcess();
+});
+
+
+function fetchDataAndProcess() {
     var data = {
         from_date : formatDate(document.getElementById("fromdate").value),
         to_date : formatDate(document.getElementById("todate").value),
@@ -104,7 +144,7 @@ document.getElementById('loginForm1').addEventListener('submit', function(event)
     };
     console.log(data);
 
-    fetch('http://43.205.230.120/ledgerReport', {
+    return fetch('http://43.205.230.120/ledgerReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -120,13 +160,14 @@ document.getElementById('loginForm1').addEventListener('submit', function(event)
     .then(result => {
         console.log(result)
         populateTable4(result)
+        return result;
         // Optionally, you can redirect or show a success message here
     })
     .catch(error => {
         console.error('Error:', error);
         // Optionally, you can display an error message here
     });
-});
+}
 
 
 function populateTable4(data) {
@@ -165,3 +206,53 @@ function populateTable4(data) {
      totalCell.textContent = 'Grand Total: ' + data.Grand['"Grand Balance"'] + ' ("Grand Balance"), ' + data.Grand['Grand outCarate'] + ' (Grand outCarate)' + data.Grand['Total Balance'] + ' (Total Balance), ' + data.Grand['Total Cash'] + ' (Total Cash)' + data.Grand['Total Online'] + ' (Total Online), ' + data.Grand['Grand Discount'] + ' (Grand Discount)' + data.Grand['Grand inCarate'] + ' (Grand inCarate), ' + data.Grand['Grand Remaining Amount'] + ' (Grand Remaining Amount)';                                                                                                                                                                                                                                                     
 }
 
+
+
+async function exportToExcel() {
+    try {
+        const data = await fetchDataAndProcess();
+
+        const customHeaders = ['date','route', 'customer_name','summary', 'balance','out_carate','total_balance','cash','online','discount','in_carate','remaining'];
+
+        // Create a new worksheet with custom headers
+        const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
+
+        // Append the data to the worksheet
+        data.reports.forEach((report) => {
+            const rowData = [
+                new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
+                report.route,
+                report.customer_name,
+                report.balance,
+                report.total_balance,
+                report.cash,
+                report.online,
+                report.discount,
+                report.in_carate,
+                report.remaining
+            ];
+            XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
+        });
+
+        // Add Grand Totals to a new sheet
+        const grandTotals = [                                                                                                                                                       
+            ["Grand Balance", "Grand outCarate", "Total Balance", "Total Cash", "Total Online", "Grand Discount", "Grand inCarate", "Grand Remaining Amount"],
+            [data.Grand["Grand Balance"], data.Grand['Grand outCarate'], data.Grand['Total Balance'], data.Grand['Total Cash'],  data.Grand['Total Online'], data.Grand['Grand Discount'], data.Grand['Grand inCarate'], data.Grand['Grand Remaining Amount'] ]
+        ];
+        const grandTotalsWorksheet = XLSX.utils.aoa_to_sheet(grandTotals);
+
+        // Create a new workbook
+        const workbook = XLSX.utils.book_new();
+
+        // Add the worksheet with data
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
+
+        // Add the worksheet with grand totals
+        XLSX.utils.book_append_sheet(workbook, grandTotalsWorksheet, 'Grand Totals');
+
+        /* generate XLSX file and prompt to download */
+        XLSX.writeFile(workbook, 'Ledger_Report.xlsx');
+    } catch (error) {
+        console.error('Error exporting to Excel:', error);
+    }
+}

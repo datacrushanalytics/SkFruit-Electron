@@ -71,7 +71,7 @@ function editUser(user) {
     // window.location.href = '../user/user_update.html?userData=' + '%7B"id"%3A31%2C"name"%3A"Deepali"%2C"address"%3A"nsk"%2C"mobile_no"%3A1234567890%2C"username"%3A"dee"%2C"password"%3A"asd"%2C"status"%3A"1"%2C"usertype"%3A"Admin"%7D';
     localStorage.setItem('userData', JSON.stringify(user));
      // Redirect to user_update.html
-     window.location.href = '../user/update.html';
+     window.location.href = '../user/update_user.html';
 }
 
 

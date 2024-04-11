@@ -1,44 +1,44 @@
-// Fetch data from API
-document.addEventListener('DOMContentLoaded', function () {
+// // Fetch data from API
+// document.addEventListener('DOMContentLoaded', function () {
 
-    fetch('http://43.205.230.120/list/Customer')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Populate dropdown with API data
-            populateDropdown(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+//     fetch('http://43.205.230.120/list/Customer')
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error('Network response was not ok');
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             // Populate dropdown with API data
+//             populateDropdown(data);
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
 
-});
+// });
 
 
-function populateDropdown(data) {
-    var userNameDropdown = document.getElementById('customer');
-    userNameDropdown.innerHTML = ''; // Clear existing options
+// function populateDropdown(data) {
+//     var userNameDropdown = document.getElementById('customer');
+//     userNameDropdown.innerHTML = ''; // Clear existing options
 
-    // Create and append new options based on API data
-    data.forEach(function (item) {
-        var option = document.createElement('option');
-        option.value = item.name; // Set the value
-        option.textContent = item.name; // Set the display text
-        userNameDropdown.appendChild(option);
-    });
+//     // Create and append new options based on API data
+//     data.forEach(function (item) {
+//         var option = document.createElement('option');
+//         option.value = item.name; // Set the value
+//         option.textContent = item.name; // Set the display text
+//         userNameDropdown.appendChild(option);
+//     });
 
-    // Add a placeholder option
-    var placeholderOption = document.createElement('option');
-    placeholderOption.value = ""; // Set an empty value
-    placeholderOption.textContent = "Select Customer type"; // Set placeholder text
-    placeholderOption.disabled = true; // Disable the option
-    placeholderOption.selected = true; // Select the option by default
-    userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-}
+//     // Add a placeholder option
+//     var placeholderOption = document.createElement('option');
+//     placeholderOption.value = ""; // Set an empty value
+//     placeholderOption.textContent = "Select Customer type"; // Set placeholder text
+//     placeholderOption.disabled = true; // Disable the option
+//     placeholderOption.selected = true; // Select the option by default
+//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
+// }
 
 
 
@@ -58,17 +58,21 @@ function formatDate(dateString) {
 }
 
 
-
 document.getElementById('loginForm1').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
-    var data = {
-        from_date : formatDate(document.getElementById("fromdate").value),
-        to_date : formatDate(document.getElementById("todate").value),
-        customer_name : getElementValueWithDefault('customer', '*') , 
-    };
-    console.log(data);
+    fetchDataAndProcess();
+});
 
-    fetch('http://43.205.230.120/carateReport', {
+
+
+function fetchDataAndProcess() {
+    var data = {
+        from_date: formatDate(document.getElementById("fromdate").value),
+        to_date: formatDate(document.getElementById("todate").value),
+        customer_name: getElementValueWithDefault('customer', '*'),
+    };
+
+    return fetch('http://43.205.230.120/carateReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -82,15 +86,67 @@ document.getElementById('loginForm1').addEventListener('submit', function(event)
         return response.json();
     })
     .then(result => {
-        console.log(result)
-        populateTable4(result)
-        // Optionally, you can redirect or show a success message here
+        console.log(result);
+        populateTable4(result);
+        return result; // Return the result to be used in the caller
     })
     .catch(error => {
         console.error('Error:', error);
         // Optionally, you can display an error message here
+        throw error; // Rethrow the error for the caller to handle
     });
-});
+}
+
+
+
+async function exportToExcel() {
+    try {
+        const data = await fetchDataAndProcess();
+
+        const customHeaders = ['Date', 'Customer Name', 'Summary', 'In Carat', 'In Carat Total', 'Out Carat', 'Out Carat Total'];
+
+        // Create a new worksheet with custom headers
+        const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
+
+        // Append the data to the worksheet
+        data.reports.forEach((report) => {
+            const rowData = [
+                report.carate_date,
+                report.customer_name,
+                report.summary,
+                report.inCarate,
+                report.in_carate_total,
+                report.OutCarate,
+                report.out_carate_total
+            ];
+            XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
+        });
+
+        // Add Grand Totals to a new sheet
+        const grandTotals = [
+            ["Grand in_carate_total", "Grand out_carate_total"],
+            [data.Grand["Grand in_carate_total"], data.Grand["Grand out_carate_total"]]
+        ];
+        const grandTotalsWorksheet = XLSX.utils.aoa_to_sheet(grandTotals);
+
+        // Create a new workbook
+        const workbook = XLSX.utils.book_new();
+
+        // Add the worksheet with data
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
+
+        // Add the worksheet with grand totals
+        XLSX.utils.book_append_sheet(workbook, grandTotalsWorksheet, 'Grand Totals');
+
+        /* generate XLSX file and prompt to download */
+        XLSX.writeFile(workbook, 'Carate_Report.xlsx');
+    } catch (error) {
+        console.error('Error exporting to Excel:', error);
+    }
+}
+
+
+
 
 
 function populateTable4(data) {
@@ -128,4 +184,6 @@ function populateTable4(data) {
      totalCell.colSpan = columnsToDisplay.length;
      totalCell.textContent = 'Grand Total: ' + data.Grand['Grand in_carate_total'] + ' (Grand in_carate_total), ' + data.Grand['Grand out_carate_total'] + ' (Grand out_carate_total)';
 }
+
+
 
