@@ -3,7 +3,7 @@ function product() {
     console.log("product function executed");
 
     fetch('http://localhost:3000/vehicleData')
-    fetch('http://skfruit-backend.onrender.com/vehicleData')
+    fetch('http://localhost:3000/vehicleData')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
