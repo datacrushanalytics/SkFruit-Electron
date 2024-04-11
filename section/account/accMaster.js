@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function() {
 
-//     fetch('https://localhost:3000/accountgroupData')
+//     fetch('https://skfruit-backend.onrender.com/accountgroupData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -17,7 +17,7 @@
 //             console.error('Error:', error);
 //         });
 
-//     fetch('https://localhost:3000/routeData')
+//     fetch('https://skfruit-backend.onrender.com/routeData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -105,7 +105,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     });
     console.log(data);
 
-    fetch('https://localhost:3000/accountData/insertaccount', {
+    fetch('https://skfruit-backend.onrender.com/accountData/insertaccount', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

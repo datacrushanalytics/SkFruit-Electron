@@ -10,32 +10,38 @@
     <title>Product Master</title>
     <style>
         body {
-    font-family: Arial, sans-serif;
-    background-color: rgba(242, 242, 242, 0.8);
-    /* Transparent background */
-    margin: 0;
-    padding: 20px;
-    overflow-x: hidden;
-    /* Hide horizontal scrollbar */
-}
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
 
-.container {
-    text-align: center;
-    margin-bottom: 20px;
-}
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
 
 h1 {
-    margin-top: 20px;
-}
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
 
-.container1 {
-    margin-top: 20px;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-   
-}
+.container1 select,
+.container1 input[type="text"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        }
 
 hr {
     border: 0;
@@ -45,7 +51,7 @@ hr {
 }
 
 form {
-    text-align: center;
+    text-align: left;
 }
 
 label {
@@ -53,16 +59,6 @@ label {
     margin-bottom: 5px;
 }
 
-input[type="text"],
-input[type="password"],
-select {
-    width: 20%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: center    
-}
 
 input[type="checkbox"] {
     margin-right: 5px;
@@ -79,6 +75,7 @@ input[type="checkbox"] {
 .second-row {
     margin-top: 10px;
     margin-bottom: 20px;
+    text-align: left;
 }
 
 .third-row {
@@ -146,7 +143,7 @@ input[type="checkbox"] {
 
                 <div class="third-row">
                     <button type="submit" class="border-hover">Save</button>
-                    <a href="./product.html"><button type="button" class="border-hover">Back</button></a>
+                    <!-- <a href="./product.html"><button type="button" class="border-hover">Back</button></a> -->
                 </div>
             </form>
         </div>
@@ -158,7 +155,7 @@ input[type="checkbox"] {
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('https://localhost:3000/categoryData', 'category','name');
+        fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/categoryData', 'category','name');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {

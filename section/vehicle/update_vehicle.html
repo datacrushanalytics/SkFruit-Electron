@@ -111,7 +111,7 @@
                     is_active: 1
                 };
         
-                const response = await fetch('https://localhost:3000/vehicleData/updateVehicle/' + userData.id, {
+                const response = await fetch('https://skfruit-backend.onrender.com/vehicleData/updateVehicle/' + userData.id, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {

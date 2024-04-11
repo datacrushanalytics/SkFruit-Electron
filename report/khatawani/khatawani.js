@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('https://localhost:3000/list/Customer')
+//     fetch('https://skfruit-backend.onrender.com/list/Customer')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -17,7 +17,7 @@
 //         });
 
 
-//     fetch('https://localhost:3000/routeData')
+//     fetch('https://skfruit-backend.onrender.com/routeData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -104,7 +104,7 @@ function formatDate(dateString) {
 //     };
 //     console.log(data);
 
-//     fetch('https://localhost:3000/khatawani', {
+//     fetch('https://skfruit-backend.onrender.com/khatawani', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -145,7 +145,7 @@ function fetchDataAndProcess() {
         route : getElementValueWithDefault('route', '*') 
     };
 
-    return fetch('https://localhost:3000/khatawani', {
+    return fetch('https://skfruit-backend.onrender.com/khatawani', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

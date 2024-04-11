@@ -2,7 +2,7 @@
 function route() {
     console.log("user function executed");
 
-    fetch('https://localhost:3000/routeData')
+    fetch('https://skfruit-backend.onrender.com/routeData')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -81,7 +81,7 @@ function editRoute(user) {
 
 function deleteRoute(userId) {
     // Perform delete operation based on userId
-    fetch('https://localhost:3000/routeData/deleterouteId/' + userId, {
+    fetch('https://skfruit-backend.onrender.com/routeData/deleterouteId/' + userId, {
         method: 'DELETE'
     })
     .then(response => {
