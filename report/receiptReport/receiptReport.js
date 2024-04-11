@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://localhost:3000/list/Customer')
+//     fetch('https://localhost:3000/list/Customer')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -67,7 +67,7 @@ function formatDate(dateString) {
 //     };
 //     console.log(data);
 
-//     fetch('http://localhost:3000/receiptReport', {
+//     fetch('https://localhost:3000/receiptReport', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -105,7 +105,7 @@ function fetchDataAndProcess() {
     };
     console.log(data);
 
-    return fetch('http://localhost:3000/receiptReport', {
+    return fetch('https://localhost:3000/receiptReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

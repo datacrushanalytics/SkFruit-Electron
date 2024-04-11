@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://localhost:3000/list/Supplier')
+//     fetch('https://localhost:3000/list/Supplier')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -57,7 +57,7 @@ function getElementValueWithDefault(id, defaultValue) {
 //     };
 //     console.log(data);
 
-//     fetch('http://localhost:3000/supplierOutstanding', {
+//     fetch('https://localhost:3000/supplierOutstanding', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -96,7 +96,7 @@ function fetchDataAndProcess() {
     };
     console.log(data);
 
-    return fetch('http://localhost:3000/supplierOutstanding', {
+    return fetch('https://localhost:3000/supplierOutstanding', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

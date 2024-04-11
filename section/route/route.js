@@ -2,7 +2,7 @@
 function route() {
     console.log("user function executed");
 
-    fetch('http://localhost:3000/routeData')
+    fetch('https://localhost:3000/routeData')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -37,7 +37,6 @@ function populateTable(data) {
          var editButton = document.createElement('button');
          editButton.className = 'button edit-button';
          var editLink = document.createElement('a');
-         editLink.href = '../route/update_route.html'; // Edit link destination
          editLink.textContent = 'Edit';
          editButton.appendChild(editLink);
 
@@ -78,7 +77,7 @@ function editRoute(user) {
 
 function deleteRoute(userId) {
     // Perform delete operation based on userId
-    fetch('http://localhost:3000/routeData/deleterouteId/' + userId, {
+    fetch('https://localhost:3000/routeData/deleterouteId/' + userId, {
         method: 'DELETE'
     })
     .then(response => {

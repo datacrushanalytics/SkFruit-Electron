@@ -333,12 +333,12 @@
         
   document.addEventListener('DOMContentLoaded', function () {
       // Fetch data from API and populate Select2 dropdowns
-      fetchAndPopulateDropdown('http://localhost:3000/list/Customer', 'grahk','name');
-      fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData', 'product','product_name');
-      fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData', 'bta','bata');
-      fetchAndPopulateDropdown('http://localhost:3000/routeData', 'Route','route_name');
-      fetchAndPopulateDropdown('http://localhost:3000/list/Bank Account', 'onlineAcc','name');
-      fetchAndPopulateDropdown('http://localhost:3000/mobile', 'number','mobile_no');
+      fetchAndPopulateDropdown('https://localhost:3000/list/Customer', 'grahk','name');
+      fetchAndPopulateDropdown('https://localhost:3000/purchaseproductData', 'product','product_name');
+      fetchAndPopulateDropdown('https://localhost:3000/purchaseproductData', 'bta','bata');
+      fetchAndPopulateDropdown('https://localhost:3000/routeData', 'Route','route_name');
+      fetchAndPopulateDropdown('https://localhost:3000/list/Bank Account', 'onlineAcc','name');
+      fetchAndPopulateDropdown('https://localhost:3000/mobile', 'number','mobile_no');
   });
 
   function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
@@ -398,7 +398,7 @@
 function previousbalance(){
   const name = document.getElementById("grahk").value
 
-  fetch('http://localhost:3000/fetchName/name/' + name)
+  fetch('https://localhost:3000/fetchName/name/' + name)
         .then(response => response.json())
         .then(data => {
             console.log(data[0].mobile_no)
@@ -416,7 +416,7 @@ function previousbalance(){
 
 
 
-  fetch('http://localhost:3000/fetchpv/' + name)
+  fetch('https://localhost:3000/fetchpv/' + name)
   .then(response => {
       if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -480,7 +480,7 @@ function totalbill(){
 
     console.log(formData)
 
-    fetch('http://localhost:3000/saleproductData/insertsaleproduct', {
+    fetch('https://localhost:3000/saleproductData/insertsaleproduct', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -528,7 +528,7 @@ function totalbill(){
       totalBalance()
       var button = event.target;
       var row = button.parentNode.parentNode;
-      fetch('http://localhost:3000/saleproductData/deletesaleproduct/' + userId, {
+      fetch('https://localhost:3000/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
       })
         .then(response => {

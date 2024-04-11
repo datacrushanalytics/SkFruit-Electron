@@ -101,8 +101,10 @@
                     <select id="category" name="category" placeholder="Category">
                         <!-- Add options here -->
                     </select>
+                    <br>
+                    <br>
                 </div>
-
+                
                 <input type="text" id="name" name="name" placeholder="Product Name">
                 <br>
 
@@ -135,7 +137,7 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://localhost:3000/categoryData', 'category','name');
+        fetchAndPopulateDropdown('https://localhost:3000/categoryData', 'category','name');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
