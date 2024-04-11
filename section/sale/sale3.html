@@ -211,7 +211,11 @@
     <div class="first-row">
       <input type="text" id="bill" name="number" placeholder="बिल नं.">
       <input type="text" id="date" name="date" placeholder="दिनांक:">
-      <input type="text" id="number" name="number" placeholder="मोबाइल नं.">
+      <!-- <input type="text" id="number" name="number" placeholder="मोबाइल नं."> -->
+
+      <!-- <label for="message" aria-placeholder="Root"></label> -->
+      <select type="root" id="number" name="number" onchange="getCust()">
+      </select>
     </div>
 
     <div>
@@ -329,11 +333,12 @@
         
   document.addEventListener('DOMContentLoaded', function () {
       // Fetch data from API and populate Select2 dropdowns
-      fetchAndPopulateDropdown('http://43.205.230.120/list/Customer', 'grahk','name');
-      fetchAndPopulateDropdown('http://43.205.230.120/purchaseproductData', 'product','product_name');
-      fetchAndPopulateDropdown('http://43.205.230.120/purchaseproductData', 'bta','bata');
-      fetchAndPopulateDropdown('http://43.205.230.120/routeData', 'Route','route_name');
-      fetchAndPopulateDropdown('http://43.205.230.120/list/Bank Account', 'onlineAcc','name');
+      fetchAndPopulateDropdown('http://localhost:3000/list/Customer', 'grahk','name');
+      fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData', 'product','product_name');
+      fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData', 'bta','bata');
+      fetchAndPopulateDropdown('http://localhost:3000/routeData', 'Route','route_name');
+      fetchAndPopulateDropdown('http://localhost:3000/list/Bank Account', 'onlineAcc','name');
+      fetchAndPopulateDropdown('http://localhost:3000/mobile', 'number','mobile_no');
   });
 
   function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
@@ -392,7 +397,26 @@
 
 function previousbalance(){
   const name = document.getElementById("grahk").value
-  fetch('http://43.205.230.120/fetchpv/' + name)
+
+  fetch('http://localhost:3000/fetchName/name/' + name)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data[0].mobile_no)
+            // Get the Select2 dropdown element
+            var $productDropdown = $('#number');
+            
+            // Set the value of the Select2 dropdown if it's different
+            if ($productDropdown.val() !== data[0].mobile_no) {
+              $productDropdown.val(data[0].mobile_no).trigger('change');
+          }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+
+
+  fetch('http://localhost:3000/fetchpv/' + name)
   .then(response => {
       if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -456,7 +480,7 @@ function totalbill(){
 
     console.log(formData)
 
-    fetch('http://43.205.230.120/saleproductData/insertsaleproduct', {
+    fetch('http://localhost:3000/saleproductData/insertsaleproduct', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -504,7 +528,7 @@ function totalbill(){
       totalBalance()
       var button = event.target;
       var row = button.parentNode.parentNode;
-      fetch('http://43.205.230.120/saleproductData/deletesaleproduct/' + userId, {
+      fetch('http://localhost:3000/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
       })
         .then(response => {

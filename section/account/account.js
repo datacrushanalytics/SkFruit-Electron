@@ -1,7 +1,7 @@
 function account() {
   console.log("user function executed");
 
-  fetch('http://43.205.230.120/accountData')
+  fetch('http://localhost:3000/accountData')
       .then(response => {
           if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -76,7 +76,7 @@ function editAccount(user) {
 
 function deleteaccount(userId) {
   // Perform delete operation based on userId
-  fetch('http://43.205.230.120/accountData/deleteaccountId/' + userId, {
+  fetch('http://localhost:3000/accountData/deleteaccountId/' + userId, {
       method: 'DELETE'
   })
   .then(response => {

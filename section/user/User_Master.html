@@ -154,7 +154,7 @@ input[type="radio"] {
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://43.205.230.120/list/Worker', 'name','name');
+        fetchAndPopulateDropdown('http://localhost:3000/list/Worker', 'name','name');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
