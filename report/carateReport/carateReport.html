@@ -10,6 +10,24 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <title>User Form in Electron</title>
     <style>
+
+button[type="submit"] {
+    padding: 10px 20px;
+    font-size: 16px;
+    width: 200px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 5px;
+    outline: none;
+    background-color:grey; /* Grey color */
+    color: #fff; /* Text color */
+}
+
+button[type="submit"]:hover {
+    background-color:darkgray; /* Dark grey color on hover */
+}
+
         /* Add border to the second form */
         .form1 {
             border: 1px solid black;
@@ -179,7 +197,7 @@
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
                     <button type="submit" id="button1">Submit</button>
-                    <button type='button' onclick="exportToExcel()" id="button2">Export</button>
+                   
                 <!-- </div> -->
             </form>
             <br>

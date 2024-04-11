@@ -10,142 +10,151 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <title>User Form in Electron</title>
     <style>
-        /* Add border to the second form */
-        .form1 {
-            border: 1px solid black;
-            padding: 10px;
-            margin-top: 20px;
-        }
+       
+      
+    /* Add border to the second form */
+    .form1 {
+        border: 1px solid black;
+        padding: 10px;
+        margin-top: 20px;
+    }
 
-        #route {
-            border-radius: 8px;
-            height: 25%;
-            width: 150px;
-            border: 1px solid transparent;
-            padding: 10px;
-            box-shadow: 5px 5px 5px grey;
-            margin: 20px;
-        }
+    #route {
+        border-radius: 8px;
+        height: 25%;
+        width: 150px;
+        border: 1px solid transparent;
+        padding: 10px;
+        box-shadow: 5px 5px 5px grey;
+        margin: 20px;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: rgba(242, 242, 242, 0.8);
-            /* Transparent background */
-            margin: 0;
-            padding: 20px;
-            overflow-x: hidden;
-            /* Hide horizontal scrollbar */
-        }
+    body {
+        font-family: Arial, sans-serif;
+        background-color: rgba(242, 242, 242, 0.8);
+        /* Transparent background */
+        margin: 0;
+        padding: 20px;
+        overflow-x: hidden;
+        /* Hide horizontal scrollbar */
+    }
 
-        .container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+    .container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
-        .first-row {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        
-        .first-row label {
-            margin-right: 10px;
-            margin-top: 9px;
-        }
-        
-        .first-row input,
-        .first-row select {
-            margin-right: 10px;
-        }
-        #todate {
-            border-radius: 8px;
-            height: 30px;
-            width: 200px;
-            box-shadow: 5px 10px 8px grey;
-            border-color: rgb(24, 24, 24);
-            text-indent: 10%;
-            margin-left: 3px;
-        }
+    .first-row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
 
-        #fromdate {
-            border-radius: 8px;
-            height: 30px;
-            width: 200px;
-            box-shadow: 5px 10px 8px grey;
-            border-color: rgb(24, 24, 24);
-            text-indent: 10%;
-            margin-right: 8%;
-            margin-left: 10px;
-        }
+    .first-row label {
+        margin-right: 10px;
+        margin-top: 9px;
+    }
 
-        .drop {
-            border-radius: 8px;
-            height: 35px;
-            width: 500px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #fff;
-            color: #333;
-            margin-right: 55px;
-        }
+    .first-row input,
+    .first-row select {
+        margin-right: 10px;
+    }
 
-        #route1 {
-            width: 560px;
-        }
+    #todate {
+        border-radius: 8px;
+        height: 30px;
+        width: 200px;
+        box-shadow: 5px 10px 8px grey;
+        border-color: rgb(24, 24, 24);
+        text-indent: 10%;
+        margin-left: 3px;
+    }
 
-        .border-hover {
-            border: 1px solid transparent;
-            padding: 10px;
-            box-shadow: 5px 5px 5px grey;
-        }
+    #fromdate {
+        border-radius: 8px;
+        height: 30px;
+        width: 200px;
+        box-shadow: 5px 10px 8px grey;
+        border-color: rgb(24, 24, 24);
+        text-indent: 10%;
+        margin-right: 8%;
+        margin-left: 10px;
+    }
 
-        .border-hover:hover {
-            border-color: blue;
-        }
+    .drop {
+        border-radius: 8px;
+        height: 35px;
+        width: 500px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+        color: #333;
+        margin-right: 55px;
+    }
 
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            width: 200px;
-            border: none;
-            cursor: pointer;
-            margin: 10px;
-            border-radius: 5px;
-            outline: none;
-            margin: 10px;
-        }
+    #route1 {
+        width: 560px;
+    }
 
-        #container1 {
-            display: flex;
-        }
+    .border-hover {
+        border: 1px solid transparent;
+        padding: 10px;
+        /* Removed box-shadow */
+        background-color: grey; /* Background color for the button */
+        color: white; /* Text color for the button */
+    }
 
-        .table-container {
-            max-width: 100%;
-            overflow-x: auto; /* Enable horizontal scrolling */
-            margin: 0 auto;
-            max-height: calc(100vh - 200px); /* Adjust the height as needed */
-            overflow-y: auto; /* Enable vertical scrolling */
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: rgba(255, 255, 255, 0.8);
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-        }
-        
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 12px;
-        }
-        
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    .border-hover:hover {
+        background-color: darkgrey; /* Hover background color */
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        width: 200px;
+        border: none;
+        cursor: pointer;
+        margin: 10px;
+        border-radius: 5px;
+        outline: none;
+        margin: 10px;
+    }
+
+    #container1 {
+        display: flex;
+    }
+
+    .table-container {
+        max-width: 100%;
+        overflow-x: auto; /* Enable horizontal scrolling */
+        margin: 0 auto;
+        max-height: calc(100vh - 200px); /* Adjust the height as needed */
+        overflow-y: auto; /* Enable vertical scrolling */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+    }
+
+    th,
+    td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 12px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+
+    
 </head>
 
 <body>
