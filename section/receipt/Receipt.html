@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +23,7 @@
           text-align: center;
           margin: 0 auto; /* Align container in the center */
           width: 90%; /* Adjust the width as needed */
-          max-width: 800px; /* Limit the maximum width */
+          max-width: 814px; /* Limit the maximum width */
           margin-bottom: 20px;
           overflow-x: auto; /* Allow horizontal scrolling if needed */
           padding: 20px; /* Add padding inside the container */
@@ -90,16 +89,19 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-bottom: 10px;
       }
 
       input[type="number"],
       input[type="text"],
       select,
       textarea {
-          width: calc(100% - 24px); /* Make inputs full width minus padding */
-          box-sizing: border-box; /* Include padding and border in width */
-          margin-bottom: 10px; /* Add some spacing between inputs */
-          margin-left: 39px;
+          flex: 1;
+          padding: 10px;
+          margin-left: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          box-sizing: border-box;
       }
       
       @media only screen and (max-width: 600px) {
@@ -121,9 +123,6 @@
           input[type="text"],
           select,
           textarea {
-              width: calc(100% - 24px); /* Make inputs full width minus padding */
-              box-sizing: border-box; /* Include padding and border in width */
-              margin-bottom: 10px; /* Add some spacing between inputs */
               font-size: 14px; /* Adjust font size for smaller screens */
           }
 
@@ -132,7 +131,7 @@
           }
            /* Adjust the carate input fields */
            .first-row > input[type="number"] {
-              width: calc(25% * 10px); /* Make inputs one-quarter width minus spacing */
+              width: calc(25% - 10px); /* Make inputs one-quarter width minus spacing */
               margin-right: 5px; /* Add spacing between input fields */
           }
       }
@@ -186,10 +185,7 @@
                     <select id="input1" name="input2"></select>
                 </div>
 
-                <div class="first-row">
-                    <label for="input7" class="input-label"></label>
-                    <input type="text" id="input7" name="input1" onchange="totalbill()">
-                </div>
+               
 
                 <div class="first-row">
                     <label for="input8" class="input-label">सूट रक्कम</label>
@@ -216,7 +212,7 @@
 
                 <div class="button-container">
                     <button class="border-hover1 button">Save</button>
-                    <button class="border-hover2 button">Back</button>
+                    <!-- <button class="border-hover2 button">Back</button> -->
                 </div>
             </form>
         </div>
