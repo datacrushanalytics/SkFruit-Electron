@@ -123,7 +123,7 @@ input[type="radio"] {
         </select>
     
         <!-- <input type="text" id="name" name="name" placeholder="Name">  -->
-        <br>
+        <br><br>
         <label fro="username">Username :</label>
         <input type="text" id="username" name="username" placeholder="Username"> <br>
 
@@ -157,7 +157,7 @@ input[type="radio"] {
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://43.205.230.120/list/Worker', 'name','name');
+        fetchAndPopulateDropdown('http://skfruit-backend.onrender.com/list/Worker', 'name','name');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {

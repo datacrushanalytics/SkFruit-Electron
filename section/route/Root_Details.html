@@ -1,113 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: rgba(242, 242, 242, 0.8);
+            /* Transparent background */
             margin: 0;
-            padding: 0;
+            padding: 20px;
             overflow-x: hidden;
+            /* Hide horizontal scrollbar */
         }
-        
+
         .container {
             text-align: center;
             margin-bottom: 20px;
         }
-        
-        h1 {
-            text-align: center;
+
+        .button1-container {
             margin-bottom: 20px;
         }
-        
-        .button-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        .button {
+
+        .button1 {
             padding: 12px 24px;
             text-decoration: none;
             color: white;
             background-color: #808080;
+            /* Grey color */
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
             margin: 0 10px;
         }
-        
-        .button:hover {
+
+        .button1:hover {
             background-color: #555;
+            /* Darker grey on hover */
         }
-        
-        .button a {
+
+        .button1 a {
             color: white;
             text-decoration: none;
         }
 
-        /* Add this CSS block to make buttons grey and hover dark grey */
-        .button {
-            background-color: grey;
-        }
-
-        .button:hover {
-            background-color: darkgrey;
-        }
-        
         .table-container {
             max-width: 100%;
-            overflow-x: auto; /* Enable horizontal scrolling */
+            overflow-x: auto;
+            /* Enable horizontal scrolling */
             margin: 0 auto;
-            max-height: calc(100vh - 200px); /* Adjust the height as needed */
-            overflow-y: auto; /* Enable vertical scrolling */
+            min-width: 600px;
+            /* Set a minimum width for the table container */
+            max-height: 400px;
+            /* Set maximum height for the table container */
+            overflow-y: auto;
+            /* Enable vertical scrolling */
         }
-        
+
         table {
-            width: 100%;
+            width: auto;
+            min-width: 100%;
+            /* Ensure table expands to fit content */
             border-collapse: collapse;
             background-color: rgba(255, 255, 255, 0.8);
+            /* Transparent background */
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
         }
-        
-        th, td {
+
+        th,
+        td {
             border: 1px solid #dddddd;
             text-align: left;
             padding: 12px;
         }
-        
+
         th {
             background-color: #f2f2f2;
         }
-    </style>
-    <title>Vehicle Details</title>
-</head>
-<body>
 
-<div class="container"> 
-    <h1>VEHICLE DETAILS</h1>
-    <div class="button-container">
-        <button class="button"><a href="../vehicle/Add_Vehicle_Details.html">ADD NEW VEHICLE</a></button><br><br>
+        /* Edit and Delete buttons styles */
+        .edit-btn,
+        .delete-btn {
+            background-color: #ccc; /* default grey background color */
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: background-color 0.3s;
+        }
+
+        .edit-btn:hover,
+        .delete-btn:hover {
+            background-color: #555; /* dark grey background color on hover */
+        }
+
+        /* Adjust margin between buttons */
+        .edit-btn + .delete-btn {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>ROOT DETAILS</h1>
+        <button class="button1"><a href="./Add_Root_Details.html">ADD NEW ROOT</a></button><br><br>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>NO.</th>
+                    <th>ROOT NAME</th>
+                    <th>DETAILS</th>
+                    <th>MOBILE NO</th>
+                    <th></th>
+                </tr>
+                <tbody id="tableBody">
+                    <!-- Data will be inserted here -->
+                </tbody>
+
+            </table>
+        </div>
     </div>
-    <div class="table-container">
-    <table>
-        <thead>
-            <tr>
-                <th>NO.</th>
-                <th>VEHICLE NAME</th>
-                <th>VEHICLE NO</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody id="tableBody">
-            <!-- Data will be inserted here -->
-        </tbody>
-    </table>
-</div>
-</div>
 </body>
-<script src="./Vehicle_Details.js"></script>
+<script src="./route.js"></script>
+
 </html>

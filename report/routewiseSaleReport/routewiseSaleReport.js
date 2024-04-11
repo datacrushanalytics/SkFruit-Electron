@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://43.205.230.120/list/Customer')
+//     fetch('http://skfruit-backend.onrender.com/list/Customer')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -17,7 +17,7 @@
 //         });
 
 
-//     fetch('http://43.205.230.120/routeData')
+//     fetch('http://skfruit-backend.onrender.com/routeData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -104,7 +104,7 @@ function formatDate(dateString) {
 //     };
 //     console.log(data);
 
-//     fetch('http://43.205.230.120/routewiseSaleReport', {
+//     fetch('http://skfruit-backend.onrender.com/routewiseSaleReport', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -145,7 +145,7 @@ function fetchDataAndProcess() {
     };
     console.log(data);
 
-    return fetch('http://43.205.230.120/routewiseSaleReport', {
+    return fetch('http://skfruit-backend.onrender.com/routewiseSaleReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -230,7 +230,7 @@ function openModal(item) {
     console.log("Opening modal for item:", item.bill_no);
     
 
-    fetch('http://43.205.230.120/bill/' + item.bill_no)
+    fetch('http://skfruit-backend.onrender.com/bill/' + item.bill_no)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

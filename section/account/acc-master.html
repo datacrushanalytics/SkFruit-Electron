@@ -108,7 +108,7 @@
                 <select class="drop" id="route_detail" name="route_detail">
                     <!-- Options will be dynamically populated -->
                 </select>
-                <br>
+                <br> <br>
                 <lable for="name">Name :</lable>
                 <input type="text" id="name" name="name" placeholder="Name"><br>
 
@@ -142,8 +142,8 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://43.205.230.120/accountgroupData', 'account_group','name');
-        fetchAndPopulateDropdown('http://43.205.230.120/routeData', 'route_detail','route_name');
+        fetchAndPopulateDropdown('http://skfruit-backend.onrender.com/accountgroupData', 'account_group','name');
+        fetchAndPopulateDropdown('http://skfruit-backend.onrender.com/routeData', 'route_detail','route_name');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {

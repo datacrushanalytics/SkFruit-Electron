@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://43.205.230.120/list/Supplier')
+//     fetch('http://skfruit-backend.onrender.com/list/Supplier')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -57,7 +57,7 @@ function getElementValueWithDefault(id, defaultValue) {
 //     };
 //     console.log(data);
 
-//     fetch('http://43.205.230.120/supplierOutstanding', {
+//     fetch('http://skfruit-backend.onrender.com/supplierOutstanding', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -96,7 +96,7 @@ function fetchDataAndProcess() {
     };
     console.log(data);
 
-    return fetch('http://43.205.230.120/supplierOutstanding', {
+    return fetch('http://skfruit-backend.onrender.com/supplierOutstanding', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

@@ -111,7 +111,7 @@
                     is_active: 1
                 };
         
-                const response = await fetch('http://43.205.230.120/vehicleData/updateVehicle/' + userData.id, {
+                const response = await fetch('http://skfruit-backend.onrender.com/vehicleData/updateVehicle/' + userData.id, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {

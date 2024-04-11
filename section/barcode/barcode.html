@@ -89,7 +89,7 @@
         }
         
         .input-row label {
-            margin-right: 20px;
+            margin-right: 30px;
             font-weight: bold;
             color: #333; /* Label text color */
         }
@@ -236,10 +236,10 @@
 <script>
 
     document.addEventListener('DOMContentLoaded', function () {
-        fetchAndPopulateDropdown('http://43.205.230.120/purchaseproductData', 'grahk','product_name');
-        fetchAndPopulateDropdown('http://43.205.230.120/purchaseproductData', 'Route','bata');
+        fetchAndPopulateDropdown('http://skfruit-backend.onrender.com/purchaseproductData', 'grahk','product_name');
+        fetchAndPopulateDropdown('http://skfruit-backend.onrender.com/purchaseproductData', 'Route','bata');
 
-        fetch('http://43.205.230.120/purchaseproductData/')
+        fetch('http://skfruit-backend.onrender.com/purchaseproductData/')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -451,7 +451,7 @@
         };
         console.log(data);
     
-        fetch('http://43.205.230.120/purchaseproductData', {
+        fetch('http://skfruit-backend.onrender.com/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

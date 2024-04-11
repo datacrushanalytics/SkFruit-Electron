@@ -241,9 +241,9 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://43.205.230.120/vehicleData', 'vehicleNumber','vehicle_no');
-        fetchAndPopulateDropdown('http://43.205.230.120/list/Supplier', 'supplier','name');
-        fetchAndPopulateDropdown('http://43.205.230.120/purchaseproductData', 'bata','bata');
+        fetchAndPopulateDropdown('http://skfruit-backend.onrender.com/vehicleData', 'vehicleNumber','vehicle_no');
+        fetchAndPopulateDropdown('http://skfruit-backend.onrender.com/list/Supplier', 'supplier','name');
+        fetchAndPopulateDropdown('http://skfruit-backend.onrender.com/purchaseproductData', 'bata','bata');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {

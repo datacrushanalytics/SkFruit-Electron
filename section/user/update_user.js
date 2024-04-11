@@ -9,7 +9,7 @@ async function updateUser() {
             status: status
         };
 
-        const response = await fetch('http://43.205.230.120/userData/updateUser/'+ parseInt(document.getElementById("id").value), {
+        const response = await fetch('http://skfruit-backend.onrender.com/userData/updateUser/'+ parseInt(document.getElementById("id").value), {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

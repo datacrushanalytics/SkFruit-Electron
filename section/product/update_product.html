@@ -164,7 +164,7 @@
                     rate_editable: status
                 };
         
-                const response = await fetch('http://43.205.230.120/productData/updateProduct/'+ userData.id, {
+                const response = await fetch('http://skfruit-backend.onrender.com/productData/updateProduct/'+ userData.id, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {
