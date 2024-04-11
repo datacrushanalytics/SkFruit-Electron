@@ -34,10 +34,10 @@
                         <label for="dropdown" >सप्लायरचे नाव: </label> 
                         <select id="supplier" class="drop">
 
-                        </select>
-                    </div>
+                        </select> <br>
+                    </div> <br>
                     <div style="margin-left:50px;">
-                        <label for="number">गाडी नं.:</label>
+                        <label for="number">गाडी नं : </label>
                         <select id="vehicle">
 
                         </select>
@@ -72,7 +72,7 @@
                         <input type="number" id="sale" name="name" placeholder="विक्री किंमत">
                     </div>
                     <div style="margin-left: 30px;">
-                        <label for="quantity">नग:</label>
+                        <label for="quantity"> &nbsp;&nbsp;   नग  :</label>
                         <input type="number" id="quantity" name="name" placeholder="नग ">
                     </div>
                 
@@ -130,9 +130,9 @@
         
       document.addEventListener('DOMContentLoaded', function () {
           // Fetch data from API and populate Select2 dropdowns
-          fetchAndPopulateDropdown('http://localhost:3000/list/Supplier', 'supplier','name');
-          fetchAndPopulateDropdown('http://localhost:3000/productData/', 'product','name');
-          fetchAndPopulateDropdown('http://localhost:3000/vehicleData', 'vehicle','vehicle_no');
+          fetchAndPopulateDropdown('http://skfruit-backend.onrender.com/list/Supplier', 'supplier','name');
+          fetchAndPopulateDropdown('http://skfruit-backend.onrender.com/productData/', 'product','name');
+          fetchAndPopulateDropdown('http://skfruit-backend.onrender.com/vehicleData', 'vehicle','vehicle_no');
       });
   
       function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
@@ -199,7 +199,7 @@
             
             console.log(formData)
         
-            fetch('http://localhost:3000/purchaseproductData/insertPurchaseproduct', {
+            fetch('http://skfruit-backend.onrender.com/purchaseproductData/insertPurchaseproduct', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -244,7 +244,7 @@
               // Perform delete operation based on userId
               var button = event.target;
               var row = button.parentNode.parentNode;
-              fetch('http://localhost:3000/purchaseproductData/deletepurchaseproductId/' + userId, {
+              fetch('http://skfruit-backend.onrender.com/purchaseproductData/deletepurchaseproductId/' + userId, {
                 method: 'DELETE'
               })
                 .then(response => {
