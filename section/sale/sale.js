@@ -299,7 +299,7 @@ function getProducts() {
         });
 
 
-    fetch('http://skfruit-backend.onrender.com/fetchStock/' + bataId)
+    fetch('http://localhost:3000/fetchStock/' + bataId)
         .then(response => response.json())
         .then(data => {
 
