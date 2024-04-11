@@ -39,7 +39,7 @@
 
       function login() {
 
-      fetch('http://skfruit-backend.onrender.com/user/login', {
+      fetch('http://localhost:3000/user/login', {
         method: 'POST',
         body: JSON.stringify({
           name: document.getElementById("username").value,

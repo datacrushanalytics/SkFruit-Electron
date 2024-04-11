@@ -138,7 +138,7 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://skfruit-backend.onrender.com/categoryData', 'category','name');
+        fetchAndPopulateDropdown('http://localhost:3000/categoryData', 'category','name');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {

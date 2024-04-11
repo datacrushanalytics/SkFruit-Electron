@@ -1,5 +1,6 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function() {
+//     fetch('http://localhost:3000/categoryData')
 //     fetch('http://skfruit-backend.onrender.com/categoryData')
 //         .then(response => {
 //             if (!response.ok) {
@@ -67,7 +68,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     });
     console.log(data);
 
-    fetch('http://skfruit-backend.onrender.com/productData/insertProduct', {
+    fetch('http://localhost:3000/productData/insertProduct', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

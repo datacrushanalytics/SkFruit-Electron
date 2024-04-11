@@ -2,6 +2,7 @@
 function product() {
     console.log("product function executed");
 
+    fetch('http://localhost:3000/vehicleData')
     fetch('http://skfruit-backend.onrender.com/vehicleData')
         .then(response => {
             if (!response.ok) {
@@ -78,7 +79,7 @@ function editProduct(user) {
 
 function deleteProduct(userId) {
     // Perform delete operation based on userId
-    fetch('http://skfruit-backend.onrender.com/vehicleData/deleteVehicle/' + userId, {
+    fetch('http://localhost:3000/vehicleData/deleteVehicle/' + userId, {
         method: 'DELETE'
     })
     .then(response => {

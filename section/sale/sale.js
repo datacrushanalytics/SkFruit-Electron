@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Set the placeholder of the input field to the formatted date
     document.getElementById('date').value = formattedDate;
 
-    fetch('http://skfruit-backend.onrender.com/fetchSaleid')
+    fetch('http://localhost:3000/fetchSaleid')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             // Populate dropdown with API data
             document.getElementById('bill').value = parseInt(data[0]['num']) + 1;
-            fetch('http://skfruit-backend.onrender.com/saleproductData/' + (parseInt(data[0]['num']) + 1))
+            fetch('http://localhost:3000/saleproductData/' + (parseInt(data[0]['num']) + 1))
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
         });
 
-    // fetch('http://skfruit-backend.onrender.com/list/Customer')
+    // fetch('http://localhost:3000/list/Customer')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //         console.error('Error:', error);
     //     });
 
-    // fetch('http://skfruit-backend.onrender.com/purchaseproductData/')
+    // fetch('http://localhost:3000/purchaseproductData/')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    // fetch('http://skfruit-backend.onrender.com/saleproductData/' +)
+    // fetch('http://localhost:3000/saleproductData/' +)
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //         console.error('Error:', error);
     //     });
 
-    // fetch('http://skfruit-backend.onrender.com/routeData')
+    // fetch('http://localhost:3000/routeData')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //         console.error('Error:', error);
     //     });
 
-    // fetch('http://skfruit-backend.onrender.com/list/Bank Account')
+    // fetch('http://localhost:3000/list/Bank Account')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -185,33 +185,33 @@ document.addEventListener('DOMContentLoaded', function () {
 // }
 
 
-// function populateDropdown3(data) {
-//     var tbody = document.getElementById('tableBody1');
-//     tbody.innerHTML = ''; // Clear existing rows
-//     var columnsToDisplay = ['product', 'bata', 'mark', 'quantity', 'rate', 'price'];
-//     data.forEach(function (item) {
-//         var row = tbody.insertRow();
-//         var cell = row.insertCell();
-//         columnsToDisplay.forEach(function (key) {
-//             var cell = row.insertCell();
-//             cell.textContent = item[key];
-//         });
-//         // Add Delete button
-//         var deleteCell = row.insertCell();
-//         var deleteButton = document.createElement('button');
-//         deleteButton.className = 'button delete-button';
-//         deleteButton.textContent = 'Delete';
-//         deleteButton.addEventListener('click', function () {
-//             deleteUser(item.id); // Pass the user id to the delete function
-//         });
-//         deleteCell.appendChild(deleteButton);
+function populateDropdown3(data) {
+    var tbody = document.getElementById('tableBody1');
+    tbody.innerHTML = ''; // Clear existing rows
+    var columnsToDisplay = ['product', 'bata', 'mark', 'quantity', 'rate', 'price'];
+    data.forEach(function (item) {
+        var row = tbody.insertRow();
+        var cell = row.insertCell();
+        columnsToDisplay.forEach(function (key) {
+            var cell = row.insertCell();
+            cell.textContent = item[key];
+        });
+        // Add Delete button
+        var deleteCell = row.insertCell();
+        var deleteButton = document.createElement('button');
+        deleteButton.className = 'button delete-button';
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', function () {
+            deleteUser(item.id); // Pass the user id to the delete function
+        });
+        deleteCell.appendChild(deleteButton);
 
-//     });
-// }
+    });
+}
 
 function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('http://skfruit-backend.onrender.com/saleproductData/deletesaleproduct/' + userId, {
+    fetch('http://localhost:3000/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
     })
         .then(response => {
@@ -275,23 +275,73 @@ function deleteUser(userId) {
 function getProducts() {
     var bataId = document.getElementById('bta').value;
     console.log(bataId)
-    fetch('http://skfruit-backend.onrender.com/purchaseproductData/getBataProduct/' + bataId)
+    fetch('http://localhost:3000/purchaseproductData/getBataProduct/' + bataId)
         .then(response => response.json())
         .then(data => {
             console.log(data[0].product_name)
             document.getElementById('mark').value = data[0].mark;
             document.getElementById('kimmat').value = data[0].selling_price;
-            var productDropdown = document.getElementById('product');
-            // Loop through the options in the dropdown
-            for (var i = 0; i < productDropdown.options.length; i++) {
-                console.log(data[0].product_name);
-                // Check if the current option's value matches the fetched data
-                if (productDropdown.options[i].value == data[0].product_name) {
-                    // Set the selected attribute of the matched option
-                    productDropdown.options[i].selected = true;
-                    // Exit the loop since we found the matching option
-                    break;
-                }
+            
+            // Get the Select2 dropdown element
+            var $productDropdown = $('#product');
+            
+            // Set the value of the Select2 dropdown
+            $productDropdown.val(data[0].product_name).trigger('change');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+
+
+
+// function getProducts() {
+//     var bataId = document.getElementById('bta').value;
+//     console.log(bataId)
+//     fetch('http://localhost:3000/purchaseproductData/getBataProduct/' + bataId)
+//         .then(response => response.json())
+//         .then(data => {
+//             console.log(data[0].product_name)
+//             document.getElementById('mark').value = data[0].mark;
+//             document.getElementById('kimmat').value = data[0].selling_price;
+//             var productDropdown = document.getElementById('product');
+//             // Loop through the options in the dropdown
+//             for (var i = 0; i < productDropdown.options.length; i++) {
+//                 console.log(data[0].product_name);
+//                 // Check if the current option's value matches the fetched data
+//                 if (productDropdown.options[i].value == data[0].product_name) {
+//                     // Set the selected attribute of the matched option
+//                     productDropdown.options[i].selected = true;
+//                     // Exit the loop since we found the matching option
+//                     break;
+//                 }
+//             }
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// }
+
+function updateTotal() {
+    document.getElementById("total").value = document.getElementById("kimmat").value * document.getElementById("nag").value
+}
+
+
+
+function getCust() {
+    var number = document.getElementById('number').value;
+    console.log(number)
+    fetch('http://localhost:3000/fetchName/mobile/' + number)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data[0].name)
+            // Get the Select2 dropdown element
+            var $productDropdown = $('#grahk');
+            
+            // Set the value of the Select2 dropdown if it's different
+            if ($productDropdown.val() !== data[0].name) {
+                $productDropdown.val(data[0].name).trigger('change');
             }
         })
         .catch(error => {
@@ -299,6 +349,23 @@ function getProducts() {
         });
 }
 
-function updateTotal() {
-    document.getElementById("total").value = document.getElementById("kimmat").value * document.getElementById("nag").value
-}
+
+
+
+// function getMobile() {
+//     var name = document.getElementById('grahk').value;
+//     console.log(name)
+//     fetch('http://localhost:3000/fetchName/name/' + name)
+//         .then(response => response.json())
+//         .then(data => {
+//             console.log(data[0].name)
+//             // Get the Select2 dropdown element
+//             var $productDropdown = $('#number');
+            
+//             // Set the value of the Select2 dropdown
+//             $productDropdown.val(data[0].name).trigger('change');
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// }
