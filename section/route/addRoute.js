@@ -9,7 +9,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     });
     console.log(data);
 
-    fetch('https://skfruit-backend.onrender.com/routeData/insertroute', {
+    fetch('https://localhost:3000/routeData/insertroute', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

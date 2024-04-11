@@ -164,7 +164,7 @@ input[type="radio"] {
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/list/Worker', 'name','name');
+        fetchAndPopulateDropdown('https://localhost:3000/list/Worker', 'name','name');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {

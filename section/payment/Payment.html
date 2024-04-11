@@ -135,7 +135,7 @@
 
     function previousbalance(){
         const name = document.getElementById("bata").value
-        fetch('https://skfruit-backend.onrender.com/fetchpv/' + name)
+        fetch('https://localhost:3000/fetchpv/' + name)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -159,8 +159,8 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/list/Supplier', 'product');
-        fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/list/Bank Account', 'bata');
+        fetchAndPopulateDropdown('https://localhost:3000/list/Supplier', 'product');
+        fetchAndPopulateDropdown('https://localhost:3000/list/Bank Account', 'bata');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId) {
