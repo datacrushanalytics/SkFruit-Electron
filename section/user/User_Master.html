@@ -9,15 +9,22 @@
     <title>User Form in Electron</title>
 
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
 
 .container {
-    margin: 20px auto;
-    max-width: 600px;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
 
 h1 {
     text-align: center;
@@ -38,46 +45,52 @@ label {
 input[type="text"],
 input[type="password"],
 select {
-    width: calc(100% - 20px);
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
 }
 
 input[type="radio"] {
     margin-right: 5px;
 }
 
-.first-row,
-.second-row,
+
+.first-row, .name{
+ display: flex;
+ margin-left: 2.5px;
+}
+
+.second-row{
+ display: flex;
+ margin-left: 2.5px;
+}
+
 .third-row {
     margin-bottom: 20px;
-}
 
-.container1 {
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
 .button-container {
     text-align: center;
 }
 
 .border-hover {
-    padding: 10px 20px;
-    margin: 0 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f0f0f0;
-    cursor: pointer;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: white;
+            background-color: #808080;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
 }
 
 .border-hover:hover {
-    background-color: #e0e0e0;
-}
+            background-color: #555;
+        }
 
 .radio-container {
     display: flex;
@@ -85,16 +98,11 @@ input[type="radio"] {
     margin-bottom: 10px;
 }
 
-.radio-container label {
+.radio-container input[type="radio"] {
     margin-right: 10px;
+    align-items: center;
 }
-
-
-
-
     </style>
-
-
 
 </head>
 <body>
@@ -105,7 +113,7 @@ input[type="radio"] {
         <form id="loginForm" method="POST">
     
         <div class="first-row">
-            <label for="userType">User Type  </label>
+            <label for="userType">User Type </label>
         <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
         <select id="usertype" name="usertype" placeholder="UserType">
             <option value="User" selected>User</option>
@@ -113,17 +121,16 @@ input[type="radio"] {
             <!-- Add more options as needed -->
         </select>
         </div>
-        
-
-
-        <label for="userType">Name</label>
+        <br>
+        <div class="name">
+        <label for="userType">Name &nbsp; &nbsp;&nbsp;</label>
         <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
         <select id="name" id="name" name="name">
             <!-- <option value="User" disabled selected>Select Account</option> -->
         </select>
-    
+    </div>
+        <br>
         <!-- <input type="text" id="name" name="name" placeholder="Name">  -->
-        <br><br>
         <label fro="username">Username :</label>
         <input type="text" id="username" name="username" placeholder="Username"> <br>
 

@@ -37,7 +37,6 @@ function populateTable(data) {
          var editButton = document.createElement('button');
          editButton.className = 'button edit-button';
          var editLink = document.createElement('a');
-         editLink.href = '../route/update_route.html'; // Edit link destination
          editLink.textContent = 'Edit';
          editButton.appendChild(editLink);
          editLink.textContent = 'Edit';

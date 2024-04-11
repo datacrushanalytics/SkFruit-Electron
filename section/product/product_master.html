@@ -11,6 +11,12 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+            font-family: Arial, sans-serif;
             background-color: rgba(242, 242, 242, 0.8);
             /* Transparent background */
             margin: 0;
@@ -20,22 +26,36 @@
         }
 
         .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .container {
             text-align: center;
             margin-bottom: 20px;
         }
 
+h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
         h1 {
             margin-top: 20px;
         }
 
-        .container1 {
-            margin-top: 20px;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-
-        }
+.container1 {
+    margin-top: 20px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+   
+}
 
         hr {
             border: 0;
@@ -47,14 +67,14 @@
         form {
             text-align: center;
         }
+form {
+    text-align: left;
+}
 
-        label {
-            text-align: right;
-            display: inline-block;
-            width: 35%; /* Adjusted width */
-            margin-bottom: 5px;
-            margin-right: 10px; /* Added margin-right */
-        }
+label {
+    display: block;
+    margin-bottom: 5px;
+}
 
         input[type="text"],
         input[type="password"],
@@ -67,37 +87,47 @@
             text-align: center
         }
 
-        input[type="checkbox"] {
-            margin-right: 0px;
-        }
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* .first-row{
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+} */
+
+
 
         .second-row {
             margin-top: 10px;
             margin-bottom: 20px;
             text-align: left;
-        }
+            text-align: left;
+}
 
-        .third-row {
-            text-align: center;
-        }
+.third-row {
+    text-align: center;
+}
 
-        .border-hover {
-            padding: 10px 20px;
-            text-decoration: none;
-            color: white;
-            background-color: #808080;
-            /* Grey color */
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-right: 10px;
-        }
+.border-hover {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    background-color: #808080;
+    /* Grey color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 10px;
+}
 
-        .border-hover:hover {
-            background-color: #555;
-            /* Darker grey on hover */
-        }
+.border-hover:hover {
+    background-color: #555;
+    /* Darker grey on hover */
+}
+
     </style>
 </head>
 
@@ -143,7 +173,7 @@
 
                 <div class="third-row">
                     <button type="submit" class="border-hover">Save</button>
-                    <a href="./product.html"><button type="button" class="border-hover">Back</button></a>
+                    <!-- <a href="./product.html"><button type="button" class="border-hover">Back</button></a> -->
                 </div>
             </form>
         </div>

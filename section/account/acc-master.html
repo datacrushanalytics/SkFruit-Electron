@@ -74,21 +74,16 @@
 
 
         .third-row button {
+            text-align: center;
             padding: 10px 20px;
+            text-decoration: none;
+            color: white;
             background-color: #808080;
-            color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
-        }
-
-        .third-row button:hover {
-            background-color: #555;
-        }
-
-        .third-row a button {
-            margin-left: 10px;
+            margin: 0 10px; /* Optional: Add margin between buttons */
         }
     </style>
 </head>
@@ -126,9 +121,9 @@
                     <input type="radio" id="dr" name="cr_dr_type" value="dr">
                     <label for="dr">DR</label>
                 </div>
-                
+            
                 <div class="third-row">
-                    <button type="submit" class="border-hover">Save</button>
+                    <center><button type="submit" class="border-hover">Save</button></a>
                     <a href="./account.html"><button type="button" class="border-hover">Back</button></a>
                 </div>
             </form>
