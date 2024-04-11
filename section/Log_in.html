@@ -37,7 +37,8 @@
       }
     });
 
-      function login() {
+function login() {
+  localStorage.removeItem('sessionData');
 
       fetch('http://localhost:3000/user/login', {
         method: 'POST',
@@ -54,10 +55,13 @@
             alert("Please enter valid username and password")
             throw new Error('Network response was not ok');
         }
+
         return response.json();
+
     })
     .then(result => {
         console.log(result)
+        localStorage.setItem('sessionData', JSON.stringify(result));
         document.getElementById("username").value = null
         document.getElementById("password").value = null
         window.location.href = './Home.html';
