@@ -89,6 +89,7 @@ function deleteRoute(userId) {
             throw new Error('Network response was not ok');
         }
         console.log('Route deleted successfully');
+        alert("Route is successfully Deleted");
         // Refresh the table or update UI as needed
         route(); // Assuming you want to refresh the table after delete
     })

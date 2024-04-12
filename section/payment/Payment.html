@@ -15,14 +15,21 @@
             margin: 0;
             padding: 20px;
         }
-
         .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            margin-bottom: 20px;
         }
 
-        h1 {
+
+       h1 {
             text-align: center;
+            margin-bottom: 20px;
+            color: #333;
         }
 
         hr {
@@ -34,6 +41,7 @@
 
         .container1 {
             max-width: 600px;
+            width: 100%;
             margin: 0 auto;
             background-color: #fff;
             padding: 20px;
@@ -55,7 +63,7 @@
         input[type="number"],
         select,
         textarea {
-            width: 40%;
+            width: 100%;
             padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
@@ -109,10 +117,12 @@
                     <!-- Options for from account -->
                 </select>
                 <br>
+                <br>
                 <label for="bata">To Account</label>
                 <select id="bata" name="to_account" onchange="previousbalance()">
                     <!-- Options for to account -->
                 </select>
+                <br>
                 <br>
                 <label for="comment">Comment</label>
                 <textarea id="comment" name="comment"></textarea><br>
@@ -126,7 +136,7 @@
                 <br>
                 <div class="third-row">
                     <button type="submit" class="border-hover">Save</button>
-                    <a href="./product.html"><button type="button" class="border-hover">Back</button></a>
+                    <!-- <a href="./product.html"><button type="button" class="border-hover">Back</button></a> -->
                 </div>
             </form>
         </div>

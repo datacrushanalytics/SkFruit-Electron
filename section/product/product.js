@@ -86,6 +86,7 @@ function deleteProduct(userId) {
             throw new Error('Network response was not ok');
         }
         console.log('User deleted successfully');
+        alert("Product is successfully Deleted");
         // Refresh the table or update UI as needed
         product(); // Assuming you want to refresh the table after delete
     })

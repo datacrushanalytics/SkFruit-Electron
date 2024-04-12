@@ -83,6 +83,7 @@ function deleteaccount(userId) {
       if (!response.ok) {
           throw new Error('Network response was not ok');
       }
+      alert("Account is successfully Deleted");
       console.log('User deleted successfully');
       // Refresh the table or update UI as needed
       account(); // Assuming you want to refresh the table after delete

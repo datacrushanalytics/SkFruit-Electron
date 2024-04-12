@@ -120,6 +120,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     })
     .then(result => {
         console.log('Data added successfully:', result);
+        alert("Account is successfully Added");
         window.location.href = './account.html';
         // Optionally, you can redirect or show a success message here
     })

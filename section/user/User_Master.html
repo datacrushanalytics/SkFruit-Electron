@@ -9,14 +9,13 @@
     <title>User Form in Electron</title>
 
     <style>
-        body {
+              body {
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
             margin: 0;
             padding: 20px;
         }
-
-.container {
+        .container {
             max-width: 600px;
             margin: 0 auto;
             background-color: #fff;
@@ -26,70 +25,68 @@
             text-align: center;
         }
 
-h1 {
-    text-align: center;
-}
 
-hr {
-    margin-top: 10px;
-    margin-bottom: 20px;
-    border: 0;
-    border-top: 1px solid #ccc;
-}
+       h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
 
-label {
-    display: block;
-    margin-bottom: 5px;
-}
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: #ddd;
+            margin-bottom: 20px;
+        }
 
-input[type="text"],
-input[type="password"],
-select {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-}
+        form {
+            text-align: left;
+        }
 
-input[type="radio"] {
-    margin-right: 5px;
-}
+        label {
+            display: block;
+            margin-bottom: -20spx;
+            text-align: left;
+        }
 
+        input[type="text"],
+        input[type="number"],
+        input[type="password"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin: 0 auto;
+            display: block;
+        }
 
-.first-row, .name{
- display: flex;
- margin-left: 2.5px;
-}
+        .second-row {
+            text-align: center;
+        }
+        .third-row {
+            text-align: center; 
+        }
 
-.second-row{
- display: flex;
- margin-left: 2.5px;
-}
-
-.third-row {
-    margin-bottom: 20px;
-
-}
-.button-container {
-    text-align: center;
-}
-
-.border-hover {
+        .border-hover {
             padding: 10px 20px;
             text-decoration: none;
             color: white;
             background-color: #808080;
+            /* Grey color */
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
             margin-right: 10px;
-}
+        }
 
-.border-hover:hover {
-            background-color: #555;
+        .border-hover:hover {
+        background-color: #555;
+        /* Darker grey on hover */
         }
 
 .radio-container {
@@ -151,7 +148,7 @@ input[type="radio"] {
         <br>
         <br>
         <button type="submit" class="border-hover">Save</button>
-        <a href="./user.html"><button type='button' class="border-hover">Back</button></a>
+        <!-- <a href="./user.html"><button type='button' class="border-hover">Back</button></a> -->
     </div>
     </form>
     </div>

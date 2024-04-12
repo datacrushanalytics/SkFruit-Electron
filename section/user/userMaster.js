@@ -82,6 +82,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     })
     .then(result => {
         console.log('Data added successfully:', result);
+        alert("User is successfully Added");
         window.location.href = './user.html';
         // Optionally, you can redirect or show a success message here
     })
