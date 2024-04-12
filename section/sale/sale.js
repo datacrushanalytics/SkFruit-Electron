@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Set the placeholder of the input field to the formatted date
     document.getElementById('date').value = formattedDate;
 
-    fetch('http://skfruit-backend.onrender.com/fetchSaleid')
+    fetch('http://localhost:3000/fetchSaleid')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             // Populate dropdown with API data
             document.getElementById('bill').value = parseInt(data[0]['num']) + 1;
-            fetch('http://skfruit-backend.onrender.com/saleproductData/' + (parseInt(data[0]['num']) + 1))
+            fetch('http://localhost:3000/saleproductData/' + (parseInt(data[0]['num']) + 1))
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
         });
 
-    // fetch('http://skfruit-backend.onrender.com/list/Customer')
+    // fetch('http://localhost:3000/list/Customer')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //         console.error('Error:', error);
     //     });
 
-    // fetch('http://skfruit-backend.onrender.com/purchaseproductData/')
+    // fetch('http://localhost:3000/purchaseproductData/')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    // fetch('http://skfruit-backend.onrender.com/saleproductData/' +)
+    // fetch('http://localhost:3000/saleproductData/' +)
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //         console.error('Error:', error);
     //     });
 
-    // fetch('http://skfruit-backend.onrender.com/routeData')
+    // fetch('http://localhost:3000/routeData')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //         console.error('Error:', error);
     //     });
 
-    // fetch('http://skfruit-backend.onrender.com/list/Bank Account')
+    // fetch('http://localhost:3000/list/Bank Account')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -211,7 +211,7 @@ function populateDropdown3(data) {
 
 function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('http://skfruit-backend.onrender.com/saleproductData/deletesaleproduct/' + userId, {
+    fetch('http://localhost:3000/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
     })
         .then(response => {
@@ -277,7 +277,7 @@ function deleteUser(userId) {
 function getProducts() {
     var bataId = document.getElementById('bta').value;
     console.log(bataId)
-    fetch('http://skfruit-backend.onrender.com/purchaseproductData/getBataProduct/' + bataId)
+    fetch('http://localhost:3000/purchaseproductData/getBataProduct/' + bataId)
         .then(response => response.json())
         .then(data => {
             console.log(data[0].product_name)
@@ -299,7 +299,7 @@ function getProducts() {
         });
 
 
-    fetch('http://skfruit-backend.onrender.com/fetchStock/' + bataId)
+    fetch('http://localhost:3000/fetchStock/' + bataId)
         .then(response => response.json())
         .then(data => {
 
@@ -318,7 +318,7 @@ function getProducts() {
 // function getProducts() {
 //     var bataId = document.getElementById('bta').value;
 //     console.log(bataId)
-//     fetch('http://skfruit-backend.onrender.com/purchaseproductData/getBataProduct/' + bataId)
+//     fetch('http://localhost:3000/purchaseproductData/getBataProduct/' + bataId)
 //         .then(response => response.json())
 //         .then(data => {
 //             console.log(data[0].product_name)
@@ -351,7 +351,7 @@ function updateTotal() {
 function getCust() {
     var number = document.getElementById('number').value;
     console.log(number)
-    fetch('http://skfruit-backend.onrender.com/fetchName/mobile/' + number)
+    fetch('http://localhost:3000/fetchName/mobile/' + number)
         .then(response => response.json())
         .then(data => {
             console.log(data[0].name)
@@ -374,7 +374,7 @@ function getCust() {
 // function getMobile() {
 //     var name = document.getElementById('grahk').value;
 //     console.log(name)
-//     fetch('http://skfruit-backend.onrender.com/fetchName/name/' + name)
+//     fetch('http://localhost:3000/fetchName/name/' + name)
 //         .then(response => response.json())
 //         .then(data => {
 //             console.log(data[0].name)
