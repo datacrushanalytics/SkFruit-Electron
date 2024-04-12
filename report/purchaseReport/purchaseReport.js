@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://localhost:3000/list/Supplier')
+//     fetch('http://skfruit-backend.onrender.com/list/Supplier')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -16,7 +16,7 @@
 //             console.error('Error:', error);
 //         });
 
-//     fetch('http://localhost:3000/purchaseproductData')
+//     fetch('http://skfruit-backend.onrender.com/purchaseproductData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -31,7 +31,7 @@
 //             console.error('Error:', error);
 //         });
 
-//     fetch('http://localhost:3000/vehicleData')
+//     fetch('http://skfruit-backend.onrender.com/vehicleData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -139,7 +139,7 @@ function formatDate(dateString) {
 //     };
 //     console.log(data);
 
-//     fetch('http://localhost:3000/purchaseReport', {
+//     fetch('http://skfruit-backend.onrender.com/purchaseReport', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -178,7 +178,7 @@ function fetchDataAndProcess() {
         gadi_number : getElementValueWithDefault('vehicleNumber', '*') 
     };
 
-    return fetch('http://localhost:3000/purchaseReport', {
+    return fetch('http://skfruit-backend.onrender.com/purchaseReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

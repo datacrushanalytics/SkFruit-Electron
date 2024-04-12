@@ -1,7 +1,7 @@
 function account() {
   console.log("user function executed");
 
-  fetch('http://localhost:3000/accountData')
+  fetch('http://skfruit-backend.onrender.com/accountData')
       .then(response => {
           if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -76,7 +76,7 @@ function editAccount(user) {
 
 function deleteaccount(userId) {
   // Perform delete operation based on userId
-  fetch('http://localhost:3000/accountData/deleteaccountId/' + userId, {
+  fetch('http://skfruit-backend.onrender.com/accountData/deleteaccountId/' + userId, {
       method: 'DELETE'
   })
   .then(response => {
