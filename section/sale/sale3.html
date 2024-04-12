@@ -348,12 +348,12 @@
         
   document.addEventListener('DOMContentLoaded', function () {
       // Fetch data from API and populate Select2 dropdowns
-      fetchAndPopulateDropdown('http://localhost:3000/list/Customer', 'grahk','name');
-      fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData', 'product','product_name');
-      fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData', 'bta','bata');
-      fetchAndPopulateDropdown('http://localhost:3000/routeData', 'Route','route_name');
-      fetchAndPopulateDropdown('http://localhost:3000/list/Bank Account', 'onlineAcc','name');
-      fetchAndPopulateDropdown('http://localhost:3000/mobile', 'number','mobile_no');
+      fetchAndPopulateDropdown('http://skfruit-backend.onrender.com/list/Customer', 'grahk','name');
+      fetchAndPopulateDropdown('http://skfruit-backend.onrender.com/purchaseproductData', 'product','product_name');
+      fetchAndPopulateDropdown('http://skfruit-backend.onrender.com/purchaseproductData', 'bta','bata');
+      fetchAndPopulateDropdown('http://skfruit-backend.onrender.com/routeData', 'Route','route_name');
+      fetchAndPopulateDropdown('http://skfruit-backend.onrender.com/list/Bank Account', 'onlineAcc','name');
+      fetchAndPopulateDropdown('http://skfruit-backend.onrender.com/mobile', 'number','mobile_no');
   });
 
   function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
@@ -413,7 +413,7 @@
 function previousbalance(){
   const name = document.getElementById("grahk").value
 
-  fetch('http://localhost:3000/fetchName/name/' + name)
+  fetch('http://skfruit-backend.onrender.com/fetchName/name/' + name)
         .then(response => response.json())
         .then(data => {
             console.log(data[0].mobile_no)
@@ -431,7 +431,7 @@ function previousbalance(){
 
 
 
-  fetch('http://localhost:3000/fetchpv/' + name)
+  fetch('http://skfruit-backend.onrender.com/fetchpv/' + name)
   .then(response => {
       if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -495,7 +495,7 @@ function totalbill(){
 
     console.log(formData)
 
-    fetch('http://localhost:3000/saleproductData/insertsaleproduct', {
+    fetch('http://skfruit-backend.onrender.com/saleproductData/insertsaleproduct', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -543,7 +543,7 @@ function totalbill(){
       totalBalance()
       var button = event.target;
       var row = button.parentNode.parentNode;
-      fetch('http://localhost:3000/saleproductData/deletesaleproduct/' + userId, {
+      fetch('http://skfruit-backend.onrender.com/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
       })
         .then(response => {

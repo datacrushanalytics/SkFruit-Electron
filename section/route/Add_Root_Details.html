@@ -22,14 +22,26 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            text-align: left;
         }
         h1 {
             margin-top: 20px;
         }
 
-        .container1 {
-            margin-top: 20px;
+        .container1 label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .container1 select,
+        .container1 input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
         }
 
         input[type="text"] {
@@ -82,7 +94,7 @@
                 <input type="text" id="mobile_no" name="mobile_no" placeholder="Mobile No"> <br>
                 <div class="third-row">
                     <button type="submit" class="border-hover">Save</button>
-                    <a href="./Root_Details.html"><button type='button' class="border-hover">Back</button></a>
+                    <!-- <a href="./Root_Details.html"><button type='button' class="border-hover">Back</button></a> -->
                 </div>
             </form>
         </div>

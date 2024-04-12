@@ -2,7 +2,7 @@
 function user() {
     console.log("user function executed");
 
-    fetch('http://localhost:3000/userData')
+    fetch('http://skfruit-backend.onrender.com/userData')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -78,7 +78,7 @@ function editUser(user) {
 
 function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('http://localhost:3000/userData/deleteUser/' + userId, {
+    fetch('http://skfruit-backend.onrender.com/userData/deleteUser/' + userId, {
         method: 'DELETE'
     })
     .then(response => {
@@ -86,7 +86,7 @@ function deleteUser(userId) {
             throw new Error('Network response was not ok');
         }
         console.log('User deleted successfully');
-        alert("Usee is successfully Deleted");
+        alert("User is successfully Deleted");
         // Refresh the table or update UI as needed
         user(); // Assuming you want to refresh the table after delete
     })

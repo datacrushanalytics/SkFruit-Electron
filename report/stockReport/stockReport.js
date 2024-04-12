@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://localhost:3000/purchaseproductData')
+//     fetch('http://skfruit-backend.onrender.com/purchaseproductData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -88,7 +88,7 @@ function formatDate(dateString) {
 //     };
 //     console.log(data);
 
-//     fetch('http://localhost:3000/stockReport', {
+//     fetch('http://skfruit-backend.onrender.com/stockReport', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -129,7 +129,7 @@ function fetchDataAndProcess() {
     };
     console.log(data);
 
-    return fetch('http://localhost:3000/stockReport', {
+    return fetch('http://skfruit-backend.onrender.com/stockReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
