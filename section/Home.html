@@ -101,7 +101,7 @@
     </div>
     <div id="sidebar-container">
       <h3 onclick="openPage('home')">SK Fruit</h3>
-      <button class="component" onclick="openPage('user')">User</button>
+      <!-- <button class="component" onclick="openPage('user')">User</button>
       <button class="component" onclick="openPage('product')">Product</button>
       <button class="component" onclick="openPage('account')">Account</button>
       <button class="component" onclick="openPage('vehicle')">Vehicle</button>
@@ -123,19 +123,56 @@
       <button class="component" onclick="openPage('supplierOutstanding')">Supplier Outstanding</button>
       <button class="component" onclick="openPage('carateReport')">Carate Report</button>
       <button class="component" onclick="openPage('remainder')">Remainder</button>
-      <button class="component" onclick="openPage('profitLossReport')">Profit Loss Report</button> 
+      <button class="component" onclick="openPage('profitLossReport')">Profit Loss Report</button>  -->
       <!-- Add other buttons here -->
-      <a href="../section/Log_in.html"><button type="button" class="logout" onclick="login()">Log Out</button></a>
+      <!-- <a href="../section/Log_in.html"><button type="button" class="logout" onclick="login()">Log Out</button></a> -->
     </div>
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Retrieve user data from localStorage
-      var userData = localStorage.getItem('sessData');
+      document.addEventListener('DOMContentLoaded', function() {
+        // Retrieve user data from localStorage
+        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+        var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
 
-  });
-  </script>
+        console.log(localStorage.getItem('sessionData'))
+        console.log(sessionData[0].usertype)
+        // Fetch data from API and dynamically generate buttons
+        fetch("http://3.108.215.177/accessconfigData")
+        .then(response => response.json())
+        .then(data => {
+          var sidebarContainer = document.getElementById('sidebar-container');
+          data.forEach(menu => {
+            if (isAdmin || menu.status === 'active') {
+              var button = document.createElement('button');
+              button.classList.add('component');
+              button.textContent = menu.name;
+              button.onclick = function() {
+                openPage(menu.name);
+            };
+            sidebarContainer.appendChild(button);
+          }
+          });
+
+          // Add logout button at the bottom
+        var logoutButton = document.createElement('button');
+        logoutButton.href = "../section/Log_in.html";
+        logoutButton.classList.add('logout');
+        logoutButton.textContent = "Log Out";
+        logoutButton.onclick = function() {
+          localStorage.removeItem('sessionData');
+          window.location.href = "../section/Log_in.html";
+        };
+        sidebarContainer.appendChild(logoutButton);
+
+
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+        });
+      });
+    </script>
+  
 
   <script>
     function openPage(pageName) {
