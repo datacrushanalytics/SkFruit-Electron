@@ -23,6 +23,7 @@ async function updateUser() {
 
         const result = await response.json();
         console.log('Data added successfully:', result);
+        alert('Data Updated successfully')
         // Optionally, you can redirect or show a success message here
     } catch (error) {
         console.error('Error:', error);
