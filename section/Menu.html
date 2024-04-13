@@ -1,89 +1,190 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>New Page</title>
-  <style>
-    .container {
-      display: flex;
-      justify-content: center;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home page</title>
+    <style>
+        .container {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-    .scrollview {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      grid-gap: 10px;
-      max-width: 100%; /* Adjust max-width as needed */
-    }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 20px;
+}
 
-    .btn {
-      padding: 12px 24px;
-      font-size: 18px;
-      text-align: center;
-    }
+.container {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-    @media only screen and (max-width: 600px) {
-      .scrollview {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjust button size for smaller screens */
-      }
-    }
-  </style>
+.container1 {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.973);
+    padding: 7px;
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgb(192 190 190 / 10%);
+    border: 4px solid #323131;
+}
+
+.scrollview {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+
+.btn {
+    flex: 1; /* Takes equal space */
+    max-width: 200px; /* Maximum width */
+    min-width: 150px; /* Minimum width */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 25px; /* Increased padding for taller buttons */
+    margin: 10px;
+    border: none;
+    background-color: grey;
+    color: white;
+    cursor: pointer;
+    border-radius: 250px; /* Adjusted border-radius for a less extreme curve */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow */
+}
+
+.btn:hover {
+    background-color: rgb(249, 245, 245);
+    color: rgb(168, 168, 168);
+}
+
+h1, h2, h3 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Optional: Add some styles for the image if needed */
+.btn-image img {
+    max-width: 50px; /* adjust as needed */
+    height: auto;
+}
+
+    </style>
+
 </head>
 <body>
-  <div class="container">
-    <div class="scrollview">
-      <button class="btn"><h3>Users</h3></button> 
-      <button class="btn"><h3>Product</h3></button> 
-      <button class="btn"><h3>Accounts</h3></button> 
-      <button class="btn"><h3>Vehicle</h3></button>
-      <button class="btn"><h3>Root</h3></button>
-      <button class="btn"><h3>Purchase</h3></button>
-      <button class="btn"><h3>Sale</h3></button>
-      <button class="btn"><h3>Root Sale</h3></button>
-      <button class="btn"><h3>Receipt</h3></button>
-      <button class="btn"><h3>Payment</h3></button>
-      <button class="btn"><h3>Users</h3></button> 
-      <button class="btn"><h3>Product</h3></button> 
-      <button class="btn"><h3>Accounts</h3></button> 
-      <button class="btn"><h3>Vehicle</h3></button>
-      <button class="btn"><h3>Root</h3></button>
-      <button class="btn"><h3>Purchase</h3></button>
-      <button class="btn"><h3>Sale</h3></button>
-      <button class="btn"><h3>Root Sale</h3></button>
-      <button class="btn"><h3>Receipt</h3></button>
-      <button class="btn"><h3>Payment</h3></button>
-      <button class="btn"><h3>Users</h3></button> 
-      <button class="btn"><h3>Product</h3></button> 
-      <button class="btn"><h3>Accounts</h3></button> 
-      <button class="btn"><h3>Vehicle</h3></button>
-      <button class="btn"><h3>Root</h3></button>
-      <button class="btn"><h3>Purchase</h3></button>
-      <button class="btn"><h3>Sale</h3></button>
-      <button class="btn"><h3>Root Sale</h3></button>
-      <button class="btn"><h3>Receipt</h3></button>
-      <button class="btn"><h3>Payment</h3></button>
-      <button class="btn"><h3>Users</h3></button> 
-      <button class="btn"><h3>Product</h3></button> 
-      <button class="btn"><h3>Accounts</h3></button> 
-      <button class="btn"><h3>Vehicle</h3></button>
-      <button class="btn"><h3>Root</h3></button>
-      <button class="btn"><h3>Purchase</h3></button>
-      <button class="btn"><h3>Sale</h3></button>
-      <button class="btn"><h3>Root Sale</h3></button>
-      <button class="btn"><h3>Receipt</h3></button>
-      <button class="btn"><h3>Payment</h3></button>
-      <button class="btn"><h3>Users</h3></button> 
-      <button class="btn"><h3>Product</h3></button> 
-      <button class="btn"><h3>Accounts</h3></button> 
-      <button class="btn"><h3>Vehicle</h3></button>
-      <button class="btn"><h3>Root</h3></button>
-      <button class="btn"><h3>Purchase</h3></button>
-      <button class="btn"><h3>Sale</h3></button>
-      <button class="btn"><h3>Root Sale</h3></button>
-      <button class="btn"><h3>Receipt</h3></button>
-      <button class="btn"><h3>Payment</h3></button>
-      <!-- Add more buttons as needed -->
+        <div class="container">
+            <h1 id="user">Manas Pisolkar</h1>
+            <hr>
+            <br>
+            <br>
+        <div class="container">
+            <div class="scrollview">
+                <button class="btn">
+                    <div class="btn-image">
+                        <!-- Your image goes here -->
+                        <img src="../assets/img/logo.png" alt="Image Description">
+                    </div>
+                    <div class="btn-content">
+                        <h2>Purchase</h2>
+                    </div>
+                    <div class="btn-number">
+                        <h2>(1111)</h2>
+                    </div>
+                </button>
+
+                <button class="btn">
+                    <div class="btn-image">
+                        <!-- Your image goes here -->
+                        <img src="../assets/img/logo.png" alt="Image Description">
+                    </div>
+                    <div class="btn-content">
+                        <h2>Sales</h2>
+                    </div>
+                    <div class="btn-number">
+                        <h2>(1111)</h2>
+                    </div>
+                </button>
+
+
+                <button class="btn">
+                    <div class="btn-image">
+                        <!-- Your image goes here -->
+                        <img src="../assets/img/logo.png" alt="Image Description">
+                    </div>
+                    <div class="btn-content">
+                        <h2>Receipt</h2>
+                    </div>
+                    <div class="btn-number">
+                        <h2>(1111)</h2>
+                    </div>
+                </button>
+
+
+                <button class="btn">
+                    <div class="btn-image">
+                        <!-- Your image goes here -->
+                        <img src="../assets/img/logo.png" alt="Image Description">
+                    </div>
+                    <div class="btn-content">
+                        <h2>Payment</h2>
+                    </div>
+                    <div class="btn-number">
+                        <h2>(1111)</h2>
+                    </div>
+                </button>
+            </div>
+            <br>
+        </div>
     </div>
-  </div>
-</body>
+    <div class="container1">
+        <h2>Sanjyot b</h2>
+        <h3>Closing cash : 3000</h3>
+        <h3>sale ammount : 3000</h3>
+    </div>
+    <br>
+    <div class="container1">
+        <h2>Sanjyot b</h2>
+        <h3>Closing cash : 3000</h3>
+        <h3>sale ammount : 3000</h3>
+    </div>
+    <br>
+    <div class="container1">
+        <h2>Sanjyot b</h2>
+        <h3>Closing cash : 3000</h3>
+        <h3>sale ammount : 3000</h3>
+    </div>
+    <br>
+    <div class="container1">
+        <h2>Sanjyot b</h2>
+        <h3>Closing cash : 3000</h3>
+        <h3>sale ammount : 3000</h3>
+    </div>
+    <br>
+    </body> 
+
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Retrieve user data from localStorage
+            var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+            document.getElementById('user').textContent = sessionData[0].name;
+            
+          });
+
+
+
+    </script>
+
+
+
+
 </html>

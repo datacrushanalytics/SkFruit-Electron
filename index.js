@@ -62,6 +62,7 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    icon: path.join(__dirname, '/logo.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       // Allow all operations on the specified IP address
