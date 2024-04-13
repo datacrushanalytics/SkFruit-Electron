@@ -216,12 +216,14 @@
       <input type="text" id="date" name="date" placeholder="दिनांक:">
 
       <label for="number">मोबाइल नं : </label>
-      <input type="text" id="number" name="number" placeholder="मोबाइल नं.">
+      <select type="root" id="number" name="number" onchange="getCust()">
+      </select>
     </div>
 
     <div>
       <label for="message" aria-placeholder="Root">ग्राहकाचे नाव :</label>
       <select type="root" id="grahk" name="root" onchange="previousbalance()">
+        <input type="hidden" id="custid" name="custid">
       </select><br>
       
       <br>
@@ -276,7 +278,6 @@
     <br>
     <table>
       <tr>
-        <th></th>
         <th>प्रॉडक्ट</th>
         <th>बटा</th>
         <th>मार्क</th>
@@ -405,9 +406,23 @@
   var balance = parseInt(document.getElementById("bill1").value) || 0;
   var preBalance = parseInt(document.getElementById("previousBalance").value) || 0;
   var total1 = parseInt(document.getElementById("total1").value) || 0;
-  document.getElementById("totalBill").value = total1 + balance + preBalance;
-  totalbill()
 
+  fetch('http://3.108.215.177/accountData/' + parseInt(document.getElementById("custid").value))
+        .then(response => response.json())
+        .then(data => {
+            console.log(data[0].cr_dr_type)
+            if(data[0].cr_dr_type == 'no'){
+              document.getElementById("totalBill").value = balance + preBalance;         
+            }else{
+              document.getElementById("totalBill").value = total1 + balance + preBalance;
+            }
+            totalbill()
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+  //document.getElementById("totalBill").value = total1 + balance + preBalance;
+  //totalbill()
  } 
 
 function previousbalance(){
@@ -419,11 +434,19 @@ function previousbalance(){
             console.log(data[0].mobile_no)
             // Get the Select2 dropdown element
             var $productDropdown = $('#number');
-            
             // Set the value of the Select2 dropdown if it's different
             if ($productDropdown.val() !== data[0].mobile_no) {
               $productDropdown.val(data[0].mobile_no).trigger('change');
-          }
+            }
+
+            var $routeDropdown = $('#Route');
+            // Set the value of the Select2 dropdown if it's different
+            if ($routeDropdown.val() !== data[0].route_detail) {
+              $routeDropdown.val(data[0].route_detail).trigger('change');
+            }
+
+
+
         })
         .catch(error => {
             console.error('Error:', error);
@@ -441,6 +464,7 @@ function previousbalance(){
   .then(data => {
       // Populate dropdown with API data
       console.log(data)
+      document.getElementById('custid').value = parseInt(data[0]['id']);
       document.getElementById('previousBalance').value = parseInt(data[0]['current_balance'] || 0);
       totalBalance();
       totalbill();
@@ -476,7 +500,25 @@ function carate1(){
 
 
 function totalbill(){
-  document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0) - parseInt(document.getElementById("total2").value || 0);
+  console.log("totalbill")
+  console.log(document.getElementById("custid").value)
+
+  fetch('http://3.108.215.177/accountData/' + parseInt(document.getElementById("custid").value))
+        .then(response => response.json())
+        .then(data => {
+            console.log(data[0].cr_dr_type)
+            if(data[0].cr_dr_type == 'no'){
+              document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0);
+            }else{
+              document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0) - parseInt(document.getElementById("total2").value || 0);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+
+  //document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0) - parseInt(document.getElementById("total2").value || 0);
 }
 
 

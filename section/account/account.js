@@ -20,7 +20,7 @@ function account() {
 function populateTable(data) {
   var tbody = document.getElementById('tableBody');
   tbody.innerHTML = ''; // Clear existing rows
-  var columnsToDisplay = ['name', 'account_group','address','mobile_no'];
+  var columnsToDisplay = ['name', 'account_group','address','mobile_no','cr_dr_type'];
   var counter = 1;
   data.forEach(function(item) {
       var row = tbody.insertRow();

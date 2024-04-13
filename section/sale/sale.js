@@ -191,7 +191,6 @@ function populateDropdown3(data) {
     var columnsToDisplay = ['product', 'bata', 'mark', 'quantity', 'rate', 'price'];
     data.forEach(function (item) {
         var row = tbody.insertRow();
-        var cell = row.insertCell();
         columnsToDisplay.forEach(function (key) {
             var cell = row.insertCell();
             cell.textContent = item[key];
