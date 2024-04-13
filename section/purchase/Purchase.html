@@ -132,9 +132,9 @@
         
       document.addEventListener('DOMContentLoaded', function () {
           // Fetch data from API and populate Select2 dropdowns
-          fetchAndPopulateDropdown('http://3.108.215.177/list/Supplier', 'supplier','name');
-          fetchAndPopulateDropdown('http://3.108.215.177/productData/', 'product','name');
-          fetchAndPopulateDropdown('http://3.108.215.177/vehicleData', 'vehicle','vehicle_no');
+          fetchAndPopulateDropdown('http://localhost:3000/list/Supplier', 'supplier','name');
+          fetchAndPopulateDropdown('http://localhost:3000/productData/', 'product','name');
+          fetchAndPopulateDropdown('http://localhost:3000/vehicleData', 'vehicle','vehicle_no');
       });
   
       function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
@@ -201,7 +201,7 @@
             
             console.log(formData)
         
-            fetch('http://3.108.215.177/purchaseproductData/insertPurchaseproduct', {
+            fetch('http://localhost:3000/purchaseproductData/insertPurchaseproduct', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -246,7 +246,7 @@
               // Perform delete operation based on userId
               var button = event.target;
               var row = button.parentNode.parentNode;
-              fetch('http://3.108.215.177/purchaseproductData/deletepurchaseproductId/' + userId, {
+              fetch('http://localhost:3000/purchaseproductData/deletepurchaseproductId/' + userId, {
                 method: 'DELETE'
               })
                 .then(response => {
