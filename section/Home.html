@@ -18,9 +18,24 @@
       display: flex;
     }
 
-    h3 {
-      margin-left: 30%;
-    }
+
+
+    /* Styles for the header */
+h3 {
+  cursor: pointer; /* Changes cursor to a hand when hovering over the header */
+  display: flex; /* Makes the header content align horizontally */
+  align-items: center; /* Aligns items vertically in the center */
+  font-size: 24px; /* Sets font size */
+  color: #fff; /* Sets text color */
+  margin-left: 33%;
+}
+
+h3 img {
+  width: 13%; /* Sets the width of the logo image */
+  height: 13%; /* Sets the height of the logo image */
+  border-radius: 50%; /* Makes the logo image rounded */
+  margin-right: 5%;
+}
 
     #sidebar-container {
       width: 20%; /* Occupy 1/5 of the page */
@@ -100,7 +115,10 @@
       <iframe id="pageContent" src="./Menu.html" frameborder="0"></iframe>
     </div>
     <div id="sidebar-container">
-      <h3 onclick="openPage('home')">SK Fruit</h3>
+      <h3 onclick="openPage('home')">
+          <img src="../../assets/img/logo.png" alt="Company Logo">
+        SK Fruit
+      </h3>
       <!-- <button class="component" onclick="openPage('user')">User</button>
       <button class="component" onclick="openPage('product')">Product</button>
       <button class="component" onclick="openPage('account')">Account</button>
