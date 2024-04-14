@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <title>Account Master</title>
 
     <style>
@@ -87,8 +90,23 @@
                 <div class="first-row">
                     <input type="text" id="id" name="id" placeholder="ID" value="">
                 </div>
-                <input type="text" id="account_group" name="account_group" placeholder="Account Group">
+                <!-- <input type="text" id="account_group" name="account_group" placeholder="Account Group">
                 <input type="text" id="route_detail" name="route_detail" placeholder="Route Detail">
+ -->
+
+                <label for="account_group">Account Group</label>
+                <select class="drop" id="account_group" name="account_group">
+                    <!-- Options will be dynamically populated -->
+                </select>
+                <br>
+                <br>
+                <label for="route_detail">Route Details</label>
+                <select class="drop" id="route_detail" name="route_detail">
+                    <!-- Options will be dynamically populated -->
+                </select>
+                <br> <br>
+
+
                 <input type="text" id="name" name="name" placeholder="Name">
                 <input type="text" id="address" name="address" placeholder="Address">
                 <input type="text" id="no" name="mobile_no" placeholder="Mobile No">
@@ -108,8 +126,49 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+
+
+        document.addEventListener('DOMContentLoaded', async function() {
             // Retrieve user data from localStorage
+            await fetchAndPopulateDropdown('http://localhost:3000/accountgroupData', 'account_group','name');
+            await fetchAndPopulateDropdown('http://localhost:3000/routeData', 'route_detail','route_name');
+        
+            async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
+                try {
+                    const response = await fetch(apiUrl);
+                    
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    
+                    const data = await response.json();
+                    populateDropdownWithSelect2(data, dropdownId, field);
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+        
+            function populateDropdownWithSelect2(data, dropdownId, field) {
+                var dropdown = $('#' + dropdownId);
+                // Clear existing options
+                dropdown.empty();
+        
+                // Add placeholder option
+                dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+        
+                // Populate dropdown with API data
+                data.forEach(function(item) {
+                    dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
+                });
+        
+                // Initialize Select2
+                dropdown.select2({
+                    placeholder: "Select " + dropdownId + " type",
+                    allowClear: true
+                });
+            }
+        
             var userData = localStorage.getItem('userData');
 
             if (userData) {
@@ -118,8 +177,24 @@
 
                 // Populate form fields with user data
                 document.getElementById("id").value = user.id;
-                document.getElementById("account_group").value = user.account_group;
-                document.getElementById("route_detail").value = user.route_detail;
+                // document.getElementById("account_group").value = user.account_group;
+                // document.getElementById("route_detail").value = user.route_detail;
+                
+                var $productDropdown = $('#account_group');
+                // Set the value of the Select2 dropdown if it's different
+                if ($productDropdown.val() !== user.account_group) {
+                    $productDropdown.val(user.account_group).trigger('change');
+                }
+        
+                var $productDropdown = $('#route_detail');
+                // Set the value of the Select2 dropdown if it's different
+                if ($productDropdown.val() !== user.route_detail) {
+                    $productDropdown.val(user.route_detail).trigger('change');
+                }
+        
+
+
+
                 document.getElementById("name").value = user.name;
                 document.getElementById("no").value = user.mobile_no;
                 document.getElementById("address").value = user.address;
@@ -133,6 +208,8 @@
                 localStorage.removeItem('userData');
             }
         });
+        
+
 
         async function updateUser() {
             try {

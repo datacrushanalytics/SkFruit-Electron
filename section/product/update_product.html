@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <title>Product Master</title>
     <style>
         body {
@@ -95,7 +98,12 @@
             <form id="loginForm" method="POST">
                 <div class="first-row">
                     <input type="text" id="id" name="id" placeholder="ID" value = ""> 
-                    <input type="text" id="category" name="category" placeholder="Category">
+                    <select id="category" name="category" placeholder="Category">
+                        <br>
+                        <br>
+                        <br>
+                        <!-- Add options here -->
+                    </select>
                 </div>
 
                 <input type="text" id="name" name="name" placeholder="Product Name">
@@ -127,10 +135,49 @@
     
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Retrieve user data from localStorage
-            var userData = localStorage.getItem('userData');
 
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Retrieve user data from localStorage
+            await fetchAndPopulateDropdown('http://localhost:3000/categoryData', 'category','name');
+        
+            async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
+                try {
+                    const response = await fetch(apiUrl);
+                    
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    
+                    const data = await response.json();
+                    populateDropdownWithSelect2(data, dropdownId, field);
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+        
+            function populateDropdownWithSelect2(data, dropdownId, field) {
+                var dropdown = $('#' + dropdownId);
+                // Clear existing options
+                dropdown.empty();
+        
+                // Add placeholder option
+                dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+        
+                // Populate dropdown with API data
+                data.forEach(function(item) {
+                    dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
+                });
+        
+                // Initialize Select2
+                dropdown.select2({
+                    placeholder: "Select " + dropdownId + " type",
+                    allowClear: true
+                });
+            }
+        
+            var userData = localStorage.getItem('userData');
+        
             if (userData) {
                 // Parse the user data
                 var user = JSON.parse(userData);
@@ -138,7 +185,11 @@
                 // Populate form fields with user data
                 document.getElementById("id").value = user.id;
                 document.getElementById("name").value = user.name;
-                document.getElementById("category").value = user.category;
+                //document.getElementById("category").value = user.category;
+                var $productDropdown = $('#category');
+                if ($productDropdown.val() !== user.category) {
+                    $productDropdown.val(user.category).trigger('change');
+                }
                 document.getElementById("rate").value = user.rate;
                 document.getElementById("w_rate").value = user.w_rate;
                 document.getElementById("minimum_stock").value = user.minimum_stock;
@@ -149,6 +200,7 @@
                 localStorage.removeItem('userData');
             }
         });
+        
 
         async function updateUser() {
             try {

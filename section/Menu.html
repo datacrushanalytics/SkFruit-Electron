@@ -23,15 +23,7 @@ body {
     margin-bottom: 20px;
 }
 
-.container1 {
-    max-width: 900px;
-    margin: 0 auto;
-    background-color: rgba(255, 255, 255, 0.973);
-    padding: 7px;
-    border-radius: 30px;
-    box-shadow: 0 0 10px rgb(192 190 190 / 10%);
-    border: 4px solid #323131;
-}
+
 
 .scrollview {
     display: flex;
@@ -76,96 +68,128 @@ h1, h2, h3 {
     height: auto;
 }
 
+
+/* ... (your existing CSS) ... */
+
+/* Added styles for datetime using Flexbox */
+.datetime {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #555;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+#currentDate, #currentTime {
+    flex: 1;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}
+
+.container1-item {
+    max-width: 900px;
+    margin: 20px auto;
+    background-color: rgba(255, 255, 255, 0.973);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 4px solid #323131;
+}
+
+
+
+
+
+
     </style>
 
 </head>
 <body>
+    
         <div class="container">
-            <h1 id="user">Manas Pisolkar</h1>
-            <hr>
+            <div class="datetime" id="datetime">
+                <p id="currentDate"></p>
+                <h1 id="user">USER</h1>
+                <p id="currentTime"></p>
+            </div>
+            
+            <!-- <hr>
             <br>
-            <br>
+            <br> -->
+
+            
         <div class="container">
             <div class="scrollview">
                 <button class="btn">
+                    <a href="./dailyPurchase.html">
                     <div class="btn-image">
-                        <!-- Your image goes here -->
-                        <img src="../assets/img/logo.png" alt="Image Description">
+                        <img src="../assets/img/1.png" alt="Image Description">
                     </div>
                     <div class="btn-content">
                         <h2>Purchase</h2>
                     </div>
                     <div class="btn-number">
-                        <h2>(1111)</h2>
+                        <h2 id="purchaseTotal">0</h2>
                     </div>
+                </a>
                 </button>
 
                 <button class="btn">
+                    <a href="./dailySale.html">
                     <div class="btn-image">
-                        <!-- Your image goes here -->
-                        <img src="../assets/img/logo.png" alt="Image Description">
+                        <img src="../assets/img/4.png" alt="Image Description">
                     </div>
                     <div class="btn-content">
                         <h2>Sales</h2>
                     </div>
                     <div class="btn-number">
-                        <h2>(1111)</h2>
+                        <h2 id="saleTotal">0</h2>
                     </div>
+                    </a>
                 </button>
 
 
                 <button class="btn">
+                    <a href="./dailyReceipt.html">
                     <div class="btn-image">
-                        <!-- Your image goes here -->
-                        <img src="../assets/img/logo.png" alt="Image Description">
+                        <img src="../assets/img/2.png" alt="Image Description">
                     </div>
                     <div class="btn-content">
                         <h2>Receipt</h2>
                     </div>
                     <div class="btn-number">
-                        <h2>(1111)</h2>
+                        <h2 id="receiptTotal">0</h2>
                     </div>
+                </a>
                 </button>
 
 
                 <button class="btn">
+                    <a href="./dailyPayment.html">
                     <div class="btn-image">
-                        <!-- Your image goes here -->
-                        <img src="../assets/img/logo.png" alt="Image Description">
+                        <img src="../assets/img/3.png" alt="Image Description">
                     </div>
                     <div class="btn-content">
                         <h2>Payment</h2>
                     </div>
                     <div class="btn-number">
-                        <h2>(1111)</h2>
+                        <h2 id="paymentTotal">0</h2>
                     </div>
+                </a>
                 </button>
             </div>
             <br>
         </div>
     </div>
     <div class="container1">
-        <h2>Sanjyot b</h2>
+        <!-- <h2>Sanjyot b</h2>
         <h3>Closing cash : 3000</h3>
-        <h3>sale ammount : 3000</h3>
-    </div>
-    <br>
-    <div class="container1">
-        <h2>Sanjyot b</h2>
-        <h3>Closing cash : 3000</h3>
-        <h3>sale ammount : 3000</h3>
-    </div>
-    <br>
-    <div class="container1">
-        <h2>Sanjyot b</h2>
-        <h3>Closing cash : 3000</h3>
-        <h3>sale ammount : 3000</h3>
-    </div>
-    <br>
-    <div class="container1">
-        <h2>Sanjyot b</h2>
-        <h3>Closing cash : 3000</h3>
-        <h3>sale ammount : 3000</h3>
+        <h3>sale ammount : 3000</h3> -->
     </div>
     <br>
     </body> 
@@ -173,12 +197,142 @@ h1, h2, h3 {
 
     <script>
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             // Retrieve user data from localStorage
+
             var sessionData = JSON.parse(localStorage.getItem('sessionData'));
             document.getElementById('user').textContent = sessionData[0].name;
+        
+            // Display current date and time
+            var currentDateElement = document.getElementById('currentDate');
+            var currentTimeElement = document.getElementById('currentTime');
+        
+            var currentDate = new Date().toLocaleDateString();
+            var currentTime = new Date().toLocaleTimeString();
+        
+            currentDateElement.textContent = "Date: " + currentDate;
+            currentTimeElement.textContent = "Time: " + currentTime;
+            var currentDate1 = new Date();
+        
+            try {
+                const fetchAPI = async (url, id) => {
+                    const response = await fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            "date": currentDate1.getFullYear() + '-' + String(currentDate1.getMonth() + 1).padStart(2, '0') + '-' + String(currentDate1.getDate()).padStart(2, '0')
+                        })
+                    });
+        
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+        
+                    const data = await response.json();
+                    console.log(data);
+                    console.log(`${id} data fetched`);
+                    document.getElementById(id).textContent = data[0][`Total${id.charAt(0).toUpperCase() + id.slice(1)}`] || 0;
+                };
+        
+                await Promise.all([
+                    renderData(),
+                    fetchAPI("http://localhost:3000/fetchTotal/purchase", 'purchaseTotal'),
+                    fetchAPI("http://localhost:3000/fetchTotal/sale", 'saleTotal'),
+                    fetchAPI("http://localhost:3000/fetchTotal/receipt", 'receiptTotal'),
+                    fetchAPI("http://localhost:3000/fetchTotal/payment", 'paymentTotal')
+                ]);
+        
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        });
+        
+
+            // Function to fetch data from API
+            async function fetchData() {
+                try {
+                    const response = await fetch('http://localhost:3000/list/Worker'); // Replace with your API URL
+                    const data = await response.json();
+                    return data;
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            }
+        
+            async function renderData() {
+                const container = document.querySelector('.container1'); // Target the existing .container1 div
+                const data = await fetchData(); // Assuming fetchData returns the list of items
+                var currentDate1 = new Date();
+                            
+                if (data && data.length > 0) {
+                    for (const item of data) {
+                        // Assuming userData contains the data you want to send
+                        const userData = {
+                            "date": currentDate1.getFullYear() + '-' + String(currentDate1.getMonth() + 1).padStart(2, '0') + '-' + String(currentDate1.getDate()).padStart(2, '0'),
+                            "route": item.route
+                        };
+                        
+                        // Send POST request to update data (you can handle the response if needed)
+                        try {
+                            const response = await fetch(`http://localhost:3000/fetchTotal/worker/`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(userData)
+                            });
+                            
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            
+                            const result = await response.json();
+                            console.log('Data added successfully:', result);
             
-          });
+                            // Create and append the div
+                            const div = document.createElement('div');
+                            div.className = 'container1-item';
+                                                    
+                            const h2 = document.createElement('h2');
+                            h2.textContent = item.name;
+                            div.appendChild(h2);
+                            
+                            const h3_1 = document.createElement('h3');
+                            h3_1.textContent = `Closing cash : ${result[0].closingCash || 0}`;
+                            div.appendChild(h3_1);
+                            
+                            const h3_2 = document.createElement('h3');
+                            h3_2.textContent = `Sale amount : ${result[0].saleAmount || 0}`;
+                            div.appendChild(h3_2);
+                            
+                            // Add event listener to navigate to another page
+                            div.addEventListener('click', function() {
+                                // Navigate to another page
+                                localStorage.setItem('workerData', JSON.stringify(item));
+                                window.location.href = './dailySale.html'; // Replace 'anotherPage.html' with your desired page URL
+                            });
+                            
+                            container.appendChild(div);
+            
+                        } catch (error) {
+                            console.error('Error updating data:', error);
+                        }
+                    }
+                } else {
+                    container.textContent = 'No data available';
+                }
+            }
+            
+            
+            
+        
+            // Call the renderData function
+           
+   
+
+
 
 
 

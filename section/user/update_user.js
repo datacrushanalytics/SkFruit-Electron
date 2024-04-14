@@ -40,3 +40,13 @@ document.getElementById("updateButton").addEventListener("click", function(event
     event.preventDefault(); // Prevent form submission
     updateUser(); // Call the updateUser function to handle the update operation
 });
+
+
+
+
+
+
+
+
+
+      

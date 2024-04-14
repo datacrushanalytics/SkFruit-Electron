@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
     <title>User Form in Electron</title>
 
@@ -105,13 +108,23 @@
     
         <div class="first-row">
         <input type="text" id="id" name="id" placeholder="ID" value = ""> 
-        <input type="text" id="usertype" name="usertype" placeholder="User Type">
+        <!-- <input type="text" id="usertype" name="usertype" placeholder="User Type"> -->
+        <select id="usertype" name="usertype" placeholder="UserType">
+            <option value="User" selected>User</option>
+            <option value="Admin">Admin</option>
+            <!-- Add more options as needed -->
+        </select>
         </div>
-    
-        <input type="text" id="name" name="name" placeholder="Name"> <br><br>
-    
-        <input type="text" id="username" name="username" placeholder="Username"> <br>
+        <!-- <input type="text" id="name" name="name" placeholder="Name"> <br><br> -->
+        <label for="userType">Name &nbsp; &nbsp;&nbsp;</label>
+        <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
+        <select id="name" id="name" name="name">
+            <!-- <option value="User" disabled selected>Select Account</option> -->
+        </select>
 
+        <label fro="username">Username :</label>
+        <input type="text" id="username" name="username" placeholder="Username"> <br>
+        <label for="password">Password :</label>
         <input type="password" id="password" name="password" placeholder="Password"> <br>
 <!-- Your HTML -->
 <div class="second-row">
@@ -131,27 +144,71 @@
     </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             // Retrieve user data from localStorage
+            await fetchAndPopulateDropdown('http://localhost:3000/list/Worker', 'name', 'name');
+        
+            async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
+                try {
+                    const response = await fetch(apiUrl);
+                    
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    
+                    const data = await response.json();
+                    populateDropdownWithSelect2(data, dropdownId, field);
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+        
+            function populateDropdownWithSelect2(data, dropdownId, field) {
+                var dropdown = $('#' + dropdownId);
+                // Clear existing options
+                dropdown.empty();
+        
+                // Add placeholder option
+                dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+        
+                // Populate dropdown with API data
+                data.forEach(function(item) {
+                    dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
+                });
+        
+                // Initialize Select2
+                dropdown.select2({
+                    placeholder: "Select " + dropdownId + " type",
+                    allowClear: true
+                });
+            }
+        
             var userData = localStorage.getItem('userData');
-
+        
             if (userData) {
                 // Parse the user data
                 var user = JSON.parse(userData);
-
+        
                 // Populate form fields with user data
                 document.getElementById("id").value = user.id;
-                document.getElementById("name").value = user.name;
+                var $productDropdown = $('#name');
+                // Set the value of the Select2 dropdown if it's different
+                if ($productDropdown.val() !== user.name) {
+                    $productDropdown.val(user.name).trigger('change');
+                }
+        
                 document.getElementById("username").value = user.username;
                 document.getElementById("password").value = user.password;
                 document.getElementById("usertype").value = user.usertype;
-                if (user.status = '1'){
-                document.getElementById("isActive").checked = true;
-                }  
+                if (user.status === '1') {
+                    document.getElementById("isActive").checked = true;
+                }
                 // Clear user data from localStorage (optional)
                 localStorage.removeItem('userData');
             }
         });
+        
     </script>
     <script src="./update_user.js"></script>
 

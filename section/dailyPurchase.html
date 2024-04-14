@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home page</title>
+    <style>
+        .container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.container1 {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.973);
+    padding: 7px;
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgb(192 190 190 / 10%);
+    border: 4px solid #323131;
+}
+
+.scrollview {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+
+.btn {
+    flex: 1; /* Takes equal space */
+    max-width: 200px; /* Maximum width */
+    min-width: 150px; /* Minimum width */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 25px; /* Increased padding for taller buttons */
+    margin: 10px;
+    border: none;
+    background-color: grey;
+    color: white;
+    cursor: pointer;
+    border-radius: 250px; /* Adjusted border-radius for a less extreme curve */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow */
+}
+
+.btn:hover {
+    background-color: rgb(249, 245, 245);
+    color: rgb(168, 168, 168);
+}
+
+h1, h2, h3 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Optional: Add some styles for the image if needed */
+.btn-image img {
+    max-width: 50px; /* adjust as needed */
+    height: auto;
+}
+
+
+/* ... (your existing CSS) ... */
+
+/* Added styles for datetime using Flexbox */
+.datetime {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #555;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+#currentDate, #currentTime {
+    flex: 1;
+}
+
+
+.table-container {
+    max-width: 100%;
+    overflow-x: auto;
+    /* Enable horizontal scrolling */
+    margin: 0 auto;
+    /* min-width: 600px; */
+    /* Set a minimum width for the table container */
+    max-height: calc(100vh - 200px);
+    /* Set maximum height for the table container */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+}
+
+table {
+    width: auto;
+    min-width: 100%;
+    /* Ensure table expands to fit content */
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.8);
+    /* Transparent background */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+th,
+td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 12px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+
+
+    </style>
+
+</head>
+<body>
+    
+        <div class="container">
+            <div class="datetime" id="datetime">
+                <p id="currentDate"></p>
+                <h1 id="user">USER</h1>
+                <p id="currentTime"></p>
+            </div>
+            
+            <!-- <hr>
+            <br>
+            <br> -->
+
+            
+        <div class="table-container">
+       <h1>Stock Received</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>NO.</th>
+                        <th>Product Name</th>
+                        <th>Stock</th>                   
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Data will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </body> 
+
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Retrieve user data from localStorage
+            var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+            document.getElementById('user').textContent = sessionData[0].name;
+
+            // Display current date and time
+            var currentDateElement = document.getElementById('currentDate');
+            var currentTimeElement = document.getElementById('currentTime');
+
+            var currentDate = new Date().toLocaleDateString();
+            var currentTime = new Date().toLocaleTimeString();
+
+            currentDateElement.textContent = "Date: " + currentDate;
+            currentTimeElement.textContent = "Time: " + currentTime;
+            var currentDate1 = new Date();
+
+            fetch("http://localhost:3000/fetchData/purchase", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                   "date" : currentDate1.getFullYear() + '-' + String(currentDate1.getMonth() + 1).padStart(2, '0') + '-' + String(currentDate1.getDate()).padStart(2, '0')
+                })
+            })
+            //"date" : 
+            .then(response => response.json())
+            .then(data => {
+                // Loop through the data received from the API
+                console.log(data)
+                console.log("data fetched");
+                populateTable(data)
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+            });        
+          });
+
+
+
+          function populateTable(data) {
+            var tbody = document.getElementById('tableBody');
+            tbody.innerHTML = ''; // Clear existing rows
+            var columnsToDisplay = ['product_name', 'quantity'];
+            var counter = 1;
+            data.forEach(function(item) {
+                var row = tbody.insertRow();
+                var cell = row.insertCell();
+                cell.textContent = counter++;
+                columnsToDisplay.forEach(function(key) {
+                    var cell = row.insertCell();
+                    cell.textContent = item[key];
+                });
+    
+            });
+        }
+
+    </script>
+
+
+
+
+</html>
