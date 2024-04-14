@@ -150,7 +150,7 @@
                     prev_balance : document.getElementById("preBalance").value,
                 };
         
-                const response = await fetch('http://3.108.215.177/accountData/updateAccount/'+ userData.id, {
+                const response = await fetch('http://localhost:3000/accountData/updateAccount/'+ userData.id, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {

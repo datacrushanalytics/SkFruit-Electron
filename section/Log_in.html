@@ -40,7 +40,7 @@
 function login() {
   localStorage.removeItem('sessionData');
 
-      fetch('http://3.108.215.177/user/login', {
+      fetch('http://localhost:3000/user/login', {
         method: 'POST',
         body: JSON.stringify({
           name: document.getElementById("username").value,

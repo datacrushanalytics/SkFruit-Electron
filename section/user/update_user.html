@@ -104,16 +104,30 @@
         <form id="loginForm">
     
         <div class="first-row">
+        <label for="id">Id : </label>
         <input type="text" id="id" name="id" placeholder="ID" value = ""> 
-        <input type="text" id="usertype" name="usertype" placeholder="User Type">
-        </div>
-    
-        <input type="text" id="name" name="name" placeholder="Name"> <br><br>
-    
-        <input type="text" id="username" name="username" placeholder="Username"> <br>
+        <!-- <input type="text" id="usertype" name="usertype" placeholder="User Type"> -->
 
+        <div class="first-row">
+            <label for="userType">User Type </label>
+        <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
+        <select id="usertype" name="usertype" placeholder="UserType">
+            <option value="User" selected>User</option>
+            <option value="Admin">Admin</option>
+            <!-- Add more options as needed -->
+        </select>
+        </div>
+
+        </div>
+        <lable for="name">Name :</lable>
+        <input type="text" id="name" name="name" placeholder="Name"> <br><br>
+         
+        <label for="username">Username :</label>
+        <input type="text" id="username" name="username" placeholder="Username"> <br>
+        
+        <lable for="password">Password :</lable>
         <input type="password" id="password" name="password" placeholder="Password"> <br>
-<!-- Your HTML -->
+<!-- Your HTML --><br>
 <div class="second-row">
     <div class="radio-container">
         <input type="radio" id="isActive" name="isActive" >
