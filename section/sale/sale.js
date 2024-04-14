@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Set the placeholder of the input field to the formatted date
     document.getElementById('date').value = formattedDate;
 
-    fetch('http://localhost:3000/fetchSaleid')
+    fetch('http://13.126.106.17/fetchSaleid')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             // Populate dropdown with API data
             document.getElementById('bill').value = parseInt(data[0]['num']) + 1;
-            fetch('http://localhost:3000/saleproductData/' + (parseInt(data[0]['num']) + 1))
+            fetch('http://13.126.106.17/saleproductData/' + (parseInt(data[0]['num']) + 1))
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
         });
 
-    // fetch('http://localhost:3000/list/Customer')
+    // fetch('http://13.126.106.17/list/Customer')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //         console.error('Error:', error);
     //     });
 
-    // fetch('http://localhost:3000/purchaseproductData/')
+    // fetch('http://13.126.106.17/purchaseproductData/')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    // fetch('http://localhost:3000/saleproductData/' +)
+    // fetch('http://13.126.106.17/saleproductData/' +)
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //         console.error('Error:', error);
     //     });
 
-    // fetch('http://localhost:3000/routeData')
+    // fetch('http://13.126.106.17/routeData')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //         console.error('Error:', error);
     //     });
 
-    // fetch('http://localhost:3000/list/Bank Account')
+    // fetch('http://13.126.106.17/list/Bank Account')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -210,7 +210,7 @@ function populateDropdown3(data) {
 
 function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('http://localhost:3000/saleproductData/deletesaleproduct/' + userId, {
+    fetch('http://13.126.106.17/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
     })
         .then(response => {
@@ -276,7 +276,7 @@ function deleteUser(userId) {
 function getProducts() {
     var bataId = document.getElementById('bta').value;
     console.log(bataId)
-    fetch('http://localhost:3000/purchaseproductData/getBataProduct/' + bataId)
+    fetch('http://13.126.106.17/purchaseproductData/getBataProduct/' + bataId)
         .then(response => response.json())
         .then(data => {
             console.log(data[0].product_name)
@@ -298,7 +298,7 @@ function getProducts() {
         });
 
 
-    fetch('http://localhost:3000/fetchStock/' + bataId)
+    fetch('http://13.126.106.17/fetchStock/' + bataId)
         .then(response => response.json())
         .then(data => {
 
@@ -317,7 +317,7 @@ function getProducts() {
 // function getProducts() {
 //     var bataId = document.getElementById('bta').value;
 //     console.log(bataId)
-//     fetch('http://localhost:3000/purchaseproductData/getBataProduct/' + bataId)
+//     fetch('http://13.126.106.17/purchaseproductData/getBataProduct/' + bataId)
 //         .then(response => response.json())
 //         .then(data => {
 //             console.log(data[0].product_name)
@@ -350,7 +350,7 @@ function updateTotal() {
 function getCust() {
     var number = document.getElementById('number').value;
     console.log(number)
-    fetch('http://localhost:3000/fetchName/mobile/' + number)
+    fetch('http://13.126.106.17/fetchName/mobile/' + number)
         .then(response => response.json())
         .then(data => {
             console.log(data[0].name)
@@ -373,7 +373,7 @@ function getCust() {
 // function getMobile() {
 //     var name = document.getElementById('grahk').value;
 //     console.log(name)
-//     fetch('http://localhost:3000/fetchName/name/' + name)
+//     fetch('http://13.126.106.17/fetchName/name/' + name)
 //         .then(response => response.json())
 //         .then(data => {
 //             console.log(data[0].name)

@@ -2,7 +2,7 @@
 function remainder() {
     console.log("product function executed");
 
-    return fetch('http://localhost:3000/remainderReport')
+    return fetch('http://13.126.106.17/remainderReport')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
