@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://13.126.106.17/list/Supplier')
+//     fetch('http://3.109.5.164/list/Supplier')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -57,7 +57,7 @@ function getElementValueWithDefault(id, defaultValue) {
 //     };
 //     console.log(data);
 
-//     fetch('http://13.126.106.17/supplierOutstanding', {
+//     fetch('http://3.109.5.164/supplierOutstanding', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -96,7 +96,7 @@ function fetchDataAndProcess() {
     };
     console.log(data);
 
-    return fetch('http://13.126.106.17/supplierOutstanding', {
+    return fetch('http://3.109.5.164/supplierOutstanding', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

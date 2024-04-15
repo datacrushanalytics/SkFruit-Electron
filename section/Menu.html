@@ -238,10 +238,10 @@ a{
         
                 await Promise.all([
                     renderData(),
-                    fetchAPI("http://13.126.106.17/fetchTotal/purchase", 'purchaseTotal'),
-                    fetchAPI("http://13.126.106.17/fetchTotal/sale", 'saleTotal'),
-                    fetchAPI("http://13.126.106.17/fetchTotal/receipt", 'receiptTotal'),
-                    fetchAPI("http://13.126.106.17/fetchTotal/payment", 'paymentTotal')
+                    fetchAPI("http://3.109.5.164/fetchTotal/purchase", 'purchaseTotal'),
+                    fetchAPI("http://3.109.5.164/fetchTotal/sale", 'saleTotal'),
+                    fetchAPI("http://3.109.5.164/fetchTotal/receipt", 'receiptTotal'),
+                    fetchAPI("http://3.109.5.164/fetchTotal/payment", 'paymentTotal')
                 ]);
         
             } catch (error) {
@@ -253,7 +253,7 @@ a{
             // Function to fetch data from API
             async function fetchData() {
                 try {
-                    const response = await fetch('http://13.126.106.17/list/Worker'); // Replace with your API URL
+                    const response = await fetch('http://3.109.5.164/list/Worker'); // Replace with your API URL
                     const data = await response.json();
                     return data;
                 } catch (error) {
@@ -276,7 +276,7 @@ a{
                         
                         // Send POST request to update data (you can handle the response if needed)
                         try {
-                            const response = await fetch(`http://13.126.106.17/fetchTotal/worker/`, {
+                            const response = await fetch(`http://3.109.5.164/fetchTotal/worker/`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'

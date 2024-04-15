@@ -1,6 +1,6 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function() {
-//     fetch('http://13.126.106.17/categoryData')
+//     fetch('http://3.109.5.164/categoryData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -67,7 +67,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     });
     console.log(data);
 
-    fetch('http://13.126.106.17/productData/insertProduct', {
+    fetch('http://3.109.5.164/productData/insertProduct', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

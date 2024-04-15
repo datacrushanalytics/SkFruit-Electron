@@ -2,7 +2,7 @@
 function route() {
     console.log("user function executed");
 
-    fetch('http://13.126.106.17/routeData')
+    fetch('http://3.109.5.164/routeData')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -81,7 +81,7 @@ function editRoute(user) {
 
 function deleteRoute(userId) {
     // Perform delete operation based on userId
-    fetch('http://13.126.106.17/routeData/deleterouteId/' + userId, {
+    fetch('http://3.109.5.164/routeData/deleterouteId/' + userId, {
         method: 'DELETE'
     })
     .then(response => {

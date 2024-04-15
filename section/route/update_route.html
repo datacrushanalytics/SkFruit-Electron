@@ -128,7 +128,7 @@
                     mobile_no: document.getElementById("mobile_no").value
                 };
         
-                const response = await fetch('http://13.126.106.17/routeData/updateRoute/' + userData.routeId, {
+                const response = await fetch('http://3.109.5.164/routeData/updateRoute/' + userData.routeId, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {

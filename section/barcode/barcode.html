@@ -236,10 +236,10 @@
 <script>
 
     document.addEventListener('DOMContentLoaded', function () {
-        fetchAndPopulateDropdown('http://13.126.106.17/purchaseproductData', 'grahk','product_name');
-        fetchAndPopulateDropdown('http://13.126.106.17/purchaseproductData', 'Route','bata');
+        fetchAndPopulateDropdown('http://3.109.5.164/purchaseproductData', 'grahk','product_name');
+        fetchAndPopulateDropdown('http://3.109.5.164/purchaseproductData', 'Route','bata');
 
-        fetch('http://13.126.106.17/purchaseproductData/')
+        fetch('http://3.109.5.164/purchaseproductData/')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -451,7 +451,7 @@
         };
         console.log(data);
     
-        fetch('http://13.126.106.17/purchaseproductData', {
+        fetch('http://3.109.5.164/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
