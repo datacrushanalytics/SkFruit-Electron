@@ -18,53 +18,62 @@
       display: flex;
     }
 
-
-
     /* Styles for the header */
-h3 {
-  cursor: pointer; /* Changes cursor to a hand when hovering over the header */
-  display: flex; /* Makes the header content align horizontally */
-  align-items: center; /* Aligns items vertically in the center */
-  font-size: 24px; /* Sets font size */
-  color: #fff; /* Sets text color */
-  margin-left: 33%;
-}
+    h3 {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      color: #fff;
+      margin-left: 33%;
+    }
 
-h3 img {
-  width: 13%; /* Sets the width of the logo image */
-  height: 13%; /* Sets the height of the logo image */
-  border-radius: 50%; /* Makes the logo image rounded */
-  margin-right: 5%;
-}
+    h3 img {
+      width: 13%;
+      height: 13%;
+      border-radius: 50%;
+      margin-right: 5%;
+    }
 
     #sidebar-container {
-      width: 20%; /* Occupy 1/5 of the page */
+      width: 20%;
       background-color: #333;
       color: white;
       padding: 20px;
-      z-index: 999; /* Ensure sidebar is above other content */
-      overflow-y: auto; /* Add scrollbar to sidebar */
-      height: 100vh; /* Set sidebar height to full viewport height */
+      z-index: 999;
+      overflow-y: auto;
+      height: 100vh;
     }
 
     #main-container {
-      flex: 4; /* Occupy remaining width */
-      overflow: hidden; /* Hide overflowing content */
-      position: relative; /* Set position to relative */
+      flex: 4;
+      overflow: hidden;
+      position: relative;
+    }
+
+    #iframe-container {
+      position: relative;
+      overflow: hidden;
+      height: 100vh;
     }
 
     #pageContent {
-      width: 100%; /* Set iframe width to 100% */
-      height: 100%; /* Set iframe height to 100% */
-      position: absolute; /* Position iframe absolutely */
-      top: 0; /* Align iframe to the top */
-      left: 0; /* Align iframe to the left */
-      border: none; /* Remove iframe border */
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border: none;
+    }
+
+    /* Hide scrollbar when not in use */
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
     }
 
     .component {
       height: 35px;
-      width: 100%; /* Adjust to fill the sidebar */
+      width: 100%;
       cursor: pointer;
       margin-bottom: 10px;
       color: #fff;
@@ -75,7 +84,7 @@ h3 img {
     }
 
     .component.active {
-      background-color:darkgray; /* Red color for active button */
+      background-color: darkgray;
     }
 
     .component:hover {
@@ -88,7 +97,7 @@ h3 img {
       cursor: pointer;
       margin-top: 20px;
       color: #fff;
-      background-color: #c0392b; /* Red color for logout button */
+      background-color: #c0392b;
       padding: 10px;
       border: none;
       border-radius: 5px;
@@ -96,14 +105,14 @@ h3 img {
     }
 
     .logout:hover {
-      background-color: #e74c3c; /* Darker red color on hover */
+      background-color: #e74c3c;
     }
 
     @media (max-width: 768px) {
       /* Adjust as needed */
       #sidebar-container {
-        width: auto; /* Adjust sidebar width for smaller screens */
-        padding-bottom: 20px; /* Add some space at the bottom */
+        width: auto;
+        padding-bottom: 20px;
       }
     }
   </style>
@@ -112,65 +121,33 @@ h3 img {
 <body>
   <div class="hero-section">
     <div id="main-container">
-      <iframe id="pageContent" src="./Menu.html" frameborder="0"></iframe>
+      <div id="iframe-container" class="hide-scrollbar"> <!-- Added container div -->
+        <iframe id="pageContent" src="./Menu.html" frameborder="0"></iframe>
+      </div>
     </div>
     <div id="sidebar-container">
       <h3 onclick="openPage('home')">
-          <img src="../../assets/img/logo.png" alt="Company Logo">
+        <img src="../../assets/img/logo.png" alt="Company Logo">
         SK Fruit
       </h3>
-      <!-- <button class="component" onclick="openPage('user')">User</button>
-      <button class="component" onclick="openPage('product')">Product</button>
-      <button class="component" onclick="openPage('account')">Account</button>
-      <button class="component" onclick="openPage('vehicle')">Vehicle</button>
-      <button class="component" onclick="openPage('route')">Route</button>
-      <button class="component" onclick="openPage('purchase')">Purchase</button>
-      <button class="component" onclick="openPage('sale3')">Sale</button>
-      <button class="component" onclick="openPage('barcode')">Barcode</button>
-      <button class="component" onclick="openPage('receipt')">Reciept</button>
-      <button class="component" onclick="openPage('payment')">Payment</button>
-      <button class="component" onclick="openPage('purchaseReport')">Purchase Report</button>
-      <button class="component" onclick="openPage('routewiseSaleReport')">Routewise Sale Report</button>
-      <button class="component" onclick="openPage('stockReport')">Stock Report</button>
-      <button class="component" onclick="openPage('khatawani')">Khatawani</button>
-      <button class="component" onclick="openPage('batawiseSaleReport')">batawiseSaleReport</button>
-      <button class="component" onclick="openPage('dailyReport')">Daily Report</button>
-      <button class="component" onclick="openPage('receiptReport')">Receipt Report</button>
-      <button class="component" onclick="openPage('ledgerReport')">Ledger Report</button>
-      <button class="component" onclick="openPage('customerOutstanding')">Customer Outstanding</button>
-      <button class="component" onclick="openPage('supplierOutstanding')">Supplier Outstanding</button>
-      <button class="component" onclick="openPage('carateReport')">Carate Report</button>
-      <button class="component" onclick="openPage('remainder')">Remainder</button>
-      <button class="component" onclick="openPage('profitLossReport')">Profit Loss Report</button>  -->
-      <!-- Add other buttons here -->
+      <!-- Add dynamic buttons here -->
       <!-- <a href="../section/Log_in.html"><button type="button" class="logout" onclick="login()">Log Out</button></a> -->
     </div>
   </div>
 
   <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // Retrieve user data from localStorage
-        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
-        var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+    document.addEventListener('DOMContentLoaded', function() {
+      // Retrieve user data from localStorage
+      var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+      var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
 
-        console.log(localStorage.getItem('sessionData'))
-        console.log(sessionData[0].usertype)
-        // Fetch data from API and dynamically generate buttons
-        fetch("http://3.109.5.164/accessconfigData")
+      console.log(localStorage.getItem('sessionData'))
+      console.log(sessionData[0].usertype)
+      // Fetch data from API and dynamically generate buttons
+      fetch("http://3.109.5.164/accessconfigData")
         .then(response => response.json())
         .then(data => {
           var sidebarContainer = document.getElementById('sidebar-container');
-          // data.forEach(menu => {
-            //if (isAdmin || menu.status === 'active') {
-              //var button = document.createElement('button');
-              // button.classList.add('component');
-              // button.textContent = menu.name;
-              // button.onclick = function() {
-              //   openPage(menu.name);
-            // };
-
-            //sidebarContainer.appendChild(button);
-          //}
 
           data.forEach(menu => {
             if (isAdmin || menu.status === 'active') {
@@ -180,33 +157,24 @@ h3 img {
               button.onclick = handleButtonClick; // Use the handleButtonClick function
               sidebarContainer.appendChild(button);
             }
-     
-
-
-
           });
 
           // Add logout button at the bottom
-        var logoutButton = document.createElement('button');
-        logoutButton.href = "../section/Log_in.html";
-        logoutButton.classList.add('logout');
-        logoutButton.textContent = "Log Out";
-        logoutButton.onclick = function() {
-          localStorage.removeItem('sessionData');
-          window.location.href = "../section/Log_in.html";
-        };
-        sidebarContainer.appendChild(logoutButton);
-
-
+          var logoutButton = document.createElement('button');
+          logoutButton.href = "../section/Log_in.html";
+          logoutButton.classList.add('logout');
+          logoutButton.textContent = "Log Out";
+          logoutButton.onclick = function() {
+            localStorage.removeItem('sessionData');
+            window.location.href = "../section/Log_in.html";
+          };
+          sidebarContainer.appendChild(logoutButton);
         })
         .catch(error => {
           console.error("Error fetching data:", error);
         });
-      });
-    </script>
-  
+    });
 
-  <script>
     function openPage(pageName) {
       var pageUrl;
       switch (pageName) {
@@ -216,7 +184,7 @@ h3 img {
         case 'user':
           pageUrl = "./user/user.html";
           break;
-          case 'product':
+        case 'product':
           pageUrl = './product/product.html';
           break;
         case 'account':
@@ -282,42 +250,36 @@ h3 img {
         case 'profitLossReport':
           pageUrl = '../report/profitLossReport/profit_loss_report.html'
           break;
-          // Add other cases as needed
         default:
           pageUrl = './Home2.html';
       }
       document.getElementById('pageContent').src = pageUrl;
-
-      // Remove active class from all buttons
-      // var buttons = document.querySelectorAll('.component');
-      // buttons.forEach(function(button) {
-      //  button.classList.remove('active');
-      // });
-
-      // Add active class to the clicked button
-      // var clickedButton = document.querySelector('[onclick="openPage(\'' + pageName + '\')"]');
-      // clickedButton.classList.add('active');
     }
 
     function handleButtonClick(event) {
-      // Remove active class from all buttons
       var buttons = document.querySelectorAll('.component');
       buttons.forEach(function(button) {
         button.classList.remove('active');
       });
-    
-      // Add active class to the clicked button
+
       event.target.classList.add('active');
-    
-      // Retrieve the page name from the clicked button's text content
+
       var pageName = event.target.textContent;
-      
-      // Call the openPage function with the page name
+
       openPage(pageName);
     }
-    
-    
 
+    // Function to show scrollbar when iframe content is being scrolled
+    document.getElementById('iframe-container').addEventListener('scroll', function() {
+      // Add class to show scrollbar
+      this.classList.remove('hide-scrollbar');
+    });
+
+    // Function to hide scrollbar when iframe content is not being scrolled
+    document.getElementById('iframe-container').addEventListener('mouseleave', function() {
+      // Remove class to hide scrollbar
+      this.classList.add('hide-scrollbar');
+    });
   </script>
 </body>
 

@@ -85,12 +85,31 @@
           margin-bottom: 5px;
           padding: 6px;
       }
-      .first-row{
+
+ .first-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items at the start of the flex container */
+    flex-wrap: wrap; /* Allow flex items to wrap to the next line */
+    margin-bottom: 10px;
+}
+
+.first-row > label {
+    flex: 0 0 auto; /* Allow labels to shrink and grow as needed */
+    margin-right: 10px; /* Add spacing between label and input */
+}
+
+.first-row > input[type="number"] {
+    width: 120px; /* Set a fixed width for input fields */
+    margin-right: 10px; /* Add spacing between input fields */
+}
+
+      /* .first-row{
         display: flex;
         justify-content: center;
         align-items: center;
         margin-bottom: 10px;
-      }
+      } */
 
       input[type="number"],
       input[type="text"],
@@ -181,7 +200,7 @@
                 </div>
 
                 <div class="first-row">
-                    <label for="input1" class="input-label">ऑनलाईन जमा Bank </label>
+                    <label for="input1" class="input-label">ऑनलाईन जमा बँक</label>
                     <select id="input1" name="input2"></select>
                 </div>
 

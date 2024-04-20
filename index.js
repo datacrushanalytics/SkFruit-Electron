@@ -101,12 +101,13 @@
 
 
 
-
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
+let mainWindow;
+
 function createWindow() {
-    const mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
         // Set the icon for the application
@@ -117,6 +118,9 @@ function createWindow() {
     });
 
     mainWindow.loadFile('section/index.html');
+
+    // Hide the taskbar
+    mainWindow.setKiosk(true);
 }
 
 app.whenReady().then(() => {
