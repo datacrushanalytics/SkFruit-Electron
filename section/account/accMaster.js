@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function() {
 
-//     fetch('http://3.109.5.164/accountgroupData')
+//     fetch('http://65.0.32.172/accountgroupData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -17,7 +17,7 @@
 //             console.error('Error:', error);
 //         });
 
-//     fetch('http://3.109.5.164/routeData')
+//     fetch('http://65.0.32.172/routeData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -105,7 +105,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     });
     console.log(data);
 
-    fetch('http://3.109.5.164/accountData/insertaccount', {
+    fetch('http://65.0.32.172/accountData/insertaccount', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

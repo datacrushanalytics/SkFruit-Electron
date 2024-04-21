@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('date').value = formattedDate;
     // console.log('hjgfqhagf',document.getElementById('date').value )
 
-    fetch('http://3.109.5.164/fetchPurchaseid')
+    fetch('http://65.0.32.172/fetchPurchaseid')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             // Populate dropdown with API data
             document.getElementById('no').value = parseInt(data[0]['num']) + 1;
-            fetch('http://3.109.5.164/purchaseproductData/' + (parseInt(data[0]['num']) + 1))
+            fetch('http://65.0.32.172/purchaseproductData/' + (parseInt(data[0]['num']) + 1))
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
         });
 
-    // fetch('http://3.109.5.164/list/Supplier')
+    // fetch('http://65.0.32.172/list/Supplier')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //         console.error('Error:', error);
     //     });
 
-    // fetch('http://3.109.5.164/productData/')
+    // fetch('http://65.0.32.172/productData/')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    // fetch('http://3.109.5.164/vehicleData')
+    // fetch('http://65.0.32.172/vehicleData')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -163,7 +163,7 @@ function populateDropdown3(data) {
 
 function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('http://3.109.5.164/purchaseproductData/deleteproductId/' + userId, {
+    fetch('http://65.0.32.172/purchaseproductData/deleteproductId/' + userId, {
         method: 'DELETE'
     })
         .then(response => {
@@ -216,7 +216,7 @@ console.log("jahsafhfa")
         total_quantity: parseInt(document.getElementById('total').value) || 0
     };
 
-    await fetch('http://3.109.5.164/purchaseData/insertPurchase', {
+    await fetch('http://65.0.32.172/purchaseData/insertPurchase', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

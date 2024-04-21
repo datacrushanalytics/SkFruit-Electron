@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://3.109.5.164/list/Customer')
+//     fetch('http://65.0.32.172/list/Customer')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -17,7 +17,7 @@
 //         });
 
 
-//     fetch('http://3.109.5.164/routeData')
+//     fetch('http://65.0.32.172/routeData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -107,7 +107,7 @@ function formatDate(dateString) {
 //     };
 //     console.log(data);
 
-//     fetch('http://3.109.5.164/customerOutstandingReport', {
+//     fetch('http://65.0.32.172/customerOutstandingReport', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -145,7 +145,7 @@ function fetchDataAndProcess() {
     };
     console.log(data);
 
-    return fetch('http://3.109.5.164/customerOutstandingReport', {
+    return fetch('http://65.0.32.172/customerOutstandingReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

@@ -18,24 +18,26 @@
       display: flex;
     }
 
-
+    .menu-toggle {
+      display: none; /* Hide by default on larger screens */
+    }
 
     /* Styles for the header */
-h3 {
-  cursor: pointer; /* Changes cursor to a hand when hovering over the header */
-  display: flex; /* Makes the header content align horizontally */
-  align-items: center; /* Aligns items vertically in the center */
-  font-size: 24px; /* Sets font size */
-  color: #fff; /* Sets text color */
-  margin-left: 33%;
-}
+    h3 {
+      cursor: pointer; /* Changes cursor to a hand when hovering over the header */
+      display: flex; /* Makes the header content align horizontally */
+      align-items: center; /* Aligns items vertically in the center */
+      font-size: 24px; /* Sets font size */
+      color: #fff; /* Sets text color */
+      margin-left: 33%;
+    }
 
-h3 img {
-  width: 13%; /* Sets the width of the logo image */
-  height: 13%; /* Sets the height of the logo image */
-  border-radius: 50%; /* Makes the logo image rounded */
-  margin-right: 5%;
-}
+    h3 img {
+      width: 13%; /* Sets the width of the logo image */
+      height: 13%; /* Sets the height of the logo image */
+      border-radius: 50%; /* Makes the logo image rounded */
+      margin-right: 5%;
+    }
 
     #sidebar-container {
       width: 20%; /* Occupy 1/5 of the page */
@@ -45,6 +47,7 @@ h3 img {
       z-index: 999; /* Ensure sidebar is above other content */
       overflow-y: auto; /* Add scrollbar to sidebar */
       height: 100vh; /* Set sidebar height to full viewport height */
+      display: none; /* Hide by default on larger screens */
     }
 
     #main-container {
@@ -55,9 +58,9 @@ h3 img {
 
     #pageContent {
       width: 100%; /* Set iframe width to 100% */
-      height: 100%; /* Set iframe height to 100% */
+      height: calc(100vh - 40px); /* Adjust height for header */
       position: absolute; /* Position iframe absolutely */
-      top: 0; /* Align iframe to the top */
+      top: 40px; /* Align iframe below the header */
       left: 0; /* Align iframe to the left */
       border: none; /* Remove iframe border */
     }
@@ -75,7 +78,7 @@ h3 img {
     }
 
     .component.active {
-      background-color:darkgray; /* Red color for active button */
+      background-color: darkgray; /* Red color for active button */
     }
 
     .component:hover {
@@ -101,9 +104,28 @@ h3 img {
 
     @media (max-width: 768px) {
       /* Adjust as needed */
+      .menu-toggle {
+        display: block; /* Show menu toggle on smaller screens */
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 1000;
+        cursor: pointer;
+        color: white;
+      }
+
       #sidebar-container {
-        width: auto; /* Adjust sidebar width for smaller screens */
-        padding-bottom: 20px; /* Add some space at the bottom */
+        position: fixed;
+        width: 70%; /* Adjust sidebar width for smaller screens */
+        height: 100%;
+        top: 0;
+        left: -70%; /* Initially hide sidebar off-screen */
+        background-color: #333;
+        transition: left 0.3s ease; /* Add transition for smooth animation */
+      }
+
+      #sidebar-container.open {
+        left: 0; /* Slide sidebar into view */
       }
     }
   </style>
@@ -111,213 +133,33 @@ h3 img {
 
 <body>
   <div class="hero-section">
+    <div class="menu-toggle" onclick="toggleMenu()">
+      ☰ <!-- Hamburger menu icon -->
+    </div>
     <div id="main-container">
       <iframe id="pageContent" src="./Menu.html" frameborder="0"></iframe>
     </div>
     <div id="sidebar-container">
-      <h3 onclick="openPage('home')">
-          <img src="../../assets/img/logo.png" alt="Company Logo">
+      <h3>
+        <img src="../../assets/img/logo.png" alt="Company Logo">
         SK Fruit
       </h3>
-      <!-- <button class="component" onclick="openPage('user')">User</button>
-      <button class="component" onclick="openPage('product')">Product</button>
-      <button class="component" onclick="openPage('account')">Account</button>
-      <button class="component" onclick="openPage('vehicle')">Vehicle</button>
-      <button class="component" onclick="openPage('route')">Route</button>
-      <button class="component" onclick="openPage('purchase')">Purchase</button>
-      <button class="component" onclick="openPage('sale3')">Sale</button>
-      <button class="component" onclick="openPage('barcode')">Barcode</button>
-      <button class="component" onclick="openPage('receipt')">Reciept</button>
-      <button class="component" onclick="openPage('payment')">Payment</button>
-      <button class="component" onclick="openPage('purchaseReport')">Purchase Report</button>
-      <button class="component" onclick="openPage('routewiseSaleReport')">Routewise Sale Report</button>
-      <button class="component" onclick="openPage('stockReport')">Stock Report</button>
-      <button class="component" onclick="openPage('khatawani')">Khatawani</button>
-      <button class="component" onclick="openPage('batawiseSaleReport')">batawiseSaleReport</button>
-      <button class="component" onclick="openPage('dailyReport')">Daily Report</button>
-      <button class="component" onclick="openPage('receiptReport')">Receipt Report</button>
-      <button class="component" onclick="openPage('ledgerReport')">Ledger Report</button>
-      <button class="component" onclick="openPage('customerOutstanding')">Customer Outstanding</button>
-      <button class="component" onclick="openPage('supplierOutstanding')">Supplier Outstanding</button>
-      <button class="component" onclick="openPage('carateReport')">Carate Report</button>
-      <button class="component" onclick="openPage('remainder')">Remainder</button>
-      <button class="component" onclick="openPage('profitLossReport')">Profit Loss Report</button>  -->
-      <!-- Add other buttons here -->
-      <!-- <a href="../section/Log_in.html"><button type="button" class="logout" onclick="login()">Log Out</button></a> -->
+      <!-- Dynamic menu buttons will be added here -->
+      <!-- Add logout button at the bottom -->
+      <button class="logout" onclick="logout()">Log Out</button>
     </div>
   </div>
 
   <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // Retrieve user data from localStorage
-        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
-        var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
-
-        console.log(localStorage.getItem('sessionData'))
-        console.log(sessionData[0].usertype)
-        // Fetch data from API and dynamically generate buttons
-        fetch("http://3.109.5.164/accessconfigData")
-        .then(response => response.json())
-        .then(data => {
-          var sidebarContainer = document.getElementById('sidebar-container');
-          // data.forEach(menu => {
-            //if (isAdmin || menu.status === 'active') {
-              //var button = document.createElement('button');
-              // button.classList.add('component');
-              // button.textContent = menu.name;
-              // button.onclick = function() {
-              //   openPage(menu.name);
-            // };
-
-            //sidebarContainer.appendChild(button);
-          //}
-
-          data.forEach(menu => {
-            if (isAdmin || menu.status === 'active') {
-              var button = document.createElement('button');
-              button.classList.add('component');
-              button.textContent = menu.name;
-              button.onclick = handleButtonClick; // Use the handleButtonClick function
-              sidebarContainer.appendChild(button);
-            }
-     
-
-
-
-          });
-
-          // Add logout button at the bottom
-        var logoutButton = document.createElement('button');
-        logoutButton.href = "../section/Log_in.html";
-        logoutButton.classList.add('logout');
-        logoutButton.textContent = "Log Out";
-        logoutButton.onclick = function() {
-          localStorage.removeItem('sessionData');
-          window.location.href = "../section/Log_in.html";
-        };
-        sidebarContainer.appendChild(logoutButton);
-
-
-        })
-        .catch(error => {
-          console.error("Error fetching data:", error);
-        });
-      });
-    </script>
-  
-
-  <script>
-    function openPage(pageName) {
-      var pageUrl;
-      switch (pageName) {
-        case 'home':
-          pageUrl = './Menu.html';
-          break;
-        case 'user':
-          pageUrl = "./user/user.html";
-          break;
-          case 'product':
-          pageUrl = './product/product.html';
-          break;
-        case 'account':
-          pageUrl = './account/account.html';
-          break;
-        case 'route':
-          pageUrl = './route/Root_Details.html';
-          break;
-        case 'purchase':
-          pageUrl = './purchase/Purchase.html'
-          break;
-        case 'sale3':
-          pageUrl = './sale/sale3.html'
-          break;
-        case 'vehicle':
-          pageUrl = './vehicle/Vehicle_Details.html'
-          break;
-        case 'barcode':
-          pageUrl = './barcode/barcode.html'
-          break;
-        case 'receipt':
-          pageUrl = './receipt/Receipt.html'
-          break;
-        case 'payment':
-          pageUrl = './payment/Payment.html'
-          break;
-        case 'purchaseReport':
-          pageUrl = '../report/purchaseReport/purchaseReport.html'
-          break;
-        case 'routewiseSaleReport':
-          pageUrl = '../report/routewiseSaleReport/routewiseSaleReport.html'
-          break;
-        case 'stockReport':
-          pageUrl = '../report/stockReport/stockReport.html'
-          break;
-        case 'batawiseSaleReport':
-          pageUrl = '../report/batawiseSaleReport/batawiseSaleReport.html'
-          break;
-        case 'khatawani':
-          pageUrl = '../report/khatawani/khatawani.html'
-          break;
-        case 'dailyReport':
-          pageUrl = '../report/dailyReport/dailyReport.html'
-          break;
-        case 'receiptReport':
-          pageUrl = '../report/receiptReport/receiptReport.html'
-          break;
-        case 'ledgerReport':
-          pageUrl = '../report/ledgerReport/ledger.html'
-          break;
-        case 'customerOutstanding':
-          pageUrl = '../report/customerOutstanding/customerOutstanding.html'
-          break;
-        case 'supplierOutstanding':
-          pageUrl = '../report/supplierOutstanding/supplierOutstanding.html'
-          break;
-        case 'carateReport':
-          pageUrl = '../report/carateReport/carateReport.html'
-          break;
-        case 'remainder':
-          pageUrl = '../report/remainder/remainder.html'
-          break;
-        case 'profitLossReport':
-          pageUrl = '../report/profitLossReport/profit_loss_report.html'
-          break;
-          // Add other cases as needed
-        default:
-          pageUrl = './Home2.html';
-      }
-      document.getElementById('pageContent').src = pageUrl;
-
-      // Remove active class from all buttons
-      // var buttons = document.querySelectorAll('.component');
-      // buttons.forEach(function(button) {
-      //  button.classList.remove('active');
-      // });
-
-      // Add active class to the clicked button
-      // var clickedButton = document.querySelector('[onclick="openPage(\'' + pageName + '\')"]');
-      // clickedButton.classList.add('active');
+    function toggleMenu() {
+      var sidebar = document.getElementById('sidebar-container');
+      sidebar.classList.toggle('open'); // Toggle the 'open' class
     }
 
-    function handleButtonClick(event) {
-      // Remove active class from all buttons
-      var buttons = document.querySelectorAll('.component');
-      buttons.forEach(function(button) {
-        button.classList.remove('active');
-      });
-    
-      // Add active class to the clicked button
-      event.target.classList.add('active');
-    
-      // Retrieve the page name from the clicked button's text content
-      var pageName = event.target.textContent;
-      
-      // Call the openPage function with the page name
-      openPage(pageName);
+    function logout() {
+      localStorage.removeItem('sessionData');
+      window.location.href = "../section/Log_in.html";
     }
-    
-    
-
   </script>
 </body>
 
