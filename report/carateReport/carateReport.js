@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://3.109.5.164/list/Customer')
+//     fetch('http://65.0.32.172/list/Customer')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -72,7 +72,7 @@ function fetchDataAndProcess() {
         customer_name: getElementValueWithDefault('customer', '*'),
     };
 
-    return fetch('http://3.109.5.164/carateReport', {
+    return fetch('http://65.0.32.172/carateReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

@@ -130,8 +130,8 @@
 
         document.addEventListener('DOMContentLoaded', async function() {
             // Retrieve user data from localStorage
-            await fetchAndPopulateDropdown('http://3.109.5.164/accountgroupData', 'account_group','name');
-            await fetchAndPopulateDropdown('http://3.109.5.164/routeData', 'route_detail','route_name');
+            await fetchAndPopulateDropdown('http://65.0.32.172/accountgroupData', 'account_group','name');
+            await fetchAndPopulateDropdown('http://65.0.32.172/routeData', 'route_detail','route_name');
         
             async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
                 try {
@@ -227,7 +227,7 @@
                     prev_balance : document.getElementById("preBalance").value,
                 };
         
-                const response = await fetch('http://3.109.5.164/accountData/updateAccount/'+ userData.id, {
+                const response = await fetch('http://65.0.32.172/accountData/updateAccount/'+ userData.id, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {

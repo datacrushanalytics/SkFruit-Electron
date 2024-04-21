@@ -138,7 +138,7 @@
 
         document.addEventListener('DOMContentLoaded', async function() {
             // Retrieve user data from localStorage
-            await fetchAndPopulateDropdown('http://3.109.5.164/categoryData', 'category','name');
+            await fetchAndPopulateDropdown('http://65.0.32.172/categoryData', 'category','name');
         
             async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
                 try {
@@ -216,7 +216,7 @@
                     rate_editable: status
                 };
         
-                const response = await fetch('http://3.109.5.164/productData/updateProduct/'+ userData.id, {
+                const response = await fetch('http://65.0.32.172/productData/updateProduct/'+ userData.id, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {

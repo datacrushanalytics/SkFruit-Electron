@@ -9,7 +9,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     });
     console.log(data);
 
-    fetch('http://3.109.5.164/routeData/insertroute', {
+    fetch('http://65.0.32.172/routeData/insertroute', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
