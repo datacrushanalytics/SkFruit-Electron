@@ -38,16 +38,16 @@ h3 img {
 }
 
     #sidebar-container {
-      width: 20%; /* Occupy 1/5 of the page */
+    /*  width: 20%;  Occupy 1/5 of the page */
       background-color: #333;
       color: white;
-      padding: 20px;
       z-index: 999; /* Ensure sidebar is above other content */
       overflow-y: auto; /* Add scrollbar to sidebar */
       height: 100vh; /* Set sidebar height to full viewport height */
     }
 
     #main-container {
+      display: flex; /* Use flexbox */
       flex: 4; /* Occupy remaining width */
       overflow: hidden; /* Hide overflowing content */
       position: relative; /* Set position to relative */
@@ -106,11 +106,41 @@ h3 img {
         padding-bottom: 20px; /* Add some space at the bottom */
       }
     }
+
+
+    /* ... */
+
+.sidebar-container {
+  width: 0;
+  background-color: #333;
+  color: white;
+  z-index: 999;
+  overflow-y: auto;
+  height: 100vh;
+  transition: width 0.3s ease; /* Smooth transition for width */
+}
+
+.sidebar-container.active {
+  width: 20%; /* Width of the sidebar when active */
+}
+
+/* ... */
+
+.footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: absolute; /* Position the footer */
+  bottom: 0; /* Stick to the bottom */
+  width: 100%; /* Full width */
+}
+
   </style>
 </head>
 
 <body>
-  <div class="hero-section">
+  <!-- <div class="hero-section">
     <div id="main-container">
       <iframe id="pageContent" src="./Menu.html" frameborder="0"></iframe>
     </div>
@@ -119,33 +149,36 @@ h3 img {
           <img src="../../assets/img/logo.png" alt="Company Logo">
         SK Fruit
       </h3>
-      <!-- <button class="component" onclick="openPage('user')">User</button>
-      <button class="component" onclick="openPage('product')">Product</button>
-      <button class="component" onclick="openPage('account')">Account</button>
-      <button class="component" onclick="openPage('vehicle')">Vehicle</button>
-      <button class="component" onclick="openPage('route')">Route</button>
-      <button class="component" onclick="openPage('purchase')">Purchase</button>
-      <button class="component" onclick="openPage('sale3')">Sale</button>
-      <button class="component" onclick="openPage('barcode')">Barcode</button>
-      <button class="component" onclick="openPage('receipt')">Reciept</button>
-      <button class="component" onclick="openPage('payment')">Payment</button>
-      <button class="component" onclick="openPage('purchaseReport')">Purchase Report</button>
-      <button class="component" onclick="openPage('routewiseSaleReport')">Routewise Sale Report</button>
-      <button class="component" onclick="openPage('stockReport')">Stock Report</button>
-      <button class="component" onclick="openPage('khatawani')">Khatawani</button>
-      <button class="component" onclick="openPage('batawiseSaleReport')">batawiseSaleReport</button>
-      <button class="component" onclick="openPage('dailyReport')">Daily Report</button>
-      <button class="component" onclick="openPage('receiptReport')">Receipt Report</button>
-      <button class="component" onclick="openPage('ledgerReport')">Ledger Report</button>
-      <button class="component" onclick="openPage('customerOutstanding')">Customer Outstanding</button>
-      <button class="component" onclick="openPage('supplierOutstanding')">Supplier Outstanding</button>
-      <button class="component" onclick="openPage('carateReport')">Carate Report</button>
-      <button class="component" onclick="openPage('remainder')">Remainder</button>
-      <button class="component" onclick="openPage('profitLossReport')">Profit Loss Report</button>  -->
-      <!-- Add other buttons here -->
-      <!-- <a href="../section/Log_in.html"><button type="button" class="logout" onclick="login()">Log Out</button></a> -->
+    </div>
+  </div> -->
+
+  <!-- ... -->
+
+<body>
+  <div class="hero-section">
+    <button class="toggle-sidebar-btn" onclick="toggleSidebar()">☰</button> <!-- Hamburger Button -->
+    <div class="sidebar-container" id="sidebar-container">
+      <!-- Sidebar content -->
+      <h3 onclick="openPage('home')">
+          <img src="../../assets/img/logo.png" alt="Company Logo">
+          SK Fruit
+      </h3>
+
+    </div>
+    <div id="main-container">
+      <iframe id="pageContent" src="./Menu.html" frameborder="0"></iframe>
+
+      <!-- Footer within main-container -->
+      <div class="footer" id = 'footer'>
+        <p>&copy; 2024 SK Fruit. All rights reserved.</p>
+      </div>
     </div>
   </div>
+<!-- ... -->
+
+  <!-- Footer -->
+ 
+
 
   <script>
       document.addEventListener('DOMContentLoaded', function() {
@@ -156,7 +189,7 @@ h3 img {
         console.log(localStorage.getItem('sessionData'))
         console.log(sessionData[0].usertype)
         // Fetch data from API and dynamically generate buttons
-        fetch("http://3.109.5.164/accessconfigData")
+        fetch("http://65.0.32.172/accessconfigData")
         .then(response => response.json())
         .then(data => {
           var sidebarContainer = document.getElementById('sidebar-container');
@@ -207,6 +240,20 @@ h3 img {
   
 
   <script>
+
+    function toggleSidebar() {
+      var sidebar = document.getElementById('sidebar-container');
+      var footer = document.getElementById('footer');
+      if (sidebar.style.width === '0%' || sidebar.style.width === '') {
+        sidebar.style.width = '20%'; // Show sidebar
+        document.querySelector('.footer').style.flex = '0 0 20px'; 
+      } else {
+        sidebar.style.width = '0%'; // Hide sidebar
+        document.querySelector('.footer').style.flex = '0 0 50px';
+      }
+    }
+
+
     function openPage(pageName) {
       var pageUrl;
       switch (pageName) {
@@ -288,15 +335,6 @@ h3 img {
       }
       document.getElementById('pageContent').src = pageUrl;
 
-      // Remove active class from all buttons
-      // var buttons = document.querySelectorAll('.component');
-      // buttons.forEach(function(button) {
-      //  button.classList.remove('active');
-      // });
-
-      // Add active class to the clicked button
-      // var clickedButton = document.querySelector('[onclick="openPage(\'' + pageName + '\')"]');
-      // clickedButton.classList.add('active');
     }
 
     function handleButtonClick(event) {

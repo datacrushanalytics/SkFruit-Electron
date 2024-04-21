@@ -2,7 +2,7 @@
 function user() {
     console.log("user function executed");
 
-    fetch('http://3.109.5.164/userData')
+    fetch('http://65.0.32.172/userData')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -78,7 +78,7 @@ function editUser(user) {
 
 function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('http://3.109.5.164/userData/deleteUser/' + userId, {
+    fetch('http://65.0.32.172/userData/deleteUser/' + userId, {
         method: 'DELETE'
     })
     .then(response => {

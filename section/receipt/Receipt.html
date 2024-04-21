@@ -240,7 +240,7 @@
 
     function previousbalance() {
         const name = document.getElementById("account_group").value
-        fetch('http://3.109.5.164/fetchpv/' + name)
+        fetch('http://65.0.32.172/fetchpv/' + name)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -264,9 +264,9 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://3.109.5.164/list/Customer', 'account_group','customer');
-        fetchAndPopulateDropdown('http://3.109.5.164/list/Bank Account', 'route_detail','Account');
-        fetchAndPopulateDropdown('http://3.109.5.164/list/Bank Account', 'input1','Account');
+        fetchAndPopulateDropdown('http://65.0.32.172/list/Customer', 'account_group','customer');
+        fetchAndPopulateDropdown('http://65.0.32.172/list/Bank Account', 'route_detail','Account');
+        fetchAndPopulateDropdown('http://65.0.32.172/list/Bank Account', 'input1','Account');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,name) {

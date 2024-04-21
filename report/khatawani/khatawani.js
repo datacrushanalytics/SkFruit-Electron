@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://3.109.5.164/list/Customer')
+//     fetch('http://65.0.32.172/list/Customer')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -17,7 +17,7 @@
 //         });
 
 
-//     fetch('http://3.109.5.164/routeData')
+//     fetch('http://65.0.32.172/routeData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -104,7 +104,7 @@ function formatDate(dateString) {
 //     };
 //     console.log(data);
 
-//     fetch('http://3.109.5.164/khatawani', {
+//     fetch('http://65.0.32.172/khatawani', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -145,7 +145,7 @@ function fetchDataAndProcess() {
         route : getElementValueWithDefault('route', '*') 
     };
 
-    return fetch('http://3.109.5.164/khatawani', {
+    return fetch('http://65.0.32.172/khatawani', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
