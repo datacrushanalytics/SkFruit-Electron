@@ -40,10 +40,9 @@
     }
 
     #sidebar-container {
-      width: 20%; /* Occupy 1/5 of the page */
+    /*  width: 20%;  Occupy 1/5 of the page */
       background-color: #333;
       color: white;
-      padding: 20px;
       z-index: 999; /* Ensure sidebar is above other content */
       overflow-y: auto; /* Add scrollbar to sidebar */
       height: 100vh; /* Set sidebar height to full viewport height */
@@ -51,6 +50,7 @@
     }
 
     #main-container {
+      display: flex; /* Use flexbox */
       flex: 4; /* Occupy remaining width */
       overflow: hidden; /* Hide overflowing content */
       position: relative; /* Set position to relative */
@@ -115,51 +115,260 @@
       }
 
       #sidebar-container {
-        position: fixed;
-        width: 70%; /* Adjust sidebar width for smaller screens */
-        height: 100%;
-        top: 0;
-        left: -70%; /* Initially hide sidebar off-screen */
-        background-color: #333;
-        transition: left 0.3s ease; /* Add transition for smooth animation */
-      }
-
-      #sidebar-container.open {
-        left: 0; /* Slide sidebar into view */
+        width: auto; /* Adjust sidebar width for smaller screens */
+        padding-bottom: 20px; /* Add some space at the bottom */
       }
     }
+
+
+    /* ... */
+
+.sidebar-container {
+  width: 0;
+  background-color: #333;
+  color: white;
+  z-index: 999;
+  overflow-y: auto;
+  height: 100vh;
+  transition: width 0.3s ease; /* Smooth transition for width */
+}
+
+.sidebar-container.active {
+  width: 20%; /* Width of the sidebar when active */
+}
+
+/* ... */
+
+.footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: absolute; /* Position the footer */
+  bottom: 0; /* Stick to the bottom */
+  width: 100%; /* Full width */
+}
+
   </style>
 </head>
 
 <body>
-  <div class="hero-section">
-    <div class="menu-toggle" onclick="toggleMenu()">
-      ☰ <!-- Hamburger menu icon -->
-    </div>
+  <!-- <div class="hero-section">
     <div id="main-container">
       <iframe id="pageContent" src="./Menu.html" frameborder="0"></iframe>
     </div>
     <div id="sidebar-container">
-      <h3>
-        <img src="../../assets/img/logo.png" alt="Company Logo">
+      <h3 onclick="openPage('home')">
+          <img src="../../assets/img/logo.png" alt="Company Logo">
         SK Fruit
       </h3>
-      <!-- Dynamic menu buttons will be added here -->
-      <!-- Add logout button at the bottom -->
-      <button class="logout" onclick="logout()">Log Out</button>
+    </div>
+  </div> -->
+
+  <!-- ... -->
+
+<body>
+  <div class="hero-section">
+    <button class="toggle-sidebar-btn" onclick="toggleSidebar()">☰</button> <!-- Hamburger Button -->
+    <div class="sidebar-container" id="sidebar-container">
+      <!-- Sidebar content -->
+      <h3 onclick="openPage('home')">
+          <img src="../../assets/img/logo.png" alt="Company Logo">
+          SK Fruit
+      </h3>
+
+    </div>
+    <div id="main-container">
+      <iframe id="pageContent" src="./Menu.html" frameborder="0"></iframe>
+
+      <!-- Footer within main-container -->
+      <div class="footer" id = 'footer'>
+        <p>&copy; 2024 SK Fruit. All rights reserved.</p>
+      </div>
     </div>
   </div>
+<!-- ... -->
+
+  <!-- Footer -->
+ 
+
 
   <script>
-    function toggleMenu() {
+      document.addEventListener('DOMContentLoaded', function() {
+        // Retrieve user data from localStorage
+        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+        var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+
+        console.log(localStorage.getItem('sessionData'))
+        console.log(sessionData[0].usertype)
+        // Fetch data from API and dynamically generate buttons
+        fetch("http://65.0.32.172/accessconfigData")
+        .then(response => response.json())
+        .then(data => {
+          var sidebarContainer = document.getElementById('sidebar-container');
+          // data.forEach(menu => {
+            //if (isAdmin || menu.status === 'active') {
+              //var button = document.createElement('button');
+              // button.classList.add('component');
+              // button.textContent = menu.name;
+              // button.onclick = function() {
+              //   openPage(menu.name);
+            // };
+
+            //sidebarContainer.appendChild(button);
+          //}
+
+          data.forEach(menu => {
+            if (isAdmin || menu.status === 'active') {
+              var button = document.createElement('button');
+              button.classList.add('component');
+              button.textContent = menu.name;
+              button.onclick = handleButtonClick; // Use the handleButtonClick function
+              sidebarContainer.appendChild(button);
+            }
+     
+
+
+
+          });
+
+          // Add logout button at the bottom
+        var logoutButton = document.createElement('button');
+        logoutButton.href = "../section/Log_in.html";
+        logoutButton.classList.add('logout');
+        logoutButton.textContent = "Log Out";
+        logoutButton.onclick = function() {
+          localStorage.removeItem('sessionData');
+          window.location.href = "../section/Log_in.html";
+        };
+        sidebarContainer.appendChild(logoutButton);
+
+
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+        });
+      });
+    </script>
+  
+
+  <script>
+
+    function toggleSidebar() {
       var sidebar = document.getElementById('sidebar-container');
-      sidebar.classList.toggle('open'); // Toggle the 'open' class
+      var footer = document.getElementById('footer');
+      if (sidebar.style.width === '0%' || sidebar.style.width === '') {
+        sidebar.style.width = '20%'; // Show sidebar
+        document.querySelector('.footer').style.flex = '0 0 20px'; 
+      } else {
+        sidebar.style.width = '0%'; // Hide sidebar
+        document.querySelector('.footer').style.flex = '0 0 50px';
+      }
     }
 
-    function logout() {
-      localStorage.removeItem('sessionData');
-      window.location.href = "../section/Log_in.html";
+
+    function openPage(pageName) {
+      var pageUrl;
+      switch (pageName) {
+        case 'home':
+          pageUrl = './Menu.html';
+          break;
+        case 'user':
+          pageUrl = "./user/user.html";
+          break;
+          case 'product':
+          pageUrl = './product/product.html';
+          break;
+        case 'account':
+          pageUrl = './account/account.html';
+          break;
+        case 'route':
+          pageUrl = './route/Root_Details.html';
+          break;
+        case 'purchase':
+          pageUrl = './purchase/Purchase.html'
+          break;
+        case 'sale3':
+          pageUrl = './sale/sale3.html'
+          break;
+        case 'vehicle':
+          pageUrl = './vehicle/Vehicle_Details.html'
+          break;
+        case 'barcode':
+          pageUrl = './barcode/barcode.html'
+          break;
+        case 'receipt':
+          pageUrl = './receipt/Receipt.html'
+          break;
+        case 'payment':
+          pageUrl = './payment/Payment.html'
+          break;
+        case 'purchaseReport':
+          pageUrl = '../report/purchaseReport/purchaseReport.html'
+          break;
+        case 'routewiseSaleReport':
+          pageUrl = '../report/routewiseSaleReport/routewiseSaleReport.html'
+          break;
+        case 'stockReport':
+          pageUrl = '../report/stockReport/stockReport.html'
+          break;
+        case 'batawiseSaleReport':
+          pageUrl = '../report/batawiseSaleReport/batawiseSaleReport.html'
+          break;
+        case 'khatawani':
+          pageUrl = '../report/khatawani/khatawani.html'
+          break;
+        case 'dailyReport':
+          pageUrl = '../report/dailyReport/dailyReport.html'
+          break;
+        case 'receiptReport':
+          pageUrl = '../report/receiptReport/receiptReport.html'
+          break;
+        case 'ledgerReport':
+          pageUrl = '../report/ledgerReport/ledger.html'
+          break;
+        case 'customerOutstanding':
+          pageUrl = '../report/customerOutstanding/customerOutstanding.html'
+          break;
+        case 'supplierOutstanding':
+          pageUrl = '../report/supplierOutstanding/supplierOutstanding.html'
+          break;
+        case 'carateReport':
+          pageUrl = '../report/carateReport/carateReport.html'
+          break;
+        case 'remainder':
+          pageUrl = '../report/remainder/remainder.html'
+          break;
+        case 'profitLossReport':
+          pageUrl = '../report/profitLossReport/profit_loss_report.html'
+          break;
+          // Add other cases as needed
+        default:
+          pageUrl = './Home2.html';
+      }
+      document.getElementById('pageContent').src = pageUrl;
+
     }
+
+    function handleButtonClick(event) {
+      // Remove active class from all buttons
+      var buttons = document.querySelectorAll('.component');
+      buttons.forEach(function(button) {
+        button.classList.remove('active');
+      });
+    
+      // Add active class to the clicked button
+      event.target.classList.add('active');
+    
+      // Retrieve the page name from the clicked button's text content
+      var pageName = event.target.textContent;
+      
+      // Call the openPage function with the page name
+      openPage(pageName);
+    }
+    
+    
+
   </script>
 </body>
 
