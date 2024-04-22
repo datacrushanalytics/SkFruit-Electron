@@ -198,6 +198,21 @@
                                 margin:20px;
                                 }
 
+                                .container {
+                                    position: relative;
+                                 }
+
+                                     .new_customer {
+                                         position: absolute;
+                                         /* left:1186px; Adjust this value as needed */
+                                         right:61px;
+                                         
+                                      }
+
+
+                               
+                                
+
   </style>
 
 
@@ -212,34 +227,54 @@
       <lable for="bill">बिल नं : </lable>
       <input type="text" id="bill" name="number" placeholder="बिल नं.">
 
-      <lable for="date">दिनांक : </lable>
+      <lable for="date">दिनांक :</lable>
       <input type="text" id="date" name="date" placeholder="दिनांक:">
+      <br>
 
-      <label for="number">मोबाइल नं : </label>
+      <!-- <label for="number">मोबाइल नं : </label>
       <select type="root" id="number" name="number" onchange="getCust()">
-      </select>
+      </select> -->
     </div>
-
+       <br>
     <div>
       <label for="message" aria-placeholder="Root">ग्राहकाचे नाव :</label>
       <select type="root" id="grahk" name="root" onchange="previousbalance()">
         <input type="hidden" id="custid" name="custid">
       </select><br>
-      
-      <br>
-      <label for="message" aria-placeholder="Root">रूट :</label>
+
+      <div class="third-row">
+        <lable for="address">पत्ता : </lable>
+        <input type="text" id="address" name="text" placeholder="पत्ता">
+        <br>
+      </div>
+
+        <label for="number">मोबाइल नं : </label>
+         <select type="root" id="number" name="number" onchange="getCust()">
+        </select>
+        
+        <button id="new_cust" class="new_customer">Add new customer</button>
+        <br>
+
+
+        <label for="sandarbh">संदर्भ :</label>
+        <input type="text" id="sandarbh" name="text" placeholder="संदर्भ ">
+
+
+
+
+      <!-- <label for="message" aria-placeholder="Root">रूट :</label>
       <select type="root" id="Route" name="root">
       </select>
       <br>
-    </div>
+    </div> -->
 
-    <div class="third-row">
+    <!-- <div class="third-row">
       <lable for="address">पत्ता : </lable>
-      <input type="text" id="address" name="text" placeholder="पत्ता">
+      <input type="text" id="address" name="text" placeholder="पत्ता"> -->
 
-      <label for="sandarbh">संदर्भ :</label>
+      <!-- <label for="sandarbh">संदर्भ :</label>
       <input type="text" id="sandarbh" name="text" placeholder="संदर्भ ">
-    </div>
+    </div> -->
 
 
     <div>
@@ -248,16 +283,15 @@
       </select><br>
 
       <br>
+      <div>
       <label for="message" aria-placeholder="Root">Product :</label>
       <select type="root" id="product" name="root">
       </select>
+   
+   
+     <lable for="mark">मार्क :</lable>
+     <input type="text" id="mark" name="text" placeholder="मार्क">
     </div>
-    <!-- <div>
-      <input type="text" id="product" name="text" placeholder="प्रॉडक्ट">
-      <input type="text" id="bta" name="text" placeholder="बटा">
-    </div> -->
-    <lable for="mark">मार्क :</lable>
-    <input type="text" id="mark" name="text" placeholder="मार्क">
 
     <label for="kimmat">किंमत :</label>
     <input type="number" id="kimmat" name="number" placeholder="किंमत">
@@ -298,38 +332,61 @@
       &nbsp;  &nbsp; &nbsp; गेलेले कॅरेट
       <input type="number" id="carate100" name="number" placeholder="100" onchange="carate()">
       <input type="number" id="carate150" name="number" placeholder="150" onchange="carate()">
-      <input type="number" id="carate250" name="number" placeholder="250" onchange="carate()">
+      <!-- <input type="number" id="carate250" name="number" placeholder="250" onchange="carate()"> -->
       <input type="number" id="carate350" name="number" placeholder="350" onchange="carate()">
+
+      <lable for="total1">गेलेले कॅरेट रक्कम :</lable>
       <input type="number" id="total1" name="number" placeholder="गेलेले कॅरेट रक्कम">
     </div>
 
-    <div>
+    <!-- <div> -->
+      <lable for="bill1">बिल रक्कम :</lable>
       <input type="number" id="bill1" name="number" placeholder="बिल रक्कम" onchange="totalBalance()">
-      <input type="number" id="previousBalance" name="number" placeholder="मागील बाकी " readonly>
-      <input type="number" id="totalBill" name="number" placeholder="एकूण रक्कम " >
-    </div>
+      <br>
 
-    <div>
+      <lable for="previousBalance">मागील बाकी :</lable>
+      <input type="number" id="previousBalance" name="number" placeholder="मागील बाकी " readonly>
+      <br>
+
+      <lable for="totalBill">एकूण रक्कम :</lable>
+      <input type="number" id="totalBill" name="number" placeholder="एकूण रक्कम " >
+      <br>
+    <!-- </div> -->
+
+    <!-- <div> -->
+      <lable for="bill_cash">रोख जमा :</lable>
       <input type="number" id="bill_cash" name="number" placeholder="रोख जमा" onchange="totalBalance()">
-      <label for="message" aria-placeholder="OnlineAccount"></label>
+      <br><br>
+      <label for="message" aria-placeholder="OnlineAccount"> ऑनलाईन जमा :</label>
       <select type="root" id="onlineAcc" name="onlineAcc">
       </select>
+      <br>
+
+      <lable for="online">ऑनलाईन जमा :</lable>
       <input type="number" id="online" name="number" placeholder="ऑनलाईन जमा " onchange="totalBalance()">
+      <br>
+
+      <lable for="discount"> सूट रक्कम :</lable>
       <input type="number" id="discount" name="number" placeholder=" सूट रक्कम" onchange="totalBalance()">
-    </div>
+    <!-- </div> -->
 
     <div>
       &nbsp;  &nbsp; &nbsp; जमा कॅरेट
       <input type="number" id="carate1100" name="number" placeholder="100" onchange="carate1()">
       <input type="number" id="carate1150" name="number" placeholder="150" onchange="carate1()">
-      <input type="number" id="carate1250" name="number" placeholder="250" onchange="carate1()">
+      <!-- <input type="number" id="carate1250" name="number" placeholder="250" onchange="carate1()"> -->
       <input type="number" id="carate1350" name="number" placeholder="350" onchange="carate1()">
+
+      <label for="total2">जमा कॅरेट रक्कम :</label>
       <input type="number" id="total2" name="number" placeholder="जमा कॅरेट रक्कम">
     </div>
 
 
     <div>
+      <lable for="note">संदर्भ :</lable>
       <input type="text" id="note" name="name" placeholder="संदर्भ">
+
+      <label for="baki">बाकी रक्कम :</label>
       <input type="number" id="baki" name="name" placeholder="बाकी रक्कम">
     </div>
 

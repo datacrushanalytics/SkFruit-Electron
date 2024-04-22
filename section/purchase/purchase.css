@@ -74,7 +74,7 @@ body {
     border-radius: 4px;
     box-sizing: border-box;
     width: calc(50% - -45px); /* Adjusted width to accommodate margins */
-    text-align: left; /* Align inputs to the left */
+    text-align: center; /* Align inputs to the left */
     display: inline-block; /* Ensures inputs stay on the same line */
   }
   
