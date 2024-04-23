@@ -19,12 +19,21 @@
           align-items: center; /* Center content horizontally */
       }
 
+      .frame {
+          border: 2px solid #000; /* Black border */
+          padding: 20px; /* Padding inside the frame */
+          border-radius: 10px; /* Rounded corners */
+          width: 80%; /* Adjust width as needed */
+          max-width: 900px; /* Maximum width */
+          margin: 0 auto; /* Center horizontally */
+          background-color: white; /* Background color */
+      }
+
       .container {
           text-align: center;
           margin: 0 auto; /* Align container in the center */
-          width: 90%; /* Adjust the width as needed */
+          width: 100%; /* Adjust the width as needed */
           max-width: 814px; /* Limit the maximum width */
-          margin-bottom: 20px;
           overflow-x: auto; /* Allow horizontal scrolling if needed */
           padding: 20px; /* Add padding inside the container */
           box-sizing: border-box; /* Include padding and border in width */
@@ -138,17 +147,20 @@
   </style>
 </head>
 <body>
-    <div class="container">
-        <h1 align="center">जमा पावती</h1>
-        <hr>
+    <div class="frame">
+        <div class="container">
+            <h1 align="center">जमा पावती</h1>
+            <hr>
 
-        <div class="container1">
-            <form id="loginForm1">
-                <div class="first-row">
-                    <label for="pavti" class="input-label">जमा पावती क्र.</label>
-                    <input type="number" id="pavti" name="number" placeholder="जमा पावती क्र.">
-                </div>
+            <div class="container1">
+                <form id="loginForm1">
+                    <div class="first-row">
+                        <label for="pavti" class="input-label">जमा पावती क्र.</label>
+                        <input type="number" id="pavti" name="number" placeholder="जमा पावती क्र.">
+                    </div>
 
+                    <!-- Rest of your form content -->
+                    
                 <div class="first-row">
                     <label for="date1" class="input-label">तारीख</label>
                     <input type="text" id="date" name="date" placeholder="तारीख">
@@ -215,16 +227,18 @@
                     <input type="text" id="input5" name="input1">
                 </div>
 
-                <div class="button-container">
-                    <button class="border-hover1 button">Save</button>
-                    <!-- <button class="border-hover2 button">Back</button> -->
-                </div>
-            </form>
+                    <div class="button-container">
+                        <button class="border-hover1 button">Save</button>
+                        <!-- <button class="border-hover2 button">Back</button> -->
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </body>
 <script src="./receipt.js"></script>
 <script>
+    // JavaScript functions remain unchanged
     function carate() {
         var value100 = parseInt(document.getElementById("carate100").value) || 0;
         var value150 = parseInt(document.getElementById("carate150").value) || 0;
@@ -307,7 +321,5 @@
     }
 
 </script>
-
-
-
-</html> 
+</script>
+</html>
