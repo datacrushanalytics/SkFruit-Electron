@@ -64,6 +64,7 @@ img{
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    margin-top: 20px
 }
 
 #submitButton:hover {

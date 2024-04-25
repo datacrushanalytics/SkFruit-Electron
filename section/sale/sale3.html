@@ -252,7 +252,7 @@
          <select type="root" id="number" name="number" onchange="getCust()">
         </select>
         
-        <button id="new_cust" class="new_customer">Add new customer</button>
+        <button id="new_cust" class="new_customer" onclick="redirectToAccMaster()">Add new customer</button>
         <br>
 
 
@@ -304,6 +304,13 @@
 
 <br>
 <br>
+
+  <div class="fourth-row">
+   <label for="carateView">Carate View :</label>
+   <input type="checkbox" id="carateView" onchange="toggleCarateView()">
+   </div>
+   <br>
+   <br>
 
     <div class="fourth-row">
       <!-- <button class="border-hover" >Save</button> -->
@@ -658,6 +665,16 @@ function totalbill(){
           console.error('Error:', error);
         });
     }
+
+      // Function to handle the click event of the "Add new customer" button
+  function redirectToAccMaster() {
+    // Redirect the user to acc-master.html
+    window.location.href = 'account.html';
+  }
+
+
+
+   
 </script>
 
 </html>
