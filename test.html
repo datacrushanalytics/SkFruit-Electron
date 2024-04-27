@@ -10,23 +10,38 @@
 <body>
 
 <select id="component-dropdown" multiple="multiple" style="width: 300px;">
-    <option value="component1">Component 1</option>
-    <option value="component2">Component 2</option>
-    <option value="component3">Component 3</option>
-    <!-- Add more options as needed -->
+    <!-- Options will be dynamically populated here -->
 </select>
 
 <script>
 $(document).ready(function() {
-    $('#component-dropdown').select2({
-        placeholder: 'Select components',
-        closeOnSelect: false,
-        templateResult: function(data) {
-            if (!data.id) {
-                return data.text;
-            }
-            var $element = $('<span>' + data.text + '</span>');
-            return $element;
+    // Fetch data from API
+    $.ajax({
+        url: 'http://localhost:3000/routeData', // Replace 'your-api-endpoint.com' with your actual API endpoint
+        type: 'GET',
+        success: function(response) {
+            // Populate options from API response
+            response.forEach(function(item) {
+                console.log(item.route_name);
+                $('#component-dropdown').append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
+            });
+
+            // Initialize Select2 after options are populated
+            $('#component-dropdown').select2({
+                placeholder: 'Select components',
+                closeOnSelect: false,
+                templateResult: function(data) {
+                    console.log(data);
+                    if (!data.id) {
+                        return data.text;
+                    }
+                    var $element = $('<span>' + data.text + '</span>');
+                    return $element;
+                }
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching data:', error);
         }
     });
 });

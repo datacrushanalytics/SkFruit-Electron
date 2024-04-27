@@ -1,7 +1,7 @@
 function account() {
   console.log("user function executed");
 
-  fetch('http://65.0.32.172/accountData')
+  fetch('http://localhost:3000/accountData')
       .then(response => {
           if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -22,6 +22,7 @@ function populateTable(data) {
   tbody.innerHTML = ''; // Clear existing rows
   var columnsToDisplay = ['name', 'account_group','address','mobile_no','cr_dr_type'];
   var counter = 1;
+  var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
   data.forEach(function(item) {
       var row = tbody.insertRow();
       var cell = row.insertCell();
@@ -31,29 +32,33 @@ function populateTable(data) {
           cell.textContent = item[key];
       });
 
-       // Add Edit button
-       var editCell = row.insertCell();
-       var editButton = document.createElement('button');
-       editButton.className = 'button edit-button';
-       var editLink = document.createElement('a');
-       editLink.href = '../account/updateAccount.html'; // Edit link destination
-       editLink.textContent = 'Edit';
-       editButton.appendChild(editLink);
+      // Add Edit button if user is admin
+      if (isAdmin) {
+        var editCell = row.insertCell();
+        var editButton = document.createElement('button');
+        editButton.className = 'button edit-button';
+        var editLink = document.createElement('a');
+        editLink.href = '../account/updateAccount.html'; // Edit link destination
+        editLink.textContent = 'Edit';
+        editButton.appendChild(editLink);
+        editButton.addEventListener('click', function() {
+          editAccount(item); // Pass the user data to the edit function
+        });
+        editCell.appendChild(editButton);
+    }
 
-      editButton.addEventListener('click', function() {
-        editAccount(item); // Pass the user data to the edit function
-      });
-      editCell.appendChild(editButton);
-
-       // Add Delete button
-       var deleteCell = row.insertCell();
-       var deleteButton = document.createElement('button');
-       deleteButton.className = 'button delete-button';
-       deleteButton.textContent = 'Delete';
-       deleteButton.addEventListener('click', function() {
+    // Add Delete button if user is admin
+    if (isAdmin) {
+        var deleteCell = row.insertCell();
+        var deleteButton = document.createElement('button');
+        deleteButton.className = 'button delete-button';
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', function() {
           deleteaccount(item.id); // Pass the user id to the delete function
-      });
-      deleteCell.appendChild(deleteButton);
+        });
+        deleteCell.appendChild(deleteButton);
+    }
+
   });
 }
 
@@ -76,7 +81,7 @@ function editAccount(user) {
 
 function deleteaccount(userId) {
   // Perform delete operation based on userId
-  fetch('http://65.0.32.172/accountData/deleteaccountId/' + userId, {
+  fetch('http://localhost:3000/accountData/deleteaccountId/' + userId, {
       method: 'DELETE'
   })
   .then(response => {

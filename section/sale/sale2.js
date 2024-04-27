@@ -32,7 +32,7 @@ document.getElementById('login').addEventListener('submit', async function(event
     };
 
     try {
-        const response = await fetch('http://65.0.32.172/saleData/insertsale', {
+        const response = await fetch('http://localhost:3000/saleData/insertsale', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

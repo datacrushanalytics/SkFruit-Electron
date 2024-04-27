@@ -197,7 +197,7 @@
                     <label for="userType">To Date :</label>
                     <input type="date" id="todate" name="date" placeholder="To Date">
                 </div>
-                <br><br>
+                <br>
                 <label for="userType">Vehicle Number :</label>
                 <select class="drop" id="vehicleNumber" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
@@ -247,9 +247,9 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://65.0.32.172/vehicleData', 'vehicleNumber','vehicle_no');
-        fetchAndPopulateDropdown('http://65.0.32.172/list/Supplier', 'supplier','name');
-        fetchAndPopulateDropdown('http://65.0.32.172/purchaseproductData', 'bata','bata');
+        fetchAndPopulateDropdown('http://localhost:3000/vehicleData', 'vehicleNumber','vehicle_no');
+        fetchAndPopulateDropdown('http://localhost:3000/list/Supplier', 'supplier','name');
+        fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData', 'bata','bata');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {

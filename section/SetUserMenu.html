@@ -151,7 +151,7 @@
             });
 
             function fetchDataAndUpdateCheckboxes() {
-                fetch("http://65.0.32.172/accessconfigData") // Assuming this is your API endpoint to fetch data
+                fetch("http://localhost:3000/accessconfigData") // Assuming this is your API endpoint to fetch data
                 .then(response => response.json())
                 .then(data => {
                     // Loop through the data received from the API
@@ -189,7 +189,7 @@
                     name: selectedMenus
             };
                 // Make a POST request to your API endpoint
-                fetch("http://65.0.32.172/accessconfigData/updateAccessconfig", {
+                fetch("http://localhost:3000/accessconfigData/updateAccessconfig", {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json"

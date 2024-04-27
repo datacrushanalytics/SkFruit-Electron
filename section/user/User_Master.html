@@ -17,14 +17,9 @@
           }
            .name label {
              display: block;
-             margin-bottom: 20px; /* Adjust this value as needed */
+             /* margin-bottom: 20px;  Adjust this value as needed */
              text-align: left;
             }
-
-
-
-
-
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -125,14 +120,12 @@
         <select id="usertype" name="usertype" placeholder="UserType">
             <option value="User" selected>User</option>
             <option value="Admin">Admin</option>
-            <option value="Customer">Customer</option>
-            <option value="Superadmin">Superadmin</option>
             <!-- Add more options as needed -->
         </select>
         </div>
         <br>
         <div class="name">
-        <label for="userType">Name &nbsp; &nbsp;&nbsp;</label>
+        <label for="userType">Name </label>
         <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
         <select id="name" id="name" name="name"> 
             <!-- <option value="User" disabled selected>Select Account</option> -->
@@ -140,7 +133,6 @@
     </div>
         <br>
         <!-- <input type="text" id="name" name="name" placeholder="Name">  -->
-        <br><br>
         <label fro="username">Username :</label>
         <input type="text" id="username" name="username" placeholder="Username"> <br>
 
@@ -174,7 +166,7 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://65.0.32.172/list/Worker', 'name','name');
+        fetchAndPopulateDropdown('http://localhost:3000/list/Worker', 'name','name');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {

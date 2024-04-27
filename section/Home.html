@@ -210,7 +210,7 @@ h3 img {
         console.log(localStorage.getItem('sessionData'))
         console.log(sessionData[0].usertype)
         // Fetch data from API and dynamically generate buttons
-        fetch("http://65.0.32.172/accessconfigData")
+        fetch("http://localhost:3000/accessconfigData")
         .then(response => response.json())
         .then(data => {
           var sidebarContainer = document.getElementById('sidebar-container');

@@ -2,7 +2,7 @@
 function user() {
     console.log("user function executed");
 
-    fetch('http://65.0.32.172/userData')
+    fetch('http://localhost:3000/userData')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -23,6 +23,7 @@ function populateTable(data) {
     tbody.innerHTML = ''; // Clear existing rows
     var columnsToDisplay = ['name', 'address','mobile_no','username','password','status','usertype'];
     var counter = 1;
+    var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
     data.forEach(function(item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
@@ -32,29 +33,32 @@ function populateTable(data) {
             cell.textContent = item[key];
         });
 
-         // Add Edit button
-         var editCell = row.insertCell();
-         var editButton = document.createElement('button');
-         editButton.className = 'button edit-button';
-         var editLink = document.createElement('a');
-         editLink.href = '../user/update_user.html'; // Edit link destination
-         editLink.textContent = 'Edit';
-         editButton.appendChild(editLink);
-
-        editButton.addEventListener('click', function() {
-            editUser(item); // Pass the user data to the edit function
-        });
-        editCell.appendChild(editButton);
+         // Add Edit button if user is admin
+        if (isAdmin) {
+            var editCell = row.insertCell();
+            var editButton = document.createElement('button');
+            editButton.className = 'button edit-button';
+            var editLink = document.createElement('a');
+            editLink.href = '../user/update_user.html'; // Edit link destination
+            editLink.textContent = 'Edit';
+            editButton.appendChild(editLink);
+            editButton.addEventListener('click', function() {
+                editUser(item); // Pass the user data to the edit function
+            });
+            editCell.appendChild(editButton);
+        }
  
-         // Add Delete button
-         var deleteCell = row.insertCell();
-         var deleteButton = document.createElement('button');
-         deleteButton.className = 'button delete-button';
-         deleteButton.textContent = 'Delete';
-         deleteButton.addEventListener('click', function() {
-            deleteUser(item.id); // Pass the user id to the delete function
-        });
-        deleteCell.appendChild(deleteButton);
+        // Add Delete button if user is admin
+        if (isAdmin) {
+            var deleteCell = row.insertCell();
+            var deleteButton = document.createElement('button');
+            deleteButton.className = 'button delete-button';
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', function() {
+                deleteUser(item.id); // Pass the user id to the delete function
+            });
+            deleteCell.appendChild(deleteButton);
+        }
     });
 }
 
@@ -78,7 +82,7 @@ function editUser(user) {
 
 function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('http://65.0.32.172/userData/deleteUser/' + userId, {
+    fetch('http://localhost:3000/userData/deleteUser/' + userId, {
         method: 'DELETE'
     })
     .then(response => {

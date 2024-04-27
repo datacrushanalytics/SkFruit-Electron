@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://65.0.32.172/list/Customer')
+//     fetch('http://localhost:3000/list/Customer')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -17,7 +17,7 @@
 //         });
 
 
-//     fetch('http://65.0.32.172/routeData')
+//     fetch('http://localhost:3000/routeData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -104,7 +104,7 @@ function formatDate(dateString) {
 //     };
 //     console.log(data);
 
-//     fetch('http://65.0.32.172/khatawani', {
+//     fetch('http://localhost:3000/khatawani', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -138,14 +138,18 @@ document.getElementById('loginForm1').addEventListener('submit', function(event)
 
 
 function fetchDataAndProcess() {
+
+    var selectedValues = $('#route').val();
+    console.log('Selected values:', selectedValues);
     var data = {
         from_date : formatDate(document.getElementById("fromdate").value),
         to_date : formatDate(document.getElementById("todate").value),
         cust_name : getElementValueWithDefault('customer', '*') , 
-        route : getElementValueWithDefault('route', '*') 
+        route : selectedValues || '*',
     };
 
-    return fetch('http://65.0.32.172/khatawani', {
+
+    return fetch('http://localhost:3000/khatawani', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

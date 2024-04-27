@@ -122,18 +122,18 @@
                 <div class="second-row">
                     Carate Bill : 
                     <input type="radio" id="cr" name="cr_dr_type" value="yes">
-                    <label for="cr">YES</label>
+                    <label for="cr">Carate with payment</label>
                     <input type="radio" id="dr" name="cr_dr_type" value="no">
-                    <label for="dr">NO</label>
+                    <label for="dr">Carate without payment</label>
                 </div>
-                <div class="second-row">
+                <!-- <div class="second-row">
                    <b> Carate with payment : </b>
                     <input type="radio" id="with_payment" name="payment_type" value="with_payment">
                     <label for="with_payment"></label>
                    <b> Carate without payment : <b>
                     <input type="radio" id="without_payment" name="payment_type" value="without_payment">
                     <label for="without_payment"></label>
-                </div>
+                </div> -->
                 <br>
             
                 <div class="third-row">
@@ -151,8 +151,8 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://65.0.32.172/accountgroupData', 'account_group','name');
-        fetchAndPopulateDropdown('http://65.0.32.172/routeData', 'route_detail','route_name');
+        fetchAndPopulateDropdown('http://localhost:3000/accountgroupData', 'account_group','name');
+        fetchAndPopulateDropdown('http://localhost:3000/routeData', 'route_detail','route_name');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {

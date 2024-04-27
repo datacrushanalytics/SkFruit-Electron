@@ -172,7 +172,7 @@
 
                 <label for="userType"> Customer : </label>
                 <select class="drop" id="customer" name="name">
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                    <!-- <option value="User" disabled sele÷cted>Select Account</option> -->
                 </select>
 
                 <br>
@@ -180,7 +180,8 @@
 
 
                 <label for="userType">Route : </label>
-                <select class="drop" id="route" name="name">
+                <select class="drop" id="route" name="name" multiple="multiple">
+                    <!-- <option value="" disabled>Select Route</option> -->
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select>
                 <br><br>
@@ -230,8 +231,9 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://65.0.32.172/list/Customer', 'customer');
-        fetchAndPopulateDropdown('http://65.0.32.172/routeData', 'route');
+        fetchAndPopulateDropdown('http://localhost:3000/routeData', 'route');
+        fetchAndPopulateDropdown('http://localhost:3000/list/Customer', 'customer');
+        
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId) {
@@ -257,8 +259,9 @@
         dropdown.empty();
 
         // Add placeholder option
-        dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
-
+        if (dropdownId== 'customer'){
+            dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+        }
         // Populate dropdown with API data
         data.forEach(function (item) {
             dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
@@ -266,8 +269,16 @@
 
         // Initialize Select2
         dropdown.select2({
-            placeholder: "Select " + dropdownId + " type",
-            allowClear: true
+            placeholder: 'Select components',
+            closeOnSelect: false,
+            allowClear: true,
+            templateResult: function (data) {
+                if (!data.id) {
+                    return data.text;
+                }
+                var $element = $('<span>' + data.text + '</span>');
+                return $element;
+            }
         });
     }
 

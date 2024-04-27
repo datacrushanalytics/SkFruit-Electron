@@ -186,7 +186,7 @@ th {
             currentTimeElement.textContent = "Time: " + currentTime;
             var currentDate1 = new Date();
 
-            fetch("http://65.0.32.172/fetchData/purchase", {
+            fetch("http://localhost:3000/fetchData/purchase", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
