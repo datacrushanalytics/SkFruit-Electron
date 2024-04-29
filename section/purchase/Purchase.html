@@ -216,8 +216,8 @@
               })
               .then(result => {
                 console.log('Entry added successfully:', result);
-                document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) + formData.price;
-                updateTable(formData, result);
+                //document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) + formData.price;
+                updateTable(formData, result.insertId);
               })
               .catch(error => {
                 console.error('Error:', error);
@@ -237,8 +237,10 @@
                   <td>${entry.quantity}</td>
                   <td>${entry.unit}</td>
                   <td>${entry.price}</td>
-                  <td><button type="button" onclick="deleteUser(this, ${result.insertId}, ${entry.price})">Delete</button></td>
+                  <td><button type="button" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button></td>
               `;
+            
+            document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) + entry.price;
             tableBody.appendChild(newRow);
           }
         

@@ -88,7 +88,9 @@ h1, h2, h3 {
     color: #555;
     border-bottom: 2px solid #ddd;
     padding-bottom: 10px;
+    flex-wrap: wrap;
 }
+
 
 #currentDate, #currentTime {
     flex: 1;
@@ -170,6 +172,13 @@ th {
         <p id="currentTime">Discount Amount : <h2 id="saleDiscount"></h2></p>
         <p id="currentTime">In Carate Received : <h2 id="saleIncarate"></h2></p>
     </div>
+    <div class="datetime" id="datetime">
+        <p id="currentTime">OutCarate 100 : <h2 id="carate100"></h2></p>
+        <p id="currentTime">OutCarate 150 : <h2 id="carate150"></h2></p>
+        <p id="currentTime">OutCarate 250 : <h2 id="carate250"></h2></p>
+        <p id="currentTime">OutCarate 350 : <h2 id="carate350"></h2></p>
+        
+    </div>
     <h1>Receipt Details : </h1>
     <div class="datetime" id="datetime">
         <p id="currentTime">Cash Received : <h2 id="receiptCash"></h2></p>
@@ -245,6 +254,10 @@ th {
                 document.getElementById('saleCash').textContent = data.SaleDetails["Cash"] || 0
                 document.getElementById('saleOnline').textContent = data.SaleDetails["online"] || 0
                 document.getElementById('saleDiscount').textContent = data.SaleDetails["discount"] || 0
+                document.getElementById('saleIncarate').textContent = data.SaleDetails["incarat"] || 0
+                document.getElementById('saleIncarate').textContent = data.SaleDetails["incarat"] || 0
+                document.getElementById('saleIncarate').textContent = data.SaleDetails["incarat"] || 0
+                document.getElementById('saleIncarate').textContent = data.SaleDetails["incarat"] || 0
                 document.getElementById('saleIncarate').textContent = data.SaleDetails["incarat"] || 0
                 document.getElementById('receiptCash').textContent = data.ReceiptDetails["Cash"] || 0
                 document.getElementById('receiptOnline').textContent = data.ReceiptDetails["online"] || 0

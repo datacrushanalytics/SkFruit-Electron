@@ -26,7 +26,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .then(data => {
                     // Populate dropdown with API data
-                    populateDropdown3(data);
+                    //populateDropdown3(data);
+                    data.forEach(function (item) {
+                        updateTable(item,item.id);
+                    });  
                 })
                 .catch(error => {
                     console.error('Error:', error);

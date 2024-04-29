@@ -616,9 +616,9 @@ function totalbill(){
       })
       .then(result => {
         console.log('Entry added successfully:', result);
-        document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + parseInt(document.getElementById('total').value);
-        totalBalance()
-        updateTable(formData, result);
+        // document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + parseInt(document.getElementById('total').value);
+        // totalBalance()
+        updateTable(formData, result.insertId);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -637,8 +637,10 @@ function totalbill(){
           <td>${entry.quantity}</td>
           <td>${entry.rate}</td>
           <td>${entry.price}</td>
-          <td><button type="button" onclick="deleteUser(this, ${result.insertId}, ${entry.price})">Delete</button></td>
+          <td><button type="button" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button></td>
       `;
+    document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + parseInt(document.getElementById('total').value);
+    totalBalance()
     tableBody.appendChild(newRow);
   }
 

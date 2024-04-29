@@ -30,7 +30,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .then(data => {
                     // Populate dropdown with API data
-                    populateDropdown3(data);
+                    // updateTable(data);
+                    // populateDropdown3(data);
+
+                    data.forEach(function (item) {
+                        updateTable(item,item.id);
+                    });  
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -137,48 +142,53 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-function populateDropdown3(data) {
-    var tbody = document.getElementById('tableBody1');
-    tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['product_name', 'bata', 'mark', 'purchase_price', 'selling_price','quantity' ,'unit'  ,'price'];
-    data.forEach(function (item) {
-        var row = tbody.insertRow();
-        var cell = row.insertCell();
-        columnsToDisplay.forEach(function (key) {
-            var cell = row.insertCell();
-            cell.textContent = item[key];
-        });
-        // Add Delete button
-        var deleteCell = row.insertCell();
-        var deleteButton = document.createElement('button');
-        deleteButton.className = 'button delete-button';
-        deleteButton.textContent = 'Delete';
-        deleteButton.addEventListener('click', function () {
-            deleteUser(item.id); // Pass the user id to the delete function
-        });
-        deleteCell.appendChild(deleteButton);
+// function populateDropdown3(data) {
+//     var tbody = document.getElementById('tableBody1');
+//     tbody.innerHTML = ''; // Clear existing rows
+//     var columnsToDisplay = ['id','product_name', 'bata', 'mark', 'purchase_price', 'selling_price','quantity' ,'unit'  ,'price'];
+//     data.forEach(function (item) {
+//         var row = tbody.insertRow();
+//         var cell = row.insertCell();
+//         columnsToDisplay.forEach(function (key) {
+//             var cell = row.insertCell();
+//             cell.textContent = item[key];
+//         });
+//         // Add Delete button
+//         var deleteCell = row.insertCell();
+//         var deleteButton = document.createElement('button');
+//         deleteButton.className = 'button delete-button';
+//         deleteButton.textContent = 'Delete';
+//         deleteButton.addEventListener('click', function () {
+//             //console.log('Delete user id', item.id);
+//             deleteUser1(item.id); // Pass the user id to the delete function
+//         });
+//         deleteCell.appendChild(deleteButton);
 
-    });
-}
+//     });
+// }
 
-function deleteUser(userId) {
-    // Perform delete operation based on userId
-    fetch('http://localhost:3000/purchaseproductData/deleteproductId/' + userId, {
-        method: 'DELETE'
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            console.log('User deleted successfully');
-            alert("purchase is successfully Deleted");
-            // Refresh the table or update UI as needed
-            user(); // Assuming you want to refresh the table after delete
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
+// async function deleteUser1(userId) {
+//     try {
+//         console.log('Deleting user id', typeof(userId));
+//         console.log(typeof(userId));
+//         // Perform delete operation based on userId
+//         const response = await fetch('http://localhost:3000/purchaseproductData/deletepurchaseproductId/' + userId, {
+//             method: 'DELETE'
+//         });
+
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//         }
+
+//         console.log('User deleted successfully');
+//         alert("purchase is successfully Deleted");
+//         // Refresh the table or update UI as needed
+//         user(); // Assuming you want to refresh the table after delete
+//     } catch (error) {
+//         console.error('Error:', error);
+//     }
+// }
+
 
 
 // function populateDropdown4(data) {
