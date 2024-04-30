@@ -55,7 +55,7 @@
 
         label {
             display: block;
-            margin-bottom: -20spx;
+            margin-top: 3%;
             text-align: left;
         }
 
@@ -108,21 +108,20 @@
             <form id="loginForm1">
 
                 <div class="first-row">
-                    <label for="date">Date</label>
+                    <label for="date">Date :</label>
                     <input type="text" id="date" name="date" placeholder="Date" required>
                 </div>
                 <br>
-                <label for="product">From Account</label>
+                <label for="product">From Account :</label>
                 <select id="product" name="from_account" required>
                     <!-- Options for from account -->
-                </select>
+                </select><br>
                 <br>
-                <br>
-                <label for="bata">To Account</label>
+                <div class="first-row">
+                <label for="bata">To Account :</label>
                 <select id="bata" name="to_account" onchange="previousbalance()" required>
                     <!-- Options for to account -->
                 </select>
-                <br>
                 <br>
                 <label for="comment">Comment</label>
                 <textarea id="comment" name="comment" required></textarea><br>

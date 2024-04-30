@@ -34,6 +34,7 @@
         
         label {
             display: block;
+            margin-top: 4%;
             margin-bottom: 5px;
         }
         
@@ -107,8 +108,10 @@
         <form id="loginForm">
     
         <div class="first-row">
+        <label for="Id">ID :</label>
         <input type="text" id="id" name="id" placeholder="ID" value = "" required> 
         <!-- <input type="text" id="usertype" name="usertype" placeholder="User Type"> -->
+        <label for="userType">User Type :</label>
         <select id="usertype" name="usertype" placeholder="UserType" required>
             <option value="User" selected>User</option>
             <option value="Admin">Admin</option>
@@ -121,9 +124,10 @@
         <select id="name" id="name" name="name" required>
             <!-- <option value="User" disabled selected>Select Account</option> -->
         </select>
-
+        <br>
         <label fro="username">Username :</label>
         <input type="text" id="username" name="username" placeholder="Username" required> <br>
+
         <label for="password">Password :</label>
         <input type="password" id="password" name="password" placeholder="Password" required> <br>
 <!-- Your HTML -->
