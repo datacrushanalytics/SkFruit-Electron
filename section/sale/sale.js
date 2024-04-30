@@ -3,8 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Get the current date
     var currentDate = new Date();
     // Format the date as mm/dd/yyyy
-    var formattedDate = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
+    var formattedDate = currentDate.getFullYear() + '-' + (String(currentDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(currentDate.getDate()).padStart(2, '0'));
     // Set the placeholder of the input field to the formatted date
+    console.log(formattedDate);
     document.getElementById('date').value = formattedDate;
 
     fetch('http://localhost:3000/fetchSaleid')
@@ -293,8 +294,8 @@ function getProducts() {
             $productDropdown.val(data[0].product_name).trigger('change');
 
             // Update label with additional content
-            var nagLabel = document.getElementById('nagLabel');
-            nagLabel.innerHTML = 'नग: (' + data[0].selling_price + data[0].selling_price + ')'; 
+            // var nagLabel = document.getElementById('nagLabel');
+            // nagLabel.innerHTML = 'नग: (' + data[0].selling_price + data[0].selling_price + ')'; 
         })
         .catch(error => {
             console.error('Error:', error);
@@ -307,7 +308,7 @@ function getProducts() {
 
             // Update label with additional content
             var nagLabel = document.getElementById('nagLabel');
-            nagLabel.innerHTML = 'नग: (Remaining : ' + data[0].closing + ')'; 
+            nagLabel.innerHTML = 'नग: (Remaining : ' + data[0].closing + ' '+ data[0].unit +')'; 
         })
         .catch(error => {
             console.error('Error:', error);

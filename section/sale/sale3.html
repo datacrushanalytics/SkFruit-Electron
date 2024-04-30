@@ -8,7 +8,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
   <title></title>
-
+<!-- 
   <style>
 
     body {
@@ -198,23 +198,200 @@
                                 margin:20px;
                                 }
 
-                                .container {
-                                    position: relative;
-                                 }
-
-                                     .new_customer {
-                                         position: absolute;
-                                         /* left:1186px; Adjust this value as needed */
-                                         right:61px;
-                                         
-                                      }
+  </style> -->
 
 
-                               
-                                
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: rgba(242, 242, 242, 0.8);
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    .container {
+      text-align: center;
+      margin-bottom: 20px;
+      padding: 0 20px;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin: 0 auto;
+      max-width: 100%;
+      min-width: 600px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 100%;
+      border-collapse: collapse;
+      background-color: rgba(255, 255, 255, 0.8);
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 12px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    button {
+      background-color: grey; 
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: darkgrey; 
+    }
+
+    /* Adjustments for input elements */
+    input[type="text"], 
+    input[type="number"],
+    input[type="date"],
+    select {
+      height: 40px;
+      width: calc(100% - 20px); /* Adjusted width */
+      margin: 10px;
+      padding: 0 10px; /* Adjusted padding */
+      border-radius: 5px; /* Added border-radius */
+      box-sizing: border-box;
+    }
+
+    /* Adjustments for labels */
+    label {
+      margin: 10px;
+    }
+
+    /* Adjustments for buttons */
+    .save {
+      margin: 20px; /* Added margin */
+    }
+
+    /* Adjustments for table rows */
+    .table-row {
+      text-align: center; /* Center align table rows */
+    }
+
+/* CSS for bill and date container */
+.bill-date-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* CSS for individual input wrappers */
+.input-wrapper {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  margin: 0 5px; /* Reduce the margin between input wrappers */
+}
+
+/* Adjustments for input elements */
+.input-wrapper input[type="text"], 
+.input-wrapper input[type="number"],
+.input-wrapper input[type="date"],
+.input-wrapper select {
+  flex: 1; 
+  margin-right: 0; /* Remove margin between input boxes */
+}
+
+/* Adjustments for labels */
+.input-wrapper label {
+  margin-right: 10px; /* Add margin between label and input box */
+  width: 100px; /* Fixed width for labels */
+  text-align: right; /* Align label text to the right */
+}
+
+/* Adjustments for individual input wrappers */
+#bill-wrapper,
+#date-wrapper {
+  margin-right: 10px; /* Reduce the margin between input wrappers */
+}
+
+.dropdown-container {
+  display: flex;
+  justify-content: space-between; /* Distribute space evenly between dropdowns */
+  margin-bottom: 10px; /* Add margin between the dropdown container and other elements */
+}
+
+.dropdown-container .input-wrapper {
+  flex: 1; /* Each dropdown takes equal width */
+  margin-right: 10px; /* Add space between dropdowns */
+}
+
+.dropdown-container .input-wrapper:last-child {
+  margin-right: 0; /* Remove margin from the last dropdown */
+}
+
+
+
+.row-container .input-wrapper {
+  flex: 1; /* Each dropdown takes equal width */
+  margin-right: 10px; /* Add space between dropdown and button */
+}
+
+.row-container .button-wrapper {
+  flex: 1; /* Button takes equal width as dropdown */
+}
+
+.row-container {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  margin-bottom: 10px; /* Add margin between the row container and other elements */
+}
+
+.row-container label {
+  margin-right: 10px; /* Add space between label and inputs */
+}
+
+.row-container .carat-inputs {
+  display: flex;
+  align-items: left; /* Align items vertically */
+}
+
+.row-container .input-wrapper {
+  margin-right: 10px; /* Add space between input wrappers */
+}
+
+.row-container .input-wrapper:last-child {
+  margin-right: 0; /* Remove margin for the last input wrapper */
+}
+
+.totalCarat {
+  margin-left: auto; /* Push the total carat container to the right */
+}
+
+.row-container1 {
+  display: flex;
+  margin-bottom: 10px; /* Add margin between rows */
+  margin-left: 50%;
+  margin-right: 10%;
+}
+
+.row-container1 label {
+  margin-left: auto; /* Move the label to the right side */
+  margin-right: 10px; /* Add space between label and input */
+}
+
+
+
+
 
   </style>
-
 
 </head>
 
@@ -223,77 +400,116 @@
     <h1 align="center">विक्री </h1>
     <hr>
 <form id="login">
-    <div class="first-row">
-      <lable for="bill">बिल नं : </lable>
-      <input type="text" id="bill" name="number" placeholder="बिल नं.">
 
-      <lable for="date">दिनांक :</lable>
-      <input type="text" id="date" name="date" placeholder="दिनांक:">
-      <br>
-
-      <!-- <label for="number">मोबाइल नं : </label>
-      <select type="root" id="number" name="number" onchange="getCust()">
-      </select> -->
+  <div class="bill-date-container">
+    <div id="bill-wrapper" class="input-wrapper">
+      <label for="bill">बिल नं :</label>
+      <input type="text" id="bill" name="number" placeholder="बिल नं." required>
     </div>
-       <br>
-    <div>
-      <label for="message" aria-placeholder="Root">ग्राहकाचे नाव :</label>
-      <select type="root" id="grahk" name="root" onchange="previousbalance()">
-        <input type="hidden" id="custid" name="custid">
-      </select><br>
+    
+    <div id="date-wrapper" class="input-wrapper">
+      <label for="date">दिनांक :</label>
+      <input type="date" id="date" name="date" required>
+    </div>    
+  </div>
+  
+  
+  <div class="dropdown-container">
+    <div id="number-wrapper" class="input-wrapper">
+      <label for="number">मोबाइल नं :</label>
+      <select type="root" id="number" name="number" onchange="getCust()" required></select>
+    </div>
+  
+    <div id="grahk-wrapper" class="input-wrapper">
+      <label for="grahk">ग्राहकाचे नाव :</label>
+      <select type="root" id="grahk" name="root" onchange="previousbalance()" required></select>
+    </div>
+  </div>
+  
 
-      <div class="third-row">
-        <lable for="address">पत्ता : </lable>
-        <input type="text" id="address" name="text" placeholder="पत्ता">
-        <br>
-      </div>
+  <div class="row-container">
+    <div id="Route-wrapper" class="input-wrapper">
+      <label for="Route">रूट :</label>
+      <select type="root" id="Route" name="root" onchange="previousbalance()" required></select>
+      <input type="hidden" id="custid" name="custid">
+    </div>
+  
+    <div class="button-wrapper">
+      <button id="account-page-button" onclick="goToAccountPage()">Add Customer</button>
+    </div>
+  </div>
 
-        <label for="number">मोबाइल नं : </label>
-         <select type="root" id="number" name="number" onchange="getCust()">
-        </select>
-        
-        <button id="new_cust" class="new_customer" onclick="redirectToAccMaster()">Add new customer</button>
-        <br>
+  <div class="row-container">
+    <div class="input-wrapper">
+      <label for="address">पत्ता :</label>
+      <input type="text" id="address" name="address" placeholder="पत्ता" required>
+    </div>
+  
+    <div class="input-wrapper">
+      <label for="sandarbh">संदर्भ :</label>
+      <input type="text" id="sandarbh" name="sandarbh" placeholder="संदर्भ">
+    </div>
+  </div>
+
+  <div class="row-container">
+    <div class="input-wrapper">
+      <label for="bta">बटा :</label>
+      <select type="root" id="bta" name="bta" onchange="getProducts()"></select>
+    </div>
+  
+    <div class="input-wrapper">
+      <label for="mark">मार्क :</label>
+      <input type="text" id="mark" name="mark" placeholder="मार्क">
+    </div>
+  
+    <div class="input-wrapper">
+      <label for="product">Product :</label>
+      <select type="root" id="product" name="product"></select>
+    </div>
+  </div>
+
+  <div class="row-container">
+    <div class="input-wrapper">
+      <label for="kimmat">किंमत :</label>
+      <input type="number" id="kimmat" name="kimmat" placeholder="किंमत">
+    </div>
+  
+    <div class="input-wrapper">
+      <label for="nag" id="nagLabel">नग :</label>
+      <input type="text" id="nag" name="nag" placeholder="नग" onchange="updateTotal()">
+    </div>
+  
+    <div class="input-wrapper">
+      <label for="total">रक्कम :</label>
+      <input type="number" id="total" name="total" placeholder="रक्कम">
+    </div>
+  
+    <div class="button-wrapper">
+      <button type="button" onclick="myFunction()" class="button">ADD</button>
+    </div>
+  </div>
+  
+  
 
 
-        <label for="sandarbh">संदर्भ :</label>
-        <input type="text" id="sandarbh" name="text" placeholder="संदर्भ ">
-
-
-
-
-      <!-- <label for="message" aria-placeholder="Root">रूट :</label>
-      <select type="root" id="Route" name="root">
-      </select>
-      <br>
-    </div> -->
-
-    <!-- <div class="third-row">
-      <lable for="address">पत्ता : </lable>
-      <input type="text" id="address" name="text" placeholder="पत्ता"> -->
-
-      <!-- <label for="sandarbh">संदर्भ :</label>
-      <input type="text" id="sandarbh" name="text" placeholder="संदर्भ ">
-    </div> -->
-
-
-    <div>
+    <!-- <div>
       <label for="message" aria-placeholder="Root">बटा :</label>
       <select type="root" id="bta" name="root" onchange="getProducts()">
       </select><br>
 
       <br>
-      <div>
       <label for="message" aria-placeholder="Root">Product :</label>
       <select type="root" id="product" name="root">
       </select>
-   
-   
-     <lable for="mark">मार्क :</lable>
-     <input type="text" id="mark" name="text" placeholder="मार्क">
-    </div>
+    </div> -->
+    <!-- <div>
+      <input type="text" id="product" name="text" placeholder="प्रॉडक्ट">
+      <input type="text" id="bta" name="text" placeholder="बटा">
+    </div> -->
+    <!-- <lable for="mark">मार्क :</lable>
+    <input type="text" id="mark" name="text" placeholder="मार्क"> -->
 
-    <label for="kimmat">किंमत :</label>
+    <!-- <label for="kimmat">किंमत :</label>
     <input type="number" id="kimmat" name="number" placeholder="किंमत">
 
     <lable for="nag" id="nagLabel">  नग :</lable>
@@ -303,19 +519,12 @@
     <input type="number" id="total" name="number" placeholder="एकूण रक्कम">
 
 <br>
-<br>
+<br> -->
 
-  <div class="fourth-row">
-   <label for="carateView">Carate View :</label>
-   <input type="checkbox" id="carateView" onchange="toggleCarateView()">
-   </div>
-   <br>
-   <br>
-
-    <div class="fourth-row">
+    <!-- <div class="fourth-row"> -->
       <!-- <button class="border-hover" >Save</button> -->
-      <button type="button" onclick="myFunction()" class="border-hover">ADD</button>
-    </div>
+      <!-- <button type="button" onclick="myFunction()" class="border-hover">ADD</button>
+    </div> -->
     <br>
     <table>
       <tr>
@@ -334,68 +543,151 @@
     </table>
 <br>
 <br>
+<div class="row-container">
+  <label>गेलेले कॅरेट :</label>
+  <div class="carat-inputs">
+    <div class="input-wrapper">
+      <label for="carate100">100 :</label>
+      <input type="number" id="carate100" name="carate100" placeholder="100" onchange="carate()">
+    </div>
+    <div class="input-wrapper">
+      <label for="carate150">150 :</label>
+      <input type="number" id="carate150" name="carate150" placeholder="150" onchange="carate()">
+    </div>
+    <div class="input-wrapper">
+      <label for="carate250">250 :</label>
+      <input type="number" id="carate250" name="carate250" placeholder="250" onchange="carate()">
+    </div>
+    <div class="input-wrapper">
+      <label for="carate350">350 :</label>
+      <input type="number" id="carate350" name="carate350" placeholder="350" onchange="carate()">
+    </div>
+  </div>
+</div>
+<div class="row-container1">
+  <label for="totalCarat">एकूण कॅरेट :</label>
+  <input type="number" id="total1" name="totalCarat" placeholder="गेलेले कॅरेट रक्कम" readonly>
+</div>
+
+
+<div class="row-container1">
+  <label for="totalCarat">बिल रक्कम :</label>
+  <input type="number" id="bill1" name="number" placeholder="बिल रक्कम"  onchange="totalBalance()" readonly>
+</div>
+<div class="row-container1">
+  <label for="totalCarat">मागील बाकी :</label>
+  <input type="number" id="previousBalance" name="number" placeholder="मागील बाकी" readonly>
+</div>
+<div class="row-container1">
+  <label for="totalCarat">एकूण रक्कम :</label>
+  <input type="number" id="totalBill" name="number" placeholder="एकूण रक्कम"  readonly>
+</div>
+
+<div class="row-container1">
+  <label for="totalCarat">रोख जमा :</label>
+  <input type="number" id="bill_cash" name="number" placeholder="रोख जमा"  onchange="totalBalance()">
+</div>
+<div class="row-container1">
+  <label for="totalCarat">ऑनलाईन जमा बँक :</label>
+    <select type="root" id="onlineAcc" name="onlineAcc">
+    </select>
+</div>
+<div class="row-container1">
+  <label for="totalCarat">ऑनलाईन जमा  :</label>
+  <input type="number" id="online" name="number" placeholder="ऑनलाईन जमा" onchange="totalBalance()">
+</div>
+<div class="row-container1">
+  <label for="totalCarat">सूट रक्कम :</label>
+  <input type="number" id="discount" name="number" placeholder="सूट रक्कम" onchange="totalBalance()">
+</div>
+
+
+
+<!-- 
     <div>
-      <!-- <input type="number" id="no1" name="number" placeholder="गेलेले कॅरेट"> -->
+      <input type="number" id="no1" name="number" placeholder="गेलेले कॅरेट">
       &nbsp;  &nbsp; &nbsp; गेलेले कॅरेट
       <input type="number" id="carate100" name="number" placeholder="100" onchange="carate()">
       <input type="number" id="carate150" name="number" placeholder="150" onchange="carate()">
-      <!-- <input type="number" id="carate250" name="number" placeholder="250" onchange="carate()"> -->
+      <input type="number" id="carate250" name="number" placeholder="250" onchange="carate()">
       <input type="number" id="carate350" name="number" placeholder="350" onchange="carate()">
-
-      <lable for="total1">गेलेले कॅरेट रक्कम :</lable>
       <input type="number" id="total1" name="number" placeholder="गेलेले कॅरेट रक्कम">
-    </div>
+    </div> -->
 
-    <!-- <div> -->
-      <lable for="bill1">बिल रक्कम :</lable>
+    <!-- <div>
       <input type="number" id="bill1" name="number" placeholder="बिल रक्कम" onchange="totalBalance()">
-      <br>
-
-      <lable for="previousBalance">मागील बाकी :</lable>
       <input type="number" id="previousBalance" name="number" placeholder="मागील बाकी " readonly>
-      <br>
-
-      <lable for="totalBill">एकूण रक्कम :</lable>
       <input type="number" id="totalBill" name="number" placeholder="एकूण रक्कम " >
-      <br>
-    <!-- </div> -->
+    </div> -->
 
-    <!-- <div> -->
-      <lable for="bill_cash">रोख जमा :</lable>
+    <!-- <div>
       <input type="number" id="bill_cash" name="number" placeholder="रोख जमा" onchange="totalBalance()">
-      <br><br>
-      <label for="message" aria-placeholder="OnlineAccount"> ऑनलाईन जमा :</label>
+      <label for="message" aria-placeholder="OnlineAccount"></label>
       <select type="root" id="onlineAcc" name="onlineAcc">
       </select>
-      <br>
-
-      <lable for="online">ऑनलाईन जमा :</lable>
       <input type="number" id="online" name="number" placeholder="ऑनलाईन जमा " onchange="totalBalance()">
-      <br>
-
-      <lable for="discount"> सूट रक्कम :</lable>
       <input type="number" id="discount" name="number" placeholder=" सूट रक्कम" onchange="totalBalance()">
-    <!-- </div> -->
+    </div> -->
 
-    <div>
+    <div class="row-container">
+      <label>जमा कॅरेट :</label>
+      <div class="carat-inputs">
+        <div class="input-wrapper">
+          <label for="carate100">100 :</label>
+          <input type="number" id="carate1100" name="carate100" placeholder="100" onchange="carate1()">
+        </div>
+        <div class="input-wrapper">
+          <label for="carate150">150 :</label>
+          <input type="number" id="carate1150" name="carate150" placeholder="150" onchange="carate1()">
+        </div>
+        <div class="input-wrapper">
+          <label for="carate250">250 :</label>
+          <input type="number" id="carate1250" name="carate250" placeholder="250" onchange="carate1()">
+        </div>
+        <div class="input-wrapper">
+          <label for="carate350">350 :</label>
+          <input type="number" id="carate1350" name="carate350" placeholder="350" onchange="carate1()">
+        </div>
+      </div>
+    </div>
+    <div class="row-container1">
+      <label for="totalCarat">एकूण जमा कॅरेट :</label>
+      <input type="number" id="total2" name="totalCarat" placeholder="जमा कॅरेट रक्कम" readonly>
+    </div>
+    
+
+
+
+
+
+
+    <!-- <div>
       &nbsp;  &nbsp; &nbsp; जमा कॅरेट
       <input type="number" id="carate1100" name="number" placeholder="100" onchange="carate1()">
       <input type="number" id="carate1150" name="number" placeholder="150" onchange="carate1()">
-      <!-- <input type="number" id="carate1250" name="number" placeholder="250" onchange="carate1()"> -->
+      <input type="number" id="carate1250" name="number" placeholder="250" onchange="carate1()">
       <input type="number" id="carate1350" name="number" placeholder="350" onchange="carate1()">
-
-      <label for="total2">जमा कॅरेट रक्कम :</label>
       <input type="number" id="total2" name="number" placeholder="जमा कॅरेट रक्कम">
+    </div> -->
+
+    <div class="row-container">
+      <div class="input-wrapper">
+        <label for="note">संदर्भ :</label>
+        <input type="text" id="note" name="note" placeholder="संदर्भ">
+      </div>
+    
+      <div class="input-wrapper">
+        <label for="baki">बाकी रक्कम :</label>
+        <input type="number" id="baki" name="baki" placeholder="बाकी रक्कम">
+      </div>
     </div>
 
+    
 
-    <div>
-      <lable for="note">संदर्भ :</lable>
+    <!-- <div>
       <input type="text" id="note" name="name" placeholder="संदर्भ">
-
-      <label for="baki">बाकी रक्कम :</label>
       <input type="number" id="baki" name="name" placeholder="बाकी रक्कम">
-    </div>
+    </div> -->
 
 
     <button type="submit" class="save">Save</button>
@@ -457,6 +749,12 @@
           allowClear: true
       });
   }
+
+  function goToAccountPage() {
+    // Perform the desired action when the button is clicked
+    window.location.href = "../account/acc-master.html"; // Redirect to the account page
+  }
+  
 
 </script>
 
@@ -581,7 +879,7 @@ function totalbill(){
             console.error('Error:', error);
         });
 
-
+  
   //document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0) - parseInt(document.getElementById("total2").value || 0);
 }
 
@@ -618,7 +916,7 @@ function totalbill(){
         console.log('Entry added successfully:', result);
         // document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + parseInt(document.getElementById('total').value);
         // totalBalance()
-        updateTable(formData, result.insertId);
+        updateTable(formData, result);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -628,6 +926,7 @@ function totalbill(){
   }
 
   function updateTable(entry, result) {
+    console.log("table")
     var tableBody = document.getElementById('tableBody1');
     var newRow = document.createElement('tr');
     newRow.innerHTML = `
@@ -637,10 +936,10 @@ function totalbill(){
           <td>${entry.quantity}</td>
           <td>${entry.rate}</td>
           <td>${entry.price}</td>
-          <td><button type="button" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button></td>
+          <td><button type="button" onclick="deleteUser(this, ${result.insertId}, ${entry.price})">Delete</button></td>
       `;
-    document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + parseInt(document.getElementById('total').value);
-    totalBalance()
+      document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + entry.price;
+      totalBalance()
     tableBody.appendChild(newRow);
   }
 
@@ -667,16 +966,6 @@ function totalbill(){
           console.error('Error:', error);
         });
     }
-
-      // Function to handle the click event of the "Add new customer" button
-  function redirectToAccMaster() {
-    // Redirect the user to acc-master.html
-    window.location.href ="../account/acc-master.html";
-  }
-
-
-
-   
 </script>
 
 </html>

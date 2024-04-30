@@ -88,33 +88,33 @@
         <div class="container1">
             <form id="loginForm" method="POST">
                 <div class="first-row">
-                    <input type="text" id="id" name="id" placeholder="ID" value="">
+                    <input type="text" id="id" name="id" placeholder="ID" value="" required>
                 </div>
                 <!-- <input type="text" id="account_group" name="account_group" placeholder="Account Group">
                 <input type="text" id="route_detail" name="route_detail" placeholder="Route Detail">
  -->
 
                 <label for="account_group">Account Group</label>
-                <select class="drop" id="account_group" name="account_group">
+                <select class="drop" id="account_group" name="account_group" required>
                     <!-- Options will be dynamically populated -->
                 </select>
                 <br>
                 <br>
                 <label for="route_detail">Route Details</label>
-                <select class="drop" id="route_detail" name="route_detail">
+                <select class="drop" id="route_detail" name="route_detail" required>
                     <!-- Options will be dynamically populated -->
                 </select>
                 <br> <br>
 
 
-                <input type="text" id="name" name="name" placeholder="Name">
-                <input type="text" id="address" name="address" placeholder="Address">
-                <input type="text" id="no" name="mobile_no" placeholder="Mobile No">
-                <input type="text" id="preBalance" name="prev_balance" placeholder="Previous Balance">
+                <input type="text" id="name" name="name" placeholder="Name" required>
+                <input type="text" id="address" name="address" placeholder="Address" required>
+                <input type="text" id="no" name="mobile_no" placeholder="Mobile No" required>
+                <input type="text" id="preBalance" name="prev_balance" placeholder="Previous Balance" required>
                 <div class="second-row">
-                    <input type="radio" id="cr" name="cr_dr_type" value="cr">
+                    <input type="radio" id="cr" name="cr_dr_type" value="yes" required>
                     <label for="isActive">CR</label>
-                    <input type="radio" id="dr" name="cr_dr_type" value="dr">
+                    <input type="radio" id="dr" name="cr_dr_type" value="no" required>
                     <label for="isdeActive">DR</label>
                 </div>
                 <div class="third-row">

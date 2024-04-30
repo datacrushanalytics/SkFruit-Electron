@@ -109,29 +109,29 @@
 
                 <div class="first-row">
                     <label for="date">Date</label>
-                    <input type="text" id="date" name="date" placeholder="Date" readonly>
+                    <input type="text" id="date" name="date" placeholder="Date" required>
                 </div>
                 <br>
                 <label for="product">From Account</label>
-                <select id="product" name="from_account">
+                <select id="product" name="from_account" required>
                     <!-- Options for from account -->
                 </select>
                 <br>
                 <br>
                 <label for="bata">To Account</label>
-                <select id="bata" name="to_account" onchange="previousbalance()">
+                <select id="bata" name="to_account" onchange="previousbalance()" required>
                     <!-- Options for to account -->
                 </select>
                 <br>
                 <br>
                 <label for="comment">Comment</label>
-                <textarea id="comment" name="comment"></textarea><br>
+                <textarea id="comment" name="comment" required></textarea><br>
                 <div class="second-row">
                     <label for="previousBalance">Prev. Balance</label>
                     <input type="number" id="previousBalance" name="previous_balance">
                     <br>
                     <label for="amount">Amount</label>
-                    <input type="number" id="amount" name="amount" onchange="totalBalance()">
+                    <input type="number" id="amount" name="amount" onchange="totalBalance()" required>
                 </div>
                 <br>
                 <div class="third-row">
