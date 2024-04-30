@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // function populateDropdown2(data) {
-//     var userNameDropdown = document.getElementById('input1');
+//     var npm  userNameDropdown = document.getElementById('input1');
 //     userNameDropdown.innerHTML = ''; // Clear existing options
     
 //     // Create and append new options based on API data
