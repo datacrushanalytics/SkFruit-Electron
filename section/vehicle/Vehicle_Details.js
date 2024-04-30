@@ -2,7 +2,7 @@
 function product() {
     console.log("product function executed");
 
-    fetch('http://localhost:3000/vehicleData')
+    fetch('http://65.0.168.11/vehicleData')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -82,7 +82,7 @@ function editProduct(user) {
 
 function deleteProduct(userId) {
     // Perform delete operation based on userId
-    fetch('http://localhost:3000/vehicleData/deleteVehicle/' + userId, {
+    fetch('http://65.0.168.11/vehicleData/deleteVehicle/' + userId, {
         method: 'DELETE'
     })
     .then(response => {
