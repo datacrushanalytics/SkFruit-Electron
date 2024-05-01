@@ -45,7 +45,7 @@ function populateTable(data) {
         if (isAdmin) {
             var editCell = row.insertCell();
             var editButton = document.createElement('button');
-            editButton.className = 'button edit-button';
+            editButton.className = 'button1 edit-button';
             var editLink = document.createElement('a');
             editLink.href = '../route/update_route.html'; // Edit link destination
             editLink.textContent = 'Edit';
