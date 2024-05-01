@@ -140,10 +140,11 @@
                 <label for="text"> prev_balance: </label>
                 <input type="text" id="preBalance" name="prev_balance" placeholder="Previous Balance" required>
                 <div class="second-row">
+                    Carate Bill : 
                     <input type="radio" id="cr" name="cr_dr_type" value="yes" required>
-                    <label for="isActive">CR</label>
+                    <label for="cr">Carate with payment</label>
                     <input type="radio" id="dr" name="cr_dr_type" value="no" required>
-                    <label for="isdeActive">DR</label>
+                    <label for="dr">Carate without payment</label>
                 </div>
                 <div class="third-row">
                     <button type="submit" id="updateButton">Save</button>
@@ -202,6 +203,7 @@
             if (userData) {
                 // Parse the user data
                 var user = JSON.parse(userData);
+                console.log(user)
 
                 // Populate form fields with user data
                 document.getElementById("id").value = user.id;
@@ -226,7 +228,7 @@
                 document.getElementById("name").value = user.name;
                 document.getElementById("no").value = user.mobile_no;
                 document.getElementById("address").value = user.address;
-                document.getElementById("preBalance").value = user.preBalance;
+                document.getElementById("preBalance").value = user.prev_balance;
                 if (user.cr_dr_type = 'CR'){
                 document.getElementById("cr").checked = true;
                 }else{
