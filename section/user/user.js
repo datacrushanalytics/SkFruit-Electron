@@ -37,7 +37,18 @@ function populateTable(data) {
         cell.textContent = counter++;
         columnsToDisplay.forEach(function(key) {
             var cell = row.insertCell();
+            // cell.textContent = item[key];
+            if(key=='status'){
+                console.log(item[key])
+                if(item[key]==1){
+                    cell.textContent = 'Active';
+                }else{
+                    cell.textContent = 'Deactive';
+                }
+            
+            }else{
             cell.textContent = item[key];
+            }
         });
 
          // Add Edit button if user is admin
