@@ -155,7 +155,7 @@ a{
                         <h2>Purchase</h2>
                     </div>
                     <div class="btn-number">
-                        <h2 id="purchaseTotal">0</h2>
+                        <h2 id="purhcaseTotal">0</h2>
                     </div>
                 </a>
                 </button>
@@ -254,12 +254,16 @@ a{
                     const data = await response.json();
                     console.log(data);
                     console.log(`${id} data fetched`);
-                    document.getElementById(id).textContent = data[0][`Total${id.charAt(0).toUpperCase() + id.slice(1)}`] || 0;
+                    nn = id.split(/(?=[A-Z])/)[0];
+                    console.log(nn.charAt(0).toUpperCase() + nn.slice(1))
+                    console.log(data[0])
+                    console.log( data[0][`Total${nn.charAt(0).toUpperCase() + nn.slice(1)}`] || 0)
+                    document.getElementById(id).textContent = data[0][`Total${nn.charAt(0).toUpperCase() + nn.slice(1)}`] || 0;
                 };
         
                 await Promise.all([
                     renderData(),
-                    fetchAPI("http://65.0.168.11/fetchTotal/purchase", 'purchaseTotal'),
+                    fetchAPI("http://65.0.168.11/fetchTotal/purchase", 'purhcaseTotal'),
                     fetchAPI("http://65.0.168.11/fetchTotal/sale", 'saleTotal'),
                     fetchAPI("http://65.0.168.11/fetchTotal/receipt", 'receiptTotal'),
                     fetchAPI("http://65.0.168.11/fetchTotal/payment", 'paymentTotal')
