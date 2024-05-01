@@ -4,7 +4,7 @@ function route() {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    fetch('http://65.0.168.11/routeData')
+    fetch('http://localhost:3000/routeData')
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';
@@ -42,7 +42,7 @@ function populateTable(data) {
         });
 
         // Add Edit button if user is admin
-        if (isAdmin) {
+        if (isAdmin) { 
             var editCell = row.insertCell();
             var editButton = document.createElement('button');
             editButton.className = 'button1 edit-button';
@@ -90,7 +90,7 @@ function editRoute(user) {
 
 function deleteRoute(userId) {
     // Perform delete operation based on userId
-    fetch('http://65.0.168.11/routeData/deleterouteId/' + userId, {
+    fetch('http://localhost:3000/routeData/deleterouteId/' + userId, {
         method: 'DELETE'
     })
     .then(response => {

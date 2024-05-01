@@ -4,7 +4,7 @@ function product() {
 
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
-    fetch('http://65.0.168.11/categoryData')
+    fetch('http://localhost:3000/categoryData')
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';
@@ -86,7 +86,7 @@ function populateTable(data) {
 
 function deleteProduct(userId) {
     // Perform delete operation based on userId
-    fetch('http://65.0.168.11/categoryData/deletecategoryId/' + userId, {
+    fetch('http://localhost:3000/categoryData/deletecategoryId/' + userId, {
         method: 'DELETE'
     })
     .then(response => {

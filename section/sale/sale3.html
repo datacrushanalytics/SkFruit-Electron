@@ -729,12 +729,12 @@
         
   document.addEventListener('DOMContentLoaded', function () {
       // Fetch data from API and populate Select2 dropdowns
-      fetchAndPopulateDropdown('http://65.0.168.11/list/Customer', 'grahk','name');
-      fetchAndPopulateDropdown('http://65.0.168.11/purchaseproductData', 'product','product_name');
-      fetchAndPopulateDropdown('http://65.0.168.11/purchaseproductData', 'bta','bata');
-      fetchAndPopulateDropdown('http://65.0.168.11/routeData', 'Route','route_name');
-      fetchAndPopulateDropdown('http://65.0.168.11/list/Bank Account', 'onlineAcc','name');
-      fetchAndPopulateDropdown('http://65.0.168.11/mobile', 'number','mobile_no');
+      fetchAndPopulateDropdown('http://localhost:3000/list/Customer', 'grahk','name');
+      fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData', 'product','product_name');
+      fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData', 'bta','bata');
+      fetchAndPopulateDropdown('http://localhost:3000/routeData', 'Route','route_name');
+      fetchAndPopulateDropdown('http://localhost:3000/list/Bank Account', 'onlineAcc','name');
+      fetchAndPopulateDropdown('http://localhost:3000/mobile', 'number','mobile_no');
   });
 
   function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
@@ -793,7 +793,7 @@
   var preBalance = parseInt(document.getElementById("previousBalance").value) || 0;
   var total1 = parseInt(document.getElementById("total1").value) || 0;
 
-  fetch('http://65.0.168.11/accountData/' + parseInt(document.getElementById("custid").value))
+  fetch('http://localhost:3000/accountData/' + parseInt(document.getElementById("custid").value))
         .then(response => response.json())
         .then(data => {
             console.log(data[0].cr_dr_type)
@@ -814,7 +814,7 @@
 function previousbalance(){
   const name = document.getElementById("grahk").value
 
-  fetch('http://65.0.168.11/fetchName/name/' + name)
+  fetch('http://localhost:3000/fetchName/name/' + name)
         .then(response => response.json())
         .then(data => {
             console.log(data[0].mobile_no)
@@ -840,7 +840,7 @@ function previousbalance(){
 
 
 
-  fetch('http://65.0.168.11/fetchpv/' + name)
+  fetch('http://localhost:3000/fetchpv/' + name)
   .then(response => {
       if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -889,7 +889,7 @@ function totalbill(){
   console.log("totalbill")
   console.log(document.getElementById("custid").value)
 
-  fetch('http://65.0.168.11/accountData/' + parseInt(document.getElementById("custid").value))
+  fetch('http://localhost:3000/accountData/' + parseInt(document.getElementById("custid").value))
         .then(response => response.json())
         .then(data => {
             console.log(data[0].cr_dr_type)
@@ -925,7 +925,7 @@ function totalbill(){
 
     console.log(formData)
 
-    fetch('http://65.0.168.11/saleproductData/insertsaleproduct', {
+    fetch('http://localhost:3000/saleproductData/insertsaleproduct', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -948,7 +948,7 @@ function totalbill(){
       .catch(error => {
         console.error('Error:', error);
       });
-    alert('Button clicked!');
+    alert('Product added Successfully!!');
     // Add your desired functionality here
   }
 
@@ -978,7 +978,7 @@ function totalbill(){
       totalBalance()
       var button = event.target;
       var row = button.parentNode.parentNode;
-      fetch('http://65.0.168.11/saleproductData/deletesaleproduct/' + userId, {
+      fetch('http://localhost:3000/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
       })
         .then(response => {

@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    fetch('http://65.0.168.11/list/Supplier')
+    fetch('http://localhost:3000/list/Supplier')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
 
-    fetch('http://65.0.168.11/list/Bank Account')
+    fetch('http://localhost:3000/list/Bank Account')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -108,7 +108,7 @@ console.log("jahsafhfa")
     loader.style.display = 'block';
 
 
-    await fetch('http://65.0.168.11/paymentData/insertPayment', {
+    await fetch('http://localhost:3000/paymentData/insertPayment', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
