@@ -1,7 +1,7 @@
 // Fetch data from API
 document.addEventListener('DOMContentLoaded', function () {
 
-    fetch('http://65.0.168.11/purchaseproductData/')
+    fetch('http://localhost:3000/purchaseproductData/')
     .then(response => {
         if (response.status === 404) {
             alert("No data found.");
@@ -100,7 +100,7 @@ function populateDropdown3(data) {
 
 function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('http://65.0.168.11/saleproductData/deletesaleproduct/' + userId, {
+    fetch('http://localhost:3000/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
     })
         .then(response => {

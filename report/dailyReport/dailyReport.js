@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://65.0.168.11/vehicleData')
+//     fetch('http://localhost:3000/vehicleData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -64,7 +64,7 @@ function formatDate(dateString) {
 //     };
 //     console.log(data);
 
-//     fetch('http://65.0.168.11/dailyReport', {
+//     fetch('http://localhost:3000/dailyReport', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -105,7 +105,7 @@ function fetchDataAndProcess() {
 
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
-    return fetch('http://65.0.168.11/dailyReport', {
+    return fetch('http://localhost:3000/dailyReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

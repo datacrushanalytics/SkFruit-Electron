@@ -133,7 +133,7 @@
     
         <div class="first-row">
         <label for="Id">ID :</label>
-        <input type="text" id="id" name="id" placeholder="ID" value = "" required> 
+        <input type="text" id="id" name="id" placeholder="ID" value = "" required readonly> 
         <!-- <input type="text" id="usertype" name="usertype" placeholder="User Type"> -->
         <label for="userType">User Type :</label>
         <select id="usertype" name="usertype" placeholder="UserType" required>
@@ -174,7 +174,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
             // Retrieve user data from localStorage
-            await fetchAndPopulateDropdown('http://65.0.168.11/list/Worker', 'name', 'name');
+            await fetchAndPopulateDropdown('http://localhost:3000/list/Worker', 'name', 'name');
         
             async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
                 try {

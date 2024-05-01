@@ -4,7 +4,7 @@ function remainder() {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    return fetch('http://65.0.168.11/remainderReport')
+    return fetch('http://localhost:3000/remainderReport')
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';

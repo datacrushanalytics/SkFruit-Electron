@@ -121,7 +121,7 @@
             <form id="loginForm" method="POST">
                 <div class="first-row">
                     <lable for="ID">ID :</lable>
-                    <input type="text" id="id" name="id" placeholder="ID" required>
+                    <input type="text" id="id" name="id" placeholder="ID" required readonly>
                     <lable for="text">VEHICLE NAME :</lable>
                     <input type="text" id="name" name="name" placeholder="VEHICLE NAME" required>
                     <lable for="text">VEHICLE NO :</lable>
@@ -163,7 +163,7 @@
                 var loader = document.getElementById('loader');
                 loader.style.display = 'block';
         
-                const response = await fetch('http://65.0.168.11/vehicleData/updateVehicle/' + userData.id, {
+                const response = await fetch('http://localhost:3000/vehicleData/updateVehicle/' + userData.id, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {
