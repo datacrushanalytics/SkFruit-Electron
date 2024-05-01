@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var formattedDate = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
     // Set the placeholder of the input field to the formatted date
     document.getElementById('date').value = formattedDate;
+    var loader = document.getElementById('loader');
+    loader.style.display = 'block';
 
     fetch('http://65.0.168.11/list/Supplier')
         .then(response => {
@@ -31,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return response.json();
         })
         .then(data => {
+            loader.style.display = 'none';
             // Populate dropdown with API data
             populateDropdown1(data);
         })
@@ -101,6 +104,8 @@ console.log("jahsafhfa")
         prev_balance: parseInt(document.getElementById('previousBalance').value) || 0,
         amounr: parseInt(document.getElementById('amount').value) || 0        
     };
+    var loader = document.getElementById('loader');
+    loader.style.display = 'block';
 
 
     await fetch('http://65.0.168.11/paymentData/insertPayment', {
@@ -118,6 +123,7 @@ console.log("jahsafhfa")
         return response.json();
     })
     .then(result => {
+        loader.style.display = 'none';
         console.log('Entry added successfully:', result);
         alert("Payment Data is added Successfully");
         window.location.reload();

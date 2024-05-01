@@ -1,14 +1,22 @@
 function account() {
   console.log("user function executed");
+  var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
   fetch('http://65.0.168.11/accountData')
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Network response was not ok');
-          }
-          return response.json();
-      })
+  .then(response => {
+    if (response.status === 404) {
+      loader.style.display = 'none';
+        alert("No data found.");
+        throw new Error('Data not found');
+    }
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json();
+})
       .then(data => {
+        loader.style.display = 'none';
           console.log(data);
           populateTable(data);
       })
@@ -125,6 +133,8 @@ function insertAccount() {
         // formData.append("route_detail", routeDetails);
         // formData.append("prev_balance", prevBalance);
         // formData.append("cr_dr_type", crDrType);
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
       
       fetch('http://3.109.121.46/accountData/insertaccount', {
         method: 'POST',
@@ -149,7 +159,10 @@ function insertAccount() {
         }
         return response.text(); // Read response as text
       })
-      .then(data => alert(data)) // Alert the response
+      .then(data => {
+        loader.style.display = 'none';
+        alert("Account is inserted")
+      }) // Alert the response
       .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
       });

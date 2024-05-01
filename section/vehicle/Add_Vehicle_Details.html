@@ -66,9 +66,33 @@
             background-color: #555;
             /* Darker grey on hover */
         }
+
+        /* Style the loader container */
+#loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Apply animation */
+    display: none; /* Hide loader by default */
+    
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
     </style>
 </head>
 <body>
+    <div id="loader"></div>
     <div class="container">
         <h1>VEHICLE DETAILS</h1>
         <hr>
@@ -99,6 +123,8 @@
             is_active: 1
         };
     
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
     
         fetch('http://65.0.168.11/vehicleData/insertVehicle', {
             method: 'POST',
@@ -114,6 +140,7 @@
             return response.json();
         })
         .then(result => {
+        loader.style.display = 'none';
             console.log('Data added successfully:', result);
             alert("vehicle is successfully Added");
             window.location.href = './Vehicle_Details.html';

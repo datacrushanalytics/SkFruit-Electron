@@ -177,6 +177,8 @@ function fetchDataAndProcess() {
         bata : getElementValueWithDefault('bata', '*') , 
         gadi_number : getElementValueWithDefault('vehicleNumber', '*') 
     };
+    var loader = document.getElementById('loader');
+    loader.style.display = 'block';
 
     return fetch('http://65.0.168.11/purchaseReport', {
         method: 'POST',
@@ -186,12 +188,20 @@ function fetchDataAndProcess() {
         }
     })
     .then(response => {
+        if (response.status === 404) {
+        loader.style.display = 'none';
+
+            alert("No data found.");
+            throw new Error('Data not found');
+        }
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         return response.json();
     })
     .then(result => {
+        loader.style.display = 'none';
+
         console.log(result)
         populateTable4(result)
         return result;
@@ -210,6 +220,9 @@ function populateTable4(data) {
     var columnsToDisplay = ['id', 'date', 'gadi_number','bata','supplier_name', 'BillAmount','TotalQuantity'];
     var counter = 1;
     console.log(data.reports)
+    if (data.reports.length === 0) {
+        alert("No Data Found");
+    }
     data.reports.forEach(function(item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();

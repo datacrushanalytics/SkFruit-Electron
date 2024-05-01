@@ -103,6 +103,8 @@ function fetchDataAndProcess() {
         vehicle_no : getElementValueWithDefault('vehicleNumber', '*') 
     };
 
+    var loader = document.getElementById('loader');
+        loader.style.display = 'block';
     return fetch('http://65.0.168.11/dailyReport', {
         method: 'POST',
         body: JSON.stringify(data),
@@ -111,12 +113,19 @@ function fetchDataAndProcess() {
         }
     })
     .then(response => {
+        if (response.status === 404) {
+
+        loader.style.display = 'none';
+            alert("No data found.");
+            throw new Error('Data not found');
+        }
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         return response.json();
     })
     .then(result => {
+        loader.style.display = 'none';
         console.log(result)
         populateTable4(result)
         populateTable5(result)
@@ -139,6 +148,9 @@ function populateTable4(data) {
     var columnsToDisplay = ['bill_no', 'date', 'cust_name','vehicle_no','route','driver_name', 'amount','cash','online_amt','discount','inCarat','carate_amount'];
     var counter = 1;
     console.log(data.reports)
+    if (data.reports.length === 0) {
+        alert("No Data Found");
+    }
     data.reports.forEach(function(item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
@@ -170,6 +182,9 @@ function populateTable5(data) {
     var columnsToDisplay = ['receipt_id', 'date', 'Customer','to_account','note', 'cash','online','discount',"inCarat","Amt"];
     var counter = 1;
     console.log(data.Receipt)
+    if (data.Receipt.length === 0) {
+        alert("No Data Found");
+    }
     data.Receipt.forEach(function(item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();

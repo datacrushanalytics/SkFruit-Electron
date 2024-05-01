@@ -7,14 +7,20 @@ document.addEventListener('DOMContentLoaded', function () {
     // Set the placeholder of the input field to the formatted date
     console.log(formattedDate);
     document.getElementById('date').value = formattedDate;
+    
 
     fetch('http://65.0.168.11/fetchSaleid')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+    .then(response => {
+        if (response.status === 404) {
+            loader.style.display = 'none';
+            alert("No data found.");
+            throw new Error('Data not found');
+        }
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
         .then(data => {
             // Populate dropdown with API data
             document.getElementById('bill').value = parseInt(data[0]['num']) + 1;
@@ -280,9 +286,12 @@ function deleteUser(userId) {
 function getProducts() {
     var bataId = document.getElementById('bta').value;
     console.log(bataId)
+    var loader = document.getElementById('loader');
+    loader.style.display = 'block';
     fetch('http://65.0.168.11/purchaseproductData/getBataProduct/' + bataId)
         .then(response => response.json())
         .then(data => {
+            loader.style.display = 'none';
             console.log(data[0].product_name)
             document.getElementById('mark').value = data[0].mark;
             document.getElementById('kimmat').value = data[0].selling_price;

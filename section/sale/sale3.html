@@ -387,6 +387,28 @@
   margin-right: 10px; /* Add space between label and input */
 }
 
+/* Style the loader container */
+#loader {
+  border: 4px solid #f3f3f3; /* Light grey */
+  border-top: 4px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite; /* Apply animation */
+  display: none; /* Hide loader by default */
+  
+  /* Center the loader */
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 
 
@@ -396,6 +418,7 @@
 </head>
 
 <body>
+  <div id="loader"></div>
   <div class="container">
     <h1 align="center">विक्री </h1>
     <hr>
@@ -886,6 +909,8 @@ function totalbill(){
 
   function myFunction() {
     event.preventDefault();
+    var loader = document.getElementById('loader');
+    loader.style.display = 'block';
   
     var formData = {
       bill_id: parseInt(document.getElementById('bill').value),
@@ -913,6 +938,7 @@ function totalbill(){
         return response.json();
       })
       .then(result => {
+        loader.style.display = 'none';
         console.log('Entry added successfully:', result);
         // document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + parseInt(document.getElementById('total').value);
         // totalBalance()

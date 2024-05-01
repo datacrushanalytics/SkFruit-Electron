@@ -217,7 +217,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.getElementById('Form').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
-console.log("jahsafhfa")
 // function form2(){
     var formData = {
         date: document.getElementById('date').value,
@@ -225,6 +224,8 @@ console.log("jahsafhfa")
         gadi_number: document.getElementById('vehicle').value,
         total_quantity: parseInt(document.getElementById('total').value) || 0
     };
+    var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
     await fetch('http://65.0.168.11/purchaseData/insertPurchase', {
         method: 'POST',
@@ -241,6 +242,7 @@ console.log("jahsafhfa")
         return response.json();
     })
     .then(result => {
+        loader.style.display = 'none';
         console.log('Entry added successfully:', result);
         alert("Purchase Data is added Successfully");
         window.location.reload();

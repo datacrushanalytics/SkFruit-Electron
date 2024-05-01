@@ -66,6 +66,8 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         data[key] = value;
     });
     console.log(data);
+    var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
     fetch('http://65.0.168.11/productData/insertProduct', {
         method: 'POST',
@@ -81,6 +83,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         return response.json();
     })
     .then(result => {
+        loader.style.display = 'none';
         console.log('Data added successfully:', result);
         alert("Product is successfully Added");
         window.location.href = './product.html';

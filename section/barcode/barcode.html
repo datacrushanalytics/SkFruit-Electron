@@ -164,11 +164,38 @@
                 width: 100%; /* Full width on smaller screens */
             }
         }
+
+/* Style the loader container */
+#loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Apply animation */
+    display: none; /* Hide loader by default */
+    
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+
     </style>
 </head>
 
 <body>
     <body>
+        <div id="loader"></div>
+
         <div class="container">
             <h1 align="center">Product Barcode </h1>
             <hr><br>
@@ -238,15 +265,25 @@
     document.addEventListener('DOMContentLoaded', function () {
         fetchAndPopulateDropdown('http://65.0.168.11/purchaseproductData', 'grahk','product_name');
         fetchAndPopulateDropdown('http://65.0.168.11/purchaseproductData', 'Route','bata');
+        
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
         fetch('http://65.0.168.11/purchaseproductData/')
             .then(response => {
+                if (response.status === 404) {
+                    loader.style.display = 'none';
+                    alert("No data found.");
+                    throw new Error('Data not found');
+                }
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 return response.json();
             })
             .then(data => {
+                // Hide loader
+                loader.style.display = 'none';
                 // Populate dropdown with API data
                 // populateDropdown1(data);
                 // populateDropdown2(data);
@@ -450,6 +487,8 @@
             bata : getElementValueWithDefault('Route', '*') 
         };
         console.log(data);
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
     
         fetch('http://65.0.168.11/purchaseproductData', {
             method: 'POST',
@@ -465,6 +504,7 @@
             return response.json();
         })
         .then(result => {
+            loader.style.display = 'none';
             console.log(result)
             populateDropdown3(result)
             // Optionally, you can redirect or show a success message here

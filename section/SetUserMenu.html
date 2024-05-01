@@ -152,7 +152,16 @@
 
             function fetchDataAndUpdateCheckboxes() {
                 fetch("http://65.0.168.11/accessconfigData") // Assuming this is your API endpoint to fetch data
-                .then(response => response.json())
+                .then(response => {
+                    if (response.status === 404) {
+                        alert("No data found.");
+                        throw new Error('Data not found');
+                    }
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     // Loop through the data received from the API
                     data.forEach(menu => {

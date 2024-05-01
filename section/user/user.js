@@ -1,15 +1,22 @@
 
 function user() {
     console.log("user function executed");
-
+    var loader = document.getElementById('loader');
+    loader.style.display = 'block';
     fetch('http://65.0.168.11/userData')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+    .then(response => {
+        if (response.status === 404) {
+            loader.style.display = 'none';
+            alert("No data found.");
+            throw new Error('Data not found');
+        }
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
         .then(data => {
+        loader.style.display = 'none';
             console.log(data);
             populateTable(data);
         })

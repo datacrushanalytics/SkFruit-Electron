@@ -132,7 +132,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.getElementById('loginForm1').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
-console.log("jahsafhfa")
 // function form2(){
     var formData = {
         receiptId: parseInt(document.getElementById('pavti').value),
@@ -152,7 +151,8 @@ console.log("jahsafhfa")
         deposite_carate_price: parseInt(document.getElementById('input4').value) || 0,
         remaining: parseInt(document.getElementById('input5').value) || 0,     
     };
-
+    var loader = document.getElementById('loader');
+    loader.style.display = 'block';
     await fetch('http://65.0.168.11/receiptData/insertReceipt', {
         method: 'POST',
         headers: {
@@ -168,6 +168,7 @@ console.log("jahsafhfa")
         return response.json();
     })
     .then(result => {
+        loader.style.display = 'none';
         console.log('Entry added successfully:', result);
         alert("Receipt Data is added Successfully");
         window.location.reload();
