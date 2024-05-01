@@ -160,8 +160,8 @@
 
         document.addEventListener('DOMContentLoaded', async function() {
             // Retrieve user data from localStorage
-            await fetchAndPopulateDropdown('http://localhost:3000/accountgroupData', 'account_group','name');
-            await fetchAndPopulateDropdown('http://localhost:3000/routeData', 'route_detail','route_name');
+            await fetchAndPopulateDropdown('http://65.0.168.11/accountgroupData', 'account_group','name');
+            await fetchAndPopulateDropdown('http://65.0.168.11/routeData', 'route_detail','route_name');
         
             async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
                 try {
@@ -260,7 +260,7 @@
         
                 var loader = document.getElementById('loader');
         loader.style.display = 'block';
-                const response = await fetch('http://localhost:3000/accountData/updateAccount/'+ userData.id, {
+                const response = await fetch('http://65.0.168.11/accountData/updateAccount/'+ userData.id, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {

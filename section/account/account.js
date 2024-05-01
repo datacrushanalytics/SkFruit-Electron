@@ -3,7 +3,7 @@ function account() {
   var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-  fetch('http://localhost:3000/accountData')
+  fetch('http://65.0.168.11/accountData')
   .then(response => {
     if (response.status === 404) {
       loader.style.display = 'none';
@@ -89,7 +89,7 @@ function editAccount(user) {
 
 function deleteaccount(userId) {
   // Perform delete operation based on userId
-  fetch('http://localhost:3000/accountData/deleteaccountId/' + userId, {
+  fetch('http://65.0.168.11/accountData/deleteaccountId/' + userId, {
       method: 'DELETE'
   })
   .then(response => {

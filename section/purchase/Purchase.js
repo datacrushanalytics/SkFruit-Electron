@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('date').value = formattedDate;
     // console.log('hjgfqhagf',document.getElementById('date').value )
 
-    fetch('http://localhost:3000/fetchPurchaseid')
+    fetch('http://65.0.168.11/fetchPurchaseid')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             // Populate dropdown with API data
             document.getElementById('no').value = parseInt(data[0]['num']) + 1;
-            fetch('http://localhost:3000/purchaseproductData/' + (parseInt(data[0]['num']) + 1))
+            fetch('http://65.0.168.11/purchaseproductData/' + (parseInt(data[0]['num']) + 1))
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
         });
 
-    // fetch('http://localhost:3000/list/Supplier')
+    // fetch('http://65.0.168.11/list/Supplier')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //         console.error('Error:', error);
     //     });
 
-    // fetch('http://localhost:3000/productData/')
+    // fetch('http://65.0.168.11/productData/')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    // fetch('http://localhost:3000/vehicleData')
+    // fetch('http://65.0.168.11/vehicleData')
     //     .then(response => {
     //         if (!response.ok) {
     //             throw new Error('Network response was not ok');
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
 //         console.log('Deleting user id', typeof(userId));
 //         console.log(typeof(userId));
 //         // Perform delete operation based on userId
-//         const response = await fetch('http://localhost:3000/purchaseproductData/deletepurchaseproductId/' + userId, {
+//         const response = await fetch('http://65.0.168.11/purchaseproductData/deletepurchaseproductId/' + userId, {
 //             method: 'DELETE'
 //         });
 
@@ -227,7 +227,7 @@ document.getElementById('Form').addEventListener('submit', async function(event)
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    await fetch('http://localhost:3000/purchaseData/insertPurchase', {
+    await fetch('http://65.0.168.11/purchaseData/insertPurchase', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
