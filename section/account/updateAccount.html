@@ -44,8 +44,9 @@
             margin-bottom: 20px;
         }
 
+        .container1 select,
         .container1 input[type="text"] {
-            width: 100%;
+            width: calc(100% - 20px);
             padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
@@ -119,13 +120,13 @@
                 <input type="text" id="route_detail" name="route_detail" placeholder="Route Detail">
  -->
 
-                <label for="account_group">Account Group</label>
-                <select class="drop" id="account_group" name="account_group" required>
+                <label for="account_group">Account Group :</label>
+                <select class="drop" id="account_group" name="account_group" required><br>
                     <!-- Options will be dynamically populated -->
                 </select>
                 <br>
                 <br>
-                <label for="route_detail">Route Details</label>
+                <label for="route_detail">Route Details :</label>
                 <select class="drop" id="route_detail" name="route_detail" required>
                     <!-- Options will be dynamically populated -->
                 </select>
