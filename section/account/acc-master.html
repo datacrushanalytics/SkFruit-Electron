@@ -175,8 +175,8 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://localhost:3000/accountgroupData', 'account_group','name');
-        fetchAndPopulateDropdown('http://localhost:3000/routeData', 'route_detail','route_name');
+        fetchAndPopulateDropdown('http://65.0.168.11/accountgroupData', 'account_group','name');
+        fetchAndPopulateDropdown('http://65.0.168.11/routeData', 'route_detail','route_name');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
