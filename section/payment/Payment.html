@@ -15,8 +15,10 @@
             margin: 0;
             padding: 20px;
         }
-        .container {
+
+        .container1 {
             max-width: 600px;
+            width: 100%;
             margin: 0 auto;
             background-color: #fff;
             padding: 20px;
@@ -25,8 +27,7 @@
             text-align: center;
         }
 
-
-       h1 {
+        h1 {
             text-align: center;
             margin-bottom: 20px;
             color: #333;
@@ -37,16 +38,6 @@
             height: 1px;
             background-color: #ddd;
             margin-bottom: 20px;
-        }
-
-        .container1 {
-            max-width: 600px;
-            width: 100%;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         form {
@@ -76,8 +67,9 @@
         .second-row {
             text-align: center;
         }
+
         .third-row {
-            text-align: center; 
+            text-align: center;
         }
 
         .border-hover {
@@ -94,149 +86,202 @@
         }
 
         .border-hover:hover {
-        background-color: #555;
-        /* Darker grey on hover */
+            background-color: #555;
+            /* Darker grey on hover */
         }
 
+        /* Style the loader container */
+        #loader {
+            border: 4px solid #f3f3f3;
+            /* Light grey */
+            border-top: 4px solid #3498db;
+            /* Blue */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            /* Apply animation */
+            display: none;
+            /* Hide loader by default */
 
-/* Style the loader container */
-#loader {
-    border: 4px solid #f3f3f3; /* Light grey */
-    border-top: 4px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite; /* Apply animation */
-    display: none; /* Hide loader by default */
-    
-    /* Center the loader */
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  /* Animation */
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+            /* Center the loader */
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Animation */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
 <body>
 
     <div id="loader"></div>
-        <div class="container1">
-            <h1>Payment</h1>
-            <hr>
-            <form id="loginForm1">
+    <div class="container1">
+        <h1>Payment</h1>
+        <hr>
+        <form id="paymentForm">
+            <!-- Input field for payment ID -->
+            <label for="id">Payment Id :</label>
+            <input type="number" id="id" name="pid" readonly>
+            <br>
 
-                <div class="first-row">
-                    <label for="date">Date :</label>
-                    <input type="text" id="date" name="date" placeholder="Date" required>
-                </div>
+            <label for="date">Date :</label>
+            <input type="text" id="date" name="date" placeholder="Date" required>
+            <br>
+
+            <label for="product">From Account :</label>
+            <select id="product" name="from_account" required>
+                <!-- Options for from account -->
+            </select>
+            <br>
+
+            <label for="bata">Supplier Name :</label>
+            <select id="bata" name="to_account" onchange="previousbalance()" required>
+                <!-- Options for to account -->
+            </select>
+            <br>
+
+            <label for="comment">Comment :</label>
+            <textarea id="comment" name="comment" required></textarea>
+            <br>
+
+            <div class="second-row">
+                <label for="previousBalance">Prev. Balance :</label>
+                <input type="number" id="previousBalance" name="previous_balance">
                 <br>
-                <label for="product">From Account :</label>
-                <select id="product" name="from_account" required>
-                    <!-- Options for from account -->
-                </select><br>
-                <br>
-                <div class="first-row">
-                <label for="bata">To Account :</label>
-                <select id="bata" name="to_account" onchange="previousbalance()" required>
-                    <!-- Options for to account -->
-                </select>
-                <br>
-                <label for="comment">Comment</label>
-                <textarea id="comment" name="comment" required></textarea><br>
-                <div class="second-row">
-                    <label for="previousBalance">Prev. Balance</label>
-                    <input type="number" id="previousBalance" name="previous_balance">
-                    <br>
-                    <label for="amount">Amount</label>
-                    <input type="number" id="amount" name="amount" onchange="totalBalance()" required>
-                </div>
-                <br>
-                <div class="third-row">
-                    <button type="submit" class="border-hover">Save</button>
-                    <!-- <a href="./product.html"><button type="button" class="border-hover">Back</button></a> -->
-                </div>
-            </form>
-        </div>
+
+                <label for="amount">Paid Amount :</label>
+                <input type="number" id="amount" name="amount" onchange="totalBalance()" required>
+            </div>
+            <br>
+
+            <div class="third-row">
+                <button type="submit" class="border-hover">Save</button>
+            </div>
+        </form>
     </div>
-</body>
-<script src="./payment.js"></script>
 
-<script>
+    <script>
+        // Function to get the current maximum payment ID from local storage
+        function getCurrentMaxPaymentId() {
+            return parseInt(localStorage.getItem('maxPaymentId') || 0);
+        }
 
-    function previousbalance(){
-        const name = document.getElementById("bata").value
-        fetch('http://65.0.168.11/fetchpv/' + name)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
+        // Function to set the current maximum payment ID in local storage
+        function setCurrentMaxPaymentId(paymentId) {
+            localStorage.setItem('maxPaymentId', paymentId);
+        }
+
+        // Function to generate the next payment ID
+        function generatePaymentId() {
+            // Get the current max payment ID
+            var currentMaxPaymentId = getCurrentMaxPaymentId();
+            // Increment the current max payment ID to get the next payment ID
+            var nextPaymentId = currentMaxPaymentId + 1;
+            // Save the next payment ID as the new max payment ID
+            setCurrentMaxPaymentId(nextPaymentId);
+            // Return the next payment ID
+            return nextPaymentId;
+        }
+
+        // Function to populate the payment ID input field
+        function populatePaymentId() {
+            document.getElementById("id").value = generatePaymentId();
+        }
+
+        // Function to populate the current date into the date input field
+        function populateCurrentDate() {
+            var currentDate = new Date().toISOString().slice(0, 10);
+            document.getElementById("date").value = currentDate;
+        }
+
+        // Call populatePaymentId and populateCurrentDate functions when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            populatePaymentId();
+            populateCurrentDate();
+        });
+
+        // Rest of your JavaScript code
+        // ...
+    </script>
+
+    <script>
+        function previousbalance() {
+            const name = document.getElementById("bata").value
+            fetch('http://65.0.168.11/fetchpv/' + name)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Populate dropdown with API data
+                    console.log(data)
+                    document.getElementById('previousBalance').value = parseInt(data[0]['current_balance'] || 0);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Fetch data from API and populate Select2 dropdowns
+            fetchAndPopulateDropdown('http://65.0.168.11/list/Supplier', 'product');
+            fetchAndPopulateDropdown('http://65.0.168.11/list/Bank Account', 'bata');
+        });
+
+        function fetchAndPopulateDropdown(apiUrl, dropdownId) {
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Populate Select2 dropdown with API data
+                    populateDropdownWithSelect2(data, dropdownId);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function populateDropdownWithSelect2(data, dropdownId) {
+            var dropdown = $('#' + dropdownId);
+            // Clear existing options
+            dropdown.empty();
+
+            // Add placeholder option
+            dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+
             // Populate dropdown with API data
-            console.log(data)
-            document.getElementById('previousBalance').value = parseInt(data[0]['current_balance'] || 0);      
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-      
-      }
-
-</script>
-
-<script>
-        
-    document.addEventListener('DOMContentLoaded', function () {
-        // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://65.0.168.11/list/Supplier', 'product');
-        fetchAndPopulateDropdown('http://65.0.168.11/list/Bank Account', 'bata');
-    });
-
-    function fetchAndPopulateDropdown(apiUrl, dropdownId) {
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId);
-            })
-            .catch(error => {
-                console.error('Error:', error);
+            data.forEach(function (item) {
+                dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
             });
-    }
 
-    function populateDropdownWithSelect2(data, dropdownId) {
-        var dropdown = $('#' + dropdownId);
-        // Clear existing options
-        dropdown.empty();
-
-        // Add placeholder option
-        dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
-
-        // Populate dropdown with API data
-        data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
-        });
-
-        // Initialize Select2
-        dropdown.select2({
-            placeholder: "Select Account",
-            allowClear: true
-        });
-    }
-
-</script>
+            // Initialize Select2
+            dropdown.select2({
+                placeholder: "Select Account",
+                allowClear: true
+            });
+        }
+    </script>
+</body>
 
 </html>

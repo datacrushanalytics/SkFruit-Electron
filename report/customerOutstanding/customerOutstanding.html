@@ -49,6 +49,14 @@
     margin: 20px;
 }
 
+#date {
+    position: absolute;
+    top: 122px;
+    left: 50px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
 
       .button-container {
             margin-bottom: 20px;
@@ -132,6 +140,7 @@
 
 <body>
     <div id="loader"></div>
+    <input type="date" id="date" value="">
     <div class="container">
         <h1 align="center">Customer Outstanding</h1><br>
         <hr>
@@ -141,19 +150,23 @@
 
                 <br>
 
-                <label for="userType">Customer Name :</label>
-                <select class="drop" id="customer" id="name" name="name">
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select><br>
+                
+               <label for="userType">Route :</label>
+               <select class="drop" id="route" name="name">
+               <!-- <option value="User" disabled selected>Select Account</option> -->
+               </select>
+                <br>
                 <br>
 
 
                 
 
-                <label for="userType">Route :</label>
-                <select class="drop" id="route" name="name">
+                <label for="userType">Customer Name :</label>
+                <select class="drop" id="customer" id="name" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select><br><br>
+                </select>
+
+                <br><br>
                 
 
                 <!-- <div class="third-row"> -->
@@ -196,6 +209,8 @@
 
 
 <script>
+    // Set current date to the date input field
+    document.getElementById('date').valueAsDate = new Date();
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
