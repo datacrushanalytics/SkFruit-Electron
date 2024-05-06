@@ -39,13 +39,13 @@
 <body>
     <div id="loader"></div>
     <div class="container">
-        <h1>खरेदी</h1>
+        <h1>Purchase</h1>
         <hr>
         <br>
         <div class="container1">
             <form id="Form">
                 <div class="first-row">
-                    <div style="margin-left: 50px;">
+                    <div style="margin-left: 3%;">
                        <label for="no">Bill No:</label> 
                         <input type="number" id="no" name="number" placeholder="Bill No" required>
                     </div>
@@ -75,14 +75,13 @@
                         <label for="dropdown">Product:</label>
                         <select id="product">
                             <br>
-                            <br>
-
                     </select>
-
                     </div>
                     <div style="margin-left: 50px;">
                         <label for="bata">Bata:</label>
                         <input type="text" id="bata" name="name" placeholder="Bata">
+                        <br>
+                    </select>
                     </div>
                     <div style="margin-left: 50px;">
                         <label for="mark">Mark:</label>
@@ -90,35 +89,34 @@
                     </div>
                 </div>
                 <br>
+                <div style="margin-left: 3%;">
+                    <label for="dropdown1"> Unit :</label>
+                    <select id="unit">
+                                <option>यूनिट</option>
+                                <option value="carate">कॅरेट</option>
+                                <option value="box">बॉक्स </option>
+                                <option value="killo">किलो</option>
+                                <option value="bag">बँग</option> 
+                                <option value="nag">नग</option>
+                                <option value="dozon">डझन</option>
+                                <option value="peti">पेटी</option>
+                            </select>
+                        </div>
                 <div class="fourth-row">
                 <div style="display: flex;">
-                    <div style="margin-left: 95px;">
+                    <div style="margin-left: 4%;">
                         <label for="purchase">Purchase Rate:</label>
                         <input type="number" id="purchase" name="name" placeholder="Purchase Rate">
                     </div>
-                    <div style=" margin-left: 20px;">
+                    <div style=" margin-left: 4%;">
                         <label for="sale">Sale Rate:</label>
                         <input type="number" id="sale" name="name" placeholder="Sale Rate">
                     </div>
                     <div style="margin-left: 30px;">
-                        <label for="quantity"> &nbsp;&nbsp;   नग  :</label>
+                        <label for="quantity">  &nbsp;&nbsp; नग  :</label>
                         <input type="number" id="quantity" name="name" placeholder="नग ">
                     </div>
-                
                     <div>
-                        <label for="dropdown1">Unit</label>
-                        <select id="unit">
-                            
-                            <option value="carate">कॅरेट</option>
-                            <option value="box">बॉक्स </option>
-                            <option value="killo">किलो</option>
-                            <option value="bag">बँग</option> 
-                            <option value="nag">नग</option>
-                            <option value="dozon">डझन</option>
-                            <option value="peti">पेटी</option>
-                            
-                        </select>
-                    </div>
                 </div>
             </div>
             <br>
@@ -297,7 +295,6 @@
                   console.error('Error:', error);
                 });
             }
-            
     
     </script>
     
