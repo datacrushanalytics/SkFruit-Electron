@@ -301,6 +301,18 @@ async function exportToExcel() {
     }
 }
 
+ // Add Delete button if user is admin
+ if (isAdmin) {
+    var deleteCell = row.insertCell();
+    var deleteButton = document.createElement('button');
+    deleteButton.className = 'button delete-button';
+    deleteButton.textContent = 'Delete';
+    deleteButton.addEventListener('click', function() {
+      deleteaccount(item.id); // Pass the user id to the delete function
+    });
+    deleteCell.appendChild(deleteButton);
+}
+
 
 
 
