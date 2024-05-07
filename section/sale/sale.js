@@ -312,7 +312,13 @@ function getProducts() {
 
 
     fetch('http://65.0.168.11/fetchStock/' + bataId)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                loader.style.display = 'none';
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
 
             // Update label with additional content
@@ -364,7 +370,13 @@ function getCust() {
     var number = document.getElementById('number').value;
     console.log(number)
     fetch('http://65.0.168.11/fetchName/mobile/' + number)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                loader.style.display = 'none';
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             console.log(data[0].name)
             // Get the Select2 dropdown element

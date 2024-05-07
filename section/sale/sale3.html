@@ -805,7 +805,13 @@
   var total1 = parseInt(document.getElementById("total1").value) || 0;
 
   fetch('http://65.0.168.11/accountData/' + parseInt(document.getElementById("custid").value))
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+              loader.style.display = 'none';
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
         .then(data => {
             console.log(data[0].cr_dr_type)
             if(data[0].cr_dr_type == 'no'){
@@ -826,7 +832,13 @@ function previousbalance(){
   const name = document.getElementById("grahk").value
 
   fetch('http://65.0.168.11/fetchName/name/' + name)
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+              loader.style.display = 'none';
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
         .then(data => {
             console.log(data[0].mobile_no)
             // Get the Select2 dropdown element
@@ -854,6 +866,7 @@ function previousbalance(){
   fetch('http://65.0.168.11/fetchpv/' + name)
   .then(response => {
       if (!response.ok) {
+        loader.style.display = 'none';
           throw new Error('Network response was not ok');
       }
       return response.json();
@@ -901,7 +914,13 @@ function totalbill(){
   console.log(document.getElementById("custid").value)
 
   fetch('http://65.0.168.11/accountData/' + parseInt(document.getElementById("custid").value))
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+              loader.style.display = 'none';
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
         .then(data => {
             console.log(data[0].cr_dr_type)
             if(data[0].cr_dr_type == 'no'){
@@ -955,6 +974,12 @@ function totalbill(){
         // document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + parseInt(document.getElementById('total').value);
         // totalBalance()
         updateTable(formData, result.insertId);
+        $('#product').val('').trigger('change');
+        $('#bta').val('').trigger('change');
+      document.getElementById('mark').value = '';
+       document.getElementById('nag').value = '';
+       document.getElementById('kimmat').value = '';
+      document.getElementById('total').value = '';
       })
       .catch(error => {
         console.error('Error:', error);
