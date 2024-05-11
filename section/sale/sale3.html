@@ -790,6 +790,11 @@
     window.location.href = "../account/acc-master.html"; // Redirect to the account page
   }
   
+  $(document).on('select2:open', function(e) {
+    window.setTimeout(function () {
+        document.querySelector('input.select2-search__field').focus();
+    }, 0);
+});
 
 </script>
 

@@ -311,7 +311,8 @@ function closePopup() {
 function openModal(item) {
     // Your code to open the modal with the data from 'item'
     console.log("Opening modal for item:", item.bill_id);
-    
+    var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
     fetch('http://65.0.168.11/bill/' + item.bill_id)
         .then(response => {
@@ -323,7 +324,7 @@ function openModal(item) {
         .then(data => {
             // Populate dropdown with API data
             console.log(data)
-
+            loader.style.display = 'none';
             var utcDate = new Date(data.results[0].date);
             var options = {
                 year: 'numeric',

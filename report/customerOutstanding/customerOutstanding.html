@@ -216,6 +216,7 @@
         // Fetch data from API and populate Select2 dropdowns
         fetchAndPopulateDropdown('http://65.0.168.11/list/Customer', 'customer');
         fetchAndPopulateDropdown('http://65.0.168.11/routeData', 'route');
+        fetchDataAndProcess();
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId) {
@@ -254,6 +255,12 @@
             allowClear: true
         });
     }
+
+    $(document).on('select2:open', function(e) {
+        window.setTimeout(function () {
+            document.querySelector('input.select2-search__field').focus();
+        }, 0);
+    });
 
 </script>
 

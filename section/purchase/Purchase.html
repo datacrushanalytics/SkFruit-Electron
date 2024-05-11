@@ -78,6 +78,7 @@
 
                         </select>
                     </div>
+                    
                 </div>
                 <br>
                 <div class="third-row">
@@ -207,12 +208,38 @@
                     dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
                 });
 
-                // Initialize Select2
-                dropdown.select2({
-                    placeholder: "Select " + dropdownId + " type",
-                    allowClear: true
-                });
+               
+                // Initialize Select2 with tags
+            dropdown.select2({
+                placeholder: "Select or type " + dropdownId + " type",
+                allowClear: true,
+                tags: true,
+                createTag: function(params) {
+                    return {
+                        id: params.term,
+                        text: params.term,
+                        newOption: true
+                    };
+                }
+            });
+
+            // Show or hide input field based on selection
+            dropdown.on('select2:select', function (e) {
+                if (e.params.data.newOption) {
+                    $('#otherOption').show();
+                } else {
+                    $('#otherOption').hide();
+                }
+            });
+ 
             }
+
+            $(document).on('select2:open', function(e) {
+                window.setTimeout(function () {
+                    document.querySelector('input.select2-search__field').focus();
+                }, 0);
+            });
+            
 
         </script>
 
