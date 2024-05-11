@@ -277,8 +277,9 @@ function displayBarcodePopup(item) {
     document.getElementById('popupContainer').innerHTML = popupContent;
     JsBarcode('#barcodeCanvas', barcodeValue, {
         format: "CODE128", // Adjust the barcode format as needed
-        displayValue: false, // Hide text under the barcode 
-        width: 1 // Set the width of the bars
+        displayValue: true, // Hide text under the barcode 
+        width: 1, // Set the width of the bars
+        text: barcodeValue 
     });
 
     // Create a download link for the barcode image
