@@ -137,27 +137,6 @@
         }
         
       
-        
-        /* table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: rgba(255, 255, 255, 0.8);
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            margin: 0 auto;
-        }
-
-        th,
-        td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 12px;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        } */
-
         /* Media query for responsiveness */
         @media only screen and (max-width: 600px) {
             .container {
@@ -203,16 +182,6 @@
             <div class="container1">
                 <form id="Form">
     
-                    <!-- <label for="userType">Product : </label>
-                    <select class="drop" id="grahk" name="account_group">
-                    </select>
-                    <br><br>
-                    <label for="userType">Bata : </label>
-                    <select class="drop" id="Route" name="route_detail">
-    
-                    </select>
-                    <br><br> -->
-
                     <div class="input-row">
                         <label for="grahk">Product:  </label>
                         <select class="drop" id="grahk" name="account_group"></select>
@@ -284,9 +253,6 @@
             .then(data => {
                 // Hide loader
                 loader.style.display = 'none';
-                // Populate dropdown with API data
-                // populateDropdown1(data);
-                // populateDropdown2(data);
                 populateDropdown3(data);
             })
             .catch(error => {
@@ -420,14 +386,6 @@
                 displayBarcodePopup(item);
             };
             infoCell.appendChild(infoButton);
-
-
-            // Generate barcode for each row
-            //var barcodeCell = row.insertCell();
-            //var barcodeId = 'barcode_' + index;
-            //barcodeCell.innerHTML = '<svg id="' + barcodeId + '"></svg>';
-            //JsBarcode('#' + barcodeId, item.barcode); // Generate barcode using JsBarcode library
-
 
         });
     }

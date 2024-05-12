@@ -71,16 +71,6 @@ function populateTable(data) {
 }
 
 function editAccount(user) {
-  // Convert user data to JSON and encode it for URL
-  // var userData = encodeURIComponent(JSON.stringify(user));
-  // console.log("Jell")
-  // console.log(userData)
-  // console.log(user.id);
-  // document.getElementById("id1").value = user.id;
-
-  // Redirect to user_master.html with user data in query parameter
-  // window.location.href = "../user/User_Master.html"
-  // window.location.href = '../user/user_update.html?userData=' + '%7B"id"%3A31%2C"name"%3A"Deepali"%2C"address"%3A"nsk"%2C"mobile_no"%3A1234567890%2C"username"%3A"dee"%2C"password"%3A"asd"%2C"status"%3A"1"%2C"usertype"%3A"Admin"%7D';
   localStorage.setItem('userData', JSON.stringify(user));
    // Redirect to user_update.html
    window.location.href = '../account/updateAccount.html';
@@ -124,15 +114,6 @@ function insertAccount() {
         const crDrType = document.querySelector('input[name="cr_dr_type"]:checked').id;
 
         console.log(name,address,mobileNo,accountGroup,routeDetails,prevBalance,crDrType)
-        // const formData = new FormData();
-        // formData.append("is_ative", 1);
-        // formData.append("name", name);
-        // formData.append("address", address);
-        // formData.append("mobile_no", mobileNo);
-        // formData.append("account_group", accountGroup);
-        // formData.append("route_detail", routeDetails);
-        // formData.append("prev_balance", prevBalance);
-        // formData.append("cr_dr_type", crDrType);
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
       
@@ -170,43 +151,4 @@ function insertAccount() {
       console.error('An error occurred:', error);
     }
   }
-  
-
-
-
-
-// function insertAccount() {
-//     console.log("INTO insertion Block");
-//     try {
-//       fetch('http://3.109.121.46/accountData/insertaccount', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json' 
-//         },
-//         body: JSON.stringify({
-//           "is_ative": 1,
-//           "name": document.getElementById("name"),
-//           "address": "hah",
-//           "mobile_no": 9852,
-//           "account_group": "fsdf",
-//           "route_detail": "trs",
-//           "prev_balance": 123,
-//           "cr_dr_type": "cr"
-//         })
-//       })
-//       .then(response => {
-//         if (!response.ok) {
-//             console.log(response)
-//           throw new Error('Network response was not ok');
-//         }
-//         return response.text(); // Read response as text
-//       })
-//       .then(data => alert(data)) // Alert the response
-//       .catch(error => {
-//         console.error('There was a problem with the fetch operation:', error);
-//       });
-//     } catch (error) {
-//       console.error('An error occurred:', error);
-//     }
-//   }
 
