@@ -189,6 +189,35 @@
   }
   
 
+  /* CSS */
+.popup {
+    /* Existing styles */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#companyInfo {
+    margin-bottom: 20px;
+}
+
+#companyLogo {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+#companyName {
+    font-size: 1.2em; /* Adjust the font size as needed */
+}
+
+#barcodeCanvas {
+    /* Existing styles */
+    margin-top: 20px; /* Add margin for spacing */
+    width: 220px;
+}
+
+
     </style>
 </head>
 
@@ -255,6 +284,9 @@
                 </table>
                 </div>
             </div>
+          
+<div id="popupContainer"></div>
+
     
     
 </body>
@@ -437,7 +469,7 @@
         var barcodeValue = 'Product Name:' + item['product_name'] + ' \nBata:' + item['bata'];
         var popupContent = `
             <div class="popup">
-                <h2>Barcode</h2>
+            
                 <div id="companyInfo">
                     <p id="companyName">Savata Fruits</p> <!-- Added company name -->
                     <img src="../../assets/img/logo.png" alt="Company Logo" id="companyLogo"> <!-- Updated company logo path -->
