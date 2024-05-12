@@ -202,7 +202,7 @@
                 <div class="dropdown-container">
                     <div id="number-wrapper" class="input-wrapper">
                       <label for="number">Mobile No :</label>
-                      <select type="root" id="number" name="number" onchange="getCust()" required></select>
+                      <select class="drop" id="mob" name="mob" onchange="getCust()" required></select>
                     </div><br>
                 <!-- <div class="first-row">
                     <label for="route_detail" class="input-label">खात्याकडे :</label>
@@ -308,7 +308,57 @@
                 console.error('Error:', error);
             });
 
+
+            fetch('http://65.0.168.11/fetchName/name/' + name)
+                  .then(response => {
+                    if (!response.ok) {
+                        loader.style.display = 'none';
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                  .then(data => {
+                      console.log(data[0].mobile_no)
+                      // Get the Select2 dropdown element
+                      var $productDropdown = $('#mob');
+                      // Set the value of the Select2 dropdown if it's different
+                      if ($productDropdown.val() !== data[0].mobile_no) {
+                        $productDropdown.val(data[0].mobile_no).trigger('change');
+                      }
+                  })
+                  .catch(error => {
+                      console.error('Error:', error);
+                  });   
     }
+
+
+
+    function getCust() {
+        var number = document.getElementById('mob').value;
+        console.log(number)
+        fetch('http://65.0.168.11/fetchName/mobile/' + number)
+            .then(response => {
+                if (!response.ok) {
+                    loader.style.display = 'none';
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data[0].name)
+                // Get the Select2 dropdown element
+                var $productDropdown = $('#account_group');
+                
+                // Set the value of the Select2 dropdown if it's different
+                if ($productDropdown.val() !== data[0].name) {
+                    $productDropdown.val(data[0].name).trigger('change');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+    
 </script>
 
 
@@ -319,6 +369,7 @@
         fetchAndPopulateDropdown('http://65.0.168.11/list/Customer', 'account_group','customer');
         fetchAndPopulateDropdown('http://65.0.168.11/list/Bank Account', 'route_detail','Account');
         fetchAndPopulateDropdown('http://65.0.168.11/list/Bank Account', 'input1','Account');
+        fetchAndPopulateDropdown('http://65.0.168.11/mobile', 'mob','mobile_no');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,name) {
@@ -348,7 +399,9 @@
 
         // Populate dropdown with API data
         data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
+            console.log(item.mobile_no)
+            console.log(item.name)
+            dropdown.append($('<option></option>').attr('value', item.name || item.route_name || item.mobile_no).text(item.name || item.route_name || item.mobile_no));
         });
 
         // Initialize Select2

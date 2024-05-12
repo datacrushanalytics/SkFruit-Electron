@@ -137,7 +137,7 @@ document.getElementById('loginForm1').addEventListener('submit', async function(
         receiptId: parseInt(document.getElementById('pavti').value),
         date: document.getElementById('date').value,
         from_account: document.getElementById('account_group').value,
-        to_account: document.getElementById('route_detail').value,
+        to_account: document.getElementById('mob').value,
         note: document.getElementById('message').value,
         prev_balance: parseInt(document.getElementById('input3').value) || 0,
         deposite: parseInt(document.getElementById('input6').value) || 0,
