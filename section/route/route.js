@@ -71,16 +71,6 @@ function populateTable(data) {
 }
 
 function editRoute(user) {
-    // Convert user data to JSON and encode it for URL
-    // var userData = encodeURIComponent(JSON.stringify(user));
-    // console.log("Jell")
-    // console.log(userData)
-    // console.log(user.id);
-    // document.getElementById("id1").value = user.id;
-
-    // Redirect to user_master.html with user data in query parameter
-    // window.location.href = "../user/User_Master.html"
-    // window.location.href = '../user/user_update.html?userData=' + '%7B"id"%3A31%2C"name"%3A"Deepali"%2C"address"%3A"nsk"%2C"mobile_no"%3A1234567890%2C"username"%3A"dee"%2C"password"%3A"asd"%2C"status"%3A"1"%2C"usertype"%3A"Admin"%7D';
     localStorage.setItem('userData', JSON.stringify(user));
      // Redirect to user_update.html
      window.location.href = '../route/update_route.html';
