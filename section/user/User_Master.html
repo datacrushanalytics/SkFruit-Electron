@@ -14,7 +14,12 @@
             background-color: #f2f2f2;
             margin: 0;
             padding: 20px;
-        }
+          }
+           .name label {
+             display: block;
+             /* margin-bottom: 20px;  Adjust this value as needed */
+             text-align: left;
+            }
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -99,10 +104,33 @@
     margin-right: 10px;
     align-items: center;
 }
+/* Style the loader container */
+#loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Apply animation */
+    display: none; /* Hide loader by default */
+    
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
     </style>
 
 </head>
 <body>
+    <div id="loader"></div>
     <div class="container">
         <h1 align="center">User Master</h1> <hr>
 
@@ -112,7 +140,7 @@
         <div class="first-row">
             <label for="userType">User Type </label>
         <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
-        <select id="usertype" name="usertype" placeholder="UserType">
+        <select id="usertype" name="usertype" placeholder="UserType" required>
             <option value="User" selected>User</option>
             <option value="Admin">Admin</option>
             <!-- Add more options as needed -->
@@ -120,26 +148,26 @@
         </div>
         <br>
         <div class="name">
-        <label for="userType">Name &nbsp; &nbsp;&nbsp;</label>
+        <label for="userType">Name </label>
         <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
-        <select id="name" id="name" name="name">
+        <select id="name" id="name" name="name" required> 
             <!-- <option value="User" disabled selected>Select Account</option> -->
         </select>
     </div>
         <br>
         <!-- <input type="text" id="name" name="name" placeholder="Name">  -->
         <label fro="username">Username :</label>
-        <input type="text" id="username" name="username" placeholder="Username"> <br>
+        <input type="text" id="username" name="username" placeholder="Username" required> <br>
 
         <label for="password">Password :</label>
-        <input type="password" id="password" name="password" placeholder="Password"> <br>
+        <input type="password" id="password" name="password" placeholder="Password" required> <br>
 
         <div class="second-row">
             <div class="radio-container">
-                <input type="radio" id="status-active" name="status" value="1">
+                <input type="radio" id="status-active" name="status" value="1" required>
                 <label for="status-active">Active</label>
-                <input type="radio" id="status-inactive" name="status" value="0">
-                <label for="status-inactive">Inactive</label>
+                <input type="radio" id="status-inactive" name="status" value="0" required>
+                <label for="status-inactive">Deactive</label>
             </div>
         </div>
     </div> 
@@ -161,7 +189,7 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://3.109.5.164/list/Worker', 'name','name');
+        fetchAndPopulateDropdown('http://65.0.168.11/list/Worker', 'name','name');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
@@ -200,6 +228,12 @@
             allowClear: true
         });
     }
+
+    $(document).on('select2:open', function(e) {
+        window.setTimeout(function () {
+            document.querySelector('input.select2-search__field').focus();
+        }, 0);
+    });
 
 </script>
     

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,225 +11,300 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="./purchase.css">
     <title>खरेदी</title>
+    <style>
+        /* Style the loader container */
+        #loader {
+            border: 4px solid #f3f3f3;
+            /* Light grey */
+            border-top: 4px solid #3498db;
+            /* Blue */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            /* Apply animation */
+            display: none;
+            /* Hide loader by default */
+
+            /* Center the loader */
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Animation */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <div id="loader"></div>
     <div class="container">
-        <h1>खरेदी</h1>
+        <h1>Purchase</h1>
         <hr>
+        <br>
         <div class="container1">
             <form id="Form">
                 <div class="first-row">
-                    <div style="margin-left: 50px;">
-                       <label for="no">नं.:</label> 
-                        <input type="number" id="no" name="number" placeholder="नं.">
+                    <div style="margin-left: 3%;">
+                        <label for="no">Bill No:</label>
+                        <input type="number" id="no" name="number" placeholder="Bill No" required>
                     </div>
-                        <div style="margin-left:30px;">
-                        <label for="date">दिनांक:</label>
-                        <input type="text" id="date" name="date"> 
-                    </div> 
+                    <div style="margin-left:50px;">
+                        <label for="date">Date:</label>
+                        <input type="text" id="date" name="date" required>
+                    </div>
                 </div>
                 <br>
                 <div class="second-row">
                     <div style="margin-left: 50px;">
-                        <label for="dropdown" >सप्लायरचे नाव: </label> 
-                        <select id="supplier" class="drop">
+                        <label for="dropdown">Supplier Name: </label>
+                        <select id="supplier" class="drop" required>
 
                         </select> <br>
                     </div> <br>
                     <div style="margin-left:50px;">
-                        <label for="number">गाडी नं : </label>
-                        <select id="vehicle">
+                        <label for="number">vehicle no : </label>
+                        <select id="vehicle" required>
 
                         </select>
                     </div>
+                    
                 </div>
                 <br>
                 <div class="third-row">
                     <div style="margin-left: 50px;">
-                        <label for="dropdown">उत्पादन:</label>
+                        <label for="dropdown">Product:</label>
                         <select id="product">
                             <br>
-
-                    </select>
-
+                        </select>
                     </div>
                     <div style="margin-left: 50px;">
-                        <label for="bata">बटा:</label>
-                        <input type="text" id="bata" name="name" placeholder="बटा">
+                        <label for="bata">Bata:</label>
+                        <input type="text" id="bata" name="name" placeholder="Bata">
+                        <br>
+                        </select>
                     </div>
                     <div style="margin-left: 50px;">
-                        <label for="mark">मार्क:</label>
-                        <input type="text" id="mark" name="name" placeholder="मार्क">
+                        <label for="mark">Mark:</label>
+                        <input type="text" id="mark" name="name" placeholder="Mark">
                     </div>
                 </div>
                 <br>
+                <div style="margin-left: 3%;">
+                    <label for="dropdown1"> Unit :</label>
+                    <select id="unit">
+                        <option>यूनिट</option>
+                        <option value="carate">कॅरेट</option>
+                        <option value="box">बॉक्स </option>
+                        <option value="killo">किलो</option>
+                        <option value="bag">बँग</option>
+                        <option value="nag">नग</option>
+                        <option value="dozon">डझन</option>
+                        <option value="peti">पेटी</option>
+                    </select>
+                </div><br><br>
                 <div class="fourth-row">
-                <div style="display: flex;">
-                    <div style="margin-left: 95px;">
-                        <label for="purchase">खरेदी किंमत:</label>
-                        <input type="number" id="purchase" name="name" placeholder="खरेदी किंमत">
+                    <div style="display: flex;">
+                        <div style="margin-left: 4%;">
+                            <label for="purchase">Purchase Rate:</label>
+                            <input type="number" id="purchase" name="name" placeholder="Purchase Rate">
+                        </div>
+                        <div style=" margin-left: 4%;">
+                            <label for="sale">Sale Rate:</label>
+                            <input type="number" id="sale" name="name" placeholder="Sale Rate">
+                        </div>
+                        <div style="margin-left: 30px;">
+                            <label for="quantity"> &nbsp;&nbsp; Nag :</label>
+                            <input type="number" id="quantity" name="name" placeholder="Nag">
+                        </div>
+                        <div>
+                        </div>
                     </div>
-                    <div style=" margin-left: 20px;">
-                        <label for="sale">विक्री किंमत:</label>
-                        <input type="number" id="sale" name="name" placeholder="विक्री किंमत">
-                    </div>
-                    <div style="margin-left: 30px;">
-                        <label for="quantity"> &nbsp;&nbsp;   नग  :</label>
-                        <input type="number" id="quantity" name="name" placeholder="नग ">
-                    </div>
-                
-                    <div>
-                        <label for="dropdown1">यूनिट</label>
-                        <select id="unit">
-                            <option>यूनिट</option>
-                            <option value="box">बॉक्स </option>
-                            <option value="killo">किलो</option>
-                            <option value="nag">नग</option>
-                        </select>
-                    </div>
+                    <br>
+
+                    <button type="submit" class="border-hover" onclick="myFunction()">ADD</button></a>
                 </div>
-            </div>
-            <br>
-            
-                <button type="submit" class="border-hover" onclick="myFunction()">ADD</button></a>
+                <br>
+                <div class="table-container">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>प्रॉडक्ट </th>
+                                <th>बटा</th>
+                                <th>मार्क</th>
+                                <th>खरेदी किंमत</th>
+                                <th>विक्री किंमत</th>
+                                <th>नग</th>
+                                <th>यूनिट</th>
+                                <th>रक्कम</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tableBody1">
+                            <!-- Data will be inserted here -->
+                        </tbody>
+
+                    </table>
+                </div>
+                <br>
+                <div style="margin-left: 400px;">
+                    <label for="total">Total Amount :</label>
+                    <input type="number" id="total" name="name" placeholder="Total Amount " required>
+                </div>
+                <br>
+                <div class="four-row">
+                    <button class="border-hover" type="submit">Save</button>
+                </div>
+            </form>
         </div>
-        <br>
-        <div class="table-container">
+        <script src="./Purchase.js"></script>
+        <script>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>प्रॉडक्ट </th>
-                        <th>बटा</th>
-                        <th>मार्क</th>
-                        <th>खरेदी किंमत</th>
-                        <th>विक्री किंमत</th>
-                        <th>नग</th>
-                        <th>यूनिट</th>
-                        <th>रक्कम</th>
-                    </tr>
-                </thead>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Fetch data from API and populate Select2 dropdowns
+                fetchAndPopulateDropdown('http://65.0.168.11/list/Supplier', 'supplier', 'name');
+                fetchAndPopulateDropdown('http://65.0.168.11/productData/', 'product', 'name');
+                fetchAndPopulateDropdown('http://65.0.168.11/vehicleData', 'vehicle', 'vehicle_no');
+            });
 
-                <tbody id="tableBody1">
-                    <!-- Data will be inserted here -->
-                </tbody>
+            function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
+                fetch(apiUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Populate Select2 dropdown with API data
+                        populateDropdownWithSelect2(data, dropdownId, field);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
 
-            </table>
-        </div>
-        <br>
-        <div style="margin-left: 400px;">
-            <label for="total">एकूण रक्कम:</label>
-            <input type="number" id="total" name="name" placeholder="एकूण रक्कम">
-        </div>
-        <br>
-        <div class="four-row">
-            <button class="border-hover" type="submit">Save</button>
-        </div>
-        </form>
-    </div>
-    <script src="./Purchase.js"></script>
-    <script>
-        
-      document.addEventListener('DOMContentLoaded', function () {
-          // Fetch data from API and populate Select2 dropdowns
-          fetchAndPopulateDropdown('http://3.109.5.164/list/Supplier', 'supplier','name');
-          fetchAndPopulateDropdown('http://3.109.5.164/productData/', 'product','name');
-          fetchAndPopulateDropdown('http://3.109.5.164/vehicleData', 'vehicle','vehicle_no');
-      });
-  
-      function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
-          fetch(apiUrl)
-              .then(response => {
-                  if (!response.ok) {
-                      throw new Error('Network response was not ok');
-                  }
-                  return response.json();
-              })
-              .then(data => {
-                  // Populate Select2 dropdown with API data
-                  populateDropdownWithSelect2(data, dropdownId,field);
-              })
-              .catch(error => {
-                  console.error('Error:', error);
-              });
-      }
-  
-      function populateDropdownWithSelect2(data, dropdownId, field) {
-          var dropdown = $('#' + dropdownId);
-          // Clear existing options
-          dropdown.empty();
-  
-          // Add placeholder option
-          dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
-  
-          // Populate dropdown with API data
-          data.forEach(function (item) {
-              dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
-          });
-  
-          // Initialize Select2
-          dropdown.select2({
-              placeholder: "Select " + dropdownId + " type",
-              allowClear: true
-          });
-      }
-  
-  </script>
+            function populateDropdownWithSelect2(data, dropdownId, field) {
+                var dropdown = $('#' + dropdownId);
+                // Clear existing options
+                dropdown.empty();
 
+                // Add placeholder option
+                dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
 
+                // Populate dropdown with API data
+                data.forEach(function (item) {
+                    dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
+                });
 
-
-
-
-    <script>
-
-        function myFunction() {
-            event.preventDefault();
-          
-            var formData = {
-              purchase_id: parseInt(document.getElementById('no').value),
-              bata: document.getElementById('bata').value,
-              mark: document.getElementById('mark').value,
-              p_date: document.getElementById('date').value,
-              product_name: document.getElementById('product').value,
-              purchase_price: parseInt(document.getElementById('purchase').value),
-              selling_price: parseInt(document.getElementById('sale').value),
-              quantity: parseInt(document.getElementById('quantity').value),
-              unit: document.getElementById('unit').value,
-              price: parseInt(document.getElementById('purchase').value) * parseInt(document.getElementById('quantity').value)
-            };
-            
-            console.log(formData)
-        
-            fetch('http://3.109.5.164/purchaseproductData/insertPurchaseproduct', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(formData)
-            })
-              .then(response => {
-                if (!response.ok) {
-                  throw new Error('Network response was not ok');
+               
+                // Initialize Select2 with tags
+            dropdown.select2({
+                placeholder: "Select or type " + dropdownId + " type",
+                allowClear: true,
+                tags: true,
+                createTag: function(params) {
+                    return {
+                        id: params.term,
+                        text: params.term,
+                        newOption: true
+                    };
                 }
-                return response.json();
-              })
-              .then(result => {
-                console.log('Entry added successfully:', result);
-                document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) + formData.price;
-                updateTable(formData, result);
-              })
-              .catch(error => {
-                console.error('Error:', error);
-              });
-            // Add your desired functionality here
-          }
-        
-          function updateTable(entry, result) {
-            var tableBody = document.getElementById('tableBody1');
-            var newRow = document.createElement('tr');
-            newRow.innerHTML = `
+            });
+
+            // Show or hide input field based on selection
+            dropdown.on('select2:select', function (e) {
+                if (e.params.data.newOption) {
+                    $('#otherOption').show();
+                } else {
+                    $('#otherOption').hide();
+                }
+            });
+ 
+            }
+
+            $(document).on('select2:open', function(e) {
+                window.setTimeout(function () {
+                    document.querySelector('input.select2-search__field').focus();
+                }, 0);
+            });
+            
+
+        </script>
+
+
+
+
+
+
+        <script>
+
+            function myFunction() {
+                event.preventDefault();
+
+                var formData = {
+                    purchase_id: parseInt(document.getElementById('no').value),
+                    bata: document.getElementById('bata').value,
+                    mark: document.getElementById('mark').value,
+                    p_date: document.getElementById('date').value,
+                    product_name: document.getElementById('product').value,
+                    purchase_price: parseInt(document.getElementById('purchase').value),
+                    selling_price: parseInt(document.getElementById('sale').value),
+                    quantity: parseInt(document.getElementById('quantity').value),
+                    unit: document.getElementById('unit').value,
+                    price: parseInt(document.getElementById('purchase').value) * parseInt(document.getElementById('quantity').value)
+                };
+
+                console.log(formData)
+
+                fetch('http://65.0.168.11/purchaseproductData/insertPurchaseproduct', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(result => {
+                        console.log('Entry added successfully:', result);
+                        //document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) + formData.price;
+                        updateTable(formData, result.insertId);
+                        // Clear input fields after successful submission
+                        document.getElementById('bata').value = '';
+                        document.getElementById('mark').value = '';
+                        document.getElementById('purchase').value = '';
+                        document.getElementById('sale').value = '';
+                        document.getElementById('quantity').value = '';
+                        document.getElementById('unit').value = '';
+                        // Clear Select2 dropdown for product
+                        $('#product').val('').trigger('change');
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                // Add your desired functionality here
+            }
+
+            function updateTable(entry, result) {
+                var tableBody = document.getElementById('tableBody1');
+                var newRow = document.createElement('tr');
+                newRow.innerHTML = `
                   <td>${entry.product_name}</td>
                   <td>${entry.bata}</td>
                   <td>${entry.mark}</td>
@@ -237,36 +313,38 @@
                   <td>${entry.quantity}</td>
                   <td>${entry.unit}</td>
                   <td>${entry.price}</td>
-                  <td><button type="button" onclick="deleteUser(this, ${result.insertId}, ${entry.price})">Delete</button></td>
+                  <td><button type="button" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button></td>
               `;
-            tableBody.appendChild(newRow);
-          }
-        
-            function deleteUser(button,userId,price) {
-              // Perform delete operation based on userId
-              var button = event.target;
-              var row = button.parentNode.parentNode;
-              fetch('http://3.109.5.164/purchaseproductData/deletepurchaseproductId/' + userId, {
-                method: 'DELETE'
-              })
-                .then(response => {
-                  if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                  }
-                  console.log('User deleted successfully');
-                  document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) - price;
-                  // Refresh the table or update UI as needed
-                  //newRow.remove();
-                  row.remove();
-                })
-                .catch(error => {
-                  console.error('Error:', error);
-                });
+
+                document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) + entry.price;
+                tableBody.appendChild(newRow);
             }
-    
-    </script>
-    
-    
+
+            function deleteUser(button, userId, price) {
+                // Perform delete operation based on userId
+                var button = event.target;
+                var row = button.parentNode.parentNode;
+                fetch('http://65.0.168.11/purchaseproductData/deletepurchaseproductId/' + userId, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        console.log('User deleted successfully');
+                        document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) - price;
+                        // Refresh the table or update UI as needed
+                        //newRow.remove();
+                        row.remove();
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+
+        </script>
+
+
 
 </body>
 

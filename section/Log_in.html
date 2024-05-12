@@ -12,9 +12,9 @@
     <div class="login-container">
       <img class="logo" src="../assets/img/logo.png" alt="Example Image">
       <form id="loginForm" method="post">
-        <input type="text" id="username" name="username" required placeholder="User Name">
+        <input type="text" id="username" name="username" required placeholder="User Name" required>
   
-        <input type="text" id="password" name="password" required placeholder="Password">
+        <input type="text" id="password" name="password" required placeholder="Password" required>
         <div class="loginbtn">
         <!-- <a href="../section/Home.html"><button type="button" type="submit" onclick="login()" style="text-decoration: none;">LOGIN</button> </a>  -->
        <button type="button" id= "submitButton" type="submit" onclick="login()" style="text-decoration: none;">LOGIN</button>
@@ -41,7 +41,7 @@
 function login() {
   localStorage.removeItem('sessionData');
 
-      fetch('http://3.109.5.164/user/login', {
+      fetch('http://65.0.168.11/user/login', {
         method: 'POST',
         body: JSON.stringify({
           name: document.getElementById("username").value,

@@ -8,11 +8,12 @@ body {
   
   .container {
     text-align: center;
-    margin-bottom: 20px;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    padding: 0 20px;
+    margin: 0 auto; /* Align container in the center */
+    width: 100%; /* Adjust the width as needed */
+    max-width: 814px; /* Limit the maximum width */
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
+    padding: 20px; /* Add padding inside the container */
+    box-sizing: border-box; /* Include padding and border in width */
   }
   
   .table-container {
@@ -69,17 +70,15 @@ body {
   select {
     padding: 10px;
     margin: 5px;
-    margin-left: 39px;
+    margin-left: 3%;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
     width: calc(50% - -45px); /* Adjusted width to accommodate margins */
-    text-align: left; /* Align inputs to the left */
+    text-align: center; /* Align inputs to the left */
     display: inline-block; /* Ensures inputs stay on the same line */
   }
   
-  
-   
   /* Style for placeholders */
   input[type="text"]::placeholder,
   input[type="number"]::placeholder,
@@ -113,7 +112,7 @@ body {
     background-color:darkgray;
   }
   
-  
+ 
   #supplier {
       text-align: left;
   }

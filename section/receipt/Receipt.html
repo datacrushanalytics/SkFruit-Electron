@@ -8,6 +8,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <title></title>
     <style>
+
+      /* Adjust the margin of the label for mobile number */
+.first-row > #number-wrapper label {
+    margin-right: 10px; /* Adjust as needed to match other labels */
+}
+
+
+
       body {
           font-family: Arial, sans-serif;
           background-color: rgba(242, 242, 242, 0.8); /* Transparent background */
@@ -19,12 +27,21 @@
           align-items: center; /* Center content horizontally */
       }
 
+      .frame {
+          /*border: 2px solid #000; /* Black border */
+          padding: 20px; /* Padding inside the frame */
+          border-radius: 10px; /* Rounded corners */
+          width: 80%; /* Adjust width as needed */
+          max-width: 900px; /* Maximum width */
+          margin: 0 auto; /* Center horizontally */
+          background-color: white; /* Background color */
+      }
+
       .container {
-          text-align: center;
+          /* text-align: center; */
           margin: 0 auto; /* Align container in the center */
-          width: 90%; /* Adjust the width as needed */
+          width: 100%; /* Adjust the width as needed */
           max-width: 814px; /* Limit the maximum width */
-          margin-bottom: 20px;
           overflow-x: auto; /* Allow horizontal scrolling if needed */
           padding: 20px; /* Add padding inside the container */
           box-sizing: border-box; /* Include padding and border in width */
@@ -89,7 +106,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom: 10px;
+        margin-bottom: 1%;
       }
 
       input[type="number"],
@@ -97,11 +114,13 @@
       select,
       textarea {
           flex: 1;
-          padding: 10px;
+          padding: 5px;
           margin-left: 10px;
           border: 1px solid #ccc;
           border-radius: 5px;
           box-sizing: border-box;
+          height: 35px;
+          width: 80%;                                  
       }
       
       @media only screen and (max-width: 600px) {
@@ -135,70 +154,103 @@
               margin-right: 5px; /* Add spacing between input fields */
           }
       }
+
+      /* Style the loader container */
+#loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Apply animation */
+    display: none; /* Hide loader by default */
+    
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
   </style>
 </head>
 <body>
-    <div class="container">
-        <h1 align="center">जमा पावती</h1>
-        <hr>
+    <div id="loader"></div>
+    <div class="frame">
+        <div class="container">
+            <h1 align="center"> Receipt</h1>
+            <hr>
+            <br>
+            <div class="container1">
+                <form id="loginForm1">
+                    <div class="first-row">
+                        <label for="pavti" class="input-label">Receipt No :</label>
+                        <input type="number" id="pavti" name="number" placeholder="Receipt No." required>
+                    </div>
 
-        <div class="container1">
-            <form id="loginForm1">
+                    <!-- Rest of your form content -->
+                    
                 <div class="first-row">
-                    <label for="pavti" class="input-label">जमा पावती क्र.</label>
-                    <input type="number" id="pavti" name="number" placeholder="जमा पावती क्र.">
+                    <label for="date1" class="input-label">Date :</label>
+                    <input type="text" id="date" name="date" placeholder="Date" required>
                 </div>
 
+
                 <div class="first-row">
-                    <label for="date1" class="input-label">तारीख</label>
-                    <input type="text" id="date" name="date" placeholder="तारीख">
+                    <label for="account_group" class="input-label">Customer Name :</label>
+                    <select class="drop" id="account_group" name="account_group" onchange="previousbalance()" required></select>
                 </div>
 
+                <div class="dropdown-container">
+                    <div id="number-wrapper" class="input-wrapper">
+                      <label for="number">Mobile No :</label>
+                      <select class="drop" id="mob" name="mob" onchange="getCust()" required></select>
+                    </div><br>
+                <!-- <div class="first-row">
+                    <label for="route_detail" class="input-label">खात्याकडे :</label>
+                    <select class="drop" id="route_detail" name="route_detail" required></select>
+                </div> -->
 
                 <div class="first-row">
-                    <label for="account_group" class="input-label">खात्यातून</label>
-                    <select class="drop" id="account_group" name="account_group" onchange="previousbalance()"></select>
-                </div>
-
-                <div class="first-row">
-                    <label for="route_detail" class="input-label">खात्याकडे</label>
-                    <select class="drop" id="route_detail" name="route_detail"></select>
-                </div>
-
-                <div class="first-row">
-                    <label for="message" class="input-label">टिप्पणी</label>
+                    <label for="message" class="input-label">Comment :</label>
                     <textarea id="message" name="message"></textarea>
                 </div>
 
                 <div class="first-row">
-                    <label for="input3" class="input-label">मागील बाकी</label>
+                    <label for="input3" class="input-label">Privious Balance :</label>
                     <input type="text" id="input3" name="input1" readonly>
                 </div>
 
                 <div class="first-row">
-                    <label for="input6" class="input-label">जमा रक्कम</label>
+                    <label for="input6" class="input-label">Cash :</label>
                     <input type="text" id="input6" name="input1" onchange="totalbill()">
                 </div>
 
                 <div class="first-row">
-                    <label for="input1" class="input-label">ऑनलाईन जमा Bank </label>
+                    <label for="input1" class="input-label">online balance Account :</label>
                     <select id="input1" name="input2"></select>
                 </div>
 
                 <div class="first-row">
-                    <label for="input1" class="input-label">ऑनलाईन जमा  </label>
-                    <input type="text" id="input7" name="input2"></select>
+                    <label for="input1" class="input-label"> Online  :</label>
+                    <input type="text" id="input7" name="input2" onchange="totalbill()"></select>
                 </div>
 
                
 
                 <div class="first-row">
-                    <label for="input8" class="input-label">सूट रक्कम</label>
+                    <label for="input8" class="input-label">Discount :</label>
                     <input type="text" id="input8" name="input1" onchange="totalbill()">
                 </div>
 
                 <div class="first-row">
-                    <label class="input-label">जमा कॅरेट</label>
+                    <label class="input-label">In carate :</label>
                     <input type="number" id="carate100" name="number" placeholder="100" onchange="carate()">
                     <input type="number" id="carate150" name="number" placeholder="150" onchange="carate()">
                     <input type="number" id="carate250" name="number" placeholder="250" onchange="carate()">
@@ -206,25 +258,33 @@
                 </div>
 
                 <div class="first-row">
-                    <label for="input4" class="input-label">जमा कॅरेट रक्कम</label>
+                    <label for="input4" class="input-label">Balance Carate price :</label>
                     <input type="text" id="input4" name="input1" onchange="totalbill()">
                 </div>
 
                 <div class="first-row">
-                    <label for="input5" class="input-label">येणे बाकी</label>
+                    <label for="input5" class="input-label">Total Due Balance :</label>
                     <input type="text" id="input5" name="input1">
                 </div>
 
-                <div class="button-container">
-                    <button class="border-hover1 button">Save</button>
-                    <!-- <button class="border-hover2 button">Back</button> -->
+                <div class="first-row">
+                    <label for="input12" class="input-label">Total Due carate :</label>
+                    <input type="text" id="input12" name="input1">
                 </div>
-            </form>
+                <div class="fourth-row">
+                    
+                    <div class="button-container">
+                        <button class="border-hover1 button">Save</button>
+                        <!-- <button class="border-hover2 button">Back</button> -->
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </body>
 <script src="./receipt.js"></script>
 <script>
+    // JavaScript functions remain unchanged
     function carate() {
         var value100 = parseInt(document.getElementById("carate100").value) || 0;
         var value150 = parseInt(document.getElementById("carate150").value) || 0;
@@ -240,7 +300,7 @@
 
     function previousbalance() {
         const name = document.getElementById("account_group").value
-        fetch('http://3.109.5.164/fetchpv/' + name)
+        fetch('http://65.0.168.11/fetchpv/' + name)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -256,7 +316,57 @@
                 console.error('Error:', error);
             });
 
+
+            fetch('http://65.0.168.11/fetchName/name/' + name)
+                  .then(response => {
+                    if (!response.ok) {
+                        loader.style.display = 'none';
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                  .then(data => {
+                      console.log(data[0].mobile_no)
+                      // Get the Select2 dropdown element
+                      var $productDropdown = $('#mob');
+                      // Set the value of the Select2 dropdown if it's different
+                      if ($productDropdown.val() !== data[0].mobile_no) {
+                        $productDropdown.val(data[0].mobile_no).trigger('change');
+                      }
+                  })
+                  .catch(error => {
+                      console.error('Error:', error);
+                  });   
     }
+
+
+
+    function getCust() {
+        var number = document.getElementById('mob').value;
+        console.log(number)
+        fetch('http://65.0.168.11/fetchName/mobile/' + number)
+            .then(response => {
+                if (!response.ok) {
+                    loader.style.display = 'none';
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data[0].name)
+                // Get the Select2 dropdown element
+                var $productDropdown = $('#account_group');
+                
+                // Set the value of the Select2 dropdown if it's different
+                if ($productDropdown.val() !== data[0].name) {
+                    $productDropdown.val(data[0].name).trigger('change');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+    
 </script>
 
 
@@ -264,9 +374,10 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://3.109.5.164/list/Customer', 'account_group','customer');
-        fetchAndPopulateDropdown('http://3.109.5.164/list/Bank Account', 'route_detail','Account');
-        fetchAndPopulateDropdown('http://3.109.5.164/list/Bank Account', 'input1','Account');
+        fetchAndPopulateDropdown('http://65.0.168.11/list/Customer', 'account_group','customer');
+        fetchAndPopulateDropdown('http://65.0.168.11/list/Bank Account', 'route_detail','Account');
+        fetchAndPopulateDropdown('http://65.0.168.11/list/Bank Account', 'input1','Account');
+        fetchAndPopulateDropdown('http://65.0.168.11/mobile', 'mob','mobile_no');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,name) {
@@ -296,7 +407,9 @@
 
         // Populate dropdown with API data
         data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
+            console.log(item.mobile_no)
+            console.log(item.name)
+            dropdown.append($('<option></option>').attr('value', item.name || item.route_name || item.mobile_no).text(item.name || item.route_name || item.mobile_no));
         });
 
         // Initialize Select2
@@ -306,8 +419,11 @@
         });
     }
 
+    $(document).on('select2:open', function(e) {
+        window.setTimeout(function () {
+            document.querySelector('input.select2-search__field').focus();
+        }, 0);
+    });
+
 </script>
-
-
-
-</html> 
+</html>

@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('date').value = formattedDate;
     // console.log('hjgfqhagf',document.getElementById('date').value )
 
-    fetch('http://3.109.5.164/fetchPurchaseid')
+    fetch('http://65.0.168.11/fetchPurchaseid')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             // Populate dropdown with API data
             document.getElementById('no').value = parseInt(data[0]['num']) + 1;
-            fetch('http://3.109.5.164/purchaseproductData/' + (parseInt(data[0]['num']) + 1))
+            fetch('http://65.0.168.11/purchaseproductData/' + (parseInt(data[0]['num']) + 1))
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -30,7 +30,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .then(data => {
                     // Populate dropdown with API data
-                    populateDropdown3(data);
+                    // updateTable(data);
+                    // populateDropdown3(data);
+
+                    data.forEach(function (item) {
+                        updateTable(item,item.id);
+                    });  
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -40,174 +45,12 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
         });
 
-    // fetch('http://3.109.5.164/list/Supplier')
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         // Populate dropdown with API data
-    //         populateDropdown(data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
-
-    // fetch('http://3.109.5.164/productData/')
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         // Populate dropdown with API data
-    //         populateDropdown1(data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
-
-
-
-    // fetch('http://3.109.5.164/vehicleData')
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         // Populate dropdown with API data
-    //         populateDropdown4(data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
-
 
 });
 
 
-// function populateDropdown(data) {
-//     var userNameDropdown = document.getElementById('supplier');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.name; // Set the value
-//         option.textContent = item.name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Supplier Name"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-// function populateDropdown1(data) {
-//     var userNameDropdown = document.getElementById('product');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.name; // Set the value
-//         option.textContent = item.name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Product"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-
-
-
-
-function populateDropdown3(data) {
-    var tbody = document.getElementById('tableBody1');
-    tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['product_name', 'bata', 'mark', 'purchase_price', 'selling_price','quantity' ,'unit'  ,'price'];
-    data.forEach(function (item) {
-        var row = tbody.insertRow();
-        var cell = row.insertCell();
-        columnsToDisplay.forEach(function (key) {
-            var cell = row.insertCell();
-            cell.textContent = item[key];
-        });
-        // Add Delete button
-        var deleteCell = row.insertCell();
-        var deleteButton = document.createElement('button');
-        deleteButton.className = 'button delete-button';
-        deleteButton.textContent = 'Delete';
-        deleteButton.addEventListener('click', function () {
-            deleteUser(item.id); // Pass the user id to the delete function
-        });
-        deleteCell.appendChild(deleteButton);
-
-    });
-}
-
-function deleteUser(userId) {
-    // Perform delete operation based on userId
-    fetch('http://3.109.5.164/purchaseproductData/deleteproductId/' + userId, {
-        method: 'DELETE'
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            console.log('User deleted successfully');
-            alert("purchase is successfully Deleted");
-            // Refresh the table or update UI as needed
-            user(); // Assuming you want to refresh the table after delete
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
-
-
-// function populateDropdown4(data) {
-//     var userNameDropdown = document.getElementById('vehicle');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.vehicle_no; // Set the value
-//         option.textContent = item.vehicle_no; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Vehicle"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-
-
-
 document.getElementById('Form').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
-console.log("jahsafhfa")
 // function form2(){
     var formData = {
         date: document.getElementById('date').value,
@@ -215,8 +58,10 @@ console.log("jahsafhfa")
         gadi_number: document.getElementById('vehicle').value,
         total_quantity: parseInt(document.getElementById('total').value) || 0
     };
+    var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
-    await fetch('http://3.109.5.164/purchaseData/insertPurchase', {
+    await fetch('http://65.0.168.11/purchaseData/insertPurchase', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -231,6 +76,7 @@ console.log("jahsafhfa")
         return response.json();
     })
     .then(result => {
+        loader.style.display = 'none';
         console.log('Entry added successfully:', result);
         alert("Purchase Data is added Successfully");
         window.location.reload();

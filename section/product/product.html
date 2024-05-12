@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             background-color: rgba(242, 242, 242, 0.8);
             margin: 0;
-            padding: 0;
+            padding:20px;
             overflow-x: hidden;
         }
         
@@ -77,10 +77,34 @@
         th {
             background-color: #f2f2f2;
         }
+        /* Style the loader container */
+#loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Apply animation */
+    display: none; /* Hide loader by default */
+    
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
     </style>
 
 </head>
 <body>
+    <div id="loader"></div>
     <div class="container">
         <h1>PRODUCTS</h1>
         <div class="button-container">
@@ -94,8 +118,7 @@
                         <th>NO.</th>
                         <th>PRODUCT_NAME</th>
                         <th>RATE</th>
-                        <th></th>
-                        <th></th>
+                        
                     </tr>
                 </thead>
                 <tbody id="tableBody">
@@ -105,5 +128,22 @@
         </div>
     </div>
     <script src="./product.js"></script>
+
+    <script>
+        // Retrieve session data from localStorage
+var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+
+// Check if session data exists and if the user is an admin
+var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+
+// Select the "Set User Menu" button element
+var setUserMenuButton = document.querySelector('.button-container button:nth-child(2)');
+
+// Check if the user is an admin and show/hide the button accordingly
+if (!isAdmin) {
+    setUserMenuButton.style.display = 'none'; // Hide the button for non-admin users
+}
+
+    </script>
 </body>
 </html>

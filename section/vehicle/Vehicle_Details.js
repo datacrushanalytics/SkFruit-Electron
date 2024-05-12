@@ -1,15 +1,22 @@
 
 function product() {
     console.log("product function executed");
-
-    fetch('http://3.109.5.164/vehicleData')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+    var loader = document.getElementById('loader');
+    loader.style.display = 'block';
+    fetch('http://65.0.168.11/vehicleData')
+    .then(response => {
+        if (response.status === 404) {
+            loader.style.display = 'none';
+            alert("No data found.");
+            throw new Error('Data not found');
+        }
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
         .then(data => {
+            loader.style.display = 'none';
             console.log(data);
             populateTable(data);
         })
@@ -23,6 +30,7 @@ function populateTable(data) {
     tbody.innerHTML = ''; // Clear existing rows
     var columnsToDisplay = ['name', 'vehicle_no'];
     var counter = 1;
+    var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
     data.forEach(function(item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
@@ -32,29 +40,32 @@ function populateTable(data) {
             cell.textContent = item[key];
         });
 
-         // Add Edit button~
-         var editCell = row.insertCell();
-         var editButton = document.createElement('button');
-         editButton.className = 'button edit-button';
-         var editLink = document.createElement('a');
-         editLink.href = '../vehicle/update_vehicle.html'; // Edit link destination
-         editLink.textContent = 'Edit';
-         editButton.appendChild(editLink);
-
-        editButton.addEventListener('click', function() {
-            editProduct(item); // Pass the user data to the edit function
-        });
-        editCell.appendChild(editButton);
+        // Add Edit button if user is admin
+        if (isAdmin) {
+            var editCell = row.insertCell();
+            var editButton = document.createElement('button');
+            editButton.className = 'button edit-button';
+            var editLink = document.createElement('a');
+            editLink.href = '../vehicle/update_vehicle.html';; // Edit link destination
+            editLink.textContent = 'Edit';
+            editButton.appendChild(editLink);
+            editButton.addEventListener('click', function() {
+                editProduct(item); // Pass the user data to the edit function
+            });
+            editCell.appendChild(editButton);
+        }
  
-         // Add Delete button
-         var deleteCell = row.insertCell();
-         var deleteButton = document.createElement('button');
-         deleteButton.className = 'button delete-button';
-         deleteButton.textContent = 'Delete';
-         deleteButton.addEventListener('click', function() {
-            deleteProduct(item.id); // Pass the user id to the delete function
-        });
-        deleteCell.appendChild(deleteButton);
+        // Add Delete button if user is admin
+        if (isAdmin) {
+            var deleteCell = row.insertCell();
+            var deleteButton = document.createElement('button');
+            deleteButton.className = 'button delete-button';
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', function() {
+                deleteProduct(item.id); // Pass the user id to the delete function
+            });
+            deleteCell.appendChild(deleteButton);
+        }
     });
 }
 
@@ -78,7 +89,7 @@ function editProduct(user) {
 
 function deleteProduct(userId) {
     // Perform delete operation based on userId
-    fetch('http://3.109.5.164/vehicleData/deleteVehicle/' + userId, {
+    fetch('http://65.0.168.11/vehicleData/deleteVehicle/' + userId, {
         method: 'DELETE'
     })
     .then(response => {

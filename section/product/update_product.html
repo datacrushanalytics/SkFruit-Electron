@@ -44,6 +44,7 @@
 
         label {
             display: block;
+            margin-top: 2%;
             margin-bottom: 5px;
         }
 
@@ -86,36 +87,61 @@
         .border-hover:hover {
             background-color: #555;
         }
+        /* Style the loader container */
+#loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Apply animation */
+    display: none; /* Hide loader by default */
+    
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
     </style>
 </head>
 
 <body>
+    <div id="loader"></div>
     <div class="container">
+        
         <h1>Product Master</h1>
         <hr>
 
         <div class="container1">
             <form id="loginForm" method="POST">
                 <div class="first-row">
-                    <input type="text" id="id" name="id" placeholder="ID" value = ""> 
-                    <select id="category" name="category" placeholder="Category">
-                        <br>
+                    <label for="Id">ID :</label>
+                    <input type="text" id="id" name="id" placeholder="ID" value = "" required readonly> 
+                    <label for="text">Category :</label>
+                    <select id="category" name="category" placeholder="Category" required>
                         <br>
                         <br>
                         <!-- Add options here -->
                     </select>
                 </div>
-
-                <input type="text" id="name" name="name" placeholder="Product Name">
+                <label for="text">Name :</label>
+                <input type="text" id="name" name="name" placeholder="Product Name" required>
                 <br>
-
-                <input type="text" id="rate" name="rate" placeholder="Rate">
+                <label for="text">Rate :</label>
+                <input type="text" id="rate" name="rate" placeholder="Rate" required>
                 <br>
-
-                <input type="text" id="w_rate" name="w_rate" placeholder="W Rate">
+                <label for="text">W Rate :</label>
+                <input type="text" id="w_rate" name="w_rate" placeholder="W Rate" required>  
                 <br>
-
-                <input type="text" id="minimum_stock" name="minimum_stock" placeholder="Minimum Stock">
+                <label for="text">Minimum Stock :</label>
+                <input type="text" id="minimum_stock" name="minimum_stock" placeholder="Minimum Stock" required>
                 <br>
 
                 <div class="second-row">
@@ -138,7 +164,7 @@
 
         document.addEventListener('DOMContentLoaded', async function() {
             // Retrieve user data from localStorage
-            await fetchAndPopulateDropdown('http://3.109.5.164/categoryData', 'category','name');
+            await fetchAndPopulateDropdown('http://65.0.168.11/categoryData', 'category','name');
         
             async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
                 try {
@@ -175,6 +201,12 @@
                     allowClear: true
                 });
             }
+
+            $(document).on('select2:open', function(e) {
+                window.setTimeout(function () {
+                    document.querySelector('input.select2-search__field').focus();
+                }, 0);
+            });
         
             var userData = localStorage.getItem('userData');
         
@@ -215,8 +247,9 @@
                     minimum_stock: document.getElementById("minimum_stock").value,
                     rate_editable: status
                 };
-        
-                const response = await fetch('http://3.109.5.164/productData/updateProduct/'+ userData.id, {
+                var loader = document.getElementById('loader');
+                loader.style.display = 'block';
+                const response = await fetch('http://65.0.168.11/productData/updateProduct/'+ userData.id, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {
@@ -229,6 +262,7 @@
                 }
         
                 const result = await response.json();
+                loader.style.display = 'none';
                 console.log('Data added successfully:', result);
                 alert('Data Updated successfully')
                 // Optionally, you can redirect or show a success message here

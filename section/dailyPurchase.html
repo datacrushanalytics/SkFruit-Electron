@@ -129,14 +129,36 @@ td {
 th {
     background-color: #f2f2f2;
 }
-
+/* Style the loader container */
+#loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Apply animation */
+    display: none; /* Hide loader by default */
+    
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
 
 
     </style>
 
 </head>
 <body>
-    
+    <div id="loader"></div>
         <div class="container">
             <div class="datetime" id="datetime">
                 <p id="currentDate"></p>
@@ -174,6 +196,8 @@ th {
             // Retrieve user data from localStorage
             var sessionData = JSON.parse(localStorage.getItem('sessionData'));
             document.getElementById('user').textContent = sessionData[0].name;
+            var loader = document.getElementById('loader');
+            loader.style.display = 'block';
 
             // Display current date and time
             var currentDateElement = document.getElementById('currentDate');
@@ -186,7 +210,7 @@ th {
             currentTimeElement.textContent = "Time: " + currentTime;
             var currentDate1 = new Date();
 
-            fetch("http://3.109.5.164/fetchData/purchase", {
+            fetch("http://65.0.168.11/fetchData/purchase", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -196,9 +220,20 @@ th {
                 })
             })
             //"date" : 
-            .then(response => response.json())
+            .then(response => {
+                if (response.status === 404) {
+                    loader.style.display = 'none';
+                    alert("No data found.");
+                    throw new Error('Data not found');
+                }
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 // Loop through the data received from the API
+                loader.style.display = 'none';
                 console.log(data)
                 console.log("data fetched");
                 populateTable(data)

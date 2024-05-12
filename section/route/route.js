@@ -1,15 +1,23 @@
 
 function route() {
     console.log("user function executed");
+    var loader = document.getElementById('loader');
+    loader.style.display = 'block';
 
-    fetch('http://3.109.5.164/routeData')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+    fetch('http://65.0.168.11/routeData')
+    .then(response => {
+        if (response.status === 404) {
+            loader.style.display = 'none';
+            alert("No data found.");
+            throw new Error('Data not found');
+        }
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
         .then(data => {
+            loader.style.display = 'none';
             console.log(data);
             populateTable(data);
         })
@@ -23,6 +31,7 @@ function populateTable(data) {
     tbody.innerHTML = ''; // Clear existing rows
     var columnsToDisplay = ['route_name', 'details','mobile_no'];
     var counter = 1;
+    var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
     data.forEach(function(item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
@@ -32,46 +41,36 @@ function populateTable(data) {
             cell.textContent = item[key];
         });
 
-         // Add Edit button
-         var editCell = row.insertCell();
-         var editButton = document.createElement('button');
-         editButton.className = 'button edit-button';
-         var editLink = document.createElement('a');
-         editLink.textContent = 'Edit';
-         editButton.appendChild(editLink);
-         editLink.textContent = 'Edit';
-        editLink.style.color = 'white'; // Set text color to white
-        editLink.style.textDecoration = 'none'; // Remove underline
-
-
-        editButton.addEventListener('click', function() {
-            editRoute(item); // Pass the user data to the edit function
-        });
-        editCell.appendChild(editButton);
+        // Add Edit button if user is admin
+        if (isAdmin) { 
+            var editCell = row.insertCell();
+            var editButton = document.createElement('button');
+            editButton.className = 'button1 edit-button';
+            var editLink = document.createElement('a');
+            editLink.href = '../route/update_route.html'; // Edit link destination
+            editLink.textContent = 'Edit';
+            editButton.appendChild(editLink);
+            editButton.addEventListener('click', function() {
+                editRoute(item); // Pass the user data to the edit function
+            });
+            editCell.appendChild(editButton);
+        }
  
-         // Add Delete button
-         var deleteCell = row.insertCell();
-         var deleteButton = document.createElement('button');
-         deleteButton.className = 'button delete-button';
-         deleteButton.textContent = 'Delete';
-         deleteButton.addEventListener('click', function() {
-            deleteRoute(item.id); // Pass the user id to the delete function
-        });
-        deleteCell.appendChild(deleteButton);
+        // Add Delete button if user is admin
+        if (isAdmin) {
+            var deleteCell = row.insertCell();
+            var deleteButton = document.createElement('button');
+            deleteButton.className = 'button delete-button';
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', function() {
+                deleteRoute(item.id); // Pass the user id to the delete function
+            });
+            deleteCell.appendChild(deleteButton);
+        }
     });
 }
 
 function editRoute(user) {
-    // Convert user data to JSON and encode it for URL
-    // var userData = encodeURIComponent(JSON.stringify(user));
-    // console.log("Jell")
-    // console.log(userData)
-    // console.log(user.id);
-    // document.getElementById("id1").value = user.id;
-
-    // Redirect to user_master.html with user data in query parameter
-    // window.location.href = "../user/User_Master.html"
-    // window.location.href = '../user/user_update.html?userData=' + '%7B"id"%3A31%2C"name"%3A"Deepali"%2C"address"%3A"nsk"%2C"mobile_no"%3A1234567890%2C"username"%3A"dee"%2C"password"%3A"asd"%2C"status"%3A"1"%2C"usertype"%3A"Admin"%7D';
     localStorage.setItem('userData', JSON.stringify(user));
      // Redirect to user_update.html
      window.location.href = '../route/update_route.html';
@@ -81,7 +80,7 @@ function editRoute(user) {
 
 function deleteRoute(userId) {
     // Perform delete operation based on userId
-    fetch('http://3.109.5.164/routeData/deleterouteId/' + userId, {
+    fetch('http://65.0.168.11/routeData/deleterouteId/' + userId, {
         method: 'DELETE'
     })
     .then(response => {

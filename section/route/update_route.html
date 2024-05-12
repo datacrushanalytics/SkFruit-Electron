@@ -73,26 +73,50 @@
             background-color: #555;
             /* Darker grey on hover */
         }
+
+        /* Style the loader container */
+#loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Apply animation */
+    display: none; /* Hide loader by default */
+    
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
     </style>
 </head>
 
 <body>
+    <div id="loader"></div>
     <div class="container">
         <h1>Add Route</h1>
         <hr>
         <div class="container1">
             <form id="loginForm" method="POST">
                 <lable for="routeId">ID :</lable>
-                <input type="text" id="routeId" name="routeId" placeholder="ID"> <br>
+                <input type="text" id="routeId" name="routeId" placeholder="ID" required readonly> <br>
 
                 <lable for="route_name">Route Name :</lable>
-                <input type="text" id="route_name" name="route_name" placeholder="Route Name"> <br>
+                <input type="text" id="route_name" name="route_name" placeholder="Route Name" required> <br>
 
                 <lable for="details">Details :</lable>
-                <input type="text" id="details" name="details" placeholder="Details"> <br>
+                <input type="text" id="details" name="details" placeholder="Details" required> <br>
 
                 <lable for="mobile_no">Mobile No :</lable>
-                <input type="text" id="mobile_no" name="mobile_no" placeholder="Mobile No"> <br>
+                <input type="text" id="mobile_no" name="mobile_no" placeholder="Mobile No" required> <br>
                 <div class="third-row">
                     <button type="Update" id="updateButton" class="border-hover">Save</button>
                     <!-- <a href="./Root_Details.html"><button type='button' class="border-hover">Back</button></a> -->
@@ -127,8 +151,9 @@
                     details: document.getElementById("details").value,
                     mobile_no: document.getElementById("mobile_no").value
                 };
-        
-                const response = await fetch('http://3.109.5.164/routeData/updateRoute/' + userData.routeId, {
+                var loader = document.getElementById('loader');
+                loader.style.display = 'block';
+                const response = await fetch('http://65.0.168.11/routeData/updateRoute/' + userData.routeId, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {
@@ -141,6 +166,7 @@
                 }
         
                 const result = await response.json();
+                loader.style.display = 'none';
                 console.log('Data added successfully:', result);
                 alert('Data Updated successfully')
                 // Optionally, you can redirect or show a success message here

@@ -1,6 +1,6 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function() {
-//     fetch('http://3.109.5.164/list/Worker')
+//     fetch('http://65.0.168.11/list/Worker')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -59,6 +59,8 @@
 
 document.getElementById('loginForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
+    var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
     var formData = new FormData(document.getElementById('loginForm'));
     var data = {};
@@ -67,7 +69,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     });
     console.log(data);
 
-    fetch('http://3.109.5.164/userData/insertUser', {
+    fetch('http://65.0.168.11/userData/insertUser', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -81,6 +83,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         return response.json();
     })
     .then(result => {
+        loader.style.display = 'none';
         console.log('Data added successfully:', result);
         alert("User is successfully Added");
         window.location.href = './user.html';

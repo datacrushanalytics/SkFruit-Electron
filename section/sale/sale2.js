@@ -1,6 +1,8 @@
 document.getElementById('login').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
 
+    var loader = document.getElementById('loader');
+    loader.style.display = 'block';
     console.log(document.getElementById('number').value)
     var formData = {
         bill_no: parseInt(document.getElementById('bill').value),
@@ -32,7 +34,7 @@ document.getElementById('login').addEventListener('submit', async function(event
     };
 
     try {
-        const response = await fetch('http://3.109.5.164/saleData/insertsale', {
+        const response = await fetch('http://65.0.168.11/saleData/insertsale', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -45,6 +47,7 @@ document.getElementById('login').addEventListener('submit', async function(event
         }
         
         const result = await response.json();
+        loader.style.display = 'none';
         console.log('Entry added successfully:', result);
         alert("Sale Data is added Successfully");
         window.location.reload(); // Reload the page after displaying the alert

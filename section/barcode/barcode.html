@@ -15,7 +15,7 @@
             font-family: Arial, sans-serif;
             background-color: rgba(242, 242, 242, 0.8);
             margin: 0;
-            padding: 0;
+            padding: 20px;
             overflow-x: hidden;
         }
         
@@ -137,38 +137,73 @@
         }
         
       
-        
-        /* table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: rgba(255, 255, 255, 0.8);
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            margin: 0 auto;
-        }
-
-        th,
-        td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 12px;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        } */
-
         /* Media query for responsiveness */
         @media only screen and (max-width: 600px) {
             .container {
                 width: 100%; /* Full width on smaller screens */
             }
         }
+
+/* Style the loader container */
+#loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Apply animation */
+    display: none; /* Hide loader by default */
+    
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+
+  /* CSS */
+.popup {
+    /* Existing styles */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#companyInfo {
+    margin-bottom: 20px;
+}
+
+#companyLogo {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+#companyName {
+    font-size: 1.2em; /* Adjust the font size as needed */
+}
+
+#barcodeCanvas {
+    /* Existing styles */
+    margin-top: 20px; /* Add margin for spacing */
+    width: 220px;
+}
+
+
     </style>
 </head>
 
 <body>
     <body>
+        <div id="loader"></div>
+
         <div class="container">
             <h1 align="center">Product Barcode </h1>
             <hr><br>
@@ -176,16 +211,6 @@
             <div class="container1">
                 <form id="Form">
     
-                    <!-- <label for="userType">Product : </label>
-                    <select class="drop" id="grahk" name="account_group">
-                    </select>
-                    <br><br>
-                    <label for="userType">Bata : </label>
-                    <select class="drop" id="Route" name="route_detail">
-    
-                    </select>
-                    <br><br> -->
-
                     <div class="input-row">
                         <label for="grahk">Product:  </label>
                         <select class="drop" id="grahk" name="account_group"></select>
@@ -193,8 +218,8 @@
                         <label for="Route">Bata:   </label>
                         <select class="drop" id="Route" name="route_detail"></select>
                     </div>
-                    
-                    
+                    <br>
+                    <br>
     
                     <button id="border-hover" type="submit">दाखवा </button>
     
@@ -228,6 +253,9 @@
                 </table>
                 </div>
             </div>
+          
+<div id="popupContainer"></div>
+
     
     
 </body>
@@ -236,20 +264,27 @@
 <script>
 
     document.addEventListener('DOMContentLoaded', function () {
-        fetchAndPopulateDropdown('http://3.109.5.164/purchaseproductData', 'grahk','product_name');
-        fetchAndPopulateDropdown('http://3.109.5.164/purchaseproductData', 'Route','bata');
+        fetchAndPopulateDropdown('http://65.0.168.11/purchaseproductData', 'grahk','product_name');
+        fetchAndPopulateDropdown('http://65.0.168.11/purchaseproductData', 'Route','bata');
+        
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
-        fetch('http://3.109.5.164/purchaseproductData/')
+        fetch('http://65.0.168.11/purchaseproductData/')
             .then(response => {
+                if (response.status === 404) {
+                    loader.style.display = 'none';
+                    alert("No data found.");
+                    throw new Error('Data not found');
+                }
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 return response.json();
             })
             .then(data => {
-                // Populate dropdown with API data
-                // populateDropdown1(data);
-                // populateDropdown2(data);
+                // Hide loader
+                loader.style.display = 'none';
                 populateDropdown3(data);
             })
             .catch(error => {
@@ -296,6 +331,11 @@
         });
     }
 
+    $(document).on('select2:open', function(e) {
+        window.setTimeout(function () {
+            document.querySelector('input.select2-search__field').focus();
+        }, 0);
+    });
 
 
  
@@ -379,14 +419,6 @@
             };
             infoCell.appendChild(infoButton);
 
-
-            // Generate barcode for each row
-            //var barcodeCell = row.insertCell();
-            //var barcodeId = 'barcode_' + index;
-            //barcodeCell.innerHTML = '<svg id="' + barcodeId + '"></svg>';
-            //JsBarcode('#' + barcodeId, item.barcode); // Generate barcode using JsBarcode library
-
-
         });
     }
 
@@ -395,7 +427,11 @@
         var barcodeValue = 'Product Name:' + item['product_name'] + ' \nBata:' + item['bata'];
         var popupContent = `
             <div class="popup">
-                <h2>Barcode</h2>
+            
+                <div id="companyInfo">
+                    <p id="companyName">Savata Fruits</p> <!-- Added company name -->
+                    <img src="../../assets/img/logo.png" alt="Company Logo" id="companyLogo"> <!-- Updated company logo path -->
+                </div>
                 <canvas id="barcodeCanvas"></canvas>
                 <button id="downloadButton">Download Barcode</button>
                 <button onclick="closePopup()">Close</button>
@@ -404,8 +440,9 @@
         document.getElementById('popupContainer').innerHTML = popupContent;
         JsBarcode('#barcodeCanvas', barcodeValue, {
             format: "CODE128", // Adjust the barcode format as needed
-            displayValue: false, // Hide text under the barcode 
-            width: 1 // Set the width of the bars
+            displayValue: true, // Hide text under the barcode 
+            width: 1, // Set the width of the bars
+            text: barcodeValue // Add text below the barcode
         });
 
             // Create a download link for the barcode image
@@ -450,8 +487,10 @@
             bata : getElementValueWithDefault('Route', '*') 
         };
         console.log(data);
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
     
-        fetch('http://3.109.5.164/purchaseproductData', {
+        fetch('http://65.0.168.11/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -465,6 +504,7 @@
             return response.json();
         })
         .then(result => {
+            loader.style.display = 'none';
             console.log(result)
             populateDropdown3(result)
             // Optionally, you can redirect or show a success message here

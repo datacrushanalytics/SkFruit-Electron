@@ -53,7 +53,7 @@ body {
 }
 
 .btn:hover {
-    background-color: rgb(249, 245, 245);
+    background-color:black;
     color: rgb(168, 168, 168);
 }
 
@@ -101,7 +101,28 @@ a{
     border: 4px solid #323131;
 }
 
-
+/* Style the loader container */
+#loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Apply animation */
+    display: none; /* Hide loader by default */
+    
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 
 
 
@@ -110,7 +131,7 @@ a{
 
 </head>
 <body>
-    
+    <div id="loader"></div>
         <div class="container">
             <div class="datetime" id="datetime">
                 <p id="currentDate"></p>
@@ -134,7 +155,7 @@ a{
                         <h2>Purchase</h2>
                     </div>
                     <div class="btn-number">
-                        <h2 id="purchaseTotal">0</h2>
+                        <h2 id="purhcaseTotal">0</h2>
                     </div>
                 </a>
                 </button>
@@ -175,7 +196,7 @@ a{
                         <img src="../assets/img/3.png" alt="Image Description">
                     </div>
                     <div class="btn-content">
-                        <h2>Payment</h2>
+                        <h2>Day Book</h2>
                     </div>
                     <div class="btn-number">
                         <h2 id="paymentTotal">0</h2>
@@ -233,15 +254,19 @@ a{
                     const data = await response.json();
                     console.log(data);
                     console.log(`${id} data fetched`);
-                    document.getElementById(id).textContent = data[0][`Total${id.charAt(0).toUpperCase() + id.slice(1)}`] || 0;
+                    nn = id.split(/(?=[A-Z])/)[0];
+                    console.log(nn.charAt(0).toUpperCase() + nn.slice(1))
+                    console.log(data[0])
+                    console.log( data[0][`Total${nn.charAt(0).toUpperCase() + nn.slice(1)}`] || 0)
+                    document.getElementById(id).textContent = data[0][`Total${nn.charAt(0).toUpperCase() + nn.slice(1)}`] || 0;
                 };
         
                 await Promise.all([
                     renderData(),
-                    fetchAPI("http://3.109.5.164/fetchTotal/purchase", 'purchaseTotal'),
-                    fetchAPI("http://3.109.5.164/fetchTotal/sale", 'saleTotal'),
-                    fetchAPI("http://3.109.5.164/fetchTotal/receipt", 'receiptTotal'),
-                    fetchAPI("http://3.109.5.164/fetchTotal/payment", 'paymentTotal')
+                    fetchAPI("http://65.0.168.11/fetchTotal/purchase", 'purhcaseTotal'),
+                    fetchAPI("http://65.0.168.11/fetchTotal/sale", 'saleTotal'),
+                    fetchAPI("http://65.0.168.11/fetchTotal/receipt", 'receiptTotal'),
+                    fetchAPI("http://65.0.168.11/fetchTotal/payment", 'paymentTotal')
                 ]);
         
             } catch (error) {
@@ -253,7 +278,7 @@ a{
             // Function to fetch data from API
             async function fetchData() {
                 try {
-                    const response = await fetch('http://3.109.5.164/list/Worker'); // Replace with your API URL
+                    const response = await fetch('http://65.0.168.11/list/Worker'); // Replace with your API URL
                     const data = await response.json();
                     return data;
                 } catch (error) {
@@ -265,6 +290,8 @@ a{
                 const container = document.querySelector('.container1'); // Target the existing .container1 div
                 const data = await fetchData(); // Assuming fetchData returns the list of items
                 var currentDate1 = new Date();
+                var loader = document.getElementById('loader');
+                loader.style.display = 'block';
                             
                 if (data && data.length > 0) {
                     for (const item of data) {
@@ -276,7 +303,7 @@ a{
                         
                         // Send POST request to update data (you can handle the response if needed)
                         try {
-                            const response = await fetch(`http://3.109.5.164/fetchTotal/worker/`, {
+                            const response = await fetch(`http://65.0.168.11/fetchTotal/worker/`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -289,6 +316,7 @@ a{
                             }
                             
                             const result = await response.json();
+                            loader.style.display = 'none';
                             console.log('Data added successfully:', result);
             
                             // Create and append the div

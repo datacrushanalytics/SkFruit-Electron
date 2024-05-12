@@ -1,13 +1,17 @@
 // Fetch data from API
 document.addEventListener('DOMContentLoaded', function () {
 
-    fetch('http://3.109.5.164/purchaseproductData/')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+    fetch('http://65.0.168.11/purchaseproductData/')
+    .then(response => {
+        if (response.status === 404) {
+            alert("No data found.");
+            throw new Error('Data not found');
+        }
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
         .then(data => {
             // Populate dropdown with API data
             populateDropdown1(data);
@@ -96,7 +100,7 @@ function populateDropdown3(data) {
 
 function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('http://3.109.5.164/saleproductData/deletesaleproduct/' + userId, {
+    fetch('http://65.0.168.11/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
     })
         .then(response => {

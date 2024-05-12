@@ -181,23 +181,48 @@
         th {
             background-color: #f2f2f2;
         }
+        /* Style the loader container */
+#loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Apply animation */
+    display: none; /* Hide loader by default */
+    
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
     </style>
 </head>
 
 <body>
+    <div id="loader"></div>
     <div class="container">
         <h1 align="center">Purchase Report</h1>
         <hr>
+        <br>
         <div class="container1">
             <form id="loginForm1">
                 <div class="first-row">
                     <label for="userType">From Date :</label>
-                    <input type="date" id="fromdate" name="date" placeholder="From Date">
+                    <input type="date" id="fromdate" name="date" placeholder="From Date" required>
                     <br>
                     <label for="userType">To Date :</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date">
+                    <input type="date" id="todate" name="date" placeholder="To Date" required>
                 </div>
-                <br><br>
+                <br>
                 <label for="userType">Vehicle Number :</label>
                 <select class="drop" id="vehicleNumber" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
@@ -247,9 +272,9 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://3.109.5.164/vehicleData', 'vehicleNumber','vehicle_no');
-        fetchAndPopulateDropdown('http://3.109.5.164/list/Supplier', 'supplier','name');
-        fetchAndPopulateDropdown('http://3.109.5.164/purchaseproductData', 'bata','bata');
+        fetchAndPopulateDropdown('http://65.0.168.11/vehicleData', 'vehicleNumber','vehicle_no');
+        fetchAndPopulateDropdown('http://65.0.168.11/list/Supplier', 'supplier','name');
+        fetchAndPopulateDropdown('http://65.0.168.11/purchaseproductData', 'bata','bata');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
@@ -288,6 +313,12 @@
             allowClear: true
         });
     }
+
+    $(document).on('select2:open', function(e) {
+        window.setTimeout(function () {
+            document.querySelector('input.select2-search__field').focus();
+        }, 0);
+    });
 
 </script>
 

@@ -8,273 +8,371 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
   <title></title>
-
   <style>
 
+     #input13{
+      margin: 1px;
+      width: auto;
+      text-align: left;
+     }
+
+
+
     body {
-        font-family: Arial, sans-serif;
-        background-color: rgba(242, 242, 242, 0.8);
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
+      font-family: Arial, sans-serif;
+      background-color: rgba(242, 242, 242, 0.8);
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
     }
-    
 
     .container {
-        text-align: center;
-        margin-bottom: 20px;
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
-        padding: 0 20px;
-      }
+      text-align: center;
+      margin-bottom: 20px;
+      padding: 0 20px;
+    }
 
     .table-container {
-        max-width: 100%;
-        overflow-x: auto;
-        margin: 0 auto;
-        min-width: 600px;
-        max-height: 400px;
-        overflow-y: auto;
-      }
-      
-      table {
-        width: auto;
-        min-width: 100%;
-        border-collapse: collapse;
-        background-color: rgba(255, 255, 255, 0.8);
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-        border-radius: 5px;
-      }
-      
-      th,
-      td {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 12px;
-      }
-      
-      th {
-        background-color: #f2f2f2;
-      }
+      overflow-x: auto;
+      margin: 0 auto;
+      max-width: 100%;
+      min-width: 600px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
 
-      button {
-        background-color:grey; 
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        /* border-radius: 5px; */
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-      
-      button:hover {
-        background-color:darkgrey; 
-      }
+    table {
+      width: 100%;
+      min-width: 100%;
+      border-collapse: collapse;
+      background-color: rgba(255, 255, 255, 0.8);
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
 
-      #bill{
-        height: 40px;
-        width: 15%;
-        /* border-radius: 8px; */
-        text-indent:  10px;
-        margin-left: 18px;
-       
-      }
-      #date{
-        height: 40px;
-        width: 15%;
-        /* border-radius: 8px; */
-        text-indent: 5%;
-        margin: 2%;
-      }
-      
-      #number{
-        height: 40px;
-        width: 15%;
-        /* border-radius: 8px; */
-        text-indent: 5%;
-        margin-left: 10px;
-      }
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 12px;
+    }
 
-      #grahk, #product, #bta, #Route{
-        text-indent: 3%;
-        /* border-radius: 6px; */
-        height: 40px;
-        width: 450px;
-        margin-left: 20px;  
-      }
+    th {
+      background-color: #f2f2f2;
+    }
 
-      #no, #carate100, #carate150, #carate250, #carate350, #carate1100, #carate1150, #carate1250, #carate1350{
-        text-indent: 3%;
-        /* border-radius: 6px; */
-        height: 40px;
-        width: 100px;
-        margin-left: 20px;
-        
-      }
+    button {
+      background-color: grey; 
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
 
-      #mark{
-        /* border-radius: 8px; */
-        height: 15px;
-        width: 50px;     
-        padding:  10px;
-        margin:20px;
-        }
+    button:hover {
+      background-color: darkgrey; 
+    }
 
-        #nag{
-            /* border-radius: 8px; */
-            height: 15px;
-            width: 50px;           
-            padding:  10px;
-            margin:20px;
-            }
-            #address{
-                /* border-radius: 8px; */
-                height: 15px;
-                width: 300px;
-                padding:  10px;
-                margin:20px;
-                  
-                }
-                #sandarbh, #note{
-                  /* border-radius: 8px; */
-                  height: 15px;
-                  width: 300px;                  
-                padding:  10px;
-                margin:20px;
-                }        
+    /* Adjustments for input elements */
+    input[type="text"], 
+    input[type="number"],
+    input[type="date"],
+    select {
+      height: 40px;
+      width: calc(100% - 20px); /* Adjusted width */
+      margin: 10px;
+      padding: 0 10px; /* Adjusted padding */
+      border-radius: 5px; /* Added border-radius */
+      box-sizing: border-box;
+    }
 
-                #bill_cash, #bill1{
-                    /* border-radius: 8px; */
-                    height: 15px;
-                    width: 150px;                    
-                    padding:  10px;
-                    margin:20px;
-                    }
+    /* Adjustments for labels */
+    label {
+      margin: 10px;
+    }
 
-                    #onlineAcc{
-                        text-indent: 3%;
-                        /* border-radius: 6px; */
-                        height: 40px;
-                        width: 150px;
-                        margin-left: 20px;
-                      }
+    /* Adjustments for buttons */
+    .save {
+      margin: 20px; /* Added margin */
+    }
 
-                      #kimmat{
-                        /* border-radius: 8px; */
-                        height: 15px;
-                        width: 100px;                        
-                        padding:  10px;                       
-                        margin:20px;
-                        }
-                        
-                        #total, #total1, #total2{
-                        /* border-radius: 8px; */
-                        height: 15px;
-                        width: 150px;                         
-                        padding:  10px;                     
-                        margin:20px;
-                        }
-                        
-                        #baki{
-                        /* border-radius: 8px; */
-                        height: 25px;
-                        width: 150px;                       
-                        padding:  10px;                    
-                        }
+    /* Adjustments for table rows */
+    .table-row {
+      text-align: center; /* Center align table rows */
+    }
 
-                        #online, #previousBalance{
-                            /* border-radius: 8px; */
-                            height: 15px;
-                            width: 150px;                            
-                            padding:  10px;
-                            margin:20px;
-                            }
+/* CSS for bill and date container */
+.bill-date-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
 
-                            #discount, #totalBill{
-                                /* border-radius: 1px; */
-                                height: 15px;
-                                padding:  10px;
-                                margin:20px;
-                                }
+/* CSS for individual input wrappers */
+.input-wrapper {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  margin: 0 5px; /* Reduce the margin between input wrappers */
+}
+
+/* Adjustments for input elements */
+.input-wrapper input[type="text"], 
+.input-wrapper input[type="number"],
+.input-wrapper input[type="date"],
+.input-wrapper select {
+  flex: 1; 
+  margin-right: 0; /* Remove margin between input boxes */
+}
+
+/* Adjustments for labels */
+.input-wrapper label {
+  margin-right: 10px; /* Add margin between label and input box */
+  width: 100px; /* Fixed width for labels */
+  text-align: right; /* Align label text to the right */
+}
+
+/* Adjustments for individual input wrappers */
+#bill-wrapper,
+#date-wrapper {
+  margin-right: 10px; /* Reduce the margin between input wrappers */
+}
+
+.dropdown-container {
+  display: flex;
+  justify-content: space-between; /* Distribute space evenly between dropdowns */
+  margin-bottom: 10px; /* Add margin between the dropdown container and other elements */
+}
+
+.dropdown-container .input-wrapper {
+  flex: 1; /* Each dropdown takes equal width */
+  margin-right: 10px; /* Add space between dropdowns */
+}
+
+.dropdown-container .input-wrapper:last-child {
+  margin-right: 0; /* Remove margin from the last dropdown */
+}
+
+
+
+.row-container .input-wrapper {
+  flex: 1; /* Each dropdown takes equal width */
+  margin-right: 10px; /* Add space between dropdown and button */
+}
+
+.row-container .button-wrapper {
+  flex: 1; /* Button takes equal width as dropdown */
+}
+
+.row-container {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  margin-bottom: 10px; /* Add margin between the row container and other elements */
+}
+
+.row-container label {
+  margin-right: 10px; /* Add space between label and inputs */
+}
+
+.row-container .carat-inputs {
+  display: flex;
+  align-items: left; /* Align items vertically */
+}
+
+.row-container .input-wrapper {
+  margin-right: 10px; /* Add space between input wrappers */
+}
+
+.row-container .input-wrapper:last-child {
+  margin-right: 0; /* Remove margin for the last input wrapper */
+}
+
+.totalCarat {
+  margin-left: auto; /* Push the total carat container to the right */
+}
+
+.row-container1 {
+  display: flex;
+  margin-bottom: 10px; /* Add margin between rows */
+  margin-left: 50%;
+  margin-right: 10%;
+}
+
+.row-container1 label {
+  margin-left: auto; /* Move the label to the right side */
+  margin-right: 10px; /* Add space between label and input */
+}
+
+/* Style the loader container */
+#loader {
+  border: 4px solid #f3f3f3; /* Light grey */
+  border-top: 4px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite; /* Apply animation */
+  display: none; /* Hide loader by default */
+  
+  /* Center the loader */
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+  z-index: 9999;
+  width: 80%; /* Adjust the width as desired */
+  height: 80%; /* Adjust the height as desired */
+  max-width: 90vw; /* Set maximum width relative to viewport width */
+  max-height: 90vh; /* Set maximum height relative to viewport height */
+  overflow: auto; /* Add scrollbars if content overflows */
+}
+.popup-content {
+  width: 100%; /* Adjust the width as desired */
+  height: 100%; /* Adjust the height as desired */
+}
+
+.popup-content iframe {
+  width: 100%; /* Adjust the width as desired */
+  height: 100%; /* Adjust the height as desired */
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
 
   </style>
-
 
 </head>
 
 <body>
+  <div id="loader"></div>
   <div class="container">
     <h1 align="center">विक्री </h1>
     <hr>
 <form id="login">
-    <div class="first-row">
-      <lable for="bill">बिल नं : </lable>
-      <input type="text" id="bill" name="number" placeholder="बिल नं.">
 
-      <lable for="date">दिनांक : </lable>
-      <input type="text" id="date" name="date" placeholder="दिनांक:">
-
-      <label for="number">मोबाइल नं : </label>
-      <select type="root" id="number" name="number" onchange="getCust()">
-      </select>
+  <div class="bill-date-container">
+    <div id="bill-wrapper" class="input-wrapper">
+      <label for="bill">बिल नं :</label>
+      <input type="text" id="bill" name="number" placeholder="बिल नं." required>
     </div>
-
-    <div>
-      <label for="message" aria-placeholder="Root">ग्राहकाचे नाव :</label>
-      <select type="root" id="grahk" name="root" onchange="previousbalance()">
-        <input type="hidden" id="custid" name="custid">
-      </select><br>
-      
-      <br>
-      <label for="message" aria-placeholder="Root">रूट :</label>
-      <select type="root" id="Route" name="root">
-      </select>
-      <br>
+    
+    <div id="date-wrapper" class="input-wrapper">
+      <label for="date">दिनांक :</label>
+      <input type="date" id="date" name="date" required>
+    </div>    
+  </div>
+  
+  
+  <div class="dropdown-container">
+    <div id="number-wrapper" class="input-wrapper">
+      <label for="number">मोबाइल नं :</label>
+      <select type="root" id="number" name="number" onchange="getCust()" required></select>
     </div>
-
-    <div class="third-row">
-      <lable for="address">पत्ता : </lable>
-      <input type="text" id="address" name="text" placeholder="पत्ता">
-
-      <label for="sandarbh">संदर्भ :</label>
-      <input type="text" id="sandarbh" name="text" placeholder="संदर्भ ">
+  
+    <div id="grahk-wrapper" class="input-wrapper">
+      <label for="grahk">ग्राहकाचे नाव :</label>
+      <select type="root" id="grahk" name="root" onchange="previousbalance()" required></select>
     </div>
+  </div>
+  
 
-
-    <div>
-      <label for="message" aria-placeholder="Root">बटा :</label>
-      <select type="root" id="bta" name="root" onchange="getProducts()">
-      </select><br>
-
-      <br>
-      <label for="message" aria-placeholder="Root">Product :</label>
-      <select type="root" id="product" name="root">
-      </select>
+  <div class="row-container">
+    <div id="Route-wrapper" class="input-wrapper">
+      <label for="Route">रूट :</label>
+      <select type="root" id="Route" name="root" onchange="previousbalance()" required></select>
+      <input type="hidden" id="custid" name="custid">
     </div>
-    <!-- <div>
-      <input type="text" id="product" name="text" placeholder="प्रॉडक्ट">
-      <input type="text" id="bta" name="text" placeholder="बटा">
+  
+    <div class="button-wrapper">
+      <button id="account-page-button" onclick="goToAccountPage()">Add Customer</button>
+    </div>
+    <!-- <div class="button-wrapper">
+      <button id="account-page-button" name="ledger" >Leder Report</button>
     </div> -->
-    <lable for="mark">मार्क :</lable>
-    <input type="text" id="mark" name="text" placeholder="मार्क">
-
-    <label for="kimmat">किंमत :</label>
-    <input type="number" id="kimmat" name="number" placeholder="किंमत">
-
-    <lable for="nag" id="nagLabel">  नग :</lable>
-    <input type="text" id="nag" name="text" placeholder="नग" onchange="updateTotal()">
-
-    <label for="total">एकूण रक्कम :</label>
-    <input type="number" id="total" name="number" placeholder="एकूण रक्कम">
-
-<br>
-<br>
-
-    <div class="fourth-row">
-      <!-- <button class="border-hover" >Save</button> -->
-      <button type="button" onclick="myFunction()" class="border-hover">ADD</button>
+    <button onclick="openPopup()">Open Popup</button>
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <iframe id="popupIframe" frameborder="0" scrolling="auto"></iframe>
+            <!-- <p>This is a popup!</p> -->
+        </div>
     </div>
+  </div>
+
+  <div class="row-container">
+    <div class="input-wrapper">
+      <label for="address">पत्ता :</label>
+      <input type="text" id="address" name="address" placeholder="पत्ता" required>
+    </div>
+  
+    <div class="input-wrapper">
+      <label for="sandarbh">संदर्भ :</label>
+      <input type="text" id="sandarbh" name="sandarbh" placeholder="संदर्भ">
+    </div>
+  </div>
+
+  <div class="row-container">
+    <div class="input-wrapper">
+      <label for="bta">बटा :</label>
+      <select type="root" id="bta" name="bta" onchange="getProducts()"></select>
+    </div>
+  
+    <div class="input-wrapper">
+      <label for="mark">मार्क :</label>
+      <input type="text" id="mark" name="mark" placeholder="मार्क">
+    </div>
+  
+    <div class="input-wrapper">
+      <label for="product">Product :</label>
+      <select type="root" id="product" name="product"></select>
+    </div>
+  </div>
+
+  <div class="row-container">
+    <div class="input-wrapper">
+      <label for="nag" id="nagLabel">नग :</label>
+      <input type="text" id="nag" name="nag" placeholder="नग" onchange="updateTotal()">
+    </div>
+    
+    <div class="input-wrapper">
+      <label for="kimmat">किंमत :</label>
+      <input type="number" id="kimmat" name="kimmat" placeholder="किंमत">
+    </div>
+  
+    <div class="input-wrapper">
+      <label for="total">रक्कम :</label>
+      <input type="number" id="total" name="total" placeholder="रक्कम">
+    </div>
+  
+    <div class="button-wrapper">
+      <button type="button" onclick="myFunction()" class="button">ADD</button>
+    </div>
+  </div>
+  
+  
     <br>
     <table>
       <tr>
@@ -293,46 +391,105 @@
     </table>
 <br>
 <br>
-    <div>
-      <!-- <input type="number" id="no1" name="number" placeholder="गेलेले कॅरेट"> -->
-      &nbsp;  &nbsp; &nbsp; गेलेले कॅरेट
-      <input type="number" id="carate100" name="number" placeholder="100" onchange="carate()">
-      <input type="number" id="carate150" name="number" placeholder="150" onchange="carate()">
-      <input type="number" id="carate250" name="number" placeholder="250" onchange="carate()">
-      <input type="number" id="carate350" name="number" placeholder="350" onchange="carate()">
-      <input type="number" id="total1" name="number" placeholder="गेलेले कॅरेट रक्कम">
+<div class="row-container">
+  <label>गेलेले कॅरेट :</label>
+  <div class="carat-inputs">
+    <div class="input-wrapper">
+      <label for="carate100">100 :</label>
+      <input type="number" id="carate100" name="carate100" placeholder="100" onchange="carate()">
     </div>
-
-    <div>
-      <input type="number" id="bill1" name="number" placeholder="बिल रक्कम" onchange="totalBalance()">
-      <input type="number" id="previousBalance" name="number" placeholder="मागील बाकी " readonly>
-      <input type="number" id="totalBill" name="number" placeholder="एकूण रक्कम " >
+    <div class="input-wrapper">
+      <label for="carate150">150 :</label>
+      <input type="number" id="carate150" name="carate150" placeholder="150" onchange="carate()">
     </div>
-
-    <div>
-      <input type="number" id="bill_cash" name="number" placeholder="रोख जमा" onchange="totalBalance()">
-      <label for="message" aria-placeholder="OnlineAccount"></label>
-      <select type="root" id="onlineAcc" name="onlineAcc">
-      </select>
-      <input type="number" id="online" name="number" placeholder="ऑनलाईन जमा " onchange="totalBalance()">
-      <input type="number" id="discount" name="number" placeholder=" सूट रक्कम" onchange="totalBalance()">
+    <div class="input-wrapper">
+      <label for="carate250">250 :</label>
+      <input type="number" id="carate250" name="carate250" placeholder="250" onchange="carate()">
     </div>
-
-    <div>
-      &nbsp;  &nbsp; &nbsp; जमा कॅरेट
-      <input type="number" id="carate1100" name="number" placeholder="100" onchange="carate1()">
-      <input type="number" id="carate1150" name="number" placeholder="150" onchange="carate1()">
-      <input type="number" id="carate1250" name="number" placeholder="250" onchange="carate1()">
-      <input type="number" id="carate1350" name="number" placeholder="350" onchange="carate1()">
-      <input type="number" id="total2" name="number" placeholder="जमा कॅरेट रक्कम">
+    <div class="input-wrapper">
+      <label for="carate350">350 :</label>
+      <input type="number" id="carate350" name="carate350" placeholder="350" onchange="carate()">
     </div>
+  </div>
+</div>
+<div class="row-container1">
+  <label for="totalCarat">एकूण कॅरेट :</label>
+  <input type="number" id="total1" name="totalCarat" placeholder="गेलेले कॅरेट रक्कम" readonly>
+</div>
 
 
-    <div>
-      <input type="text" id="note" name="name" placeholder="संदर्भ">
-      <input type="number" id="baki" name="name" placeholder="बाकी रक्कम">
+<div class="row-container1">
+  <label for="totalCarat">बिल रक्कम :</label>
+  <input type="number" id="bill1" name="number" placeholder="बिल रक्कम"  onchange="totalBalance()" readonly>
+</div>
+<div class="row-container1">
+  <label for="totalCarat">मागील बाकी :</label>
+  <input type="number" id="previousBalance" name="number" placeholder="मागील बाकी" readonly>
+</div>
+<div class="row-container1">
+  <label for="totalCarat">एकूण रक्कम :</label>
+  <input type="number" id="totalBill" name="number" placeholder="एकूण रक्कम"  readonly>
+</div>
+
+<div class="row-container1">
+  <label for="totalCarat">रोख जमा :</label>
+  <input type="number" id="bill_cash" name="number" placeholder="रोख जमा"  onchange="totalBalance()">
+</div>
+<div class="row-container1">
+  <label for="totalCarat">ऑनलाईन जमा बँक :</label>
+    <select type="root" id="onlineAcc" name="onlineAcc">
+    </select>
+</div>
+<div class="row-container1">
+  <label for="totalCarat">ऑनलाईन जमा  :</label>
+  <input type="number" id="online" name="number" placeholder="ऑनलाईन जमा" onchange="totalBalance()">
+</div>
+<div class="row-container1">
+  <label for="totalCarat">सूट रक्कम :</label>
+  <input type="number" id="discount" name="number" placeholder="सूट रक्कम" onchange="totalBalance()">
+</div>
+<div class="first-row">
+  <label for="input13" class="input-label">कॅरेट येणे बाकी :</label>
+  <input type="text" id="input13" name="input1">
+</div>
+
+    <div class="row-container">
+      <label>जमा कॅरेट :</label>
+      <div class="carat-inputs">
+        <div class="input-wrapper">
+          <label for="carate100">100 :</label>
+          <input type="number" id="carate1100" name="carate100" placeholder="100" onchange="carate1()">
+        </div>
+        <div class="input-wrapper">
+          <label for="carate150">150 :</label>
+          <input type="number" id="carate1150" name="carate150" placeholder="150" onchange="carate1()">
+        </div>
+        <div class="input-wrapper">
+          <label for="carate250">250 :</label>
+          <input type="number" id="carate1250" name="carate250" placeholder="250" onchange="carate1()">
+        </div>
+        <div class="input-wrapper">
+          <label for="carate350">350 :</label>
+          <input type="number" id="carate1350" name="carate350" placeholder="350" onchange="carate1()">
+        </div>
+      </div>
     </div>
-
+    <div class="row-container1">
+      <label for="totalCarat">एकूण जमा कॅरेट :</label>
+      <input type="number" id="total2" name="totalCarat" placeholder="जमा कॅरेट रक्कम" readonly>
+    </div>
+    
+    <div class="row-container">
+      <div class="input-wrapper">
+        <label for="note">संदर्भ :</label>
+        <input type="text" id="note" name="note" placeholder="संदर्भ">
+      </div>
+    
+      <div class="input-wrapper">
+        <label for="baki">बाकी रक्कम :</label>
+        <input type="number" id="baki" name="baki" placeholder="बाकी रक्कम">
+      </div>
+    </div>
 
     <button type="submit" class="save">Save</button>
   </div>
@@ -349,12 +506,12 @@
         
   document.addEventListener('DOMContentLoaded', function () {
       // Fetch data from API and populate Select2 dropdowns
-      fetchAndPopulateDropdown('http://3.109.5.164/list/Customer', 'grahk','name');
-      fetchAndPopulateDropdown('http://3.109.5.164/purchaseproductData', 'product','product_name');
-      fetchAndPopulateDropdown('http://3.109.5.164/purchaseproductData', 'bta','bata');
-      fetchAndPopulateDropdown('http://3.109.5.164/routeData', 'Route','route_name');
-      fetchAndPopulateDropdown('http://3.109.5.164/list/Bank Account', 'onlineAcc','name');
-      fetchAndPopulateDropdown('http://3.109.5.164/mobile', 'number','mobile_no');
+      fetchAndPopulateDropdown('http://65.0.168.11/list/Customer', 'grahk','name');
+      fetchAndPopulateDropdown('http://65.0.168.11/purchaseproductData', 'product','product_name');
+      fetchAndPopulateDropdown('http://65.0.168.11/purchaseproductData', 'bta','bata');
+      fetchAndPopulateDropdown('http://65.0.168.11/routeData', 'Route','route_name');
+      fetchAndPopulateDropdown('http://65.0.168.11/list/Bank Account', 'onlineAcc','name');
+      fetchAndPopulateDropdown('http://65.0.168.11/mobile', 'number','mobile_no');
   });
 
   function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
@@ -394,6 +551,31 @@
       });
   }
 
+  function goToAccountPage() {
+    // Perform the desired action when the button is clicked
+    window.location.href = "../account/acc-master.html"; // Redirect to the account page
+  }
+  
+  $(document).on('select2:open', function(e) {
+    window.setTimeout(function () {
+        document.querySelector('input.select2-search__field').focus();
+    }, 0);
+});
+
+
+function openPopup() {
+  event.preventDefault();
+  document.getElementById("popup").style.display = "block";
+  var popupIframe = document.getElementById("popupIframe");
+    popupIframe.src = "../../report/ledgerReport/ledger.html"; //
+}
+
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+
+
+
 </script>
 
 
@@ -407,8 +589,14 @@
   var preBalance = parseInt(document.getElementById("previousBalance").value) || 0;
   var total1 = parseInt(document.getElementById("total1").value) || 0;
 
-  fetch('http://3.109.5.164/accountData/' + parseInt(document.getElementById("custid").value))
-        .then(response => response.json())
+  fetch('http://65.0.168.11/accountData/' + parseInt(document.getElementById("custid").value))
+        .then(response => {
+          if (!response.ok) {
+              loader.style.display = 'none';
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
         .then(data => {
             console.log(data[0].cr_dr_type)
             if(data[0].cr_dr_type == 'no'){
@@ -428,8 +616,14 @@
 function previousbalance(){
   const name = document.getElementById("grahk").value
 
-  fetch('http://3.109.5.164/fetchName/name/' + name)
-        .then(response => response.json())
+  fetch('http://65.0.168.11/fetchName/name/' + name)
+        .then(response => {
+          if (!response.ok) {
+              loader.style.display = 'none';
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
         .then(data => {
             console.log(data[0].mobile_no)
             // Get the Select2 dropdown element
@@ -454,9 +648,10 @@ function previousbalance(){
 
 
 
-  fetch('http://3.109.5.164/fetchpv/' + name)
+  fetch('http://65.0.168.11/fetchpv/' + name)
   .then(response => {
       if (!response.ok) {
+        loader.style.display = 'none';
           throw new Error('Network response was not ok');
       }
       return response.json();
@@ -503,8 +698,14 @@ function totalbill(){
   console.log("totalbill")
   console.log(document.getElementById("custid").value)
 
-  fetch('http://3.109.5.164/accountData/' + parseInt(document.getElementById("custid").value))
-        .then(response => response.json())
+  fetch('http://65.0.168.11/accountData/' + parseInt(document.getElementById("custid").value))
+        .then(response => {
+          if (!response.ok) {
+              loader.style.display = 'none';
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
         .then(data => {
             console.log(data[0].cr_dr_type)
             if(data[0].cr_dr_type == 'no'){
@@ -517,13 +718,15 @@ function totalbill(){
             console.error('Error:', error);
         });
 
-
+  
   //document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0) - parseInt(document.getElementById("total2").value || 0);
 }
 
 
   function myFunction() {
     event.preventDefault();
+    var loader = document.getElementById('loader');
+    loader.style.display = 'block';
   
     var formData = {
       bill_id: parseInt(document.getElementById('bill').value),
@@ -537,7 +740,7 @@ function totalbill(){
 
     console.log(formData)
 
-    fetch('http://3.109.5.164/saleproductData/insertsaleproduct', {
+    fetch('http://65.0.168.11/saleproductData/insertsaleproduct', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -551,19 +754,29 @@ function totalbill(){
         return response.json();
       })
       .then(result => {
+        loader.style.display = 'none';
         console.log('Entry added successfully:', result);
-        document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + parseInt(document.getElementById('total').value);
-        totalBalance()
-        updateTable(formData, result);
+        // document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + parseInt(document.getElementById('total').value);
+        // totalBalance()
+        updateTable(formData, result.insertId);
+        $('#product').val('').trigger('change');
+        $('#bta').val('').trigger('change');
+      document.getElementById('mark').value = '';
+       document.getElementById('nag').value = '';
+       document.getElementById('kimmat').value = '';
+      document.getElementById('total').value = '';
+      var nagLabel = document.getElementById('nagLabel');
+            nagLabel.innerHTML = ''; 
       })
       .catch(error => {
         console.error('Error:', error);
       });
-    alert('Button clicked!');
+    alert('Product added Successfully!!');
     // Add your desired functionality here
   }
 
   function updateTable(entry, result) {
+    console.log("table")
     var tableBody = document.getElementById('tableBody1');
     var newRow = document.createElement('tr');
     newRow.innerHTML = `
@@ -573,19 +786,22 @@ function totalbill(){
           <td>${entry.quantity}</td>
           <td>${entry.rate}</td>
           <td>${entry.price}</td>
-          <td><button type="button" onclick="deleteUser(this, ${result.insertId}, ${entry.price})">Delete</button></td>
+          <td><button type="button" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button></td>
       `;
+      document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + entry.price;
+      totalBalance()
     tableBody.appendChild(newRow);
   }
 
     function deleteUser(button,userId,price) {
       // Perform delete operation based on userId
       console.log(price)
+      console.log(userId)
       document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) - price;
       totalBalance()
       var button = event.target;
       var row = button.parentNode.parentNode;
-      fetch('http://3.109.5.164/saleproductData/deletesaleproduct/' + userId, {
+      fetch('http://65.0.168.11/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
       })
         .then(response => {

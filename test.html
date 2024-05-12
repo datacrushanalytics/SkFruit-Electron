@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select2 Dropdown with Checkboxes</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+</head>
+<body>
+
+<select id="component-dropdown" multiple="multiple" style="width: 300px;">
+    <!-- Options will be dynamically populated here -->
+</select>
+
+<script>
+$(document).ready(function() {
+    // Fetch data from API
+    $.ajax({
+        url: 'http://65.0.168.11/routeData', // Replace 'your-api-endpoint.com' with your actual API endpoint
+        type: 'GET',
+        success: function(response) {
+            // Populate options from API response
+            response.forEach(function(item) {
+                console.log(item.route_name);
+                $('#component-dropdown').append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
+            });
+
+            // Initialize Select2 after options are populated
+            $('#component-dropdown').select2({
+                placeholder: 'Select components',
+                closeOnSelect: false,
+                templateResult: function(data) {
+                    console.log(data);
+                    if (!data.id) {
+                        return data.text;
+                    }
+                    var $element = $('<span>' + data.text + '</span>');
+                    return $element;
+                }
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching data:', error);
+        }
+    });
+});
+</script>
+
+</body>
+</html>

@@ -37,7 +37,7 @@
   }
 
   label{
-    margin-left: 70px;
+    margin-left: 1px;
   }
   #route {
     border-radius: 8px;
@@ -49,6 +49,14 @@
     margin: 20px;
 }
 
+#date {
+    position: absolute;
+    top: 122px;
+    left: 800px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
 
       .button-container {
             margin-bottom: 20px;
@@ -102,11 +110,37 @@
         th {
             background-color: #f2f2f2;
         }
+/* Style the loader container */
+#loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Apply animation */
+    display: none; /* Hide loader by default */
+    
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+
 
     </style>
 </head>
 
 <body>
+    <div id="loader"></div>
+    <input type="date" id="date" value="">
     <div class="container">
         <h1 align="center">Customer Outstanding</h1><br>
         <hr>
@@ -116,19 +150,23 @@
 
                 <br>
 
-                <label for="userType">Customer Name :</label>
-                <select class="drop" id="customer" id="name" name="name">
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select><br>
+                
+               <label for="userType">Route :</label>
+               <select class="drop" id="route" name="name">
+               <!-- <option value="User" disabled selected>Select Account</option> -->
+               </select>
+                <br>
                 <br>
 
 
                 
 
-                <label for="userType">Route :</label>
-                <select class="drop" id="route" name="name">
+                <label for="userType">Customer Name :</label>
+                <select class="drop" id="customer" id="name" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select><br><br>
+                </select>
+
+                <br><br>
                 
 
                 <!-- <div class="third-row"> -->
@@ -171,11 +209,14 @@
 
 
 <script>
+    // Set current date to the date input field
+    document.getElementById('date').valueAsDate = new Date();
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://3.109.5.164/list/Customer', 'customer');
-        fetchAndPopulateDropdown('http://3.109.5.164/routeData', 'route');
+        fetchAndPopulateDropdown('http://65.0.168.11/list/Customer', 'customer');
+        fetchAndPopulateDropdown('http://65.0.168.11/routeData', 'route');
+        fetchDataAndProcess();
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId) {
@@ -214,6 +255,12 @@
             allowClear: true
         });
     }
+
+    $(document).on('select2:open', function(e) {
+        window.setTimeout(function () {
+            document.querySelector('input.select2-search__field').focus();
+        }, 0);
+    });
 
 </script>
 

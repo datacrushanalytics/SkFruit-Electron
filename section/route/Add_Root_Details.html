@@ -74,26 +74,50 @@
             background-color: #555;
             /* Darker grey on hover */
         }
+        /* Style the loader container */
+#loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Apply animation */
+    display: none; /* Hide loader by default */
+    
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
     </style>
 </head>
 
 <body>
+    <div id="loader"></div>
     <div class="container">
         <h1>ROUTE DETAILS</h1>
         <hr>
         <div class="container1">
             <form id="loginForm" method="POST">
                 <label for="routeId">ID :</label>
-                <input type="text" id="routeId" name="routeId" placeholder="ID"> <br>
+                <input type="text" id="routeId" name="routeId" placeholder="ID" > <br>
 
                 <label for="route_name">Route Name :</label>
-                <input type="text" id="route_name" name="route_name" placeholder="Route Name"> <br>
+                <input type="text" id="route_name" name="route_name" placeholder="Route Name" required> <br>
 
                 <lable for="details">Details :</lable>
-                <input type="text" id="details" name="details" placeholder="Details"> <br>
+                <input type="text" id="details" name="details" placeholder="Details" required> <br>
 
                 <lable for="mobile_no">Mobile No :</lable>
-                <input type="text" id="mobile_no" name="mobile_no" placeholder="Mobile No"> <br>
+                <input type="text" id="mobile_no" name="mobile_no" placeholder="Mobile No" required> <br>
                 <div class="third-row">
                     <button type="submit" class="border-hover">Save</button>
                     <!-- <a href="./Root_Details.html"><button type='button' class="border-hover">Back</button></a> -->

@@ -237,10 +237,65 @@
             text-decoration: none;
             cursor: pointer;
         }
+        /* Style the loader container */
+#loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Apply animation */
+    display: none; /* Hide loader by default */
+    
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* CSS */
+.popup {
+    /* Existing styles */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#companyInfo {
+    margin-bottom: 20px;
+}
+
+#companyLogo {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+#companyName {
+    font-size: 1.2em; /* Adjust the font size as needed */
+}
+
+#barcodeCanvas {
+    /* Existing styles */
+    margin-top: 20px; /* Add margin for spacing */
+    width: 220px;
+}
+
+
+
+
     </style>
 </head>
 
 <body>
+    <div id="loader"></div>
     <div class="container">
         <h1 align="center">Batawise Sale Report</h1>
         <br>
@@ -251,10 +306,10 @@
 
                 <div class="first-row">
                     <label for="userType">From Date :</label>
-                    <input type="date" id="fromdate" name="date" placeholder="From Date">
+                    <input type="date" id="fromdate" name="date" placeholder="From Date" required>
                     <br>
                     <label for="userType">To Date :</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date">
+                    <input type="date" id="todate" name="date" placeholder="To Date" required>
                 </div>
 
                 <br>
@@ -315,8 +370,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://3.109.5.164/purchaseproductData', 'product', 'product_name');
-        fetchAndPopulateDropdown('http://3.109.5.164/purchaseproductData', 'bata', 'bata');
+        fetchAndPopulateDropdown('http://65.0.168.11/purchaseproductData', 'product', 'product_name');
+        fetchAndPopulateDropdown('http://65.0.168.11/purchaseproductData', 'bata', 'bata');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
@@ -355,6 +410,12 @@
             allowClear: true
         });
     }
+
+    $(document).on('select2:open', function(e) {
+        window.setTimeout(function () {
+            document.querySelector('input.select2-search__field').focus();
+        }, 0);
+    });
 </script>
 
 </html>

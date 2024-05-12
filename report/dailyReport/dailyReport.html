@@ -55,7 +55,7 @@
     /* border-radius: 8px; */
     height: 35px;
     width: 320px;
-    margin-left: 5%; 
+    margin-left: 0%; 
   }
 
   label{
@@ -66,7 +66,7 @@
     /* border-radius: 8px; */
     height: 35px;
     width: 320px;
-    margin-left: 1%;
+    margin-left: 0%;
   }
 
   #vehicleNumber{
@@ -132,31 +132,55 @@
             background-color: #f2f2f2;
         }
 
+        /* Style the loader container */
+#loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Apply animation */
+    display: none; /* Hide loader by default */
+    
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+
     </style>
 </head>
 
 <body>
+    <div id="loader"></div>
     <div class="container">
         <h1 align="center">Daily Report</h1><br>
         <hr>
-
+        <br>
         <div class="container1">
             <form id="loginForm1">
 
                 <div class="first-row">
                     <label for="userType">From Date</label>
-                    <input type="date" id="fromdate" name="date" placeholder="From Date">
+                    <input type="date" id="fromdate" name="date" placeholder="From Date" required>
                     <br>
                     <label for="userType">To Date</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date">
+                    <input type="date" id="todate" name="date" placeholder="To Date" required>
                 </div><br>
 
                 <label for="userType">Vehicle Number</label>
                 <select class="drop" id="vehicleNumber" name="name"></select><br>
-                
+              
             <br>
 
-                
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
                     <button type="submit" class="button">Submit</button>
@@ -225,7 +249,7 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://3.109.5.164/vehicleData', 'vehicleNumber');
+        fetchAndPopulateDropdown('http://65.0.168.11/vehicleData', 'vehicleNumber');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId) {
@@ -264,6 +288,12 @@
             allowClear: true
         });
     }
+
+    $(document).on('select2:open', function(e) {
+        window.setTimeout(function () {
+            document.querySelector('input.select2-search__field').focus();
+        }, 0);
+    });
 
 </script>
 

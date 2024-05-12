@@ -1,7 +1,7 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://3.109.5.164/list/Customer')
+//     fetch('http://65.0.168.11/list/Customer')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -71,8 +71,10 @@ function fetchDataAndProcess() {
         to_date: formatDate(document.getElementById("todate").value),
         customer_name: getElementValueWithDefault('customer', '*'),
     };
+    var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
-    return fetch('http://3.109.5.164/carateReport', {
+    return fetch('http://65.0.168.11/carateReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -80,12 +82,18 @@ function fetchDataAndProcess() {
         }
     })
     .then(response => {
+        if (response.status === 404) {
+        loader.style.display = 'none';
+            alert("No data found.");
+            throw new Error('Data not found');
+        }
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         return response.json();
     })
     .then(result => {
+        loader.style.display = 'none';
         console.log(result);
         populateTable4(result);
         return result; // Return the result to be used in the caller
@@ -155,6 +163,9 @@ function populateTable4(data) {
     var columnsToDisplay = ['carate_date','customer_name','summary',"inCarate",'in_carate_total',"OutCarate",'out_carate_total'];
     var counter = 1;
     console.log(data.reports)
+    if (data.reports.length === 0) {
+        alert("No Data Found");
+    }
     data.reports.forEach(function(item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();

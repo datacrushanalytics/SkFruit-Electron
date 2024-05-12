@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Set the placeholder of the input field to the formatted date
     document.getElementById('date').value = formattedDate;
 
-    fetch('http://3.109.5.164/fetchReceiptid')
+    fetch('http://65.0.168.11/fetchReceiptid')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -23,122 +23,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
-    // fetch('http://3.109.5.164/list/Customer')
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         // Populate dropdown with API data
-    //         populateDropdown(data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
-
-
-    // fetch('http://3.109.5.164/list/Bank Account')
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         // Populate dropdown with API data
-    //         populateDropdown1(data);
-    //         populateDropdown2(data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
-
-
-
-// function populateDropdown(data) {
-//     var userNameDropdown = document.getElementById('account_group');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.name; // Set the value
-//         option.textContent = item.name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Customer Name"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-// function populateDropdown1(data) {
-//     var userNameDropdown = document.getElementById('route_detail');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-//     // Add a hardcoded option
-//     var hardcodedOption = document.createElement('option');
-//     hardcodedOption.value = "CASH"; // Set the value for the hardcoded option
-//     hardcodedOption.textContent = "CASH"; // Set the display text for the hardcoded option
-//     userNameDropdown.appendChild(hardcodedOption);
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.name; // Set the value
-//         option.textContent = item.name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Online Account"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-
-// function populateDropdown2(data) {
-//     var userNameDropdown = document.getElementById('input1');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-    
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.name; // Set the value
-//         option.textContent = item.name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Online Account"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-
-
-
 document.getElementById('loginForm1').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
-console.log("jahsafhfa")
 // function form2(){
     var formData = {
         receiptId: parseInt(document.getElementById('pavti').value),
         date: document.getElementById('date').value,
         from_account: document.getElementById('account_group').value,
-        to_account: document.getElementById('route_detail').value,
+        to_account: document.getElementById('mob').value,
         note: document.getElementById('message').value,
         prev_balance: parseInt(document.getElementById('input3').value) || 0,
         deposite: parseInt(document.getElementById('input6').value) || 0,
@@ -152,8 +44,9 @@ console.log("jahsafhfa")
         deposite_carate_price: parseInt(document.getElementById('input4').value) || 0,
         remaining: parseInt(document.getElementById('input5').value) || 0,     
     };
-
-    await fetch('http://3.109.5.164/receiptData/insertReceipt', {
+    var loader = document.getElementById('loader');
+    loader.style.display = 'block';
+    await fetch('http://65.0.168.11/receiptData/insertReceipt', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -168,6 +61,7 @@ console.log("jahsafhfa")
         return response.json();
     })
     .then(result => {
+        loader.style.display = 'none';
         console.log('Entry added successfully:', result);
         alert("Receipt Data is added Successfully");
         window.location.reload();

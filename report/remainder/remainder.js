@@ -1,15 +1,23 @@
 
 function remainder() {
     console.log("product function executed");
+    var loader = document.getElementById('loader');
+    loader.style.display = 'block';
 
-    return fetch('http://3.109.5.164/remainderReport')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+    return fetch('http://65.0.168.11/remainderReport')
+    .then(response => {
+        if (response.status === 404) {
+            loader.style.display = 'none';
+            alert("No data found.");
+            throw new Error('Data not found');
+        }
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
         .then(data => {
+            loader.style.display = 'none';
             console.log(data);
             populateTable(data);
             return data;
@@ -24,6 +32,9 @@ function populateTable(data) {
     tbody.innerHTML = ''; // Clear existing rows
     var columnsToDisplay = [ 'name','address','mobile_no',"Last Date", 'Days','current_balance' ];
     var counter = 1;
+    if (data.reports.length === 0) {
+        alert("No Data Found");
+    }
     data.reports.forEach(function(item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();

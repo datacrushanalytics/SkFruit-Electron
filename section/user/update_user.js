@@ -1,5 +1,7 @@
 async function updateUser() {
     try {
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
         var status = document.getElementById("isActive").checked ? '1' : '0';
         var userData = {
             name: document.getElementById("name").value,
@@ -9,7 +11,7 @@ async function updateUser() {
             status: status
         };
 
-        const response = await fetch('http://3.109.5.164/userData/updateUser/'+ parseInt(document.getElementById("id").value), {
+        const response = await fetch('http://65.0.168.11/userData/updateUser/'+ parseInt(document.getElementById("id").value), {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -22,6 +24,7 @@ async function updateUser() {
         }
 
         const result = await response.json();
+        loader.style.display = 'none';
         console.log('Data added successfully:', result);
         alert('Data Updated successfully')
         // Optionally, you can redirect or show a success message here

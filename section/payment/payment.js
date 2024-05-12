@@ -6,8 +6,10 @@ document.addEventListener('DOMContentLoaded', function () {
     var formattedDate = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
     // Set the placeholder of the input field to the formatted date
     document.getElementById('date').value = formattedDate;
+    var loader = document.getElementById('loader');
+    loader.style.display = 'block';
 
-    fetch('http://3.109.5.164/list/Supplier')
+    fetch('http://65.0.168.11/list/Supplier')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -23,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
 
-    fetch('http://3.109.5.164/list/Bank Account')
+    fetch('http://65.0.168.11/list/Bank Account')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -31,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return response.json();
         })
         .then(data => {
+            loader.style.display = 'none';
             // Populate dropdown with API data
             populateDropdown1(data);
         })
@@ -101,9 +104,11 @@ console.log("jahsafhfa")
         prev_balance: parseInt(document.getElementById('previousBalance').value) || 0,
         amounr: parseInt(document.getElementById('amount').value) || 0        
     };
+    var loader = document.getElementById('loader');
+    loader.style.display = 'block';
 
 
-    await fetch('http://3.109.5.164/paymentData/insertPayment', {
+    await fetch('http://65.0.168.11/paymentData/insertPayment', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -118,6 +123,7 @@ console.log("jahsafhfa")
         return response.json();
     })
     .then(result => {
+        loader.style.display = 'none';
         console.log('Entry added successfully:', result);
         alert("Payment Data is added Successfully");
         window.location.reload();

@@ -3,7 +3,7 @@
 
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://3.109.5.164/purchaseproductData')
+//     fetch('http://65.0.168.11/purchaseproductData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -90,7 +90,7 @@ function formatDate(dateString) {
 //     };
 //     console.log(data);
 
-//     fetch('http://3.109.5.164/batawiseSaleReport', {
+//     fetch('http://65.0.168.11/batawiseSaleReport', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -127,21 +127,29 @@ function fetchDataAndProcess() {
         bata: getElementValueWithDefault('bata', '*')
     };
     console.log(data);
+    var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
-    return fetch('http://3.109.5.164/batawiseSaleReport', {
+    return fetch('http://65.0.168.11/batawiseSaleReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
             'Content-Type': 'application/json'
         }
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+    .then(response => {
+        if (response.status === 404) {
+        loader.style.display = 'none';
+            alert("No data found.");
+            throw new Error('Data not found');
+        }
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
         .then(result => {
+        loader.style.display = 'none';
             console.log(result);
             populateTable4(result);
             return result;
@@ -206,6 +214,9 @@ function populateTable4(data) {
     var columnsToDisplay = ['bill_id', 'date', 'cust_name', 'address', 'mobile_no', "Sandharbh", 'product', 'bata', 'mark', 'quantity', 'rate', 'price'];
     var counter = 1;
     console.log(data.reports)
+    if (data.reports.length === 0) {
+        alert("No Data Found");
+    }
     data.reports.forEach(function (item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
@@ -257,7 +268,11 @@ function displayBarcodePopup(item) {
     var barcodeValue = 'Product Name:' + item['product'] + ' \nBata:' + item['bata'];
     var popupContent = `
         <div class="popup">
-            <h2>Barcode</h2>
+        <div id="companyInfo">
+        <p id="companyName">Savata Fruits</p> <!-- Added company name -->
+        <img src="../../assets/img/logo.png" alt="Company Logo" id="companyLogo"> <!-- Updated company logo path -->
+    </div>
+            
             <canvas id="barcodeCanvas"></canvas>
             <button id="downloadButton">Download Barcode</button>
             <button onclick="closePopup()">Close</button>
@@ -266,8 +281,9 @@ function displayBarcodePopup(item) {
     document.getElementById('popupContainer').innerHTML = popupContent;
     JsBarcode('#barcodeCanvas', barcodeValue, {
         format: "CODE128", // Adjust the barcode format as needed
-        displayValue: false, // Hide text under the barcode 
-        width: 1 // Set the width of the bars
+        displayValue: true, // Hide text under the barcode 
+        width: 1, // Set the width of the bars
+        text: barcodeValue 
     });
 
     // Create a download link for the barcode image
@@ -300,9 +316,10 @@ function closePopup() {
 function openModal(item) {
     // Your code to open the modal with the data from 'item'
     console.log("Opening modal for item:", item.bill_id);
-    
+    var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
-    fetch('http://3.109.5.164/bill/' + item.bill_id)
+    fetch('http://65.0.168.11/bill/' + item.bill_id)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -312,7 +329,7 @@ function openModal(item) {
         .then(data => {
             // Populate dropdown with API data
             console.log(data)
-
+            loader.style.display = 'none';
             var utcDate = new Date(data.results[0].date);
             var options = {
                 year: 'numeric',
