@@ -268,7 +268,11 @@ function displayBarcodePopup(item) {
     var barcodeValue = 'Product Name:' + item['product'] + ' \nBata:' + item['bata'];
     var popupContent = `
         <div class="popup">
-            <h2>Barcode</h2>
+        <div id="companyInfo">
+        <p id="companyName">Savata Fruits</p> <!-- Added company name -->
+        <img src="../../assets/img/logo.png" alt="Company Logo" id="companyLogo"> <!-- Updated company logo path -->
+    </div>
+            
             <canvas id="barcodeCanvas"></canvas>
             <button id="downloadButton">Download Barcode</button>
             <button onclick="closePopup()">Close</button>
