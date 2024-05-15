@@ -427,6 +427,32 @@
 <br>
 <br>
 <div class="row-container">
+  <label>बाकी कॅरेट :</label>
+  <div class="carat-inputs">
+    <div class="input-wrapper">
+      <label for="carate100">100 :</label>
+      <input type="number" id="carate2100" name="carate2100" placeholder="100" readonly>
+    </div>
+    <div class="input-wrapper">
+      <label for="carate150">150 :</label>
+      <input type="number" id="carate2150" name="carate2150" placeholder="150" readonly>
+    </div>
+    <div class="input-wrapper">
+      <label for="carate250">250 :</label>
+      <input type="number" id="carate2250" name="carate2250" placeholder="250" readonly>
+    </div>
+    <div class="input-wrapper">
+      <label for="carate350">350 :</label>
+      <input type="number" id="carate2350" name="carate2350" placeholder="350" readonly>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="row-container">
   <label>गेलेले कॅरेट :</label>
   <div class="carat-inputs">
     <div class="input-wrapper">
@@ -612,6 +638,8 @@ function closePopup() {
 
 
 
+
+
 </script>
 
 
@@ -705,9 +733,31 @@ function previousbalance(){
       console.error('Error:', error);
   });
 
+
+  fetch('http://65.0.168.11/carateuserData/' + name)
+  .then(response => {
+      if (!response.ok) {
+        loader.style.display = 'none';
+          throw new Error('Network response was not ok');
+      }
+      return response.json();
+  })
+  .then(data => {
+      // Populate dropdown with API data
+      console.log(data)
+      document.getElementById('carate2100').value = parseInt(data[0]['carate_100']);
+      document.getElementById('carate2150').value = parseInt(data[0]['carate_150']);
+      document.getElementById('carate2250').value = parseInt(data[0]['carate_250']);
+      document.getElementById('carate2350').value = parseInt(data[0]['carate_350']);
+  })
+  .catch(error => {
+      console.error('Error:', error);
+  });
+
 }
 
-
+// Here in Carate is the carate send to the customer
+// Out carate is the carate received from the customer
 function carate(){
   var value100 = parseInt(document.getElementById("carate100").value) || 0;
   var value150 = parseInt(document.getElementById("carate150").value) || 0;

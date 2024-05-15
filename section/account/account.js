@@ -71,6 +71,8 @@ function populateTable(data) {
 }
 
 function editAccount(user) {
+  localStorage.removeItem('userData');
+  console.log('Editing user: ' + JSON.stringify(user));
   localStorage.setItem('userData', JSON.stringify(user));
    // Redirect to user_update.html
    window.location.href = '../account/updateAccount.html';

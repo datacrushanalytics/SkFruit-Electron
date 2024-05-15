@@ -173,28 +173,6 @@ document.addEventListener('DOMContentLoaded', function () {
 // }
 
 
-// function populateDropdown2(data) {
-//     var userNameDropdown = document.getElementById('product');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.product_name; // Set the value
-//         option.textContent = item.product_name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Product"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-
 function populateDropdown3(data) {
     var tbody = document.getElementById('tableBody1');
     tbody.innerHTML = ''; // Clear existing rows

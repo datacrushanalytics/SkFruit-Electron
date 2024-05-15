@@ -204,6 +204,7 @@
             if (userData) {
                 // Parse the user data
                 var user = JSON.parse(userData);
+                console.log("lapajcowjfocjwoj")
                 console.log(user)
 
                 // Populate form fields with user data
@@ -230,7 +231,7 @@
                 document.getElementById("no").value = user.mobile_no;
                 document.getElementById("address").value = user.address;
                 document.getElementById("preBalance").value = user.prev_balance;
-                if (user.cr_dr_type = 'CR'){
+                if (user.cr_dr_type = 'yes'){
                 document.getElementById("cr").checked = true;
                 }else{
                     document.getElementById("dr").checked = true;
@@ -252,7 +253,7 @@
         async function updateUser() {
             try {
                 // Determine status based on radio button value
-                var status = document.querySelector('input[name="cr_dr_type"]:checked').value === 'CR' ? 'CR' : 'DR';
+                var status = document.querySelector('input[name="cr_dr_type"]:checked').value === 'cr' ? 'yes' : 'no';
         
                 var userData = {
                     id: parseInt(document.getElementById("id").value),

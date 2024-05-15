@@ -205,6 +205,7 @@
                 <div class="first-row">
                     <label for="account_group" class="input-label">Customer Name :</label>
                     <select class="drop" id="account_group" name="account_group" onchange="previousbalance()" required></select>
+                    <input type="hidden" id="custid" name="custid">
                 </div>
 
                 <div class="dropdown-container">
@@ -247,6 +248,14 @@
                 <div class="first-row">
                     <label for="input8" class="input-label">Discount :</label>
                     <input type="text" id="input8" name="input1" onchange="totalbill()">
+                </div>
+
+                <div class="first-row">
+                    <label class="input-label">Reamining carate :</label>
+                    <input type="number" id="carate2100" name="number" placeholder="100" readonly>
+                    <input type="number" id="carate2150" name="number" placeholder="150" readonly>
+                    <input type="number" id="carate2250" name="number" placeholder="250" readonly>
+                    <input type="number" id="carate2350" name="number" placeholder="350" readonly>
                 </div>
 
                 <div class="first-row">
@@ -294,10 +303,40 @@
         totalbill();
     }
 
-    function totalbill() {
-        document.getElementById("input5").value = parseInt(document.getElementById("input3").value || 0) - parseInt(document.getElementById("input6").value || 0) - parseInt(document.getElementById("input7").value || 0) - parseInt(document.getElementById("input8").value || 0) - parseInt(document.getElementById("input4").value || 0);
-    }
+   // function totalbill() {
+   //    document.getElementById("input5").value = parseInt(document.getElementById("input3").value || 0) - parseInt(document.getElementById("input6").value || 0) - parseInt(document.getElementById("input7").value || 0) - parseInt(document.getElementById("input8").value || 0) - parseInt(document.getElementById("input4").value || 0);
+   // }
 
+
+
+function totalbill(){
+    console.log("totalbill")
+    console.log(document.getElementById("custid").value)
+  
+    fetch('http://65.0.168.11/accountData/' + parseInt(document.getElementById("custid").value))
+          .then(response => {
+            if (!response.ok) {
+                loader.style.display = 'none';
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+          .then(data => {
+              console.log(data[0].cr_dr_type)
+              if(data[0].cr_dr_type == 'no'){
+                document.getElementById("input5").value = parseInt(document.getElementById("input3").value || 0) - parseInt(document.getElementById("input6").value || 0) - parseInt(document.getElementById("input7").value || 0) - parseInt(document.getElementById("input8").value || 0);
+              }else{
+                document.getElementById("input5").value = parseInt(document.getElementById("input3").value || 0) - parseInt(document.getElementById("input6").value || 0) - parseInt(document.getElementById("input7").value || 0) - parseInt(document.getElementById("input8").value || 0) - parseInt(document.getElementById("input4").value || 0);
+              }
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+  
+    
+    //document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0) - parseInt(document.getElementById("total2").value || 0);
+  }
+  
     function previousbalance() {
         const name = document.getElementById("account_group").value
         fetch('http://65.0.168.11/fetchpv/' + name)
@@ -310,6 +349,7 @@
             .then(data => {
                 // Populate dropdown with API data
                 console.log(data)
+                document.getElementById('custid').value = parseInt(data[0]['id']);
                 document.getElementById('input3').value = parseInt(data[0]['current_balance'] || 0);
             })
             .catch(error => {
@@ -336,7 +376,32 @@
                   })
                   .catch(error => {
                       console.error('Error:', error);
-                  });   
+                  });
+
+
+
+    fetch('http://65.0.168.11/carateuserData/' + name)
+  .then(response => {
+      if (!response.ok) {
+        loader.style.display = 'none';
+          throw new Error('Network response was not ok');
+      }
+      return response.json();
+  })
+  .then(data => {
+      // Populate dropdown with API data
+      console.log(data)
+      document.getElementById('carate2100').value = parseInt(data[0]['carate_100']);
+      document.getElementById('carate2150').value = parseInt(data[0]['carate_150']);
+      document.getElementById('carate2250').value = parseInt(data[0]['carate_250']);
+      document.getElementById('carate2350').value = parseInt(data[0]['carate_350']);
+  })
+  .catch(error => {
+      console.error('Error:', error);
+  });
+                  
+
+
     }
 
 
