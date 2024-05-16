@@ -11,7 +11,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://65.0.168.11/productData/insertProduct', {
+    fetch('http://localhost:3000/productData/insertProduct', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

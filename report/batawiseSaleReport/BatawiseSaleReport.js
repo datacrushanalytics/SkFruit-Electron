@@ -3,7 +3,7 @@
 
 // document.addEventListener('DOMContentLoaded', function () {
 
-//     fetch('http://65.0.168.11/purchaseproductData')
+//     fetch('http://localhost:3000/purchaseproductData')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -90,7 +90,7 @@ function formatDate(dateString) {
 //     };
 //     console.log(data);
 
-//     fetch('http://65.0.168.11/batawiseSaleReport', {
+//     fetch('http://localhost:3000/batawiseSaleReport', {
 //         method: 'POST',
 //         body: JSON.stringify(data),
 //         headers: {
@@ -130,7 +130,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://65.0.168.11/batawiseSaleReport', {
+    return fetch('http://localhost:3000/batawiseSaleReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -319,7 +319,7 @@ function openModal(item) {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://65.0.168.11/bill/' + item.bill_id)
+    fetch('http://localhost:3000/bill/' + item.bill_id)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

@@ -11,7 +11,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://65.0.168.11/accountData/insertaccount', {
+    fetch('http://localhost:3000/accountData/insertaccount', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

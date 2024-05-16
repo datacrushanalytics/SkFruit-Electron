@@ -249,7 +249,7 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://65.0.168.11/vehicleData', 'vehicleNumber');
+        fetchAndPopulateDropdown('http://localhost:3000/vehicleData', 'vehicleNumber');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId) {
