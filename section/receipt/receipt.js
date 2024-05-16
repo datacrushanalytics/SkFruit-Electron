@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Set the placeholder of the input field to the formatted date
     document.getElementById('date').value = formattedDate;
 
-    fetch('http://localhost:3000/fetchReceiptid')
+    fetch('http://65.0.168.11/fetchReceiptid')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -46,7 +46,7 @@ document.getElementById('loginForm1').addEventListener('submit', async function(
     };
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
-    await fetch('http://localhost:3000/receiptData/insertReceipt', {
+    await fetch('http://65.0.168.11/receiptData/insertReceipt', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

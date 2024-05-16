@@ -1,6 +1,6 @@
 // // Fetch data from API
 // document.addEventListener('DOMContentLoaded', function() {
-//     fetch('http://localhost:3000/list/Worker')
+//     fetch('http://65.0.168.11/list/Worker')
 //         .then(response => {
 //             if (!response.ok) {
 //                 throw new Error('Network response was not ok');
@@ -69,7 +69,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     });
     console.log(data);
 
-    fetch('http://localhost:3000/userData/insertUser', {
+    fetch('http://65.0.168.11/userData/insertUser', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
