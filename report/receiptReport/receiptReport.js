@@ -143,7 +143,7 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['receipt_id', 'date', 'Customer','to_account','note', 'PaidAmt',"onlineAmt",'discount','inCarat','Amt'];
+    var columnsToDisplay = ['receipt_id', 'date', 'Customer','mobile_no','note', 'PaidAmt',"onlineAmt",'discount','inCarat','Amt'];
     var counter = 1;
     console.log(data.reports)
     if (data.reports.length === 0) {
@@ -181,7 +181,7 @@ async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
 
-        const customHeaders = ['receipt_id', 'date', 'Customer','to_account','note', 'PaidAmt',"onlineAmt",'discount','inCarat','Amt'];
+        const customHeaders = ['receipt_id', 'date', 'Customer','mobile_no','note', 'PaidAmt',"onlineAmt",'discount','inCarat','Amt'];
 
         // Create a new worksheet with custom headers
         const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
@@ -192,7 +192,7 @@ async function exportToExcel() {
                 report.receipt_id,
                 report.date,
                 report.Customer,
-                report.to_account,
+                report.mobile_no,
                 report.note,
                 report.PaidAmt,
                 report.onlineAmt,
