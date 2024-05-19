@@ -1,3 +1,6 @@
+let accountInfo = [];
+
+
 function account() {
   console.log("user function executed");
   var loader = document.getElementById('loader');
@@ -18,12 +21,32 @@ function account() {
       .then(data => {
         loader.style.display = 'none';
           console.log(data);
-          populateTable(data);
+          accountInfo = data;
+          populateTable(accountInfo);
       })
       .catch(error => {
           console.error('Error:', error);
       });
 }
+
+
+// Function to filter results based on the search input
+function searchData() {
+  const query = document.getElementById('searchBox').value.toLowerCase();
+  const filteredResults = accountInfo.filter(item => {
+      return (
+          item.name.toLowerCase().includes(query) ||
+          item.account_group.toLowerCase().includes(query) ||
+          item.address.toLowerCase().includes(query) ||
+          item.mobile_no.toString().toLowerCase().includes(query)
+      );
+  });
+  populateTable(filteredResults);
+}
+
+
+
+
 
 function populateTable(data) {
   var tbody = document.getElementById('tableBody');
