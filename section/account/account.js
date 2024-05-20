@@ -35,10 +35,12 @@ function searchData() {
   const query = document.getElementById('searchBox').value.toLowerCase();
   const filteredResults = accountInfo.filter(item => {
       return (
-          item.name.toLowerCase().includes(query) ||
-          item.account_group.toLowerCase().includes(query) ||
-          item.address.toLowerCase().includes(query) ||
-          item.mobile_no.toString().toLowerCase().includes(query)
+        (item.name?.toLowerCase() ?? '').includes(query) ||
+        (item.company?.toLowerCase() ?? '').includes(query) ||
+        (item.account_group?.toLowerCase() ?? '').includes(query) ||
+        (item.address?.toLowerCase() ?? '').includes(query) ||
+        (item.mobile_no?.toString().toLowerCase() ?? '').includes(query) ||
+        (item.optional_mobile?.toString().toLowerCase() ?? '').includes(query)
       );
   });
   populateTable(filteredResults);
@@ -47,11 +49,10 @@ function searchData() {
 
 
 
-
 function populateTable(data) {
   var tbody = document.getElementById('tableBody');
   tbody.innerHTML = ''; // Clear existing rows
-  var columnsToDisplay = ['name', 'account_group','address','mobile_no','cr_dr_type'];
+  var columnsToDisplay = ['name','company' ,'account_group','address','mobile_no','optional_mobile','cr_dr_type'];
   var counter = 1;
   var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
   data.forEach(function(item) {

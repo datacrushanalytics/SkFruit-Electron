@@ -22,7 +22,25 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
+
+        form2 = {
+            userName : document.getElementById("name").value,
+            carate_100 : parseInt(document.getElementById("carate2100").value) || 0,
+            carate_150 : parseInt(document.getElementById("carate2150").value) || 0,
+            carate_250 : parseInt(document.getElementById("carate2250").value) || 0,
+            carate_350 : parseInt(document.getElementById("carate2350").value) || 0
+        }
+        console.log(form2)
+        const response1 =  fetch('http://65.0.168.11/carateuserData/insertcarateuser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(form2)
+        });
+       
         return response.json();
+        
     })
     .then(result => {
         loader.style.display = 'none';
