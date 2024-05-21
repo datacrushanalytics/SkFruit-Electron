@@ -219,8 +219,6 @@ function populateTable4(data) {
 }
 
 
-
-
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
