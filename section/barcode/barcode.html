@@ -217,12 +217,14 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <label for="Route">Bata:   </label>
                         <select class="drop" id="Route" name="route_detail"></select>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label for="Route">Vehicle:   </label>
+                        <select class="drop" id="vehicle" name="vehicle"></select>
                     </div>
                     <br>
                     <br>
-    
-                    <button id="border-hover" type="submit">दाखवा </button>
-    
+                    <button id="border-hover" type="submit">Show </button>
+                    <button id="border-hover"  type="button"  onclick="download()">Download </button>
                 </form>
                 <br>
                 <br>
@@ -237,6 +239,7 @@
                         <th>Product Name</th>
                         <th>Bata</th>
                         <th>Mark</th>
+                        <th>Vehicle</th>
                         <th>Purchase Price</th>
                         <th>Selling Price</th>
                         <th>Barcode</th>
@@ -261,11 +264,15 @@
 </body>
 <!-- <script src="./barcode.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/JsBarcode/3.11.5/JsBarcode.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <script>
 
     document.addEventListener('DOMContentLoaded', function () {
         fetchAndPopulateDropdown('http://65.0.168.11/purchaseproductData', 'grahk','product_name');
         fetchAndPopulateDropdown('http://65.0.168.11/purchaseproductData', 'Route','bata');
+        fetchAndPopulateDropdown('http://65.0.168.11/vehicleData', 'vehicle','vehicle_no');
         
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
@@ -387,7 +394,7 @@
         var tbody = document.getElementById('tableBody');
         tbody.innerHTML = ''; // Clear existing rows
 
-        var columnsToDisplay = ['purchase_id', 'p_date', 'product_name', 'bata', 'mark', 'purchase_price', 'selling_price'];
+        var columnsToDisplay = ['purchase_id', 'p_date', 'product_name', 'bata', 'mark', 'gadi_number','purchase_price', 'selling_price'];
         data.forEach(function (item) {
             var row = tbody.insertRow();
             var cell = row.insertCell();
@@ -422,6 +429,7 @@
         });
     }
 
+    
 
     function displayBarcodePopup(item) {
         var barcodeValue = 'Product Name:' + item['product_name'] + ' \nBata:' + item['bata'];
@@ -484,13 +492,14 @@
         event.preventDefault(); // Prevent form submission
         var data = {
             product : getElementValueWithDefault('grahk', '*') , 
-            bata : getElementValueWithDefault('Route', '*') 
+            bata : getElementValueWithDefault('Route', '*'),
+            gadi_number : getElementValueWithDefault('vehicle', '*') 
         };
         console.log(data);
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
     
-        fetch('http://65.0.168.11/purchaseproductData', {
+        fetch('http://localhost:3000/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -516,7 +525,89 @@
     });
 
 
+    function download() {
+        var data = {
+            product: getElementValueWithDefault('grahk', '*'),
+            bata: getElementValueWithDefault('Route', '*'),
+            gadi_number: getElementValueWithDefault('vehicle', '*')
+        };
+        console.log(data);
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
+        fetch('http://localhost:3000/purchaseproductData', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(result => {
+            loader.style.display = 'none';
+            console.log(result);
+            // Assuming result is an array of items
+            generateBarcodesAndDownloadPDF(result);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            loader.style.display = 'none';
+        });
+    }
+
+
+    function generateBarcodesAndDownloadPDF(items) {
+            const { jsPDF } = window.jspdf;
+            const barcodeWidth = 80; // Adjust the width to fit two barcodes in a row
+            const barcodeHeight = 40;
+            const itemsPerRow = 2; // Two items per row
+            const rowsPerPage = 5; // Adjust this to fit the number of rows per page
+            const itemsPerPage = itemsPerRow * rowsPerPage; // Calculate total items per page
+            const spacing = 10; // Space between barcodes
+
+            var pdf = new jsPDF(); // Create a new jsPDF instance
+
+            items.forEach((item, index) => {
+                var barcodeValue = 'Product Name:' + item['product_name'] + ' \nBata:' + item['bata'];
+
+                // Create a canvas element for each barcode
+                var canvas = document.createElement('canvas');
+                JsBarcode(canvas, barcodeValue, {
+                    format: "CODE128", // Adjust the barcode format as needed
+                    displayValue: true, // Show text under the barcode
+                    width: 1, // Set the width of the bars
+                    text: barcodeValue // Add text below the barcode
+                });
+
+                // Convert the canvas to an image
+                var image = canvas.toDataURL('image/png');
+
+                // Calculate position for this barcode on the page
+                const rowIndex = Math.floor((index % itemsPerPage) / itemsPerRow);
+                const colIndex = index % itemsPerRow;
+
+                const xOffset = 10 + (colIndex * (barcodeWidth + spacing));
+                const yOffset = 20 + (rowIndex * (barcodeHeight + spacing));
+
+                // Add the barcode image
+                pdf.addImage(image, 'PNG', xOffset, yOffset, barcodeWidth, barcodeHeight); // Adjust position and size as needed
+
+                // Add a new page if we've added itemsPerPage barcodes to the current page
+                if ((index + 1) % itemsPerPage === 0 && index < items.length - 1) {
+                    pdf.addPage();
+                }
+            });
+
+            // Save the PDF
+            pdf.save('barcodes.pdf');
+        }
+
+    
 
 </script>
 </html>
