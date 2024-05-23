@@ -1,103 +1,22 @@
-// // Fetch data from API
-// document.addEventListener('DOMContentLoaded', function () {
-
-//     fetch('http://65.0.168.11/list/Supplier')
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             // Populate dropdown with API data
-//             populateDropdown(data);
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-
-// });
-
-
-// function populateDropdown(data) {
-//     var userNameDropdown = document.getElementById('customer');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.name; // Set the value
-//         option.textContent = item.name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Customer type"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-
-
-
 function getElementValueWithDefault(id, defaultValue) {
     var element = document.getElementById(id);
     return element && element.value ? element.value : defaultValue;
 }
-
-
-
-// document.getElementById('loginForm1').addEventListener('submit', function(event) {
-//     event.preventDefault(); // Prevent form submission
-//     var data = {
-//         supplier_name : getElementValueWithDefault('customer', '*') , 
-//     };
-//     console.log(data);
-
-//     fetch('http://65.0.168.11/supplierOutstanding', {
-//         method: 'POST',
-//         body: JSON.stringify(data),
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     })
-//     .then(response => {
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok');
-//         }
-//         return response.json();
-//     })
-//     .then(result => {
-//         console.log(result)
-//         populateTable4(result)
-//         // Optionally, you can redirect or show a success message here
-//     })
-//     .catch(error => {
-//         console.error('Error:', error);
-//         // Optionally, you can display an error message here
-//     });
-// });
-
-
 
 document.getElementById('loginForm1').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
     fetchDataAndProcess();
 });
 
-
-
 function fetchDataAndProcess() {
     var data = {
-        supplier_name : getElementValueWithDefault('customer', '*') , 
+        supplier_name: getElementValueWithDefault('customer', '*')
     };
     console.log(data);
 
     var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+    loader.style.display = 'block';
+
     return fetch('http://65.0.168.11/supplierOutstanding', {
         method: 'POST',
         body: JSON.stringify(data),
@@ -107,7 +26,7 @@ function fetchDataAndProcess() {
     })
     .then(response => {
         if (response.status === 404) {
-        loader.style.display = 'none';
+            loader.style.display = 'none';
             alert("No data found.");
             throw new Error('Data not found');
         }
@@ -118,24 +37,21 @@ function fetchDataAndProcess() {
     })
     .then(result => {
         loader.style.display = 'none';
-        console.log(result)
-        populateTable4(result)
+        console.log(result);
+        populateTable4(result);
         return result;
-        // Optionally, you can redirect or show a success message here
     })
     .catch(error => {
         console.error('Error:', error);
-        // Optionally, you can display an error message here
     });
 }
-
 
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['name','address','mobile_no',"Amount"];
+    var columnsToDisplay = ['name', 'address', 'mobile_no', "Amount"];
     var counter = 1;
-    console.log(data.reports)
+    console.log(data.reports);
     if (data.reports.length === 0) {
         alert("No Data Found");
     }
@@ -145,37 +61,28 @@ function populateTable4(data) {
         cell.textContent = counter++;
         columnsToDisplay.forEach(function(key) {
             var cell = row.insertCell();
-            if(key=='date'){
-                console.log(item[key])
-                var utcDate = new Date(item[key]);
-                var options = { 
-                    year: 'numeric', 
-                    month: '2-digit', 
-                    day: '2-digit', 
-                    timeZone: 'Asia/Kolkata' 
-                };
-                cell.textContent = utcDate.toLocaleString('en-IN', options);
-            
-            }else{
             cell.textContent = item[key];
-            }
         });
     });
 
-     // Add row for grand total
-     var totalRow = tbody.insertRow();
-     var totalCell = totalRow.insertCell();
-     totalCell.colSpan = columnsToDisplay.length;
-     totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Amount'] + ' ("Grand Amount") ';                                                                                                                                                                                                                                                     
+    // Add row for grand total
+    var totalRow = tbody.insertRow();
+    for (let i = 0; i < columnsToDisplay.length; i++) {
+        var cell = totalRow.insertCell();
+        // Shift the grand total one more column to the right
+        if (i === columnsToDisplay.length - 2) {
+            cell = totalRow.insertCell(); // Insert empty cell
+        } else if (i === columnsToDisplay.length - 1) {
+            cell.textContent = 'Grand Total: ' + data.Grand['Grand Amount'];
+        }
+    }
 }
-
-
 
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
 
-        const customHeaders = ['name','address','mobile_no',"Amount"];
+        const customHeaders = ['name', 'address', 'mobile_no', "Amount"];
 
         // Create a new worksheet with custom headers
         const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
@@ -203,4 +110,3 @@ async function exportToExcel() {
         console.error('Error exporting to Excel:', error);
     }
 }
-
