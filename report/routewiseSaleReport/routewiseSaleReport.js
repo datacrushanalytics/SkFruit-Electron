@@ -172,14 +172,15 @@ function openModal(item) {
             tablefooter.innerHTML = ""; // Clear existing rows
 
             var footerDetails = [
-                { label: "गेलेले कॅरेट : +", value: data.results[0].carate_amount },
+                //{ label: "गेलेले कॅरेट : +", value: data.results[0].carate_amount },
                 { label: "चालू कलम रक्कम:", value: data.results[0].amount },
                 { label: "मागील बाकी:", value: data.results[0].pre_balance },
                 { label: "एकूण रक्कम:", value: data.results[0].total_amount },
                 { label: "रोख जमा रक्कम:", value: data.results[0].cash },
+                { label: "ऑनलाईन जमा बँक :", value: data.results[0].online_acc },
                 { label: "ऑनलाईन जमा रक्कम:", value: data.results[0].online_amt },
                 { label: "सूट रक्कम:", value: data.results[0].discount },
-                { label: "जमा कॅरेट:   -", value: data.results[0].inCarat },
+                //{ label: "जमा कॅरेट:   -", value: data.results[0].inCarat },
                 { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.results[0].balance },
                 // Add other bill details similarly
             ];
@@ -192,6 +193,20 @@ function openModal(item) {
                     `;
                 tablefooter.appendChild(row);
             });
+
+            document.getElementById('carate1100').textContent = data.results[0].in_carate_100;
+            document.getElementById('carate1150').textContent = data.results[0].in_carate_150;
+            document.getElementById('carate1250').textContent = data.results[0].in_carate_250;
+            document.getElementById('carate1350').textContent = data.results[0].in_carate_350;
+            document.getElementById('carate2100').textContent = data.results[0].out_carate_100;
+            document.getElementById('carate2150').textContent = data.results[0].out_carate_150;
+            document.getElementById('carate2250').textContent = data.results[0].out_carate_250;
+            document.getElementById('carate2350').textContent = data.results[0].out_carate_350;
+            document.getElementById('carate3100').textContent = data.results[0].carate_100;
+            document.getElementById('carate3150').textContent = data.results[0].carate_150;
+            document.getElementById('carate3250').textContent = data.results[0].carate_250;
+            document.getElementById('carate3350').textContent = data.results[0].carate_350;
+
 
             // Populate table with fetched data
             var itemsTableBody = document.getElementById("itemsTableBody");
@@ -307,7 +322,27 @@ function openModal(item) {
         display: none; /* Hide the print button and header details when printing */
     }
 }
-        </style>
+.container3 {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+.box-container {
+    display: flex;
+    justify-content: space-around;
+}
+.carate {
+    font-size: 16px;
+    color: #333;
+}
+.data {
+    font-size: 14px;
+    color: #666;
+}
+
+
+</style>
         <div class="header">
         <div class="logo">
             <img src="../../assets/img/logo.png" alt="Company Logo">
@@ -323,26 +358,7 @@ function openModal(item) {
         <!-- Bill details -->
         <table>
             <tbody id = 'TableBody'>
-                <tr>
-                    <td><b>बिल क्र.:</b></td>
-                    <td>49746</td>
-                </tr>
-                <tr>
-                    <td><b>तारीख:</b></td>
-                    <td>01-03-2024</td>
-                </tr>
-                <tr>
-                    <td><b>ग्राहकाचे नाव:</b></td>
-                    <td id="cust_name" value= "test">Cash Bill</td>
-                </tr>
-                <tr>
-                    <td><b>संपर्क क्र.:</b></td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td><b>पत्ता:</b></td>
-                    <td>-</td>
-                </tr>
+                
             </tbody>
         </table>
         
@@ -361,42 +377,7 @@ function openModal(item) {
             <tbody id= 'itemsTableBody'>
             </tbody>
             <tfoot style="background-color: #e8e6e4;"  id ="tablefooter">
-                <tr>
-                    <td align="right" colspan="6"><font color="black">गेलेले कॅरेट : +</font></td>
-                    <td align="right" colspan="1"><font color="black">0</font></td>
-                </tr>	
-                <tr>
-                    <td align="right" colspan="6" style="border-top: 1px solid #999"><font color="black">चालू कलम रक्कम:</font></td>
-                    <td align="right" colspan="1" style="border-top: 1px solid #999"><font color="black">800</font></td>
-                </tr>
-                <tr>
-                    <td align="right" colspan="6"><font color="black">मागील बाकी:</font></td>
-                    <td align="right" colspan="1"><font color="black">0</font></td>
-                </tr>
-                <tr>
-                    <td align="right" colspan="6" style="border-top: 1px solid #999"><font color="black">एकूण रक्कम:</font></td>
-                    <td align="right" colspan="1" style="border-top: 1px solid #999"><font color="black">800</font></td>
-                </tr>
-                <tr>
-                    <td align="right" colspan="6"><font color="black">रोख जमा रक्कम:</font></td>
-                    <td align="right" colspan="1"><font color="black">800</font></td>
-                </tr>
-                <tr>
-                    <td align="right" colspan="6"><font color="black">ऑनलाईन जमा रक्कम:</font></td>
-                    <td align="right" colspan="1"><font color="black">0</font></td>
-                </tr>
-                <tr>
-                    <td align="right" colspan="6"><font color="black">सूट रक्कम:</font></td>
-                    <td align="right" colspan="1"><font color="black">0</font></td>
-                </tr>
-                <tr>
-                    <td align="right" colspan="6"><font color="black">जमा कॅरेट:   -</font></td>
-                    <td align="right" colspan="1"><font color="black">0</font></td>
-                </tr>
-                <tr>
-                    <td align="right" colspan="6" style="border-top: 1px solid #999"><font color="black">आत्ता पर्यंतचे येणे बाकी:</font></td>
-                    <td align="right" colspan="1" style="border-top: 1px solid #999"><font color="black">0</font></td>
-                </tr>
+                
             </tfoot>
         </table>
         
@@ -407,6 +388,48 @@ function openModal(item) {
         </div>
     </div>
         
+    <div class="box-container">
+    गेलेले कॅरेट : 
+        <div class="carate">100:</div>
+        <div class="data" id="carate1100">Data 1</div>
+        
+        <div class="carate">150:</div>
+        <div class="data" id="carate1150">Data 2</div>
+        
+        <div class="carate">250:</div>
+        <div class="data" id="carate1250">Data 3</div>
+        
+        <div class="carate">350:</div>
+        <div class="data" id="carate1350">Data 4</div>
+    </div>
+    <div class="box-container">
+    जमा कॅरेट : 
+        <div class="carate">100:</div>
+        <div class="data" id="carate2100">Data 1</div>
+        
+        <div class="carate">150:</div>
+        <div class="data" id="carate2150">Data 2</div>
+        
+        <div class="carate">250:</div>
+        <div class="data" id="carate2250">Data 3</div>
+        
+        <div class="carate">350:</div>
+        <div class="data" id="carate2350">Data 4</div>
+    </div>
+    <div class="box-container">
+    बाकी कॅरेट : 
+        <div class="carate">100:</div>
+        <div class="data" id="carate3100">Data 1</div>
+        
+        <div class="carate">150:</div>
+        <div class="data" id="carate3150">Data 2</div>
+        
+        <div class="carate">250:</div>
+        <div class="data" id="carate3250">Data 3</div>
+        
+        <div class="carate">350:</div>
+        <div class="data" id="carate3350">Data 4</div>
+    </div>
 
 
         <!-- Print button -->
