@@ -35,7 +35,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    return fetch('http://localhost:3000/khatawani', {
+    return fetch('http://65.0.168.11/khatawani', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -110,10 +110,42 @@ function populateTable4(data) {
     });
 
      // Add row for grand total
-     var totalRow = tbody.insertRow();
-     var totalCell = totalRow.insertCell();
-     totalCell.colSpan = columnsToDisplay.length;
-     totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Bill Amount'] + ' (Grand Bill Amount), ' + data.Grand['Grand outCarate'] + ' (Grand outCarate)' + data.Grand['Total Bill Amount'] + ' (Total Bill Amount), ' + data.Grand['Cash'] + ' (Total Cash), '  + data.Grand['Online Amount'] + ' (Online Amount)' + data.Grand['Grand Discount'] + ' (Grand Discount), ' + data.Grand['Grand inCarate'] + ' (Grand inCarate)';
+    var totalRow = tbody.insertRow();
+    totalRow.insertCell(); // Add empty cell at the beginning for shifting
+    columnsToDisplay.forEach(function(key) {
+        var totalCell = totalRow.insertCell();
+        switch (key) {
+            case 'amount':
+                totalCell.textContent = data.Grand['Grand Bill Amount'];
+                break;
+            case 'carate_amount':
+                totalCell.textContent = data.Grand['Grand outCarate'];
+                break;
+            case 'TotalKalam':
+                totalCell.textContent = data.Grand['Total Bill Amount'];
+                break;
+            case 'pre_balance':
+                totalCell.textContent = data.Grand['Grand Previous balance'];
+                break;
+            case 'cash':
+                totalCell.textContent = data.Grand['Cash'];
+                break;
+            case 'online_amt':
+                totalCell.textContent = data.Grand['Online Amount'];
+                break;
+            case 'discount':
+                totalCell.textContent = data.Grand['Grand Discount'];
+                break;
+            case 'inCarat':
+                totalCell.textContent = data.Grand['Grand inCarate'];
+                break;
+            case 'balance':
+                totalCell.textContent = data.Grand['Grand balance'];
+                break;
+            default:
+                totalCell.textContent = '';
+        }
+    });
 }
 
 
