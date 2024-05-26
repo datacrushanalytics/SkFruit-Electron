@@ -1,118 +1,3 @@
-// // Fetch data from API
-// document.addEventListener('DOMContentLoaded', function () {
-
-//     fetch('http://65.0.168.11/list/Supplier')
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             // Populate dropdown with API data
-//             populateDropdown(data);
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-
-//     fetch('http://65.0.168.11/purchaseproductData')
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             // Populate dropdown with API data
-//             populateDropdown1(data);
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-
-//     fetch('http://65.0.168.11/vehicleData')
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             // Populate dropdown with API data
-//             populateDropdown2(data);
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-// });
-
-
-// function populateDropdown(data) {
-//     var userNameDropdown = document.getElementById('supplier');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.name; // Set the value
-//         option.textContent = item.name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Supplier type"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-// function populateDropdown1(data) {
-//     var userNameDropdown = document.getElementById('bata');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.bata; // Set the value
-//         option.textContent = item.bata; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Bata"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-
-// function populateDropdown2(data) {
-//     var userNameDropdown = document.getElementById('vehicleNumber');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.vehicle_no; // Set the value
-//         option.textContent = item.vehicle_no; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Vehicle"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-
 function getElementValueWithDefault(id, defaultValue) {
     var element = document.getElementById(id);
     return element && element.value ? element.value : defaultValue;
@@ -126,42 +11,6 @@ function formatDate(dateString) {
     return year + '-' + month + '-' + day;
 }
 
-
-
-// document.getElementById('loginForm1').addEventListener('submit', function(event) {
-//     event.preventDefault(); // Prevent form submission
-//     var data = {
-//         from_date : formatDate(document.getElementById("fromdate").value),
-//         to_date : formatDate(document.getElementById("todate").value),
-//         supplier_name : getElementValueWithDefault('supplier', '*') , 
-//         bata : getElementValueWithDefault('bata', '*') , 
-//         gadi_number : getElementValueWithDefault('vehicleNumber', '*') 
-//     };
-//     console.log(data);
-
-//     fetch('http://65.0.168.11/purchaseReport', {
-//         method: 'POST',
-//         body: JSON.stringify(data),
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     })
-//     .then(response => {
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok');
-//         }
-//         return response.json();
-//     })
-//     .then(result => {
-//         console.log(result)
-//         populateTable4(result)
-//         // Optionally, you can redirect or show a success message here
-//     })
-//     .catch(error => {
-//         console.error('Error:', error);
-//         // Optionally, you can display an error message here
-//     });
-// });
 
 
 document.getElementById('loginForm1').addEventListener('submit', function(event) {
@@ -180,7 +29,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    return fetch('http://65.0.168.11/purchaseReport', {
+    return fetch('http://localhost:3000/purchaseReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -217,7 +66,7 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['id', 'date', 'gadi_number','bata','supplier_name', 'BillAmount','TotalQuantity'];
+    var columnsToDisplay = ['id', 'date', 'gadi_number','supplier_name', 'BillAmount','TotalQuantity'];
     var counter = 1;
     console.log(data.reports)
     if (data.reports.length === 0) {
@@ -244,6 +93,7 @@ function populateTable4(data) {
             cell.textContent = item[key];
             }
         });
+        
     });
 
      // Add row for grand total

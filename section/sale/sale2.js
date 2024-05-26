@@ -320,15 +320,7 @@ function openModal(item) {
                 
             </tfoot>
         </table>
-        
-        <!-- Thank you message -->
-        <div class="details">
-            <h4>Thank you, visit again!</h4>
-            <p><a href="https://datacrushanalytics.com/" style="color: #B1B6BA; font-size: 14px;">www.DataCrushAnalytics.com (Contact No: 7040040015)</a></p>
-        </div>
-    </div>
-       
-    <div class="box-container">
+        <div class="box-container">
     गेलेले कॅरेट : 
         <div class="carate">100:</div>
         <div class="data" id="carate1100">Data 1</div>
@@ -370,6 +362,15 @@ function openModal(item) {
         <div class="carate">350:</div>
         <div class="data" id="carate3350">Data 4</div>
     </div>
+
+        
+        <!-- Thank you message -->
+        <div class="details">
+            <h4>Thank you, visit again!</h4>
+            <p><a href="https://datacrushanalytics.com/" style="color: #B1B6BA; font-size: 14px;">www.DataCrushAnalytics.com (Contact No: 7040040015)</a></p>
+        </div>
+    </div>
+       
 
 
         <!-- Print button -->
