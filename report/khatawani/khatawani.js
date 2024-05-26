@@ -242,7 +242,9 @@ async function exportToExcel() {
             ["Total Cash", data.Grand['Cash']],
             ["Online Amount", data.Grand['Online Amount']],
             ["Grand Discount", data.Grand['Grand Discount']],
-            ["Grand inCarate", data.Grand['Grand inCarate']]
+            ["Grand inCarate", data.Grand['Grand inCarate']],
+            ["Grand Previous balance", data.Grand['Grand Previous balance']],
+            ["Grand balance", data.Grand['Grand balance']]
         ];
 
         doc.autoTable({
