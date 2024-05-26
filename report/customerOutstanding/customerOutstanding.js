@@ -92,11 +92,18 @@ function populateTable4(data) {
         });
     });
 
-     // Add row for grand total
-     var totalRow = tbody.insertRow();
-     var totalCell = totalRow.insertCell();
-     totalCell.colSpan = columnsToDisplay.length;
-     totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Amournt'] + ' ("Grand Amournt") ';                                                                                                                                                                                                                                                     
+    //  // Add row for grand total
+    //  var totalRow = tbody.insertRow();
+    //  var totalCell = totalRow.insertCell();
+    //  totalCell.colSpan = columnsToDisplay.length;
+    //  totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Amournt'] + ' ("Grand Amournt") ';    
+    // Add row for grand total
+    var totalRow = tbody.insertRow();
+    for (let i = 0; i < columnsToDisplay.length; i++) {
+        totalRow.insertCell();
+    }
+    var totalCell = totalRow.insertCell();
+    totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Amournt'];                                                                                                                                                                                                                                                 
 }
 
 
