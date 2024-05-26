@@ -262,6 +262,25 @@ function openModal(item) {
     }
 }
 
+.container3 {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+.box-container {
+    display: flex;
+    justify-content: space-around;
+}
+.carate {
+    font-size: 16px;
+    color: #333;
+}
+.data {
+    font-size: 14px;
+    color: #666;
+}
+
   
         </style>
         <div class="header">

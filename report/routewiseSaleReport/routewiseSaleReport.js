@@ -380,6 +380,48 @@ function openModal(item) {
                 
             </tfoot>
         </table>
+        <div class="box-container">
+        गेलेले कॅरेट : 
+            <div class="carate">100:</div>
+            <div class="data" id="carate1100">Data 1</div>
+            
+            <div class="carate">150:</div>
+            <div class="data" id="carate1150">Data 2</div>
+            
+            <div class="carate">250:</div>
+            <div class="data" id="carate1250">Data 3</div>
+            
+            <div class="carate">350:</div>
+            <div class="data" id="carate1350">Data 4</div>
+        </div>
+        <div class="box-container">
+        जमा कॅरेट : 
+            <div class="carate">100:</div>
+            <div class="data" id="carate2100">Data 1</div>
+            
+            <div class="carate">150:</div>
+            <div class="data" id="carate2150">Data 2</div>
+            
+            <div class="carate">250:</div>
+            <div class="data" id="carate2250">Data 3</div>
+            
+            <div class="carate">350:</div>
+            <div class="data" id="carate2350">Data 4</div>
+        </div>
+        <div class="box-container">
+        बाकी कॅरेट : 
+            <div class="carate">100:</div>
+            <div class="data" id="carate3100">Data 1</div>
+            
+            <div class="carate">150:</div>
+            <div class="data" id="carate3150">Data 2</div>
+            
+            <div class="carate">250:</div>
+            <div class="data" id="carate3250">Data 3</div>
+            
+            <div class="carate">350:</div>
+            <div class="data" id="carate3350">Data 4</div>
+        </div>
         
         <!-- Thank you message -->
         <div class="details">
@@ -387,49 +429,7 @@ function openModal(item) {
             <p><a href="https://datacrushanalytics.com/" style="color: #B1B6BA; font-size: 14px;">www.DataCrushAnalytics.com (Contact No: 7040040015)</a></p>
         </div>
     </div>
-        
-    <div class="box-container">
-    गेलेले कॅरेट : 
-        <div class="carate">100:</div>
-        <div class="data" id="carate1100">Data 1</div>
-        
-        <div class="carate">150:</div>
-        <div class="data" id="carate1150">Data 2</div>
-        
-        <div class="carate">250:</div>
-        <div class="data" id="carate1250">Data 3</div>
-        
-        <div class="carate">350:</div>
-        <div class="data" id="carate1350">Data 4</div>
-    </div>
-    <div class="box-container">
-    जमा कॅरेट : 
-        <div class="carate">100:</div>
-        <div class="data" id="carate2100">Data 1</div>
-        
-        <div class="carate">150:</div>
-        <div class="data" id="carate2150">Data 2</div>
-        
-        <div class="carate">250:</div>
-        <div class="data" id="carate2250">Data 3</div>
-        
-        <div class="carate">350:</div>
-        <div class="data" id="carate2350">Data 4</div>
-    </div>
-    <div class="box-container">
-    बाकी कॅरेट : 
-        <div class="carate">100:</div>
-        <div class="data" id="carate3100">Data 1</div>
-        
-        <div class="carate">150:</div>
-        <div class="data" id="carate3150">Data 2</div>
-        
-        <div class="carate">250:</div>
-        <div class="data" id="carate3250">Data 3</div>
-        
-        <div class="carate">350:</div>
-        <div class="data" id="carate3350">Data 4</div>
-    </div>
+    
 
 
         <!-- Print button -->
