@@ -1,84 +1,3 @@
-// // Fetch data from API
-// document.addEventListener('DOMContentLoaded', function () {
-
-//     fetch('http://65.0.168.11/list/Customer')
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             // Populate dropdown with API data
-//             populateDropdown(data);
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-
-
-//     fetch('http://65.0.168.11/routeData')
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             // Populate dropdown with API data
-//             populateDropdown4(data);
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-// });
-
-
-// function populateDropdown(data) {
-//     var userNameDropdown = document.getElementById('customer');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.name; // Set the value
-//         option.textContent = item.name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Customer"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-// function populateDropdown4(data) {
-//     var userNameDropdown = document.getElementById('route');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.route_name; // Set the value
-//         option.textContent = item.route_name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Route type"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-
-
-
 function getElementValueWithDefault(id, defaultValue) {
     var element = document.getElementById(id);
     return element && element.value ? element.value : defaultValue;
@@ -93,48 +12,10 @@ function formatDate(dateString) {
 }
 
 
-
-// document.getElementById('loginForm1').addEventListener('submit', function(event) {
-//     event.preventDefault(); // Prevent form submission
-//     var data = {
-//         from_date : formatDate(document.getElementById("fromdate").value),
-//         to_date : formatDate(document.getElementById("todate").value),
-//         cust_name : getElementValueWithDefault('customer', '*') , 
-//         route : getElementValueWithDefault('route', '*') 
-//     };
-//     console.log(data);
-
-//     fetch('http://65.0.168.11/khatawani', {
-//         method: 'POST',
-//         body: JSON.stringify(data),
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     })
-//     .then(response => {
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok');
-//         }
-//         return response.json();
-//     })
-//     .then(result => {
-//         console.log(result)
-//         populateTable4(result)
-//         // Optionally, you can redirect or show a success message here
-//     })
-//     .catch(error => {
-//         console.error('Error:', error);
-//         // Optionally, you can display an error message here
-//     });
-// });
-
-
 document.getElementById('loginForm1').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
     fetchDataAndProcess();
 });
-
-
 
 
 function fetchDataAndProcess() {
@@ -154,7 +35,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    return fetch('http://65.0.168.11/khatawani', {
+    return fetch('http://localhost:3000/khatawani', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -190,7 +71,7 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['bill_no', 'date', 'cust_name','route','amount', 'carate_amount',"TotalKalam",'pre_balance','cash','online_amt', 'discount','inCarat', 'balance'];
+    var columnsToDisplay = ['bill_no', 'date', 'cust_name','route','amount', 'carate_amount',"TotalKalam",'pre_balance','cash','online_acc','online_amt', 'discount','inCarat', 'balance'];
     var counter = 1;
     console.log(data.reports)
     if (data.reports.length === 0) {
@@ -228,21 +109,26 @@ function populateTable4(data) {
 
 
 
-
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
 
-        const customHeaders = ['bill_no', 'date', 'cust_name','route','amount', 'carate_amount',"TotalKalam",'pre_balance','cash','online_amt', 'discount','inCarat', 'balance'];
+        // Function to format dates in IST without time
+        const formatDateToIST = (dateString) => {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' });
+        };
+
+        const customHeaders = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'carate_amount', "TotalKalam", 'pre_balance', 'cash', 'online_acc', 'online_amt', 'discount', 'inCarat', 'balance'];
 
         // Create a new worksheet with custom headers
         const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
 
-        // Append the data to the worksheet
+        // Append the data to the worksheet with formatted dates
         data.reports.forEach((report) => {
             const rowData = [
                 report.bill_no,
-                report.date,
+                formatDateToIST(report.date), // Format date to IST
                 report.cust_name,
                 report.route,
                 report.amount,
@@ -250,6 +136,7 @@ async function exportToExcel() {
                 report.TotalKalam,
                 report.pre_balance,
                 report.cash,
+                report.online_acc,
                 report.online_amt,
                 report.discount,
                 report.inCarat,
@@ -274,9 +161,60 @@ async function exportToExcel() {
         // Add the worksheet with grand totals
         XLSX.utils.book_append_sheet(workbook, grandTotalsWorksheet, 'Grand Totals');
 
-        /* generate XLSX file and prompt to download */
+        // Generate XLSX file and prompt to download
         XLSX.writeFile(workbook, 'Khatawani.xlsx');
+
+        // Export to PDF using jsPDF and autoTable
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Adding the headers and data
+        const reportData = data.reports.map(report => [
+            report.bill_no,
+            formatDateToIST(report.date), // Format date to IST
+            report.cust_name,
+            report.route,
+            report.amount,
+            report.carate_amount,
+            report.TotalKalam,
+            report.pre_balance,
+            report.cash,
+            report.online_acc,
+            report.online_amt,
+            report.discount,
+            report.inCarat,
+            report.balance
+        ]);
+
+        doc.autoTable({
+            head: [customHeaders],
+            body: reportData,
+            startY: 10,
+            theme: 'grid'
+        });
+
+        // Adding Grand Totals
+        const grandTotalsData = [
+            ["Grand Bill Amount", data.Grand['Grand Bill Amount']],
+            ["Grand outCarate", data.Grand['Grand outCarate']],
+            ["Total Bill Amount", data.Grand['Total Bill Amount']],
+            ["Total Cash", data.Grand['Cash']],
+            ["Online Amount", data.Grand['Online Amount']],
+            ["Grand Discount", data.Grand['Grand Discount']],
+            ["Grand inCarate", data.Grand['Grand inCarate']]
+        ];
+
+        doc.autoTable({
+            head: [['Description', 'Amount']],
+            body: grandTotalsData,
+            startY: doc.autoTable.previous.finalY + 10,
+            theme: 'grid'
+        });
+
+        // Save the PDF
+        doc.save('Khatawani.pdf');
+
     } catch (error) {
-        console.error('Error exporting to Excel:', error);
+        console.error('Error exporting data:', error);
     }
 }

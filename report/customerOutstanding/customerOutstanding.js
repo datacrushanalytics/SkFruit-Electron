@@ -1,88 +1,3 @@
-// // Fetch data from API
-// document.addEventListener('DOMContentLoaded', function () {
-
-//     fetch('http://65.0.168.11/list/Customer')
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             // Populate dropdown with API data
-//             populateDropdown(data);
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-
-
-//     fetch('http://65.0.168.11/routeData')
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             // Populate dropdown with API data
-//             populateDropdown4(data);
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-// });
-
-
-// function populateDropdown(data) {
-//     var userNameDropdown = document.getElementById('customer');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.name; // Set the value
-//         option.textContent = item.name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Customer type"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-// function populateDropdown4(data) {
-//     var userNameDropdown = document.getElementById('route');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.route_name; // Set the value
-//         option.textContent = item.route_name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Route type"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-
-
-
-
-
-
-
 
 function getElementValueWithDefault(id, defaultValue) {
     var element = document.getElementById(id);
@@ -96,40 +11,6 @@ function formatDate(dateString) {
     var day = ('0' + date.getDate()).slice(-2);
     return year + '-' + month + '-' + day;
 }
-
-
-
-// document.getElementById('loginForm1').addEventListener('submit', function(event) {
-//     event.preventDefault(); // Prevent form submission
-//     var data = {
-//         customer_name : getElementValueWithDefault('customer', '*') , 
-//         route : getElementValueWithDefault('route', '*') 
-//     };
-//     console.log(data);
-
-//     fetch('http://65.0.168.11/customerOutstandingReport', {
-//         method: 'POST',
-//         body: JSON.stringify(data),
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     })
-//     .then(response => {
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok');
-//         }
-//         return response.json();
-//     })
-//     .then(result => {
-//         console.log(result)
-//         populateTable4(result)
-//         // Optionally, you can redirect or show a success message here
-//     })
-//     .catch(error => {
-//         console.error('Error:', error);
-//         // Optionally, you can display an error message here
-//     });
-// });
 
 
 document.getElementById('loginForm1').addEventListener('submit', function(event) {
@@ -221,11 +102,47 @@ function populateTable4(data) {
 
 
 
+// async function exportToExcel() {
+//     try {
+//         const data = await fetchDataAndProcess();
+
+//         const customHeaders = ['id','name','address','route_detail','mobile_no',"Amount"];
+
+//         // Create a new worksheet with custom headers
+//         const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
+
+//         // Append the data to the worksheet
+//         data.reports.forEach((report) => {
+//             const rowData = [
+//                 report.id,
+//                 report.name,
+//                 report.address,
+//                 report.route_detail,
+//                 report.mobile_no,
+//                 report.Amount
+//             ];
+//             XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
+//         });
+
+//         // Create a new workbook
+//         const workbook = XLSX.utils.book_new();
+
+//         // Add the worksheet with data
+//         XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
+
+//         /* generate XLSX file and prompt to download */
+//         XLSX.writeFile(workbook, 'Customer_Outstanding.xlsx');
+//     } catch (error) {
+//         console.error('Error exporting to Excel:', error);
+//     }
+// }
+
+
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
 
-        const customHeaders = ['id','name','address','route_detail','mobile_no',"Amount"];
+        const customHeaders = ['id', 'name', 'address', 'route_detail', 'mobile_no', 'Amount'];
 
         // Create a new worksheet with custom headers
         const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
@@ -249,10 +166,47 @@ async function exportToExcel() {
         // Add the worksheet with data
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
 
-        /* generate XLSX file and prompt to download */
+        // Generate XLSX file and prompt to download
         XLSX.writeFile(workbook, 'Customer_Outstanding.xlsx');
+
+        // Export to PDF using jsPDF and autoTable
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Map data for autoTable
+        const reportData = data.reports.map(report => [
+            report.id,
+            report.name,
+            report.address,
+            report.route_detail,
+            report.mobile_no,
+            report.Amount
+        ]);
+
+        // Add table to PDF
+        doc.autoTable({
+            head: [customHeaders],
+            body: reportData,
+            startY: 10,
+            theme: 'grid'
+        });
+
+        // Adding Grand Totals
+        const grandTotalsData = [
+            ["Grand Amount", data.Grand['Grand Amournt']]
+        ];
+
+        doc.autoTable({
+            head: [['Description', 'Amount']],
+            body: grandTotalsData,
+            startY: doc.autoTable.previous.finalY + 10,
+            theme: 'grid'
+        });
+
+        // Save the PDF
+        doc.save('Customer_Outstanding.pdf');
+
     } catch (error) {
-        console.error('Error exporting to Excel:', error);
+        console.error('Error exporting data:', error);
     }
 }
-
