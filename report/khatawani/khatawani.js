@@ -78,7 +78,6 @@
 
 
 
-
 function getElementValueWithDefault(id, defaultValue) {
     var element = document.getElementById(id);
     return element && element.value ? element.value : defaultValue;
@@ -92,64 +91,21 @@ function formatDate(dateString) {
     return year + '-' + month + '-' + day;
 }
 
-
-
-// document.getElementById('loginForm1').addEventListener('submit', function(event) {
-//     event.preventDefault(); // Prevent form submission
-//     var data = {
-//         from_date : formatDate(document.getElementById("fromdate").value),
-//         to_date : formatDate(document.getElementById("todate").value),
-//         cust_name : getElementValueWithDefault('customer', '*') , 
-//         route : getElementValueWithDefault('route', '*') 
-//     };
-//     console.log(data);
-
-//     fetch('http://65.0.168.11/khatawani', {
-//         method: 'POST',
-//         body: JSON.stringify(data),
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     })
-//     .then(response => {
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok');
-//         }
-//         return response.json();
-//     })
-//     .then(result => {
-//         console.log(result)
-//         populateTable4(result)
-//         // Optionally, you can redirect or show a success message here
-//     })
-//     .catch(error => {
-//         console.error('Error:', error);
-//         // Optionally, you can display an error message here
-//     });
-// });
-
-
 document.getElementById('loginForm1').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
     fetchDataAndProcess();
 });
 
-
-
-
 function fetchDataAndProcess() {
-
     var selectedValues = $('#route').val();
-    // if (selectedValues = []){ selectedValues ="*"; }
-    // console.log('Selected values:', selectedValues);
     if (selectedValues.length === 0) {
-        selectedValues ="*";
+        selectedValues = "*";
     }
     var data = {
-        from_date : formatDate(document.getElementById("fromdate").value),
-        to_date : formatDate(document.getElementById("todate").value),
-        cust_name : getElementValueWithDefault('customer', '*') , 
-        route : selectedValues || '*',
+        from_date: formatDate(document.getElementById("fromdate").value),
+        to_date: formatDate(document.getElementById("todate").value),
+        cust_name: getElementValueWithDefault('customer', '*'),
+        route: selectedValues || '*',
     };
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
@@ -163,8 +119,7 @@ function fetchDataAndProcess() {
     })
     .then(response => {
         if (response.status === 404) {
-
-        loader.style.display = 'none';
+            loader.style.display = 'none';
             alert("No data found.");
             throw new Error('Data not found');
         }
@@ -175,24 +130,24 @@ function fetchDataAndProcess() {
     })
     .then(result => {
         loader.style.display = 'none';
-        console.log(result)
-        populateTable4(result)
+        console.log(result);
+        populateTable4(result);
         return result;
-        // Optionally, you can redirect or show a success message here
     })
     .catch(error => {
         console.error('Error:', error);
-        // Optionally, you can display an error message here
     });
 }
-
 
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['bill_no', 'date', 'cust_name','route','amount', 'carate_amount',"TotalKalam",'pre_balance','cash','online_amt', 'discount','inCarat', 'balance'];
+    var columnsToDisplay = [
+        'bill_no', 'date', 'cust_name', 'route', 'amount', 'carate_amount',
+        'TotalKalam', 'pre_balance', 'cash', 'online_amt', 'discount', 'inCarat', 'balance'
+    ];
     var counter = 1;
-    console.log(data.reports)
+    console.log(data.reports);
     if (data.reports.length === 0) {
         alert("No Data Found");
     }
@@ -202,38 +157,63 @@ function populateTable4(data) {
         cell.textContent = counter++;
         columnsToDisplay.forEach(function(key) {
             var cell = row.insertCell();
-            if(key=='date'){
-                console.log(item[key])
+            if (key == 'date') {
+                console.log(item[key]);
                 var utcDate = new Date(item[key]);
-                var options = { 
-                    year: 'numeric', 
-                    month: '2-digit', 
-                    day: '2-digit', 
-                    timeZone: 'Asia/Kolkata' 
+                var options = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    timeZone: 'Asia/Kolkata'
                 };
                 cell.textContent = utcDate.toLocaleString('en-IN', options);
-            
-            }else{
-            cell.textContent = item[key];
+            } else {
+                cell.textContent = item[key];
             }
         });
     });
 
-     // Add row for grand total
-     var totalRow = tbody.insertRow();
-     var totalCell = totalRow.insertCell();
-     totalCell.colSpan = columnsToDisplay.length;
-     totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Bill Amount'] + ' (Grand Bill Amount), ' + data.Grand['Grand outCarate'] + ' (Grand outCarate)' + data.Grand['Total Bill Amount'] + ' (Total Bill Amount), ' + data.Grand['Cash'] + ' (Total Cash), '  + data.Grand['Online Amount'] + ' (Online Amount)' + data.Grand['Grand Discount'] + ' (Grand Discount), ' + data.Grand['Grand inCarate'] + ' (Grand inCarate)';
+    // Add row for grand total
+    var totalRow = tbody.insertRow();
+    totalRow.insertCell(); // Add empty cell at the beginning for shifting
+    columnsToDisplay.forEach(function(key) {
+        var totalCell = totalRow.insertCell();
+        switch (key) {
+            case 'amount':
+                totalCell.textContent = data.Grand['Grand Bill Amount'];
+                break;
+            case 'carate_amount':
+                totalCell.textContent = data.Grand['Grand outCarate'];
+                break;
+            case 'TotalKalam':
+                totalCell.textContent = data.Grand['Total Bill Amount'];
+                break;
+            case 'cash':
+                totalCell.textContent = data.Grand['Cash'];
+                break;
+            case 'online_amt':
+                totalCell.textContent = data.Grand['Online Amount'];
+                break;
+            case 'discount':
+                totalCell.textContent = data.Grand['Grand Discount'];
+                break;
+            case 'inCarat':
+                totalCell.textContent = data.Grand['Grand inCarate'];
+                break;
+            default:
+                totalCell.textContent = '';
+        }
+    });
 }
-
-
-
 
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
 
-        const customHeaders = ['bill_no', 'date', 'cust_name','route','amount', 'carate_amount',"TotalKalam",'pre_balance','cash','online_amt', 'discount','inCarat', 'balance'];
+        const customHeaders = [
+            'bill_no', 'date', 'cust_name', 'route', 'amount', 'carate_amount',
+            'TotalKalam', 'pre_balance', 'cash', 'online_amt', 'discount', 'inCarat', 'balance'
+        ];
 
         // Create a new worksheet with custom headers
         const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
@@ -260,8 +240,12 @@ async function exportToExcel() {
 
         // Add Grand Totals to a new sheet
         const grandTotals = [
-            ["Grand Bill Amount", "Grand outCarate", "Total Bill Amount", "Total Cash", "Online Amount", "Grand Discount", "Grand inCarate"],
-            [data.Grand['Grand Bill Amount'], data.Grand['Grand outCarate'], data.Grand['Total Bill Amount'], data.Grand['Cash'], data.Grand['Online Amount'], data.Grand['Grand Discount'], data.Grand['Grand inCarate']]
+            ["", "Grand Bill Amount", "Grand outCarate", "Total Bill Amount", "Total Cash", "Online Amount", "Grand Discount", "Grand inCarate"],
+            [
+                '',
+                data.Grand['Grand Bill Amount'], data.Grand['Grand outCarate'], data.Grand['Total Bill Amount'],
+                data.Grand['Cash'], data.Grand['Online Amount'], data.Grand['Grand Discount'], data.Grand['Grand inCarate']
+            ]
         ];
         const grandTotalsWorksheet = XLSX.utils.aoa_to_sheet(grandTotals);
 
