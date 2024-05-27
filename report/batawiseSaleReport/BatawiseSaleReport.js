@@ -370,7 +370,59 @@ function openModal(item) {
     // Add item data to modal content
     var itemData = document.createElement('div');
     itemData.innerHTML = `
-        <style>        
+        <style>   
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        
+        .box-container {
+            background-color: #fff;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 31px;
+            position: relative;
+            top: 17px;
+            right: -47px;
+
+        }
+        
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .carate-box {
+            background-color: #e9e9e9;
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            flex: 1 1 calc(25% - 20px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box; /* Ensures padding and border are included in the width calculation */
+        }
+        
+        .carate {
+            font-weight: bold;
+        }
+        
+        .data {
+            margin-left: 10px;
+            color: #333;
+        }
+             
         .header {
             background-color: #f9f9f9;
             padding: 20px;
@@ -450,6 +502,7 @@ function openModal(item) {
 .box-container {
     display: flex;
     justify-content: space-around;
+    margin: 16px
 }
 .carate {
     font-size: 16px;
@@ -496,49 +549,72 @@ function openModal(item) {
                 
             </tfoot>
         </table>
-    <div class="box-container">
-    गेलेले कॅरेट : 
-        <div class="carate">100:</div>
-        <div class="data" id="carate1100">Data 1</div>
-        
-        <div class="carate">150:</div>
-        <div class="data" id="carate1150">Data 2</div>
-        
-        <div class="carate">250:</div>
-        <div class="data" id="carate1250">Data 3</div>
-        
-        <div class="carate">350:</div>
-        <div class="data" id="carate1350">Data 4</div>
+        <div class="box-container">
+        <div class="label">गेलेले कॅरेट :</div>
+        <div class="row">
+            <div class="carate-box">
+                <div class="carate">100:</div>
+                <div class="data" id="carate1100">Data 1</div>
+            </div>
+            <div class="carate-box">
+                <div class="carate">150:</div>
+                <div class="data" id="carate1150">Data 2</div>
+            </div>
+            <div class="carate-box">
+                <div class="carate">250:</div>
+                <div class="data" id="carate1250">Data 3</div>
+            </div>
+            <div class="carate-box">
+                <div class="carate">350:</div>
+                <div class="data" id="carate1350">Data 4</div>
+            </div>
+        </div>
     </div>
+
     <div class="box-container">
-    जमा कॅरेट : 
-        <div class="carate">100:</div>
-        <div class="data" id="carate2100">Data 1</div>
-        
-        <div class="carate">150:</div>
-        <div class="data" id="carate2150">Data 2</div>
-        
-        <div class="carate">250:</div>
-        <div class="data" id="carate2250">Data 3</div>
-        
-        <div class="carate">350:</div>
-        <div class="data" id="carate2350">Data 4</div>
+        <div class="label">जमा कॅरेट :</div>
+        <div class="row">
+            <div class="carate-box">
+                <div class="carate">100:</div>
+                <div class="data" id="carate2100">Data 1</div>
+            </div>
+            <div class="carate-box">
+                <div class="carate">150:</div>
+                <div class="data" id="carate2150">Data 2</div>
+            </div>
+            <div class="carate-box">
+                <div class="carate">250:</div>
+                <div class="data" id="carate2250">Data 3</div>
+            </div>
+            <div class="carate-box">
+                <div class="carate">350:</div>
+                <div class="data" id="carate2350">Data 4</div>
+            </div>
+        </div>
     </div>
+
     <div class="box-container">
-    बाकी कॅरेट : 
-        <div class="carate">100:</div>
-        <div class="data" id="carate3100">Data 1</div>
-        
-        <div class="carate">150:</div>
-        <div class="data" id="carate3150">Data 2</div>
-        
-        <div class="carate">250:</div>
-        <div class="data" id="carate3250">Data 3</div>
-        
-        <div class="carate">350:</div>
-        <div class="data" id="carate3350">Data 4</div>
-    </div>
-        <!-- Thank you message -->
+        <div class="label">बाकी कॅरेट :</div>
+        <div class="row">
+            <div class="carate-box">
+                <div class="carate">100:</div>
+                <div class="data" id="carate3100">Data 1</div>
+            </div>
+            <div class="carate-box">
+                <div class="carate">150:</div>
+                <div class="data" id="carate3150">Data 2</div>
+            </div>
+            <div class="carate-box">
+                <div class="carate">250:</div>
+                <div class="data" id="carate3250">Data 3</div>
+            </div>
+            <div class="carate-box">
+                <div class="carate">350:</div>
+                <div class="data" id="carate3350">Data 4</div>
+            </div>
+        </div>
+    </div>  
+       <!-- Thank you message -->
         <div class="details">
             <h4>Thank you, visit again!</h4>
             <p><a href="https://datacrushanalytics.com/" style="color: #B1B6BA; font-size: 14px;">www.DataCrushAnalytics.com (Contact No: 7040040015)</a></p>
