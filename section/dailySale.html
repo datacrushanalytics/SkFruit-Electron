@@ -199,7 +199,12 @@ th {
         <p id="currentTime">OutCarate 150 : <h2 id="carate150"></h2></p>
         <p id="currentTime">OutCarate 250 : <h2 id="carate250"></h2></p>
         <p id="currentTime">OutCarate 350 : <h2 id="carate350"></h2></p>
-        
+    </div>
+    <div class="datetime" id="datetime">
+        <p id="currentTime">InCarate 100 : <h2 id="carate1100"></h2></p>
+        <p id="currentTime">InCarate 150 : <h2 id="carate1150"></h2></p>
+        <p id="currentTime">InCarate 250 : <h2 id="carate2150"></h2></p>
+        <p id="currentTime">InCarate 350 : <h2 id="carate3150"></h2></p>
     </div>
     <h1>Receipt Details : </h1>
     <div class="datetime" id="datetime">
@@ -208,12 +213,30 @@ th {
         <p id="currentTime">Discount Amount : <h2 id="receiptDiscount"></h2></p>
         <p id="currentTime">In Carate Received : <h2 id="receiptIncarate"></h2></p>
     </div>
+    <div class="datetime" id="datetime">
+        <p id="currentTime">InCarate 100 : <h2 id="carate1200"></h2></p>
+        <p id="currentTime">InCarate 150 : <h2 id="carate1250"></h2></p>
+        <p id="currentTime">InCarate 250 : <h2 id="carate2250"></h2></p>
+        <p id="currentTime">InCarate 350 : <h2 id="carate3250"></h2></p>
+    </div>
     <h1>Total Details : </h1>
     <div class="datetime" id="datetime">
         <p id="currentTime">Cash Received : <h2 id="totalCash"></h2></p>
         <p id="currentTime">Online Received : <h2 id="totalOnline"></h2></p>
         <p id="currentTime">Discount Amount : <h2 id="totalDiscount"></h2></p>
         <p id="currentTime">In Carate Received : <h2 id="totalIncarate"></h2></p>
+    </div>
+    <div class="datetime" id="datetime">
+        <p id="currentTime">OutCarate 100 : <h2 id="carate1300"></h2></p>
+        <p id="currentTime">OutCarate 150 : <h2 id="carate1350"></h2></p>
+        <p id="currentTime">OutCarate 250 : <h2 id="carate2350"></h2></p>
+        <p id="currentTime">OutCarate 350 : <h2 id="carate3350"></h2></p>
+    </div>
+    <div class="datetime" id="datetime">
+        <p id="currentTime">InCarate 100 : <h2 id="carate1400"></h2></p>
+        <p id="currentTime">InCarate 150 : <h2 id="carate1450"></h2></p>
+        <p id="currentTime">InCarate 250 : <h2 id="carate2450"></h2></p>
+        <p id="currentTime">InCarate 350 : <h2 id="carate3450"></h2></p>
     </div>
 
         </div>
@@ -274,7 +297,7 @@ th {
                     }
         
                     const data = await response.json();
-        loader.style.display = 'none';
+                    loader.style.display = 'none';
                     console.log(data);
                     console.log("data fetched");
                     return data;
@@ -289,14 +312,30 @@ th {
                 document.getElementById('carate150').textContent = data.SaleDetails["carate150"] || 0
                 document.getElementById('carate250').textContent = data.SaleDetails["carate250"] || 0
                 document.getElementById('carate350').textContent = data.SaleDetails["carate350"] || 0
+                document.getElementById('carate1300').textContent = data.SaleDetails["carate100"] || 0
+                document.getElementById('carate1350').textContent = data.SaleDetails["carate150"] || 0
+                document.getElementById('carate2350').textContent = data.SaleDetails["carate250"] || 0
+                document.getElementById('carate3350').textContent = data.SaleDetails["carate350"] || 0
+                document.getElementById('carate1100').textContent = data.SaleDetails["carate1100"] || 0
+                document.getElementById('carate1150').textContent = data.SaleDetails["carate1150"] || 0
+                document.getElementById('carate2150').textContent = data.SaleDetails["carate2150"] || 0
+                document.getElementById('carate3150').textContent = data.SaleDetails["carate3150"] || 0
                 document.getElementById('receiptCash').textContent = data.ReceiptDetails["Cash"] || 0
                 document.getElementById('receiptOnline').textContent = data.ReceiptDetails["online"] || 0
                 document.getElementById('receiptDiscount').textContent = data.ReceiptDetails["discount"] || 0
                 document.getElementById('receiptIncarate').textContent = data.ReceiptDetails["incarat"] || 0
+                document.getElementById('carate1200').textContent = data.ReceiptDetails["carate1200"] || 0
+                document.getElementById('carate1250').textContent = data.ReceiptDetails["carate1250"] || 0
+                document.getElementById('carate2250').textContent = data.ReceiptDetails["carate2250"] || 0
+                document.getElementById('carate3250').textContent = data.ReceiptDetails["carate3250"] || 0
                 document.getElementById('totalCash').textContent = data.TotalDetails["Cash"] || 0
                 document.getElementById('totalOnline').textContent = data.TotalDetails["online"] || 0
                 document.getElementById('totalDiscount').textContent = data.TotalDetails["discount"] || 0
                 document.getElementById('totalIncarate').textContent = data.TotalDetails["incarat"] || 0
+                document.getElementById('carate1400').textContent = data.ReceiptDetails["carate1200"] || 0 + data.SaleDetails["carate1100"] || 0
+                document.getElementById('carate1450').textContent = data.ReceiptDetails["carate1250"] || 0 + data.SaleDetails["carate1150"] || 0
+                document.getElementById('carate2450').textContent = data.ReceiptDetails["carate2250"] || 0 + data.SaleDetails["carate2150"] || 0
+                document.getElementById('carate3450').textContent = data.ReceiptDetails["carate3250"] || 0 + data.SaleDetails["carate3150"] || 0
                 populateTable(data);
         
             } catch (error) {
