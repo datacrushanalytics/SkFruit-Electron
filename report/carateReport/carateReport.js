@@ -1,49 +1,3 @@
-// // Fetch data from API
-// document.addEventListener('DOMContentLoaded', function () {
-
-//     fetch('http://65.0.168.11/list/Customer')
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             // Populate dropdown with API data
-//             populateDropdown(data);
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-
-// });
-
-
-// function populateDropdown(data) {
-//     var userNameDropdown = document.getElementById('customer');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.name; // Set the value
-//         option.textContent = item.name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Customer type"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-
-
-
-
 function getElementValueWithDefault(id, defaultValue) {
     var element = document.getElementById(id);
     return element && element.value ? element.value : defaultValue;
@@ -146,13 +100,50 @@ async function exportToExcel() {
         // Add the worksheet with grand totals
         XLSX.utils.book_append_sheet(workbook, grandTotalsWorksheet, 'Grand Totals');
 
-        /* generate XLSX file and prompt to download */
+        // Generate XLSX file and prompt to download
         XLSX.writeFile(workbook, 'Carate_Report.xlsx');
+
+        // Export to PDF using jsPDF and autoTable
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Map data for autoTable
+        const reportData = data.reports.map(report => [
+            report.carate_date,
+            report.customer_name,
+            report.summary,
+            report.inCarate,
+            report.in_carate_total,
+            report.OutCarate,
+            report.out_carate_total
+        ]);
+
+        // Add table to PDF
+        doc.autoTable({
+            head: [customHeaders],
+            body: reportData,
+            startY: 10,
+            theme: 'grid'
+        });
+
+        // Adding Grand Totals to PDF
+        doc.autoTable({
+            head: [['Description', 'Amount']],
+            body: [
+                ["Grand in_carate_total", data.Grand["Grand in_carate_total"]],
+                ["Grand out_carate_total", data.Grand["Grand out_carate_total"]]
+            ],
+            startY: doc.autoTable.previous.finalY + 10,
+            theme: 'grid'
+        });
+
+        // Save the PDF
+        doc.save('Carate_Report.pdf');
+
     } catch (error) {
-        console.error('Error exporting to Excel:', error);
+        console.error('Error exporting data:', error);
     }
 }
-
 
 
 

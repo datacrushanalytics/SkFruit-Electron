@@ -175,19 +175,6 @@ h3 img {
 </head>
 
 
-  <!-- <div class="hero-section">
-    <div id="main-container">
-      <iframe id="pageContent" src="./Menu.html" frameborder="0"></iframe>
-    </div>
-    <div id="sidebar-container">
-      <h3 onclick="openPage('home')">
-          <img src="../../assets/img/logo.png" alt="Company Logo">
-        SK Fruit
-      </h3>
-    </div>
-  </div> -->
-
-  <!-- ... -->
 
 <body>
   <div id="loader"></div>
@@ -241,17 +228,7 @@ h3 img {
         .then(data => {
           loader.style.display = 'none';
           var sidebarContainer = document.getElementById('sidebar-container');
-          // data.forEach(menu => {
-            //if (isAdmin || menu.status === 'active') {
-              //var button = document.createElement('button');
-              // button.classList.add('component');
-              // button.textContent = menu.name;
-              // button.onclick = function() {
-              //   openPage(menu.name);
-            // };
 
-            //sidebarContainer.appendChild(button);
-          //}
 
           data.forEach(menu => {
             if (isAdmin || menu.status === 'active') {

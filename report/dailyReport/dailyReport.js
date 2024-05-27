@@ -1,44 +1,3 @@
-// // Fetch data from API
-// document.addEventListener('DOMContentLoaded', function () {
-
-//     fetch('http://65.0.168.11/vehicleData')
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             // Populate dropdown with API data
-//             populateDropdown(data);
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-// });
-
-
-// function populateDropdown(data) {
-//     var userNameDropdown = document.getElementById('vehicleNumber');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.vehicle_no; // Set the value
-//         option.textContent = item.vehicle_no; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Vehicle"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
 
 function getElementValueWithDefault(id, defaultValue) {
     var element = document.getElementById(id);
@@ -55,41 +14,6 @@ function formatDate(dateString) {
 
 
 
-// document.getElementById('loginForm1').addEventListener('submit', function(event) {
-//     event.preventDefault(); // Prevent form submission
-//     var data = {
-//         from_date : formatDate(document.getElementById("fromdate").value),
-//         to_date : formatDate(document.getElementById("todate").value),
-//         vehicle_no : getElementValueWithDefault('vehicleNumber', '*') 
-//     };
-//     console.log(data);
-
-//     fetch('http://65.0.168.11/dailyReport', {
-//         method: 'POST',
-//         body: JSON.stringify(data),
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     })
-//     .then(response => {
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok');
-//         }
-//         return response.json();
-//     })
-//     .then(result => {
-//         console.log(result)
-//         populateTable4(result)
-//         populateTable5(result)
-//         // Optionally, you can redirect or show a success message here
-//     })
-//     .catch(error => {
-//         console.error('Error:', error);
-//         // Optionally, you can display an error message here
-//     });
-// });
-
-
 document.getElementById('loginForm1').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
     fetchDataAndProcess();
@@ -100,7 +24,6 @@ function fetchDataAndProcess() {
     var data = {
         from_date : formatDate(document.getElementById("fromdate").value),
         to_date : formatDate(document.getElementById("todate").value),
-        vehicle_no : getElementValueWithDefault('vehicleNumber', '*') 
     };
 
     var loader = document.getElementById('loader');
@@ -145,7 +68,7 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['bill_no', 'date', 'cust_name','vehicle_no','route','driver_name', 'amount','cash','online_amt','discount','inCarat','carate_amount'];
+    var columnsToDisplay = ['bill_no', 'date', 'cust_name','route', 'amount','cash','online_amt','discount','inCarat','carate_amount'];
     var counter = 1;
     console.log(data.reports)
     if (data.reports.length === 0) {
@@ -179,7 +102,7 @@ function populateTable4(data) {
 function populateTable5(data) {
     var tbody = document.getElementById('tableBody1');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['receipt_id', 'date', 'Customer','to_account','note', 'cash','online','discount',"inCarat","Amt"];
+    var columnsToDisplay = ['receipt_id', 'date', 'Customer','mobile_no','note', 'cash','online','discount',"inCarat","Amt"];
     var counter = 1;
     console.log(data.Receipt)
     if (data.Receipt.length === 0) {
@@ -211,11 +134,12 @@ function populateTable5(data) {
 
 
 
+
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
 
-        const customHeaders = ['bill_no', 'date', 'cust_name','vehicle_no','route','driver_name', 'amount','cash','online_amt','discount','inCarat','carate_amount'];
+        const customHeaders = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'cash', 'online_amt', 'discount', 'inCarat', 'carate_amount'];
 
         // Create a new worksheet with custom headers
         const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
@@ -226,9 +150,7 @@ async function exportToExcel() {
                 report.bill_no,
                 report.date,
                 report.cust_name,
-                report.vehicle_no,
                 report.route,
-                report.driver_name,
                 report.amount,
                 report.cash,
                 report.online_amt,
@@ -239,8 +161,7 @@ async function exportToExcel() {
             XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
         });
 
-
-        const customHeaders1 = ['receipt_id', 'date', 'Customer','to_account','note', 'cash','online','discount',"inCarat","Amt"];
+        const customHeaders1 = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'cash', 'online', 'discount', 'inCarat', 'Amt'];
 
         // Create a new worksheet with custom headers
         const worksheet1 = XLSX.utils.aoa_to_sheet([customHeaders1]);
@@ -251,7 +172,7 @@ async function exportToExcel() {
                 Receipt.receipt_id,
                 Receipt.date,
                 Receipt.Customer,
-                Receipt.to_account,
+                Receipt.mobile_no,
                 Receipt.note,
                 Receipt.cash,
                 Receipt.online,
@@ -262,21 +183,75 @@ async function exportToExcel() {
             XLSX.utils.sheet_add_aoa(worksheet1, [rowData], { origin: -1 });
         });
 
-
         // Create a new workbook
         const workbook = XLSX.utils.book_new();
 
-        // Add the worksheet with data
+        // Add the worksheets with data
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
         XLSX.utils.book_append_sheet(workbook, worksheet1, 'Receipts');
 
-        /* generate XLSX file and prompt to download */
+        // Generate XLSX file and prompt to download
         XLSX.writeFile(workbook, 'Daily_Report.xlsx');
+
+        // Export to PDF using jsPDF and autoTable
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Map data for autoTable (Reports)
+        const reportData = data.reports.map(report => [
+            report.bill_no,
+            report.date,
+            report.cust_name,
+            report.route,
+            report.amount,
+            report.cash,
+            report.online_amt,
+            report.discount,
+            report.inCarat,
+            report.carate_amount
+        ]);
+
+        // Add Reports table to PDF
+        doc.autoTable({
+            head: [customHeaders],
+            body: reportData,
+            startY: 10,
+            theme: 'grid',
+            headStyles: { fillColor: [255, 0, 0] },
+            margin: { top: 10 }
+        });
+
+        // Map data for autoTable (Receipts)
+        const receiptData = data.Receipt.map(receipt => [
+            receipt.receipt_id,
+            receipt.date,
+            receipt.Customer,
+            receipt.mobile_no,
+            receipt.note,
+            receipt.cash,
+            receipt.online,
+            receipt.discount,
+            receipt.inCarat,
+            receipt.Amt
+        ]);
+
+        // Add Receipts table to PDF
+        doc.autoTable({
+            head: [customHeaders1],
+            body: receiptData,
+            startY: doc.autoTable.previous.finalY + 10,
+            theme: 'grid',
+            headStyles: { fillColor: [0, 255, 0] },
+            margin: { top: 10 }
+        });
+
+        // Save the PDF
+        doc.save('Daily_Report.pdf');
+
     } catch (error) {
-        console.error('Error exporting to Excel:', error);
+        console.error('Error exporting data:', error);
     }
 }
-
 
 
 

@@ -6,16 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <title>User Form in Electron</title>
     <style>
         /* Add border to the second form */
-        /* .form1 {
-            border: 1px solid black;
-            padding: 10px;
-            margin-top: 20px;
-        } */
         body {
             font-family: Arial, sans-serif;
             background-color: rgba(242, 242, 242, 0.8);
@@ -176,8 +173,6 @@
                     <input type="date" id="todate" name="date" placeholder="To Date" required>
                 </div><br>
 
-                <label for="userType">Vehicle Number</label>
-                <select class="drop" id="vehicleNumber" name="name"></select><br>
               
             <br>
 
@@ -195,9 +190,7 @@
                     <th>BILL NO</th>
                     <th>DATE</th>
                     <th>Customer Name</th>
-                    <th>Gadi Number</th>
                     <th>Route</th>
-                    <th>Driver Name</th>
                     <th>Amount</th>
                     <th>Cash</th>
                     <th>Online Amount</th>
@@ -221,7 +214,7 @@
                     <th>Receipt ID</th>
                     <th>DATE</th>
                     <th>Customer Name</th>
-                    <th>To Account</th>
+                    <th>Mobile No</th>
                     <th>Note</th>
                     <th>Cash</th>
                     <th>Online Amount</th>

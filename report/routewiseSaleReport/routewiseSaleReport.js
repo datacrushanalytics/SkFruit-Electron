@@ -479,7 +479,7 @@ async function exportToExcel() {
         data.reports.forEach((report) => {
             const rowData = [
                 report.bill_no,
-                report.date,
+                new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
                 report.cust_name,
                 report.route,
                 report.amount,
@@ -499,7 +499,7 @@ async function exportToExcel() {
         // Add Grand Totals to a new sheet
         const grandTotals = [
             ["Grand Bill Amount", "Grand outCarate", "Total Bill Amount", "Online Amount", "Grand Discount", "Grand inCarate", "Grand Paid Amount", "Grand Balance"],
-            [data.Grand['Grand Bill Amount'], data.Grand['Grand outCarate'], data.Grand['Total Bill Amount'], data.Grand['Online Amount'], data.Grand['Grand Discount'], data.Grand['Grand inCarate'], data.Grand['Grand Paid Amount'] ,data.Grand['Grand Balance']]
+            [data.Grand['Grand Bill Amount'], data.Grand['Grand outCarate'], data.Grand['Total Bill Amount'], data.Grand['Online Amount'], data.Grand['Grand Discount'], data.Grand['Grand inCarate'], data.Grand['Grand Paid Amount'], data.Grand['Grand Balance']]
         ];
         const grandTotalsWorksheet = XLSX.utils.aoa_to_sheet(grandTotals);
 
@@ -512,14 +512,63 @@ async function exportToExcel() {
         // Add the worksheet with grand totals
         XLSX.utils.book_append_sheet(workbook, grandTotalsWorksheet, 'Grand Totals');
 
-        /* generate XLSX file and prompt to download */
+        // Generate XLSX file and prompt to download
         XLSX.writeFile(workbook, 'Routewise_Sale_Report.xlsx');
+
+        // Export to PDF using jsPDF and autoTable
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Map data for autoTable
+        const reportData = data.reports.map(report => [
+            report.bill_no,
+            new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
+            report.cust_name,
+            report.route,
+            report.amount,
+            report.carate_amount,
+            report.total_amount,
+            report.pre_balance,
+            report.online_amt,
+            report.discount,
+            report.inCarat,
+            report.PaidAmount,
+            report.balance,
+            report.comment
+        ]);
+
+        // Add Reports table to PDF
+        doc.autoTable({
+            head: [customHeaders],
+            body: reportData,
+            startY: 10,
+            theme: 'grid'
+        });
+
+        // Adding Grand Totals to PDF
+        doc.autoTable({
+            head: [["Description", "Amount"]],
+            body: [
+                ["Grand Bill Amount", data.Grand['Grand Bill Amount']],
+                ["Grand outCarate", data.Grand['Grand outCarate']],
+                ["Total Bill Amount", data.Grand['Total Bill Amount']],
+                ["Online Amount", data.Grand['Online Amount']],
+                ["Grand Discount", data.Grand['Grand Discount']],
+                ["Grand inCarate", data.Grand['Grand inCarate']],
+                ["Grand Paid Amount", data.Grand['Grand Paid Amount']],
+                ["Grand Balance", data.Grand['Grand Balance']]
+            ],
+            startY: doc.autoTable.previous.finalY + 10,
+            theme: 'grid'
+        });
+
+        // Save the PDF
+        doc.save('Routewise_Sale_Report.pdf');
+
     } catch (error) {
-        console.error('Error exporting to Excel:', error);
+        console.error('Error exporting data:', error);
     }
 }
-
-
 
 
 

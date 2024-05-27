@@ -93,13 +93,44 @@ async function exportToExcel() {
         // Add the worksheet with data
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
 
-        /* generate XLSX file and prompt to download */
+        // Generate XLSX file and prompt to download
         XLSX.writeFile(workbook, 'Bata_Sale_Report.xlsx');
+
+        // Export to PDF using jsPDF and autoTable
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Map data for autoTable
+        const reportData = data.reports.map(report => [
+            report.bill_id,
+            report.date,
+            report.cust_name,
+            report.address,
+            report.mobile_no,
+            report.Sandharbh,
+            report.product,
+            report.bata,
+            report.mark,
+            report.quantity,
+            report.rate,
+            report.price
+        ]);
+
+        // Add table to PDF
+        doc.autoTable({
+            head: [customHeaders],
+            body: reportData,
+            startY: 10,
+            theme: 'grid'
+        });
+
+        // Save the PDF
+        doc.save('Bata_Sale_Report.pdf');
+
     } catch (error) {
-        console.error('Error exporting to Excel:', error);
+        console.error('Error exporting data:', error);
     }
 }
-
 
 
 
@@ -550,7 +581,5 @@ function openModal(item) {
 function closePopup() {
     document.querySelector('.popup').style.display = 'none';
 }
-
-
 
 

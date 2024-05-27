@@ -50,127 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
         });
 
-    // fetch('http://65.0.168.11/list/Customer')
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         // Populate dropdown with API data
-    //         populateDropdown(data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
-
-    // fetch('http://65.0.168.11/purchaseproductData/')
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         // Populate dropdown with API data
-    //         populateDropdown1(data);
-    //         populateDropdown2(data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
-
-
-
-    // fetch('http://65.0.168.11/saleproductData/' +)
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         // Populate dropdown with API data
-    //         populateDropdown3(data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
-
-    // fetch('http://65.0.168.11/routeData')
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         // Populate dropdown with API data
-    //         populateDropdown4(data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
-
-    // fetch('http://65.0.168.11/list/Bank Account')
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         // Populate dropdown with API data
-    //         populateDropdown5(data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
 });
 
-
-// function populateDropdown(data) {
-//     var userNameDropdown = document.getElementById('grahk');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.name; // Set the value
-//         option.textContent = item.name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "ग्राहकाचे नाव"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-// function populateDropdown1(data) {
-//     var userNameDropdown = document.getElementById('bta');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.bata; // Set the value
-//         option.textContent = item.bata; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Bata"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
 
 
 function populateDropdown3(data) {
@@ -216,50 +97,6 @@ function deleteUser(userId) {
 }
 
 
-// function populateDropdown4(data) {
-//     var userNameDropdown = document.getElementById('Route');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.route_name; // Set the value
-//         option.textContent = item.route_name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Route type"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-
-// function populateDropdown5(data) {
-//     var userNameDropdown = document.getElementById('onlineAcc');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.name; // Set the value
-//         option.textContent = item.name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Online Account"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-
 
 function getProducts() {
     var bataId = document.getElementById('bta').value;
@@ -280,9 +117,6 @@ function getProducts() {
             // Set the value of the Select2 dropdown
             $productDropdown.val(data[0].product_name).trigger('change');
 
-            // Update label with additional content
-            // var nagLabel = document.getElementById('nagLabel');
-            // nagLabel.innerHTML = 'नग: (' + data[0].selling_price + data[0].selling_price + ')'; 
         })
         .catch(error => {
             console.error('Error:', error);
@@ -309,34 +143,6 @@ function getProducts() {
     
 }
 
-
-
-// function getProducts() {
-//     var bataId = document.getElementById('bta').value;
-//     console.log(bataId)
-//     fetch('http://65.0.168.11/purchaseproductData/getBataProduct/' + bataId)
-//         .then(response => response.json())
-//         .then(data => {
-//             console.log(data[0].product_name)
-//             document.getElementById('mark').value = data[0].mark;
-//             document.getElementById('kimmat').value = data[0].selling_price;
-//             var productDropdown = document.getElementById('product');
-//             // Loop through the options in the dropdown
-//             for (var i = 0; i < productDropdown.options.length; i++) {
-//                 console.log(data[0].product_name);
-//                 // Check if the current option's value matches the fetched data
-//                 if (productDropdown.options[i].value == data[0].product_name) {
-//                     // Set the selected attribute of the matched option
-//                     productDropdown.options[i].selected = true;
-//                     // Exit the loop since we found the matching option
-//                     break;
-//                 }
-//             }
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-// }
 
 function updateTotal() {
     document.getElementById("total").value = document.getElementById("kimmat").value * document.getElementById("nag").value
@@ -369,24 +175,3 @@ function getCust() {
             console.error('Error:', error);
         });
 }
-
-
-
-
-// function getMobile() {
-//     var name = document.getElementById('grahk').value;
-//     console.log(name)
-//     fetch('http://65.0.168.11/fetchName/name/' + name)
-//         .then(response => response.json())
-//         .then(data => {
-//             console.log(data[0].name)
-//             // Get the Select2 dropdown element
-//             var $productDropdown = $('#number');
-            
-//             // Set the value of the Select2 dropdown
-//             $productDropdown.val(data[0].name).trigger('change');
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-// }

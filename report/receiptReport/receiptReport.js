@@ -111,7 +111,7 @@ async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
 
-        const customHeaders = ['receipt_id', 'date', 'Customer','mobile_no','note', 'PaidAmt',"onlineAmt",'discount','inCarat','Amt'];
+        const customHeaders = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'PaidAmt','online_deposite_bank', 'onlineAmt', 'discount', 'inCarat', 'Balance'];
 
         // Create a new worksheet with custom headers
         const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
@@ -120,7 +120,7 @@ async function exportToExcel() {
         data.reports.forEach((report) => {
             const rowData = [
                 report.receipt_id,
-                report.date,
+                new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
                 report.Customer,
                 report.mobile_no,
                 report.note,
@@ -133,20 +133,49 @@ async function exportToExcel() {
             XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
         });
 
-
         // Create a new workbook
         const workbook = XLSX.utils.book_new();
 
         // Add the worksheet with data
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
 
-
-        /* generate XLSX file and prompt to download */
+        // Generate XLSX file and prompt to download
         XLSX.writeFile(workbook, 'Receipt_Report.xlsx');
+
+        // Export to PDF using jsPDF and autoTable
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Map data for autoTable
+        const reportData = data.reports.map(report => [
+            report.receipt_id,
+            new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
+            report.Customer,
+            report.mobile_no,
+            report.note,
+            report.PaidAmt,
+            report.onlineAmt,
+            report.discount,
+            report.inCarat,
+            report.Amt
+        ]);
+
+        // Add Reports table to PDF
+        doc.autoTable({
+            head: [customHeaders],
+            body: reportData,
+            startY: 10,
+            theme: 'grid'
+        });
+
+        // Save the PDF
+        doc.save('Receipt_Report.pdf');
+
     } catch (error) {
-        console.error('Error exporting to Excel:', error);
+        console.error('Error exporting data:', error);
     }
 }
+
 
 
 function openModal(item) {
