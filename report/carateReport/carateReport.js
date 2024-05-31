@@ -65,7 +65,7 @@ async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
 
-        const customHeaders = ['Date', 'Customer Name', 'Summary', 'In Carat', 'In Carat Total', 'Out Carat', 'Out Carat Total'];
+        const customHeaders = ['Date', 'Customer Name', 'Summary', 'Out Carat', 'Out Carat Total', 'In Carat', ' In Carat Total'];       
 
         // Create a new worksheet with custom headers
         const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
@@ -76,10 +76,10 @@ async function exportToExcel() {
                 report.carate_date,
                 report.customer_name,
                 report.summary,
-                report.inCarate,
-                report.in_carate_total,
                 report.OutCarate,
-                report.out_carate_total
+                report.out_carate_total,
+                report.inCarate,
+                report.in_carate_total
             ];
             XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
         });
@@ -112,10 +112,10 @@ async function exportToExcel() {
             report.carate_date,
             report.customer_name,
             report.summary,
-            report.inCarate,
-            report.in_carate_total,
             report.OutCarate,
-            report.out_carate_total
+            report.out_carate_total,
+            report.inCarate,
+            report.in_carate_total
         ]);
 
         // Add table to PDF
@@ -151,7 +151,7 @@ async function exportToExcel() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['carate_date','customer_name','summary',"inCarate",'in_carate_total',"OutCarate",'out_carate_total'];
+    var columnsToDisplay = ['carate_date','customer_name','summary',"OutCarate",'out_carate_total',"inCarate",'in_carate_total'];
     var counter = 1;
     console.log(data.reports)
     if (data.reports.length === 0) {

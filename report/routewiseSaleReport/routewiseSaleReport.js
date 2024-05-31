@@ -284,8 +284,13 @@ function openModal(item) {
     
     .carate-box {
         background-color: #e9e9e9;
-        padding: 10px;
-        margin: 5px;
+        padding: 4px;
+        margin: 7px;
+        position: relative;
+        top: 10px;
+        max-width: 66px;
+        max-height: 24px;
+        left: -23px;
         border: 1px solid #ccc;
         border-radius: 5px;
         flex: 1 1 calc(25% - 20px);
@@ -294,6 +299,7 @@ function openModal(item) {
         align-items: center;
         box-sizing: border-box; /* Ensures padding and border are included in the width calculation */
     }
+    
     
     .carate {
         font-weight: bold;
