@@ -383,7 +383,7 @@ function totalbill(){
     console.log("totalbill")
     console.log(document.getElementById("custid").value)
   
-    fetch('http://65.0.168.11/accountData/' + parseInt(document.getElementById("custid").value))
+    fetch('http://65.2.144.249/accountData/' + parseInt(document.getElementById("custid").value))
           .then(response => {
             if (!response.ok) {
                 loader.style.display = 'none';
@@ -409,7 +409,7 @@ function totalbill(){
   
     function previousbalance() {
         const name = document.getElementById("account_group").value
-        fetch('http://65.0.168.11/fetchpv/' + name)
+        fetch('http://65.2.144.249/fetchpv/' + name)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -427,7 +427,7 @@ function totalbill(){
             });
 
 
-            fetch('http://65.0.168.11/fetchName/name/' + name)
+            fetch('http://65.2.144.249/fetchName/name/' + name)
                   .then(response => {
                     if (!response.ok) {
                         loader.style.display = 'none';
@@ -450,7 +450,7 @@ function totalbill(){
 
 
 
-    fetch('http://65.0.168.11/carateuserData/' + name)
+    fetch('http://65.2.144.249/carateuserData/' + name)
   .then(response => {
       if (!response.ok) {
         loader.style.display = 'none';
@@ -479,7 +479,7 @@ function totalbill(){
     function getCust() {
         var number = document.getElementById('mob').value;
         console.log(number)
-        fetch('http://65.0.168.11/fetchName/mobile/' + number)
+        fetch('http://65.2.144.249/fetchName/mobile/' + number)
             .then(response => {
                 if (!response.ok) {
                     loader.style.display = 'none';
@@ -509,10 +509,10 @@ function totalbill(){
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://65.0.168.11/list/Customer', 'account_group','customer');
-        fetchAndPopulateDropdown('http://65.0.168.11/list/Bank Account', 'route_detail','Account');
-        fetchAndPopulateDropdown('http://65.0.168.11/list/Bank Account', 'input1','Account');
-        fetchAndPopulateDropdown('http://65.0.168.11/mobile', 'mob','mobile_no');
+        fetchAndPopulateDropdown('http://65.2.144.249/list/Customer', 'account_group','customer');
+        fetchAndPopulateDropdown('http://65.2.144.249/list/Bank Account', 'route_detail','Account');
+        fetchAndPopulateDropdown('http://65.2.144.249/list/Bank Account', 'input1','Account');
+        fetchAndPopulateDropdown('http://65.2.144.249/mobile', 'mob','mobile_no');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,name) {

@@ -557,12 +557,12 @@
         
   document.addEventListener('DOMContentLoaded', function () {
       // Fetch data from API and populate Select2 dropdowns
-      fetchAndPopulateDropdown('http://65.0.168.11/list/Customer', 'grahk','name');
-      fetchAndPopulateDropdown('http://65.0.168.11/purchaseproductData', 'product','product_name');
-      fetchAndPopulateDropdown('http://65.0.168.11/purchaseproductData', 'bta','bata');
-      fetchAndPopulateDropdown('http://65.0.168.11/routeData', 'Route','route_name');
-      fetchAndPopulateDropdown('http://65.0.168.11/list/Bank Account', 'onlineAcc','name');
-      fetchAndPopulateDropdown('http://65.0.168.11/mobile', 'number','mobile_no');
+      fetchAndPopulateDropdown('http://65.2.144.249/list/Customer', 'grahk','name');
+      fetchAndPopulateDropdown('http://65.2.144.249/purchaseproductData', 'product','product_name');
+      fetchAndPopulateDropdown('http://65.2.144.249/purchaseproductData', 'bta','bata');
+      fetchAndPopulateDropdown('http://65.2.144.249/routeData', 'Route','route_name');
+      fetchAndPopulateDropdown('http://65.2.144.249/list/Bank Account', 'onlineAcc','name');
+      fetchAndPopulateDropdown('http://65.2.144.249/mobile', 'number','mobile_no');
   });
 
   function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
@@ -642,7 +642,7 @@ function closePopup() {
   var preBalance = parseInt(document.getElementById("previousBalance").value) || 0;
   var total1 = parseInt(document.getElementById("total1").value) || 0;
 
-  fetch('http://65.0.168.11/accountData/' + parseInt(document.getElementById("custid").value))
+  fetch('http://65.2.144.249/accountData/' + parseInt(document.getElementById("custid").value))
         .then(response => {
           if (!response.ok) {
               loader.style.display = 'none';
@@ -669,7 +669,7 @@ function closePopup() {
 function previousbalance(){
   const name = document.getElementById("grahk").value
 
-  fetch('http://65.0.168.11/fetchName/name/' + name)
+  fetch('http://65.2.144.249/fetchName/name/' + name)
         .then(response => {
           if (!response.ok) {
               loader.style.display = 'none';
@@ -701,7 +701,7 @@ function previousbalance(){
 
 
 
-  fetch('http://65.0.168.11/fetchpv/' + name)
+  fetch('http://65.2.144.249/fetchpv/' + name)
   .then(response => {
       if (!response.ok) {
         loader.style.display = 'none';
@@ -723,7 +723,7 @@ function previousbalance(){
   });
 
 
-  fetch('http://65.0.168.11/carateuserData/' + name)
+  fetch('http://65.2.144.249/carateuserData/' + name)
   .then(response => {
       if (!response.ok) {
         loader.style.display = 'none';
@@ -773,7 +773,7 @@ function totalbill(){
   console.log("totalbill")
   console.log(document.getElementById("custid").value)
 
-  fetch('http://65.0.168.11/accountData/' + parseInt(document.getElementById("custid").value))
+  fetch('http://65.2.144.249/accountData/' + parseInt(document.getElementById("custid").value))
         .then(response => {
           if (!response.ok) {
               loader.style.display = 'none';
@@ -815,7 +815,7 @@ function totalbill(){
 
     console.log(formData)
 
-    fetch('http://65.0.168.11/saleproductData/insertsaleproduct', {
+    fetch('http://65.2.144.249/saleproductData/insertsaleproduct', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -876,7 +876,7 @@ function totalbill(){
       totalBalance()
       var button = event.target;
       var row = button.parentNode.parentNode;
-      fetch('http://65.0.168.11/saleproductData/deletesaleproduct/' + userId, {
+      fetch('http://65.2.144.249/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
       })
         .then(response => {

@@ -163,7 +163,7 @@
                 var loader = document.getElementById('loader');
                 loader.style.display = 'block';
         
-                const response = await fetch('http://65.0.168.11/vehicleData/updateVehicle/' + userData.id, {
+                const response = await fetch('http://65.2.144.249/vehicleData/updateVehicle/' + userData.id, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {

@@ -153,7 +153,7 @@
                 };
                 var loader = document.getElementById('loader');
                 loader.style.display = 'block';
-                const response = await fetch('http://65.0.168.11/routeData/updateRoute/' + userData.routeId, {
+                const response = await fetch('http://65.2.144.249/routeData/updateRoute/' + userData.routeId, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {

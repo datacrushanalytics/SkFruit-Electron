@@ -28,7 +28,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://65.0.168.11/carateReport', {
+    return fetch('http://65.2.144.249/carateReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

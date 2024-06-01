@@ -27,7 +27,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://65.0.168.11/batawiseSaleReport', {
+    return fetch('http://65.2.144.249/batawiseSaleReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -246,7 +246,7 @@ function openModal(item) {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://65.0.168.11/bill/' + item.bill_id)
+    fetch('http://65.2.144.249/bill/' + item.bill_id)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

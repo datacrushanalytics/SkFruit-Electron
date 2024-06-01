@@ -34,7 +34,7 @@ document.getElementById('login').addEventListener('submit', async function(event
     };
 
     try {
-        const response = await fetch('http://65.0.168.11/saleData/insertsale', {
+        const response = await fetch('http://65.2.144.249/saleData/insertsale', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ function openModal(item) {
     console.log("Opening modal for item:", item.bill_no);
     
 
-    fetch('http://65.0.168.11/bill/' + item.bill_no)
+    fetch('http://65.2.144.249/bill/' + item.bill_no)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -205,6 +205,8 @@ function openModal(item) {
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
+
+    
     
     .label {
         font-size: 16px;
@@ -223,8 +225,13 @@ function openModal(item) {
     
     .carate-box {
         background-color: #e9e9e9;
-        padding: 10px;
-        margin: 5px;
+        padding: 4px;
+        margin: 7px;
+        position: relative;
+        top: 10px;
+        max-width: 66px;
+        max-height: 24px;
+        left: -23px;
         border: 1px solid #ccc;
         border-radius: 5px;
         flex: 1 1 calc(25% - 20px);
@@ -233,6 +240,7 @@ function openModal(item) {
         align-items: center;
         box-sizing: border-box; /* Ensures padding and border are included in the width calculation */
     }
+    
     
     .carate {
         font-weight: bold;
