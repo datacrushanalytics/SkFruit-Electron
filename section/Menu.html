@@ -227,13 +227,37 @@ a{
             // Display current date and time
             var currentDateElement = document.getElementById('currentDate');
             var currentTimeElement = document.getElementById('currentTime');
+
+            function updateTime() {
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        var seconds = now.getSeconds();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        var currentTime = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+        currentTimeElement.textContent = "Time: " + currentTime;
+    }
+
+    // Set the current date
+    var currentDate = new Date().toLocaleDateString();
+    currentDateElement.textContent = "Date: " + currentDate;
+
+    // Update the time every second
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    var currentDate1 = new Date();
         
-            var currentDate = new Date().toLocaleDateString();
-            var currentTime = new Date().toLocaleTimeString();
+            // var currentDate = new Date().toLocaleDateString();
+            // var currentTime = new Date().toLocaleTimeString();
         
-            currentDateElement.textContent = "Date: " + currentDate;
-            currentTimeElement.textContent = "Time: " + currentTime;
-            var currentDate1 = new Date();
+            // currentDateElement.textContent = "Date: " + currentDate;
+            // currentTimeElement.textContent = "Time: " + currentTime;
+            // var currentDate1 = new Date();
         
             try {
                 const fetchAPI = async (url, id) => {
