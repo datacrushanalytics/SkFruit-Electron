@@ -283,134 +283,187 @@ function openModal(item) {
     // Add item data to modal content
     var itemData = document.createElement('div');
     itemData.innerHTML = `
-        <style>        
-        .header {
-            background-color: #f9f9f9;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .header .logo {
-            width: auto; /* Adjust as needed */
-            margin-right: 20px; /* Adjust as needed */
-        }
-        .header .logo img {
-            height: 80px; /* Adjust as needed */
-        }
-        .header .details {
-            width: 80%; /* Adjust as needed */
-            text-align: right;
-        }
-        .header h1, .header p {
-            margin: 5px 0;
-            font-size: 16px;
-        }
-
-
-        .container2 {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 12px; /* Adjust font size */
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 10px;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 6px; /* Adjust padding */
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .total {
-            font-weight: bold;
-        }
-        .details {
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        /* CSS styles for the print button */
-.header-details button {
-    padding: 10px 20px;
-    background-color: #808080;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-
-@media print {
-    .details, .header-details, .close{
-        display: none; /* Hide the print button and header details when printing */
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
     }
-}
-.container3 {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-}
-.box-container {
-    display: flex;
-    justify-content: space-around;
-}
-.carate {
-    font-size: 16px;
-    color: #333;
-}
-.data {
-    font-size: 14px;
-    color: #666;
-}
-        </style>
-        <div class="header">
-        <div class="logo">
-            <img src="../../assets/img/logo.png" alt="Company Logo">
-        </div>
-        <div >
-            <h1>सावता फ्रुट सप्लायर्स</h1>
-            <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
-            <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
+
+    .header {
+        background-color: #f9f9f9;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .header .logo {
+        width: auto; /* Adjust as needed */
+        margin-right: 20px; /* Adjust as needed */
+    }
+
+    .header .logo img {
+        height: 80px; /* Adjust as needed */
+    }
+
+    .header .details {
+        width: 80%; /* Adjust as needed */
+        text-align: right;
+    }
+
+    .header h1, .header p {
+        margin: 5px 0;
+        font-size: 16px;
+    }
+
+    .container2 {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 12px; /* Adjust font size */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10px;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 6px; /* Adjust padding */
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .total {
+        font-weight: bold;
+    }
+
+    .details {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .header-details button {
+        padding: 10px 20px;
+        background-color: #808080;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    @media print {
+        .details, .header-details, .close {
+            display: none; /* Hide the print button and header details when printing */
+        }
+    }
+
+    .container3 {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .box-container {
+        background-color: #fff;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        margin-left: 10%; /* Add left margin to make the container smaller from the left side */
+        width: 70%; /* Adjust the width to make the container smaller */
+        max-width: 600px; /* Optional: set a maximum width */
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .carate-box {
+        background-color: #e9e9e9;
+        padding: 8px; /* Reduced padding */
+        margin: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        flex: 1 1 calc(20% - 20px); /* Adjusted flex-basis for smaller boxes */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    .carate {
+        font-weight: bold;
+        font-size: 16px;
+        color: #333;
+    }
+
+    .data {
+        font-size: 14px;
+        color: #666;
+        margin-left: 10px;
+    }
+</style>
+</head>
+<body>
+<div class="header">
+    <div class="logo">
+        <img src="../../assets/img/logo.png" alt="Company Logo">
+    </div>
+    <div>
+        <h1>सावता फ्रुट सप्लायर्स</h1>
+        <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
+        <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
+    </div>
+</div>
+<div class="container2">
+    <!-- Receipt details -->
+    <table>
+        <tbody id="TableBody">
+        </tbody>
+    </table>
+    
+    <!-- Items table -->
+    <table>
+        <tfoot style="background-color: #e8e6e4;" id="tablefooter">
+        </tfoot>
+    </table>
+
+    <div class="box-container">
+       <b> <div class="label">बाकी कॅरेट :</div> </b>
+        <div class="row">
+            <div class="carate-box">
+                <div class="carate">100:</div>
+                <div class="data" id="carate3100">Data 1</div>
+            </div>
+            <div class="carate-box">
+                <div class="carate">150:</div>
+                <div class="data" id="carate3150">Data 2</div>
+            </div>
+            <div class="carate-box">
+                <div class="carate">250:</div>
+                <div class="data" id="carate3250">Data 3</div>
+            </div>
+            <div class="carate-box">
+                <div class="carate">350:</div>
+                <div class="data" id="carate3350">Data 4</div>
+            </div>
         </div>
     </div>
-    <div class="container2">
+</div>
 
-        <!-- Receipt details -->
-        <table>
-            <tbody id = 'TableBody'>
-            </tbody>
-        </table>
-        
-        <!-- Items table -->
-        <table>
-            <tfoot style="background-color: #e8e6e4;"  id ="tablefooter">
-                
-            </tfoot>
-        </table>
-        <div class="box-container">
-        बाकी कॅरेट : 
-            <div class="carate">100:</div>
-            <div class="data" id="carate3100">Data 1</div>
-            
-            <div class="carate">150:</div>
-            <div class="data" id="carate3150">Data 2</div>
-            
-            <div class="carate">250:</div>
-            <div class="data" id="carate3250">Data 3</div>
-            
-            <div class="carate">350:</div>
-            <div class="data" id="carate3350">Data 4</div>
-        </div>
         <!-- Thank you message -->
         <div class="details">
             <h4>Thank you, visit again!</h4>
