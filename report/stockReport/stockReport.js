@@ -28,13 +28,16 @@ function fetchDataAndProcess() {
         from_date : formatDate(document.getElementById("fromdate").value),
         to_date : formatDate(document.getElementById("todate").value),
         product : getElementValueWithDefault('product', '*') , 
-        bata : getElementValueWithDefault('bata', '*') 
+        bata : getElementValueWithDefault('bata', '*'),
+        gadi_number : getElementValueWithDefault('vehicle', '*') ,
+        supplier_name : getElementValueWithDefault('supplier', '*') ,
+        purchase_id : getElementValueWithDefault('purchase_id', '*') 
     };
     console.log(data);
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://65.0.168.11/stockReport', {
+    return fetch('http://65.2.144.249/stockReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -70,7 +73,7 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['product_name','bata','purchase', 'opening','purchase','sale','closing' ];
+    var columnsToDisplay = ['purchase_id','gadi_number','supplier_name','product_name','bata','purchase', 'opening','purchase','sale','closing' ];
     var counter = 1;
     console.log(data.reports)
     if (data.reports.length === 0) {
@@ -105,34 +108,6 @@ function populateTable4(data) {
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
-
-        const customHeaders = ['product_name', 'bata', 'purchase', 'opening', 'purchase', 'sale', 'closing'];
-
-        // Create a new worksheet with custom headers
-        const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
-
-        // Append the data to the worksheet
-        data.reports.forEach((report) => {
-            const rowData = [
-                report.product_name,
-                report.bata,
-                report.purchase,
-                report.opening,
-                report.purchase,
-                report.sale,
-                report.closing
-            ];
-            XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
-        });
-
-        // Create a new workbook
-        const workbook = XLSX.utils.book_new();
-
-        // Add the worksheet with data
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
-
-        // Generate XLSX file and prompt to download
-        XLSX.writeFile(workbook, 'Stock_Report.xlsx');
 
         // Export to PDF using jsPDF and autoTable
         const { jsPDF } = window.jspdf;

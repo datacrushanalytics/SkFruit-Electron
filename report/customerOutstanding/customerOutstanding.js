@@ -28,7 +28,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://65.0.168.11/customerOutstandingReport', {
+    return fetch('http://65.2.144.249/customerOutstandingReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -106,33 +106,6 @@ function populateTable4(data) {
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
-
-        const customHeaders = ['id', 'name', 'address', 'route_detail', 'mobile_no', 'Amount'];
-
-        // Create a new worksheet with custom headers
-        const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
-
-        // Append the data to the worksheet
-        data.reports.forEach((report) => {
-            const rowData = [
-                report.id,
-                report.name,
-                report.address,
-                report.route_detail,
-                report.mobile_no,
-                report.Amount
-            ];
-            XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
-        });
-
-        // Create a new workbook
-        const workbook = XLSX.utils.book_new();
-
-        // Add the worksheet with data
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
-
-        // Generate XLSX file and prompt to download
-        XLSX.writeFile(workbook, 'Customer_Outstanding.xlsx');
 
         // Export to PDF using jsPDF and autoTable
         const { jsPDF } = window.jspdf;

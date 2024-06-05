@@ -7,9 +7,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // Set the placeholder of the input field to the formatted date
     console.log(formattedDate);
     document.getElementById('date').value = formattedDate;
+        // Retrieve session data from localStorage
+    var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    // Check if session data exists and if the user is an admin
+    var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+    // Check if the user is an admin and show/hide the button accordingly
+    if (!isAdmin) {
+        document.getElementById('date').readOnly = true; // Hide the button for non-admin users
+    }
     
 
-    fetch('http://65.0.168.11/fetchSaleid')
+    fetch('http://65.2.144.249/fetchSaleid')
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';
@@ -24,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             // Populate dropdown with API data
             document.getElementById('bill').value = parseInt(data[0]['num']) + 1;
-            fetch('http://65.0.168.11/saleproductData/' + (parseInt(data[0]['num']) + 1))
+            fetch('http://65.2.144.249/saleproductData/' + (parseInt(data[0]['num']) + 1))
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -79,7 +87,7 @@ function populateDropdown3(data) {
 
 function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('http://65.0.168.11/saleproductData/deletesaleproduct/' + userId, {
+    fetch('http://65.2.144.249/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
     })
         .then(response => {
@@ -103,7 +111,7 @@ function getProducts() {
     console.log(bataId)
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
-    fetch('http://65.0.168.11/purchaseproductData/getBataProduct/' + bataId)
+    fetch('http://65.2.144.249/purchaseproductData/getBataProduct/' + bataId)
         .then(response => response.json())
         .then(data => {
             loader.style.display = 'none';
@@ -123,7 +131,7 @@ function getProducts() {
         });
 
 
-    fetch('http://65.0.168.11/fetchStock/' + bataId)
+    fetch('http://65.2.144.249/fetchStock/' + bataId)
         .then(response => {
             if (!response.ok) {
                 loader.style.display = 'none';
@@ -153,7 +161,7 @@ function updateTotal() {
 function getCust() {
     var number = document.getElementById('number').value;
     console.log(number)
-    fetch('http://65.0.168.11/fetchName/mobile/' + number)
+    fetch('http://65.2.144.249/fetchName/mobile/' + number)
         .then(response => {
             if (!response.ok) {
                 loader.style.display = 'none';

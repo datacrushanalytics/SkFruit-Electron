@@ -179,7 +179,7 @@ th {
                     <tr>
                         <th>NO.</th>
                         <th>From Account</th>
-                        <th>To Account</th>          
+                        <th>Mobile No</th>          
                         <th>Amount</th>                   
                     </tr>
                 </thead>
@@ -212,7 +212,7 @@ th {
             currentTimeElement.textContent = "Time: " + currentTime;
             var currentDate1 = new Date();
 
-            fetch("http://65.0.168.11/fetchData/receipt", {
+            fetch("http://65.2.144.249/fetchData/receipt", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

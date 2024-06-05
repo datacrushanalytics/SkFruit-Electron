@@ -28,7 +28,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://65.0.168.11/carateReport', {
+    return fetch('http://65.2.144.249/carateReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -64,44 +64,6 @@ function fetchDataAndProcess() {
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
-
-        const customHeaders = ['Date', 'Customer Name', 'Summary', 'Out Carat', 'Out Carat Total', 'In Carat', ' In Carat Total'];       
-
-        // Create a new worksheet with custom headers
-        const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
-
-        // Append the data to the worksheet
-        data.reports.forEach((report) => {
-            const rowData = [
-                report.carate_date,
-                report.customer_name,
-                report.summary,
-                report.OutCarate,
-                report.out_carate_total,
-                report.inCarate,
-                report.in_carate_total
-            ];
-            XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
-        });
-
-        // Add Grand Totals to a new sheet
-        const grandTotals = [
-            ["Grand in_carate_total", "Grand out_carate_total"],
-            [data.Grand["Grand in_carate_total"], data.Grand["Grand out_carate_total"]]
-        ];
-        const grandTotalsWorksheet = XLSX.utils.aoa_to_sheet(grandTotals);
-
-        // Create a new workbook
-        const workbook = XLSX.utils.book_new();
-
-        // Add the worksheet with data
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
-
-        // Add the worksheet with grand totals
-        XLSX.utils.book_append_sheet(workbook, grandTotalsWorksheet, 'Grand Totals');
-
-        // Generate XLSX file and prompt to download
-        XLSX.writeFile(workbook, 'Carate_Report.xlsx');
 
         // Export to PDF using jsPDF and autoTable
         const { jsPDF } = window.jspdf;
@@ -163,7 +125,7 @@ function populateTable4(data) {
         cell.textContent = counter++;
         columnsToDisplay.forEach(function(key) {
             var cell = row.insertCell();
-            if(key=='date'){
+            if(key=='carate_date'){
                 console.log(item[key])
                 var utcDate = new Date(item[key]);
                 var options = { 

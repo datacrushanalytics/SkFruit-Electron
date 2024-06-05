@@ -28,7 +28,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://65.0.168.11/receiptReport', {
+    return fetch('http://65.2.144.249/receiptReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -111,37 +111,6 @@ async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
 
-        const customHeaders = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'PaidAmt','online_deposite_bank', 'onlineAmt', 'discount', 'inCarat', 'Balance'];
-
-        // Create a new worksheet with custom headers
-        const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
-
-        // Append the data to the worksheet
-        data.reports.forEach((report) => {
-            const rowData = [
-                report.receipt_id,
-                new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
-                report.Customer,
-                report.mobile_no,
-                report.note,
-                report.PaidAmt,
-                report.onlineAmt,
-                report.discount,
-                report.inCarat,
-                report.Amt
-            ];
-            XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
-        });
-
-        // Create a new workbook
-        const workbook = XLSX.utils.book_new();
-
-        // Add the worksheet with data
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
-
-        // Generate XLSX file and prompt to download
-        XLSX.writeFile(workbook, 'Receipt_Report.xlsx');
-
         // Export to PDF using jsPDF and autoTable
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
@@ -184,7 +153,7 @@ function openModal(item) {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://65.0.168.11/receiptReport/' + item.receipt_id)
+    fetch('http://65.2.144.249/receiptReport/' + item.receipt_id)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

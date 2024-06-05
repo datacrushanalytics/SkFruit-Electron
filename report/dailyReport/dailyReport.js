@@ -28,7 +28,7 @@ function fetchDataAndProcess() {
 
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
-    return fetch('http://65.0.168.11/dailyReport', {
+    return fetch('http://65.2.144.249/dailyReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -138,61 +138,7 @@ function populateTable5(data) {
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
-
-        const customHeaders = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'cash', 'online_amt', 'discount', 'inCarat', 'carate_amount'];
-
-        // Create a new worksheet with custom headers
-        const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
-
-        // Append the data to the worksheet
-        data.reports.forEach((report) => {
-            const rowData = [
-                report.bill_no,
-                report.date,
-                report.cust_name,
-                report.route,
-                report.amount,
-                report.cash,
-                report.online_amt,
-                report.discount,
-                report.inCarat,
-                report.carate_amount
-            ];
-            XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
-        });
-
-        const customHeaders1 = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'cash', 'online', 'discount', 'inCarat', 'Amt'];
-
-        // Create a new worksheet with custom headers
-        const worksheet1 = XLSX.utils.aoa_to_sheet([customHeaders1]);
-
-        // Append the data to the worksheet
-        data.Receipt.forEach((Receipt) => {
-            const rowData = [
-                Receipt.receipt_id,
-                Receipt.date,
-                Receipt.Customer,
-                Receipt.mobile_no,
-                Receipt.note,
-                Receipt.cash,
-                Receipt.online,
-                Receipt.discount,
-                Receipt.inCarat,
-                Receipt.Amt
-            ];
-            XLSX.utils.sheet_add_aoa(worksheet1, [rowData], { origin: -1 });
-        });
-
-        // Create a new workbook
-        const workbook = XLSX.utils.book_new();
-
-        // Add the worksheets with data
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
-        XLSX.utils.book_append_sheet(workbook, worksheet1, 'Receipts');
-
-        // Generate XLSX file and prompt to download
-        XLSX.writeFile(workbook, 'Daily_Report.xlsx');
-
+    
         // Export to PDF using jsPDF and autoTable
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();

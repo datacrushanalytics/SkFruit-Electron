@@ -29,7 +29,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://65.0.168.11/ledgerReport', {
+    return fetch('http://65.2.144.249/ledgerReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -106,47 +106,6 @@ function populateTable4(data) {
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
-
-        const customHeaders = ['date', 'route', 'customer_name', 'balance', 'total_balance', 'cash', 'online', 'discount', 'in_carate', 'remaining'];
-
-        // Create a new worksheet with custom headers
-        const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
-
-        // Append the data to the worksheet
-        data.reports.forEach((report) => {
-            const rowData = [
-                new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
-                report.route,
-                report.customer_name,
-                report.balance,
-                report.total_balance,
-                report.cash,
-                report.online,
-                report.discount,
-                report.in_carate,
-                report.remaining
-            ];
-            XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
-        });
-
-        // Add Grand Totals to a new sheet
-        const grandTotals = [
-            ["Grand Balance", "Grand outCarate", "Total Balance", "Total Cash", "Total Online", "Grand Discount", "Grand inCarate", "Grand Remaining Amount"],
-            [data.Grand["Grand Balance"], data.Grand['Grand outCarate'], data.Grand['Total Balance'], data.Grand['Total Cash'], data.Grand['Total Online'], data.Grand['Grand Discount'], data.Grand['Grand inCarate'], data.Grand['Grand Remaining Amount']]
-        ];
-        const grandTotalsWorksheet = XLSX.utils.aoa_to_sheet(grandTotals);
-
-        // Create a new workbook
-        const workbook = XLSX.utils.book_new();
-
-        // Add the worksheet with data
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
-
-        // Add the worksheet with grand totals
-        XLSX.utils.book_append_sheet(workbook, grandTotalsWorksheet, 'Grand Totals');
-
-        // Generate XLSX file and prompt to download
-        XLSX.writeFile(workbook, 'Ledger_Report.xlsx');
 
         // Export to PDF using jsPDF and autoTable
         const { jsPDF } = window.jspdf;

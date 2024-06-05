@@ -29,7 +29,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    return fetch('http://65.0.168.11/purchaseReport', {
+    return fetch('http://65.2.144.249/purchaseReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -117,44 +117,6 @@ async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
 
-        const customHeaders = ['id', 'date', 'gadi_number', 'bata', 'supplier_name', 'BillAmount', 'TotalQuantity'];
-
-        // Create a new worksheet with custom headers
-        const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
-
-        // Append the data to the worksheet
-        data.reports.forEach((report) => {
-            const rowData = [
-                report.id,
-                new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
-                report.gadi_number,
-                report.bata,
-                report.supplier_name,
-                report.BillAmount,
-                report.TotalQuantity
-            ];
-            XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
-        });
-
-        // Add Grand Totals to a new sheet
-        const grandTotals = [
-            ["BillAmount", "TotalQuantity"],
-            [data.Grand['Grand Amount'], data.Grand['Grand Quantity']]
-        ];
-        const grandTotalsWorksheet = XLSX.utils.aoa_to_sheet(grandTotals);
-
-        // Create a new workbook
-        const workbook = XLSX.utils.book_new();
-
-        // Add the worksheet with data
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
-
-        // Add the worksheet with grand totals
-        XLSX.utils.book_append_sheet(workbook, grandTotalsWorksheet, 'Grand Totals');
-
-        // Generate XLSX file and prompt to download
-        XLSX.writeFile(workbook, 'Purchase_Report.xlsx');
-
         // Export to PDF using jsPDF and autoTable
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
@@ -220,7 +182,7 @@ function openModal(item) {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://65.0.168.11/purchaseReport/' + item.id)
+    fetch('http://65.2.144.249/purchaseReport/' + item.id)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

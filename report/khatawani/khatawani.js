@@ -35,7 +35,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    return fetch('http://65.0.168.11/khatawani', {
+    return fetch('http://65.2.144.249/khatawani', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -159,52 +159,7 @@ async function exportToExcel() {
             const date = new Date(dateString);
             return date.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' });
         };
-
-        const customHeaders = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'carate_amount', "TotalKalam", 'pre_balance', 'cash', 'online_acc', 'online_amt', 'discount', 'inCarat', 'balance'];
-
-        // Create a new worksheet with custom headers
-        const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
-
-        // Append the data to the worksheet with formatted dates
-        data.reports.forEach((report) => {
-            const rowData = [
-                report.bill_no,
-                formatDateToIST(report.date), // Format date to IST
-                report.cust_name,
-                report.route,
-                report.amount,
-                report.carate_amount,
-                report.TotalKalam,
-                report.pre_balance,
-                report.cash,
-                report.online_acc,
-                report.online_amt,
-                report.discount,
-                report.inCarat,
-                report.balance
-            ];
-            XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
-        });
-
-        // Add Grand Totals to a new sheet
-        const grandTotals = [
-            ["Grand Bill Amount", "Grand outCarate", "Total Bill Amount", "Total Cash", "Online Amount", "Grand Discount", "Grand inCarate"],
-            [data.Grand['Grand Bill Amount'], data.Grand['Grand outCarate'], data.Grand['Total Bill Amount'], data.Grand['Cash'], data.Grand['Online Amount'], data.Grand['Grand Discount'], data.Grand['Grand inCarate']]
-        ];
-        const grandTotalsWorksheet = XLSX.utils.aoa_to_sheet(grandTotals);
-
-        // Create a new workbook
-        const workbook = XLSX.utils.book_new();
-
-        // Add the worksheet with data
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
-
-        // Add the worksheet with grand totals
-        XLSX.utils.book_append_sheet(workbook, grandTotalsWorksheet, 'Grand Totals');
-
-        // Generate XLSX file and prompt to download
-        XLSX.writeFile(workbook, 'Khatawani.xlsx');
-
+ 
         // Export to PDF using jsPDF and autoTable
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
@@ -274,7 +229,7 @@ function openModal(item) {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://65.0.168.11/bill/' + item.bill_no)
+    fetch('http://65.2.144.249/bill/' + item.bill_no)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
