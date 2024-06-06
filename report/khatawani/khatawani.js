@@ -320,7 +320,7 @@ function openModal(item) {
             tablefooter.innerHTML = ""; // Clear existing rows
 
             var footerDetails = [
-                // { label: "गेलेले कॅरेट : +", value: data.results[0].carate_amount },
+                { label: "गेलेले कॅरेट : +", value: data.results[0].carate_amount },
                 { label: "चालू कलम रक्कम:", value: data.results[0].amount },
                 { label: "मागील बाकी:", value: data.results[0].pre_balance },
                 { label: "एकूण रक्कम:", value: data.results[0].total_amount },
@@ -328,8 +328,9 @@ function openModal(item) {
                 { label: "ऑनलाईन जमा बँक :", value: data.results[0].online_acc },
                 { label: "ऑनलाईन जमा रक्कम:", value: data.results[0].online_amt },
                 { label: "सूट रक्कम:", value: data.results[0].discount },
-                // { label: "जमा कॅरेट:   -", value: data.results[0].inCarat },
+                { label: "जमा कॅरेट:   -", value: data.results[0].inCarat },
                 { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.results[0].balance },
+                { label: "बाकी कॅरेट: ", value: data.results[0].remaining },
                 // Add other bill details similarly
             ];
 
@@ -413,6 +414,12 @@ function openModal(item) {
         border: 1px solid #ddd;
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h6{
+        top: -17px;
+       position: absolute;
+       font-size: 12px;
     }
 
     
@@ -551,6 +558,7 @@ color: #666;
 }
     </style>
     <div class="header">
+    <div> <h6> Mobile:- 9960607512  </h6> </div>
     <div class="logo">
         <img src="../../assets/img/logo.png" alt="Company Logo">
     </div>
