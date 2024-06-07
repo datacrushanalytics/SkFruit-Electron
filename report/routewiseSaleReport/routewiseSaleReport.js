@@ -170,22 +170,20 @@ function openModal(item) {
 
             var tablefooter = document.getElementById("tablefooter");
             tablefooter.innerHTML = ""; // Clear existing rows
-
             var footerDetails = [
                 { label: "गेलेले कॅरेट : +", value: data.results[0].carate_amount },
                 { label: "चालू कलम रक्कम:", value: data.results[0].amount },
                 { label: "मागील बाकी:", value: data.results[0].pre_balance },
                 { label: "एकूण रक्कम:", value: data.results[0].total_amount },
                 { label: "रोख जमा रक्कम:", value: data.results[0].cash },
-                { label: "ऑनलाईन जमा बँक :", value: data.results[0].online_acc },
-                { label: "ऑनलाईन जमा रक्कम:", value: data.results[0].online_amt },
+                { label: "ऑनलाईन जमा बँक: " + data.results[0].online_acc + "  |  ऑनलाईन जमा रक्कम: " + data.results[0].online_amt, value: "" },
                 { label: "सूट रक्कम:", value: data.results[0].discount },
                 { label: "जमा कॅरेट:   -", value: data.results[0].inCarat },
                 { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.results[0].balance },
-                { label: "बाकी कॅरेट :" , value: data.results[0].remaining} 
+                { label: "बाकी कॅरेट :", value: data.results[0].remaining} 
                 // Add other bill details similarly
             ];
-
+            
             footerDetails.forEach(function (detail) {
                 var row = document.createElement("tr");
                 row.innerHTML = `
@@ -271,7 +269,7 @@ function openModal(item) {
     h6{
         top: -17px;
        position: absolute;
-       font-size: 12px;
+      font-size: 12px;
     }
     
     .label {
