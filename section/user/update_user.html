@@ -149,6 +149,15 @@
             <!-- <option value="User" disabled selected>Select Account</option> -->
         </select>
         <br>
+
+        <label for="userType">Route &nbsp; &nbsp;&nbsp;</label>
+        <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
+        <select id="route" id="route" name="route" required>
+            <!-- <option value="User" disabled selected>Select Account</option> -->
+        </select>
+        <br>
+
+
         <label fro="username">Username :</label>
         <input type="text" id="username" name="username" placeholder="Username" required> <br>
 
@@ -175,6 +184,7 @@
         document.addEventListener('DOMContentLoaded', async function() {
             // Retrieve user data from localStorage
             await fetchAndPopulateDropdown('http://65.2.144.249/list/Worker', 'name', 'name');
+            await fetchAndPopulateDropdown('http://65.2.144.249/routeData', 'route', 'route_name');
         
             async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
                 try {
@@ -224,6 +234,12 @@
                 // Set the value of the Select2 dropdown if it's different
                 if ($productDropdown.val() !== user.name) {
                     $productDropdown.val(user.name).trigger('change');
+                }
+
+                var $productDropdown = $('#route');
+                // Set the value of the Select2 dropdown if it's different
+                if ($productDropdown.val() !== user.route) {
+                    $productDropdown.val(user.route).trigger('change');
                 }
         
                 document.getElementById("username").value = user.username;

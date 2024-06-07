@@ -5,6 +5,7 @@ async function updateUser() {
         var status = document.getElementById("isActive").checked ? '1' : '0';
         var userData = {
             name: document.getElementById("name").value,
+            route: document.getElementById("route").value,
             username: document.getElementById("username").value,
             password: document.getElementById("password").value,
             usertype: document.getElementById("usertype").value,

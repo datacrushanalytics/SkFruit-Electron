@@ -28,7 +28,7 @@ function user() {
 function populateTable(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['name', 'address','mobile_no','username','password','status','usertype'];
+    var columnsToDisplay = ['name', 'route','address','mobile_no','username','password','status','usertype'];
     var counter = 1;
     var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
     data.forEach(function(item) {

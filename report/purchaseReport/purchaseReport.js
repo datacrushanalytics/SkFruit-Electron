@@ -24,7 +24,8 @@ function fetchDataAndProcess() {
         to_date : formatDate(document.getElementById("todate").value),
         supplier_name : getElementValueWithDefault('supplier', '*') , 
         bata : getElementValueWithDefault('bata', '*') , 
-        gadi_number : getElementValueWithDefault('vehicleNumber', '*') 
+        gadi_number : getElementValueWithDefault('vehicleNumber', '*'),
+        purchase_id : getElementValueWithDefault('purchase_id', '*') 
     };
     var loader = document.getElementById('loader');
     loader.style.display = 'block';

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,17 +10,19 @@
     <title>User Form in Electron</title>
 
     <style>
-              body {
+        body {
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
             margin: 0;
             padding: 20px;
-          }
-           .name label {
-             display: block;
-             /* margin-bottom: 20px;  Adjust this value as needed */
-             text-align: left;
-            }
+        }
+
+        .name label {
+            display: block;
+            /* margin-bottom: 20px;  Adjust this value as needed */
+            text-align: left;
+        }
+
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -31,7 +34,7 @@
         }
 
 
-       h1 {
+        h1 {
             text-align: center;
             margin-bottom: 20px;
             color: #333;
@@ -72,8 +75,9 @@
         .second-row {
             text-align: center;
         }
+
         .third-row {
-            text-align: center; 
+            text-align: center;
         }
 
         .border-hover {
@@ -90,154 +94,174 @@
         }
 
         .border-hover:hover {
-        background-color: #555;
-        /* Darker grey on hover */
+            background-color: #555;
+            /* Darker grey on hover */
         }
 
-.radio-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
+        .radio-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
 
-.radio-container input[type="radio"] {
-    margin-right: 10px;
-    align-items: center;
-}
-/* Style the loader container */
-#loader {
-    border: 4px solid #f3f3f3; /* Light grey */
-    border-top: 4px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite; /* Apply animation */
-    display: none; /* Hide loader by default */
-    
-    /* Center the loader */
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  /* Animation */
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+        .radio-container input[type="radio"] {
+            margin-right: 10px;
+            align-items: center;
+        }
+
+        /* Style the loader container */
+        #loader {
+            border: 4px solid #f3f3f3;
+            /* Light grey */
+            border-top: 4px solid #3498db;
+            /* Blue */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            /* Apply animation */
+            display: none;
+            /* Hide loader by default */
+
+            /* Center the loader */
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Animation */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 
 </head>
+
 <body>
     <div id="loader"></div>
     <div class="container">
-        <h1 align="center">User Master</h1> <hr>
+        <h1 align="center">User Master</h1>
+        <hr>
 
         <div class="container1">
-        <form id="loginForm" method="POST">
-    
-        <div class="first-row">
-            <label for="userType">User Type </label>
-        <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
-        <select id="usertype" name="usertype" placeholder="UserType" required>
-            <option value="User" selected>User</option>
-            <option value="Admin">Admin</option>
-            <!-- Add more options as needed -->
-        </select>
-        </div>
-        <br>
-        <div class="name">
-        <label for="userType">Name </label>
-        <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
-        <select id="name" id="name" name="name" required> 
-            <!-- <option value="User" disabled selected>Select Account</option> -->
-        </select>
-    </div>
-        <br>
-        <!-- <input type="text" id="name" name="name" placeholder="Name">  -->
-        <label fro="username">Username :</label>
-        <input type="text" id="username" name="username" placeholder="Username" required> <br>
+            <form id="loginForm" method="POST">
 
-        <label for="password">Password :</label>
-        <input type="password" id="password" name="password" placeholder="Password" required> <br>
+                <div class="first-row">
+                    <label for="userType">User Type </label>
+                    <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
+                    <select id="usertype" name="usertype" placeholder="UserType" required>
+                        <option value="User" selected>User</option>
+                        <option value="Admin">Admin</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
+                <br>
+                <div class="name">
+                    <label for="userType">Name </label>
+                    <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
+                    <select id="name" id="name" name="name" required>
+                        <!-- <option value="User" disabled selected>Select Account</option> -->
+                    </select>
+                </div>
+                <br>
+                <div class="name">
+                    <label for="userType">Route </label>
+                    <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
+                    <select id="route" id="route" name="route" required>
+                        <!-- <option value="User" disabled selected>Select Account</option> -->
+                    </select>
+                </div>
+                <br>
+                <!-- <input type="text" id="name" name="name" placeholder="Name">  -->
+                <label fro="username">Username :</label>
+                <input type="text" id="username" name="username" placeholder="Username" required> <br>
 
-        <div class="second-row">
-            <div class="radio-container">
-                <input type="radio" id="status-active" name="status" value="1" required>
-                <label for="status-active">Active</label>
-                <input type="radio" id="status-inactive" name="status" value="0" required>
-                <label for="status-inactive">Deactive</label>
-            </div>
+                <label for="password">Password :</label>
+                <input type="password" id="password" name="password" placeholder="Password" required> <br>
+
+                <div class="second-row">
+                    <div class="radio-container">
+                        <input type="radio" id="status-active" name="status" value="1" required>
+                        <label for="status-active">Active</label>
+                        <input type="radio" id="status-inactive" name="status" value="0" required>
+                        <label for="status-inactive">Deactive</label>
+                    </div>
+                </div>
         </div>
-    </div> 
         <div class="third-row">
-        <!-- <button class="border-hover" >Save</button> -->
-        <br>
-        <br>
-        <button type="submit" class="border-hover">Save</button>
-        <!-- <a href="./user.html"><button type='button' class="border-hover">Back</button></a> -->
-    </div>
-    </form>
+            <!-- <button class="border-hover" >Save</button> -->
+            <br>
+            <br>
+            <button type="submit" class="border-hover">Save</button>
+            <!-- <a href="./user.html"><button type='button' class="border-hover">Back</button></a> -->
+        </div>
+        </form>
     </div>
     </div>
 
     <script src="./userMaster.js"></script>
 
 
-<script>
-        
-    document.addEventListener('DOMContentLoaded', function () {
-        // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://65.2.144.249/list/Worker', 'name','name');
-    });
+    <script>
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId,field);
-            })
-            .catch(error => {
-                console.error('Error:', error);
+        document.addEventListener('DOMContentLoaded', function () {
+            // Fetch data from API and populate Select2 dropdowns
+            fetchAndPopulateDropdown('http://65.2.144.249/list/Worker', 'name', 'name');
+            fetchAndPopulateDropdown('http://65.2.144.249/routeData', 'route', 'route_name');
+        });
+
+        function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Populate Select2 dropdown with API data
+                    populateDropdownWithSelect2(data, dropdownId, field);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function populateDropdownWithSelect2(data, dropdownId, field) {
+            var dropdown = $('#' + dropdownId);
+            // Clear existing options
+            dropdown.empty();
+
+            // Add placeholder option
+            dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+
+            // Populate dropdown with API data
+            data.forEach(function (item) {
+                dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
             });
-    }
 
-    function populateDropdownWithSelect2(data, dropdownId, field) {
-        var dropdown = $('#' + dropdownId);
-        // Clear existing options
-        dropdown.empty();
+            // Initialize Select2
+            dropdown.select2({
+                placeholder: "Select " + dropdownId + " type",
+                allowClear: true
+            });
+        }
 
-        // Add placeholder option
-        dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
-
-        // Populate dropdown with API data
-        data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
+        $(document).on('select2:open', function (e) {
+            window.setTimeout(function () {
+                document.querySelector('input.select2-search__field').focus();
+            }, 0);
         });
 
-        // Initialize Select2
-        dropdown.select2({
-            placeholder: "Select " + dropdownId + " type",
-            allowClear: true
-        });
-    }
+    </script>
 
-    $(document).on('select2:open', function(e) {
-        window.setTimeout(function () {
-            document.querySelector('input.select2-search__field').focus();
-        }, 0);
-    });
-
-</script>
-    
 </body>
+
 </html>
-
-

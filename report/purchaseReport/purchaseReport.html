@@ -311,7 +311,14 @@
                 <label id='label' for="userType">Bata :</label>
                 <select class="drop" id="bata" id="bata" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select> <br> <br>
+                </select> 
+                <br>
+                <br>
+                <label for="userType">Purchase Id :</label>
+                <select class="drop" id="purchase_id" id="purchase_id" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select>
+                <br> <br>
                 <div class="third-row">
                     <!-- <button class="border-hover" >Save</button> -->
                     <button type="submit" class="border-hover">Submit</button>
@@ -352,6 +359,7 @@
         fetchAndPopulateDropdown('http://65.2.144.249/vehicleData', 'vehicleNumber','vehicle_no');
         fetchAndPopulateDropdown('http://65.2.144.249/list/Supplier', 'supplier','name');
         fetchAndPopulateDropdown('http://65.2.144.249/purchaseproductData', 'bata','bata');
+        fetchAndPopulateDropdown('http://65.2.144.249/purchaseproductData', 'purchase_id', 'purchase_id');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
