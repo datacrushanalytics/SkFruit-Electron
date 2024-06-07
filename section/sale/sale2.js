@@ -197,6 +197,18 @@ function openModal(item) {
         padding: 20px;
     }
     
+    .close {
+        color: #aaa;
+        position: absolute;
+        top: 8px;
+        right: 16px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer
+    }
+
+
+
     .box-container {
         background-color: #fff;
         padding: 10px;
@@ -223,8 +235,13 @@ function openModal(item) {
     
     .carate-box {
         background-color: #e9e9e9;
-        padding: 10px;
-        margin: 5px;
+        padding: 4px;
+        margin: 7px;
+        position: relative;
+        top: 10px;
+        max-width: 66px;
+        max-height: 24px;
+        left: -23px;
         border: 1px solid #ccc;
         border-radius: 5px;
         flex: 1 1 calc(25% - 20px);
@@ -374,19 +391,19 @@ color: #666;
     <div class="row">
         <div class="carate-box">
             <div class="carate">100:</div>
-            <div class="data" id="carate1100">Data 1</div>
+            <div class="data" id="carate1100">0</div>
         </div>
         <div class="carate-box">
             <div class="carate">150:</div>
-            <div class="data" id="carate1150">Data 2</div>
+            <div class="data" id="carate1150">0</div>
         </div>
         <div class="carate-box">
             <div class="carate">250:</div>
-            <div class="data" id="carate1250">Data 3</div>
+            <div class="data" id="carate1250">0</div>
         </div>
         <div class="carate-box">
             <div class="carate">350:</div>
-            <div class="data" id="carate1350">Data 4</div>
+            <div class="data" id="carate1350">0</div>
         </div>
     </div>
 </div>
@@ -396,19 +413,19 @@ color: #666;
     <div class="row">
         <div class="carate-box">
             <div class="carate">100:</div>
-            <div class="data" id="carate2100">Data 1</div>
+            <div class="data" id="carate2100">0</div>
         </div>
         <div class="carate-box">
             <div class="carate">150:</div>
-            <div class="data" id="carate2150">Data 2</div>
+            <div class="data" id="carate2150">0</div>
         </div>
         <div class="carate-box">
             <div class="carate">250:</div>
-            <div class="data" id="carate2250">Data 3</div>
+            <div class="data" id="carate2250">0</div>
         </div>
         <div class="carate-box">
             <div class="carate">350:</div>
-            <div class="data" id="carate2350">Data 4</div>
+            <div class="data" id="carate2350">0</div>
         </div>
     </div>
 </div>
@@ -434,8 +451,7 @@ color: #666;
         </div>
     </div>
 </div>
-
-        
+ 
         <!-- Thank you message -->
         <div class="details">
             <h4>Thank you, visit again!</h4>

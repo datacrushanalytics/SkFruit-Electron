@@ -300,7 +300,13 @@ function openModal(item) {
             font-size: 16px;
         }
 
-
+        h6{
+            top: -17px;
+           position: absolute;
+           font-size: 12px;
+        }
+    
+    
         .container2 {
             max-width: 600px;
             margin: 0 auto;
@@ -367,6 +373,7 @@ function openModal(item) {
 }
         </style>
         <div class="header">
+        <div> <h6> Mobile:- 9960607512  </h6> </div>
         <div class="logo">
             <img src="../../assets/img/logo.png" alt="Company Logo">
         </div>
