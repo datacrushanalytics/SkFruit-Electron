@@ -80,6 +80,8 @@ h1, h2, h3 {
     color: #555;
     border-bottom: 2px solid #ddd;
     padding-bottom: 10px;
+    text-align: center;
+    margin-top: 50px;
 }
 
 #currentDate, #currentTime {
@@ -134,7 +136,11 @@ a{
     <div id="loader"></div>
         <div class="container">
             <div class="datetime" id="datetime">
-                <p id="currentDate"></p>
+                <!-- <p id="currentDate"></p> -->
+                <p>
+                    <label for="currentDate">Date:</label>
+                    <input type="date" id="currentDate" onchange="fetchTiles()">
+                </p>
                 <h1 id="user">USER</h1>
                 <p id="currentTime"></p>
             </div>
@@ -223,9 +229,13 @@ a{
 
             var sessionData = JSON.parse(localStorage.getItem('sessionData'));
             document.getElementById('user').textContent = sessionData[0].name;
+            var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+    // Check if the user is an admin and show/hide the button accordingly
+   
+    
         
             // Display current date and time
-            var currentDateElement = document.getElementById('currentDate');
+            //var currentDateElement = document.getElementById('currentDate');
             var currentTimeElement = document.getElementById('currentTime');
 
             function updateTime() {
@@ -243,14 +253,18 @@ a{
     }
 
     // Set the current date
-    var currentDate = new Date().toLocaleDateString();
-    currentDateElement.textContent = "Date: " + currentDate;
+    var currentDate = new Date();
+    document.getElementById('currentDate').value = currentDate.getFullYear() + '-' + (String(currentDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(currentDate.getDate()).padStart(2, '0'));
 
+    if (!isAdmin) {
+        document.getElementById('currentDate').readOnly = true; // Hide the button for non-admin users
+    }
     // Update the time every second
     setInterval(updateTime, 1000);
     updateTime();
+    fetchTiles();
 
-    var currentDate1 = new Date();
+    //var currentDate1 = new Date();
         
             // var currentDate = new Date().toLocaleDateString();
             // var currentTime = new Date().toLocaleTimeString();
@@ -259,6 +273,11 @@ a{
             // currentTimeElement.textContent = "Time: " + currentTime;
             // var currentDate1 = new Date();
         
+
+        });
+        
+
+        async function fetchTiles(){
             try {
                 const fetchAPI = async (url, id) => {
                     const response = await fetch(url, {
@@ -267,10 +286,10 @@ a{
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                            "date": currentDate1.getFullYear() + '-' + String(currentDate1.getMonth() + 1).padStart(2, '0') + '-' + String(currentDate1.getDate()).padStart(2, '0')
+                            "date": document.getElementById("currentDate").value
                         })
                     });
-        
+                    //"date": currentDate1.getFullYear() + '-' + String(currentDate1.getMonth() + 1).padStart(2, '0') + '-' + String(currentDate1.getDate()).padStart(2, '0')
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
                     }
@@ -296,9 +315,11 @@ a{
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
-        });
-        
+        }
 
+
+
+        
             // Function to fetch data from API
             async function fetchData() {
                 try {
@@ -313,15 +334,17 @@ a{
             async function renderData() {
                 const container = document.querySelector('.container1'); // Target the existing .container1 div
                 const data = await fetchData(); // Assuming fetchData returns the list of items
-                var currentDate1 = new Date();
+                // var currentDate1 = new Date();
                 var loader = document.getElementById('loader');
+                // Clear previous content
+                 container.innerHTML = '';
                 loader.style.display = 'block';
                             
                 if (data && data.length > 0) {
                     for (const item of data) {
                         // Assuming userData contains the data you want to send
                         const userData = {
-                            "date": currentDate1.getFullYear() + '-' + String(currentDate1.getMonth() + 1).padStart(2, '0') + '-' + String(currentDate1.getDate()).padStart(2, '0'),
+                            "date": document.getElementById('currentDate').value,
                             "name": item.name
                         };
                         
@@ -342,32 +365,34 @@ a{
                             const result = await response.json();
                             loader.style.display = 'none';
                             console.log('Data added successfully:', result);
+
+                            if(result[0].closingCash > 0 || result[0].saleAmount > 0){
             
-                            // Create and append the div
-                            const div = document.createElement('div');
-                            div.className = 'container1-item';
-                                                    
-                            const h2 = document.createElement('h2');
-                            h2.textContent = item.name;
-                            div.appendChild(h2);
-                            
-                            const h3_1 = document.createElement('h3');
-                            h3_1.textContent = `Closing cash : ${result[0].closingCash || 0}`;
-                            div.appendChild(h3_1);
-                            
-                            const h3_2 = document.createElement('h3');
-                            h3_2.textContent = `Sale amount : ${result[0].saleAmount || 0}`;
-                            div.appendChild(h3_2);
-                            
-                            // Add event listener to navigate to another page
-                            div.addEventListener('click', function() {
-                                // Navigate to another page
-                                localStorage.setItem('workerData', JSON.stringify(item));
-                                window.location.href = './dailySale.html'; // Replace 'anotherPage.html' with your desired page URL
-                            });
-                            
-                            container.appendChild(div);
-            
+                                // Create and append the div
+                                const div = document.createElement('div');
+                                div.className = 'container1-item';
+                                                        
+                                const h2 = document.createElement('h2');
+                                h2.textContent = item.name;
+                                div.appendChild(h2);
+                                
+                                const h3_1 = document.createElement('h3');
+                                h3_1.textContent = `Closing cash : ${result[0].closingCash || 0}`;
+                                div.appendChild(h3_1);
+                                
+                                const h3_2 = document.createElement('h3');
+                                h3_2.textContent = `Sale amount : ${result[0].saleAmount || 0}`;
+                                div.appendChild(h3_2);
+                                
+                                // Add event listener to navigate to another page
+                                div.addEventListener('click', function() {
+                                    // Navigate to another page
+                                    localStorage.setItem('workerData', JSON.stringify(item));
+                                    window.location.href = './dailySale.html'; // Replace 'anotherPage.html' with your desired page URL
+                                });
+                                
+                                container.appendChild(div);
+                            }
                         } catch (error) {
                             console.error('Error updating data:', error);
                         }

@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -108,6 +111,11 @@
     <div id="loader"></div>
     <div class="container">
         <h1 align="center">Remainder</h1><br>
+
+        <div class="button-container">
+            <input type="text" id="searchBox" placeholder="Search" oninput="searchData()">
+            <!-- <button class="button"><a href="../SetUserMenu.html">Set User Menu</a></button> -->
+        </div>
         <hr>
         <br>
       
@@ -118,8 +126,7 @@
         <th>NAME</th>
         <th>Address</th>
         <th>Mobile Number</th>
-        <th>Last Updated</th>
-        <th>Days</th>
+        <th>Remainder Date</th>
         <th>Current Balance</th>
     </tr>
 
@@ -133,46 +140,51 @@
 </div>
 <br>
 
-<button type='button' class="button" onclick="exportToExcel()" id="button2">Export</button>
+<button type='button' class="button" onclick="exportToPDF()" id="button2">Export</button>
 
 </div>
 <script src="./remainder.js"></script>
 <script>
 
-    async function exportToExcel() {
+    async function exportToPDF() {
         try {
             const data = await remainder();
+
+            // Export to PDF using jsPDF and autoTable
+        const { jsPDF } = window.jspdf;
+
     
-            const customHeaders = ['name','address','mobile_no', 'Days','current_balance' ];
+            const customHeaders = ['name','address','mobile_no',"last_update",'current_balance'];
     
-            // Create a new worksheet with custom headers
-            const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
+            // Prepare data for autoTable
+            const rows = data.reports.map((report) => [
+                report.name,
+                report.address,
+                report.mobile_no,
+                new Date(report.last_update).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
+                report.current_balance
+            ]);
     
-            // Append the data to the worksheet
-            data.reports.forEach((report) => {
-                const rowData = [
-                    report.name,
-                    report.address,
-                    report.mobile_no,
-                    report.Days,
-                    report.current_balance
-                ];
-                XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
+            // Create a new jsPDF instance
+            const doc = new jsPDF();
+    
+            // Add a title to the PDF
+            doc.text('Remainder Reports', 20, 10);
+    
+            // Add the table to the PDF
+            doc.autoTable({
+                head: [customHeaders],
+                body: rows,
+                startY: 20
             });
     
-            // Create a new workbook
-            const workbook = XLSX.utils.book_new();
-    
-            // Add the worksheet with data
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
-    
-    
-            /* generate XLSX file and prompt to download */
-            XLSX.writeFile(workbook, 'Remainder.xlsx');
+            // Save the PDF and prompt to download
+            doc.save('Remainder.pdf');
         } catch (error) {
-            console.error('Error exporting to Excel:', error);
+            console.error('Error exporting to PDF:', error);
         }
     }
+    
 
 
 </script>
