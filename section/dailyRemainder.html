@@ -152,11 +152,12 @@ th {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
-  
+
   #user {
     margin-left: 30%;
 }
   
+
 
     </style>
 
@@ -180,14 +181,16 @@ th {
 
             
         <div class="table-container">
-       <h1>Receipt</h1>
+       <h1>Remainder </h1>
             <table>
                 <thead>
                     <tr>
                         <th>NO.</th>
-                        <th>From Account</th>
-                        <th>Mobile No</th>          
-                        <th>Amount</th>                   
+        <th>NAME</th>
+        <th>Address</th>
+        <th>Mobile Number</th>
+        <th>Remainder Date</th>
+        <th>Current Balance</th>            
                     </tr>
                 </thead>
                 <tbody id="tableBody">
@@ -206,32 +209,29 @@ th {
             var sessionData = JSON.parse(localStorage.getItem('sessionData'));
             document.getElementById('user').textContent = sessionData[0].name;
             var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
-            var loader = document.getElementById('loader');
-        loader.style.display = 'block';
 
             // Display current date and time
             //var currentDateElement = document.getElementById('currentDate');
-            var currentDate = new Date();
-            document.getElementById('currentDate').value = currentDate.getFullYear() + '-' + (String(currentDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(currentDate.getDate()).padStart(2, '0'));
             var currentTimeElement = document.getElementById('currentTime');
 
-            //var currentDate = new Date().toLocaleDateString();
+            var currentDate = new Date().toLocaleDateString();
             var currentTime = new Date().toLocaleTimeString();
 
             //currentDateElement.textContent = "Date: " + currentDate;
+            var currentDate = new Date();
+            document.getElementById('currentDate').value = currentDate.getFullYear() + '-' + (String(currentDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(currentDate.getDate()).padStart(2, '0'));
             currentTimeElement.textContent = "Time: " + currentTime;
-            //var currentDate1 = new Date();
+            var currentDate1 = new Date();
+            var loader = document.getElementById('loader');
+            loader.style.display = 'block';
 
-            fetchData();
-       
+            fetchData(); 
           });
 
-
-          function fetchData(){
+          function fetchData() {
             var tbody = document.getElementById('tableBody');
             tbody.innerHTML = ''; // Clear existing rows
-
-            fetch("http://65.2.144.249/fetchData/receipt", {
+            fetch("http://65.2.144.249/fetchData/remainder", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -253,8 +253,8 @@ th {
                 return response.json();
             })
             .then(data => {
-            loader.style.display = 'none';
                 // Loop through the data received from the API
+                loader.style.display = 'none';
                 console.log(data)
                 console.log("data fetched");
                 populateTable(data)
@@ -264,11 +264,10 @@ th {
             }); 
           }
 
-
           function populateTable(data) {
             var tbody = document.getElementById('tableBody');
             tbody.innerHTML = ''; // Clear existing rows
-            var columnsToDisplay = ['from_account', 'to_account','TotalReceipt'];
+            var columnsToDisplay = ['name','address','mobile_no',"last_update",'current_balance'];
             var counter = 1;
             data.forEach(function(item) {
                 var row = tbody.insertRow();
@@ -276,9 +275,25 @@ th {
                 cell.textContent = counter++;
                 columnsToDisplay.forEach(function(key) {
                     var cell = row.insertCell();
-                    cell.textContent = item[key];
+        
+                    if (key === 'last_update') {
+                        if (item[key] === null || item[key] === undefined) {
+                            cell.textContent = 'null';
+                        } else {
+                            var utcDate = new Date(item[key]);
+                            var options = {
+                                year: 'numeric',
+                                month: '2-digit',
+                                day: '2-digit',
+                                timeZone: 'Asia/Kolkata'
+                            };
+                            cell.textContent = utcDate.toLocaleString('en-IN', options);
+                        }
+                    } else {
+                        cell.textContent = item[key];
+                    }
                 });
-    
+        
             });
         }
 

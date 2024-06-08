@@ -1,46 +1,46 @@
-// Fetch data from API
-document.addEventListener('DOMContentLoaded', function () {
-    // Get the current date
-    var currentDate = new Date();
-    // Format the date as mm/dd/yyyy
-    var formattedDate = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
-    // Set the placeholder of the input field to the formatted date
-    document.getElementById('date').value = formattedDate;
-    var loader = document.getElementById('loader');
-    loader.style.display = 'block';
+// // Fetch data from API
+// document.addEventListener('DOMContentLoaded', function () {
+//     // Get the current date
+//     var currentDate = new Date();
+//     // Format the date as mm/dd/yyyy
+//     var formattedDate = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
+//     // Set the placeholder of the input field to the formatted date
+//     document.getElementById('date').value = formattedDate;
+//     var loader = document.getElementById('loader');
+//     loader.style.display = 'block';
 
-    fetch('http://65.2.144.249/list/Supplier')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Populate dropdown with API data
-            populateDropdown(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+//     fetch('http://65.2.144.249/list/Supplier')
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error('Network response was not ok');
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             // Populate dropdown with API data
+//             populateDropdown(data);
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
 
 
-    fetch('http://65.2.144.249/list/Bank Account')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            loader.style.display = 'none';
-            // Populate dropdown with API data
-            populateDropdown1(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-});
+//     fetch('http://65.2.144.249/list/Bank Account')
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error('Network response was not ok');
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             loader.style.display = 'none';
+//             // Populate dropdown with API data
+//             populateDropdown1(data);
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// });
 
 
 function populateDropdown(data) {
@@ -92,7 +92,7 @@ function populateDropdown1(data) {
 
 
 
-document.getElementById('loginForm1').addEventListener('submit', async function(event) {
+document.getElementById('paymentForm').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
 console.log("jahsafhfa")
 // function form2(){

@@ -162,7 +162,7 @@
                 <br>
 
                 <label for="amount">Paid Amount :</label>
-                <input type="number" id="amount" name="amount" onchange="totalBalance()" required>
+                <input type="number" id="amount" name="amount" required>
             </div>
             <br>
 
@@ -171,6 +171,8 @@
             </div>
         </form>
     </div>
+
+    <script src="./payment.js"></script>
 
     <script>
         // Function to get the current maximum payment ID from local storage
@@ -291,6 +293,11 @@
                 document.querySelector('input.select2-search__field').focus();
             }, 0);
         });
+
+
+
+
+        
     </script>
 </body>
 
