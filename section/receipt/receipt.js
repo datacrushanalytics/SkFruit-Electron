@@ -3,9 +3,16 @@ document.addEventListener('DOMContentLoaded', function () {
     // Get the current date
     var currentDate = new Date();
     // Format the date as mm/dd/yyyy
-    var formattedDate = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
+    var formattedDate = currentDate.getFullYear() + '-' + (String(currentDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(currentDate.getDate()).padStart(2, '0'));
     // Set the placeholder of the input field to the formatted date
     document.getElementById('date').value = formattedDate;
+
+    var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+    // Check if the user is an admin and show/hide the button accordingly
+    if (!isAdmin) {
+        document.getElementById('date').readOnly = true; // Hide the button for non-admin users
+    }
 
     fetch('http://65.2.144.249/fetchReceiptid')
     .then(response => {

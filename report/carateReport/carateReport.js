@@ -12,7 +12,7 @@ function formatDate(dateString) {
 }
 
 
-document.getElementById('loginForm1').addEventListener('submit', function(event) {
+document.getElementById('loginForm1').addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent form submission
     fetchDataAndProcess();
 });
@@ -26,7 +26,7 @@ function fetchDataAndProcess() {
         customer_name: getElementValueWithDefault('customer', '*'),
     };
     var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+    loader.style.display = 'block';
 
     return fetch('http://65.2.144.249/carateReport', {
         method: 'POST',
@@ -35,28 +35,28 @@ function fetchDataAndProcess() {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => {
-        if (response.status === 404) {
-        loader.style.display = 'none';
-            alert("No data found.");
-            throw new Error('Data not found');
-        }
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        loader.style.display = 'none';
-        console.log(result);
-        populateTable4(result);
-        return result; // Return the result to be used in the caller
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        // Optionally, you can display an error message here
-        throw error; // Rethrow the error for the caller to handle
-    });
+        .then(response => {
+            if (response.status === 404) {
+                loader.style.display = 'none';
+                alert("No data found.");
+                throw new Error('Data not found');
+            }
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(result => {
+            loader.style.display = 'none';
+            console.log(result);
+            populateTable4(result);
+            return result; // Return the result to be used in the caller
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Optionally, you can display an error message here
+            throw error; // Rethrow the error for the caller to handle
+        });
 }
 
 
@@ -113,40 +113,69 @@ async function exportToExcel() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['carate_date','customer_name','summary',"OutCarate",'out_carate_total',"inCarate",'in_carate_total'];
+    var columnsToDisplay = ['carate_date', 'customer_name', 'summary', "OutCarate", 'out_carate_total', "inCarate", 'in_carate_total'];
     var counter = 1;
     console.log(data.reports)
     if (data.reports.length === 0) {
         alert("No Data Found");
     }
-    data.reports.forEach(function(item) {
+    data.reports.forEach(function (item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
         cell.textContent = counter++;
-        columnsToDisplay.forEach(function(key) {
+        columnsToDisplay.forEach(function (key) {
             var cell = row.insertCell();
-            if(key=='carate_date'){
+            if (key == 'carate_date') {
                 console.log(item[key])
                 var utcDate = new Date(item[key]);
-                var options = { 
-                    year: 'numeric', 
-                    month: '2-digit', 
-                    day: '2-digit', 
-                    timeZone: 'Asia/Kolkata' 
+                var options = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    timeZone: 'Asia/Kolkata'
                 };
                 cell.textContent = utcDate.toLocaleString('en-IN', options);
-            
-            }else{
-            cell.textContent = item[key];
+
+            } else {
+                cell.textContent = item[key];
             }
         });
     });
+    console.log(document.getElementById('customer').value)
+    // Add row for grand total
+    var totalRow = tbody.insertRow();
+    var totalCell = totalRow.insertCell();
+    totalCell.colSpan = columnsToDisplay.length;
 
-     // Add row for grand total
-     var totalRow = tbody.insertRow();
-     var totalCell = totalRow.insertCell();
-     totalCell.colSpan = columnsToDisplay.length;
-     totalCell.textContent = 'Grand Total: ' + data.Grand['Grand in_carate_total'] + ' (Grand in_carate_total), ' + data.Grand['Grand out_carate_total'] + ' (Grand out_carate_total)';
+
+    if (document.getElementById('customer').value !== '') {
+        console.log("Custometr not seletced ")
+        fetch('http://65.2.144.249/carateuserData/' + document.getElementById('customer').value)
+            .then(response => {
+                if (!response.ok) {
+                    loader.style.display = 'none';
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data1 => {
+                // Populate dropdown with API data
+                console.log(data1)
+                // totalCell.textContent = 'Grand Total: ' + data.Grand['Grand in_carate_total'] + ' (Grand in_carate_total), ' + data.Grand['Grand out_carate_total'] + ' (Grand out_carate_total) <br>   Remaining Carate of Customer :  100 => ' + data1[0]['carate_100'] + ' 150 => '+  data1[0]['carate_150']+ ' 250 => ' + data1[0]['carate_250']+ ' 350 => '+ data1[0]['carate_350'];
+                totalCell.innerHTML = 'Grand Total: ' + 
+    data.Grand['Grand in_carate_total'] + ' (Grand in_carate_total), ' + 
+    data.Grand['Grand out_carate_total'] + ' (Grand out_carate_total) <br>' + 
+    'Remaining Carate of Customer :\n' + 
+    '100 => ' + data1[0]['carate_100'] + '\n' +
+    '150 => ' + data1[0]['carate_150'] + '\n' +
+    '250 => ' + data1[0]['carate_250'] + '\n' +
+    '350 => ' + data1[0]['carate_350'];
+
+            })
+
+    }else{
+        totalCell.textContent = 'Grand Total: ' + data.Grand['Grand in_carate_total'] + ' (Grand in_carate_total), ' + data.Grand['Grand out_carate_total'] + ' (Grand out_carate_total)';
+    }
 }
 
 

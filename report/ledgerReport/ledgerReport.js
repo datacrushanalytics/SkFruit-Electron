@@ -91,13 +91,40 @@ function populateTable4(data) {
             cell.textContent = item[key];
             }
         });
+        
     });
-
-     // Add row for grand total
+ // Add row for grand total
      var totalRow = tbody.insertRow();
      var totalCell = totalRow.insertCell();
      totalCell.colSpan = columnsToDisplay.length;
+
+    if (document.getElementById('customer').value !== '') {
+        console.log("Custometr not seletced ")
+        fetch('http://65.2.144.249/carateuserData/' + document.getElementById('customer').value)
+            .then(response => {
+                if (!response.ok) {
+                    loader.style.display = 'none';
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data1 => {
+                // Populate dropdown with API data
+                console.log(data1)
+                // totalCell.textContent = 'Grand Total: ' + data.Grand['Grand in_carate_total'] + ' (Grand in_carate_total), ' + data.Grand['Grand out_carate_total'] + ' (Grand out_carate_total) <br>   Remaining Carate of Customer :  100 => ' + data1[0]['carate_100'] + ' 150 => '+  data1[0]['carate_150']+ ' 250 => ' + data1[0]['carate_250']+ ' 350 => '+ data1[0]['carate_350'];
+
+                totalCell.innerHTML = 'Grand Total: ' + data.Grand['"Grand Balance"'] + ' ("Grand Balance"), ' + data.Grand['Grand outCarate'] + ' (Grand outCarate)' + data.Grand['Total Balance'] + ' (Total Balance), ' + data.Grand['Total Cash'] + ' (Total Cash)' + data.Grand['Total Online'] + ' (Total Online), ' + data.Grand['Grand Discount'] + ' (Grand Discount)' + data.Grand['Grand inCarate'] + ' (Grand inCarate), ' + data.Grand['Grand Remaining Amount'] + ' (Grand Remaining Amount) <br>' +  
+    'Remaining Carate of Customer :\n' + 
+    '100 => ' + data1[0]['carate_100'] + '\n' +
+    '150 => ' + data1[0]['carate_150'] + '\n' +
+    '250 => ' + data1[0]['carate_250'] + '\n' +
+    '350 => ' + data1[0]['carate_350'];
+
+            })
+        }else{
+    
      totalCell.textContent = 'Grand Total: ' + data.Grand['"Grand Balance"'] + ' ("Grand Balance"), ' + data.Grand['Grand outCarate'] + ' (Grand outCarate)' + data.Grand['Total Balance'] + ' (Total Balance), ' + data.Grand['Total Cash'] + ' (Total Cash)' + data.Grand['Total Online'] + ' (Total Online), ' + data.Grand['Grand Discount'] + ' (Grand Discount)' + data.Grand['Grand inCarate'] + ' (Grand inCarate), ' + data.Grand['Grand Remaining Amount'] + ' (Grand Remaining Amount)';                                                                                                                                                                                                                                                     
+}
 }
 
 

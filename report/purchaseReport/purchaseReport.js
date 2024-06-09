@@ -69,6 +69,7 @@ function populateTable4(data) {
     tbody.innerHTML = ''; // Clear existing rows
     var columnsToDisplay = ['id', 'date', 'gadi_number','supplier_name', 'BillAmount','TotalQuantity'];
     var counter = 1;
+    var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
     console.log(data.reports)
     if (data.reports.length === 0) {
         alert("No Data Found");
@@ -103,6 +104,32 @@ function populateTable4(data) {
             openModal(item); // Pass the data item to the openPopup function
         });
         buttonCell.appendChild(openPopupButton);
+
+        // Add Edit button if user is admin
+      if (isAdmin) {
+        var editCell = row.insertCell();
+        var editButton = document.createElement('button');
+        editButton.className = 'button edit-button';
+        var editLink = document.createElement('a');
+        editLink.href = './updatePurchase.html'; // Edit link destination
+        editLink.textContent = 'Edit';
+        editButton.appendChild(editLink);
+        editButton.addEventListener('click', function() {
+          editAccount(item); // Pass the user data to the edit function
+        });
+        editCell.appendChild(editButton);
+    }
+
+        if (isAdmin) {
+            var deleteCell = row.insertCell();
+            var deleteButton = document.createElement('button');
+            deleteButton.className = 'button delete-button';
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', function () {
+                deleteaccount(item.id); // Pass the user id to the delete function
+            });
+            deleteCell.appendChild(deleteButton);
+        }
     });
 
      // Add row for grand total
@@ -110,6 +137,35 @@ function populateTable4(data) {
      var totalCell = totalRow.insertCell();
      totalCell.colSpan = columnsToDisplay.length;
      totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Amournt'] + ' (BillAmount), ' + data.Grand['Grand Quantity'] + ' (TotalQuantity)';
+}
+
+
+function editAccount(user) {
+    localStorage.removeItem('purchaseData');
+    console.log('Editing user: ' + JSON.stringify(user));
+    localStorage.setItem('purchaseData', JSON.stringify(user));
+     // Redirect to user_update.html
+     window.location.href = './updatePurchase.html';
+  }
+
+
+function deleteaccount(userId) {
+    // Perform delete operation based on userId
+    fetch('http://65.2.144.249/purchaseReport/deletePurchaseReport/' + userId, {
+        method: 'DELETE'
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            alert("Record is successfully Deleted");
+            console.log('REcord deleted successfully');
+            // Refresh the table or update UI as needed
+            fetchDataAndProcess(); // Assuming you want to refresh the table after delete
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 
@@ -160,19 +216,6 @@ async function exportToExcel() {
     }
 }
 
-
-
- // Add Delete button if user is admin
- if (isAdmin) {
-    var deleteCell = row.insertCell();
-    var deleteButton = document.createElement('button');
-    deleteButton.className = 'button delete-button';
-    deleteButton.textContent = 'Delete';
-    deleteButton.addEventListener('click', function() {
-      deleteaccount(item.id); // Pass the user id to the delete function
-    });
-    deleteCell.appendChild(deleteButton);
-}
 
 
 

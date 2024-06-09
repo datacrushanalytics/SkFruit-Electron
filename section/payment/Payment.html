@@ -52,6 +52,7 @@
 
         input[type="text"],
         input[type="number"],
+        input[type="date"],
         select,
         textarea {
             width: 100%;
@@ -137,7 +138,7 @@
             <br>
 
             <label for="date">Date :</label>
-            <input type="text" id="date" name="date" placeholder="Date" required>
+            <input type="date" id="date" name="date" placeholder="Date" required>
             <br>
 
             <label for="product">From Account :</label>
@@ -204,8 +205,22 @@
 
         // Function to populate the current date into the date input field
         function populateCurrentDate() {
-            var currentDate = new Date().toISOString().slice(0, 10);
-            document.getElementById("date").value = currentDate;
+            var currentDate = new Date();
+            // Format the date as mm/dd/yyyy
+            var formattedDate = currentDate.getFullYear() + '-' + (String(currentDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(currentDate.getDate()).padStart(2, '0'));
+            // Set the placeholder of the input field to the formatted date
+            console.log(formattedDate);
+            document.getElementById('date').value = formattedDate;
+            // Retrieve session data from localStorage
+            var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+            // Check if session data exists and if the user is an admin
+            var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+            // Check if the user is an admin and show/hide the button accordingly
+            if (!isAdmin) {
+                document.getElementById('date').readOnly = true; // Hide the button for non-admin users
+            }
+
+            //document.getElementById("date").value = currentDate;
         }
 
         // Call populatePaymentId and populateCurrentDate functions when the page loads
@@ -243,11 +258,11 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Fetch data from API and populate Select2 dropdowns
-            fetchAndPopulateDropdown('http://65.2.144.249/list/Supplier', 'bata','bata');
-            fetchAndPopulateDropdown('http://65.2.144.249/list/Bank Account', 'product','bank');
+            fetchAndPopulateDropdown('http://65.2.144.249/list/Supplier', 'bata', 'bata');
+            fetchAndPopulateDropdown('http://65.2.144.249/list/Bank Account', 'product', 'bank');
         });
 
-        function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
+        function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
             fetch(apiUrl)
                 .then(response => {
                     if (!response.ok) {
@@ -257,14 +272,14 @@
                 })
                 .then(data => {
                     // Populate Select2 dropdown with API data
-                    populateDropdownWithSelect2(data, dropdownId,field);
+                    populateDropdownWithSelect2(data, dropdownId, field);
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
         }
 
-        function populateDropdownWithSelect2(data, dropdownId,field) {
+        function populateDropdownWithSelect2(data, dropdownId, field) {
             var dropdown = $('#' + dropdownId);
             // Clear existing options
             dropdown.empty();
@@ -273,7 +288,7 @@
             dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
 
             // Add new option
-            if(field == 'bank'){
+            if (field == 'bank') {
                 dropdown.append($('<option></option>').attr('cash', 'cash').text('Cash'));
             }
             // Populate dropdown with API data
@@ -288,7 +303,7 @@
             });
         }
 
-        $(document).on('select2:open', function(e) {
+        $(document).on('select2:open', function (e) {
             window.setTimeout(function () {
                 document.querySelector('input.select2-search__field').focus();
             }, 0);
@@ -297,7 +312,7 @@
 
 
 
-        
+
     </script>
 </body>
 

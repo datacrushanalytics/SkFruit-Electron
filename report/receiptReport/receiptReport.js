@@ -12,7 +12,7 @@ function formatDate(dateString) {
 }
 
 
-document.getElementById('loginForm1').addEventListener('submit', function(event) {
+document.getElementById('loginForm1').addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent form submission
     fetchDataAndProcess();
 });
@@ -20,13 +20,13 @@ document.getElementById('loginForm1').addEventListener('submit', function(event)
 
 function fetchDataAndProcess() {
     var data = {
-        from_date : formatDate(document.getElementById("fromdate").value),
-        to_date : formatDate(document.getElementById("todate").value),
-        customer_name : getElementValueWithDefault('customer', '*')
+        from_date: formatDate(document.getElementById("fromdate").value),
+        to_date: formatDate(document.getElementById("todate").value),
+        customer_name: getElementValueWithDefault('customer', '*')
     };
     console.log(data);
     var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+    loader.style.display = 'block';
 
     return fetch('http://65.2.144.249/receiptReport', {
         method: 'POST',
@@ -35,28 +35,28 @@ function fetchDataAndProcess() {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => {
-        if (response.status === 404) {
-        loader.style.display = 'none';
-            alert("No data found.");
-            throw new Error('Data not found');
-        }
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        loader.style.display = 'none';
-        console.log(result)
-        populateTable4(result)
-        return result;
-        // Optionally, you can redirect or show a success message here
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        // Optionally, you can display an error message here
-    });
+        .then(response => {
+            if (response.status === 404) {
+                loader.style.display = 'none';
+                alert("No data found.");
+                throw new Error('Data not found');
+            }
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(result => {
+            loader.style.display = 'none';
+            console.log(result)
+            populateTable4(result)
+            return result;
+            // Optionally, you can redirect or show a success message here
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Optionally, you can display an error message here
+        });
 }
 
 
@@ -64,46 +64,123 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['receipt_id', 'date', 'Customer','mobile_no','note', 'PaidAmt','online_deposite_bank',"onlineAmt",'discount','inCarat','Balance'];
+    var columnsToDisplay = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'PaidAmt', 'online_deposite_bank', "onlineAmt", 'discount', 'inCarat', 'Balance'];
     var counter = 1;
+    var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
     console.log(data.reports)
     if (data.reports.length === 0) {
         alert("No Data Found");
     }
-    data.reports.forEach(function(item) {
+    data.reports.forEach(function (item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
         cell.textContent = counter++;
-        columnsToDisplay.forEach(function(key) {
+        columnsToDisplay.forEach(function (key) {
             var cell = row.insertCell();
-            if(key=='date'){
+            if (key == 'date') {
                 console.log(item[key])
                 var utcDate = new Date(item[key]);
-                var options = { 
-                    year: 'numeric', 
-                    month: '2-digit', 
-                    day: '2-digit', 
-                    timeZone: 'Asia/Kolkata' 
+                var options = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    timeZone: 'Asia/Kolkata'
                 };
                 cell.textContent = utcDate.toLocaleString('en-IN', options);
-            
-            }else{
-            cell.textContent = item[key];
+
+            } else {
+                cell.textContent = item[key];
             }
         });
-         // Add button to open popup
-         var buttonCell = row.insertCell();
-         var openPopupButton = document.createElement('button');
-         openPopupButton.className = 'button';
-         openPopupButton.textContent = 'View';
-         openPopupButton.addEventListener('click', function () {
-             openModal(item); // Pass the data item to the openPopup function
-         });
-         buttonCell.appendChild(openPopupButton);
+        // Add button to open popup
+        var buttonCell = row.insertCell();
+        var openPopupButton = document.createElement('button');
+        openPopupButton.className = 'button';
+        openPopupButton.textContent = 'View';
+        openPopupButton.addEventListener('click', function () {
+            openModal(item); // Pass the data item to the openPopup function
+        });
+        buttonCell.appendChild(openPopupButton);
+
+
+
+        //      // Add Edit button if user is admin
+        // if (isAdmin) {
+        //     var editCell = row.insertCell();
+        //     var editButton = document.createElement('button');
+        //     editButton.className = 'button edit-button';
+        //     var editLink = document.createElement('a');
+        //     editLink.href = '../account/updateAccount.html'; // Edit link destination
+        //     editLink.textContent = 'Edit';
+        //     editButton.appendChild(editLink);
+        //     editButton.addEventListener('click', function() {
+        //       editAccount(item); // Pass the user data to the edit function
+        //     });
+        //     editCell.appendChild(editButton);
+        // }
+
+        // Add Delete button if user is admin
+        if (isAdmin) {
+            var deleteCell = row.insertCell();
+            var deleteButton = document.createElement('button');
+            deleteButton.className = 'button delete-button';
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', function () {
+                deleteaccount(item.receipt_id); // Pass the user id to the delete function
+            });
+            deleteCell.appendChild(deleteButton);
+        }
+
+
+
+
+
     });
 
-     
 }
+
+
+// function editAccount(user) {
+//     localStorage.removeItem('userData');
+//     console.log('Editing user: ' + JSON.stringify(user));
+//     localStorage.setItem('userData', JSON.stringify(user));
+//      // Redirect to user_update.html
+//      window.location.href = '../account/updateAccount.html';
+//   }
+
+
+function deleteaccount(userId) {
+    // Perform delete operation based on userId
+    fetch('http://65.2.144.249/receiptReport/deleteReceiptReport/' + userId, {
+        method: 'DELETE'
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            alert("Record is successfully Deleted");
+            console.log('REcord deleted successfully');
+            // Refresh the table or update UI as needed
+            fetchDataAndProcess(); // Assuming you want to refresh the table after delete
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -151,7 +228,7 @@ function openModal(item) {
     // Your code to open the modal with the data from 'item'
     console.log("Opening modal for item:", item.receipt_id);
     var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+    loader.style.display = 'block';
 
     fetch('http://65.2.144.249/receiptReport/' + item.receipt_id)
         .then(response => {
@@ -212,7 +289,7 @@ function openModal(item) {
                 { label: "ऑनलाईन जमा बँक :", value: data.reports[0].online_deposite_bank },
                 { label: "ऑनलाईन जमा रक्कम:", value: data.reports[0].onlineAmt },
                 { label: "सूट रक्कम:", value: data.reports[0].discount },
-                { label: "जमा कॅरेट:  -" + "100 * " +data.reports[0].c100 +" | 150 * " + data.reports[0].c150+ " | 250 * " +data.reports[0].c250 + " | 350 * " + data.reports[0].c350, value: data.reports[0].inCarat },
+                { label: "जमा कॅरेट:  -" + "100 * " + data.reports[0].c100 + " | 150 * " + data.reports[0].c150 + " | 250 * " + data.reports[0].c250 + " | 350 * " + data.reports[0].c350, value: data.reports[0].inCarat },
                 { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.reports[0].Balance },
                 // Add other bill details similarly
             ];
@@ -247,7 +324,7 @@ function openModal(item) {
         modal.style.display = 'none'; // Close the modal when close button is clicked
     };
     modalContent.appendChild(closeButton);
-   
+
 
     // Add item data to modal content
     var itemData = document.createElement('div');

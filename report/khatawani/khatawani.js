@@ -71,7 +71,7 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['bill_no', 'date', 'cust_name','route','amount', 'carate_amount',"TotalKalam",'pre_balance','cash','online_acc','online_amt', 'discount','inCarat', 'balance'];
+    var columnsToDisplay = ['summary', 'date', 'customer_name','route','balance', 'out_carate',"total_balance",'cash','online_bank','online', 'discount','in_carate', 'remaining'];
     var counter = 1;
     console.log(data.reports)
     if (data.reports.length === 0) {
