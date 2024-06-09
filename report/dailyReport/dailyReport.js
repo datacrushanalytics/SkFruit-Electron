@@ -143,6 +143,11 @@ async function exportToExcel() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
+        const customHeaders = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'cash', 'online_amt', 'discount', 'inCarat', 'carate_amount'];
+
+        // Create a new worksheet with custom headers
+        const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
+
         // Map data for autoTable (Reports)
         const reportData = data.reports.map(report => [
             report.bill_no,
@@ -156,6 +161,12 @@ async function exportToExcel() {
             report.inCarat,
             report.carate_amount
         ]);
+
+        const customHeaders1 = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'cash', 'online', 'discount', 'inCarat', 'Amt'];
+
+        // Create a new worksheet with custom headers
+        const worksheet1 = XLSX.utils.aoa_to_sheet([customHeaders1]);
+
 
         // Add Reports table to PDF
         doc.autoTable({
