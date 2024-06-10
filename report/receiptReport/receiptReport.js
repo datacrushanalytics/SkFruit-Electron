@@ -267,6 +267,13 @@ function openModal(item) {
         justify-content: center;
     }
 
+
+    h6{
+        top: -17px;
+       position: absolute;
+       font-size: 12px;
+    }
+    
     .header .logo {
         width: auto; /* Adjust as needed */
         margin-right: 20px; /* Adjust as needed */
@@ -388,14 +395,15 @@ function openModal(item) {
 </head>
 <body>
 <div class="header">
+ <div> <h6> Mobile:- 9960607512  </h6> </div>
     <div class="logo">
         <img src="../../assets/img/logo.png" alt="Company Logo">
     </div>
     <div>
-        <h1>सावता फ्रुट सप्लायर्स</h1>
+       <center> <h1>सावता फ्रुट सप्लायर्स</h1>
         <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
         <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
-    </div>
+    </div> </center>
 </div>
 <div class="container2">
     <!-- Receipt details -->
