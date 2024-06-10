@@ -102,7 +102,6 @@ function populateTable4(data) {
 }
 
 
-
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
@@ -110,6 +109,17 @@ async function exportToExcel() {
         // Export to PDF using jsPDF and autoTable
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
+
+        const customHeaders = ['ID', 'Name', 'Address', 'Route Detail', 'Mobile No', 'Amount'];
+       // Adding header details
+       doc.setFontSize(10);
+       doc.text('Mobile:- 9960607512', 10, 10);
+       doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30);
+       doc.setFontSize(16);
+       doc.text('Savata Fruits Suppliers', 50, 20);
+       doc.setFontSize(12);
+       doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
+       doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
 
         // Map data for autoTable
         const reportData = data.reports.map(report => [
@@ -121,23 +131,17 @@ async function exportToExcel() {
             report.Amount
         ]);
 
+        // Calculate grand total
+        const grandTotal = data.reports.reduce((sum, report) => sum + report.Amount, 0);
+
+        // Add grand total row
+        reportData.push(['', '', '', '', 'Grand Total', grandTotal]);
+
         // Add table to PDF
         doc.autoTable({
             head: [customHeaders],
             body: reportData,
-            startY: 10,
-            theme: 'grid'
-        });
-
-        // Adding Grand Totals
-        const grandTotalsData = [
-            ["Grand Amount", data.Grand['Grand Amournt']]
-        ];
-
-        doc.autoTable({
-            head: [['Description', 'Amount']],
-            body: grandTotalsData,
-            startY: doc.autoTable.previous.finalY + 10,
+            startY: 50, // Adjust startY based on the header height
             theme: 'grid'
         });
 

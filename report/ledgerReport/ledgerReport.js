@@ -136,6 +136,7 @@ async function exportToExcel() {
         // Append the grand total row
         const grandTotalRow = [
             'Grand Total',
+
             '',
             data.Grand["Grand Balance"],
             data.Grand['Grand outCarate'],

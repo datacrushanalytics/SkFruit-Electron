@@ -115,6 +115,7 @@ function populateTable4(data) {
 
 
 async function exportToExcel() {
+    let customHeaders; // Define customHeaders outside the try block
     try {
         const data = await fetchDataAndProcess();
 
@@ -122,6 +123,20 @@ async function exportToExcel() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
+        customHeaders = ['id', 'date', 'gadi_number', 'bata', 'supplier_name', 'BillAmount', 'TotalQuantity']; // Assign customHeaders value here
+        
+        // Adding header details
+        doc.setFontSize(10);
+        doc.text('Mobile:- 9960607512', 10, 10);
+        doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+        doc.setFontSize(16);
+        doc.text('Savata Fruits Suppliers', 50, 10);
+        doc.setFontSize(12);
+        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 20);
+        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 30);
+        
+        let startY = 50;
+        
         // Map data for autoTable
         const reportData = data.reports.map(report => [
             report.id,
@@ -133,22 +148,18 @@ async function exportToExcel() {
             report.TotalQuantity
         ]);
 
+        // Calculate grand totals
+        const grandTotalAmount = data.reports.reduce((total, report) => total + parseFloat(report.BillAmount), 0);
+        const grandTotalQuantity = data.reports.reduce((total, report) => total + parseFloat(report.TotalQuantity), 0);
+
+        // Add grand totals row to reportData
+        reportData.push(['Grand Total:', '', '', '','', grandTotalAmount.toFixed(2), grandTotalQuantity.toFixed(2)]);
+
         // Add Reports table to PDF
         doc.autoTable({
             head: [customHeaders],
             body: reportData,
-            startY: 10,
-            theme: 'grid'
-        });
-
-        // Adding Grand Totals to PDF
-        doc.autoTable({
-            head: [['Description', 'Amount']],
-            body: [
-                ["BillAmount", data.Grand['Grand Amournt']],
-                ["TotalQuantity", data.Grand['Grand Quantity']]
-            ],
-            startY: doc.autoTable.previous.finalY + 10,
+            startY: 50,
             theme: 'grid'
         });
 

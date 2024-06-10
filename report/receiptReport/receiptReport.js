@@ -115,6 +115,21 @@ async function exportToExcel() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
+        const customHeaders = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'PaidAmt','online_deposite_bank', 'onlineAmt', 'discount', 'inCarat', 'Balance'];
+        
+        // Adding header details
+        doc.setFontSize(10);
+        doc.text('Mobile:- 9960607512', 10, 10);
+        doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+        doc.setFontSize(16);
+        doc.text('Savata Fruits Suppliers', 50, 10);
+        doc.setFontSize(12);
+        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 20);
+        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 30);
+        
+        let startY = 50;
+        
+
         // Map data for autoTable
         const reportData = data.reports.map(report => [
             report.receipt_id,
@@ -123,17 +138,19 @@ async function exportToExcel() {
             report.mobile_no,
             report.note,
             report.PaidAmt,
+            report.online_deposite_bank,
             report.onlineAmt,
             report.discount,
             report.inCarat,
-            report.Amt
+            report.Amt,
+            report.Balance // Ensure this field matches the actual field name in your data
         ]);
 
         // Add Reports table to PDF
         doc.autoTable({
             head: [customHeaders],
             body: reportData,
-            startY: 10,
+            startY: 50,
             theme: 'grid'
         });
 

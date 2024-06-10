@@ -98,10 +98,23 @@ async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
 
-        // Export to PDF using jsPDF and autoTable
+        // Initialize jsPDF
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
+        const customHeaders = ['name', 'address', 'mobile_no', 'Amount'];
+        // Adding header details
+        doc.setFontSize(10);
+        doc.text('Mobile:- 9960607512', 10, 10);
+        doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+        doc.setFontSize(16);
+        doc.text('Savata Fruits Suppliers', 50, 10);
+        doc.setFontSize(12);
+        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 20);
+        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 30);
+
+        let startY = 50;
+        
         // Map data for autoTable
         const reportData = data.reports.map(report => [
             report.name,
@@ -110,12 +123,18 @@ async function exportToExcel() {
             report.Amount
         ]);
 
-        // Add Reports table to PDF
+        // Calculate grand total
+        const grandTotal = reportData.reduce((acc, curr) => acc + curr[3], 0);
+
+        // Add grand total to the report data
+        const reportDataWithTotal = [...reportData, ['Grand Total', '', '', grandTotal]];
+
+        // Add report data to PDF
         doc.autoTable({
             head: [customHeaders],
-            body: reportData,
-            startY: 10,
-            theme: 'grid'
+            body: reportDataWithTotal,
+            startY: 50, // Adjust startY to leave space for header details and logo
+            theme: 'grid',
         });
 
         // Save the PDF
