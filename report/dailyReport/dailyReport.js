@@ -96,6 +96,42 @@ function populateTable4(data) {
             }
         });
     });    
+
+
+    // Add row for grand total
+    var totalRow = tbody.insertRow();
+    totalRow.insertCell(); // Add empty cell at the beginning for shifting
+    columnsToDisplay.forEach(function(key) {
+        var totalCell = totalRow.insertCell();
+        switch (key) {
+            case 'amount':
+                totalCell.textContent = data.GrandSale['saleAmount'];
+                break;
+            case 'online_amt':
+                totalCell.textContent = data.GrandSale['saleOnline'];
+                break;
+            case 'cash':
+                totalCell.textContent = data.GrandSale['saleCash'];
+                break;
+            case 'discount':
+                totalCell.textContent = data.GrandSale['saleDiscount'];
+                break;
+            case 'inCarat':
+                totalCell.textContent = data.GrandSale['saleInCarat'];
+                break;
+            case 'carate_amount':
+                totalCell.textContent = data.GrandSale['saleCarate'];
+                break;
+            default:
+                totalCell.textContent = '';
+        }
+    });
+
+
+
+
+
+
 }
 
 
@@ -129,7 +165,42 @@ function populateTable5(data) {
             cell.textContent = item[key];
             }
         });
-    });    
+    }); 
+
+
+
+    // Add row for grand total
+    var totalRow = tbody.insertRow();
+    totalRow.insertCell(); // Add empty cell at the beginning for shifting
+    columnsToDisplay.forEach(function(key) {
+        var totalCell = totalRow.insertCell();
+        switch (key) {
+            case 'Amt':
+                totalCell.textContent = data.GrandReceipt['receiptAmt'];
+                break;
+            case 'online':
+                totalCell.textContent = data.GrandReceipt['receiptOnline'];
+                break;
+            case 'cash':
+                totalCell.textContent = data.GrandReceipt['receiptCash'];
+                break;
+            case 'discount':
+                totalCell.textContent = data.GrandReceipt['receiptDiscount'];
+                break;
+            case 'inCarat':
+                totalCell.textContent = data.GrandReceipt['receiptInCarat'];
+                break;
+            default:
+                totalCell.textContent = '';
+        }
+    });
+
+    
+    
+
+
+
+
 }
 
 
