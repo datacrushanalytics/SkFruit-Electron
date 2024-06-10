@@ -179,4 +179,64 @@ function populateTable4(data) {
 }
 
 
+async function exportToExcel() {
+    try {
+        const data = await fetchDataAndProcess();
 
+        // Ensure jsPDF and autoTable are correctly imported
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+
+        // Adding header details
+        doc.setFontSize(10);
+        doc.text('Mobile:- 9960607512', 10, 10);
+        doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+        doc.setFontSize(16);
+        doc.text('Savata Fruits Suppliers', 50, 10);
+        doc.setFontSize(12);
+        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 20);
+        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 30);
+
+        let startY = 50;
+
+
+        // Define custom headers
+        const customHeaders = ['Date', 'Customer Name', 'Summary', 'Out Carate', 'Out Carate Total', 'In Carate', 'In Carate Total'];
+
+        // Map data for autoTable
+        const reportData = data.reports.map(report => [
+            report.carate_date,
+            report.customer_name,
+            report.summary,
+            report.OutCarate,
+            report.out_carate_total,
+            report.inCarate,
+            report.in_carate_total
+        ]);
+
+        // Add grand totals as the last row in reportData
+        const grandTotalRow = [
+            'Grand Total', '', '', '', 
+            data.Grand['Grand out_carate_total'], 
+            '', 
+            data.Grand['Grand in_carate_total']
+        ];
+
+        reportData.push(grandTotalRow);
+
+        // Add report data and grand total to PDF
+        doc.autoTable({
+            head: [customHeaders],
+            body: reportData,
+            startY: 50,
+            theme: 'grid',
+        });
+
+        // Save the PDF
+        doc.save('Carate_Report.pdf');
+
+    } catch (error) {
+        console.error('Error exporting data:', error);
+    }
+}

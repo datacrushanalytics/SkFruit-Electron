@@ -59,50 +59,6 @@ function fetchDataAndProcess() {
 }
 
 
-async function exportToExcel() {
-    try {
-        const data = await fetchDataAndProcess();
-
-        // Export to PDF using jsPDF and autoTable
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-
-        // Map data for autoTable
-        const reportData = data.reports.map(report => [
-            report.bill_id,
-            report.date,
-            report.cust_name,
-            report.address,
-            report.mobile_no,
-            report.Sandharbh,
-            report.product,
-            report.bata,
-            report.mark,
-            report.quantity,
-            report.rate,
-            report.price
-        ]);
-
-        // Add table to PDF
-        doc.autoTable({
-            head: [customHeaders],
-            body: reportData,
-            startY: 10,
-            theme: 'grid'
-        });
-
-        // Save the PDF
-        doc.save('Bata_Sale_Report.pdf');
-
-    } catch (error) {
-        console.error('Error exporting data:', error);
-    }
-}
-
-
-
-
-
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
@@ -638,3 +594,55 @@ function closePopup() {
 }
 
 
+async function exportToExcel() {
+    try {
+        const data = await fetchDataAndProcess();
+
+        // Export to PDF using jsPDF and autoTable
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const customHeaders = ['bill_id', 'date', 'cust_name','address','product', 'bata', 'mark', 'quantity', 'rate', 'price'];
+
+        // Adding header details
+        doc.setFontSize(10);
+        doc.text('Mobile:- 9960607512', 10, 10);
+        doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+        doc.setFontSize(16);
+        doc.text('Savata Fruits Suppliers', 50, 10);
+        doc.setFontSize(12);
+        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 20);
+        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 30);
+        
+        let startY = 50;
+        
+
+        // Map data for autoTable
+        const reportData = data.reports.map(report => [
+            report.bill_id,
+            new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
+            report.cust_name,
+            report.address,
+            report.product,
+            report.bata,
+            report.mark,
+            report.quantity,
+            report.rate,
+            report.price
+        ]);
+
+        // Add table to PDF
+        doc.autoTable({
+            head: [customHeaders],
+            body: reportData,
+            startY: 50,
+            theme: 'grid'
+        });
+
+        // Save the PDF
+        doc.save('Bata_Sale_Report.pdf');
+
+    } catch (error) {
+        console.error('Error exporting data:', error);
+    }
+}

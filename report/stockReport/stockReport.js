@@ -113,8 +113,26 @@ async function exportToExcel() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
-        // Map data for autoTable
+        
+        const customHeaders = ['purchase_id','gadi_number','supplier_name','product_name','bata','purchase', 'opening','purchase','sale','closing' ];
+
+        // Adding header details
+        doc.setFontSize(10);
+        doc.text('Mobile:- 9960607512', 10, 10);
+        doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+        doc.setFontSize(16);
+        doc.text('Savata Fruits Suppliers', 50, 10);
+        doc.setFontSize(12);
+        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 20);
+        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 30);
+        
+        let startY = 50;
+
+        // Map data for autoTable Purchase ID	Vehicle Number	Suppplier Name
         const reportData = data.reports.map(report => [
+            report.Purchase_iD,
+            report.gadi_number,
+            report.supplier_name,
             report.product_name,
             report.bata,
             report.purchase,
@@ -128,7 +146,7 @@ async function exportToExcel() {
         doc.autoTable({
             head: [customHeaders],
             body: reportData,
-            startY: 10,
+            startY: 50,
             theme: 'grid'
         });
 

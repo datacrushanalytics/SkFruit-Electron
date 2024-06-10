@@ -1,4 +1,3 @@
-
 function getElementValueWithDefault(id, defaultValue) {
     var element = document.getElementById(id);
     return element && element.value ? element.value : defaultValue;
@@ -12,13 +11,10 @@ function formatDate(dateString) {
     return year + '-' + month + '-' + day;
 }
 
-
-
 document.getElementById('loginForm1').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
     fetchDataAndProcess();
 });
-
 
 function fetchDataAndProcess() {
     var data = {
@@ -27,7 +23,7 @@ function fetchDataAndProcess() {
     };
 
     var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+    loader.style.display = 'block';
     return fetch('http://65.2.144.249/dailyReport', {
         method: 'POST',
         body: JSON.stringify(data),
@@ -37,8 +33,7 @@ function fetchDataAndProcess() {
     })
     .then(response => {
         if (response.status === 404) {
-
-        loader.style.display = 'none';
+            loader.style.display = 'none';
             alert("No data found.");
             throw new Error('Data not found');
         }
@@ -50,9 +45,9 @@ function fetchDataAndProcess() {
     .then(result => {
         loader.style.display = 'none';
         console.log(result)
-        populateTable4(result)
-        populateTable5(result)
-        return result
+        populateTable4(result);
+        populateTable5(result);
+        return result;
         // Optionally, you can redirect or show a success message here
     })
     .catch(error => {
@@ -60,10 +55,6 @@ function fetchDataAndProcess() {
         // Optionally, you can display an error message here
     });
 }
-
-
-
-
 
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
@@ -80,7 +71,7 @@ function populateTable4(data) {
         cell.textContent = counter++;
         columnsToDisplay.forEach(function(key) {
             var cell = row.insertCell();
-            if(key=='date'){
+            if(key == 'date') {
                 console.log(item[key])
                 var utcDate = new Date(item[key]);
                 var options = { 
@@ -90,9 +81,8 @@ function populateTable4(data) {
                     timeZone: 'Asia/Kolkata' 
                 };
                 cell.textContent = utcDate.toLocaleString('en-IN', options);
-            
-            }else{
-            cell.textContent = item[key];
+            } else {
+                cell.textContent = item[key];
             }
         });
     });    
@@ -134,7 +124,6 @@ function populateTable4(data) {
 
 }
 
-
 function populateTable5(data) {
     var tbody = document.getElementById('tableBody1');
     tbody.innerHTML = ''; // Clear existing rows
@@ -150,7 +139,7 @@ function populateTable5(data) {
         cell.textContent = counter++;
         columnsToDisplay.forEach(function(key) {
             var cell = row.insertCell();
-            if(key=='date'){
+            if(key == 'date') {
                 console.log(item[key])
                 var utcDate = new Date(item[key]);
                 var options = { 
@@ -160,9 +149,8 @@ function populateTable5(data) {
                     timeZone: 'Asia/Kolkata' 
                 };
                 cell.textContent = utcDate.toLocaleString('en-IN', options);
-            
-            }else{
-            cell.textContent = item[key];
+            } else {
+                cell.textContent = item[key];
             }
         });
     }); 
@@ -203,9 +191,6 @@ function populateTable5(data) {
 
 }
 
-
-
-
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
@@ -213,6 +198,18 @@ async function exportToExcel() {
         // Export to PDF using jsPDF and autoTable
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
+
+        // Adding header details
+        doc.setFontSize(10);
+        doc.text('Mobile:- 9960607512', 10, 10);
+        doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+        doc.setFontSize(16);
+        doc.text('Savata Fruits Suppliers', 50, 10);
+        doc.setFontSize(12);
+        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 20);
+        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 30);
+        
+        const customHeaders = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'cash', 'online_amt', 'discount', 'inCarat', 'carate_amount'];
 
         // Map data for autoTable (Reports)
         const reportData = data.reports.map(report => [
@@ -228,15 +225,35 @@ async function exportToExcel() {
             report.carate_amount
         ]);
 
+        // Calculate grand totals for Reports
+        const grandTotalReports = {
+            amount: data.reports.reduce((total, item) => total + item.amount, 0),
+            cash: data.reports.reduce((total, item) => total + item.cash, 0),
+            online_amt: data.reports.reduce((total, item) => total + item.online_amt, 0),
+            discount: data.reports.reduce((total, item) => total + item.discount, 0),
+            inCarat: data.reports.reduce((total, item) => total + item.inCarat, 0),
+            carate_amount: data.reports.reduce((total, item) => total + item.carate_amount, 0)
+        };
+
         // Add Reports table to PDF
         doc.autoTable({
             head: [customHeaders],
             body: reportData,
-            startY: 10,
+            startY: 50,
             theme: 'grid',
             headStyles: { fillColor: [255, 0, 0] },
             margin: { top: 10 }
         });
+
+        // Append grand totals to Reports table
+        doc.autoTable({
+            head: [['Grand Total', '', '', '', grandTotalReports.amount, grandTotalReports.cash, grandTotalReports.online_amt, grandTotalReports.discount, grandTotalReports.inCarat, grandTotalReports.carate_amount]],
+            body: [],
+            startY: doc.autoTable.previous.finalY,
+            theme: 'grid'
+        });
+
+        const customHeaders1 = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'cash', 'online', 'discount', 'inCarat', 'Amt'];
 
         // Map data for autoTable (Receipts)
         const receiptData = data.Receipt.map(receipt => [
@@ -252,6 +269,15 @@ async function exportToExcel() {
             receipt.Amt
         ]);
 
+        // Calculate grand totals for Receipts
+        const grandTotalReceipts = {
+            cash: data.Receipt.reduce((total, item) => total + item.cash, 0),
+            online: data.Receipt.reduce((total, item) => total + item.online, 0),
+            discount: data.Receipt.reduce((total, item) => total + item.discount, 0),
+            inCarat: data.Receipt.reduce((total, item) => total + item.inCarat, 0),
+            Amt: data.Receipt.reduce((total, item) => total + item.Amt, 0)
+        };
+
         // Add Receipts table to PDF
         doc.autoTable({
             head: [customHeaders1],
@@ -261,6 +287,16 @@ async function exportToExcel() {
             headStyles: { fillColor: [0, 255, 0] },
             margin: { top: 10 }
         });
+
+        // Append grand totals to Receipts table
+        doc.autoTable({
+            head: [['Grand Total', '', '', '', '', grandTotalReceipts.cash, grandTotalReceipts.online, grandTotalReceipts.discount, grandTotalReceipts.inCarat, grandTotalReceipts.Amt]],
+            body: [],
+            startY: doc.autoTable.previous.finalY,
+            theme: 'grid'
+        });
+
+        // Save the PDF
 
         // Save the PDF
         doc.save('Daily_Report.pdf');
