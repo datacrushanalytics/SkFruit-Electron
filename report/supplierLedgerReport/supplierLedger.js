@@ -130,52 +130,71 @@ function populateTable5(data) {
 
 
 
-
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
-    
+
         // Export to PDF using jsPDF and autoTable
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
+        const customHeaders = ['id', 'date', 'supplier_name', 'gadi_number', 'total_quantity'];
+
+        // Adding header details
+        doc.setFontSize(10);
+        doc.text('Mobile:- 9960607512', 10, 10);
+        doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+        doc.setFontSize(16);
+        doc.text('Savata Fruits Suppliers', 50, 10);
+        doc.setFontSize(12);
+        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 20);
+        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 30);
+
+        let startY = 50;
 
         // Map data for autoTable (Reports)
         const reportData = data.reports.map(report => [
-            report.bill_no,
-            report.date,
-            report.cust_name,
-            report.route,
-            report.amount,
-            report.cash,
-            report.online_amt,
-            report.discount,
-            report.inCarat,
-            report.carate_amount
+            report.id,
+            new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
+            report.supplier_name,
+            report.gadi_number,
+            report.total_quantity
         ]);
+
+        // Calculate grand total for reports
+        let grandTotalQuantity = data.reports.reduce((acc, report) => acc + report.total_quantity, 0);
+        
+        // Append grand total row to Reports table data
+        reportData.push(['', '', '', 'Grand Total:', grandTotalQuantity]);
 
         // Add Reports table to PDF
         doc.autoTable({
             head: [customHeaders],
             body: reportData,
-            startY: 10,
+            startY: startY,
             theme: 'grid',
             headStyles: { fillColor: [255, 0, 0] },
             margin: { top: 10 }
         });
 
+        const customHeaders1 = ['p_id', 'date', 'from_account', 'to_account', 'comment', 'pre_balance', 'amounr'];
+
         // Map data for autoTable (Receipts)
         const receiptData = data.Receipt.map(receipt => [
-            receipt.receipt_id,
-            receipt.date,
-            receipt.Customer,
-            receipt.mobile_no,
-            receipt.note,
-            receipt.cash,
-            receipt.online,
-            receipt.discount,
-            receipt.inCarat,
-            receipt.Amt
+            receipt.p_id,
+            new Date(receipt.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
+            receipt.from_account,
+            receipt.to_account,
+            receipt.comment,
+            receipt.pre_balance,
+            receipt.amounr
         ]);
+
+         // Calculate grand total for receipts
+         let grandTotalPreBalance = data.Receipt.reduce((acc, receipt) => acc + receipt.pre_balance, 0);
+         let grandTotalamounr = data.Receipt.reduce((acc, receipt) => acc + receipt.amounr, 0);
+ 
+         // Append grand total row to Receipts table data
+         receiptData.push(['', '', '', '', 'Grand Total:', grandTotalPreBalance, grandTotalamounr]);
 
         // Add Receipts table to PDF
         doc.autoTable({
@@ -188,7 +207,7 @@ async function exportToExcel() {
         });
 
         // Save the PDF
-        doc.save('Daily_Report.pdf');
+        doc.save('Supplier Ledger Report.pdf');
 
     } catch (error) {
         console.error('Error exporting data:', error);

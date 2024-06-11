@@ -61,54 +61,6 @@ function fetchDataAndProcess() {
 
 
 
-async function exportToExcel() {
-    try {
-        const data = await fetchDataAndProcess();
-
-        // Export to PDF using jsPDF and autoTable
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-
-        // Map data for autoTable
-        const reportData = data.reports.map(report => [
-            report.carate_date,
-            report.customer_name,
-            report.summary,
-            report.OutCarate,
-            report.out_carate_total,
-            report.inCarate,
-            report.in_carate_total
-        ]);
-
-        // Add table to PDF
-        doc.autoTable({
-            head: [customHeaders],
-            body: reportData,
-            startY: 10,
-            theme: 'grid'
-        });
-
-        // Adding Grand Totals to PDF
-        doc.autoTable({
-            head: [['Description', 'Amount']],
-            body: [
-                ["Grand in_carate_total", data.Grand["Grand in_carate_total"]],
-                ["Grand out_carate_total", data.Grand["Grand out_carate_total"]]
-            ],
-            startY: doc.autoTable.previous.finalY + 10,
-            theme: 'grid'
-        });
-
-        // Save the PDF
-        doc.save('Carate_Report.pdf');
-
-    } catch (error) {
-        console.error('Error exporting data:', error);
-    }
-}
-
-
-
 
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
