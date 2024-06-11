@@ -183,13 +183,23 @@ function populateTable5(data) {
         }
     });
 
-    
-    
-
-
-
+    document.getElementById('sale').textContent = data.GrandSale['saleAmount'] || 0;
+    document.getElementById('saleCash').textContent =data.GrandSale['saleCash'] || 0;
+    document.getElementById('receiptCash').textContent = data.GrandReceipt['receiptCash'] || 0;
+    document.getElementById('receiptOnline').textContent = data.GrandReceipt['receiptOnline'] || 0;
+    document.getElementById('saleOnline').textContent = data.GrandSale['saleOnline'] || 0;
+    document.getElementById('saleDiscount').textContent = data.GrandSale['saleDiscount'] || 0;
+    document.getElementById('receiptDiscount').textContent = data.GrandReceipt['receiptDiscount'] || 0;
+    document.getElementById('grandSale').textContent = data.GrandSale['saleAmount'] || 0;
+    document.getElementById('grandCash').textContent = data.GrandSale['saleCash'] || 0 + data.GrandReceipt['receiptCash'] || 0
+    document.getElementById('grandOnline').textContent = data.GrandReceipt['receiptOnline'] || 0 + data.GrandSale['saleOnline'] || 0;
+    document.getElementById('grandDiscount').textContent = data.GrandReceipt['receiptDiscount'] || 0 + data.GrandSale['saleDiscount'] || 0;
+    document.getElementById('grandTotal').textContent = data.GrandSale['saleCash'] || 0 + data.GrandReceipt['receiptCash'] || 0 + data.GrandReceipt['receiptOnline'] || 0 + data.GrandSale['saleOnline'] || 0;
 
 }
+
+
+
 
 async function exportToExcel() {
     try {
