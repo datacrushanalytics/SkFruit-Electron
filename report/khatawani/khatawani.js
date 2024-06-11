@@ -68,83 +68,157 @@ function fetchDataAndProcess() {
 }
 
 
+// function populateTable4(data) {
+//     var tbody = document.getElementById('tableBody');
+//     tbody.innerHTML = ''; // Clear existing rows
+//     var columnsToDisplay = ['summary', 'date', 'customer_name','route','balance', 'out_carate',"total_balance",'cash','online_bank','online', 'discount','in_carate', 'remaining'];
+//     var counter = 1;
+//     console.log(data.reports)
+//     if (data.reports.length === 0) {
+//         alert("No Data Found");
+//     }
+//     data.reports.forEach(function(item) {
+//         var row = tbody.insertRow();
+//         var cell = row.insertCell();
+//         cell.textContent = counter++;
+//         columnsToDisplay.forEach(function(key) {
+//             var cell = row.insertCell();
+//             if(key=='date'){
+//                 console.log(item[key])
+//                 var utcDate = new Date(item[key]);
+//                 var options = { 
+//                     year: 'numeric', 
+//                     month: '2-digit', 
+//                     day: '2-digit', 
+//                     timeZone: 'Asia/Kolkata' 
+//                 };
+//                 cell.textContent = utcDate.toLocaleString('en-IN', options);
+            
+//             }else{
+//             cell.textContent = item[key];
+//             }
+//         });
+//          // Add button to open popup
+//          var buttonCell = row.insertCell();
+//          var openPopupButton = document.createElement('button');
+//          openPopupButton.className = 'button';
+//          openPopupButton.textContent = 'View';
+//          openPopupButton.addEventListener('click', function () {
+//              openModal(item); // Pass the data item to the openPopup function
+//          });
+//          buttonCell.appendChild(openPopupButton);
+//     });
+
+//      // Add row for grand total
+//     var totalRow = tbody.insertRow();
+//     totalRow.insertCell(); // Add empty cell at the beginning for shifting
+//     columnsToDisplay.forEach(function(key) {
+//         var totalCell = totalRow.insertCell();
+//         switch (key) {
+//             case 'amount':
+//                 totalCell.textContent = data.Grand['Grand Bill Amount'];
+//                 break;
+//             case 'carate_amount':
+//                 totalCell.textContent = data.Grand['Grand outCarate'];
+//                 break;
+//             case 'TotalKalam':
+//                 totalCell.textContent = data.Grand['Total Bill Amount'];
+//                 break;
+//             case 'pre_balance':
+//                 totalCell.textContent = data.Grand['Grand Previous balance'];
+//                 break;
+//             case 'cash':
+//                 totalCell.textContent = data.Grand['Cash'];
+//                 break;
+//             case 'online_amt':
+//                 totalCell.textContent = data.Grand['Online Amount'];
+//                 break;
+//             case 'discount':
+//                 totalCell.textContent = data.Grand['Grand Discount'];
+//                 break;
+//             case 'inCarat':
+//                 totalCell.textContent = data.Grand['Grand inCarate'];
+//                 break;
+//             case 'balance':
+//                 totalCell.textContent = data.Grand['Grand balance'];
+//                 break;
+//             default:
+//                 totalCell.textContent = '';
+//         }
+//     });
+// }
+
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['summary', 'date', 'customer_name','route','balance', 'out_carate',"total_balance",'cash','online_bank','online', 'discount','in_carate', 'remaining'];
+    var columnsToDisplay = ['summary', 'date', 'customer_name', 'route', 'balance', 'out_carate', 'total_balance', 'cash', 'online_bank', 'online', 'discount', 'in_carate', 'remaining'];
     var counter = 1;
-    console.log(data.reports)
+    console.log(data.reports);
+    
     if (data.reports.length === 0) {
         alert("No Data Found");
     }
+
+    var grandTotals = {
+        balance: 0,
+        out_carate: 0,
+        total_balance: 0,
+        cash: 0,
+        online_bank: 0,
+        online: 0,
+        discount: 0,
+        in_carate: 0,
+        remaining: 0
+    };
+
     data.reports.forEach(function(item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
         cell.textContent = counter++;
         columnsToDisplay.forEach(function(key) {
             var cell = row.insertCell();
-            if(key=='date'){
-                console.log(item[key])
+            if (key === 'date') {
+                console.log(item[key]);
                 var utcDate = new Date(item[key]);
-                var options = { 
-                    year: 'numeric', 
-                    month: '2-digit', 
-                    day: '2-digit', 
-                    timeZone: 'Asia/Kolkata' 
+                var options = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    timeZone: 'Asia/Kolkata'
                 };
                 cell.textContent = utcDate.toLocaleString('en-IN', options);
-            
-            }else{
-            cell.textContent = item[key];
+            } else {
+                cell.textContent = item[key];
+                if (key in grandTotals) {
+                    grandTotals[key] += parseFloat(item[key]) || 0;
+                }
             }
         });
-         // Add button to open popup
-         var buttonCell = row.insertCell();
-         var openPopupButton = document.createElement('button');
-         openPopupButton.className = 'button';
-         openPopupButton.textContent = 'View';
-         openPopupButton.addEventListener('click', function () {
-             openModal(item); // Pass the data item to the openPopup function
-         });
-         buttonCell.appendChild(openPopupButton);
+
+        // Add button to open popup
+        var buttonCell = row.insertCell();
+        var openPopupButton = document.createElement('button');
+        openPopupButton.className = 'button';
+        openPopupButton.textContent = 'View';
+        openPopupButton.addEventListener('click', function () {
+            openModal(item); // Pass the data item to the openPopup function
+        });
+        buttonCell.appendChild(openPopupButton);
     });
 
-     // Add row for grand total
+    // Add row for grand total
     var totalRow = tbody.insertRow();
-    totalRow.insertCell(); // Add empty cell at the beginning for shifting
-    columnsToDisplay.forEach(function(key) {
+    totalRow.insertCell(); // Add empty cell for counter column
+    totalRow.insertCell(); // Add empty cell for summary column
+    totalRow.insertCell(); // Add empty cell for date column
+    totalRow.insertCell(); // Add empty cell for customer_name column
+
+    var grandTotalLabelCell = totalRow.insertCell();
+    grandTotalLabelCell.textContent = 'Grand Total';
+
+    columnsToDisplay.slice(4).forEach(function(key) {
         var totalCell = totalRow.insertCell();
-        switch (key) {
-            case 'amount':
-                totalCell.textContent = data.Grand['Grand Bill Amount'];
-                break;
-            case 'carate_amount':
-                totalCell.textContent = data.Grand['Grand outCarate'];
-                break;
-            case 'TotalKalam':
-                totalCell.textContent = data.Grand['Total Bill Amount'];
-                break;
-            case 'pre_balance':
-                totalCell.textContent = data.Grand['Grand Previous balance'];
-                break;
-            case 'cash':
-                totalCell.textContent = data.Grand['Cash'];
-                break;
-            case 'online_amt':
-                totalCell.textContent = data.Grand['Online Amount'];
-                break;
-            case 'discount':
-                totalCell.textContent = data.Grand['Grand Discount'];
-                break;
-            case 'inCarat':
-                totalCell.textContent = data.Grand['Grand inCarate'];
-                break;
-            case 'balance':
-                totalCell.textContent = data.Grand['Grand balance'];
-                break;
-            default:
-                totalCell.textContent = '';
-        }
+        totalCell.textContent = grandTotals[key] || '';
     });
 }
 
