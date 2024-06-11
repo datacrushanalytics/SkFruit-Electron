@@ -56,42 +56,48 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['name','address','mobile_no',"Amount"];
+    var columnsToDisplay = ['name', 'address', 'mobile_no', 'Amount'];
     var counter = 1;
     console.log(data.reports)
     if (data.reports.length === 0) {
         alert("No Data Found");
     }
-    data.reports.forEach(function(item) {
+    data.reports.forEach(function (item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
         cell.textContent = counter++;
-        columnsToDisplay.forEach(function(key) {
+        columnsToDisplay.forEach(function (key) {
             var cell = row.insertCell();
-            if(key=='date'){
+            if (key === 'date') {
                 console.log(item[key])
                 var utcDate = new Date(item[key]);
-                var options = { 
-                    year: 'numeric', 
-                    month: '2-digit', 
-                    day: '2-digit', 
-                    timeZone: 'Asia/Kolkata' 
+                var options = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    timeZone: 'Asia/Kolkata'
                 };
                 cell.textContent = utcDate.toLocaleString('en-IN', options);
-            
-            }else{
-            cell.textContent = item[key];
+            } else {
+                cell.textContent = item[key];
             }
         });
     });
 
-     // Add row for grand total
-     var totalRow = tbody.insertRow();
-     var totalCell = totalRow.insertCell();
-     totalCell.colSpan = columnsToDisplay.length;
-     totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Amount'] + ' ("Grand Amount") ';                                                                                                                                                                                                                                                     
-}
+    // Add row for grand total
+    var totalRow = tbody.insertRow();
+    var totalCell = totalRow.insertCell();
+    totalCell.colSpan = columnsToDisplay.length - 3; // Skip the first three columns
 
+    columnsToDisplay.forEach(function (key) {
+        var cell = totalRow.insertCell();
+        if (key === 'Amount') {
+            cell.textContent = data.Grand['Grand Amount'];
+        } else {
+            cell.textContent = '';
+        }
+    });
+}
 
 
 async function exportToExcel() {
