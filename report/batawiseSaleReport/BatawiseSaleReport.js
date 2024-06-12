@@ -609,10 +609,10 @@ async function exportToExcel() {
         doc.text('Mobile:- 9960607512', 10, 10);
         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
         doc.setFontSize(16);
-        doc.text('Savata Fruits Suppliers', 50, 10);
+        doc.text('Savata Fruits Suppliers', 50, 20);
         doc.setFontSize(12);
-        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 20);
-        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 30);
+        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
+        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
         
         let startY = 50;
         

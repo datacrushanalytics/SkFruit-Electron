@@ -56,42 +56,48 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['name','address','mobile_no',"Amount"];
+    var columnsToDisplay = ['name', 'address', 'mobile_no', 'Amount'];
     var counter = 1;
     console.log(data.reports)
     if (data.reports.length === 0) {
         alert("No Data Found");
     }
-    data.reports.forEach(function(item) {
+    data.reports.forEach(function (item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
         cell.textContent = counter++;
-        columnsToDisplay.forEach(function(key) {
+        columnsToDisplay.forEach(function (key) {
             var cell = row.insertCell();
-            if(key=='date'){
+            if (key === 'date') {
                 console.log(item[key])
                 var utcDate = new Date(item[key]);
-                var options = { 
-                    year: 'numeric', 
-                    month: '2-digit', 
-                    day: '2-digit', 
-                    timeZone: 'Asia/Kolkata' 
+                var options = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    timeZone: 'Asia/Kolkata'
                 };
                 cell.textContent = utcDate.toLocaleString('en-IN', options);
-            
-            }else{
-            cell.textContent = item[key];
+            } else {
+                cell.textContent = item[key];
             }
         });
     });
 
-     // Add row for grand total
-     var totalRow = tbody.insertRow();
-     var totalCell = totalRow.insertCell();
-     totalCell.colSpan = columnsToDisplay.length;
-     totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Amount'] + ' ("Grand Amount") ';                                                                                                                                                                                                                                                     
-}
+    // Add row for grand total
+    var totalRow = tbody.insertRow();
+    var totalCell = totalRow.insertCell();
+    totalCell.colSpan = columnsToDisplay.length - 3; // Skip the first three columns
 
+    columnsToDisplay.forEach(function (key) {
+        var cell = totalRow.insertCell();
+        if (key === 'Amount') {
+            cell.textContent = data.Grand['Grand Amount'];
+        } else {
+            cell.textContent = '';
+        }
+    });
+}
 
 
 async function exportToExcel() {
@@ -108,10 +114,10 @@ async function exportToExcel() {
         doc.text('Mobile:- 9960607512', 10, 10);
         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
         doc.setFontSize(16);
-        doc.text('Savata Fruits Suppliers', 50, 10);
+        doc.text('Savata Fruits Suppliers', 50, 20);
         doc.setFontSize(12);
-        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 20);
-        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 30);
+        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
+        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
 
         let startY = 50;
         

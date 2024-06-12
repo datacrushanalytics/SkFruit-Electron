@@ -49,9 +49,12 @@ function populateTable(data) {
     var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
     var columnsToDisplay = ['name', 'address', 'mobile_no', 'last_update', 'current_balance'];
     var counter = 1;
+    var totalCurrentBalance = 0;
+
     if (data.length === 0) {
         alert("No Data Found");
     }
+
     data.forEach(function(item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
@@ -73,6 +76,9 @@ function populateTable(data) {
                 }
             } else {
                 cell.textContent = item[key];
+                if (key === 'current_balance') {
+                    totalCurrentBalance += parseFloat(item[key]);
+                }
             }
         });
 
@@ -90,11 +96,39 @@ function populateTable(data) {
             editCell.appendChild(editButton);
         }
     });
+
+    // Add a row for the grand total
+    var totalRow = tbody.insertRow();
+
+    // Create empty cells before the 'Grand Total' label and the total amount cell
+    for (let i = 0; i < columnsToDisplay.length - 1; i++) {
+        var emptyCell = totalRow.insertCell();
+        emptyCell.textContent = '';
+    }
+
+    // Add the 'Grand Total' label
+    var grandTotalLabelCell = totalRow.insertCell();
+    grandTotalLabelCell.textContent = 'Grand Total';
+    grandTotalLabelCell.style.fontWeight = 'bold';
+    grandTotalLabelCell.style.textAlign = 'right';
+
+    // Add the total amount cell
+    var totalCell = totalRow.insertCell();
+    totalCell.textContent = totalCurrentBalance.toFixed(2); // Assuming you want 2 decimal places
+    totalCell.style.fontWeight = 'bold';
+    totalCell.style.textAlign = 'right';
+
+    // Add an empty cell after the total amount if there are admin columns
+    if (isAdmin) {
+        var adminCell = totalRow.insertCell();
+        adminCell.textContent = '';
+    }
 }
 
 function editUser(user) {
-    console.log("jhsgjhwdgjhgjh");
+    console.log("Editing user data");
     localStorage.setItem('remainderData', JSON.stringify(user));
+    // Redirect to user_update.html
     window.location.href = '../remainder/update_remainder.html';
 }
 

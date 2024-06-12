@@ -70,7 +70,7 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'carate_amount', 'pre_balance','total_amount', 'online_amt', 'discount', 'inCarat', 'PaidAmount', 'balance', 'comment'];
+    var columnsToDisplay = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'carate_amount', 'pre_balance', 'total_amount', 'online_amt', 'discount', 'inCarat', 'PaidAmount', 'balance', 'comment'];
     var counter = 1;
     console.log(data.reports)
     if (data.reports.length === 0) {
@@ -82,7 +82,7 @@ function populateTable4(data) {
         cell.textContent = counter++;
         columnsToDisplay.forEach(function (key) {
             var cell = row.insertCell();
-            if (key == 'date') {
+            if (key === 'date') {
                 console.log(item[key])
                 var utcDate = new Date(item[key]);
                 var options = {
@@ -108,15 +108,47 @@ function populateTable4(data) {
             openModal(item); // Pass the data item to the openPopup function
         });
         buttonCell.appendChild(openPopupButton);
-
     });
-
 
     // Add row for grand total
     var totalRow = tbody.insertRow();
-    var totalCell = totalRow.insertCell();
-    totalCell.colSpan = columnsToDisplay.length;
-    totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Bill Amount'] + ' (Grand Bill Amount), ' + data.Grand['Grand outCarate'] + ' (Grand outCarate)' + data.Grand['Total Bill Amount'] + ' (Total Bill Amount), ' + data.Grand['Online Amount'] + ' (Online Amount)' + data.Grand['Grand Discount'] + ' (Grand Discount), ' + data.Grand['Grand inCarate'] + ' (Grand inCarate)' + data.Grand['Grand Paid Amount'] + ' (Grand Paid Amount), ' + data.Grand['Grand Balance'] + ' (Grand Balance)';
+    totalRow.insertCell().colSpan = 1; // Skip the first column
+
+    columnsToDisplay.forEach(function (key) {
+        var cell = totalRow.insertCell();
+        switch (key) {
+            case 'amount':
+                cell.textContent = data.Grand['Grand Bill Amount'];
+                break;
+            case 'carate_amount':
+                cell.textContent = data.Grand['Grand outCarate'];
+                break;
+            case 'total_amount':
+                cell.textContent = data.Grand['Total Bill Amount'];
+                break;
+            case 'online_amt':
+                cell.textContent = data.Grand['Online Amount'];
+                break;
+            case 'discount':
+                cell.textContent = data.Grand['Grand Discount'];
+                break;
+            case 'inCarat':
+                cell.textContent = data.Grand['Grand inCarate'];
+                break;
+            case 'PaidAmount':
+                cell.textContent = data.Grand['Grand Paid Amount'];
+                break;
+            case 'balance':
+                cell.textContent = data.Grand['Grand Balance'];
+                break;
+            default:
+                cell.textContent = '';
+                break;
+        }
+    });
+
+    // Add a final cell for the "Bill" column, leaving it empty
+    totalRow.insertCell();
 }
 
 

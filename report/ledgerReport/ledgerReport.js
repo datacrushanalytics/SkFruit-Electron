@@ -50,6 +50,9 @@ async function fetchDataAndProcess() {
         loader.style.display = 'none';
     }
 }
+
+
+
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
@@ -59,11 +62,11 @@ function populateTable4(data) {
     if (data.reports.length === 0) {
         alert("No Data Found");
     }
-    data.reports.forEach(function(item) {
+    data.reports.forEach(function (item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
         cell.textContent = counter++;
-        columnsToDisplay.forEach(function(key) {
+        columnsToDisplay.forEach(function (key) {
             var cell = row.insertCell();
             if (key == 'date') {
                 console.log(item[key])
@@ -79,15 +82,48 @@ function populateTable4(data) {
                 cell.textContent = item[key];
             }
         });
-        
+
     });
- // Add row for grand total
-     var totalRow = tbody.insertRow();
-     var totalCell = totalRow.insertCell();
-     totalCell.colSpan = columnsToDisplay.length;
+
+    // Add row for grand total
+    var totalRow = tbody.insertRow();
+    totalRow.insertCell().colSpan = 1; // Skip the first column
+
+    columnsToDisplay.forEach(function (key) {
+        var cell = totalRow.insertCell();
+        switch (key) {
+            case 'balance':
+                cell.textContent = data.Grand['Grand Balance'];
+                break;
+            case 'out_carate':
+                cell.textContent = data.Grand['Grand outCarate'];
+                break;
+            case 'total_balance':
+                cell.textContent = data.Grand['Total Balance'];
+                break;
+            case 'cash':
+                cell.textContent = data.Grand['Total Cash'];
+                break;
+            case 'online':
+                cell.textContent = data.Grand['Total Online'];
+                break;
+            case 'discount':
+                cell.textContent = data.Grand['Grand Discount'];
+                break;
+            case 'in_carate':
+                cell.textContent = data.Grand['Grand inCarate'];
+                break;
+            case 'remaining':
+                cell.textContent = data.Grand['Grand Remaining Amount'];
+                break;
+            default:
+                cell.textContent = '';
+                break;
+        }
+    });
 
     if (document.getElementById('customer').value !== '') {
-        console.log("Custometr not seletced ")
+        console.log("Customer not selected");
         fetch('http://65.2.144.249/carateuserData/' + document.getElementById('customer').value)
             .then(response => {
                 if (!response.ok) {
@@ -99,22 +135,33 @@ function populateTable4(data) {
             .then(data1 => {
                 // Populate dropdown with API data
                 console.log(data1)
-                // totalCell.textContent = 'Grand Total: ' + data.Grand['Grand in_carate_total'] + ' (Grand in_carate_total), ' + data.Grand['Grand out_carate_total'] + ' (Grand out_carate_total) <br>   Remaining Carate of Customer :  100 => ' + data1[0]['carate_100'] + ' 150 => '+  data1[0]['carate_150']+ ' 250 => ' + data1[0]['carate_250']+ ' 350 => '+ data1[0]['carate_350'];
-
-                totalCell.innerHTML = 'Grand Total: ' + data.Grand['"Grand Balance"'] + ' ("Grand Balance"), ' + data.Grand['Grand outCarate'] + ' (Grand outCarate)' + data.Grand['Total Balance'] + ' (Total Balance), ' + data.Grand['Total Cash'] + ' (Total Cash)' + data.Grand['Total Online'] + ' (Total Online), ' + data.Grand['Grand Discount'] + ' (Grand Discount)' + data.Grand['Grand inCarate'] + ' (Grand inCarate), ' + data.Grand['Grand Remaining Amount'] + ' (Grand Remaining Amount) <br>' +  
-    'Remaining Carate of Customer :\n' + 
-    '100 => ' + data1[0]['carate_100'] + '\n' +
-    '150 => ' + data1[0]['carate_150'] + '\n' +
-    '250 => ' + data1[0]['carate_250'] + '\n' +
-    '350 => ' + data1[0]['carate_350'];
-
-            })
-        }else{
-    
-     totalCell.textContent = 'Grand Total: ' + data.Grand['"Grand Balance"'] + ' ("Grand Balance"), ' + data.Grand['Grand outCarate'] + ' (Grand outCarate)' + data.Grand['Total Balance'] + ' (Total Balance), ' + data.Grand['Total Cash'] + ' (Total Cash)' + data.Grand['Total Online'] + ' (Total Online), ' + data.Grand['Grand Discount'] + ' (Grand Discount)' + data.Grand['Grand inCarate'] + ' (Grand inCarate), ' + data.Grand['Grand Remaining Amount'] + ' (Grand Remaining Amount)';                                                                                                                                                                                                                                                     
+                totalCell.innerHTML = 'Grand Total: ' + 
+                    data.Grand['Grand Balance'] + ' ("Grand Balance"), ' + 
+                    data.Grand['Grand outCarate'] + ' (Grand outCarate)' + 
+                    data.Grand['Total Balance'] + ' (Total Balance), ' + 
+                    data.Grand['Total Cash'] + ' (Total Cash)' + 
+                    data.Grand['Total Online'] + ' (Total Online), ' + 
+                    data.Grand['Grand Discount'] + ' (Grand Discount)' + 
+                    data.Grand['Grand inCarate'] + ' (Grand inCarate), ' + 
+                    data.Grand['Grand Remaining Amount'] + ' (Grand Remaining Amount) <br>' +  
+                    'Remaining Carate of Customer :<br>' + 
+                    '100 => ' + data1[0]['carate_100'] + '<br>' +
+                    '150 => ' + data1[0]['carate_150'] + '<br>' +
+                    '250 => ' + data1[0]['carate_250'] + '<br>' +
+                    '350 => ' + data1[0]['carate_350'];
+            });
+    } else {
+        totalCell.textContent = 'Grand Total: ' + 
+            data.Grand['Grand Balance'] + ' ("Grand Balance"), ' + 
+            data.Grand['Grand outCarate'] + ' (Grand outCarate)' + 
+            data.Grand['Total Balance'] + ' (Total Balance), ' + 
+            data.Grand['Total Cash'] + ' (Total Cash)' + 
+            data.Grand['Total Online'] + ' (Total Online), ' + 
+            data.Grand['Grand Discount'] + ' (Grand Discount)' + 
+            data.Grand['Grand inCarate'] + ' (Grand inCarate), ' + 
+            data.Grand['Grand Remaining Amount'] + ' (Grand Remaining Amount)';
+    }
 }
-}
-
 
 
 async function exportToExcel() {
@@ -130,10 +177,10 @@ async function exportToExcel() {
         doc.text('Mobile:- 9960607512', 10, 10);
         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
         doc.setFontSize(16);
-        doc.text('Savata Fruits Suppliers', 50, 10);
+        doc.text('Savata Fruits Suppliers', 50, 20);
         doc.setFontSize(12);
-        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 20);
-        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 30);
+        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
+        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
 
         // Add customer name and route
         if (document.getElementById('customer').value !== '') {

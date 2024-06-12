@@ -184,6 +184,61 @@ function deleteaccount(userId) {
 
 
 
+// async function exportToExcel() {
+//     try {
+//         const data = await fetchDataAndProcess();
+
+//         // Export to PDF using jsPDF and autoTable
+//         const { jsPDF } = window.jspdf;
+//         const doc = new jsPDF();
+
+//         const customHeaders = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'PaidAmt','online_deposite_bank', 'onlineAmt', 'discount', 'inCarat', 'Balance'];
+        
+//         // Adding header details
+//         doc.setFontSize(10);
+//         doc.text('Mobile:- 9960607512', 10, 10);
+//         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+//         doc.setFontSize(16);
+//         doc.text('Savata Fruits Suppliers', 50, 10);
+//         doc.setFontSize(12);
+//         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 20);
+//         doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 30);
+        
+//         let startY = 50;
+        
+
+//         // Map data for autoTable
+//         const reportData = data.reports.map(report => [
+//             report.receipt_id,
+//             new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
+//             report.Customer,
+//             report.mobile_no,
+//             report.note,
+//             report.PaidAmt,
+//             report.online_deposite_bank,
+//             report.onlineAmt,
+//             report.discount,
+//             report.inCarat,
+//             report.Amt,
+//             report.Balance // Ensure this field matches the actual field name in your data
+//         ]);
+
+//         // Add Reports table to PDF
+//         doc.autoTable({
+//             head: [customHeaders],
+//             body: reportData,
+//             startY: 50,
+//             theme: 'grid'
+//         });
+
+//         // Save the PDF
+//         doc.save('Receipt_Report.pdf');
+
+//     } catch (error) {
+//         console.error('Error exporting data:', error);
+//     }
+// }
+
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
@@ -192,17 +247,17 @@ async function exportToExcel() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
-        const customHeaders = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'PaidAmt','online_deposite_bank', 'onlineAmt', 'discount', 'inCarat', 'Balance'];
+        const customHeaders = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'PaidAmt', 'online_deposite_bank', 'onlineAmt', 'discount', 'inCarat', 'Balance'];
         
         // Adding header details
         doc.setFontSize(10);
         doc.text('Mobile:- 9960607512', 10, 10);
         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
         doc.setFontSize(16);
-        doc.text('Savata Fruits Suppliers', 50, 10);
+        doc.text('Savata Fruits Suppliers', 50, 20);
         doc.setFontSize(12);
-        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 20);
-        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 30);
+        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
+        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
         
         let startY = 50;
         
@@ -219,7 +274,6 @@ async function exportToExcel() {
             report.onlineAmt,
             report.discount,
             report.inCarat,
-            report.Amt,
             report.Balance // Ensure this field matches the actual field name in your data
         ]);
 
@@ -238,7 +292,6 @@ async function exportToExcel() {
         console.error('Error exporting data:', error);
     }
 }
-
 
 
 function openModal(item) {
