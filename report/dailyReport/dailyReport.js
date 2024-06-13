@@ -251,14 +251,7 @@ async function exportToExcel() {
             headStyles: { fillColor: [0, 255, 0] },
             margin: { top: 10 }
         });
-        // // Append grand totals to Receipts table
-        // doc.autoTable({
-        //     head: [['Grand Total', '', '', '', '', grandTotalReceipts.cash, grandTotalReceipts.online, grandTotalReceipts.discount, grandTotalReceipts.inCarat, grandTotalReceipts.Amt]],
-        //     body: [],
-        //     startY: doc.autoTable.previous.finalY + 10, // Adjust the startY position for spacing
-        //     theme: 'grid'
-        // });
-        // Save the PDF
+
         doc.save('Daily_Report.pdf');
     } catch (error) {
         console.error('Error exporting data:', error);
