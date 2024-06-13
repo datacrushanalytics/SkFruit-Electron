@@ -98,7 +98,7 @@ function populateTable4(data) {
 function populateTable5(data) {
     var tbody = document.getElementById('tableBody1');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['p_id','date','from_account','to_account','comment','pre_balance','amounr'];
+    var columnsToDisplay = ['p_id','date','from_account','to_account','comment','prev_balance','amounr'];
     var counter = 1;
     console.log(data.Receipt)
     if (data.Receipt.length === 0) {
