@@ -11,22 +11,20 @@ function formatDate(dateString) {
     return year + '-' + month + '-' + day;
 }
 
-
 document.getElementById('loginForm1').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
     fetchDataAndProcess();
 });
 
-
 function fetchDataAndProcess() {
     var data = {
-        from_date : formatDate(document.getElementById("fromdate").value),
-        to_date : formatDate(document.getElementById("todate").value),
-        supplier_name : getElementValueWithDefault('supplier', '*') 
+        from_date: formatDate(document.getElementById("fromdate").value),
+        to_date: formatDate(document.getElementById("todate").value),
+        supplier_name: getElementValueWithDefault('supplier', '*')
     };
     console.log(data);
     var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+    loader.style.display = 'block';
 
     return fetch('http://65.2.144.249/supplierLedger', {
         method: 'POST',
@@ -36,8 +34,8 @@ function fetchDataAndProcess() {
         }
     })
     .then(response => {
-        if (response.status === 404) {
         loader.style.display = 'none';
+        if (response.status === 404) {
             alert("No data found.");
             throw new Error('Data not found');
         }
@@ -47,37 +45,33 @@ function fetchDataAndProcess() {
         return response.json();
     })
     .then(result => {
-        loader.style.display = 'none';
-        console.log(result)
-        populateTable4(result)
-        populateTable5(result)
+        console.log(result);
+        populateTable4(result);
+        populateTable5(result);
         return result;
-        // Optionally, you can redirect or show a success message here
     })
     .catch(error => {
         console.error('Error:', error);
-        // Optionally, you can display an error message here
     });
 }
-
 
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['id','date','supplier_name','gadi_number','total_quantity'];
+    var columnsToDisplay = ['id', 'date', 'supplier_name', 'gadi_number', 'total_quantity'];
     var counter = 1;
-    console.log(data.reports)
+    console.log(data.reports);
     if (data.reports.length === 0) {
         alert("No Data Found");
     }
+    let grandTotalQuantity = 0;
     data.reports.forEach(function(item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
         cell.textContent = counter++;
         columnsToDisplay.forEach(function(key) {
             var cell = row.insertCell();
-            if(key=='date'){
-                console.log(item[key])
+            if (key === 'date') {
                 var utcDate = new Date(item[key]);
                 var options = { 
                     year: 'numeric', 
@@ -86,32 +80,42 @@ function populateTable4(data) {
                     timeZone: 'Asia/Kolkata' 
                 };
                 cell.textContent = utcDate.toLocaleString('en-IN', options);
-            
-            }else{
-            cell.textContent = item[key];
+            } else {
+                cell.textContent = item[key];
+                if (key === 'total_quantity') {
+                    grandTotalQuantity += item[key];
+                }
             }
         });
-    });    
+    });
+    // Append grand total row
+    var row = tbody.insertRow();
+    row.insertCell().textContent = ''; // Empty cell for serial number
+    row.insertCell().textContent = ''; // Empty cell for date
+    row.insertCell().textContent = ''; // Empty cell for supplier_name
+    row.insertCell().textContent = '';
+    row.insertCell().textContent = 'Grand Total:'; // Cell for Grand Total label
+    row.insertCell().textContent = grandTotalQuantity; // Cell for Grand Total value
 }
-
 
 function populateTable5(data) {
     var tbody = document.getElementById('tableBody1');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['p_id','date','from_account','to_account','comment','pre_balance','amounr'];
+    var columnsToDisplay = ['p_id', 'date', 'from_account', 'to_account', 'comment', 'pre_balance', 'amounr'];
     var counter = 1;
-    console.log(data.Receipt)
+    console.log(data.Receipt);
     if (data.Receipt.length === 0) {
         alert("No Data Found");
     }
+    let grandTotalPreBalance = 0;
+    let grandTotalAmounr = 0;
     data.Receipt.forEach(function(item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
         cell.textContent = counter++;
         columnsToDisplay.forEach(function(key) {
             var cell = row.insertCell();
-            if(key=='date'){
-                console.log(item[key])
+            if (key === 'date') {
                 var utcDate = new Date(item[key]);
                 var options = { 
                     year: 'numeric', 
@@ -120,15 +124,28 @@ function populateTable5(data) {
                     timeZone: 'Asia/Kolkata' 
                 };
                 cell.textContent = utcDate.toLocaleString('en-IN', options);
-            
-            }else{
-            cell.textContent = item[key];
+            } else {
+                cell.textContent = item[key];
+                if (key === 'pre_balance') {
+                    grandTotalPreBalance += item[key];
+                }
+                if (key === 'amounr') {
+                    grandTotalAmounr += item[key];
+                }
             }
         });
-    });    
+    });
+    // Append grand total row
+    var row = tbody.insertRow();
+    row.insertCell().textContent = ''; // Empty cell for serial number
+    row.insertCell().textContent = ''; // Empty cell for date
+    row.insertCell().textContent = ''; // Empty cell for from_account
+    row.insertCell().textContent = ''; // Empty cell for to_account
+    row.insertCell().textContent = '';
+    row.insertCell().textContent = 'Grand Total:'; // Cell for Grand Total label
+    row.insertCell().textContent = grandTotalPreBalance; // Cell for Grand Total pre_balance
+    row.insertCell().textContent = grandTotalAmounr; // Cell for Grand Total amounr
 }
-
-
 
 async function exportToExcel() {
     try {
@@ -144,10 +161,10 @@ async function exportToExcel() {
         doc.text('Mobile:- 9960607512', 10, 10);
         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
         doc.setFontSize(16);
-        doc.text('Savata Fruits Suppliers', 50, 10);
+        doc.text('Savata Fruits Suppliers', 50, 20);
         doc.setFontSize(12);
-        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 20);
-        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 30);
+        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
+        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
 
         let startY = 50;
 
@@ -189,12 +206,12 @@ async function exportToExcel() {
             receipt.amounr
         ]);
 
-         // Calculate grand total for receipts
-         let grandTotalPreBalance = data.Receipt.reduce((acc, receipt) => acc + receipt.pre_balance, 0);
-         let grandTotalamounr = data.Receipt.reduce((acc, receipt) => acc + receipt.amounr, 0);
- 
-         // Append grand total row to Receipts table data
-         receiptData.push(['', '', '', '', 'Grand Total:', grandTotalPreBalance, grandTotalamounr]);
+        // Calculate grand total for receipts
+        let grandTotalPreBalance = data.Receipt.reduce((acc, receipt) => acc + receipt.pre_balance, 0);
+        let grandTotalAmounr = data.Receipt.reduce((acc, receipt) => acc + receipt.amounr, 0);
+
+        // Append grand total row to Receipts table data
+        receiptData.push(['', '', '', '', 'Grand Total:', grandTotalPreBalance, grandTotalAmounr]);
 
         // Add Receipts table to PDF
         doc.autoTable({
@@ -213,7 +230,3 @@ async function exportToExcel() {
         console.error('Error exporting data:', error);
     }
 }
-
-
-
-
