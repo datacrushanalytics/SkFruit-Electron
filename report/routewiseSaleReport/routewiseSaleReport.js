@@ -583,8 +583,6 @@ color: #666;
 }
 
 
-
-
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
@@ -593,16 +591,41 @@ async function exportToExcel() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
+        // Custom headers
+        const customHeaders = ['bill_no', 'date', 'amount', 'carate_amount', 'pre_balance','total_amount', 'online_amt', 'discount', 'inCarat', 'PaidAmount', 'balance', 'comment'];
+
+        // Adding header details
+        doc.setFontSize(10);
+        doc.text('Mobile: 9960607512', 10, 10);
+        doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+
+        doc.setFontSize(16);
+        doc.text('Savata Fruits Suppliers', 50, 20);
+
+        doc.setFontSize(12);
+        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
+        doc.text('Mobile NO: 9860601102 / 9175129393 / 9922676380 / 9156409970', 50, 40);
+
+        let startY = 50;
+
+        // Add customer name and route
+        if (document.getElementById('customer').value !== '') {
+            doc.text(`Customer Name: ${data.cust_name}`, 50, 50);
+            startY = 60; // Adjust startY for the next line
+        }
+        if (document.getElementById('route').value !== '') {
+            doc.text(`Route: ${data.route}`, 50, startY);
+            startY += 10; // Adjust startY for the next section
+        }
+
         // Map data for autoTable
         const reportData = data.reports.map(report => [
             report.bill_no,
             new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
-            report.cust_name,
-            report.route,
             report.amount,
             report.carate_amount,
-            report.total_amount,
             report.pre_balance,
+            report.total_amount,
             report.online_amt,
             report.discount,
             report.inCarat,
@@ -611,30 +634,51 @@ async function exportToExcel() {
             report.comment
         ]);
 
+        // Calculate grand totals
+        const grandTotals = {
+            amount: 0,
+            carate_amount: 0,
+            pre_balance: 0,
+            total_amount: 0,
+            online_amt: 0,
+            discount: 0,
+            inCarat: 0,
+            PaidAmount: 0,
+            balance: 0
+        };
+
+        reportData.forEach(row => {
+            grandTotals.amount += parseFloat(row[2]) || 0;
+            grandTotals.carate_amount += parseFloat(row[3]) || 0;
+            grandTotals.pre_balance += parseFloat(row[4]) || 0;
+            grandTotals.total_amount += parseFloat(row[5]) || 0;
+            grandTotals.online_amt += parseFloat(row[6]) || 0;
+            grandTotals.discount += parseFloat(row[7]) || 0;
+            grandTotals.inCarat += parseFloat(row[8]) || 0;
+            grandTotals.PaidAmount += parseFloat(row[9]) || 0;
+            grandTotals.balance += parseFloat(row[10]) || 0;
+        });
+
+        // Add Grand Totals row at the end of the data
+        reportData.push([
+            '', 'Grand Total', grandTotals.amount.toFixed(),
+            grandTotals.carate_amount.toFixed(),
+            grandTotals.pre_balance.toFixed(),
+            grandTotals.total_amount.toFixed(),
+            grandTotals.online_amt.toFixed(),
+            grandTotals.discount.toFixed(),
+            grandTotals.inCarat.toFixed(),
+            grandTotals.PaidAmount.toFixed(),
+            grandTotals.balance.toFixed(), ''
+        ]);
+
         // Add Reports table to PDF
         doc.autoTable({
             head: [customHeaders],
             body: reportData,
-            startY: 10,
-            theme: 'grid'
-        });
-
-        // Adding Grand Totals to PDF
-        doc.autoTable({
-            head: [["Description", "Amount"]],
-            body: [
-                ["Grand Bill Amount", data.Grand['Grand Bill Amount']],
-                ["Grand outCarate", data.Grand['Grand outCarate']],
-                ["Total Bill Amount", data.Grand['Total Bill Amount']],
-                ["Online Amount", data.Grand['Online Amount']],
-                ["Grand Discount", data.Grand['Grand Discount']],
-                ["Grand inCarate", data.Grand['Grand inCarate']],
-                ["Grand Paid Amount", data.Grand['Grand Paid Amount']],
-                ["Grand Balance", data.Grand['Grand Balance']]
-            ],
-            startY: doc.autoTable.previous.finalY + 10,
-            theme: 'grid'
-        });
+            startY: startY + 5, // Start table below the last text
+            theme: 'grid',
+        }); 
 
         // Save the PDF
         doc.save('Routewise_Sale_Report.pdf');
@@ -643,7 +687,6 @@ async function exportToExcel() {
         console.error('Error exporting data:', error);
     }
 }
-
 
 
 
