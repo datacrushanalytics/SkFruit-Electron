@@ -67,87 +67,6 @@ function fetchDataAndProcess() {
     });
 }
 
-
-// function populateTable4(data) {
-//     var tbody = document.getElementById('tableBody');
-//     tbody.innerHTML = ''; // Clear existing rows
-//     var columnsToDisplay = ['summary', 'date', 'customer_name','route','balance', 'out_carate',"total_balance",'cash','online_bank','online', 'discount','in_carate', 'remaining'];
-//     var counter = 1;
-//     console.log(data.reports)
-//     if (data.reports.length === 0) {
-//         alert("No Data Found");
-//     }
-//     data.reports.forEach(function(item) {
-//         var row = tbody.insertRow();
-//         var cell = row.insertCell();
-//         cell.textContent = counter++;
-//         columnsToDisplay.forEach(function(key) {
-//             var cell = row.insertCell();
-//             if(key=='date'){
-//                 console.log(item[key])
-//                 var utcDate = new Date(item[key]);
-//                 var options = { 
-//                     year: 'numeric', 
-//                     month: '2-digit', 
-//                     day: '2-digit', 
-//                     timeZone: 'Asia/Kolkata' 
-//                 };
-//                 cell.textContent = utcDate.toLocaleString('en-IN', options);
-            
-//             }else{
-//             cell.textContent = item[key];
-//             }
-//         });
-//          // Add button to open popup
-//          var buttonCell = row.insertCell();
-//          var openPopupButton = document.createElement('button');
-//          openPopupButton.className = 'button';
-//          openPopupButton.textContent = 'View';
-//          openPopupButton.addEventListener('click', function () {
-//              openModal(item); // Pass the data item to the openPopup function
-//          });
-//          buttonCell.appendChild(openPopupButton);
-//     });
-
-//      // Add row for grand total
-//     var totalRow = tbody.insertRow();
-//     totalRow.insertCell(); // Add empty cell at the beginning for shifting
-//     columnsToDisplay.forEach(function(key) {
-//         var totalCell = totalRow.insertCell();
-//         switch (key) {
-//             case 'amount':
-//                 totalCell.textContent = data.Grand['Grand Bill Amount'];
-//                 break;
-//             case 'carate_amount':
-//                 totalCell.textContent = data.Grand['Grand outCarate'];
-//                 break;
-//             case 'TotalKalam':
-//                 totalCell.textContent = data.Grand['Total Bill Amount'];
-//                 break;
-//             case 'pre_balance':
-//                 totalCell.textContent = data.Grand['Grand Previous balance'];
-//                 break;
-//             case 'cash':
-//                 totalCell.textContent = data.Grand['Cash'];
-//                 break;
-//             case 'online_amt':
-//                 totalCell.textContent = data.Grand['Online Amount'];
-//                 break;
-//             case 'discount':
-//                 totalCell.textContent = data.Grand['Grand Discount'];
-//                 break;
-//             case 'inCarat':
-//                 totalCell.textContent = data.Grand['Grand inCarate'];
-//                 break;
-//             case 'balance':
-//                 totalCell.textContent = data.Grand['Grand balance'];
-//                 break;
-//             default:
-//                 totalCell.textContent = '';
-//         }
-//     });
-// }
-
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
@@ -426,130 +345,130 @@ function openModal(item) {
     modalContent.appendChild(closeButton);
    
 
-    // Add item data to modal content
-    var itemData = document.createElement('div');
-    itemData.innerHTML = `
-    <style>   
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        padding: 20px;
-    }
-    
-    .box-container {
-        background-color: #fff;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
+  // Add item data to modal content
+  var itemData = document.createElement('div');
+  itemData.innerHTML = `
+  <style>   
+  body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+  }
+  
+  .box-container {
+      background-color: #fff;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
 
-    h6{
-        top: -17px;
-       position: absolute;
-       font-size: 12px;
-    }
+  h6{
+      top: -17px;
+     position: absolute;
+     font-size: 12px;
+  }
 
-    
-    
-    .label {
-        font-size: 16px;
-        font-weight: bold;
-        margin-bottom: 31px;
-        position: relative;
-        top: 17px;
-        right: -47px;
+  
+  
+  .label {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 31px;
+      position: relative;
+      top: 17px;
+      right: -47px;
 
-    }
-    
-    .row {
-        display: flex;
-        flex-wrap: wrap;
-    }
-    
-    .carate-box {
-        background-color: #e9e9e9;
-        padding: 4px;
-        margin: 7px;
-        position: relative;
-        top: 10px;
-        max-width: 66px;
-        max-height: 24px;
-        left: -23px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        flex: 1 1 calc(25% - 20px);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-sizing: border-box; /* Ensures padding and border are included in the width calculation */
-    }
-    
-    
-    .carate {
-        font-weight: bold;
-    }
-    
-    .data {
-        margin-left: 10px;
-        color: #333;
-    }
-         
-    .header {
-        background-color: #f9f9f9;
-        padding: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .header .logo {
-        width: auto; /* Adjust as needed */
-        margin-right: 20px; /* Adjust as needed */
-    }
-    .header .logo img {
-        height: 80px; /* Adjust as needed */
-    }
-    .header .details {
-        width: 80%; /* Adjust as needed */
-        text-align: right;
-    }
-    .header h1, .header p {
-        margin: 5px 0;
-        font-size: 16px;
-    }
+  }
+  
+  .row {
+      display: flex;
+      flex-wrap: wrap;
+  }
+  
+  .carate-box {
+      background-color: #e9e9e9;
+      padding: 4px;
+      margin: 7px;
+      position: relative;
+      top: 10px;
+      max-width: 66px;
+      max-height: 24px;
+      left: -23px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      flex: 1 1 calc(25% - 20px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box; /* Ensures padding and border are included in the width calculation */
+  }
+  
+  
+  .carate {
+      font-weight: bold;
+  }
+  
+  .data {
+      margin-left: 10px;
+      color: #333;
+  }
+       
+  .header {
+      background-color: #f9f9f9;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+  .header .logo {
+      width: auto; /* Adjust as needed */
+      margin-right: 20px; /* Adjust as needed */
+  }
+  .header .logo img {
+      height: 80px; /* Adjust as needed */
+  }
+  .header .details {
+      width: 80%; /* Adjust as needed */
+      text-align: right;
+  }
+  .header h1, .header p {
+      margin: 5px 0;
+      font-size: 16px;
+  }
 
 
-    .container2 {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 12px; /* Adjust font size */
-    }
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 10px;
-    }
-    th, td {
-        border: 1px solid #ccc;
-        padding: 6px; /* Adjust padding */
-        text-align: left;
-    }
-    th {
-        background-color: #f2f2f2;
-    }
-    .total {
-        font-weight: bold;
-    }
-    .details {
-        text-align: center;
-        margin-top: 10px;
-    }
+  .container2 {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 12px; /* Adjust font size */
+  }
+  table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+  }
+  th, td {
+      border: 1px solid #ccc;
+      padding: 6px; /* Adjust padding */
+      text-align: left;
+  }
+  th {
+      background-color: #f2f2f2;
+  }
+  .total {
+      font-weight: bold;
+  }
+  .details {
+      text-align: center;
+      margin-top: 10px;
+  }
 
-    /* CSS styles for the print button */
+  /* CSS styles for the print button */
 .header-details button {
 padding: 10px 20px;
 background-color: #808080;
@@ -563,7 +482,7 @@ transition: background-color 0.3s;
 
 @media print {
 .details, .header-details, .close{
-    display: none; /* Hide the print button and header details when printing */
+  display: none; /* Hide the print button and header details when printing */
 }
 }
 .container3 {
@@ -585,125 +504,125 @@ color: #333;
 font-size: 14px;
 color: #666;
 }
-    </style>
-    <div class="header">
-    <div> <h6> Mobile:- 9960607512  </h6> </div>
-    <div class="logo">
-        <img src="../../assets/img/logo.png" alt="Company Logo">
-    </div>
-    <div >
-        <h1>सावता फ्रुट सप्लायर्स</h1>
-        <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
-        <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
-    </div>
+  </style>
+  <div class="header">
+  <div> <h6> Mobile:- 9960607512  </h6> </div>
+  <div class="logo">
+      <img src="../../assets/img/logo.png" alt="Company Logo">
+  </div>
+  <div >
+      <h1>सावता फ्रुट सप्लायर्स</h1>
+      <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
+      <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
+  </div>
 </div>
 <div class="container2">
 
-    <!-- Bill details -->
-    <table>
-        <tbody id = 'TableBody'>
-        </tbody>
-    </table>
-    
-    <!-- Items table -->
-    <table>
-        <thead>
-            <tr>
-                <th>अनु क्र.</th>
-                <th>बटा</th>
-                <th>Product</th>
-                <th>नग</th>
-                <th>किंमत</th>
-                <th>रक्कम</th>
-            </tr>
-        </thead>
-        <tbody id= 'itemsTableBody'>
-        </tbody>
-        <tfoot style="background-color: #e8e6e4;"  id ="tablefooter">
-            
-        </tfoot>
-    </table>
-    <div class="box-container">
-    <div class="label">गेलेले कॅरेट :</div>
-    <div class="row">
-        <div class="carate-box">
-            <div class="carate">100:</div>
-            <div class="data" id="carate1100">Data 1</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">150:</div>
-            <div class="data" id="carate1150">Data 2</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">250:</div>
-            <div class="data" id="carate1250">Data 3</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">350:</div>
-            <div class="data" id="carate1350">Data 4</div>
-        </div>
-    </div>
+  <!-- Bill details -->
+  <table>
+      <tbody id = 'TableBody'>
+      </tbody>
+  </table>
+  
+  <!-- Items table -->
+  <table>
+      <thead>
+          <tr>
+              <th>अनु क्र.</th>
+              <th>बटा</th>
+              <th>Product</th>
+              <th>नग</th>
+              <th>किंमत</th>
+              <th>रक्कम</th>
+          </tr>
+      </thead>
+      <tbody id= 'itemsTableBody'>
+      </tbody>
+      <tfoot style="background-color: #e8e6e4;"  id ="tablefooter">
+          
+      </tfoot>
+  </table>
+  <div class="box-container">
+  <div class="label">गेलेले कॅरेट :</div>
+  <div class="row">
+      <div class="carate-box">
+          <div class="carate">100:</div>
+          <div class="data" id="carate1100">Data 1</div>
+      </div>
+      <div class="carate-box">
+          <div class="carate">150:</div>
+          <div class="data" id="carate1150">Data 2</div>
+      </div>
+      <div class="carate-box">
+          <div class="carate">250:</div>
+          <div class="data" id="carate1250">Data 3</div>
+      </div>
+      <div class="carate-box">
+          <div class="carate">350:</div>
+          <div class="data" id="carate1350">Data 4</div>
+      </div>
+  </div>
 </div>
 
 <div class="box-container">
-    <div class="label">जमा कॅरेट :</div>
-    <div class="row">
-        <div class="carate-box">
-            <div class="carate">100:</div>
-            <div class="data" id="carate2100">Data 1</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">150:</div>
-            <div class="data" id="carate2150">Data 2</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">250:</div>
-            <div class="data" id="carate2250">Data 3</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">350:</div>
-            <div class="data" id="carate2350">Data 4</div>
-        </div>
-    </div>
+  <div class="label">जमा कॅरेट :</div>
+  <div class="row">
+      <div class="carate-box">
+          <div class="carate">100:</div>
+          <div class="data" id="carate2100">Data 1</div>
+      </div>
+      <div class="carate-box">
+          <div class="carate">150:</div>
+          <div class="data" id="carate2150">Data 2</div>
+      </div>
+      <div class="carate-box">
+          <div class="carate">250:</div>
+          <div class="data" id="carate2250">Data 3</div>
+      </div>
+      <div class="carate-box">
+          <div class="carate">350:</div>
+          <div class="data" id="carate2350">Data 4</div>
+      </div>
+  </div>
 </div>
 
 <div class="box-container">
-    <div class="label">बाकी कॅरेट :</div>
-    <div class="row">
-        <div class="carate-box">
-            <div class="carate">100:</div>
-            <div class="data" id="carate3100">Data 1</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">150:</div>
-            <div class="data" id="carate3150">Data 2</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">250:</div>
-            <div class="data" id="carate3250">Data 3</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">350:</div>
-            <div class="data" id="carate3350">Data 4</div>
-        </div>
-    </div>
+  <div class="label">बाकी कॅरेट :</div>
+  <div class="row">
+      <div class="carate-box">
+          <div class="carate">100:</div>
+          <div class="data" id="carate3100">Data 1</div>
+      </div>
+      <div class="carate-box">
+          <div class="carate">150:</div>
+          <div class="data" id="carate3150">Data 2</div>
+      </div>
+      <div class="carate-box">
+          <div class="carate">250:</div>
+          <div class="data" id="carate3250">Data 3</div>
+      </div>
+      <div class="carate-box">
+          <div class="carate">350:</div>
+          <div class="data" id="carate3350">Data 4</div>
+      </div>
+  </div>
 </div>
-        
-        <!-- Thank you message -->
-        <div class="details">
-            <h4>Thank you, visit again!</h4>
-            <p><a href="https://datacrushanalytics.com/" style="color: #B1B6BA; font-size: 14px;">www.DataCrushAnalytics.com (Contact No: 7040040015)</a></p>
-        </div>
-    </div>
-        
+      
+      <!-- Thank you message -->
+      <div class="details">
+          <h4>Thank you, visit again!</h4>
+          <p><a href="https://datacrushanalytics.com/" style="color: #B1B6BA; font-size: 14px;">www.DataCrushAnalytics.com (Contact No: 7040040015)</a></p>
+      </div>
+  </div>
+      
 
 
-        <!-- Print button -->
-        <div class="header-details">
-        <button id="printButton">Print</button>
-        </div>
+      <!-- Print button -->
+      <div class="header-details">
+      <button id="printButton">Print</button>
+      </div>
 
-    `;
+  `;
 
     // Assign ID to itemData
     itemData.id = 'printContent';

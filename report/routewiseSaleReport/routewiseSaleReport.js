@@ -608,15 +608,29 @@ async function exportToExcel() {
 
         let startY = 50;
 
-        // Add customer name and route
-        if (document.getElementById('customer').value !== '') {
-            doc.text(`Customer Name: ${data.cust_name}`, 50, 50);
+        // // Add customer name and route
+        // if (document.getElementById('customer').value !== '') {
+        //     doc.text(`Customer Name: ${data.cust_name}`, 50, 50);
+        //     startY = 60; // Adjust startY for the next line
+        // }
+        // if (document.getElementById('route').value !== '') {
+        //     doc.text(`Route: ${data.route}`, 50, startY);
+        //     startY += 10; // Adjust startY for the next section
+        // }
+
+        // Check and add customer name and route
+        const customerNameElement = document.getElementById('customer');
+        const routeElement = document.getElementById('route');
+
+        if (customerNameElement && customerNameElement.value !== '') {
+            doc.text(`Customer Name: ${customerNameElement.value}`, 50, 50);
             startY = 60; // Adjust startY for the next line
         }
-        if (document.getElementById('route').value !== '') {
-            doc.text(`Route: ${data.route}`, 50, startY);
+        if (routeElement && routeElement.value !== '') {
+            doc.text(`Route: ${routeElement.value}`, 50, startY);
             startY += 10; // Adjust startY for the next section
         }
+
 
         // Map data for autoTable
         const reportData = data.reports.map(report => [
@@ -676,7 +690,7 @@ async function exportToExcel() {
         doc.autoTable({
             head: [customHeaders],
             body: reportData,
-            startY: startY + 5, // Start table below the last text
+            startY: startY , // Start table below the last text
             theme: 'grid',
         }); 
 
