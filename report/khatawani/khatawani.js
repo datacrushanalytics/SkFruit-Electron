@@ -160,10 +160,24 @@ async function exportToExcel() {
             const date = new Date(dateString);
             return date.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' });
         };
- 
+
+        const customHeaders = ['bill_no', 'date', 'cust_name','route','amount', 'carate_amount',"TotalKalam",'pre_balance','cash','online_acc','online_amt', 'discount','inCarat', 'balance'];
+        
         // Export to PDF using jsPDF and autoTable
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
+        
+        // Adding header details
+        doc.setFontSize(10);
+        doc.text('Mobile:- 9960607512', 10, 10);
+        doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+        doc.setFontSize(16);
+        doc.text('Savata Fruits Suppliers', 50, 20);
+        doc.setFontSize(12);
+        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
+        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
+        
+        let startY = 50;
 
         // Adding the headers and data
         const reportData = data.reports.map(report => [
@@ -186,27 +200,32 @@ async function exportToExcel() {
         doc.autoTable({
             head: [customHeaders],
             body: reportData,
-            startY: 10,
+            startY: startY,
             theme: 'grid'
         });
 
         // Adding Grand Totals
+        const grandTotals = data.Grand || {};
+
         const grandTotalsData = [
-            ["Grand Bill Amount", data.Grand['Grand Bill Amount']],
-            ["Grand outCarate", data.Grand['Grand outCarate']],
-            ["Total Bill Amount", data.Grand['Total Bill Amount']],
-            ["Total Cash", data.Grand['Cash']],
-            ["Online Amount", data.Grand['Online Amount']],
-            ["Grand Discount", data.Grand['Grand Discount']],
-            ["Grand inCarate", data.Grand['Grand inCarate']],
-            ["Grand Previous balance", data.Grand['Grand Previous balance']],
-            ["Grand balance", data.Grand['Grand balance']]
+            ["Grand Bill Amount", grandTotals['Grand Bill Amount'] || 0],
+            ["Grand outCarate", grandTotals['Grand outCarate'] || 0],
+            ["Total Bill Amount", grandTotals['Total Bill Amount'] || 0],
+            ["Total Cash", grandTotals['Cash'] || 0],
+            ["Online Amount", grandTotals['Online Amount'] || 0],
+            ["Grand Discount", grandTotals['Grand Discount'] || 0],
+            ["Grand inCarate", grandTotals['Grand inCarate'] || 0],
+            ["Grand Previous balance", grandTotals['Grand Previous balance'] || 0],
+            ["Grand balance", grandTotals['Grand balance'] || 0]
         ];
+
+        // Get the position where the first table ends
+        const finalY = doc.autoTable.previous.finalY || 60; // 60 is a fallback value in case previous.finalY is undefined
 
         doc.autoTable({
             head: [['Description', 'Amount']],
             body: grandTotalsData,
-            startY: doc.autoTable.previous.finalY + 10,
+            startY: finalY + 10, // Adding some space between tables
             theme: 'grid'
         });
 
@@ -219,6 +238,7 @@ async function exportToExcel() {
 }
 
 
+
 function closePopup() {
     document.querySelector('.popup').style.display = 'none';
 }
@@ -227,8 +247,7 @@ function closePopup() {
 function openModal(item) {
     // Your code to open the modal with the data from 'item'
     console.log("Opening modal for item:", item);
-    var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+    
 
     fetch('http://65.2.144.249/bill/' + item)
         .then(response => {
@@ -240,7 +259,7 @@ function openModal(item) {
         .then(data => {
             // Populate dropdown with API data
             console.log(data)
-            loader.style.display = 'none';
+
             var utcDate = new Date(data.results[0].date);
             var options = {
                 year: 'numeric',
@@ -276,7 +295,7 @@ function openModal(item) {
             tablefooter.innerHTML = ""; // Clear existing rows
 
             var footerDetails = [
-                { label: "गेलेले कॅरेट : +", value: data.results[0].carate_amount },
+                { label: "गेलेले कॅरेट : 100 X  " + data.results[0].in_carate_100 + "  150 X  " + data.results[0].in_carate_150 + "  250 X  " + data.results[0].in_carate_250 + "  350 X  " +  data.results[0].in_carate_350, value: data.results[0].carate_amount },
                 { label: "चालू कलम रक्कम:", value: data.results[0].amount },
                 { label: "मागील बाकी:", value: data.results[0].pre_balance },
                 { label: "एकूण रक्कम:", value: data.results[0].total_amount },
@@ -284,9 +303,9 @@ function openModal(item) {
                 { label: "ऑनलाईन जमा बँक :", value: data.results[0].online_acc },
                 { label: "ऑनलाईन जमा रक्कम:", value: data.results[0].online_amt },
                 { label: "सूट रक्कम:", value: data.results[0].discount },
-                { label: "जमा कॅरेट:   -", value: data.results[0].inCarat },
+                { label: "जमा कॅरेट: 100 X  " + data.results[0].out_carate_100 + "  150 X  " + data.results[0].out_carate_150 + "  250 X  " + data.results[0].out_carate_250 + "  350 X  " +  data.results[0].out_carate_350, value: data.results[0].inCarat },
                 { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.results[0].balance },
-                { label: "बाकी कॅरेट: ", value: data.results[0].remaining },
+                { label: "बाकी कॅरेट : 100 X  " + data.results[0].carate_100 + "  150 X  " + data.results[0].carate_150 + "  250 X  " + data.results[0].carate_250 + "  350 X  " +  data.results[0].carate_350, value: ''} 
                 // Add other bill details similarly
             ];
 
@@ -299,18 +318,18 @@ function openModal(item) {
                 tablefooter.appendChild(row);
             });
 
-            document.getElementById('carate1100').textContent = data.results[0].in_carate_100;
-            document.getElementById('carate1150').textContent = data.results[0].in_carate_150;
-            document.getElementById('carate1250').textContent = data.results[0].in_carate_250;
-            document.getElementById('carate1350').textContent = data.results[0].in_carate_350;
-            document.getElementById('carate2100').textContent = data.results[0].out_carate_100;
-            document.getElementById('carate2150').textContent = data.results[0].out_carate_150;
-            document.getElementById('carate2250').textContent = data.results[0].out_carate_250;
-            document.getElementById('carate2350').textContent = data.results[0].out_carate_350;
-            document.getElementById('carate3100').textContent = data.results[0].carate_100;
-            document.getElementById('carate3150').textContent = data.results[0].carate_150;
-            document.getElementById('carate3250').textContent = data.results[0].carate_250;
-            document.getElementById('carate3350').textContent = data.results[0].carate_350;
+            // document.getElementById('carate1100').textContent = data.results[0].in_carate_100;
+            // document.getElementById('carate1150').textContent = data.results[0].in_carate_150;
+            // document.getElementById('carate1250').textContent = data.results[0].in_carate_250;
+            // document.getElementById('carate1350').textContent = data.results[0].in_carate_350;
+            // document.getElementById('carate2100').textContent = data.results[0].out_carate_100;
+            // document.getElementById('carate2150').textContent = data.results[0].out_carate_150;
+            // document.getElementById('carate2250').textContent = data.results[0].out_carate_250;
+            // document.getElementById('carate2350').textContent = data.results[0].out_carate_350;
+            // document.getElementById('carate3100').textContent = data.results[0].carate_100;
+            // document.getElementById('carate3150').textContent = data.results[0].carate_150;
+            // document.getElementById('carate3250').textContent = data.results[0].carate_250;
+            // document.getElementById('carate3350').textContent = data.results[0].carate_350;
 
 
             // Populate table with fetched data
@@ -353,130 +372,128 @@ function openModal(item) {
     modalContent.appendChild(closeButton);
    
 
-  // Add item data to modal content
-  var itemData = document.createElement('div');
-  itemData.innerHTML = `
-  <style>   
-  body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      padding: 20px;
-  }
-  
-  .box-container {
-      background-color: #fff;
-      padding: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  }
+    // Add item data to modal content
+    var itemData = document.createElement('div');
+    itemData.innerHTML = `
+    <style>   
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+    }
+    
+    .box-container {
+        background-color: #fff;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
 
-  h6{
-      top: -17px;
-     position: absolute;
-     font-size: 12px;
-  }
+    h6{
+        top: -17px;
+       position: absolute;
+       font-size: 12px;
+    }
+    
+    .label {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 31px;
+        position: relative;
+        top: 17px;
+        right: -47px;
 
-  
-  
-  .label {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 31px;
-      position: relative;
-      top: 17px;
-      right: -47px;
-
-  }
-  
-  .row {
-      display: flex;
-      flex-wrap: wrap;
-  }
-  
-  .carate-box {
-      background-color: #e9e9e9;
-      padding: 4px;
-      margin: 7px;
-      position: relative;
-      top: 10px;
-      max-width: 66px;
-      max-height: 24px;
-      left: -23px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      flex: 1 1 calc(25% - 20px);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-sizing: border-box; /* Ensures padding and border are included in the width calculation */
-  }
-  
-  
-  .carate {
-      font-weight: bold;
-  }
-  
-  .data {
-      margin-left: 10px;
-      color: #333;
-  }
-       
-  .header {
-      background-color: #f9f9f9;
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-  }
-  .header .logo {
-      width: auto; /* Adjust as needed */
-      margin-right: 20px; /* Adjust as needed */
-  }
-  .header .logo img {
-      height: 80px; /* Adjust as needed */
-  }
-  .header .details {
-      width: 80%; /* Adjust as needed */
-      text-align: right;
-  }
-  .header h1, .header p {
-      margin: 5px 0;
-      font-size: 16px;
-  }
+    }
+    
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .carate-box {
+        background-color: #e9e9e9;
+        padding: 4px;
+        margin: 7px;
+        position: relative;
+        top: 10px;
+        max-width: 66px;
+        max-height: 24px;
+        left: -23px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        flex: 1 1 calc(25% - 20px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box; /* Ensures padding and border are included in the width calculation */
+    }
+    
+    
+    .carate {
+        font-weight: bold;
+    }
+    
+    .data {
+        margin-left: 10px;
+        color: #333;
+    }
+         
+    .header {
+        background-color: #f9f9f9;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .header .logo {
+        width: auto; /* Adjust as needed */
+        margin-right: 20px; /* Adjust as needed */
+    }
+    .header .logo img {
+        height: 80px; /* Adjust as needed */
+    }
+    .header .details {
+        width: 80%; /* Adjust as needed */
+        text-align: right;
+    }
+    .header h1, .header p {
+        margin: 5px 0;
+        font-size: 16px;
+    }
 
 
-  .container2 {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 12px; /* Adjust font size */
-  }
-  table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 10px;
-  }
-  th, td {
-      border: 1px solid #ccc;
-      padding: 6px; /* Adjust padding */
-      text-align: left;
-  }
-  th {
-      background-color: #f2f2f2;
-  }
-  .total {
-      font-weight: bold;
-  }
-  .details {
-      text-align: center;
-      margin-top: 10px;
-  }
+    .container2 {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 12px; /* Adjust font size */
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10px;
+    }
+    th, td {
+        border: 1px solid #ccc;
+        padding: 6px; /* Adjust padding */
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .total {
+        font-weight: bold;
+    }
+    .details {
+        text-align: center;
+        margin-top: 10px;
+    }
 
-  /* CSS styles for the print button */
+    /* CSS styles for the print button */
 .header-details button {
 padding: 10px 20px;
 background-color: #808080;
@@ -490,7 +507,7 @@ transition: background-color 0.3s;
 
 @media print {
 .details, .header-details, .close{
-  display: none; /* Hide the print button and header details when printing */
+    display: none; /* Hide the print button and header details when printing */
 }
 }
 .container3 {
@@ -512,125 +529,60 @@ color: #333;
 font-size: 14px;
 color: #666;
 }
-  </style>
-  <div class="header">
-  <div> <h6> Mobile:- 9960607512  </h6> </div>
-  <div class="logo">
-      <img src="../../assets/img/logo.png" alt="Company Logo">
-  </div>
-  <div >
-      <h1>सावता फ्रुट सप्लायर्स</h1>
-      <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
-      <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
-  </div>
+    </style>
+    <div class="header">
+   <div> <h6> Mobile:- 9960607512  </h6> </div>
+    <div class="logo">
+        <img src="../../assets/img/logo.png" alt="Company Logo">
+    </div>
+    <div >
+      <center><h1>सावता फ्रुट सप्लायर्स</h1> 
+        <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
+        <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
+    </div> </center>
 </div>
 <div class="container2">
 
-  <!-- Bill details -->
-  <table>
-      <tbody id = 'TableBody'>
-      </tbody>
-  </table>
-  
-  <!-- Items table -->
-  <table>
-      <thead>
-          <tr>
-              <th>अनु क्र.</th>
-              <th>बटा</th>
-              <th>Product</th>
-              <th>नग</th>
-              <th>किंमत</th>
-              <th>रक्कम</th>
-          </tr>
-      </thead>
-      <tbody id= 'itemsTableBody'>
-      </tbody>
-      <tfoot style="background-color: #e8e6e4;"  id ="tablefooter">
-          
-      </tfoot>
-  </table>
-  <div class="box-container">
-  <div class="label">गेलेले कॅरेट :</div>
-  <div class="row">
-      <div class="carate-box">
-          <div class="carate">100:</div>
-          <div class="data" id="carate1100">Data 1</div>
-      </div>
-      <div class="carate-box">
-          <div class="carate">150:</div>
-          <div class="data" id="carate1150">Data 2</div>
-      </div>
-      <div class="carate-box">
-          <div class="carate">250:</div>
-          <div class="data" id="carate1250">Data 3</div>
-      </div>
-      <div class="carate-box">
-          <div class="carate">350:</div>
-          <div class="data" id="carate1350">Data 4</div>
-      </div>
-  </div>
-</div>
+    <!-- Bill details -->
+    <table>
+        <tbody id = 'TableBody'>
+        </tbody>
+    </table>
+    <br><br>
+    <!-- Items table -->
+    <table>
+        <thead>
+            <tr>
+                <th>अनु क्र.</th>
+                <th>बटा</th>
+                <th>Product</th>
+                <th>नग</th>
+                <th>किंमत</th>
+                <th>रक्कम</th>
+            </tr>
+        </thead>
+        <tbody id= 'itemsTableBody'>
+        </tbody>
+        <tfoot style="background-color: #e8e6e4;"  id ="tablefooter">
+            
+        </tfoot>
+    </table>
 
-<div class="box-container">
-  <div class="label">जमा कॅरेट :</div>
-  <div class="row">
-      <div class="carate-box">
-          <div class="carate">100:</div>
-          <div class="data" id="carate2100">Data 1</div>
-      </div>
-      <div class="carate-box">
-          <div class="carate">150:</div>
-          <div class="data" id="carate2150">Data 2</div>
-      </div>
-      <div class="carate-box">
-          <div class="carate">250:</div>
-          <div class="data" id="carate2250">Data 3</div>
-      </div>
-      <div class="carate-box">
-          <div class="carate">350:</div>
-          <div class="data" id="carate2350">Data 4</div>
-      </div>
-  </div>
-</div>
-
-<div class="box-container">
-  <div class="label">बाकी कॅरेट :</div>
-  <div class="row">
-      <div class="carate-box">
-          <div class="carate">100:</div>
-          <div class="data" id="carate3100">Data 1</div>
-      </div>
-      <div class="carate-box">
-          <div class="carate">150:</div>
-          <div class="data" id="carate3150">Data 2</div>
-      </div>
-      <div class="carate-box">
-          <div class="carate">250:</div>
-          <div class="data" id="carate3250">Data 3</div>
-      </div>
-      <div class="carate-box">
-          <div class="carate">350:</div>
-          <div class="data" id="carate3350">Data 4</div>
-      </div>
-  </div>
-</div>
-      
-      <!-- Thank you message -->
-      <div class="details">
-          <h4>Thank you, visit again!</h4>
-          <p><a href="https://datacrushanalytics.com/" style="color: #B1B6BA; font-size: 14px;">www.DataCrushAnalytics.com (Contact No: 7040040015)</a></p>
-      </div>
-  </div>
-      
+        <!-- Thank you message -->
+        <div class="details">
+            <h4>Thank you, visit again!</h4>
+            <p><a href="https://datacrushanalytics.com/" style="color: #B1B6BA; font-size: 14px;">www.DataCrushAnalytics.com (Contact No: 7040040015)</a></p>
+        </div>
+    </div>
+    
 
 
-      <!-- Print button -->
-      <div class="header-details">
-      <button id="printButton">Print</button>
-      </div>
+        <!-- Print button -->
+        <div class="header-details">
+        <button id="printButton">Print</button>
+        </div>
 
-  `;
+    `;
 
     // Assign ID to itemData
     itemData.id = 'printContent';
@@ -664,7 +616,7 @@ function openModal1(item) {
     // Your code to open the modal with the data from 'item'
     console.log("Opening receipt modal for item:", item);
     var loader = document.getElementById('loader');
-    loader.style.display = 'block';
+        loader.style.display = 'block';
 
     fetch('http://65.2.144.249/receiptReport/' + item)
         .then(response => {
@@ -707,10 +659,10 @@ function openModal1(item) {
                 tableBody.appendChild(row);
             });
 
-            document.getElementById('carate3100').textContent = data.reports[0].carate_100;
-            document.getElementById('carate3150').textContent = data.reports[0].carate_150;
-            document.getElementById('carate3250').textContent = data.reports[0].carate_250;
-            document.getElementById('carate3350').textContent = data.reports[0].carate_350;
+            // document.getElementById('carate3100').textContent = data.reports[0].carate_100;
+            // document.getElementById('carate3150').textContent = data.reports[0].carate_150;
+            // document.getElementById('carate3250').textContent = data.reports[0].carate_250;
+            // document.getElementById('carate3350').textContent = data.reports[0].carate_350;
 
 
             var tablefooter = document.getElementById("tablefooter");
@@ -720,13 +672,15 @@ function openModal1(item) {
                 //{ label: "गेलेले कॅरेट : +", value: data.results[0].carate_amount },
                 //{ label: "चालू कलम रक्कम:", value: data.results[0].amount },
                 { label: "मागील बाकी:", value: data.reports[0].previous_balance },
+                { label: "बाकी कॅरेट : 100 X  " + data.reports[0].carate_100 + "  150 X  " + data.reports[0].carate_150 + "  250 X  " + data.reports[0].carate_250 + "  350 X  " +  data.reports[0].carate_350, value: ''},
                 //{ label: "एकूण रक्कम:", value: data.results[0].total_amount },
                 { label: "रोख जमा रक्कम:", value: data.reports[0].PaidAmt },
                 { label: "ऑनलाईन जमा बँक :", value: data.reports[0].online_deposite_bank },
                 { label: "ऑनलाईन जमा रक्कम:", value: data.reports[0].onlineAmt },
                 { label: "सूट रक्कम:", value: data.reports[0].discount },
-                { label: "जमा कॅरेट:  -" + "100 * " + data.reports[0].c100 + " | 150 * " + data.reports[0].c150 + " | 250 * " + data.reports[0].c250 + " | 350 * " + data.reports[0].c350, value: data.reports[0].inCarat },
+                { label: "जमा कॅरेट:  -" + "100 * " +data.reports[0].c100 +" | 150 * " + data.reports[0].c150+ " | 250 * " +data.reports[0].c250 + " | 350 * " + data.reports[0].c350, value: data.reports[0].inCarat },
                 { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.reports[0].Balance },
+                
                 // Add other bill details similarly
             ];
 
@@ -758,9 +712,10 @@ function openModal1(item) {
     closeButton.onclick = function () {
         modalContent.innerHTML = '';
         modal.style.display = 'none'; // Close the modal when close button is clicked
+        window.location.reload();
     };
     modalContent.appendChild(closeButton);
-
+   
 
     // Add item data to modal content
     var itemData = document.createElement('div');
@@ -923,29 +878,8 @@ function openModal1(item) {
         </tfoot>
     </table>
 
-    <div class="box-container">
-       <b> <div class="label">बाकी कॅरेट :</div> </b>
-        <div class="row">
-            <div class="carate-box">
-                <div class="carate">100:</div>
-                <div class="data" id="carate3100">Data 1</div>
-            </div>
-            <div class="carate-box">
-                <div class="carate">150:</div>
-                <div class="data" id="carate3150">Data 2</div>
-            </div>
-            <div class="carate-box">
-                <div class="carate">250:</div>
-                <div class="data" id="carate3250">Data 3</div>
-            </div>
-            <div class="carate-box">
-                <div class="carate">350:</div>
-                <div class="data" id="carate3350">Data 4</div>
-            </div>
-        </div>
-    </div>
+    
 </div>
-
         <!-- Thank you message -->
         <div class="details">
             <h4>Thank you, visit again!</h4>
@@ -985,6 +919,7 @@ function openModal1(item) {
         });
     });
 }
+
 
 
 
