@@ -166,8 +166,7 @@ downloadButton.addEventListener('click', function () {
 function openModal(item) {
     // Your code to open the modal with the data from 'item'
     console.log("Opening modal for item:", item.bill_id);
-    var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+    
 
     fetch('http://65.2.144.249/bill/' + item.bill_id)
         .then(response => {
@@ -179,7 +178,7 @@ function openModal(item) {
         .then(data => {
             // Populate dropdown with API data
             console.log(data)
-            loader.style.display = 'none';
+
             var utcDate = new Date(data.results[0].date);
             var options = {
                 year: 'numeric',
@@ -193,7 +192,7 @@ function openModal(item) {
             tableBody.innerHTML = ""; // Clear existing rows
 
             var billDetails = [
-                { label: "बिल क्र.:", value: item.bill_id },
+                { label: "बिल क्र.:", value: item.bill_no },
                 { label: "तारीख:", value: utcDate.toLocaleString('en-IN', options) },
                 { label: "ग्राहकाचे नाव:", value: data.results[0].cust_name },
                 { label: "संपर्क क्र.:", value: data.results[0].mobile_no },
@@ -215,7 +214,7 @@ function openModal(item) {
             tablefooter.innerHTML = ""; // Clear existing rows
 
             var footerDetails = [
-                { label: "गेलेले कॅरेट : +", value: data.results[0].carate_amount },
+                { label: "गेलेले कॅरेट : 100 X  " + data.results[0].in_carate_100 + "  150 X  " + data.results[0].in_carate_150 + "  250 X  " + data.results[0].in_carate_250 + "  350 X  " +  data.results[0].in_carate_350, value: data.results[0].carate_amount },
                 { label: "चालू कलम रक्कम:", value: data.results[0].amount },
                 { label: "मागील बाकी:", value: data.results[0].pre_balance },
                 { label: "एकूण रक्कम:", value: data.results[0].total_amount },
@@ -223,8 +222,9 @@ function openModal(item) {
                 { label: "ऑनलाईन जमा बँक :", value: data.results[0].online_acc },
                 { label: "ऑनलाईन जमा रक्कम:", value: data.results[0].online_amt },
                 { label: "सूट रक्कम:", value: data.results[0].discount },
-                { label: "जमा कॅरेट:   -", value: data.results[0].inCarat },
+                { label: "जमा कॅरेट: 100 X  " + data.results[0].out_carate_100 + "  150 X  " + data.results[0].out_carate_150 + "  250 X  " + data.results[0].out_carate_250 + "  350 X  " +  data.results[0].out_carate_350, value: data.results[0].inCarat },
                 { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.results[0].balance },
+                { label: "बाकी कॅरेट : 100 X  " + data.results[0].carate_100 + "  150 X  " + data.results[0].carate_150 + "  250 X  " + data.results[0].carate_250 + "  350 X  " +  data.results[0].carate_350, value: ''} 
                 // Add other bill details similarly
             ];
 
@@ -237,18 +237,19 @@ function openModal(item) {
                 tablefooter.appendChild(row);
             });
 
-            document.getElementById('carate1100').textContent = data.results[0].in_carate_100;
-            document.getElementById('carate1150').textContent = data.results[0].in_carate_150;
-            document.getElementById('carate1250').textContent = data.results[0].in_carate_250;
-            document.getElementById('carate1350').textContent = data.results[0].in_carate_350;
-            document.getElementById('carate2100').textContent = data.results[0].out_carate_100;
-            document.getElementById('carate2150').textContent = data.results[0].out_carate_150;
-            document.getElementById('carate2250').textContent = data.results[0].out_carate_250;
-            document.getElementById('carate2350').textContent = data.results[0].out_carate_350;
-            document.getElementById('carate3100').textContent = data.results[0].carate_100;
-            document.getElementById('carate3150').textContent = data.results[0].carate_150;
-            document.getElementById('carate3250').textContent = data.results[0].carate_250;
-            document.getElementById('carate3350').textContent = data.results[0].carate_350;
+            // document.getElementById('carate1100').textContent = data.results[0].in_carate_100;
+            // document.getElementById('carate1150').textContent = data.results[0].in_carate_150;
+            // document.getElementById('carate1250').textContent = data.results[0].in_carate_250;
+            // document.getElementById('carate1350').textContent = data.results[0].in_carate_350;
+            // document.getElementById('carate2100').textContent = data.results[0].out_carate_100;
+            // document.getElementById('carate2150').textContent = data.results[0].out_carate_150;
+            // document.getElementById('carate2250').textContent = data.results[0].out_carate_250;
+            // document.getElementById('carate2350').textContent = data.results[0].out_carate_350;
+            // document.getElementById('carate3100').textContent = data.results[0].carate_100;
+            // document.getElementById('carate3150').textContent = data.results[0].carate_150;
+            // document.getElementById('carate3250').textContent = data.results[0].carate_250;
+            // document.getElementById('carate3350').textContent = data.results[0].carate_350;
+
 
             // Populate table with fetched data
             var itemsTableBody = document.getElementById("itemsTableBody");
@@ -308,13 +309,13 @@ function openModal(item) {
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    
+
     h6{
         top: -17px;
        position: absolute;
        font-size: 12px;
     }
-
+    
     .label {
         font-size: 16px;
         font-weight: bold;
@@ -347,6 +348,7 @@ function openModal(item) {
         align-items: center;
         box-sizing: border-box; /* Ensures padding and border are included in the width calculation */
     }
+    
     
     .carate {
         font-weight: bold;
@@ -448,15 +450,15 @@ color: #666;
 }
     </style>
     <div class="header">
-    <div> <h6> Mobile:- 9960607512  </h6> </div>
+   <div> <h6> Mobile:- 9960607512  </h6> </div>
     <div class="logo">
         <img src="../../assets/img/logo.png" alt="Company Logo">
     </div>
     <div >
-        <h1>सावता फ्रुट सप्लायर्स</h1>
+      <center><h1>सावता फ्रुट सप्लायर्स</h1> 
         <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
         <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
-    </div>
+    </div> </center>
 </div>
 <div class="container2">
 
@@ -465,7 +467,7 @@ color: #666;
         <tbody id = 'TableBody'>
         </tbody>
     </table>
-    
+    <br><br>
     <!-- Items table -->
     <table>
         <thead>
@@ -484,78 +486,14 @@ color: #666;
             
         </tfoot>
     </table>
-    <div class="box-container">
-    <div class="label">गेलेले कॅरेट :</div>
-    <div class="row">
-        <div class="carate-box">
-            <div class="carate">100:</div>
-            <div class="data" id="carate1100">Data 1</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">150:</div>
-            <div class="data" id="carate1150">Data 2</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">250:</div>
-            <div class="data" id="carate1250">Data 3</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">350:</div>
-            <div class="data" id="carate1350">Data 4</div>
-        </div>
-    </div>
-</div>
 
-<div class="box-container">
-    <div class="label">जमा कॅरेट :</div>
-    <div class="row">
-        <div class="carate-box">
-            <div class="carate">100:</div>
-            <div class="data" id="carate2100">Data 1</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">150:</div>
-            <div class="data" id="carate2150">Data 2</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">250:</div>
-            <div class="data" id="carate2250">Data 3</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">350:</div>
-            <div class="data" id="carate2350">Data 4</div>
-        </div>
-    </div>
-</div>
-
-<div class="box-container">
-    <div class="label">बाकी कॅरेट :</div>
-    <div class="row">
-        <div class="carate-box">
-            <div class="carate">100:</div>
-            <div class="data" id="carate3100">Data 1</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">150:</div>
-            <div class="data" id="carate3150">Data 2</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">250:</div>
-            <div class="data" id="carate3250">Data 3</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">350:</div>
-            <div class="data" id="carate3350">Data 4</div>
-        </div>
-    </div>
-</div>
         <!-- Thank you message -->
         <div class="details">
             <h4>Thank you, visit again!</h4>
             <p><a href="https://datacrushanalytics.com/" style="color: #B1B6BA; font-size: 14px;">www.DataCrushAnalytics.com (Contact No: 7040040015)</a></p>
         </div>
     </div>
-        
+    
 
 
         <!-- Print button -->

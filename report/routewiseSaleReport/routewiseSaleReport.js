@@ -111,40 +111,47 @@ function populateTable4(data) {
 
     columnsToDisplay.forEach(function (key) {
         var cell = totalRow.insertCell();
-        switch (key) {
-            case 'amount':
-                cell.textContent = data.Grand['Grand Bill Amount'];
-                break;
-            case 'carate_amount':
-                cell.textContent = data.Grand['Grand outCarate'];
-                break;
-            case 'total_amount':
-                cell.textContent = data.Grand['Total Bill Amount'];
-                break;
-            case 'online_amt':
-                cell.textContent = data.Grand['Online Amount'];
-                break;
-            case 'discount':
-                cell.textContent = data.Grand['Grand Discount'];
-                break;
-            case 'inCarat':
-                cell.textContent = data.Grand['Grand inCarate'];
-                break;
-            case 'PaidAmount':
-                cell.textContent = data.Grand['Grand Paid Amount'];
-                break;
-            case 'balance':
-                cell.textContent = data.Grand['Grand Balance'];
-                break;
-            default:
-                cell.textContent = '';
-                break;
+        if (key === 'route') {
+            cell.textContent = 'Grand Total';
+            cell.style.fontWeight = 'bold'; // Make "Grand Total" bold
+        } else {
+            switch (key) {
+                case 'amount':
+                    cell.textContent = data.Grand['Grand Bill Amount'];
+                    break;
+                case 'carate_amount':
+                    cell.textContent = data.Grand['Grand outCarate'];
+                    break;
+                case 'total_amount':
+                    cell.textContent = data.Grand['Total Bill Amount'];
+                    break;
+                case 'online_amt':
+                    cell.textContent = data.Grand['Online Amount'];
+                    break;
+                case 'discount':
+                    cell.textContent = data.Grand['Grand Discount'];
+                    break;
+                case 'inCarat':
+                    cell.textContent = data.Grand['Grand inCarate'];
+                    break;
+                case 'PaidAmount':
+                    cell.textContent = data.Grand['Grand Paid Amount'];
+                    break;
+                case 'balance':
+                    cell.textContent = data.Grand['Grand Balance'];
+                    break;
+                default:
+                    cell.textContent = '';
+                    break;
+            }
+            cell.style.fontWeight = 'bold'; // Make the values bold
         }
     });
 
     // Add a final cell for the "Bill" column, leaving it empty
     totalRow.insertCell();
 }
+
 
 
 
@@ -511,6 +518,7 @@ color: #666;
         });
     });
 }
+
 
 
 async function exportToExcel() {

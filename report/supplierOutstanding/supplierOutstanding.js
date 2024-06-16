@@ -52,13 +52,12 @@ function fetchDataAndProcess() {
     });
 }
 
-
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
     var columnsToDisplay = ['name', 'address', 'mobile_no', 'Amount'];
     var counter = 1;
-    console.log(data.reports)
+    console.log(data.reports);
     if (data.reports.length === 0) {
         alert("No Data Found");
     }
@@ -69,7 +68,7 @@ function populateTable4(data) {
         columnsToDisplay.forEach(function (key) {
             var cell = row.insertCell();
             if (key === 'date') {
-                console.log(item[key])
+                console.log(item[key]);
                 var utcDate = new Date(item[key]);
                 var options = {
                     year: 'numeric',
@@ -86,18 +85,21 @@ function populateTable4(data) {
 
     // Add row for grand total
     var totalRow = tbody.insertRow();
-    var totalCell = totalRow.insertCell();
-    totalCell.colSpan = columnsToDisplay.length - 3; // Skip the first three columns
 
-    columnsToDisplay.forEach(function (key) {
-        var cell = totalRow.insertCell();
-        if (key === 'Amount') {
-            cell.textContent = data.Grand['Grand Amount'];
-        } else {
-            cell.textContent = '';
-        }
-    });
+    // Insert empty cells for the first three columns
+    for (let i = 0; i < 3; i++) {
+        totalRow.insertCell();
+    }
+
+    var grandTotalLabelCell = totalRow.insertCell();
+    grandTotalLabelCell.textContent = 'Grand Total';
+    grandTotalLabelCell.style.fontWeight = 'bold'; // Make "Grand Total" label bold
+
+    var grandTotalValueCell = totalRow.insertCell();
+    grandTotalValueCell.textContent = data.Grand['Grand Amount']; // Assuming 'Grand Amount' is correct key in your data
+    grandTotalValueCell.style.fontWeight = 'bold'; // Make grand total value bold
 }
+
 
 
 async function exportToExcel() {

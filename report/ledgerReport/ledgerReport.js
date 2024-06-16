@@ -91,37 +91,47 @@ function populateTable4(data) {
 
     columnsToDisplay.forEach(function (key) {
         var cell = totalRow.insertCell();
-        switch (key) {
-            case 'balance':
-                cell.textContent = data.Grand['Grand Balance'];
-                break;
-            case 'out_carate':
-                cell.textContent = data.Grand['Grand outCarate'];
-                break;
-            case 'total_balance':
-                cell.textContent = data.Grand['Total Balance'];
-                break;
-            case 'cash':
-                cell.textContent = data.Grand['Total Cash'];
-                break;
-            case 'online':
-                cell.textContent = data.Grand['Total Online'];
-                break;
-            case 'discount':
-                cell.textContent = data.Grand['Grand Discount'];
-                break;
-            case 'in_carate':
-                cell.textContent = data.Grand['Grand inCarate'];
-                break;
-            case 'remaining':
-                cell.textContent = data.Grand['Grand Remaining Amount'];
-                break;
-            default:
-                cell.textContent = '';
-                break;
+        if (key === 'summary') {
+            cell.textContent = 'Grand Total';
+            cell.style.fontWeight = 'bold'; // Make "Grand Total" label bold
+        } else {
+            switch (key) {
+                case 'balance':
+                    cell.textContent = data.Grand['Grand Balance'];
+                    break;
+                case 'out_carate':
+                    cell.textContent = data.Grand['Grand outCarate'];
+                    break;
+                case 'total_balance':
+                    cell.textContent = data.Grand['Total Balance'];
+                    break;
+                case 'cash':
+                    cell.textContent = data.Grand['Total Cash'];
+                    break;
+                case 'online':
+                    cell.textContent = data.Grand['Total Online'];
+                    break;
+                case 'discount':
+                    cell.textContent = data.Grand['Grand Discount'];
+                    break;
+                case 'in_carate':
+                    cell.textContent = data.Grand['Grand inCarate'];
+                    break;
+                case 'remaining':
+                    cell.textContent = data.Grand['Grand Remaining Amount'];
+                    break;
+                default:
+                    cell.textContent = '';
+                    break;
+            }
+            cell.style.fontWeight = 'bold'; // Make grand total values bold
         }
     });
 
+    // Add a final cell for the "counter" column, leaving it empty
+    totalRow.insertCell();
+
+    // Conditional logic for additional content based on customer selection
     if (document.getElementById('customer').value !== '') {
         console.log("Customer not selected");
         fetch('http://65.2.144.249/carateuserData/' + document.getElementById('customer').value)
@@ -135,6 +145,7 @@ function populateTable4(data) {
             .then(data1 => {
                 // Populate dropdown with API data
                 console.log(data1)
+                // Assuming 'totalCell' is defined somewhere in your context
                 totalCell.innerHTML = 'Grand Total: ' + 
                     data.Grand['Grand Balance'] + ' ("Grand Balance"), ' + 
                     data.Grand['Grand outCarate'] + ' (Grand outCarate)' + 
@@ -151,6 +162,7 @@ function populateTable4(data) {
                     '350 => ' + data1[0]['carate_350'];
             });
     } else {
+        // Assuming 'totalCell' is defined somewhere in your context
         totalCell.textContent = 'Grand Total: ' + 
             data.Grand['Grand Balance'] + ' ("Grand Balance"), ' + 
             data.Grand['Grand outCarate'] + ' (Grand outCarate)' + 
