@@ -88,14 +88,23 @@ function populateTable4(data) {
             }
         });
     });
+
     // Append grand total row
     var row = tbody.insertRow();
     row.insertCell().textContent = ''; // Empty cell for serial number
     row.insertCell().textContent = ''; // Empty cell for date
     row.insertCell().textContent = ''; // Empty cell for supplier_name
-    row.insertCell().textContent = '';
-    row.insertCell().textContent = 'Grand Total:'; // Cell for Grand Total label
-    row.insertCell().textContent = grandTotalQuantity; // Cell for Grand Total value
+    row.insertCell().textContent = ''; // Empty cell for gadi_number
+
+    // Cell for Grand Total label
+    var labelCell = row.insertCell();
+    labelCell.textContent = 'Grand Total:';
+    labelCell.style.fontWeight = 'bold'; // Make label text bold
+
+    // Cell for Grand Total value
+    var valueCell = row.insertCell();
+    valueCell.textContent = grandTotalQuantity;
+    valueCell.style.fontWeight = 'bold'; // Make value text bold
 }
 
 function populateTable5(data) {
@@ -135,16 +144,29 @@ function populateTable5(data) {
             }
         });
     });
+
     // Append grand total row
     var row = tbody.insertRow();
     row.insertCell().textContent = ''; // Empty cell for serial number
     row.insertCell().textContent = ''; // Empty cell for date
     row.insertCell().textContent = ''; // Empty cell for from_account
     row.insertCell().textContent = ''; // Empty cell for to_account
-    row.insertCell().textContent = '';
-    row.insertCell().textContent = 'Grand Total:'; // Cell for Grand Total label
-    row.insertCell().textContent = grandTotalPreBalance; // Cell for Grand Total pre_balance
-    row.insertCell().textContent = grandTotalAmounr; // Cell for Grand Total amounr
+    row.insertCell().textContent = ''; // Empty cell for comment
+
+    // Cell for Grand Total label
+    var labelCell = row.insertCell();
+    labelCell.textContent = 'Grand Total:';
+    labelCell.style.fontWeight = 'bold'; // Make label text bold
+
+    // Cell for Grand Total pre_balance
+    var preBalanceCell = row.insertCell();
+    preBalanceCell.textContent = grandTotalPreBalance;
+    preBalanceCell.style.fontWeight = 'bold'; // Make value text bold
+
+    // Cell for Grand Total amounr
+    var amounrCell = row.insertCell();
+    amounrCell.textContent = grandTotalAmounr;
+    amounrCell.style.fontWeight = 'bold'; // Make value text bold
 }
 
 async function exportToExcel() {

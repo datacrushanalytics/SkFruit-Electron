@@ -102,12 +102,14 @@ function populateTable4(data) {
     totalRow.insertCell(); // Add empty cell for route column
     var grandTotalLabelCell = totalRow.insertCell();
     grandTotalLabelCell.textContent = 'Grand Total';
+    grandTotalLabelCell.style.fontWeight = 'bold'; // Make "Grand Total" label bold
+
     columnsToDisplay.slice(4).forEach(function(key) {
         var totalCell = totalRow.insertCell();
         totalCell.textContent = grandTotals[key] || '';
+        totalCell.style.fontWeight = 'bold'; // Make grand total values bold
     });
 }
-
 
 function populateTable5(data) {
     var tbody = document.getElementById('tableBody1');
@@ -156,6 +158,8 @@ function populateTable5(data) {
     totalRow.insertCell(); // Add empty cell for note column
     var grandTotalLabelCell = totalRow.insertCell();
     grandTotalLabelCell.textContent = 'Grand Total';
+    grandTotalLabelCell.style.fontWeight = 'bold'; // Make "Grand Total" label bold
+
     columnsToDisplay.slice(5).forEach(function(key) {
         var totalCell = totalRow.insertCell();
         switch (key) {
@@ -177,7 +181,10 @@ function populateTable5(data) {
             default:
                 totalCell.textContent = '';
         }
+        totalCell.style.fontWeight = 'bold'; // Make grand total values bold
     });
+
+
 
     document.getElementById('sale').textContent = data.GrandSale['saleAmount'] || 0;
     document.getElementById('saleCash').textContent =data.GrandSale['saleCash'] || 0;

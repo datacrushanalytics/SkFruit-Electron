@@ -129,10 +129,10 @@ function openModal(item) {
                 tableBody.appendChild(row);
             });
 
-            document.getElementById('carate3100').textContent = data.reports[0].carate_100;
-            document.getElementById('carate3150').textContent = data.reports[0].carate_150;
-            document.getElementById('carate3250').textContent = data.reports[0].carate_250;
-            document.getElementById('carate3350').textContent = data.reports[0].carate_350;
+            // document.getElementById('carate3100').textContent = data.reports[0].carate_100;
+            // document.getElementById('carate3150').textContent = data.reports[0].carate_150;
+            // document.getElementById('carate3250').textContent = data.reports[0].carate_250;
+            // document.getElementById('carate3350').textContent = data.reports[0].carate_350;
 
 
             var tablefooter = document.getElementById("tablefooter");
@@ -142,6 +142,7 @@ function openModal(item) {
                 //{ label: "गेलेले कॅरेट : +", value: data.results[0].carate_amount },
                 //{ label: "चालू कलम रक्कम:", value: data.results[0].amount },
                 { label: "मागील बाकी:", value: data.reports[0].previous_balance },
+                { label: "बाकी कॅरेट : 100 X  " + data.reports[0].carate_100 + "  150 X  " + data.reports[0].carate_150 + "  250 X  " + data.reports[0].carate_250 + "  350 X  " +  data.reports[0].carate_350, value: ''},
                 //{ label: "एकूण रक्कम:", value: data.results[0].total_amount },
                 { label: "रोख जमा रक्कम:", value: data.reports[0].PaidAmt },
                 { label: "ऑनलाईन जमा बँक :", value: data.reports[0].online_deposite_bank },
@@ -149,6 +150,7 @@ function openModal(item) {
                 { label: "सूट रक्कम:", value: data.reports[0].discount },
                 { label: "जमा कॅरेट:  -" + "100 * " +data.reports[0].c100 +" | 150 * " + data.reports[0].c150+ " | 250 * " +data.reports[0].c250 + " | 350 * " + data.reports[0].c350, value: data.reports[0].inCarat },
                 { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.reports[0].Balance },
+                
                 // Add other bill details similarly
             ];
 
@@ -346,27 +348,7 @@ function openModal(item) {
         </tfoot>
     </table>
 
-    <div class="box-container">
-       <b> <div class="label">बाकी कॅरेट :</div> </b>
-        <div class="row">
-            <div class="carate-box">
-                <div class="carate">100:</div>
-                <div class="data" id="carate3100">Data 1</div>
-            </div>
-            <div class="carate-box">
-                <div class="carate">150:</div>
-                <div class="data" id="carate3150">Data 2</div>
-            </div>
-            <div class="carate-box">
-                <div class="carate">250:</div>
-                <div class="data" id="carate3250">Data 3</div>
-            </div>
-            <div class="carate-box">
-                <div class="carate">350:</div>
-                <div class="data" id="carate3350">Data 4</div>
-            </div>
-        </div>
-    </div>
+    
 </div>
         <!-- Thank you message -->
         <div class="details">

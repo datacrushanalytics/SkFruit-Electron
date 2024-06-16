@@ -61,13 +61,12 @@ function fetchDataAndProcess() {
 
 
 
-
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
     var columnsToDisplay = ['carate_date', 'customer_name', 'summary', "OutCarate", 'out_carate_total', "inCarate", 'in_carate_total'];
     var counter = 1;
-    console.log(data.reports)
+    console.log(data.reports);
     if (data.reports.length === 0) {
         alert("No Data Found");
     }
@@ -78,7 +77,7 @@ function populateTable4(data) {
         columnsToDisplay.forEach(function (key) {
             var cell = row.insertCell();
             if (key === 'carate_date') {
-                console.log(item[key])
+                console.log(item[key]);
                 var utcDate = new Date(item[key]);
                 var options = {
                     year: 'numeric',
@@ -87,7 +86,6 @@ function populateTable4(data) {
                     timeZone: 'Asia/Kolkata'
                 };
                 cell.textContent = utcDate.toLocaleString('en-IN', options);
-
             } else {
                 cell.textContent = item[key];
             }
@@ -102,16 +100,23 @@ function populateTable4(data) {
 
     columnsToDisplay.forEach(function (key) {
         var cell = totalRow.insertCell();
-        switch (key) {
-            case 'out_carate_total':
-                cell.textContent = data.Grand['Grand out_carate_total'];
-                break;
-            case 'in_carate_total':
-                cell.textContent = data.Grand['Grand in_carate_total'];
-                break;
-            default:
-                cell.textContent = '';
-                break;
+        if (key === 'summary') {
+            cell.textContent = 'Grand Total';
+            cell.style.fontWeight = 'bold'; // Make the label bold
+        } else {
+            switch (key) {
+                case 'out_carate_total':
+                    cell.textContent = data.Grand['Grand out_carate_total'];
+                    cell.style.fontWeight = 'bold'; // Make the value bold
+                    break;
+                case 'in_carate_total':
+                    cell.textContent = data.Grand['Grand in_carate_total'];
+                    cell.style.fontWeight = 'bold'; // Make the value bold
+                    break;
+                default:
+                    cell.textContent = '';
+                    break;
+            }
         }
     });
 
