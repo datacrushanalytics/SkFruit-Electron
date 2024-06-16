@@ -204,7 +204,7 @@ function openModal(item) {
             tablefooter.innerHTML = ""; // Clear existing rows
 
             var footerDetails = [
-                { label: "गेलेले कॅरेट : +", value: data.results[0].carate_amount },
+                { label: "गेलेले कॅरेट : 100 X  " + data.results[0].in_carate_100 + "  150 X  " + data.results[0].in_carate_150 + "  250 X  " + data.results[0].in_carate_250 + "  350 X  " +  data.results[0].in_carate_350, value: data.results[0].carate_amount },
                 { label: "चालू कलम रक्कम:", value: data.results[0].amount },
                 { label: "मागील बाकी:", value: data.results[0].pre_balance },
                 { label: "एकूण रक्कम:", value: data.results[0].total_amount },
@@ -212,9 +212,9 @@ function openModal(item) {
                 { label: "ऑनलाईन जमा बँक :", value: data.results[0].online_acc },
                 { label: "ऑनलाईन जमा रक्कम:", value: data.results[0].online_amt },
                 { label: "सूट रक्कम:", value: data.results[0].discount },
-                { label: "जमा कॅरेट:   -", value: data.results[0].inCarat },
+                { label: "जमा कॅरेट: 100 X  " + data.results[0].out_carate_100 + "  150 X  " + data.results[0].out_carate_150 + "  250 X  " + data.results[0].out_carate_250 + "  350 X  " +  data.results[0].out_carate_350, value: data.results[0].inCarat },
                 { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.results[0].balance },
-                { label: "बाकी कॅरेट :" , value: data.results[0].remaining} 
+                { label: "बाकी कॅरेट : 100 X  " + data.results[0].carate_100 + "  150 X  " + data.results[0].carate_150 + "  250 X  " + data.results[0].carate_250 + "  350 X  " +  data.results[0].carate_350, value: ''} 
                 // Add other bill details similarly
             ];
 
@@ -227,18 +227,18 @@ function openModal(item) {
                 tablefooter.appendChild(row);
             });
 
-            document.getElementById('carate1100').textContent = data.results[0].in_carate_100;
-            document.getElementById('carate1150').textContent = data.results[0].in_carate_150;
-            document.getElementById('carate1250').textContent = data.results[0].in_carate_250;
-            document.getElementById('carate1350').textContent = data.results[0].in_carate_350;
-            document.getElementById('carate2100').textContent = data.results[0].out_carate_100;
-            document.getElementById('carate2150').textContent = data.results[0].out_carate_150;
-            document.getElementById('carate2250').textContent = data.results[0].out_carate_250;
-            document.getElementById('carate2350').textContent = data.results[0].out_carate_350;
-            document.getElementById('carate3100').textContent = data.results[0].carate_100;
-            document.getElementById('carate3150').textContent = data.results[0].carate_150;
-            document.getElementById('carate3250').textContent = data.results[0].carate_250;
-            document.getElementById('carate3350').textContent = data.results[0].carate_350;
+            // document.getElementById('carate1100').textContent = data.results[0].in_carate_100;
+            // document.getElementById('carate1150').textContent = data.results[0].in_carate_150;
+            // document.getElementById('carate1250').textContent = data.results[0].in_carate_250;
+            // document.getElementById('carate1350').textContent = data.results[0].in_carate_350;
+            // document.getElementById('carate2100').textContent = data.results[0].out_carate_100;
+            // document.getElementById('carate2150').textContent = data.results[0].out_carate_150;
+            // document.getElementById('carate2250').textContent = data.results[0].out_carate_250;
+            // document.getElementById('carate2350').textContent = data.results[0].out_carate_350;
+            // document.getElementById('carate3100').textContent = data.results[0].carate_100;
+            // document.getElementById('carate3150').textContent = data.results[0].carate_150;
+            // document.getElementById('carate3250').textContent = data.results[0].carate_250;
+            // document.getElementById('carate3350').textContent = data.results[0].carate_350;
 
 
             // Populate table with fetched data
@@ -457,7 +457,7 @@ color: #666;
         <tbody id = 'TableBody'>
         </tbody>
     </table>
-    
+    <br><br>
     <!-- Items table -->
     <table>
         <thead>
@@ -476,72 +476,7 @@ color: #666;
             
         </tfoot>
     </table>
-    <div class="box-container">
-    <div class="label">गेलेले कॅरेट :</div>
-    <div class="row">
-        <div class="carate-box">
-            <div class="carate">100:</div>
-            <div class="data" id="carate1100">Data 1</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">150:</div>
-            <div class="data" id="carate1150">Data 2</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">250:</div>
-            <div class="data" id="carate1250">Data 3</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">350:</div>
-            <div class="data" id="carate1350">Data 4</div>
-        </div>
-    </div>
-</div>
 
-<div class="box-container">
-    <div class="label">जमा कॅरेट :</div>
-    <div class="row">
-        <div class="carate-box">
-            <div class="carate">100:</div>
-            <div class="data" id="carate2100">Data 1</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">150:</div>
-            <div class="data" id="carate2150">Data 2</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">250:</div>
-            <div class="data" id="carate2250">Data 3</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">350:</div>
-            <div class="data" id="carate2350">Data 4</div>
-        </div>
-    </div>
-</div>
-
-<div class="box-container">
-    <div class="label">बाकी कॅरेट :</div>
-    <div class="row">
-        <div class="carate-box">
-            <div class="carate">100:</div>
-            <div class="data" id="carate3100">Data 1</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">150:</div>
-            <div class="data" id="carate3150">Data 2</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">250:</div>
-            <div class="data" id="carate3250">Data 3</div>
-        </div>
-        <div class="carate-box">
-            <div class="carate">350:</div>
-            <div class="data" id="carate3350">Data 4</div>
-        </div>
-    </div>
-</div>
-        
         <!-- Thank you message -->
         <div class="details">
             <h4>Thank you, visit again!</h4>
