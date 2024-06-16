@@ -13,12 +13,10 @@ function formatDate(dateString) {
 }
 
 
-
 document.getElementById('loginForm1').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
     fetchDataAndProcess();
 });
-
 
 
 function fetchDataAndProcess() {    
@@ -62,9 +60,6 @@ function fetchDataAndProcess() {
             // Optionally, you can display an error message here
         });
 }
-
-
-
 
 
 function populateTable4(data) {
