@@ -205,6 +205,13 @@ function openModal(item) {
         justify-content: center;
     }
 
+    h6{
+            top: -17px;
+           position: absolute;
+           font-size: 12px;
+        }
+
+
     .header .logo {
         width: auto; /* Adjust as needed */
         margin-right: 20px; /* Adjust as needed */
@@ -326,6 +333,7 @@ function openModal(item) {
 </head>
 <body>
 <div class="header">
+<div> <h6> Mobile:- 9960607512  </h6> </div>
     <div class="logo">
         <img src="../../assets/img/logo.png" alt="Company Logo">
     </div>

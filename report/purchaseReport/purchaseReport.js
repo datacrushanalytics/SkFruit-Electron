@@ -78,6 +78,9 @@ function populateTable4(data) {
         alert("No Data Found");
     }
 
+    var grandTotalBillAmount = 0;
+    var grandTotalQuantity = 0;
+
     data.reports.forEach(function(item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
@@ -86,7 +89,6 @@ function populateTable4(data) {
         columnsToDisplay.forEach(function(key) {
             var cell = row.insertCell();
             if (key == 'date') {
-                console.log(item[key]);
                 var utcDate = new Date(item[key]);
                 var options = { 
                     year: 'numeric', 
@@ -100,6 +102,13 @@ function populateTable4(data) {
                 // Align BillAmount and TotalQuantity to the right
                 if (key == 'BillAmount' || key == 'TotalQuantity') {
                     cell.classList.add('right-align');
+                }
+                // Calculate grand totals
+                if (key == 'BillAmount') {
+                    grandTotalBillAmount += parseFloat(item[key]) || 0;
+                }
+                if (key == 'TotalQuantity') {
+                    grandTotalQuantity += parseFloat(item[key]) || 0;
                 }
             }
         });
@@ -129,6 +138,7 @@ function populateTable4(data) {
             editCell.appendChild(editButton);
         }
 
+        // Add Delete button if user is admin
         if (isAdmin) {
             var deleteCell = row.insertCell();
             var deleteButton = document.createElement('button');
@@ -144,19 +154,21 @@ function populateTable4(data) {
     // Add row for grand total
     var totalRow = tbody.insertRow();
     var totalCell = totalRow.insertCell();
-    totalCell.colSpan = columnsToDisplay.length - 2;
-    totalCell.textContent = ''; // Empty cell to shift the grand total one column to the right
+    totalCell.colSpan = columnsToDisplay.length - 2; // Span the totalCell across all columns except the last two
 
     var emptyCell = totalRow.insertCell(); // Add an additional empty cell to shift the grand total one more column to the right
 
     var billAmountCell = totalRow.insertCell();
-    billAmountCell.textContent = 'Grand Total: ' + data.Grand['Grand Amournt'] + ' (BillAmount)';
+    billAmountCell.textContent = 'Grand Total: ' + grandTotalBillAmount.toFixed(2) + ' (BillAmount)';
+    billAmountCell.style.fontWeight = 'bold'; // Make label text bold
     billAmountCell.classList.add('right-align');
 
     var quantityCell = totalRow.insertCell();
-    quantityCell.textContent = data.Grand['Grand Quantity'] + ' (TotalQuantity)';
+    quantityCell.textContent = grandTotalQuantity.toFixed(2) + ' (TotalQuantity)';
+    quantityCell.style.fontWeight = 'bold'; // Make label text bold
     quantityCell.classList.add('right-align');
 }
+
 
 // Add CSS for right alignment
 const style = document.createElement('style');
