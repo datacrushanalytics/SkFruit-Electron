@@ -90,6 +90,17 @@ function populateTable4(data) {
         alert("No Data Found");
     }
 
+    var grandTotals = {
+        balance: 0,
+        out_carate: 0,
+        total_balance: 0,
+        cash: 0,
+        online_bank: 0,
+        online: 0,
+        discount: 0,
+        in_carate: 0,
+        remaining: 0
+    };
 
     data.reports.forEach(function(item) {
         var row = tbody.insertRow();
@@ -143,10 +154,12 @@ function populateTable4(data) {
 
     var grandTotalLabelCell = totalRow.insertCell();
     grandTotalLabelCell.textContent = 'Grand Total';
+    grandTotalLabelCell.style.fontWeight = 'bold'; // Make label text bold
 
     columnsToDisplay.slice(4).forEach(function(key) {
         var totalCell = totalRow.insertCell();
         totalCell.textContent = grandTotals[key] || '';
+        totalCell.style.fontWeight = 'bold'; // Make value text bold
     });
 }
 
