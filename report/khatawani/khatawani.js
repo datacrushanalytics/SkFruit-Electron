@@ -67,6 +67,18 @@ function fetchDataAndProcess() {
     });
 }
 
+
+var grandTotals = {balance: 0,
+    out_carate: 0,
+    total_balance: 0,
+    cash: 0,
+    online_bank: 0,
+    online: 0,
+    discount: 0, 
+    in_carate: 0,
+    remaining: 0
+};
+
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
@@ -78,17 +90,6 @@ function populateTable4(data) {
         alert("No Data Found");
     }
 
-    var grandTotals = {
-        balance: 0,
-        out_carate: 0,
-        total_balance: 0,
-        cash: 0,
-        online_bank: 0,
-        online: 0,
-        discount: 0,
-        in_carate: 0,
-        remaining: 0
-    };
 
     data.reports.forEach(function(item) {
         var row = tbody.insertRow();
@@ -160,8 +161,8 @@ async function exportToExcel() {
             const date = new Date(dateString);
             return date.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' });
         };
-
-        const customHeaders = ['bill_no', 'date', 'cust_name','route','amount', 'carate_amount',"TotalKalam",'pre_balance','cash','online_acc','online_amt', 'discount','inCarat', 'balance'];
+        
+        const customHeaders = ['bill_no', 'date', 'cust_name','route','amount', 'carate_amount',"TotalKalam",'cash','online_acc','online_amt', 'discount','inCarat', 'balance'];
         
         // Export to PDF using jsPDF and autoTable
         const { jsPDF } = window.jspdf;
@@ -178,23 +179,21 @@ async function exportToExcel() {
         doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
         
         let startY = 50;
-
         // Adding the headers and data
         const reportData = data.reports.map(report => [
-            report.bill_no,
+            report.summary,
             formatDateToIST(report.date), // Format date to IST
-            report.cust_name,
+            report.customer_name,
             report.route,
-            report.amount,
-            report.carate_amount,
-            report.TotalKalam,
-            report.pre_balance,
+            report.balance,
+            report.out_carate,
+            report.total_balance,
             report.cash,
-            report.online_acc,
-            report.online_amt,
+            report.online_bank,
+            report.online,
             report.discount,
-            report.inCarat,
-            report.balance
+            report.in_carate,
+            report.remaining
         ]);
 
         doc.autoTable({
@@ -205,19 +204,22 @@ async function exportToExcel() {
         });
 
         // Adding Grand Totals
-        const grandTotals = data.Grand || {};
+        // const grandTotals = data.Grand || {};
+        console.log("Grand Totals: ", grandTotals); // Debugging line to check grand totals
 
         const grandTotalsData = [
-            ["Grand Bill Amount", grandTotals['Grand Bill Amount'] || 0],
-            ["Grand outCarate", grandTotals['Grand outCarate'] || 0],
-            ["Total Bill Amount", grandTotals['Total Bill Amount'] || 0],
-            ["Total Cash", grandTotals['Cash'] || 0],
-            ["Online Amount", grandTotals['Online Amount'] || 0],
-            ["Grand Discount", grandTotals['Grand Discount'] || 0],
-            ["Grand inCarate", grandTotals['Grand inCarate'] || 0],
-            ["Grand Previous balance", grandTotals['Grand Previous balance'] || 0],
-            ["Grand balance", grandTotals['Grand balance'] || 0]
+            ["Grand Bill Amount", grandTotals['balance'] || 0],
+            ["Grand outCarate", grandTotals['out_carate'] || 0],
+            ["Total Bill Amount", grandTotals['total_balance'] || 0],
+            ["Total Cash", grandTotals['cash'] || 0],
+            ["Online Amount", grandTotals['online'] || 0],
+            ["Grand Discount", grandTotals['discount'] || 0],
+            ["Grand inCarate", grandTotals['in_carate'] || 0],
+            ["Grand balance", grandTotals['remaining'] || 0]
         ];
+
+        // Debugging line to check grandTotalsData
+        console.log("Grand Totals Data: ", grandTotalsData);
 
         // Get the position where the first table ends
         const finalY = doc.autoTable.previous.finalY || 60; // 60 is a fallback value in case previous.finalY is undefined
@@ -231,7 +233,6 @@ async function exportToExcel() {
 
         // Save the PDF
         doc.save('Khatawani.pdf');
-
     } catch (error) {
         console.error('Error exporting data:', error);
     }
