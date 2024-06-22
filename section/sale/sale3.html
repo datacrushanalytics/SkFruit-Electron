@@ -432,6 +432,7 @@
         <div class="input-wrapper">
           <label for="nag" id="nagLabel">नग :</label>
           <input type="text" id="nag" name="nag" placeholder="नग" onchange="updateTotal()">
+          <input type="hidden" id="nag1" name="nag1">
         </div>
 
         <div class="input-wrapper">
@@ -572,18 +573,22 @@
           <div class="input-wrapper">
             <label for="carate100">100 :</label>
             <input type="number" id="carate2100" name="carate2100" placeholder="100" readonly>
+            <input type="hidden" id="carate22100" name="carate22100" placeholder="100" readonly>
           </div>
           <div class="input-wrapper">
             <label for="carate150">150 :</label>
             <input type="number" id="carate2150" name="carate2150" placeholder="150" readonly>
+            <input type="hidden" id="carate22150" name="carate22150" placeholder="150" readonly>
           </div>
           <div class="input-wrapper">
             <label for="carate250">250 :</label>
             <input type="number" id="carate2250" name="carate2250" placeholder="250" readonly>
+            <input type="hidden" id="carate22250" name="carate22250" placeholder="250" readonly>
           </div>
           <div class="input-wrapper">
             <label for="carate350">350 :</label>
             <input type="number" id="carate2350" name="carate2350" placeholder="350" readonly>
+            <input type="hidden" id="carate22350" name="carate22350" placeholder="350" readonly>
           </div>
         </div>
       </div>
@@ -785,6 +790,10 @@
         document.getElementById('carate2150').value = parseInt(data[0]['carate_150']);
         document.getElementById('carate2250').value = parseInt(data[0]['carate_250']);
         document.getElementById('carate2350').value = parseInt(data[0]['carate_350']);
+        document.getElementById('carate22100').value = parseInt(data[0]['carate_100']);
+        document.getElementById('carate22150').value = parseInt(data[0]['carate_150']);
+        document.getElementById('carate22250').value = parseInt(data[0]['carate_250']);
+        document.getElementById('carate22350').value = parseInt(data[0]['carate_350']);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -799,7 +808,17 @@
     var value150 = parseInt(document.getElementById("carate150").value) || 0;
     var value250 = parseInt(document.getElementById("carate250").value) || 0;
     var value350 = parseInt(document.getElementById("carate350").value) || 0;
+    var value1100 = parseInt(document.getElementById("carate1100").value) || 0;
+    var value1150 = parseInt(document.getElementById("carate1150").value) || 0;
+    var value1250 = parseInt(document.getElementById("carate1250").value) || 0;
+    var value1350 = parseInt(document.getElementById("carate1350").value) || 0;
+
+
     document.getElementById("total1").value = value100 * 100 + value150 * 150 + value250 * 250 + value350 * 350;
+    document.getElementById("carate2100").value = parseInt(document.getElementById("carate22100").value) + value100 - value1100; 
+    document.getElementById("carate2150").value = parseInt(document.getElementById("carate22150").value) + value150 - value1150;
+    document.getElementById("carate2250").value = parseInt(document.getElementById("carate22250").value) + value250 - value1250;
+    document.getElementById("carate2350").value = parseInt(document.getElementById("carate22350").value) + value350 - value1350;
     totalbill();
     totalBalance();
     //document.getElementById("total1").value = parseInt(document.getElementById("carate100").value) * 100 +  parseInt(document.getElementById("carate150").value) * 150 +  parseInt(document.getElementById("carate250").value) * 250 +  parseInt(document.getElementById("carate350").value) * 350
@@ -810,7 +829,15 @@
     var value150 = parseInt(document.getElementById("carate1150").value) || 0;
     var value250 = parseInt(document.getElementById("carate1250").value) || 0;
     var value350 = parseInt(document.getElementById("carate1350").value) || 0;
+    var value1100 = parseInt(document.getElementById("carate100").value) || 0;
+    var value1150 = parseInt(document.getElementById("carate150").value) || 0;
+    var value1250 = parseInt(document.getElementById("carate250").value) || 0;
+    var value1350 = parseInt(document.getElementById("carate350").value) || 0;
     document.getElementById("total2").value = value100 * 100 + value150 * 150 + value250 * 250 + value350 * 350;
+    document.getElementById("carate2100").value = parseInt(document.getElementById("carate22100").value) + value1100 - value100;
+    document.getElementById("carate2150").value = parseInt(document.getElementById("carate22150").value) + value1150 - value150;
+    document.getElementById("carate2250").value = parseInt(document.getElementById("carate22250").value) + value1250 - value250;
+    document.getElementById("carate2350").value = parseInt(document.getElementById("carate22350").value) + value1350 - value350;
     totalbill();
     //document.getElementById("total1").value = parseInt(document.getElementById("carate100").value) * 100 +  parseInt(document.getElementById("carate150").value) * 150 +  parseInt(document.getElementById("carate250").value) * 250 +  parseInt(document.getElementById("carate350").value) * 350
   }

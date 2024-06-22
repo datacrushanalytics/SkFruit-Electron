@@ -144,6 +144,7 @@ function getProducts() {
             // Update label with additional content
             var nagLabel = document.getElementById('nagLabel');
             nagLabel.innerHTML = 'नग: (Remaining : ' + data[0].closing + ' '+ data[0].unit +')'; 
+            document.getElementById('nag1').value = data[0].closing;
         })
         .catch(error => {
             console.error('Error:', error);
@@ -153,6 +154,10 @@ function getProducts() {
 
 
 function updateTotal() {
+    if (document.getElementById("nag").value > document.getElementById('nag1').value){
+        alert("Inventory Is not available");
+        document.getElementById("nag").value = 0;
+    }
     document.getElementById("total").value = document.getElementById("kimmat").value * document.getElementById("nag").value
 }
 
