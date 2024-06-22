@@ -508,8 +508,11 @@
         })
         .then(response => {
             if (!response.ok) {
+                alert("Product not found on this Bata")
+                loader.style.display = 'none';
                 throw new Error('Network response was not ok');
             }
+            console.log(response)
             return response.json();
         })
         .then(result => {
@@ -544,6 +547,8 @@
         })
         .then(response => {
             if (!response.ok) {
+                alert("Product not found on this Bata")
+                loader.style.display = 'none';
                 throw new Error('Network response was not ok');
             }
             return response.json();
