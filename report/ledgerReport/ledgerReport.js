@@ -58,10 +58,11 @@ function populateTable4(data) {
     tbody.innerHTML = ''; // Clear existing rows
     var columnsToDisplay = ['date', 'route', 'customer_name', 'summary', 'balance', 'out_carate', 'total_balance', 'cash', 'online', 'discount', 'in_carate', 'remaining'];
     var counter = 1;
-    console.log(data.reports)
+
     if (data.reports.length === 0) {
         alert("No Data Found");
     }
+
     data.reports.forEach(function (item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
@@ -69,7 +70,6 @@ function populateTable4(data) {
         columnsToDisplay.forEach(function (key) {
             var cell = row.insertCell();
             if (key == 'date') {
-                console.log(item[key])
                 var utcDate = new Date(item[key]);
                 var options = {
                     year: 'numeric',
@@ -82,19 +82,17 @@ function populateTable4(data) {
                 cell.textContent = item[key];
             }
         });
-
     });
 
-    // Add row for grand total
-    var totalRow = tbody.insertRow();
-    totalRow.insertCell().colSpan = 1; // Skip the first column
+    // Display grand totals for all columns except 'remaining'
+    var grandTotalRow = tbody.insertRow();
+    var grandTotalCell = grandTotalRow.insertCell();
+    grandTotalCell.textContent = 'Grand Total:';
+    grandTotalCell.style.fontWeight = 'bold';
 
     columnsToDisplay.forEach(function (key) {
-        var cell = totalRow.insertCell();
-        if (key === 'summary') {
-            cell.textContent = 'Grand Total';
-            cell.style.fontWeight = 'bold'; // Make "Grand Total" label bold
-        } else {
+        var cell = grandTotalRow.insertCell();
+        if (key !== 'remaining') {
             switch (key) {
                 case 'balance':
                     cell.textContent = data.Grand['Grand Balance'];
@@ -117,23 +115,48 @@ function populateTable4(data) {
                 case 'in_carate':
                     cell.textContent = data.Grand['Grand inCarate'];
                     break;
-                case 'remaining':
-                    cell.textContent = data.Grand['Grand Remaining Amount'];
-                    break;
                 default:
                     cell.textContent = '';
                     break;
             }
             cell.style.fontWeight = 'bold'; // Make grand total values bold
+        } else {
+            cell.textContent = ''; // Leave 'remaining' column empty for grand total row
         }
     });
 
-    // Add a final cell for the "counter" column, leaving it empty
-    totalRow.insertCell();
+    // Display remaining amount from the last entry
+    if (data.reports.length > 0) {
+        var lastEntry = data.reports[data.reports.length - 1];
+        var remainingRow = tbody.insertRow();
+        var remainingCellLabel = remainingRow.insertCell();
+        var remainingCellLabel = remainingRow.insertCell();
+        var remainingCellLabel = remainingRow.insertCell();
+        var remainingCellLabel = remainingRow.insertCell();
+        var remainingCellLabel = remainingRow.insertCell();
+        var remainingCellLabel = remainingRow.insertCell();
+        var remainingCellLabel = remainingRow.insertCell();
+        var remainingCellLabel = remainingRow.insertCell();
+        var remainingCellLabel = remainingRow.insertCell();
+        var remainingCellLabel = remainingRow.insertCell();
+        var remainingCellLabel = remainingRow.insertCell();
+        var remainingCellLabel = remainingRow.insertCell();
+        remainingCellLabel.textContent = 'Remaining Amount:';
+        remainingCellLabel.style.fontWeight = 'bold';
+
+        var remainingValueCell = remainingRow.insertCell();
+        remainingValueCell.textContent = lastEntry['remaining'];
+    } else {
+        var noDataRow = tbody.insertRow();
+        var noDataCell = noDataRow.insertCell();
+        noDataCell.textContent = 'No Data Available';
+        noDataCell.colSpan = columnsToDisplay.length;
+        noDataCell.style.textAlign = 'center';
+    }
 
     // Conditional logic for additional content based on customer selection
     if (document.getElementById('customer').value !== '') {
-        console.log("Customer not selected");
+        console.log("Customer selected");
         fetch('http://65.2.144.249/carateuserData/' + document.getElementById('customer').value)
             .then(response => {
                 if (!response.ok) {
@@ -143,19 +166,8 @@ function populateTable4(data) {
                 return response.json();
             })
             .then(data1 => {
-                // Populate dropdown with API data
-                console.log(data1)
                 // Assuming 'totalCell' is defined somewhere in your context
-                totalCell.innerHTML = 'Grand Total: ' + 
-                    data.Grand['Grand Balance'] + ' ("Grand Balance"), ' + 
-                    data.Grand['Grand outCarate'] + ' (Grand outCarate)' + 
-                    data.Grand['Total Balance'] + ' (Total Balance), ' + 
-                    data.Grand['Total Cash'] + ' (Total Cash)' + 
-                    data.Grand['Total Online'] + ' (Total Online), ' + 
-                    data.Grand['Grand Discount'] + ' (Grand Discount)' + 
-                    data.Grand['Grand inCarate'] + ' (Grand inCarate), ' + 
-                    data.Grand['Grand Remaining Amount'] + ' (Grand Remaining Amount) <br>' +  
-                    'Remaining Carate of Customer :<br>' + 
+                totalCell.innerHTML = 'Remaining Carate of Customer :<br>' +
                     '100 => ' + data1[0]['carate_100'] + '<br>' +
                     '150 => ' + data1[0]['carate_150'] + '<br>' +
                     '250 => ' + data1[0]['carate_250'] + '<br>' +
@@ -163,17 +175,10 @@ function populateTable4(data) {
             });
     } else {
         // Assuming 'totalCell' is defined somewhere in your context
-        totalCell.textContent = 'Grand Total: ' + 
-            data.Grand['Grand Balance'] + ' ("Grand Balance"), ' + 
-            data.Grand['Grand outCarate'] + ' (Grand outCarate)' + 
-            data.Grand['Total Balance'] + ' (Total Balance), ' + 
-            data.Grand['Total Cash'] + ' (Total Cash)' + 
-            data.Grand['Total Online'] + ' (Total Online), ' + 
-            data.Grand['Grand Discount'] + ' (Grand Discount)' + 
-            data.Grand['Grand inCarate'] + ' (Grand inCarate), ' + 
-            data.Grand['Grand Remaining Amount'] + ' (Grand Remaining Amount)';
+        totalCell.textContent = ''; // Clear the totalCell if no customer is selected
     }
 }
+
 
 
 async function exportToExcel() {

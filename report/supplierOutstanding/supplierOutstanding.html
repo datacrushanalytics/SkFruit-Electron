@@ -179,6 +179,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
         fetchAndPopulateDropdown('http://65.2.144.249/list/Supplier', 'customer');
+        fetchDataAndProcess();
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId) {
