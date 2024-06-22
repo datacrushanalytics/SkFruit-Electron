@@ -289,9 +289,16 @@ th {
                     route = "*"
                 }else{
                     var user = JSON.parse(localStorage.getItem('workerData'));
+                    var workerdate = JSON.parse(localStorage.getItem('workerDataDate'));
                     route = user.route_detail
+                    if (workerdate != null){
+                        console.log(workerdate)
+                        document.getElementById('currentDate').value = workerdate;
+                    }
+                    document.getElementById('user').textContent = user.name;
                     console.log(route)
-                    localStorage.removeItem('workerData');
+                    localStorage.removeItem('workerDataDate');
+                    //localStorage.removeItem('workerData');
                 }
         
                 const fetchData = async () => {
@@ -301,7 +308,7 @@ th {
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                           "date": document.getElementById("currentDate").value,
+                           "date": document.getElementById('currentDate').value,
                            "route" : route
                         })
                     });

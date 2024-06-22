@@ -402,7 +402,10 @@ a{
                                 // Add event listener to navigate to another page
                                 div.addEventListener('click', function() {
                                     // Navigate to another page
+                                    localStorage.removeItem('workerDataDate');
+                                    localStorage.removeItem('workerData');
                                     localStorage.setItem('workerData', JSON.stringify(item));
+                                    localStorage.setItem('workerDataDate', JSON.stringify(document.getElementById('currentDate').value));
                                     window.location.href = './dailySale.html'; // Replace 'anotherPage.html' with your desired page URL
                                 });
                                 
