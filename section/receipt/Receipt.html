@@ -258,33 +258,33 @@
     <div id="loader"></div>
     <div class="frame">
         <div class="container">
-            <h1 align="center"> Receipt</h1>
+            <h1 align="center"> जमा पावती</h1>
             <hr>
             <br>
             <div class="container1">
                 <form id="loginForm1">
                     <div class="first-row">
-                        <label for="pavti" class="input-label">Receipt No :</label>
+                        <label for="pavti" class="input-label">जमा पावती क्र :</label>
                         <input type="number" id="pavti" name="number" placeholder="Receipt No." required>
                     </div>
 
                     <!-- Rest of your form content -->
                     
                 <div class="first-row">
-                    <label for="date1" class="input-label">Date :</label>
+                    <label for="date1" class="input-label">तारीख :</label>
                     <input type="date" id="date" name="date" placeholder="Date" required>
                 </div>
 
 
                 <div class="first-row">
-                    <label for="account_group" class="input-label">Customer Name :</label>
+                    <label for="account_group" class="input-label">ग्राहकाचे नाव:</label>
                     <select class="drop" id="account_group" name="account_group" onchange="previousbalance()" required></select>
                     <input type="hidden" id="custid" name="custid">
                 </div>
 
                 <div class="dropdown-container">
                     <div id="number-wrapper" class="input-wrapper">
-                      <label for="number">Mobile No :</label>
+                      <label for="number">मोबाईल नंबर :</label>
                       <select class="drop" id="mob" name="mob" onchange="getCust()" required></select>
                     </div><br>
                 <!-- <div class="first-row">
@@ -293,17 +293,17 @@
                 </div> -->
 
                 <div class="first-row">
-                    <label for="message" class="input-label">Comment :</label>
+                    <label for="message" class="input-label">संदर्भ :</label>
                     <textarea id="message" name="message"></textarea>
                 </div>
 
                 <div class="first-row">
-                    <label for="input3" class="input-label">Privious Balance :</label>
+                    <label for="input3" class="input-label">मागील बाकी :</label>
                     <input type="text" id="input3" name="input1" readonly>
                 </div>
                 
                 <div class="first-row">
-                    <label class="input-label">Reamining carate :</label>
+                    <label class="input-label">बाकी कॅरेट :</label>
                     <input type="number" id="carate2100" name="number" placeholder="100" readonly>
                     <input type="number" id="carate2150" name="number" placeholder="150" readonly>
                     <input type="number" id="carate2250" name="number" placeholder="250" readonly>
@@ -311,30 +311,30 @@
                 </div>
 
                 <div class="first-row">
-                    <label for="input6" class="input-label">Cash :</label>
+                    <label for="input6" class="input-label">रोख :</label>
                     <input type="text" id="input6" name="input1" onchange="totalbill()">
                 </div>
 
                 <div class="first-row">
-                    <label for="input1" class="input-label">online balance Account :</label>
+                    <label for="input1" class="input-label">बँक खाते :</label>
                     <select id="input1" name="input2"></select>
                 </div>
 
                 <div class="first-row">
-                    <label for="input1" class="input-label"> Online  :</label>
+                    <label for="input1" class="input-label"> ऑनलाईन :</label>
                     <input type="text" id="input7" name="input2" onchange="totalbill()"></select>
                 </div>
 
                
 
                 <div class="first-row">
-                    <label for="input8" class="input-label">Discount :</label>
+                    <label for="input8" class="input-label">सूट रक्कम :</label>
                     <input type="text" id="input8" name="input1" onchange="totalbill()">
                 </div>
 
 
                 <div class="first-row">
-                    <label class="input-label">In carate :</label>
+                    <label class="input-label">जमा कॅरेट:</label>
                     <input type="number" id="carate100" name="number" placeholder="100" onchange="carate()">
                     <input type="number" id="carate150" name="number" placeholder="150" onchange="carate()">
                     <input type="number" id="carate250" name="number" placeholder="250" onchange="carate()">
