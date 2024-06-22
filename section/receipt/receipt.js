@@ -153,6 +153,7 @@ function openModal(item) {
                 
                 // Add other bill details similarly
             ];
+            
 
             footerDetails.forEach(function (detail) {
                 var row = document.createElement("tr");
