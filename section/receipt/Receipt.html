@@ -303,7 +303,7 @@
                 </div>
                 
                 <div class="first-row">
-                    <label class="input-label">बाकी कॅरेट :</label>
+                    <label class="input-label"> मागील बाकी कॅरेट :</label>
                     <input type="number" id="carate2100" name="number" placeholder="100" readonly>
                     <input type="number" id="carate2150" name="number" placeholder="150" readonly>
                     <input type="number" id="carate2250" name="number" placeholder="250" readonly>
@@ -347,9 +347,18 @@
                 </div>
 
                 <div class="first-row">
-                    <label for="input5" class="input-label">Total Due Balance :</label>
+                    <label for="input5" class="input-label">बाकी रक्कम :</label>
                     <input type="text" id="input5" name="input1">
                 </div>
+
+                <div class="first-row">
+                    <label class="input-label">एकून बाकी कॅरेट :</label>
+                    <input type="number" id="carate3100" name="number" placeholder="100" readonly>
+                    <input type="number" id="carate3150" name="number" placeholder="150" readonly>
+                    <input type="number" id="carate3250" name="number" placeholder="250" readonly>
+                    <input type="number" id="carate3350" name="number" placeholder="350" readonly>
+                </div>
+
 
                 <div class="fourth-row">
                     
@@ -367,11 +376,36 @@
 <script>
     // JavaScript functions remain unchanged
     function carate() {
+        if (document.getElementById("carate100").value > document.getElementById('carate2100').value){
+        alert("Carate limit exceed");
+        document.getElementById("carate100").value = 0;
+    }
+
+    if (document.getElementById("carate150").value > document.getElementById('carate2150').value){
+        alert("Carate limit exceed");
+        document.getElementById("carate150").value = 0;
+    }
+
+    if (document.getElementById("carate250").value > document.getElementById('carate2250').value){
+        alert("Carate limit exceed");
+        document.getElementById("carate250").value = 0;
+    }
+
+
+    if (document.getElementById("carate350").value > document.getElementById('carate2350').value){
+        alert("Carate limit exceed");
+        document.getElementById("carate350").value = 0;
+    }
+
         var value100 = parseInt(document.getElementById("carate100").value) || 0;
         var value150 = parseInt(document.getElementById("carate150").value) || 0;
         var value250 = parseInt(document.getElementById("carate250").value) || 0;
         var value350 = parseInt(document.getElementById("carate350").value) || 0;
         document.getElementById("input4").value = value100 * 100 + value150 * 150 + value250 * 250 + value350 * 350;
+        document.getElementById('carate3100').value = parseInt(document.getElementById('carate2100').value) - value100;
+        document.getElementById('carate3150').value = parseInt(document.getElementById('carate2150').value) - value150;
+        document.getElementById('carate3250').value = parseInt(document.getElementById('carate2250').value) - value250;
+        document.getElementById('carate3350').value = parseInt(document.getElementById('carate2350').value) - value350;
         totalbill();
     }
 
@@ -467,6 +501,10 @@ function totalbill(){
       document.getElementById('carate2150').value = parseInt(data[0]['carate_150']);
       document.getElementById('carate2250').value = parseInt(data[0]['carate_250']);
       document.getElementById('carate2350').value = parseInt(data[0]['carate_350']);
+      document.getElementById('carate3100').value = parseInt(data[0]['carate_100']);
+      document.getElementById('carate3150').value = parseInt(data[0]['carate_150']);
+      document.getElementById('carate3250').value = parseInt(data[0]['carate_250']);
+      document.getElementById('carate3350').value = parseInt(data[0]['carate_350']);
   })
   .catch(error => {
       console.error('Error:', error);
@@ -561,6 +599,29 @@ function totalbill(){
             document.querySelector('input.select2-search__field').focus();
         }, 0);
     });
+
+
+    if (document.getElementById("carate100").value > document.getElementById('carate2100').value){
+        alert("Carate limit exceed");
+        document.getElementById("carate100").value = 0;
+    }
+
+    if (document.getElementById("carate150").value > document.getElementById('carate2150').value){
+        alert("Carate limit exceed");
+        document.getElementById("carate150").value = 0;
+    }
+
+    if (document.getElementById("carate250").value > document.getElementById('carate2250').value){
+        alert("Carate limit exceed");
+        document.getElementById("carate250").value = 0;
+    }
+
+
+    if (document.getElementById("carate350").value > document.getElementById('carate2350').value){
+        alert("Carate limit exceed");
+        document.getElementById("carate350").value = 0;
+    }
+    
 
 </script>
 </html>
