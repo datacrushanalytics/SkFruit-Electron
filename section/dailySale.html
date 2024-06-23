@@ -281,23 +281,25 @@ th {
             }
         });
 
-
+        let worker = "*"
         async function fetchData1(){
             console.log("Localdata", localStorage.getItem('workerData'))
                 if (localStorage.getItem('workerData')===null){
                     console.log("Hello")
-                    route = "*"
+                    worker = "*"
                 }else{
-                    var user = JSON.parse(localStorage.getItem('workerData'));
+                    var data1 = JSON.parse(localStorage.getItem('workerData'));
+                    var worker = data1.name;
                     var workerdate = JSON.parse(localStorage.getItem('workerDataDate'));
-                    route = user.route_detail
+                    route = worker.route_detail
                     if (workerdate != null){
                         console.log(workerdate)
                         document.getElementById('currentDate').value = workerdate;
                     }
-                    document.getElementById('user').textContent = user.name;
+                    document.getElementById('user').textContent = worker.name;
                     console.log(route)
                     localStorage.removeItem('workerDataDate');
+                    localStorage.removeItem('workerData');
                     //localStorage.removeItem('workerData');
                 }
         
@@ -309,7 +311,7 @@ th {
                         },
                         body: JSON.stringify({
                            "date": document.getElementById('currentDate').value,
-                           "route" : route
+                           "added_by" : worker
                         })
                     });
         

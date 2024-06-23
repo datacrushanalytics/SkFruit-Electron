@@ -1,6 +1,8 @@
 document.getElementById('login').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
-
+    var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    var isAdmin = sessionData[0].name;
+    console.log('admin name',isAdmin);
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
     console.log(document.getElementById('number').value)
@@ -31,6 +33,7 @@ document.getElementById('login').addEventListener('submit', async function(event
         out_carate_150: parseInt(document.getElementById('carate1150').value) || 0,
         out_carate_250: parseInt(document.getElementById('carate1250').value) || 0,
         out_carate_350: parseInt(document.getElementById('carate1350').value) || 0,
+        added_by: isAdmin,
     };
 
     try {

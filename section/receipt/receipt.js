@@ -32,6 +32,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.getElementById('loginForm1').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
+    var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    var isAdmin = sessionData[0].name;
+    console.log('admin name',isAdmin);
 // function form2(){
     var formData = {
         receiptId: parseInt(document.getElementById('pavti').value),
@@ -49,7 +52,8 @@ document.getElementById('loginForm1').addEventListener('submit', async function(
         carate_250: parseInt(document.getElementById('carate250').value) || 0,
         carate_350: parseInt(document.getElementById('carate350').value) || 0,
         deposite_carate_price: parseInt(document.getElementById('input4').value) || 0,
-        remaining: parseInt(document.getElementById('input5').value) || 0,     
+        remaining: parseInt(document.getElementById('input5').value) || 0,
+        added_by: isAdmin,     
     };
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
