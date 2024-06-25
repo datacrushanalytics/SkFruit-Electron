@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+  <title></title>
+  <style>
+    #input13 {
+      margin: 1px;
+      width: auto;
+      text-align: left;
+    }
+
+
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: rgba(242, 242, 242, 0.8);
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    .container {
+      text-align: center;
+      margin-bottom: 20px;
+      padding: 0 20px;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin: 0 auto;
+      max-width: 100%;
+      min-width: 600px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 100%;
+      border-collapse: collapse;
+      background-color: rgba(255, 255, 255, 0.8);
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+
+    th,
+    td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 12px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    button {
+      background-color: grey;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: darkgrey;
+    }
+
+    /* Adjustments for input elements */
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select {
+      height: 40px;
+      width: calc(100% - 20px);
+      /* Adjusted width */
+      margin: 10px;
+      padding: 0 10px;
+      /* Adjusted padding */
+      border-radius: 5px;
+      /* Added border-radius */
+      box-sizing: border-box;
+    }
+
+    /* Adjustments for labels */
+    label {
+      margin: 10px;
+    }
+
+    /* Adjustments for buttons */
+    .save {
+      margin: 20px;
+      /* Added margin */
+    }
+
+    /* Adjustments for table rows */
+    .table-row {
+      text-align: center;
+      /* Center align table rows */
+    }
+
+    /* CSS for bill and date container */
+    .bill-date-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    /* CSS for individual input wrappers */
+    .input-wrapper {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      margin: 0 5px;
+      /* Reduce the margin between input wrappers */
+    }
+
+    /* Adjustments for input elements */
+    .input-wrapper input[type="text"],
+    .input-wrapper input[type="number"],
+    .input-wrapper input[type="date"],
+    .input-wrapper select {
+      flex: 1;
+      margin-right: 0;
+      /* Remove margin between input boxes */
+    }
+
+    /* Adjustments for labels */
+    .input-wrapper label {
+      margin-right: 10px;
+      /* Add margin between label and input box */
+      width: 100px;
+      /* Fixed width for labels */
+      text-align: right;
+      /* Align label text to the right */
+    }
+
+    /* Adjustments for individual input wrappers */
+    #bill-wrapper,
+    #date-wrapper {
+      margin-right: 10px;
+      /* Reduce the margin between input wrappers */
+    }
+
+    .dropdown-container {
+      display: flex;
+      justify-content: space-between;
+      /* Distribute space evenly between dropdowns */
+      margin-bottom: 10px;
+      /* Add margin between the dropdown container and other elements */
+    }
+
+    .dropdown-container .input-wrapper {
+      flex: 1;
+      /* Each dropdown takes equal width */
+      margin-right: 10px;
+      /* Add space between dropdowns */
+    }
+
+    .dropdown-container .input-wrapper:last-child {
+      margin-right: 0;
+      /* Remove margin from the last dropdown */
+    }
+
+
+
+    .row-container .input-wrapper {
+      flex: 1;
+      /* Each dropdown takes equal width */
+      margin-right: 10px;
+      /* Add space between dropdown and button */
+    }
+
+    .row-container .button-wrapper {
+      flex: 1;
+      /* Button takes equal width as dropdown */
+    }
+
+    .row-container {
+      display: flex;
+      align-items: center;
+      /* Align items vertically */
+      margin-bottom: 10px;
+      /* Add margin between the row container and other elements */
+    }
+
+    .row-container label {
+      margin-right: 10px;
+      /* Add space between label and inputs */
+    }
+
+    .row-container .carat-inputs {
+      display: flex;
+      align-items: left;
+      /* Align items vertically */
+    }
+
+    .row-container .input-wrapper:last-child {
+      margin-right: 0;
+      /* Remove margin for the last input wrapper */
+    }
+
+    .totalCarat {
+      margin-left: auto;
+      /* Push the total carat container to the right */
+    }
+
+    .row-container1 {
+      display: flex;
+      margin-bottom: 10px;
+      /* Add margin between rows */
+      margin-left: 50%;
+      margin-right: 10%;
+    }
+
+    .row-container1 label {
+      margin-left: auto;
+      /* Move the label to the right side */
+      margin-right: 10px;
+      /* Add space between label and input */
+    }
+
+    /* Style the loader container */
+    #loader {
+      border: 4px solid #f3f3f3;
+      /* Light grey */
+      border-top: 4px solid #3498db;
+      /* Blue */
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      /* Apply animation */
+      display: none;
+      /* Hide loader by default */
+
+      /* Center the loader */
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Animation */
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border: 1px solid #ccc;
+      box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+      width: 80%;
+      /* Adjust the width as desired */
+      height: 80%;
+      /* Adjust the height as desired */
+      max-width: 90vw;
+      /* Set maximum width relative to viewport width */
+      max-height: 90vh;
+      /* Set maximum height relative to viewport height */
+      overflow: auto;
+      /* Add scrollbars if content overflows */
+    }
+
+    .popup-content {
+      width: 100%;
+      /* Adjust the width as desired */
+      height: 100%;
+      /* Adjust the height as desired */
+    }
+
+    .popup-content iframe {
+      width: 100%;
+      /* Adjust the width as desired */
+      height: 100%;
+      /* Adjust the height as desired */
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
+
+    /* Styles for the modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+
+    /* Styles for the modal content */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 600px;
+      position: relative;
+      /* Position relative for the close button */
+    }
+
+
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="loader"></div>
+  <div class="container">
+    <h1 align="center">विक्री </h1>
+    <hr>
+    <form id="login">
+
+      <div class="bill-date-container">
+        <div id="bill-wrapper" class="input-wrapper">
+          <label for="bill">बिल नं :</label>
+          <input type="text" id="bill" name="number" placeholder="बिल नं." required>
+        </div>
+
+        <div id="date-wrapper" class="input-wrapper">
+          <label for="date">दिनांक :</label>
+          <input type="date" id="date" name="date" required>
+        </div>
+      </div>
+
+
+      <div class="dropdown-container">
+        <div id="grahk-wrapper" class="input-wrapper">
+          <label for="grahk">ग्राहकाचे नाव :</label>
+          <select type="root" id="grahk" name="root" onchange="previousbalance()" required></select>
+        </div>
+        <div id="number-wrapper" class="input-wrapper">
+          <label for="number">मोबाइल नं :</label>
+          <select type="root" id="number" name="number" onchange="getCust()" required></select>
+        </div>
+      </div>
+
+
+      <div class="row-container">
+        <div id="Route-wrapper" class="input-wrapper">
+          <label for="Route">रूट :</label>
+          <select type="root" id="Route" name="root" onchange="previousbalance()" required></select>
+          <input type="hidden" id="custid" name="custid">
+        </div>
+
+        <div class="button-wrapper">
+          <button id="account-page-button" onclick="goToAccountPage()">Add Customer</button>
+        </div>
+        
+        <!-- <div class="button-wrapper">
+      <button id="account-page-button" name="ledger" >Leder Report</button>
+    </div> -->
+        <button onclick="openPopup()">Ledger</button>
+        <div class="popup" id="popup">
+          <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <iframe id="popupIframe" frameborder="0" scrolling="auto"></iframe>
+            <!-- <p>This is a popup!</p> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="row-container">
+        <div class="input-wrapper">
+          <label for="address">पत्ता :</label>
+          <input type="text" id="address" name="address" placeholder="पत्ता" required>
+        </div>
+
+        <div class="input-wrapper">
+          <label for="sandarbh">संदर्भ :</label>
+          <input type="text" id="sandarbh" name="sandarbh" placeholder="संदर्भ">
+        </div>
+      </div>
+
+      <div class="row-container">
+        <div class="input-wrapper">
+          <label for="bta">बटा :</label>
+          <select type="root" id="bta" name="bta" onchange="getProducts()"></select>
+        </div>
+
+        <div class="input-wrapper">
+          <label for="mark">मार्क :</label>
+          <input type="text" id="mark" name="mark" placeholder="मार्क">
+        </div>
+
+        <div class="input-wrapper">
+          <label for="product">Product :</label>
+          <select type="root" id="product" name="product"></select>
+        </div>
+      </div>
+
+      <div class="row-container">
+        <div class="input-wrapper">
+          <label for="nag" id="nagLabel">नग :</label>
+          <input type="text" id="nag" name="nag" placeholder="नग" onchange="updateTotal()">
+          <input type="hidden" id="nag1" name="nag1">
+        </div>
+
+        <div class="input-wrapper">
+          <label for="kimmat">किंमत :</label>
+          <input type="number" id="kimmat" name="kimmat" placeholder="किंमत" onchange="updateTotal()">
+        </div>
+
+        <div class="input-wrapper">
+          <label for="total">रक्कम :</label>
+          <input type="number" id="total" name="total" placeholder="रक्कम">
+        </div>
+
+        <div class="button-wrapper">
+          <button type="button" onclick="myFunction()" class="button">ADD</button>
+        </div>
+      </div>
+
+
+      <br>
+      <table>
+        <tr>
+          <th>प्रॉडक्ट</th>
+          <th>बटा</th>
+          <th>मार्क</th>
+          <th>नग</th>
+          <th>किंमत</th>
+          <th>रक्कम</th>
+        </tr>
+
+        <!-- Add more rows as needed -->
+        <tbody id="tableBody1">
+          <!-- Data will be inserted here -->
+        </tbody>
+      </table>
+      <br>
+      <br>
+
+
+      <div class="row-container">
+        <label>गेलेले कॅरेट :</label>
+        <div class="carat-inputs">
+          <div class="input-wrapper">
+            <label for="carate100">100 :</label>
+            <input type="number" id="carate100" name="carate100" placeholder="100" onchange="carate()">
+          </div>
+          <div class="input-wrapper">
+            <label for="carate150">150 :</label>
+            <input type="number" id="carate150" name="carate150" placeholder="150" onchange="carate()">
+          </div>
+          <div class="input-wrapper">
+            <label for="carate250">250 :</label>
+            <input type="number" id="carate250" name="carate250" placeholder="250" onchange="carate()">
+          </div>
+          <div class="input-wrapper">
+            <label for="carate350">350 :</label>
+            <input type="number" id="carate350" name="carate350" placeholder="350" onchange="carate()">
+          </div>
+        </div>
+      </div>
+      <div class="row-container1">
+        <label for="totalCarat">एकूण कॅरेट :</label>
+        <input type="number" id="total1" name="totalCarat" placeholder="गेलेले कॅरेट रक्कम" readonly>
+      </div>
+
+
+      <div class="row-container1">
+        <label for="totalCarat">बिल रक्कम :</label>
+        <input type="number" id="bill1" name="number" placeholder="बिल रक्कम" onchange="totalBalance()" readonly>
+      </div>
+      <div class="row-container1">
+        <label for="totalCarat">मागील बाकी :</label>
+        <input type="number" id="previousBalance" name="number" placeholder="मागील बाकी" readonly>
+      </div>
+      <div class="row-container1">
+        <label for="totalCarat">एकूण रक्कम :</label>
+        <input type="number" id="totalBill" name="number" placeholder="एकूण रक्कम" readonly>
+      </div>
+
+      <div class="row-container1">
+        <label for="totalCarat">रोख जमा :</label>
+        <input type="number" id="bill_cash" name="number" placeholder="रोख जमा" onchange="totalBalance()">
+      </div>
+      <div class="row-container1">
+        <label for="totalCarat">ऑनलाईन जमा बँक :</label>
+        <select type="root" id="onlineAcc" name="onlineAcc">
+        </select>
+      </div>
+      <div class="row-container1">
+        <label for="totalCarat">ऑनलाईन जमा :</label>
+        <input type="number" id="online" name="number" placeholder="ऑनलाईन जमा" onchange="totalBalance()">
+      </div>
+      <div class="row-container1">
+        <label for="totalCarat">सूट रक्कम :</label>
+        <input type="number" id="discount" name="number" placeholder="सूट रक्कम" onchange="totalBalance()">
+      </div>
+
+      <div class="row-container">
+        <label>जमा कॅरेट :</label>
+        <div class="carat-inputs">
+          <div class="input-wrapper">
+            <label for="carate100">100 :</label>
+            <input type="number" id="carate1100" name="carate100" placeholder="100" onchange="carate1()">
+          </div>
+          <div class="input-wrapper">
+            <label for="carate150">150 :</label>
+            <input type="number" id="carate1150" name="carate150" placeholder="150" onchange="carate1()">
+          </div>
+          <div class="input-wrapper">
+            <label for="carate250">250 :</label>
+            <input type="number" id="carate1250" name="carate250" placeholder="250" onchange="carate1()">
+          </div>
+          <div class="input-wrapper">
+            <label for="carate350">350 :</label>
+            <input type="number" id="carate1350" name="carate350" placeholder="350" onchange="carate1()">
+          </div>
+        </div>
+      </div>
+      <div class="row-container1">
+        <label for="totalCarat">एकूण जमा कॅरेट :</label>
+        <input type="number" id="total2" name="totalCarat" placeholder="जमा कॅरेट रक्कम" readonly>
+      </div>
+
+      <div class="row-container">
+        <div class="input-wrapper">
+          <label for="note">संदर्भ :</label>
+          <input type="text" id="note" name="note" placeholder="संदर्भ">
+        </div>
+
+        <div class="input-wrapper">
+          <label for="baki">बाकी रक्कम :</label>
+          <input type="number" id="baki" name="baki" placeholder="बाकी रक्कम">
+        </div>
+      </div>
+
+      <div class="row-container">
+        <label>बाकी कॅरेट :</label>
+        <div class="carat-inputs">
+          <div class="input-wrapper">
+            <label for="carate100">100 :</label>
+            <input type="number" id="carate2100" name="carate2100" placeholder="100" readonly>
+            <input type="hidden" id="carate22100" name="carate22100" placeholder="100" readonly>
+          </div>
+          <div class="input-wrapper">
+            <label for="carate150">150 :</label>
+            <input type="number" id="carate2150" name="carate2150" placeholder="150" readonly>
+            <input type="hidden" id="carate22150" name="carate22150" placeholder="150" readonly>
+          </div>
+          <div class="input-wrapper">
+            <label for="carate250">250 :</label>
+            <input type="number" id="carate2250" name="carate2250" placeholder="250" readonly>
+            <input type="hidden" id="carate22250" name="carate22250" placeholder="250" readonly>
+          </div>
+          <div class="input-wrapper">
+            <label for="carate350">350 :</label>
+            <input type="number" id="carate2350" name="carate2350" placeholder="350" readonly>
+            <input type="hidden" id="carate22350" name="carate22350" placeholder="350" readonly>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="save">Save</button>
+  </div>
+  </form>
+
+</body>
+<script src="./validateSale.js"></script>
+<!-- <script src="./sale2.js"></script> -->
+<!-- <Script src="../../report/routewiseSaleReport/routewiseSaleReport.js"></Script> -->
+
+
+
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // Fetch data from API and populate Select2 dropdowns
+    fetchAndPopulateDropdown('http://65.2.144.249/list/Customer', 'grahk', 'name');
+    fetchAndPopulateDropdown('http://65.2.144.249/purchaseproductData', 'product', 'product_name');
+    fetchAndPopulateDropdown('http://65.2.144.249/purchaseproductData', 'bta', 'bata');
+    fetchAndPopulateDropdown('http://65.2.144.249/routeData', 'Route', 'route_name');
+    fetchAndPopulateDropdown('http://65.2.144.249/list/Bank Account', 'onlineAcc', 'name');
+    fetchAndPopulateDropdown('http://65.2.144.249/mobile', 'number', 'mobile_no');
+
+
+
+    var saleData = localStorage.getItem('saleData');
+
+            if (saleData) {
+                // Parse the user data
+                var sale = JSON.parse(saleData);
+                console.log("lapajcowjfocjwoj")
+                console.log(sale)
+
+                // Populate form fields with user data
+                document.getElementById("bill").value = sale.bill_no;
+                // document.getElementById("account_group").value = user.account_group;
+                // document.getElementById("route_detail").value = user.route_detail;
+                saleProduct(sale.bill_no);
+                
+                var $productDropdown = $('#grahk');
+                // Set the value of the Select2 dropdown if it's different
+                if ($productDropdown.val() !== sale.cust_name) {
+                    $productDropdown.val(sale.cust_name).trigger('change');
+                }
+        
+                var $productDropdown = $('#route_detail');
+                // Set the value of the Select2 dropdown if it's different
+                if ($productDropdown.val() !== user.route_detail) {
+                    $productDropdown.val(user.route_detail).trigger('change');
+                }
+
+            }
+
+
+
+
+
+  });
+
+  function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
+    fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Populate Select2 dropdown with API data
+        populateDropdownWithSelect2(data, dropdownId, field);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
+  function populateDropdownWithSelect2(data, dropdownId, field) {
+    var dropdown = $('#' + dropdownId);
+    // Clear existing options
+    dropdown.empty();
+
+    // Add placeholder option
+    dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+
+    // Populate dropdown with API data
+    data.forEach(function (item) {
+      dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
+    });
+
+    // Initialize Select2
+    dropdown.select2({
+      placeholder: "Select " + dropdownId + " type",
+      allowClear: true
+    });
+  }
+
+  function goToAccountPage() {
+    // Perform the desired action when the button is clicked
+    window.location.href = "../account/acc-master.html"; // Redirect to the account page
+  }
+
+  $(document).on('select2:open', function (e) {
+    window.setTimeout(function () {
+      document.querySelector('input.select2-search__field').focus();
+    }, 0);
+  });
+
+
+  function openPopup() {
+    event.preventDefault();
+    document.getElementById("popup").style.display = "block";
+    var popupIframe = document.getElementById("popupIframe");
+    popupIframe.src = "../../report/ledgerReport/ledger.html"; //
+  }
+
+  function closePopup() {
+    document.getElementById("popup").style.display = "none";
+  }
+
+
+
+
+
+</script>
+
+
+
+<script>
+
+
+
+  function totalBalance() {
+    var balance = parseInt(document.getElementById("bill1").value) || 0;
+    var preBalance = parseInt(document.getElementById("previousBalance").value) || 0;
+    var total1 = parseInt(document.getElementById("total1").value) || 0;
+
+    fetch('http://65.2.144.249/accountData/' + parseInt(document.getElementById("custid").value))
+      .then(response => {
+        if (!response.ok) {
+          loader.style.display = 'none';
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data[0].cr_dr_type)
+        if (data[0].cr_dr_type == 'no') {
+          document.getElementById("totalBill").value = balance + preBalance;
+        } else {
+          document.getElementById("totalBill").value = total1 + balance + preBalance;
+        }
+        totalbill()
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    //document.getElementById("totalBill").value = total1 + balance + preBalance;
+    //totalbill()
+  }
+
+  function previousbalance() {
+    const name = document.getElementById("grahk").value
+
+    fetch('http://65.2.144.249/fetchName/name/' + name)
+      .then(response => {
+        if (!response.ok) {
+          loader.style.display = 'none';
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data[0].mobile_no)
+        // Get the Select2 dropdown element
+        var $productDropdown = $('#number');
+        // Set the value of the Select2 dropdown if it's different
+        if ($productDropdown.val() !== data[0].mobile_no) {
+          $productDropdown.val(data[0].mobile_no).trigger('change');
+        }
+
+        var $routeDropdown = $('#Route');
+        // Set the value of the Select2 dropdown if it's different
+        if ($routeDropdown.val() !== data[0].route) {
+          $routeDropdown.val(data[0].route).trigger('change');
+        }
+
+        document.getElementById('address').value = data[0].address;
+
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
+
+
+    fetch('http://65.2.144.249/fetchpv/' + name)
+      .then(response => {
+        if (!response.ok) {
+          loader.style.display = 'none';
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Populate dropdown with API data
+        console.log(data)
+        document.getElementById('custid').value = parseInt(data[0]['id']);
+        document.getElementById('previousBalance').value = parseInt(data[0]['current_balance'] || 0);
+        totalBalance();
+        totalbill();
+
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
+
+    fetch('http://65.2.144.249/carateuserData/' + name)
+      .then(response => {
+        if (!response.ok) {
+          loader.style.display = 'none';
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Populate dropdown with API data
+        console.log(data)
+        document.getElementById('carate2100').value = parseInt(data[0]['carate_100']);
+        document.getElementById('carate2150').value = parseInt(data[0]['carate_150']);
+        document.getElementById('carate2250').value = parseInt(data[0]['carate_250']);
+        document.getElementById('carate2350').value = parseInt(data[0]['carate_350']);
+        document.getElementById('carate22100').value = parseInt(data[0]['carate_100']);
+        document.getElementById('carate22150').value = parseInt(data[0]['carate_150']);
+        document.getElementById('carate22250').value = parseInt(data[0]['carate_250']);
+        document.getElementById('carate22350').value = parseInt(data[0]['carate_350']);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
+  }
+
+  // Here in Carate is the carate send to the customer
+  // Out carate is the carate received from the customer
+  function carate() {
+    var value100 = parseInt(document.getElementById("carate100").value) || 0;
+    var value150 = parseInt(document.getElementById("carate150").value) || 0;
+    var value250 = parseInt(document.getElementById("carate250").value) || 0;
+    var value350 = parseInt(document.getElementById("carate350").value) || 0;
+    var value1100 = parseInt(document.getElementById("carate1100").value) || 0;
+    var value1150 = parseInt(document.getElementById("carate1150").value) || 0;
+    var value1250 = parseInt(document.getElementById("carate1250").value) || 0;
+    var value1350 = parseInt(document.getElementById("carate1350").value) || 0;
+
+
+    document.getElementById("total1").value = value100 * 100 + value150 * 150 + value250 * 250 + value350 * 350;
+    document.getElementById("carate2100").value = parseInt(document.getElementById("carate22100").value) + value100 - value1100; 
+    document.getElementById("carate2150").value = parseInt(document.getElementById("carate22150").value) + value150 - value1150;
+    document.getElementById("carate2250").value = parseInt(document.getElementById("carate22250").value) + value250 - value1250;
+    document.getElementById("carate2350").value = parseInt(document.getElementById("carate22350").value) + value350 - value1350;
+    totalbill();
+    totalBalance();
+    //document.getElementById("total1").value = parseInt(document.getElementById("carate100").value) * 100 +  parseInt(document.getElementById("carate150").value) * 150 +  parseInt(document.getElementById("carate250").value) * 250 +  parseInt(document.getElementById("carate350").value) * 350
+  }
+
+  function carate1() {
+    var value100 = parseInt(document.getElementById("carate1100").value) || 0;
+    var value150 = parseInt(document.getElementById("carate1150").value) || 0;
+    var value250 = parseInt(document.getElementById("carate1250").value) || 0;
+    var value350 = parseInt(document.getElementById("carate1350").value) || 0;
+    var value1100 = parseInt(document.getElementById("carate100").value) || 0;
+    var value1150 = parseInt(document.getElementById("carate150").value) || 0;
+    var value1250 = parseInt(document.getElementById("carate250").value) || 0;
+    var value1350 = parseInt(document.getElementById("carate350").value) || 0;
+    document.getElementById("total2").value = value100 * 100 + value150 * 150 + value250 * 250 + value350 * 350;
+    document.getElementById("carate2100").value = parseInt(document.getElementById("carate22100").value) + value1100 - value100;
+    document.getElementById("carate2150").value = parseInt(document.getElementById("carate22150").value) + value1150 - value150;
+    document.getElementById("carate2250").value = parseInt(document.getElementById("carate22250").value) + value1250 - value250;
+    document.getElementById("carate2350").value = parseInt(document.getElementById("carate22350").value) + value1350 - value350;
+    totalbill();
+    //document.getElementById("total1").value = parseInt(document.getElementById("carate100").value) * 100 +  parseInt(document.getElementById("carate150").value) * 150 +  parseInt(document.getElementById("carate250").value) * 250 +  parseInt(document.getElementById("carate350").value) * 350
+  }
+
+
+  function totalbill() {
+    console.log("totalbill")
+    console.log(document.getElementById("custid").value)
+
+    fetch('http://65.2.144.249/accountData/' + parseInt(document.getElementById("custid").value))
+      .then(response => {
+        if (!response.ok) {
+          loader.style.display = 'none';
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data[0].cr_dr_type)
+        if (data[0].cr_dr_type == 'no') {
+          document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0);
+        } else {
+          document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0) - parseInt(document.getElementById("total2").value || 0);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
+
+    //document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0) - parseInt(document.getElementById("total2").value || 0);
+  }
+
+
+  function myFunction() {
+    event.preventDefault();
+    var loader = document.getElementById('loader');
+    loader.style.display = 'block';
+
+    var formData = {
+      bill_id: parseInt(document.getElementById('bill').value),
+      bata: document.getElementById('bta').value,
+      mark: document.getElementById('mark').value,
+      product: document.getElementById('product').value,
+      quantity: parseInt(document.getElementById('nag').value),
+      rate: parseInt(document.getElementById('kimmat').value),
+      price: parseInt(document.getElementById('total').value)
+    };
+
+    console.log(formData)
+
+    fetch('http://65.2.144.249/saleproductData/insertsaleproduct', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(result => {
+        loader.style.display = 'none';
+        console.log('Entry added successfully:', result);
+        // document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + parseInt(document.getElementById('total').value);
+        // totalBalance()
+        updateTable(formData, result.insertId);
+        $('#product').val('').trigger('change');
+        $('#bta').val('').trigger('change');
+        document.getElementById('mark').value = '';
+        document.getElementById('nag').value = '';
+        document.getElementById('kimmat').value = '';
+        document.getElementById('total').value = '';
+        var nagLabel = document.getElementById('nagLabel');
+        nagLabel.innerHTML = '';
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    alert('Product added Successfully!!');
+    // Add your desired functionality here
+  }
+
+  function updateTable(entry, result) {
+    console.log("table")
+    var tableBody = document.getElementById('tableBody1');
+    var newRow = document.createElement('tr');
+    newRow.innerHTML = `
+          <td>${entry.product}</td>
+          <td>${entry.bata}</td>
+          <td>${entry.mark}</td>
+          <td>${entry.quantity}</td>
+          <td>${entry.rate}</td>
+          <td>${entry.price}</td>
+          <td><button type="button" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button></td>
+      `;
+    document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + entry.price;
+    totalBalance()
+    tableBody.appendChild(newRow);
+  }
+
+  function deleteUser(button, userId, price) {
+    // Perform delete operation based on userId
+    console.log(price)
+    console.log(userId)
+    document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) - price;
+    totalBalance()
+    var button = event.target;
+    var row = button.parentNode.parentNode;
+    fetch('http://65.2.144.249/saleproductData/deletesaleproduct/' + userId, {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        console.log('User deleted successfully');
+        // Refresh the table or update UI as needed
+        //newRow.remove();
+        row.remove();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+</script>
+
+</html>

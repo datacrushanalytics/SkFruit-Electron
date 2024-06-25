@@ -145,6 +145,7 @@ function populateTable4(data) {
         buttonCell.appendChild(openPopupButton);
     });
 
+    var lastEntry = data.reports[data.reports.length - 1];
     // Add row for grand total
     var totalRow = tbody.insertRow();
     totalRow.insertCell(); // Add empty cell for counter column
@@ -156,11 +157,16 @@ function populateTable4(data) {
     grandTotalLabelCell.textContent = 'Grand Total';
     grandTotalLabelCell.style.fontWeight = 'bold'; // Make label text bold
 
-    columnsToDisplay.slice(4).forEach(function(key) {
+    columnsToDisplay.slice(4,-1).forEach(function(key) {
         var totalCell = totalRow.insertCell();
         totalCell.textContent = grandTotals[key] || '';
         totalCell.style.fontWeight = 'bold'; // Make value text bold
     });
+
+    var grandTotalLabelCell1 = totalRow.insertCell();
+    grandTotalLabelCell1.textContent = lastEntry['remaining'];
+    grandTotalLabelCell1.style.fontWeight = 'bold'; // Make label text bold
+
 }
 
 

@@ -58,7 +58,7 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'cash', 'online_amt', 'discount', 'inCarat', 'carate_amount'];
+    var columnsToDisplay = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'cash', 'online_amt', 'discount', 'inCarat', 'carate_amount','validate'];
     var counter = 1;
     if (data.reports.length === 0) {
         alert("No Data Found");
@@ -86,6 +86,22 @@ function populateTable4(data) {
                     timeZone: 'Asia/Kolkata'
                 };
                 cell.textContent = utcDate.toLocaleString('en-IN', options);
+            } else if(key === 'validate') {
+                if(item[key]=='Pending'){
+                    //let buttonContainer = document.getElementById('buttonContainer');
+                    let button = document.createElement('button');
+                    button.textContent = "Verify";
+                    button.onclick = function() {
+                        localStorage.removeItem('saleData');
+                        console.log('Editing Sale: ' + JSON.stringify(item));
+                        localStorage.setItem('saleData', JSON.stringify(item));
+                        window.location.href = './validateSale.html';
+                    };
+                    cell.appendChild(button);
+                }else {
+                    cell.textContent = item[key];
+                    row.style.backgroundColor = "#90EE90";
+                }
             } else {
                 cell.textContent = item[key];
                 if (['amount', 'cash', 'online_amt', 'discount', 'inCarat', 'carate_amount'].includes(key)) {
@@ -114,7 +130,7 @@ function populateTable4(data) {
 function populateTable5(data) {
     var tbody = document.getElementById('tableBody1');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'cash', 'online', 'discount', 'inCarat', 'Amt'];
+    var columnsToDisplay = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'cash', 'online', 'discount', 'inCarat', 'Amt','validate'];
     var counter = 1;
     if (data.Receipt.length === 0) {
         alert("No Data Found");
@@ -141,6 +157,19 @@ function populateTable5(data) {
                     timeZone: 'Asia/Kolkata'
                 };
                 cell.textContent = utcDate.toLocaleString('en-IN', options);
+            } else if(key === 'validate') {
+                if(item[key]=='Pending'){
+                    //let buttonContainer = document.getElementById('buttonContainer');
+                    let button = document.createElement('button');
+                    button.textContent = "Verify";
+                    button.onclick = function() {
+                        window.location.href = './validateSale.html';
+                    };
+                    cell.appendChild(button);
+                }else {
+                    cell.textContent = item[key];
+                    row.style.backgroundColor = "#90EE90";
+                }
             } else {
                 cell.textContent = item[key];
                 if (['cash', 'online', 'discount', 'inCarat', 'Amt'].includes(key)) {
