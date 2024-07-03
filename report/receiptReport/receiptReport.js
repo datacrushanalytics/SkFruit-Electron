@@ -28,7 +28,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    return fetch('http://65.2.144.249/receiptReport', {
+    return fetch('http://52.66.126.53/receiptReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -151,7 +151,7 @@ function populateTable4(data) {
 
 function deleteaccount(userId) {
     // Perform delete operation based on userId
-    fetch('http://65.2.144.249/receiptReport/deleteReceiptReport/' + userId, {
+    fetch('http://52.66.126.53/receiptReport/deleteReceiptReport/' + userId, {
         method: 'DELETE'
     })
         .then(response => {
@@ -300,7 +300,7 @@ function openModal(item) {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://65.2.144.249/receiptReport/' + item.receipt_id)
+    fetch('http://52.66.126.53/receiptReport/' + item.receipt_id)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

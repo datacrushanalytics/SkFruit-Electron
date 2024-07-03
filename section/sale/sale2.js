@@ -37,7 +37,7 @@ document.getElementById('login').addEventListener('submit', async function(event
     };
 
     try {
-        const response = await fetch('http://65.2.144.249/saleData/insertsale', {
+        const response = await fetch('http://52.66.126.53/saleData/insertsale', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -67,7 +67,7 @@ function openModal(item) {
     console.log("Opening modal for item:", item.bill_no);
     
 
-    fetch('http://65.2.144.249/bill/' + item.bill_no)
+    fetch('http://52.66.126.53/bill/' + item.bill_no)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

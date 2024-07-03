@@ -19,7 +19,7 @@
 
 function saleProduct(num){
 
-    // fetch('http://65.2.144.249/fetchSaleid')
+    // fetch('http://52.66.126.53/fetchSaleid')
     // .then(response => {
     //     if (response.status === 404) {
     //         loader.style.display = 'none';
@@ -34,7 +34,7 @@ function saleProduct(num){
     //     .then(data => {
     //         // Populate dropdown with API data
             //document.getElementById('bill').value = parseInt(data[0]['num']) + 1;
-            fetch('http://65.2.144.249/saleproductData/' + num)
+            fetch('http://52.66.126.53/saleproductData/' + num)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -89,7 +89,7 @@ function populateDropdown3(data) {
 
 function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('http://65.2.144.249/saleproductData/deletesaleproduct/' + userId, {
+    fetch('http://52.66.126.53/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
     })
         .then(response => {
@@ -113,7 +113,7 @@ function getProducts() {
     console.log(bataId)
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
-    fetch('http://65.2.144.249/purchaseproductData/getBataProduct/' + bataId)
+    fetch('http://52.66.126.53/purchaseproductData/getBataProduct/' + bataId)
         .then(response => response.json())
         .then(data => {
             loader.style.display = 'none';
@@ -133,7 +133,7 @@ function getProducts() {
         });
 
 
-    fetch('http://65.2.144.249/fetchStock/' + bataId)
+    fetch('http://52.66.126.53/fetchStock/' + bataId)
         .then(response => {
             if (!response.ok) {
                 loader.style.display = 'none';
@@ -168,7 +168,7 @@ function updateTotal() {
 function getCust() {
     var number = document.getElementById('number').value;
     console.log(number)
-    fetch('http://65.2.144.249/fetchName/mobile/' + number)
+    fetch('http://52.66.126.53/fetchName/mobile/' + number)
         .then(response => {
             if (!response.ok) {
                 loader.style.display = 'none';

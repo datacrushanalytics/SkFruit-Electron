@@ -270,14 +270,14 @@
 <script>
 
     document.addEventListener('DOMContentLoaded', function () {
-        fetchAndPopulateDropdown('http://65.2.144.249/purchaseproductData', 'grahk','product_name');
-        fetchAndPopulateDropdown('http://65.2.144.249/purchaseproductData', 'Route','bata');
-        fetchAndPopulateDropdown('http://65.2.144.249/vehicleData', 'vehicle','vehicle_no');
+        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'grahk','product_name');
+        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'Route','bata');
+        fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle','vehicle_no');
         
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        fetch('http://65.2.144.249/purchaseproductData/')
+        fetch('http://52.66.126.53/purchaseproductData/')
             .then(response => {
                 if (response.status === 404) {
                     loader.style.display = 'none';
@@ -499,7 +499,7 @@
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
     
-        fetch('http://65.2.144.249/purchaseproductData', {
+        fetch('http://52.66.126.53/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -538,7 +538,7 @@
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        fetch('http://65.2.144.249/purchaseproductData', {
+        fetch('http://52.66.126.53/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

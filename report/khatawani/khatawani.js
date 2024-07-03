@@ -35,7 +35,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    return fetch('http://65.2.144.249/khatawani', {
+    return fetch('http://52.66.126.53/khatawani', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -269,7 +269,7 @@ function openModal(item) {
     console.log("Opening modal for item:", item);
     
 
-    fetch('http://65.2.144.249/bill/' + item)
+    fetch('http://52.66.126.53/bill/' + item)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -638,7 +638,7 @@ function openModal1(item) {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://65.2.144.249/receiptReport/' + item)
+    fetch('http://52.66.126.53/receiptReport/' + item)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

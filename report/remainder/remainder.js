@@ -6,7 +6,7 @@ async function remainder() {
     loader.style.display = 'block';
 
     try {
-        const response = await fetch('http://65.2.144.249/remainderReport');
+        const response = await fetch('http://52.66.126.53/remainderReport');
         loader.style.display = 'none';
 
         if (response.status === 404) {

@@ -236,7 +236,7 @@
     <script>
         function previousbalance() {
             const name = document.getElementById("bata").value
-            fetch('http://65.2.144.249/fetchpv/' + name)
+            fetch('http://52.66.126.53/fetchpv/' + name)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -258,8 +258,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Fetch data from API and populate Select2 dropdowns
-            fetchAndPopulateDropdown('http://65.2.144.249/list/Supplier', 'bata', 'bata');
-            fetchAndPopulateDropdown('http://65.2.144.249/list/Bank Account', 'product', 'bank');
+            fetchAndPopulateDropdown('http://52.66.126.53/list/Supplier', 'bata', 'bata');
+            fetchAndPopulateDropdown('http://52.66.126.53/list/Bank Account', 'product', 'bank');
         });
 
         function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {

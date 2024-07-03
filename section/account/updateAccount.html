@@ -203,8 +203,8 @@
 
         document.addEventListener('DOMContentLoaded', async function() {
             // Retrieve user data from localStorage
-            await fetchAndPopulateDropdown('http://65.2.144.249/accountgroupData', 'account_group','name');
-            await fetchAndPopulateDropdown('http://65.2.144.249/routeData', 'route_detail','route_name');
+            await fetchAndPopulateDropdown('http://52.66.126.53/accountgroupData', 'account_group','name');
+            await fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route_detail','route_name');
         
             async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
                 try {
@@ -282,7 +282,7 @@
                     document.getElementById("dr").checked = true;
                 }
 
-                fetch('http://65.2.144.249/carateuserData/' + user.name)
+                fetch('http://52.66.126.53/carateuserData/' + user.name)
                 .then(response => {
                 if (response.status === 404) {
                     loader.style.display = 'none';
@@ -337,7 +337,7 @@
         
                 var loader = document.getElementById('loader');
                 loader.style.display = 'block';
-                const response = await fetch('http://65.2.144.249/accountData/updateAccount/'+ userData.id, {
+                const response = await fetch('http://52.66.126.53/accountData/updateAccount/'+ userData.id, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {
@@ -357,7 +357,7 @@
                     carate_350 : parseInt(document.getElementById("carate2350").value) || 0
                 }
                 console.log(form2)
-                const response1 =  fetch('http://65.2.144.249/carateuserData/updateCarateuser/' +form2.userName , {
+                const response1 =  fetch('http://52.66.126.53/carateuserData/updateCarateuser/' +form2.userName , {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'

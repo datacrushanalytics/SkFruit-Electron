@@ -175,9 +175,9 @@
 
             document.addEventListener('DOMContentLoaded', async function () {
                 // Fetch data from API and populate Select2 dropdowns
-                // await fetchAndPopulateDropdown('http://65.2.144.249/list/Supplier', 'supplier', 'name');
-                await fetchAndPopulateDropdown('http://65.2.144.249/productData/', 'product', 'name');
-                // await fetchAndPopulateDropdown('http://65.2.144.249/vehicleData', 'vehicle', 'vehicle_no');
+                // await fetchAndPopulateDropdown('http://52.66.126.53/list/Supplier', 'supplier', 'name');
+                await fetchAndPopulateDropdown('http://52.66.126.53/productData/', 'product', 'name');
+                // await fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle', 'vehicle_no');
                 
 
         
@@ -285,7 +285,7 @@
                     // setDropdownValue('vehicle', user.gadi_number);
 
                     
-            fetch('http://65.2.144.249/purchaseproductData/' + (user.id))
+            fetch('http://52.66.126.53/purchaseproductData/' + (user.id))
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -358,7 +358,7 @@
 
                 console.log(formData)
 
-                fetch('http://65.2.144.249/purchaseproductData/insertPurchaseproduct', {
+                fetch('http://52.66.126.53/purchaseproductData/insertPurchaseproduct', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -414,7 +414,7 @@
                 // Perform delete operation based on userId
                 var button = event.target;
                 var row = button.parentNode.parentNode;
-                fetch('http://65.2.144.249/purchaseproductData/deletepurchaseproductId/' + userId, {
+                fetch('http://52.66.126.53/purchaseproductData/deletepurchaseproductId/' + userId, {
                     method: 'DELETE'
                 })
                     .then(response => {
@@ -450,7 +450,7 @@
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    await fetch('http://65.2.144.249/purchaseData/updatePurchase/' + formData.purchase_id, {
+    await fetch('http://52.66.126.53/purchaseData/updatePurchase/' + formData.purchase_id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
