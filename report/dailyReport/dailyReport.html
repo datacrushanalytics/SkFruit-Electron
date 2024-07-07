@@ -10,6 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>User Form in Electron</title>
     <style>
         /* Add border to the second form */
@@ -93,6 +94,9 @@
             transition: background-color 0.3s;
             margin: 0 10px;
         }
+        .button i {
+            font-size: 20px; /* Adjust the size as needed */
+        }
 
         .button:hover {
             background-color: #555;
@@ -101,6 +105,10 @@
         .button a {
             color: white;
             text-decoration: none;
+        }
+        .button-container {
+            display: flex;
+            gap: 10px; /* Adjust the space between buttons */
         }
 
         .table-container {
@@ -199,6 +207,7 @@
                     <th>In Carate</th>
                     <th>Carate Amount</th>
                     <th>Validate</th>
+                    <th>Communication</th>
                 </tr>
                 <!-- Add more rows as needed -->
                 <tbody id="tableBody">
@@ -225,6 +234,7 @@
                     <th>In Carate</th>
                     <th>Amount</th>
                     <th>Validate</th>
+                    <th>Communication</th>
                 </tr>
 
                 <!-- Add more rows as needed -->
@@ -322,7 +332,7 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://65.2.144.249/vehicleData', 'vehicleNumber');
+        fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicleNumber');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId) {

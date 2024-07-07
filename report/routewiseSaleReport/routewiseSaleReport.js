@@ -30,7 +30,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://65.2.144.249/routewiseSaleReport', {
+    return fetch('http://52.66.126.53/routewiseSaleReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -160,7 +160,7 @@ function openModal(item) {
     console.log("Opening modal for item:", item.bill_no);
     
 
-    fetch('http://65.2.144.249/bill/' + item.bill_no)
+    fetch('http://52.66.126.53/bill/' + item.bill_no)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -205,8 +205,30 @@ function openModal(item) {
             var tablefooter = document.getElementById("tablefooter");
             tablefooter.innerHTML = ""; // Clear existing rows
 
+            const label = 
+                "बाकी कॅरेट : " +
+                (data.results[0].carate_100 > 0 ? "100 X " + data.results[0].carate_100 + " " : "") +
+                (data.results[0].carate_150 > 0 ? "150 X " + data.results[0].carate_150 + " " : "") +
+                (data.results[0].carate_250 > 0 ? "250 X " + data.results[0].carate_250 + " " : "") +
+                (data.results[0].carate_350 > 0 ? "350 X " + data.results[0].carate_350 : "");
+
+            const label1 = 
+                "गेलेले कॅरेट : " +
+                (data.results[0].in_carate_100 > 0 ? "100 X " + data.results[0].in_carate_100 + " " : "") +
+                (data.results[0].in_carate_150 > 0 ? "150 X " + data.results[0].in_carate_150 + " " : "") +
+                (data.results[0].in_carate_250 > 0 ? "250 X " + data.results[0].in_carate_250 + " " : "") +
+                (data.results[0].in_carate_350 > 0 ? "350 X " + data.results[0].in_carate_350 : "");
+
+            const label2 = 
+                "जमा कॅरेट : " +
+                (data.results[0].out_carate_100 > 0 ? "100 X " + data.results[0].out_carate_100 + " " : "") +
+                (data.results[0].out_carate_150 > 0 ? "150 X " + data.results[0].out_carate_150 + " " : "") +
+                (data.results[0].out_carate_250 > 0 ? "250 X " + data.results[0].out_carate_250 + " " : "") +
+                (data.results[0].out_carate_350 > 0 ? "350 X " + data.results[0].out_carate_350 : "");
+
             var footerDetails = [
-                { label: "गेलेले कॅरेट : 100 X  " + data.results[0].in_carate_100 + "  150 X  " + data.results[0].in_carate_150 + "  250 X  " + data.results[0].in_carate_250 + "  350 X  " +  data.results[0].in_carate_350, value: data.results[0].carate_amount },
+                // { label: "गेलेले कॅरेट : 100 X  " + data.results[0].in_carate_100 + "  150 X  " + data.results[0].in_carate_150 + "  250 X  " + data.results[0].in_carate_250 + "  350 X  " +  data.results[0].in_carate_350, value: data.results[0].carate_amount },
+                { label: label1.trim(), value: data.results[0].carate_amount },
                 { label: "चालू कलम रक्कम:", value: data.results[0].amount },
                 { label: "मागील बाकी:", value: data.results[0].pre_balance },
                 { label: "एकूण रक्कम:", value: data.results[0].total_amount },
@@ -214,9 +236,11 @@ function openModal(item) {
                 { label: "ऑनलाईन जमा बँक :", value: data.results[0].online_acc },
                 { label: "ऑनलाईन जमा रक्कम:", value: data.results[0].online_amt },
                 { label: "सूट रक्कम:", value: data.results[0].discount },
-                { label: "जमा कॅरेट: 100 X  " + data.results[0].out_carate_100 + "  150 X  " + data.results[0].out_carate_150 + "  250 X  " + data.results[0].out_carate_250 + "  350 X  " +  data.results[0].out_carate_350, value: data.results[0].inCarat },
+                // { label: "जमा कॅरेट: 100 X  " + data.results[0].out_carate_100 + "  150 X  " + data.results[0].out_carate_150 + "  250 X  " + data.results[0].out_carate_250 + "  350 X  " +  data.results[0].out_carate_350, value: data.results[0].inCarat },
+                { label: label2.trim(), value: data.results[0].inCarat },
                 { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.results[0].balance },
-                { label: "बाकी कॅरेट : 100 X  " + data.results[0].carate_100 + "  150 X  " + data.results[0].carate_150 + "  250 X  " + data.results[0].carate_250 + "  350 X  " +  data.results[0].carate_350, value: ''} 
+                //{ label: "बाकी कॅरेट : 100 X  " + data.results[0].carate_100 + "  150 X  " + data.results[0].carate_150 + "  250 X  " + data.results[0].carate_250 + "  350 X  " +  data.results[0].carate_350, value: ''} 
+                { label: label.trim(), value: ''} 
                 // Add other bill details similarly
             ];
 

@@ -3,7 +3,7 @@ function product() {
     console.log("product function executed");
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
-    fetch('http://65.2.144.249/productData')
+    fetch('http://52.66.126.53/productData')
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';
@@ -79,7 +79,7 @@ function editProduct(user) {
 
 function deleteProduct(userId) {
     // Perform delete operation based on userId
-    fetch('http://65.2.144.249/productData/deleteproductId/' + userId, {
+    fetch('http://52.66.126.53/productData/deleteproductId/' + userId, {
         method: 'DELETE'
     })
     .then(response => {

@@ -28,7 +28,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    return fetch('http://65.2.144.249/carateReport', {
+    return fetch('http://52.66.126.53/carateReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -64,7 +64,7 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['carate_date', 'customer_name', 'summary', "OutCarate", 'out_carate_total', "inCarate", 'in_carate_total'];
+    var columnsToDisplay = ['carate_date', 'customer_name', 'summary', "outCarate", 'out_carate_total', "inCarate", 'in_carate_total'];
     var counter = 1;
     console.log(data.reports);
     if (data.reports.length === 0) {
@@ -122,7 +122,7 @@ function populateTable4(data) {
 
     if (document.getElementById('customer').value !== '') {
         console.log("Customer not selected ");
-        fetch('http://65.2.144.249/carateuserData/' + document.getElementById('customer').value)
+        fetch('http://52.66.126.53/carateuserData/' + document.getElementById('customer').value)
             .then(response => {
                 if (!response.ok) {
                     loader.style.display = 'none';

@@ -24,7 +24,7 @@ function fetchDataAndProcess() {
     };
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
-    return fetch('http://65.2.144.249/dailyReport', {
+    return fetch('http://52.66.126.53/dailyReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -109,6 +109,113 @@ function populateTable4(data) {
                 }
             }
         });
+
+        var buttonCell = row.insertCell();
+
+        // Container for the buttons
+        var buttonContainer = document.createElement('div');
+        buttonContainer.className = 'button-container';
+
+        var openPopupButton = document.createElement('button');
+        openPopupButton.className = 'button';
+        var billIcon = document.createElement('i');
+        billIcon.className = 'fa-sharp fa-regular fa-envelope'; 
+        openPopupButton.appendChild(billIcon);
+        //openPopupButton.textContent = 'Bill';
+        openPopupButton.addEventListener('click', async function () {
+            
+            var loader = document.getElementById('loader');
+            loader.style.display = 'block';
+            await fetch('http://52.66.126.53/sms/saleMessage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                        "mobile_no" : item.mobile_no,
+                        "orderValue": item.amount,
+                        "paid": item.cash + item.online_amt,
+                        "remaining": item.balance
+                })
+            })
+                .then(response => {
+                    console.log("DTAASS")
+                    if (!response.ok) {
+                        loader.style.display = 'none';
+                        alert("SMS is failed with some error")
+                        throw new Error('Network response was not ok');
+                        
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    loader.style.display = 'none';
+                    console.log('Entry added successfully:', result);
+                    alert("SMS Sent Successfully");
+                    //window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+        });
+        buttonContainer.appendChild(openPopupButton);
+        
+        // Second button
+        var secondButton = document.createElement('button');
+        secondButton.className = 'button';
+        var secondIcon = document.createElement('i');
+        secondIcon.className = 'fa-brands fa-whatsapp';
+        secondButton.appendChild(secondIcon);
+        //secondButton.textContent = 'Second Button'; // Change the text as needed
+        secondButton.addEventListener('click', async function () {
+
+            var loader = document.getElementById('loader');
+            loader.style.display = 'block';
+            await fetch('http://52.66.126.53/whatsapp/saleMessage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "campaignName" : "SK_fruit_2",
+                    "mobile_no" : item.mobile_no,
+                    "userName" : item.cust_name,
+                    "orderValue" : item.amount,
+                    "paid" : item.cash + item.online_amt,
+                    "remaining" : item.balance
+                
+                })
+            })
+                .then(response => {
+                    console.log("DTAASS")
+                    if (!response.ok) {
+                        loader.style.display = 'none';
+                        alert("Whatsapp message is failed with some error")
+                        throw new Error('Network response was not ok');
+                        
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    loader.style.display = 'none';
+                    console.log('Entry added successfully:', result);
+                    alert("Whatsapp message Sent Successfully");
+                    //window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+
+        });
+        buttonContainer.appendChild(secondButton);
+
+        // Append the button container to the cell
+        buttonCell.appendChild(buttonContainer);
+
+
+
     });
     // Add row for grand total
     var totalRow = tbody.insertRow();
@@ -163,7 +270,10 @@ function populateTable5(data) {
                     let button = document.createElement('button');
                     button.textContent = "Verify";
                     button.onclick = function() {
-                        window.location.href = './validateSale.html';
+                        localStorage.removeItem('receiptData');
+                        console.log('Editing receipt: ' + JSON.stringify(item));
+                        localStorage.setItem('receiptData', JSON.stringify(item));
+                        window.location.href = './validateReceipt.html';
                     };
                     cell.appendChild(button);
                 }else {
@@ -177,6 +287,109 @@ function populateTable5(data) {
                 }
             }
         });
+
+        var buttonCell = row.insertCell();
+
+        // Container for the buttons
+        var buttonContainer = document.createElement('div');
+        buttonContainer.className = 'button-container';
+
+        var openPopupButton = document.createElement('button');
+        openPopupButton.className = 'button';
+        var billIcon = document.createElement('i');
+        billIcon.className = 'fa-sharp fa-regular fa-envelope'; 
+        openPopupButton.appendChild(billIcon);
+        //openPopupButton.textContent = 'Bill';
+        openPopupButton.addEventListener('click', async function () {
+            
+            var loader = document.getElementById('loader');
+            loader.style.display = 'block';
+            await fetch('http://52.66.126.53/sms/receiptMessage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "mobile_no" : item.mobile_no,
+                    "cash": item.cash,
+                    "online": item.online,
+                    "remaining": item.remaining
+                })
+            })
+                .then(response => {
+                    console.log("DTAASS")
+                    if (!response.ok) {
+                        loader.style.display = 'none';
+                        alert("SMS is failed with some error")
+                        throw new Error('Network response was not ok');
+                        
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    loader.style.display = 'none';
+                    console.log('Entry added successfully:', result);
+                    alert("SMS Sent Successfully");
+                    //window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+        });
+        buttonContainer.appendChild(openPopupButton);
+        
+        // Second button
+        var secondButton = document.createElement('button');
+        secondButton.className = 'button';
+        var secondIcon = document.createElement('i');
+        secondIcon.className = 'fa-brands fa-whatsapp';
+        secondButton.appendChild(secondIcon);
+        //secondButton.textContent = 'Second Button'; // Change the text as needed
+        secondButton.addEventListener('click', async function () {
+
+            var loader = document.getElementById('loader');
+            loader.style.display = 'block';
+            await fetch('http://52.66.126.53/whatsapp/receiptMessage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "campaignName" : "SK_fruits_Reciept",
+                    "mobile_no" : item.mobile_no,
+                    "userName" : item.Customer,
+                    "paid" : parseInt(item.cash) + parseInt(item.online),
+                    "remaining" : item.remaining
+                })
+            })
+                .then(response => {
+                    console.log("DTAASS")
+                    if (!response.ok) {
+                        loader.style.display = 'none';
+                        alert("Whatsapp message is failed with some error")
+                        throw new Error('Network response was not ok');
+                        
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    loader.style.display = 'none';
+                    console.log('Entry added successfully:', result);
+                    alert("Whatsapp message Sent Successfully");
+                    //window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+
+        });
+        buttonContainer.appendChild(secondButton);
+
+        // Append the button container to the cell
+        buttonCell.appendChild(buttonContainer);
+
     });
     // Add row for grand total
     var totalRow = tbody.insertRow();

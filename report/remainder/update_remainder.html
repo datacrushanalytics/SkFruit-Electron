@@ -204,7 +204,7 @@ if (lastUpdate) {
         
                 var loader = document.getElementById('loader');
                 loader.style.display = 'block';
-                const response = await fetch('http://65.2.144.249/remainderReport/updateRemainder/'+ userData.name, {
+                const response = await fetch('http://52.66.126.53/remainderReport/updateRemainder/'+ userData.name, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {

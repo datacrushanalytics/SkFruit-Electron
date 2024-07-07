@@ -28,7 +28,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://65.2.144.249/customerOutstandingReport', {
+    return fetch('http://52.66.126.53/customerOutstandingReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
