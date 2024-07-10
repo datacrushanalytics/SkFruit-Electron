@@ -24,7 +24,9 @@ function fetchDataAndProcess() {
         from_date: formatDate(document.getElementById("fromdate").value),
         to_date: formatDate(document.getElementById("todate").value),
         cust_name: getElementValueWithDefault('customer', '*'),
-        route: getElementValueWithDefault('route', '*')
+        route: getElementValueWithDefault('route', '*'),
+        product: getElementValueWithDefault('product', '*'),
+        bata: getElementValueWithDefault('bata', '*')
     };
     console.log(data);
     var loader = document.getElementById('loader');
@@ -93,6 +95,15 @@ function populateTable4(data) {
                 cell.textContent = item[key] !== '' ? item[key] : 'null';
             }
         });
+         // Add button to open popup
+         var buttonCell = row.insertCell();
+         var openPopupButton = document.createElement('button');
+         openPopupButton.className = 'button';
+         openPopupButton.textContent = 'Products';
+         openPopupButton.addEventListener('click', function () {
+            openPopup(item); // Pass the data item to the openPopup function
+         });
+         buttonCell.appendChild(openPopupButton);
 
         // Add button to open popup
         var buttonCell = row.insertCell();
@@ -153,6 +164,52 @@ function populateTable4(data) {
 }
 
 
+
+function openPopup(item) {
+    document.getElementById('popup').style.display = 'block';
+    // Set the src of the iframe to display content based on the item data
+    // var iframe = document.getElementById('popupIframe');
+    // iframe.src = './billDetails.html?bill_no=' + encodeURIComponent(item.bill_no);
+
+    fetch('http://52.66.126.53/saleproductData/' + String(item.bill_no))
+            .then(response => response.json())
+            .then(data => {
+                populatePopupTable(data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+}
+
+function closePopup() {
+    document.getElementById('popupTableBody').innerHTML = ''; 
+    document.getElementById('popup').style.display = 'none';
+     // Clear the iframe src
+}
+
+
+
+function populatePopupTable(data) {
+    var tbody = document.getElementById('popupTableBody');
+    tbody.innerHTML = ''; // Clear existing rows
+    var columnsToDisplay = ['product','bata','mark','quantity','rate','price'];
+    var counter = 1;
+    console.log(data)
+    // console.log(data.reports)
+    if (data.length === 0) {
+        alert("No Data Found");
+    }
+    data.forEach(function (item) {
+        var row = tbody.insertRow();
+        var cell = row.insertCell();
+        cell.textContent = counter++;
+        columnsToDisplay.forEach(function (key) {
+            var cell = row.insertCell();
+            cell.textContent = item[key] !== '' ? item[key] : 'null';
+            
+        });
+    });
+}
 
 
 function openModal(item) {

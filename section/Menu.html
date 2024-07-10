@@ -130,8 +130,40 @@ a{
     100% { transform: rotate(360deg); }
   }
 
+  .table-container {
+    overflow-x: auto;
+    margin: 0 auto;
+    max-width: 100%;
+    min-width: 600px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
 
+  table {
+    width: 100%;
+    min-width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
 
+  th,
+  td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 12px;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+ /* Adjustments for table rows */
+ .table-row {
+    text-align: center;
+    /* Center align table rows */
+  }
 
     </style>
 
@@ -154,7 +186,7 @@ a{
             <br> -->
 
             
-        <div class="container">
+        <div class="container" id="adminContent">
             <div class="scrollview">
                 <button class="btn">
                     <a href="./dailyPurchase.html">
@@ -228,12 +260,30 @@ a{
             <br>
         </div>
     </div>
-    <div class="container1">
+    <div class="container1" id="adminContent2">
         <!-- <h2>Sanjyot b</h2>
         <h3>Closing cash : 3000</h3>
         <h3>sale ammount : 3000</h3> -->
     </div>
     <br>
+
+
+
+    <div class="table-container" id = "userContent">
+        <table>
+            <thead>
+            <tr>
+                <th>Sr. No</th>
+                <th>Customer Name</th>
+                <th>Sale BILL</th>
+            </tr>
+            </thead>
+            <!-- Add more rows as needed -->
+            <tbody id="tableBody">
+                <!-- Data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
     </body> 
 
 
@@ -273,11 +323,17 @@ a{
 
     if (!isAdmin) {
         document.getElementById('currentDate').readOnly = true; // Hide the button for non-admin users
+        document.getElementById('adminContent').style.display = 'none';
+        document.getElementById('adminContent2').style.display = 'none';
+        routeSale(sessionData[0].route, document.getElementById('currentDate').value);
+    }else{
+        document.getElementById('userContent').style.display = 'none';
+        fetchTiles();
     }
     // Update the time every second
     setInterval(updateTime, 1000);
     updateTime();
-    fetchTiles();
+    
 
     //var currentDate1 = new Date();
         
@@ -291,6 +347,7 @@ a{
 
         });
         
+
 
         async function fetchTiles(){
             try {
@@ -423,8 +480,87 @@ a{
             
             
         
-            // Call the renderData function
-           
+            // Defination of routeSale Function
+
+            function routeSale(route, date) {
+                var data = {
+                    route : route, 
+                    date : date
+                };
+                console.log(data);
+            
+                var loader = document.getElementById('loader');
+                    loader.style.display = 'block';
+                return fetch('http://52.66.126.53/routeSale/sale', {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.status === 404) {
+                    loader.style.display = 'none';
+                        alert("No data found.");
+                        throw new Error('Data not found');
+                    }
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    loader.style.display = 'none';
+                    console.log(result)
+                    populateTable4(result)
+                    return result;
+                    // Optionally, you can redirect or show a success message here
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Optionally, you can display an error message here
+                });
+
+            }
+
+
+
+            function populateTable4(data) {
+                var tbody = document.getElementById('tableBody');
+                tbody.innerHTML = ''; // Clear existing rows
+                var columnsToDisplay = ['name', 'BillCount'];
+                var counter = 1;
+                console.log(data.reports);
+                if (data.reports.length === 0) {
+                    alert("No Data Found");
+                }
+                data.reports.forEach(function (item) {
+                    var row = tbody.insertRow();
+                    var cell = row.insertCell();
+                    cell.textContent = counter++;
+                    columnsToDisplay.forEach(function (key) {
+                        var cell = row.insertCell();
+                        cell.textContent = item[key];
+                        // row.style.backgroundColor = "#90EE90";
+                        
+                    });
+                    if (item.BillCount > 0) {
+                        row.style.backgroundColor = "#90EE90"; // Light green
+                    }
+            
+                    // Add a click event listener to the row
+                    row.addEventListener('click', function() {
+                        // Define what should happen when the row is clicked
+                        // For example, navigate to a new page or display more details
+                        // alert('Row clicked: ' + JSON.stringify(item));
+                        localStorage.removeItem('routeSaleData');
+                        console.log('Editing receipt: ' + JSON.stringify(item));
+                        localStorage.setItem('routeSaleData', JSON.stringify(item));
+                        window.location.href = './routeSale/routeSale3.html';
+                    });
+                });
+            }
+            
    
 
 

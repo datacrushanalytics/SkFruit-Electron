@@ -199,10 +199,73 @@
     100% { transform: rotate(360deg); }
   }
   
+
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    width: 80%;
+    /* Adjust the width as desired */
+    height: 80%;
+    /* Adjust the height as desired */
+    max-width: 90vw;
+    /* Set maximum width relative to viewport width */
+    max-height: 90vh;
+    /* Set maximum height relative to viewport height */
+    overflow: auto;
+    /* Add scrollbars if content overflows */
+  }
+
+  .popup-content {
+    width: 100%;
+    /* Adjust the width as desired */
+    height: 100%;
+    /* Adjust the height as desired */
+  }
+
+  .popup-content iframe {
+    width: 100%;
+    /* Adjust the width as desired */
+    height: 100%;
+    /* Adjust the height as desired */
+  }
+
+
     </style>
 </head>
 <body>
     <div id="loader"></div>
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <br>
+            <table id="popupTable">
+                <thead>
+                    <tr>
+                        <th>Sr. </th>
+                        <th>Product Name</th>
+                        <th>Bata</th>
+                        <th>Mark</th>
+                        <th>Quantity</th>
+                        <th>Rate</th>
+                        <th>Price</th>
+                        <!-- Add more columns as needed -->
+                    </tr>
+                </thead>
+                <tbody id="popupTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+
     <div class="container">
         <h1 align="center">Routewise Sale Report</h1><br>
         <hr>
@@ -226,6 +289,20 @@
                 <select class="drop1" id="route" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br><br>
+
+                <label for="userType"> Product :</label>
+                <select class="drop" id="product" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br>
+
+                <br>
+
+                <label for="userType">Bata :</label>
+                <select class="drop" id="bata" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br><br>
+
+
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
                     <button type="submit" class="button">Submit</button>
@@ -253,6 +330,7 @@
                     <th>Balance</th>
                     <th>Paid Amount</th>
                     <th>Comment</th>
+                    <th>Products</th>
                     <th>BILL</th>
                 </tr>
                 </thead>
@@ -270,11 +348,13 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer');
-        fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route');
+        fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer','name');
+        fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name');
+        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'product', 'product_name');
+        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'bata', 'bata');
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId) {
+    function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -284,14 +364,14 @@
             })
             .then(data => {
                 // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId);
+                populateDropdownWithSelect2(data, dropdownId, field);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     }
 
-    function populateDropdownWithSelect2(data, dropdownId) {
+    function populateDropdownWithSelect2(data, dropdownId, field) {
         var dropdown = $('#' + dropdownId);
         // Clear existing options
         dropdown.empty();
@@ -301,7 +381,7 @@
 
         // Populate dropdown with API data
         data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
+            dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
         });
 
         // Initialize Select2

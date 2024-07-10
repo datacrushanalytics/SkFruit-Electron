@@ -65,6 +65,20 @@ body {
     color: rgb(168, 168, 168);
 }
 
+button {
+    background-color: grey;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: darkgrey;
+  }
+
+
 h1, h2, h3 {
     text-align: center;
     margin-bottom: 10px;
@@ -158,6 +172,88 @@ th {
     margin-left: 30%;
 }
 
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    width: 80%;
+    /* Adjust the width as desired */
+    height: 80%;
+    /* Adjust the height as desired */
+    max-width: 90vw;
+    /* Set maximum width relative to viewport width */
+    max-height: 90vh;
+    /* Set maximum height relative to viewport height */
+    overflow: auto;
+    /* Add scrollbars if content overflows */
+  }
+
+  .popup-content {
+    width: 100%;
+    /* Adjust the width as desired */
+    height: 100%;
+    /* Adjust the height as desired */
+  }
+
+  .popup-content iframe {
+    width: 100%;
+    /* Adjust the width as desired */
+    height: 100%;
+    /* Adjust the height as desired */
+  }
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+
+  /* Styles for the modal */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+
+  /* Styles for the modal content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+    /* Position relative for the close button */
+  }
+
+
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
+
     </style>
 
 </head>
@@ -192,6 +288,36 @@ th {
             <!-- Data will be inserted here -->
         </tbody>
     </table>
+
+    <br>
+    <br>
+
+    <div class="row-container">
+        <!-- <div id="Route-wrapper" class="input-wrapper">
+          <label for="Route">रूट :</label>
+          <select type="root" id="Route" name="root" onchange="previousbalance()" required></select>
+          <input type="hidden" id="custid" name="custid">
+        </div>
+
+        <div class="button-wrapper">
+          <button id="account-page-button" onclick="goToAccountPage()">Add Customer</button>
+        </div> -->
+        
+        <!-- <div class="button-wrapper">
+      <button id="account-page-button" name="ledger" >Leder Report</button>
+    </div> -->
+        <button onclick="openPopup()">Route Sale</button>
+        <div class="popup" id="popup">
+          <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <iframe id="popupIframe" frameborder="0" scrolling="auto"></iframe>
+            <!-- <p>This is a popup!</p> -->
+          </div>
+        </div>
+      </div>
+
+
+
     <h1>Sale Details : </h1>
     <div class="datetime" id="datetime">
         <p id="currentTime">Cash Received : <h2 id="saleCash"></h2></p>
@@ -388,6 +514,19 @@ th {
             totalCell.colSpan = columnsToDisplay.length;
             totalCell.textContent = 'Total Sale : ' + data.Grand["Total Sale"];
         }
+
+
+        function openPopup() {
+            event.preventDefault();
+            document.getElementById("popup").style.display = "block";
+            var popupIframe = document.getElementById("popupIframe");
+            popupIframe.src = "./routeSale/routeSale.html"; //
+          }
+        
+          function closePopup() {
+            document.getElementById("popup").style.display = "none";
+          }
+        
         
 
     </script>
