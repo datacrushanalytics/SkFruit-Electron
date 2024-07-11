@@ -171,91 +171,145 @@ function populateTable4(data) {
 
 
 
+// async function exportToExcel() {
+//     try {
+//         const data = await fetchDataAndProcess();
+
+//         // Function to format dates in IST without time
+//         const formatDateToIST = (dateString) => {
+//             const date = new Date(dateString);
+//             return date.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' });
+//         };
+        
+//         const customHeaders = ['bill_no', 'date', 'cust_name','route','amount', 'carate_amount',"TotalKalam",'cash','online_acc','online_amt', 'discount','inCarat', 'balance'];
+        
+//         // Export to PDF using jsPDF and autoTable
+//         const { jsPDF } = window.jspdf;
+//         const doc = new jsPDF();
+        
+//         // Adding header details
+//         doc.setFontSize(10);
+//         doc.text('Mobile:- 9960607512', 10, 10);
+//         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+//         doc.setFontSize(16);
+//         doc.text('Savata Fruits Suppliers', 50, 20);
+//         doc.setFontSize(12);
+//         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
+//         doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
+        
+//         let startY = 50;
+//         // Adding the headers and data
+//         const reportData = data.reports.map(report => [
+//             report.summary,
+//             formatDateToIST(report.date), // Format date to IST
+//             report.customer_name,
+//             report.route,
+//             report.balance,
+//             report.out_carate,
+//             report.total_balance,
+//             report.cash,
+//             report.online_bank,
+//             report.online,
+//             report.discount,
+//             report.in_carate,
+//             report.remaining
+//         ]);
+
+//         doc.autoTable({
+//             head: [customHeaders],
+//             body: reportData,
+//             startY: startY,
+//             theme: 'grid'
+//         });
+
+//         // Adding Grand Totals
+//         // const grandTotals = data.Grand || {};
+//         console.log("Grand Totals: ", grandTotals); // Debugging line to check grand totals
+
+//         const grandTotalsData = [
+//             ["Grand Bill Amount", grandTotals['balance'] || 0],
+//             ["Grand outCarate", grandTotals['out_carate'] || 0],
+//             ["Total Bill Amount", grandTotals['total_balance'] || 0],
+//             ["Total Cash", grandTotals['cash'] || 0],
+//             ["Online Amount", grandTotals['online'] || 0],
+//             ["Grand Discount", grandTotals['discount'] || 0],
+//             ["Grand inCarate", grandTotals['in_carate'] || 0],
+//             ["Grand balance", grandTotals['remaining'] || 0]
+//         ];
+
+//         // Debugging line to check grandTotalsData
+//         console.log("Grand Totals Data: ", grandTotalsData);
+
+//         // Get the position where the first table ends
+//         const finalY = doc.autoTable.previous.finalY || 60; // 60 is a fallback value in case previous.finalY is undefined
+
+//         doc.autoTable({
+//             head: [['Description', 'Amount']],
+//             body: grandTotalsData,
+//             startY: finalY + 10, // Adding some space between tables
+//             theme: 'grid'
+//         });
+
+//         // Save the PDF
+//         doc.save('Khatawani.pdf');
+//     } catch (error) {
+//         console.error('Error exporting data:', error);
+//     }
+// }
+
+
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
 
-        // Function to format dates in IST without time
-        const formatDateToIST = (dateString) => {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' });
-        };
-        
-        const customHeaders = ['bill_no', 'date', 'cust_name','route','amount', 'carate_amount',"TotalKalam",'cash','online_acc','online_amt', 'discount','inCarat', 'balance'];
-        
-        // Export to PDF using jsPDF and autoTable
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        
-        // Adding header details
-        doc.setFontSize(10);
-        doc.text('Mobile:- 9960607512', 10, 10);
-        doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
-        doc.setFontSize(16);
-        doc.text('Savata Fruits Suppliers', 50, 20);
-        doc.setFontSize(12);
-        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
-        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
-        
-        let startY = 50;
-        // Adding the headers and data
-        const reportData = data.reports.map(report => [
-            report.summary,
-            formatDateToIST(report.date), // Format date to IST
-            report.customer_name,
-            report.route,
-            report.balance,
-            report.out_carate,
-            report.total_balance,
-            report.cash,
-            report.online_bank,
-            report.online,
-            report.discount,
-            report.in_carate,
-            report.remaining
-        ]);
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
-        doc.autoTable({
-            head: [customHeaders],
-            body: reportData,
-            startY: startY,
-            theme: 'grid'
+        return fetch('http://52.66.126.53/khatawani/generate-pdf', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.status === 404) {
+                loader.style.display = 'none';
+                alert("No data found.");
+                throw new Error('Data not found');
+            }
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob(); // Get the response as a Blob
+        })
+        .then(blob => {
+            loader.style.display = 'none';
+
+            // Create a URL for the Blob and trigger a download
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'Khatawani.pdf'; // Set the desired file name
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url); // Release the URL
+
+            console.log('PDF downloaded successfully');
+        })
+        .catch(error => {
+            loader.style.display = 'none';
+            console.error('Error:', error);
+            alert('Error generating PDF. Please try again.');
         });
-
-        // Adding Grand Totals
-        // const grandTotals = data.Grand || {};
-        console.log("Grand Totals: ", grandTotals); // Debugging line to check grand totals
-
-        const grandTotalsData = [
-            ["Grand Bill Amount", grandTotals['balance'] || 0],
-            ["Grand outCarate", grandTotals['out_carate'] || 0],
-            ["Total Bill Amount", grandTotals['total_balance'] || 0],
-            ["Total Cash", grandTotals['cash'] || 0],
-            ["Online Amount", grandTotals['online'] || 0],
-            ["Grand Discount", grandTotals['discount'] || 0],
-            ["Grand inCarate", grandTotals['in_carate'] || 0],
-            ["Grand balance", grandTotals['remaining'] || 0]
-        ];
-
-        // Debugging line to check grandTotalsData
-        console.log("Grand Totals Data: ", grandTotalsData);
-
-        // Get the position where the first table ends
-        const finalY = doc.autoTable.previous.finalY || 60; // 60 is a fallback value in case previous.finalY is undefined
-
-        doc.autoTable({
-            head: [['Description', 'Amount']],
-            body: grandTotalsData,
-            startY: finalY + 10, // Adding some space between tables
-            theme: 'grid'
-        });
-
-        // Save the PDF
-        doc.save('Khatawani.pdf');
     } catch (error) {
-        console.error('Error exporting data:', error);
+        console.error('Error:', error);
+        alert('Error generating PDF. Please try again.');
     }
 }
+
+
 
 
 

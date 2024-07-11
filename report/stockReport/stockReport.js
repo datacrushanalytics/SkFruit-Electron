@@ -105,57 +105,110 @@ function populateTable4(data) {
 
 
 
+// async function exportToExcel() {
+//     try {
+//         const data = await fetchDataAndProcess();
+
+//         // Export to PDF using jsPDF and autoTable
+//         const { jsPDF } = window.jspdf;
+//         const doc = new jsPDF();
+
+        
+//         const customHeaders = ['purchase_id','gadi_number','supplier_name','product_name','bata','purchase', 'opening','purchase','sale','closing' ];
+
+//         // Adding header details
+//         doc.setFontSize(10);
+//         doc.text('Mobile:- 9960607512', 10, 10);
+//         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+//         doc.setFontSize(16);
+//         doc.text('Savata Fruits Suppliers', 50, 20);
+//         doc.setFontSize(12);
+//         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
+//         doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
+        
+//         let startY = 50;
+
+//         // Map data for autoTable Purchase ID	Vehicle Number	Suppplier Name
+//         const reportData = data.reports.map(report => [
+//             report.Purchase_iD,
+//             report.gadi_number,
+//             report.supplier_name,
+//             report.product_name,
+//             report.bata,
+//             report.purchase,
+//             report.opening,
+//             report.purchase,
+//             report.sale,
+//             report.closing
+//         ]);
+
+//         // Add Reports table to PDF
+//         doc.autoTable({
+//             head: [customHeaders],
+//             body: reportData,
+//             startY: 50,
+//             theme: 'grid'
+//         });
+
+//         // Save the PDF
+//         doc.save('Stock_Report.pdf');
+
+//     } catch (error) {
+//         console.error('Error exporting data:', error);
+//     }
+// }
+
+
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
 
-        // Export to PDF using jsPDF and autoTable
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
-        
-        const customHeaders = ['purchase_id','gadi_number','supplier_name','product_name','bata','purchase', 'opening','purchase','sale','closing' ];
+        return fetch('http://52.66.126.53/stockReport/generate-pdf', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.status === 404) {
+                loader.style.display = 'none';
+                alert("No data found.");
+                throw new Error('Data not found');
+            }
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob(); // Get the response as a Blob
+        })
+        .then(blob => {
+            loader.style.display = 'none';
 
-        // Adding header details
-        doc.setFontSize(10);
-        doc.text('Mobile:- 9960607512', 10, 10);
-        doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
-        doc.setFontSize(16);
-        doc.text('Savata Fruits Suppliers', 50, 20);
-        doc.setFontSize(12);
-        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
-        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
-        
-        let startY = 50;
+            // Create a URL for the Blob and trigger a download
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'stockReport.pdf'; // Set the desired file name
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url); // Release the URL
 
-        // Map data for autoTable Purchase ID	Vehicle Number	Suppplier Name
-        const reportData = data.reports.map(report => [
-            report.Purchase_iD,
-            report.gadi_number,
-            report.supplier_name,
-            report.product_name,
-            report.bata,
-            report.purchase,
-            report.opening,
-            report.purchase,
-            report.sale,
-            report.closing
-        ]);
-
-        // Add Reports table to PDF
-        doc.autoTable({
-            head: [customHeaders],
-            body: reportData,
-            startY: 50,
-            theme: 'grid'
+            console.log('PDF downloaded successfully');
+        })
+        .catch(error => {
+            loader.style.display = 'none';
+            console.error('Error:', error);
+            alert('Error generating PDF. Please try again.');
         });
-
-        // Save the PDF
-        doc.save('Stock_Report.pdf');
-
     } catch (error) {
-        console.error('Error exporting data:', error);
+        console.error('Error:', error);
+        alert('Error generating PDF. Please try again.');
     }
 }
+
 
 

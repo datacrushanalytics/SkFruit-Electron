@@ -210,62 +210,115 @@ function deleteaccount(userId) {
 
 
 
+// async function exportToExcel() {
+//     let customHeaders; // Define customHeaders outside the try block
+//     try {
+//         const data = await fetchDataAndProcess();
+
+//         // Export to PDF using jsPDF and autoTable
+//         const { jsPDF } = window.jspdf;
+//         const doc = new jsPDF();
+
+//         customHeaders = ['id', 'date', 'gadi_number', 'bata', 'supplier_name', 'BillAmount', 'TotalQuantity']; // Assign customHeaders value here
+        
+//         // Adding header details
+//         doc.setFontSize(10);
+//         doc.text('Mobile:- 9960607512', 10, 10);
+//         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+//         doc.setFontSize(16);
+//         doc.text('Savata Fruits Suppliers', 50, 20);
+//         doc.setFontSize(12);
+//         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
+//         doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
+        
+//         let startY = 50;
+        
+//         // Map data for autoTable
+//         const reportData = data.reports.map(report => [
+//             report.id,
+//             new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
+//             report.gadi_number,
+//             report.bata,
+//             report.supplier_name,
+//             report.BillAmount,
+//             report.TotalQuantity
+//         ]);
+
+//         // Calculate grand totals
+//         const grandTotalAmount = data.reports.reduce((total, report) => total + parseFloat(report.BillAmount), 0);
+//         const grandTotalQuantity = data.reports.reduce((total, report) => total + parseFloat(report.TotalQuantity), 0);
+
+//         // Add grand totals row to reportData
+//         reportData.push(['Grand Total:', '', '', '','', grandTotalAmount.toFixed(2), grandTotalQuantity.toFixed(2)]);
+
+//         // Add Reports table to PDF
+//         doc.autoTable({
+//             head: [customHeaders],
+//             body: reportData,
+//             startY: 50,
+//             theme: 'grid'
+//         });
+
+//         // Save the PDF
+//         doc.save('Purchase_Report.pdf');
+
+//     } catch (error) {
+//         console.error('Error exporting data:', error);
+//     }
+// }
+
 async function exportToExcel() {
-    let customHeaders; // Define customHeaders outside the try block
     try {
         const data = await fetchDataAndProcess();
 
-        // Export to PDF using jsPDF and autoTable
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
-        customHeaders = ['id', 'date', 'gadi_number', 'bata', 'supplier_name', 'BillAmount', 'TotalQuantity']; // Assign customHeaders value here
-        
-        // Adding header details
-        doc.setFontSize(10);
-        doc.text('Mobile:- 9960607512', 10, 10);
-        doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
-        doc.setFontSize(16);
-        doc.text('Savata Fruits Suppliers', 50, 20);
-        doc.setFontSize(12);
-        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
-        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
-        
-        let startY = 50;
-        
-        // Map data for autoTable
-        const reportData = data.reports.map(report => [
-            report.id,
-            new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
-            report.gadi_number,
-            report.bata,
-            report.supplier_name,
-            report.BillAmount,
-            report.TotalQuantity
-        ]);
+        return fetch('http://52.66.126.53/purchaseReport/generate-pdf', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.status === 404) {
+                loader.style.display = 'none';
+                alert("No data found.");
+                throw new Error('Data not found');
+            }
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob(); // Get the response as a Blob
+        })
+        .then(blob => {
+            loader.style.display = 'none';
 
-        // Calculate grand totals
-        const grandTotalAmount = data.reports.reduce((total, report) => total + parseFloat(report.BillAmount), 0);
-        const grandTotalQuantity = data.reports.reduce((total, report) => total + parseFloat(report.TotalQuantity), 0);
+            // Create a URL for the Blob and trigger a download
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'purchaseReport.pdf'; // Set the desired file name
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url); // Release the URL
 
-        // Add grand totals row to reportData
-        reportData.push(['Grand Total:', '', '', '','', grandTotalAmount.toFixed(2), grandTotalQuantity.toFixed(2)]);
-
-        // Add Reports table to PDF
-        doc.autoTable({
-            head: [customHeaders],
-            body: reportData,
-            startY: 50,
-            theme: 'grid'
+            console.log('PDF downloaded successfully');
+        })
+        .catch(error => {
+            loader.style.display = 'none';
+            console.error('Error:', error);
+            alert('Error generating PDF. Please try again.');
         });
-
-        // Save the PDF
-        doc.save('Purchase_Report.pdf');
-
     } catch (error) {
-        console.error('Error exporting data:', error);
+        console.error('Error:', error);
+        alert('Error generating PDF. Please try again.');
     }
 }
+
+
 
 
 

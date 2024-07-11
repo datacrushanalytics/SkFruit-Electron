@@ -20,6 +20,7 @@ function fetchDataAndProcess() {
     var data = {
         from_date: formatDate(document.getElementById("fromdate").value),
         to_date: formatDate(document.getElementById("todate").value),
+        customer: getElementValueWithDefault('customer', '*'),
         vehicle: getElementValueWithDefault('vehicle', '*'),
         bata: getElementValueWithDefault('bata', '*')
     };
@@ -125,7 +126,7 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['bill_no', 'gadi_number', 'bata', 'product', 'sold_quantity', 'purchase_price', "selling_price", 'Amount', 'profit_loss'];
+    var columnsToDisplay = ['bill_no', 'gadi_number','cust_name', 'bata', 'product', 'sold_quantity', 'purchase_price', "selling_price", 'Amount', 'profit_loss'];
     var counter = 1;
     var grandTotals = {
         sold_quantity: 0,
@@ -193,65 +194,119 @@ function populateTable4(data) {
 
 
 
+// async function exportToExcel() {
+//     let customHeaders; // Define customHeaders outside the try block
+//     try {
+//         const data = await fetchDataAndProcess();
+
+//         // Export to PDF using jsPDF and autoTable
+//         const { jsPDF } = window.jspdf;
+//         const doc = new jsPDF();
+
+//         customHeaders = ['bill_no','gadi_number','bata', 'product', 'sold_quantity', 'purchase_price', "selling_price", 'Amount', 'profit_loss']; // Assign customHeaders value here
+        
+//         // Adding header details
+//         doc.setFontSize(10);
+//         doc.text('Mobile:- 9960607512', 10, 10);
+//         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+//         doc.setFontSize(16);
+//         doc.text('Savata Fruits Suppliers', 50, 20);
+//         doc.setFontSize(12);
+//         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
+//         doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
+        
+//         let startY = 50;
+        
+//         // Map data for autoTable
+//         const reportData = data.reports.map(report => [
+//             report.bill_no,
+//             report.gadi_number,
+//             report.bata,
+//             report.product,
+//             report.sold_quantity,
+//             report.purchase_price,
+//             report.selling_price,
+//             report.Amount,
+//             report.profit_loss
+
+//         ]);
+
+//         // Calculate grand totals
+//         const grandTotalAmount = data.reports.reduce((total, report) => total + parseFloat(report.purchase_price), 0);
+//         const grandTotalQuantity = data.reports.reduce((total, report) => total + parseFloat(report.selling_price), 0);
+        
+    
+//         // Add grand totals row to reportData
+//         reportData.push(['Grand Total:', '', '', '','', grandTotalAmount.toFixed(2), grandTotalQuantity.toFixed(2)]);
+
+//         // Add Reports table to PDF
+//         doc.autoTable({
+//             head: [customHeaders],
+//             body: reportData,
+//             startY: 50,
+//             theme: 'grid'
+//         });
+
+//         // Save the PDF
+//         doc.save('profit Loss Report.pdf');
+
+//     } catch (error) {
+//         console.error('Error exporting data:', error);
+//     }
+// }
+
+
 async function exportToExcel() {
-    let customHeaders; // Define customHeaders outside the try block
     try {
         const data = await fetchDataAndProcess();
 
-        // Export to PDF using jsPDF and autoTable
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
-        customHeaders = ['bill_no','gadi_number','bata', 'product', 'sold_quantity', 'purchase_price', "selling_price", 'Amount', 'profit_loss']; // Assign customHeaders value here
-        
-        // Adding header details
-        doc.setFontSize(10);
-        doc.text('Mobile:- 9960607512', 10, 10);
-        doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
-        doc.setFontSize(16);
-        doc.text('Savata Fruits Suppliers', 50, 20);
-        doc.setFontSize(12);
-        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
-        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
-        
-        let startY = 50;
-        
-        // Map data for autoTable
-        const reportData = data.reports.map(report => [
-            report.bill_no,
-            report.gadi_number,
-            report.bata,
-            report.product,
-            report.sold_quantity,
-            report.purchase_price,
-            report.selling_price,
-            report.Amount,
-            report.profit_loss
+        return fetch('http://52.66.126.53/profitLossReport/generate-pdf', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.status === 404) {
+                loader.style.display = 'none';
+                alert("No data found.");
+                throw new Error('Data not found');
+            }
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob(); // Get the response as a Blob
+        })
+        .then(blob => {
+            loader.style.display = 'none';
 
-        ]);
+            // Create a URL for the Blob and trigger a download
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'ProfitLossReport.pdf'; // Set the desired file name
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url); // Release the URL
 
-        // Calculate grand totals
-        const grandTotalAmount = data.reports.reduce((total, report) => total + parseFloat(report.purchase_price), 0);
-        const grandTotalQuantity = data.reports.reduce((total, report) => total + parseFloat(report.selling_price), 0);
-        
-    
-        // Add grand totals row to reportData
-        reportData.push(['Grand Total:', '', '', '','', grandTotalAmount.toFixed(2), grandTotalQuantity.toFixed(2)]);
-
-        // Add Reports table to PDF
-        doc.autoTable({
-            head: [customHeaders],
-            body: reportData,
-            startY: 50,
-            theme: 'grid'
+            console.log('PDF downloaded successfully');
+        })
+        .catch(error => {
+            loader.style.display = 'none';
+            console.error('Error:', error);
+            alert('Error generating PDF. Please try again.');
         });
-
-        // Save the PDF
-        doc.save('profit Loss Report.pdf');
-
     } catch (error) {
-        console.error('Error exporting data:', error);
+        console.error('Error:', error);
+        alert('Error generating PDF. Please try again.');
     }
 }
+
+
 
 

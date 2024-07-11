@@ -181,75 +181,128 @@ function populateTable4(data) {
 
 
 
+// async function exportToExcel() {
+//     try {
+//         // Export to PDF using jsPDF and autoTable
+//         const { jsPDF } = window.jspdf;
+//         const data = await fetchDataAndProcess();
+//         const doc = new jsPDF();
+
+//         console.log("AJAJAJ",data)
+//         // Adding header details
+//         doc.setFontSize(10);
+//         doc.text('Mobile:- 9960607512', 10, 10);
+//         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+//         doc.setFontSize(16);
+//         doc.text('Savata Fruits Suppliers', 50, 20);
+//         doc.setFontSize(12);
+//         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
+//         doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
+
+//         // Add customer name and route
+//         if (document.getElementById('customer').value !== '') {
+//             doc.text(`Customer Name: ${data.customer_name}`, 50, 40);
+//         }
+//         if (document.getElementById('route').value !== '') {
+//             doc.text(`Route: ${data.route}`, 50, 50);
+//         }
+//         // Add some space before the table
+//         doc.setFontSize(12);
+//         doc.text(' ', 10, 60);
+//         // Map data for autoTable
+//         const reportData = data.reports.map(report => [
+//             new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
+//             report.summary,
+//             report.balance,
+//             report.out_carate,
+//             report.total_balance,
+//             report.cash,
+//             report.online,
+//             report.discount,
+//             report.in_carate,
+//             report.remaining
+//         ]);
+//         const customHeaders = [
+//             'Date', 'Summary', 'Balance', 'Out Carate', 'Total Balance', 'Cash', 'Online', 'Discount', 'In Carate', 'Remaining'
+//         ];
+//         // Append the grand total row
+//         const grandTotalRow = [
+//             'Grand Total',
+
+//             '',
+//             data.Grand["Grand Balance"],
+//             data.Grand['Grand outCarate'],
+//             data.Grand['Total Balance'],
+//             data.Grand['Total Cash'],
+//             data.Grand['Total Online'],
+//             data.Grand['Grand Discount'],
+//             data.Grand['Grand inCarate'],
+//             data.Grand['Grand Remaining Amount']
+//         ];
+//         reportData.push(grandTotalRow);
+//         // Add Reports table to PDF
+//         doc.autoTable({
+//             head: [customHeaders],
+//             body: reportData,
+//             startY: 70, // Adjust startY based on the header height
+//             theme: 'grid'
+//         });
+//         // Save the PDF
+//         doc.save('Ledger_Report.pdf');
+//     } catch (error) {
+//         console.error('Error exporting data:', error);
+//     }
+// }
+
+
 async function exportToExcel() {
     try {
-        // Export to PDF using jsPDF and autoTable
-        const { jsPDF } = window.jspdf;
         const data = await fetchDataAndProcess();
-        const doc = new jsPDF();
 
-        console.log("AJAJAJ",data)
-        // Adding header details
-        doc.setFontSize(10);
-        doc.text('Mobile:- 9960607512', 10, 10);
-        doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
-        doc.setFontSize(16);
-        doc.text('Savata Fruits Suppliers', 50, 20);
-        doc.setFontSize(12);
-        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
-        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
-        // Add customer name and route
-        if (document.getElementById('customer').value !== '') {
-            doc.text(`Customer Name: ${data.customer_name}`, 50, 40);
-        }
-        if (document.getElementById('route').value !== '') {
-            doc.text(`Route: ${data.route}`, 50, 50);
-        }
-        // Add some space before the table
-        doc.setFontSize(12);
-        doc.text(' ', 10, 60);
-        // Map data for autoTable
-        const reportData = data.reports.map(report => [
-            new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
-            report.summary,
-            report.balance,
-            report.out_carate,
-            report.total_balance,
-            report.cash,
-            report.online,
-            report.discount,
-            report.in_carate,
-            report.remaining
-        ]);
-        const customHeaders = [
-            'Date', 'Summary', 'Balance', 'Out Carate', 'Total Balance', 'Cash', 'Online', 'Discount', 'In Carate', 'Remaining'
-        ];
-        // Append the grand total row
-        const grandTotalRow = [
-            'Grand Total',
+        return fetch('http://52.66.126.53/ledgerReport/generate-pdf', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.status === 404) {
+                loader.style.display = 'none';
+                alert("No data found.");
+                throw new Error('Data not found');
+            }
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob(); // Get the response as a Blob
+        })
+        .then(blob => {
+            loader.style.display = 'none';
 
-            '',
-            data.Grand["Grand Balance"],
-            data.Grand['Grand outCarate'],
-            data.Grand['Total Balance'],
-            data.Grand['Total Cash'],
-            data.Grand['Total Online'],
-            data.Grand['Grand Discount'],
-            data.Grand['Grand inCarate'],
-            data.Grand['Grand Remaining Amount']
-        ];
-        reportData.push(grandTotalRow);
-        // Add Reports table to PDF
-        doc.autoTable({
-            head: [customHeaders],
-            body: reportData,
-            startY: 70, // Adjust startY based on the header height
-            theme: 'grid'
+            // Create a URL for the Blob and trigger a download
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'LedgerReport.pdf'; // Set the desired file name
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url); // Release the URL
+
+            console.log('PDF downloaded successfully');
+        })
+        .catch(error => {
+            loader.style.display = 'none';
+            console.error('Error:', error);
+            alert('Error generating PDF. Please try again.');
         });
-        // Save the PDF
-        doc.save('Ledger_Report.pdf');
     } catch (error) {
-        console.error('Error exporting data:', error);
+        console.error('Error:', error);
+        alert('Error generating PDF. Please try again.');
     }
 }
+

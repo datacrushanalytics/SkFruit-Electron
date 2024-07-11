@@ -239,59 +239,112 @@ function deleteaccount(userId) {
 //     }
 // }
 
+// async function exportToExcel() {
+//     try {
+//         const data = await fetchDataAndProcess();
+
+//         // Export to PDF using jsPDF and autoTable
+//         const { jsPDF } = window.jspdf;
+//         const doc = new jsPDF();
+
+//         const customHeaders = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'PaidAmt', 'online_deposite_bank', 'onlineAmt', 'discount', 'inCarat', 'Balance'];
+        
+//         // Adding header details
+//         doc.setFontSize(10);
+//         doc.text('Mobile:- 9960607512', 10, 10);
+//         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+//         doc.setFontSize(16);
+//         doc.text('Savata Fruits Suppliers', 50, 20);
+//         doc.setFontSize(12);
+//         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
+//         doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
+        
+//         let startY = 50;
+        
+
+//         // Map data for autoTable
+//         const reportData = data.reports.map(report => [
+//             report.receipt_id,
+//             new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
+//             report.Customer,
+//             report.mobile_no,
+//             report.note,
+//             report.PaidAmt,
+//             report.online_deposite_bank,
+//             report.onlineAmt,
+//             report.discount,
+//             report.inCarat,
+//             report.Balance // Ensure this field matches the actual field name in your data
+//         ]);
+
+//         // Add Reports table to PDF
+//         doc.autoTable({
+//             head: [customHeaders],
+//             body: reportData,
+//             startY: 50,
+//             theme: 'grid'
+//         });
+
+//         // Save the PDF
+//         doc.save('Receipt_Report.pdf');
+
+//     } catch (error) {
+//         console.error('Error exporting data:', error);
+//     }
+// }
+
+
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
 
-        // Export to PDF using jsPDF and autoTable
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
-        const customHeaders = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'PaidAmt', 'online_deposite_bank', 'onlineAmt', 'discount', 'inCarat', 'Balance'];
-        
-        // Adding header details
-        doc.setFontSize(10);
-        doc.text('Mobile:- 9960607512', 10, 10);
-        doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
-        doc.setFontSize(16);
-        doc.text('Savata Fruits Suppliers', 50, 20);
-        doc.setFontSize(12);
-        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
-        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
-        
-        let startY = 50;
-        
+        return fetch('http://52.66.126.53/receiptReport/generate-pdf', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.status === 404) {
+                loader.style.display = 'none';
+                alert("No data found.");
+                throw new Error('Data not found');
+            }
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob(); // Get the response as a Blob
+        })
+        .then(blob => {
+            loader.style.display = 'none';
 
-        // Map data for autoTable
-        const reportData = data.reports.map(report => [
-            report.receipt_id,
-            new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
-            report.Customer,
-            report.mobile_no,
-            report.note,
-            report.PaidAmt,
-            report.online_deposite_bank,
-            report.onlineAmt,
-            report.discount,
-            report.inCarat,
-            report.Balance // Ensure this field matches the actual field name in your data
-        ]);
+            // Create a URL for the Blob and trigger a download
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'receiptReport.pdf'; // Set the desired file name
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url); // Release the URL
 
-        // Add Reports table to PDF
-        doc.autoTable({
-            head: [customHeaders],
-            body: reportData,
-            startY: 50,
-            theme: 'grid'
+            console.log('PDF downloaded successfully');
+        })
+        .catch(error => {
+            loader.style.display = 'none';
+            console.error('Error:', error);
+            alert('Error generating PDF. Please try again.');
         });
-
-        // Save the PDF
-        doc.save('Receipt_Report.pdf');
-
     } catch (error) {
-        console.error('Error exporting data:', error);
+        console.error('Error:', error);
+        alert('Error generating PDF. Please try again.');
     }
 }
+
 
 
 function openModal(item) {

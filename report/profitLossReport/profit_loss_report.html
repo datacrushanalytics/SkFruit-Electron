@@ -91,7 +91,7 @@
   }
 
   
-  #vehicle{
+  #vehicle, #customer{
     /* border-radius: 8px; */
     height: 35px;
     width: 600px;
@@ -220,6 +220,13 @@
 
                 <br>
 
+                <label for="userType"> Customer :</label>
+                <select class="drop" id="customer" id="customer" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select>
+
+                <br><br>
+
                 <label for="userType"> Vehicle No :</label>
                 <select class="drop" id="vehicle" id="vehicle" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
@@ -245,6 +252,7 @@
                     <th>Id</th>
                     <th>Bill No</th>
                     <th>Vehicle No</th>
+                    <th>Customer</th>
                     <th>Bata</th>
                     <th>Product</th>
                     <th>Sold Quantity</th>
@@ -275,6 +283,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
         fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle','vehicle_no');
+        fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer','name');
         fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'bata', 'bata');
     });
 
