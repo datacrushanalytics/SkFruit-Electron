@@ -59,14 +59,85 @@ function fetchDataAndProcess() {
 }
 
 
+// function populateTable4(data) {
+//     var tbody = document.getElementById('tableBody');
+//     tbody.innerHTML = ''; // Clear existing rows
+//     var columnsToDisplay = ['bill_no', 'gadi_number', 'bata', 'product', 'sold_quantity', 'purchase_price', "selling_price", 'Amount', 'profit_loss'];
+//     var counter = 1;
+//     var grandTotals = {
+//         sold_quantity: 0,
+//         purchase_price: 0,
+//         selling_price: 0,
+//         Amount: 0,
+//         profit_loss: 0
+//     };
+//     console.log(data.reports);
+//     if (data.reports.length === 0) {
+//         alert("No Data Found");
+//         return;
+//     }
+//     data.reports.forEach(function (item) {
+//         var row = tbody.insertRow();
+//         var cell = row.insertCell();
+//         cell.textContent = counter++;
+//         columnsToDisplay.forEach(function (key) {
+//             var cell = row.insertCell();
+//             if (key === 'profit_loss') {
+//                 if (item[key].startsWith('Loss')) {
+//                     cell.style.color = 'red';
+//                 } else {
+//                     cell.style.color = 'green';
+//                 }
+//                 grandTotals[key] += parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
+//             } else if (['sold_quantity', 'purchase_price', "selling_price", 'Amount'].includes(key)) {
+//                 grandTotals[key] += parseFloat(item[key]) || 0;
+//             }
+//             cell.textContent = item[key];
+//         });
+//     });
+
+//     // Create the grand total row
+//     var totalRow = tbody.insertRow();
+    
+//     // Create cell for 'Grand Total' heading
+//     var headingCell = totalRow.insertCell();
+//     headingCell.textContent = 'Grand Total';
+//     headingCell.style.fontWeight = 'bold';
+//     headingCell.colSpan = 4; // Span across the first four columns
+
+//     // Create cells for the total values
+//     columnsToDisplay.forEach(function (key, index) {
+//         if (index >= 4) { // Start populating totals after the first four columns
+//             var cell = totalRow.insertCell();
+//             if (['sold_quantity', 'purchase_price', "selling_price", 'Amount', 'profit_loss'].includes(key)) {
+//                 if (key === 'profit_loss') {
+//                     cell.style.color = grandTotals[key] < 0 ? 'red' : 'green';
+//                 }
+//                 cell.textContent = grandTotals[key].toFixed(2); // Format the total to 2 decimal places
+//             } else {
+//                 cell.textContent = ''; // Empty cells for the specified columns
+//             }
+//         }
+//     });
+// }
+
+
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['bill_no','gadi_number','bata', 'product', 'sold_quantity', 'purchase_price', "selling_price", 'Amount', 'profit_loss'];
+    var columnsToDisplay = ['bill_no', 'gadi_number', 'bata', 'product', 'sold_quantity', 'purchase_price', "selling_price", 'Amount', 'profit_loss'];
     var counter = 1;
-    console.log(data.reports)
+    var grandTotals = {
+        sold_quantity: 0,
+        purchase_price: 0,
+        selling_price: 0,
+        Amount: 0,
+        profit_loss: 0
+    };
+    console.log(data.reports);
     if (data.reports.length === 0) {
         alert("No Data Found");
+        return;
     }
     data.reports.forEach(function (item) {
         var row = tbody.insertRow();
@@ -74,16 +145,113 @@ function populateTable4(data) {
         cell.textContent = counter++;
         columnsToDisplay.forEach(function (key) {
             var cell = row.insertCell();
-            if (key == 'profit_loss') {
+            if (key === 'profit_loss') {
                 if (item[key].startsWith('Loss')) {
                     cell.style.color = 'red';
                 } else {
                     cell.style.color = 'green';
                 }
-            } 
+                grandTotals[key] += parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
+            } else if (['sold_quantity', 'purchase_price', "selling_price", 'Amount'].includes(key)) {
+                grandTotals[key] += parseFloat(item[key]) || 0;
+            }
             cell.textContent = item[key];
         });
+    });
 
+    // Create the grand total row
+    var totalRow = tbody.insertRow();
+    
+    // Create cell for 'Grand Total' heading
+    var headingCell = totalRow.insertCell();
+    headingCell.textContent = 'Grand Total';
+    headingCell.style.fontWeight = 'bold';
+    headingCell.colSpan = 4; // Span across the first four columns
+
+    // Create an empty cell to shift the totals to the right
+    var emptyCell = totalRow.insertCell();
+    emptyCell.textContent = ''; // Empty cell to shift totals to the right
+
+    // Create cells for the total values
+    columnsToDisplay.forEach(function (key, index) {
+        if (index >= 4) { // Start populating totals after the first four columns
+            var cell = totalRow.insertCell();
+            if (['sold_quantity', 'purchase_price', "selling_price", 'Amount', 'profit_loss'].includes(key)) {
+                if (key === 'profit_loss') {
+                    cell.style.color = grandTotals[key] < 0 ? 'red' : 'green';
+                }
+                cell.textContent = grandTotals[key].toFixed(2); // Format the total to 2 decimal places
+            } else {
+                cell.textContent = ''; // Empty cells for the specified columns
+            }
+        }
     });
 }
+
+
+
+
+
+
+async function exportToExcel() {
+    let customHeaders; // Define customHeaders outside the try block
+    try {
+        const data = await fetchDataAndProcess();
+
+        // Export to PDF using jsPDF and autoTable
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        customHeaders = ['bill_no','gadi_number','bata', 'product', 'sold_quantity', 'purchase_price', "selling_price", 'Amount', 'profit_loss']; // Assign customHeaders value here
+        
+        // Adding header details
+        doc.setFontSize(10);
+        doc.text('Mobile:- 9960607512', 10, 10);
+        doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+        doc.setFontSize(16);
+        doc.text('Savata Fruits Suppliers', 50, 20);
+        doc.setFontSize(12);
+        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
+        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
+        
+        let startY = 50;
+        
+        // Map data for autoTable
+        const reportData = data.reports.map(report => [
+            report.bill_no,
+            report.gadi_number,
+            report.bata,
+            report.product,
+            report.sold_quantity,
+            report.purchase_price,
+            report.selling_price,
+            report.Amount,
+            report.profit_loss
+
+        ]);
+
+        // Calculate grand totals
+        const grandTotalAmount = data.reports.reduce((total, report) => total + parseFloat(report.purchase_price), 0);
+        const grandTotalQuantity = data.reports.reduce((total, report) => total + parseFloat(report.selling_price), 0);
+        
+    
+        // Add grand totals row to reportData
+        reportData.push(['Grand Total:', '', '', '','', grandTotalAmount.toFixed(2), grandTotalQuantity.toFixed(2)]);
+
+        // Add Reports table to PDF
+        doc.autoTable({
+            head: [customHeaders],
+            body: reportData,
+            startY: 50,
+            theme: 'grid'
+        });
+
+        // Save the PDF
+        doc.save('profit Loss Report.pdf');
+
+    } catch (error) {
+        console.error('Error exporting data:', error);
+    }
+}
+
 

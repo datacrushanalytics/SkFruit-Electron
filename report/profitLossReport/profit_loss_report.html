@@ -49,6 +49,24 @@
         margin-right: 10px;
         margin-top: 9px;
     }
+
+
+    #button2 {
+           padding: 12px 24px;
+           text-decoration: none;
+           color: white;
+           background-color: #808080;
+           border: none;
+           border-radius: 5px;
+           cursor: pointer;
+           transition: background-color 0.3s;
+           margin: 0 10px;
+           cursor: pointer;
+           
+}
+
+  
+
     
     .first-row input,
     .first-row select {
@@ -112,8 +130,16 @@
         }
 
         .button:hover {
-            background-color: #555;
-            /* Darker grey on hover */
+            padding: 12px 24px;
+            text-decoration: none;
+            color: white;
+            background-color: #808080;
+            /* Grey color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 0 10px;
         }
 
         .button a {
@@ -209,6 +235,7 @@
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
                     <button type="submit" class="button">Submit</button>
+                    <button type='button' class="border-hover" onclick="exportToExcel()" id="button2">Export</button>
                 <!-- </div> -->
             </form>
           <br>
