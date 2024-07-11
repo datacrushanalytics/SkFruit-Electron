@@ -199,73 +199,10 @@
     100% { transform: rotate(360deg); }
   }
   
-
-
-.popup {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border: 1px solid #ccc;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-    z-index: 9999;
-    width: 80%;
-    /* Adjust the width as desired */
-    height: 80%;
-    /* Adjust the height as desired */
-    max-width: 90vw;
-    /* Set maximum width relative to viewport width */
-    max-height: 90vh;
-    /* Set maximum height relative to viewport height */
-    overflow: auto;
-    /* Add scrollbars if content overflows */
-  }
-
-  .popup-content {
-    width: 100%;
-    /* Adjust the width as desired */
-    height: 100%;
-    /* Adjust the height as desired */
-  }
-
-  .popup-content iframe {
-    width: 100%;
-    /* Adjust the width as desired */
-    height: 100%;
-    /* Adjust the height as desired */
-  }
-
-
     </style>
 </head>
 <body>
     <div id="loader"></div>
-    <div class="popup" id="popup">
-        <div class="popup-content">
-            <span class="close" onclick="closePopup()">&times;</span>
-            <br>
-            <table id="popupTable">
-                <thead>
-                    <tr>
-                        <th>Sr. </th>
-                        <th>Product Name</th>
-                        <th>Bata</th>
-                        <th>Mark</th>
-                        <th>Quantity</th>
-                        <th>Rate</th>
-                        <th>Price</th>
-                        <!-- Add more columns as needed -->
-                    </tr>
-                </thead>
-                <tbody id="popupTableBody"></tbody>
-            </table>
-        </div>
-    </div>
-
-
     <div class="container">
         <h1 align="center">Routewise Sale Report</h1><br>
         <hr>
@@ -273,40 +210,26 @@
         <div class="container1">
             <form id="loginForm1">
                 <div class="first-row">
-                    <label for="userType">From Date :</label>
+                    <label for="userType"> Date :</label>
                     <input type="date" id="fromdate" name="date" placeholder="From Date" required>
-                    <br>
+                    <!-- <br>
                     <label for="userType">To Date :</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date" required>
+                    <input type="date" id="todate" name="date" placeholder="To Date" required> -->
                 </div>
                 <br>
-                <label for="userType">Customer Name :</label>
-                <select class="drop" id="customer" id="name" name="name">
+                <!-- <label for="userType">Customer Name :</label> -->
+                <!-- <select class="drop" id="customer" id="name" name="name"> -->
                     <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select><br>
-                <br>
+                <!-- </select><br> -->
+                <!-- <br> -->
                 <label id='lable1111' for="userType">Route :</label>
-                <select class="drop1" id="route" name="name">
+                <select class="drop1" id="route" name="name" required>
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br><br>
-
-                <label for="userType"> Product :</label>
-                <select class="drop" id="product" name="name">
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select><br>
-
-                <br>
-
-                <label for="userType">Bata :</label>
-                <select class="drop" id="bata" name="name">
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select><br><br>
-
-
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
                     <button type="submit" class="button">Submit</button>
-                    <button type='button' class="button" onclick="exportToExcel()" id="button2">Export</button>
+                    <!-- <button type='button' class="button" onclick="exportToExcel()" id="button2">Export</button> -->
                 <!-- </div> -->
             </form>
             <br>
@@ -316,22 +239,8 @@
                 <thead>
                 <tr>
                     <th>Sr. No</th>
-                    <th>BILL NO</th>
-                    <th>DATE</th>
                     <th>Customer Name</th>
-                    <th>Route</th>
-                    <th>Amount</th>
-                    <th>Carate Amount</th>
-                    <th>Previous Balance</th>
-                    <th>Total Kalam</th>
-                    <th>Online Amount</th>
-                    <th>Discount</th>
-                    <th>In Carte</th>
-                    <th>Balance</th>
-                    <th>Paid Amount</th>
-                    <th>Comment</th>
-                    <th>Products</th>
-                    <th>BILL</th>
+                    <th>Sale BILL</th>
                 </tr>
                 </thead>
                 <!-- Add more rows as needed -->
@@ -343,18 +252,28 @@
         </div>
     </div>
 </body>
-<script src="./routewiseSaleReport.js"></script>
+<script src="./routeSale.js"></script>
 <script>
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer','name');
-        fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name');
-        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'product', 'product_name');
-        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'bata', 'bata');
+        // fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer');
+        fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route');
+
+        function setDefaultDate() {
+            var today = new Date();
+            var year = today.getFullYear();
+            var month = ('0' + (today.getMonth() + 1)).slice(-2); // Months are zero-based
+            var day = ('0' + today.getDate()).slice(-2);
+            var defaultDate = year + '-' + month + '-' + day;
+            document.getElementById('fromdate').value = defaultDate;
+        }
+
+        // Set the default date when the page loads
+        setDefaultDate();
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
+    function fetchAndPopulateDropdown(apiUrl, dropdownId) {
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -364,14 +283,14 @@
             })
             .then(data => {
                 // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId, field);
+                populateDropdownWithSelect2(data, dropdownId);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     }
 
-    function populateDropdownWithSelect2(data, dropdownId, field) {
+    function populateDropdownWithSelect2(data, dropdownId) {
         var dropdown = $('#' + dropdownId);
         // Clear existing options
         dropdown.empty();
@@ -381,7 +300,7 @@
 
         // Populate dropdown with API data
         data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
+            dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
         });
 
         // Initialize Select2

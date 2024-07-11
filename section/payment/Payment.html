@@ -176,6 +176,7 @@
     <script src="./payment.js"></script>
 
     <script>
+        /*
         // Function to get the current maximum payment ID from local storage
         function getCurrentMaxPaymentId() {
             return parseInt(localStorage.getItem('maxPaymentId') || 0);
@@ -202,6 +203,21 @@
         function populatePaymentId() {
             document.getElementById("id").value = generatePaymentId();
         }
+        */
+        fetch('http://52.66.126.53/fetchPaymentid')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Populate dropdown with API data
+            document.getElementById('id').value = parseInt(data[0]['num']) + 1;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 
         // Function to populate the current date into the date input field
         function populateCurrentDate() {

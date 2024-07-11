@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <title></title>
+    <style>
+
+      /* Adjust the margin of the label for mobile number */
+.first-row > #number-wrapper label {
+    margin-right: 10px; /* Adjust as needed to match other labels */
+}
+
+
+
+      body {
+          font-family: Arial, sans-serif;
+          background-color: rgba(242, 242, 242, 0.8); /* Transparent background */
+          margin: 0;
+          padding: 20px;
+          display: flex;
+          flex-direction: column; /* Align content vertically */
+          justify-content: center; /* Center content vertically */
+          align-items: center; /* Center content horizontally */
+      }
+
+      .frame {
+          /*border: 2px solid #000; /* Black border */
+          padding: 20px; /* Padding inside the frame */
+          border-radius: 10px; /* Rounded corners */
+          width: 80%; /* Adjust width as needed */
+          max-width: 900px; /* Maximum width */
+          margin: 0 auto; /* Center horizontally */
+          background-color: white; /* Background color */
+      }
+
+      .container {
+          /* text-align: center; */
+          margin: 0 auto; /* Align container in the center */
+          width: 100%; /* Adjust the width as needed */
+          max-width: 814px; /* Limit the maximum width */
+          overflow-x: auto; /* Allow horizontal scrolling if needed */
+          padding: 20px; /* Add padding inside the container */
+          box-sizing: border-box; /* Include padding and border in width */
+      }
+
+      .button-container {
+          margin-top: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center; /* Center buttons vertically */
+      }
+
+      .button {
+          padding: 12px 24px;
+          text-decoration: none;
+          color: white;
+          background-color: #808080; /* Grey color */
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+          margin: 0 10px;
+          min-width: 120px; /* Ensure button width */
+      }
+
+      .button:hover {
+          background-color: #555; /* Darker grey on hover */
+      }
+
+      .button a {
+          color: white;
+          text-decoration: none;
+      }
+
+      table {
+          width: 100%;
+          border-collapse: collapse;
+          background-color: rgba(255, 255, 255, 0.8); /* Transparent background */
+          box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+          border-radius: 5px;
+      }
+      
+
+      th,
+      td {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 12px;
+      }
+
+      th {
+          background-color: #f2f2f2;
+      }
+
+      .input-label {
+          display: block;
+          text-align: left;
+          margin-bottom: 5px;
+          padding: 6px;
+      }
+      .first-row{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1%;
+      }
+
+      input[type="number"],
+      input[type="text"],
+      input[type="date"],
+      select,
+      textarea {
+          flex: 1;
+          padding: 5px;
+          margin-left: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          box-sizing: border-box;
+          height: 35px;
+          width: 80%;                                  
+      }
+      
+      @media only screen and (max-width: 600px) {
+          /* Adjustments for smaller screens */
+          th,
+          td {
+              padding: 8px; /* Reduced padding for smaller screens */
+          }
+
+          .container {
+              padding: 10px; /* Reduce padding for smaller screens */
+          }
+
+          .input-label {
+              margin-bottom: 0;
+          }
+
+          input[type="number"],
+          input[type="text"],
+          select,
+          textarea {
+              font-size: 14px; /* Adjust font size for smaller screens */
+          }
+
+          .button-container {
+              flex-direction: column; /* Arrange buttons vertically */
+          }
+           /* Adjust the carate input fields */
+           .first-row > input[type="number"] {
+              width: calc(25% - 10px); /* Make inputs one-quarter width minus spacing */
+              margin-right: 5px; /* Add spacing between input fields */
+          }
+      }
+
+      /* Style the loader container */
+#loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Apply animation */
+    display: none; /* Hide loader by default */
+    
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+    /* CSS */
+.popup {
+    /* Existing styles */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#companyInfo {
+    margin-bottom: 20px;
+}
+
+#companyLogo {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+#companyName {
+    font-size: 1.2em; /* Adjust the font size as needed */
+}
+
+#barcodeCanvas {
+    /* Existing styles */
+    margin-top: 20px; /* Add margin for spacing */
+    width: 220px;
+}
+
+/* Styles for the modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Styles for the modal content */
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+    /* Position relative for the close button */
+}
+
+/* Close button style */
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+  
+  </style>
+</head>
+<body>
+    <div id="loader"></div>
+    <div class="frame">
+        <div class="container">
+            <h1 align="center"> जमा पावती</h1>
+            <hr>
+            <br>
+            <div class="container1">
+                <form id="loginForm1">
+                    <div class="first-row">
+                        <label for="pavti" class="input-label">जमा पावती क्र :</label>
+                        <input type="number" id="pavti" name="number" placeholder="Receipt No." required>
+                    </div>
+
+                    <!-- Rest of your form content -->
+                    
+                <div class="first-row">
+                    <label for="date1" class="input-label">तारीख :</label>
+                    <input type="date" id="date" name="date" placeholder="Date" required>
+                </div>
+
+
+                <div class="first-row">
+                    <label for="account_group" class="input-label">ग्राहकाचे नाव:</label>
+                    <input type="text" id="account_group" name="account_group" required readonly>
+                    <!-- <select class="drop" id="account_group" name="account_group" onchange="previousbalance()" required></select> -->
+                    <input type="hidden" id="custid" name="custid">
+                </div>
+
+                <div class="dropdown-container">
+                    <div id="number-wrapper" class="input-wrapper">
+                      <label for="number">मोबाईल नंबर :</label>
+                      <input type="text" id="mob" name="mob" required readonly>
+                      <!-- <select class="drop" id="mob" name="mob" onchange="getCust()" required></select> -->
+                    </div><br>
+                <!-- <div class="first-row">
+                    <label for="route_detail" class="input-label">खात्याकडे :</label>
+                    <select class="drop" id="route_detail" name="route_detail" required></select>
+                </div> -->
+
+                <div class="first-row">
+                    <label for="message" class="input-label">संदर्भ :</label>
+                    <textarea id="message" name="message"></textarea>
+                </div>
+
+                <div class="first-row">
+                    <label for="input3" class="input-label">मागील बाकी :</label>
+                    <input type="text" id="input3" name="input1" readonly>
+                </div>
+                
+                <div class="first-row">
+                    <label class="input-label"> मागील बाकी कॅरेट :</label>
+                    <input type="number" id="carate2100" name="number" placeholder="100" readonly>
+                    <input type="number" id="carate2150" name="number" placeholder="150" readonly>
+                    <input type="number" id="carate2250" name="number" placeholder="250" readonly>
+                    <input type="number" id="carate2350" name="number" placeholder="350" readonly>
+                </div>
+
+                <div class="first-row">
+                    <label for="input6" class="input-label">रोख :</label>
+                    <input type="text" id="input6" name="input1" onchange="totalbill()">
+                </div>
+
+                <div class="first-row">
+                    <label for="input1" class="input-label">बँक खाते :</label>
+                    <select id="input1" name="input2"></select>
+                </div>
+
+                <div class="first-row">
+                    <label for="input1" class="input-label"> ऑनलाईन :</label>
+                    <input type="text" id="input7" name="input2" onchange="totalbill()"></select>
+                </div>
+
+               
+
+                <div class="first-row">
+                    <label for="input8" class="input-label">सूट रक्कम :</label>
+                    <input type="text" id="input8" name="input1" onchange="totalbill()">
+                </div>
+
+
+                <div class="first-row">
+                    <label class="input-label">जमा कॅरेट:</label>
+                    <input type="number" id="carate100" name="number" placeholder="100" onchange="carate()">
+                    <input type="number" id="carate150" name="number" placeholder="150" onchange="carate()">
+                    <input type="number" id="carate250" name="number" placeholder="250" onchange="carate()">
+                    <input type="number" id="carate350" name="number" placeholder="350" onchange="carate()">
+                </div>
+
+                <div class="first-row">
+                    <!-- <label for="input4" class="input-label">Balance Carate price :</label> -->
+                    <input type="hidden" id="input4" name="input1" onchange="totalbill()">
+                </div>
+
+                <div class="first-row">
+                    <label for="input5" class="input-label">बाकी रक्कम :</label>
+                    <input type="text" id="input5" name="input1">
+                </div>
+
+                <div class="first-row">
+                    <label class="input-label">एकून बाकी कॅरेट :</label>
+                    <input type="number" id="carate3100" name="number" placeholder="100" readonly>
+                    <input type="number" id="carate3150" name="number" placeholder="150" readonly>
+                    <input type="number" id="carate3250" name="number" placeholder="250" readonly>
+                    <input type="number" id="carate3350" name="number" placeholder="350" readonly>
+                </div>
+
+
+                <div class="fourth-row">
+                    
+                    <div class="button-container">
+                        <button class="border-hover1 button">Update and Validate</button>
+                        <!-- <button class="border-hover2 button">Back</button> -->
+                    </div>
+                </form>
+                <div id="popupContainer"></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./validateReceipt.js"></script>
+<script>
+    // JavaScript functions remain unchanged
+    function carate() {
+        /*
+    if (document.getElementById("carate100").value > document.getElementById('carate2100').value){
+        alert("Carate limit exceed");
+        document.getElementById("carate100").value = 0;
+    }
+
+    if (document.getElementById("carate150").value > document.getElementById('carate2150').value){
+        alert("Carate limit exceed");
+        document.getElementById("carate150").value = 0;
+    }
+
+    if (document.getElementById("carate250").value > document.getElementById('carate2250').value){
+        alert("Carate limit exceed");
+        document.getElementById("carate250").value = 0;
+    }
+
+
+    if (document.getElementById("carate350").value > document.getElementById('carate2350').value){
+        alert("Carate limit exceed");
+        document.getElementById("carate350").value = 0;
+    }
+*/
+        var value100 = parseInt(document.getElementById("carate100").value) || 0;
+        var value150 = parseInt(document.getElementById("carate150").value) || 0;
+        var value250 = parseInt(document.getElementById("carate250").value) || 0;
+        var value350 = parseInt(document.getElementById("carate350").value) || 0;
+        document.getElementById("input4").value = value100 * 100 + value150 * 150 + value250 * 250 + value350 * 350;
+        document.getElementById('carate3100').value = parseInt(document.getElementById('carate2100').value) - value100;
+        document.getElementById('carate3150').value = parseInt(document.getElementById('carate2150').value) - value150;
+        document.getElementById('carate3250').value = parseInt(document.getElementById('carate2250').value) - value250;
+        document.getElementById('carate3350').value = parseInt(document.getElementById('carate2350').value) - value350;
+        totalbill();
+    }
+
+   // function totalbill() {
+   //    document.getElementById("input5").value = parseInt(document.getElementById("input3").value || 0) - parseInt(document.getElementById("input6").value || 0) - parseInt(document.getElementById("input7").value || 0) - parseInt(document.getElementById("input8").value || 0) - parseInt(document.getElementById("input4").value || 0);
+   // }
+
+
+
+function totalbill(){
+    console.log("totalbill")
+    console.log(document.getElementById("custid").value)
+  
+    fetch('http://52.66.126.53/accountData/' + parseInt(document.getElementById("custid").value))
+          .then(response => {
+            if (!response.ok) {
+                loader.style.display = 'none';
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+          .then(data => {
+              console.log(data[0].cr_dr_type)
+              if(data[0].cr_dr_type == 'no'){
+                document.getElementById("input5").value = parseInt(document.getElementById("input3").value || 0) - parseInt(document.getElementById("input6").value || 0) - parseInt(document.getElementById("input7").value || 0) - parseInt(document.getElementById("input8").value || 0);
+              }else{
+                document.getElementById("input5").value = parseInt(document.getElementById("input3").value || 0) - parseInt(document.getElementById("input6").value || 0) - parseInt(document.getElementById("input7").value || 0) - parseInt(document.getElementById("input8").value || 0) - parseInt(document.getElementById("input4").value || 0);
+              }
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+  
+    
+    //document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0) - parseInt(document.getElementById("total2").value || 0);
+  }
+  
+    function previousbalance() {
+        const name = document.getElementById("account_group").value
+        //const name = receipt.Customer
+        fetch('http://52.66.126.53/fetchpv/' + name)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Populate dropdown with API data
+                console.log(data)
+                document.getElementById('custid').value = parseInt(data[0]['id']);
+                //document.getElementById('input3').value = parseInt(data[0]['current_balance'] || 0);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+
+            fetch('http://52.66.126.53/fetchName/name/' + name)
+                  .then(response => {
+                    if (!response.ok) {
+                        loader.style.display = 'none';
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                  .then(data => {
+                      console.log(data[0].mobile_no)
+                      // Get the Select2 dropdown element
+                      var $productDropdown = $('#mob');
+                      // Set the value of the Select2 dropdown if it's different
+                      if ($productDropdown.val() !== data[0].mobile_no) {
+                        $productDropdown.val(data[0].mobile_no).trigger('change');
+                      }
+                  })
+                  .catch(error => {
+                      console.error('Error:', error);
+                  });
+
+
+
+    fetch('http://52.66.126.53/carateuserData/' + name)
+  .then(response => {
+      if (!response.ok) {
+        loader.style.display = 'none';
+          throw new Error('Network response was not ok');
+      }
+      return response.json();
+  })
+  .then(data => {
+      // Populate dropdown with API data
+      console.log(data)
+      document.getElementById('carate2100').value = parseInt(data[0]['carate_100']);
+      document.getElementById('carate2150').value = parseInt(data[0]['carate_150']);
+      document.getElementById('carate2250').value = parseInt(data[0]['carate_250']);
+      document.getElementById('carate2350').value = parseInt(data[0]['carate_350']);
+      document.getElementById('carate3100').value = parseInt(data[0]['carate_100']);
+      document.getElementById('carate3150').value = parseInt(data[0]['carate_150']);
+      document.getElementById('carate3250').value = parseInt(data[0]['carate_250']);
+      document.getElementById('carate3350').value = parseInt(data[0]['carate_350']);
+  })
+  .catch(error => {
+      console.error('Error:', error);
+  });
+                  
+
+
+    }
+
+
+
+    function getCust() {
+        var number = document.getElementById('mob').value;
+        console.log(number)
+        fetch('http://52.66.126.53/fetchName/mobile/' + number)
+            .then(response => {
+                if (!response.ok) {
+                    loader.style.display = 'none';
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data[0].name)
+                // Get the Select2 dropdown element
+                var $productDropdown = $('#account_group');
+                
+                // Set the value of the Select2 dropdown if it's different
+                if ($productDropdown.val() !== data[0].name) {
+                    $productDropdown.val(data[0].name).trigger('change');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+    
+</script>
+
+
+<script>
+        
+    document.addEventListener('DOMContentLoaded', async function () {
+        // Fetch data from API and populate Select2 dropdowns
+        //await fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'account_group','customer');
+        //await fetchAndPopulateDropdown('http://52.66.126.53/list/Bank Account', 'route_detail','Account');
+        await fetchAndPopulateDropdown('http://52.66.126.53/list/Bank Account', 'input1','Account');
+        //await fetchAndPopulateDropdown('http://52.66.126.53/mobile', 'mob','mobile_no');
+    
+
+        async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
+            try {
+                const response = await fetch(apiUrl);
+                
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                
+                const data = await response.json();
+                populateDropdownWithSelect2(data, dropdownId, field);
+                
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+    function populateDropdownWithSelect2(data, dropdownId, name) {
+        var dropdown = $('#' + dropdownId);
+        // Clear existing options
+        dropdown.empty();
+
+        // Add placeholder option
+        dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+
+        // Populate dropdown with API data
+        data.forEach(function (item) {
+            dropdown.append($('<option></option>').attr('value', item.name || item.route_name || item.mobile_no).text(item.name || item.route_name || item.mobile_no));
+        });
+
+        // Initialize Select2
+        dropdown.select2({
+            placeholder: "Select " + name + " type",
+            allowClear: true
+        });
+    }
+
+    $(document).on('select2:open', function(e) {
+        window.setTimeout(function () {
+            document.querySelector('input.select2-search__field').focus();
+        }, 0);
+    });
+
+
+    var receiptData = localStorage.getItem('receiptData');
+
+    if (receiptData) {
+      // Parse the user data
+      var receipt = JSON.parse(receiptData);
+      console.log("lapajcowjfocjwoj")
+      console.log(receipt)
+
+
+      //var $routeDropdown = $('#account_group');
+      // Set the value of the Select2 dropdown if it's different
+      //if ($routeDropdown.val() !== receipt.Customer) {
+      //  console.log("dev AJ")
+      //  $routeDropdown.val(receipt.Customer).trigger('change');
+      //}
+      
+
+      fetch('http://52.66.126.53/fetchpv/' + receipt.Customer)
+      .then(response => {
+        if (!response.ok) {
+          loader.style.display = 'none';
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Populate dropdown with API data
+        console.log(data)
+        document.getElementById('custid').value = parseInt(data[0]['id']);
+        //document.getElementById('previousBalance').value = parseInt(data[0]['current_balance'] || 0);
+        totalbill();
+
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
+
+
+      // Populate form fields with user data
+      document.getElementById("pavti").value = receipt.receipt_id;
+      var currentDate = new Date(receipt.date);
+      // Convert to IST
+      var utcDate = new Date(currentDate.getTime() + (currentDate.getTimezoneOffset() * 60000));
+      var istOffset = 5.5 * 60 * 60000; // 5 hours and 30 minutes in milliseconds
+      var istDate = new Date(utcDate.getTime() + istOffset);
+      var formattedDate = istDate.getFullYear() + '-' + (String(istDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(istDate.getDate()).padStart(2, '0'));
+      document.getElementById('date').value = formattedDate;
+
+      
+
+      document.getElementById("message").value = receipt.note;
+      document.getElementById("input3").value = receipt.previous_balance;
+      document.getElementById("mob").value = receipt.mobile_no;
+      // document.getElementById("sandarbh").value = sale.comment;
+      document.getElementById("carate100").value = receipt.carate_100 || 0;
+      document.getElementById("carate150").value = receipt.carate_150 || 0;
+      document.getElementById("carate250").value = receipt.carate_250 || 0;
+      document.getElementById("carate350").value = receipt.carate_350 || 0;
+      //carate();
+      // document.getElementById("carate1100").value = sale.out_carate_100 || 0;
+      // document.getElementById("carate1150").value = sale.out_carate_150 || 0;
+      // document.getElementById("carate1250").value = sale.out_carate_250 || 0;
+      // document.getElementById("carate1350").value = sale.out_carate_350 || 0;
+      // carate1();
+      // document.getElementById("previousBalance").value = sale.pre_balance || 0;
+      document.getElementById("input6").value = receipt.deposite || 0;
+
+      var $routeDropdown = $('#input1');
+      // Set the value of the Select2 dropdown if it's different
+      if ($routeDropdown.val() !== receipt.online_deposite_bank) {
+        $routeDropdown.val(receipt.online_deposite_bank).trigger('change');
+      }
+
+      document.getElementById("input8").value = receipt.discount || 0;
+      document.getElementById("input7").value = receipt.online || 0;
+      document.getElementById("account_group").value = receipt.Customer;
+      // document.getElementById("totalBill").value = sale.total_amount;
+      // document.getElementById("note").value = sale.note;
+
+      
+
+    fetch('http://52.66.126.53/carateuserData/' + receipt.Customer)
+    .then(response => {
+        if (!response.ok) {
+          loader.style.display = 'none';
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Populate dropdown with API data
+        console.log(data)
+        document.getElementById('carate2100').value = parseInt(data[0]['carate_100']);
+        document.getElementById('carate2150').value = parseInt(data[0]['carate_150']);
+        document.getElementById('carate2250').value = parseInt(data[0]['carate_250']);
+        document.getElementById('carate2350').value = parseInt(data[0]['carate_350']);
+        document.getElementById('carate3100').value = parseInt(data[0]['carate_100']);
+        document.getElementById('carate3150').value = parseInt(data[0]['carate_150']);
+        document.getElementById('carate3250').value = parseInt(data[0]['carate_250']);
+        document.getElementById('carate3350').value = parseInt(data[0]['carate_350']);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+
+    }
+
+
+});
+
+    
+
+
+    // if (document.getElementById("carate100").value > document.getElementById('carate2100').value){
+    //    alert("Carate limit exceed");
+    //    document.getElementById("carate100").value = 0;
+    //}
+
+    // if (document.getElementById("carate150").value > document.getElementById('carate2150').value){
+    //    alert("Carate limit exceed");
+    //    document.getElementById("carate150").value = 0;
+    //}
+
+    //if (document.getElementById("carate250").value > document.getElementById('carate2250').value){
+    //    alert("Carate limit exceed");
+    //    document.getElementById("carate250").value = 0;
+    //}
+
+
+    //if (document.getElementById("carate350").value > document.getElementById('carate2350').value){
+    //    alert("Carate limit exceed");
+    //    document.getElementById("carate350").value = 0;
+    //}
+    
+
+</script>
+</html>

@@ -1,297 +1,89 @@
-function getElementValueWithDefault(id, defaultValue) {
-    var element = document.getElementById(id);
-    return element && element.value ? element.value : defaultValue;
-}
+// // Fetch data from API
+// document.addEventListener('DOMContentLoaded', function () {
+//     // Get the current date
+//     var currentDate = new Date();
+//     // Format the date as mm/dd/yyyy
+//     var formattedDate = currentDate.getFullYear() + '-' + (String(currentDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(currentDate.getDate()).padStart(2, '0'));
+//     // Set the placeholder of the input field to the formatted date
+//     document.getElementById('date').value = formattedDate;
 
-function formatDate(dateString) {
-    var date = new Date(dateString);
-    var year = date.getFullYear();
-    var month = ('0' + (date.getMonth() + 1)).slice(-2);
-    var day = ('0' + date.getDate()).slice(-2);
-    return year + '-' + month + '-' + day;
-}
+//     var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+//     var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+//     // Check if the user is an admin and show/hide the button accordingly
+//     if (!isAdmin) {
+//         document.getElementById('date').readOnly = true; // Hide the button for non-admin users
+//     }
 
+//     fetch('http://52.66.126.53/fetchReceiptid')
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//         }
+//         return response.json();
+//     })
+//     .then(data => {
+//         // Populate dropdown with API data
+//         document.getElementById('pavti').value = parseInt(data[0]['num']) + 1;
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//     });
+// });
 
-document.getElementById('loginForm1').addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevent form submission
-    fetchDataAndProcess();
-});
-
-
-function fetchDataAndProcess() {
-    var data = {
-        from_date: formatDate(document.getElementById("fromdate").value),
-        to_date: formatDate(document.getElementById("todate").value),
-        customer_name: getElementValueWithDefault('customer', '*')
+document.getElementById('loginForm1').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Prevent default form submission
+    var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    var isAdmin = sessionData[0].name;
+    console.log('admin name',isAdmin);
+// function form2(){
+    var formData = {
+        receiptId: parseInt(document.getElementById('pavti').value),
+        date: document.getElementById('date').value,
+        from_account: document.getElementById('account_group').value,
+        to_account: document.getElementById('mob').value,
+        note: document.getElementById('message').value,
+        previous_balance: parseInt(document.getElementById('input3').value) || 0,
+        deposite: parseInt(document.getElementById('input6').value) || 0,
+        online_deposite_bank: document.getElementById('input1').value,
+        online_deposite: parseInt(document.getElementById('input7').value) || 0,
+        discount: parseInt(document.getElementById('input8').value) || 0,
+        carate_100: parseInt(document.getElementById('carate100').value) || 0,
+        carate_150: parseInt(document.getElementById('carate150').value) || 0,
+        carate_250: parseInt(document.getElementById('carate250').value) || 0,
+        carate_350: parseInt(document.getElementById('carate350').value) || 0,
+        deposite_carate_price: parseInt(document.getElementById('input4').value) || 0,
+        remaining: parseInt(document.getElementById('input5').value) || 0,
+        added_by: isAdmin,     
     };
-    console.log(data);
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
-
-    return fetch('http://52.66.126.53/receiptReport', {
-        method: 'POST',
-        body: JSON.stringify(data),
+    await fetch('http://52.66.126.53/receiptData/updateReceipt/' + formData.receiptId , {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify(formData)
     })
-        .then(response => {
-            if (response.status === 404) {
-                loader.style.display = 'none';
-                alert("No data found.");
-                throw new Error('Data not found');
-            }
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(result => {
-            loader.style.display = 'none';
-            console.log(result)
-            populateTable4(result)
-            return result;
-            // Optionally, you can redirect or show a success message here
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            // Optionally, you can display an error message here
-        });
-}
-
-
-
-function populateTable4(data) {
-    var tbody = document.getElementById('tableBody');
-    tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'PaidAmt', 'online_deposite_bank', "onlineAmt", 'discount', 'inCarat', 'Balance'];
-    var counter = 1;
-    var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
-    console.log(data.reports)
-    if (data.reports.length === 0) {
-        alert("No Data Found");
-    }
-    data.reports.forEach(function (item) {
-        var row = tbody.insertRow();
-        var cell = row.insertCell();
-        cell.textContent = counter++;
-        columnsToDisplay.forEach(function (key) {
-            var cell = row.insertCell();
-            if (key == 'date') {
-                console.log(item[key])
-                var utcDate = new Date(item[key]);
-                var options = {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    timeZone: 'Asia/Kolkata'
-                };
-                cell.textContent = utcDate.toLocaleString('en-IN', options);
-
-            } else {
-                cell.textContent = item[key];
-            }
-        });
-        // Add button to open popup
-        var buttonCell = row.insertCell();
-        var openPopupButton = document.createElement('button');
-        openPopupButton.className = 'button';
-        openPopupButton.textContent = 'View';
-        openPopupButton.addEventListener('click', function () {
-            openModal(item); // Pass the data item to the openPopup function
-        });
-        buttonCell.appendChild(openPopupButton);
-
-
-
-        //      // Add Edit button if user is admin
-        // if (isAdmin) {
-        //     var editCell = row.insertCell();
-        //     var editButton = document.createElement('button');
-        //     editButton.className = 'button edit-button';
-        //     var editLink = document.createElement('a');
-        //     editLink.href = '../account/updateAccount.html'; // Edit link destination
-        //     editLink.textContent = 'Edit';
-        //     editButton.appendChild(editLink);
-        //     editButton.addEventListener('click', function() {
-        //       editAccount(item); // Pass the user data to the edit function
-        //     });
-        //     editCell.appendChild(editButton);
-        // }
-
-        // Add Delete button if user is admin
-        if (isAdmin) {
-            var deleteCell = row.insertCell();
-            var deleteButton = document.createElement('button');
-            deleteButton.className = 'button delete-button';
-            deleteButton.textContent = 'Delete';
-            deleteButton.addEventListener('click', function () {
-                deleteaccount(item.receipt_id); // Pass the user id to the delete function
-            });
-            deleteCell.appendChild(deleteButton);
+    .then(response => {
+        console.log("DTAASS")
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-
-
-
-
-
+        return response.json();
+    })
+    .then(result => {
+        loader.style.display = 'none';
+        console.log('Entry added successfully:', result);
+        //alert("Receipt Data is added Successfully");
+        openModal({"receipt_id": formData.receiptId})
+        //window.location.reload();
+    })
+    .catch(error => {
+        console.error('Error:', error);
     });
 
-}
+});
 
-
-// function editAccount(user) {
-//     localStorage.removeItem('userData');
-//     console.log('Editing user: ' + JSON.stringify(user));
-//     localStorage.setItem('userData', JSON.stringify(user));
-//      // Redirect to user_update.html
-//      window.location.href = '../account/updateAccount.html';
-//   }
-
-
-function deleteaccount(userId) {
-    // Perform delete operation based on userId
-    fetch('http://52.66.126.53/receiptReport/deleteReceiptReport/' + userId, {
-        method: 'DELETE'
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            alert("Record is successfully Deleted");
-            console.log('REcord deleted successfully');
-            // Refresh the table or update UI as needed
-            fetchDataAndProcess(); // Assuming you want to refresh the table after delete
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// async function exportToExcel() {
-//     try {
-//         const data = await fetchDataAndProcess();
-
-//         // Export to PDF using jsPDF and autoTable
-//         const { jsPDF } = window.jspdf;
-//         const doc = new jsPDF();
-
-//         const customHeaders = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'PaidAmt','online_deposite_bank', 'onlineAmt', 'discount', 'inCarat', 'Balance'];
-        
-//         // Adding header details
-//         doc.setFontSize(10);
-//         doc.text('Mobile:- 9960607512', 10, 10);
-//         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
-//         doc.setFontSize(16);
-//         doc.text('Savata Fruits Suppliers', 50, 10);
-//         doc.setFontSize(12);
-//         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 20);
-//         doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 30);
-        
-//         let startY = 50;
-        
-
-//         // Map data for autoTable
-//         const reportData = data.reports.map(report => [
-//             report.receipt_id,
-//             new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
-//             report.Customer,
-//             report.mobile_no,
-//             report.note,
-//             report.PaidAmt,
-//             report.online_deposite_bank,
-//             report.onlineAmt,
-//             report.discount,
-//             report.inCarat,
-//             report.Amt,
-//             report.Balance // Ensure this field matches the actual field name in your data
-//         ]);
-
-//         // Add Reports table to PDF
-//         doc.autoTable({
-//             head: [customHeaders],
-//             body: reportData,
-//             startY: 50,
-//             theme: 'grid'
-//         });
-
-//         // Save the PDF
-//         doc.save('Receipt_Report.pdf');
-
-//     } catch (error) {
-//         console.error('Error exporting data:', error);
-//     }
-// }
-
-async function exportToExcel() {
-    try {
-        const data = await fetchDataAndProcess();
-
-        // Export to PDF using jsPDF and autoTable
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-
-        const customHeaders = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'PaidAmt', 'online_deposite_bank', 'onlineAmt', 'discount', 'inCarat', 'Balance'];
-        
-        // Adding header details
-        doc.setFontSize(10);
-        doc.text('Mobile:- 9960607512', 10, 10);
-        doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
-        doc.setFontSize(16);
-        doc.text('Savata Fruits Suppliers', 50, 20);
-        doc.setFontSize(12);
-        doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
-        doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
-        
-        let startY = 50;
-        
-
-        // Map data for autoTable
-        const reportData = data.reports.map(report => [
-            report.receipt_id,
-            new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
-            report.Customer,
-            report.mobile_no,
-            report.note,
-            report.PaidAmt,
-            report.online_deposite_bank,
-            report.onlineAmt,
-            report.discount,
-            report.inCarat,
-            report.Balance // Ensure this field matches the actual field name in your data
-        ]);
-
-        // Add Reports table to PDF
-        doc.autoTable({
-            head: [customHeaders],
-            body: reportData,
-            startY: 50,
-            theme: 'grid'
-        });
-
-        // Save the PDF
-        doc.save('Receipt_Report.pdf');
-
-    } catch (error) {
-        console.error('Error exporting data:', error);
-    }
-}
 
 
 function openModal(item) {
@@ -380,6 +172,7 @@ function openModal(item) {
                 { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.reports[0].Balance },  
                 // Add other bill details similarly
             ];
+            
 
             footerDetails.forEach(function (detail) {
                 var row = document.createElement("tr");
@@ -409,7 +202,7 @@ function openModal(item) {
     closeButton.onclick = function () {
         modalContent.innerHTML = '';
         modal.style.display = 'none'; // Close the modal when close button is clicked
-        window.location.reload();
+        window.location.href = './dailyReport.html';
     };
     modalContent.appendChild(closeButton);
    
@@ -431,6 +224,13 @@ function openModal(item) {
         align-items: center;
         justify-content: center;
     }
+
+    h6{
+            top: -17px;
+           position: absolute;
+           font-size: 12px;
+        }
+
 
     .header .logo {
         width: auto; /* Adjust as needed */
@@ -553,6 +353,7 @@ function openModal(item) {
 </head>
 <body>
 <div class="header">
+<div> <h6> Mobile:- 9960607512  </h6> </div>
     <div class="logo">
         <img src="../../assets/img/logo.png" alt="Company Logo">
     </div>
@@ -616,12 +417,3 @@ function openModal(item) {
         });
     });
 }
-
-
-function closePopup() {
-    document.querySelector('.popup').style.display = 'none';
-}
-
-
-
-

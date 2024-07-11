@@ -4,6 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <title>User Form in Electron</title>
     <style>
         /* Add border to the second form
@@ -65,7 +73,7 @@
   }
 
   
-  #product{
+  #vehicle{
     /* border-radius: 8px; */
     height: 35px;
     width: 600px;
@@ -139,12 +147,35 @@
             background-color: #f2f2f2;
         }
 
+                /* Style the loader container */
+#loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Apply animation */
+    display: none; /* Hide loader by default */
+    
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+    /* Animation */
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    
 
         
     </style>
 </head>
 
 <body>
+    <div id="loader"></div>
     <div class="container">
         <h3 align="center">Profit Loss Report</h3>
         
@@ -155,20 +186,20 @@
 
                 <div class="first-row">
                     <label for="userType">From Date :</label>
-                    <input type="date" id="fromdate" name="date" placeholder="From Date">
+                    <input type="date" id="fromdate" name="date" placeholder="From Date" required>
                     <br>
                     <label for="userType">To Date :</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date">
+                    <input type="date" id="todate" name="date" placeholder="To Date" required>
                 </div>
 
                 <br>
 
                 <label for="userType"> Vehicle No :</label>
-                <select class="drop" id="product" id="product" name="name">
+                <select class="drop" id="vehicle" id="vehicle" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select>
 
-                <br>
+                <br><br>
 
                 <label for="userType">Bata :</label>
                 <select class="drop" id="bata" id="bata" name="name">
@@ -185,18 +216,15 @@
             <table>
                 <tr>
                     <th>Id</th>
-                    <th>Date</th>
-                    <th>From A/C</th>
-                    <th>To A/C </th>
-                    <th>Coment</th>
-                    <th>Paid Amt</th>
-                    <th>Online Amt</th>
-                    <th>Disc Amt</th> 
-                    <th>In Caret</th>   
-                    <th>Amt</th>    
-                    <th>Action</th>
-                    <th>Action</th>
-              
+                    <th>Bill No</th>
+                    <th>Vehicle No</th>
+                    <th>Bata</th>
+                    <th>Product</th>
+                    <th>Sold Quantity</th>
+                    <th>Purchase Price</th>
+                    <th>Selling Price</th>
+                    <th>Amount</th>
+                    <th>Profit Loss</th> 
                 </tr>
                
 
@@ -215,8 +243,57 @@
  
 
 </body>
-<script src="./BatawiseSaleReport.js"></script>
+<script src="./profitLossReport.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Fetch data from API and populate Select2 dropdowns
+        fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle','vehicle_no');
+        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'bata', 'bata');
+    });
 
+    function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Populate Select2 dropdown with API data
+                populateDropdownWithSelect2(data, dropdownId, field);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function populateDropdownWithSelect2(data, dropdownId, field) {
+        var dropdown = $('#' + dropdownId);
+        // Clear existing options
+        dropdown.empty();
+
+        // Add placeholder option
+        dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+
+        // Populate dropdown with API data
+        data.forEach(function (item) {
+            dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
+        });
+
+        // Initialize Select2
+        dropdown.select2({
+            placeholder: "Select " + dropdownId + " type",
+            allowClear: true
+        });
+    }
+
+    $(document).on('select2:open', function(e) {
+        window.setTimeout(function () {
+            document.querySelector('input.select2-search__field').focus();
+        }, 0);
+    });
+</script>
 
 
 </html>
