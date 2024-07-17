@@ -10,107 +10,106 @@
     <title>Payment</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 20px;
-        }
+                font-family: Arial, sans-serif;
+                background-color: #f2f2f2;
+                margin: 0;
+                padding: 20px;
+            }
 
-        .container1 {
-            max-width: 600px;
-            width: 100%;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+            .container1 {
+                max-width: 600px;
+                width: 100%;
+                margin: 0 auto;
+                padding: 20px;
+                border-radius: 10px;
+                text-align: center;
+            }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
+            h1 {
+                text-align: center;
+                margin-bottom: 20px;
+                color: #333;
+            }
 
-        hr {
-            border: 0;
-            height: 1px;
-            background-color: #ddd;
-            margin-bottom: 20px;
-        }
+            hr {
+                border: 0;
+                height: 1px;
+                background-color: #ddd;
+                margin-bottom: 20px;
+            }
 
-        form {
-            text-align: left;
-        }
+            form {
+                text-align: left;
+                display: flex;
+                flex-direction: column;
+                gap: -10px; /* Equal spacing between elements */
+            }
 
-        label {
-            display: block;
-            margin-top: 3%;
-            text-align: left;
-        }
+            label {
+                display: block;
+                text-align: left;
+            }
 
-        input[type="text"],
-        input[type="number"],
-        input[type="date"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            margin: 0 auto;
-            display: block;
-        }
+            input[type="text"],
+            input[type="number"],
+            input[type="date"],
+            select,
+            textarea {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
 
-        .second-row {
-            text-align: center;
-        }
+            .second-row{
+                display: flex;
+                flex-direction: column;
+                gap: -10px; /* Equal spacing between elements */
+                text-align: center;
+            }
 
-        .third-row {
-            text-align: center;
-        }
+            .third-row {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-top: 20px; /* Adjust the spacing as needed */
+                }
 
-        .border-hover {
-            padding: 10px 20px;
-            text-decoration: none;
-            color: white;
-            background-color: #808080;
-            /* Grey color */
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-right: 10px;
-        }
+            .border-hover {
+                padding: 10px 20px;
+                text-decoration: none;
+                color: white;
+                background-color: #808080;
+                border: none;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+            }
 
-        .border-hover:hover {
-            background-color: #555;
-            /* Darker grey on hover */
-        }
+            .border-hover:hover {
+                background-color: #555;
+            }
 
-        /* Style the loader container */
-        #loader {
-            border: 4px solid #f3f3f3;
-            /* Light grey */
-            border-top: 4px solid #3498db;
-            /* Blue */
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            /* Apply animation */
-            display: none;
-            /* Hide loader by default */
+            /* Style the loader container */
+            #loader {
+                border: 4px solid #f3f3f3;
+                /* Light grey */
+                border-top: 4px solid #3498db;
+                /* Blue */
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                animation: spin 1s linear infinite;
+                /* Apply animation */
+                display: none;
+                /* Hide loader by default */
 
-            /* Center the loader */
-            position: absolute;
-            top: 60%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+                /* Center the loader */
+                position: absolute;
+                top: 60%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
 
         /* Animation */
         @keyframes spin {
@@ -122,6 +121,7 @@
                 transform: rotate(360deg);
             }
         }
+
     </style>
 </head>
 
