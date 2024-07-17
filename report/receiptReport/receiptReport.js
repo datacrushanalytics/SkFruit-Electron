@@ -96,6 +96,7 @@ function populateTable4(data) {
         var buttonCell = row.insertCell();
         var openPopupButton = document.createElement('button');
         openPopupButton.className = 'button';
+        openPopupButton.style.backgroundColor = 'green';
         openPopupButton.textContent = 'View';
         openPopupButton.addEventListener('click', function () {
             openModal(item); // Pass the data item to the openPopup function
@@ -124,6 +125,7 @@ function populateTable4(data) {
             var deleteCell = row.insertCell();
             var deleteButton = document.createElement('button');
             deleteButton.className = 'button delete-button';
+            deleteButton.style.backgroundColor = 'red';
             deleteButton.textContent = 'Delete';
             deleteButton.addEventListener('click', function () {
                 deleteaccount(item.receipt_id); // Pass the user id to the delete function

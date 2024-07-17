@@ -99,6 +99,7 @@ function populateTable4(data) {
          var buttonCell = row.insertCell();
          var openPopupButton = document.createElement('button');
          openPopupButton.className = 'button';
+         openPopupButton.style.backgroundColor = 'green';
          openPopupButton.textContent = 'Products';
          openPopupButton.addEventListener('click', function () {
             openPopup(item); // Pass the data item to the openPopup function
@@ -109,6 +110,7 @@ function populateTable4(data) {
         var buttonCell = row.insertCell();
         var openPopupButton = document.createElement('button');
         openPopupButton.className = 'button';
+        openPopupButton.style.backgroundColor = 'red';
         openPopupButton.textContent = 'Bill';
         openPopupButton.addEventListener('click', function () {
             openModal(item); // Pass the data item to the openPopup function

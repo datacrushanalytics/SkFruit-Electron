@@ -46,6 +46,7 @@ function populateTable(data) {
             var editCell = row.insertCell();
             var editButton = document.createElement('button');
             editButton.className = 'button1 edit-button';
+            editButton.style.backgroundColor = 'green';
             var editLink = document.createElement('a');
             editLink.href = '../route/update_route.html'; // Edit link destination
             editLink.textContent = 'Edit';
