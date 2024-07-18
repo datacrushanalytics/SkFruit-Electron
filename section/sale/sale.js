@@ -154,7 +154,9 @@ function getProducts() {
 
 
 function updateTotal() {
-    if (document.getElementById("nag").value > document.getElementById('nag1').value){
+    if (parseInt(document.getElementById("nag").value) > parseInt(document.getElementById('nag1').value)){
+        console.log("AJAJAJ",document.getElementById('nag1').value)
+        console.log("JJJJJJ",document.getElementById('nag').value)
         alert("Inventory Is not available");
         document.getElementById("nag").value = 0;
     }
