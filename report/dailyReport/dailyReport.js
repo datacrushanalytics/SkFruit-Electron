@@ -97,6 +97,7 @@ function populateTable4(data) {
                     let button = document.createElement('button');
                     button.textContent = "Edit";
                     button.className = 'button';
+                    button.style.backgroundColor = 'green';
                     button.onclick = function() {
                         localStorage.removeItem('saleData');
                         console.log('Editing Sale: ' + JSON.stringify(item));
@@ -168,7 +169,8 @@ function populateTable4(data) {
         var buttonCell = row.insertCell();
         var openPopupButton = document.createElement('button');
         openPopupButton.className = 'button';
-        openPopupButton.textContent = 'Bill';
+        openPopupButton.style.backgroundColor = 'green';
+        openPopupButton.textContent = 'View';
         openPopupButton.addEventListener('click', function () {
             // console.log(item.summary.split('(')[0])
             openModal(item.bill_no); // Pass the data item to the openPopup function for Sale
@@ -184,6 +186,7 @@ function populateTable4(data) {
 
         var openPopupButton = document.createElement('button');
         openPopupButton.className = 'button';
+        openPopupButton.style.backgroundColor = '#C48B58';
         var billIcon = document.createElement('i');
         billIcon.className = 'fa-sharp fa-regular fa-envelope'; 
         openPopupButton.appendChild(billIcon);
@@ -230,6 +233,7 @@ function populateTable4(data) {
         // Second button
         var secondButton = document.createElement('button');
         secondButton.className = 'button';
+        secondButton.style.backgroundColor = 'green';
         var secondIcon = document.createElement('i');
         secondIcon.className = 'fa-brands fa-whatsapp';
         secondButton.appendChild(secondIcon);
@@ -340,6 +344,7 @@ function populateTable5(data) {
 
                     let button1 = document.createElement('button');
                     button1.textContent = "Edit";
+                    button1.style.backgroundColor = 'green';
                     button1.className = 'button';
                     button1.onclick = function() {
                         localStorage.removeItem('receiptData');
@@ -411,6 +416,7 @@ function populateTable5(data) {
         var buttonCell = row.insertCell();
         var openPopupButton = document.createElement('button');
         openPopupButton.className = 'button';
+        openPopupButton.style.backgroundColor = 'green';
         openPopupButton.textContent = 'View';
         openPopupButton.addEventListener('click', function () {
             // console.log(item.summary.split('(')[0])
@@ -428,6 +434,7 @@ function populateTable5(data) {
 
         var openPopupButton = document.createElement('button');
         openPopupButton.className = 'button';
+        openPopupButton.style.backgroundColor = '#C48B58';
         var billIcon = document.createElement('i');
         billIcon.className = 'fa-sharp fa-regular fa-envelope'; 
         openPopupButton.appendChild(billIcon);
@@ -474,6 +481,7 @@ function populateTable5(data) {
         // Second button
         var secondButton = document.createElement('button');
         secondButton.className = 'button';
+        secondButton.style.backgroundColor = 'green';
         var secondIcon = document.createElement('i');
         secondIcon.className = 'fa-brands fa-whatsapp';
         secondButton.appendChild(secondIcon);

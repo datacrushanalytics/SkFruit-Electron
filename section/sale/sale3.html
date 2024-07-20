@@ -20,7 +20,7 @@
 
     body {
       font-family: Arial, sans-serif;
-      background-color: rgba(242, 242, 242, 0.8);
+      background-color: #fff7c6;
       margin: 0;
       padding: 0;
       overflow-x: hidden;
@@ -383,14 +383,14 @@
         </div>
 
         <div class="button-wrapper">
-          <button id="account-page-button" onclick="goToAccountPage()">Add Customer</button>
+          <button id="account-page-button" style="background-color: red;" onclick="goToAccountPage()">Add Customer</button>
         </div>
         
         <!-- <div class="button-wrapper">
       <button id="account-page-button" name="ledger" >Leder Report</button>
     </div> -->
         <button onclick="openPopup()">Ledger</button>
-        <div class="popup" id="popup">
+        <div class="popup" style="background-color: red;" id="popup">
           <div class="popup-content">
             <span class="close" onclick="closePopup()">&times;</span>
             <iframe id="popupIframe" frameborder="0" scrolling="auto"></iframe>
@@ -446,7 +446,7 @@
         </div>
 
         <div class="button-wrapper">
-          <button type="button" onclick="myFunction()" class="button">ADD</button>
+          <button type="button" style="background-color: red;" onclick="myFunction()" class="button">ADD</button>
         </div>
       </div>
 
@@ -593,7 +593,7 @@
         </div>
       </div>
 
-      <button type="submit" class="save">Save</button>
+      <button type="submit" style="background-color: green;" class="save">Save</button>
   </div>
   </form>
 

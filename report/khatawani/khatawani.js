@@ -130,6 +130,7 @@ function populateTable4(data) {
         var buttonCell = row.insertCell();
         var openPopupButton = document.createElement('button');
         openPopupButton.className = 'button';
+        openPopupButton.style.backgroundColor = 'green';
         openPopupButton.textContent = 'View';
         openPopupButton.addEventListener('click', function () {
             console.log(item.summary.split('(')[0])

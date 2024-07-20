@@ -106,6 +106,7 @@ function populateTable(data) {
             var editCell = row.insertCell();
             var editButton = document.createElement('button');
             editButton.className = 'button edit-button';
+            editButton.style.backgroundColor = 'green';
             var editLink = document.createElement('a');
             editLink.href = '../remainder/update_remainder.html'; // Edit link destination
             editLink.textContent = 'Edit';
@@ -126,6 +127,7 @@ function populateTable(data) {
         openPopupButton.className = 'button';
         var billIcon = document.createElement('i');
         billIcon.className = 'fa-sharp fa-regular fa-envelope'; 
+        openPopupButton.style.backgroundColor = '#C48B58';  
         openPopupButton.appendChild(billIcon);
         //openPopupButton.textContent = 'Bill';
         openPopupButton.addEventListener('click', async function () {
@@ -170,6 +172,7 @@ function populateTable(data) {
         // Second button
         var secondButton = document.createElement('button');
         secondButton.className = 'button';
+        secondButton.style.backgroundColor = 'green'; 
         var secondIcon = document.createElement('i');
         secondIcon.className = 'fa-brands fa-whatsapp';
         secondButton.appendChild(secondIcon);
