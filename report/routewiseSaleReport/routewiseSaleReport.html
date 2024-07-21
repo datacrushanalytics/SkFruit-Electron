@@ -123,14 +123,16 @@
             border-radius: 5px;
         }
         
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 12px;
-        }
+        th,
+    td {
+        border: 1px solid #dddddd;
+        background-color: #eafffb;
+        text-align: left;
+        padding: 12px;
+    }
         
         th {
-            background-color: #f2f2f2;
+            background-color: #c7d5d3;
         }
 
         /* Styles for the modal */
@@ -213,9 +215,9 @@
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
     z-index: 9999;
     width: 80%;
-    /* Adjust the width as desired */
+    /* Adjust the width as desidarkgrey */
     height: 80%;
-    /* Adjust the height as desired */
+    /* Adjust the height as desidarkgrey */
     max-width: 90vw;
     /* Set maximum width relative to viewport width */
     max-height: 90vh;
@@ -226,16 +228,16 @@
 
   .popup-content {
     width: 100%;
-    /* Adjust the width as desired */
+    /* Adjust the width as desidarkgrey */
     height: 100%;
-    /* Adjust the height as desired */
+    /* Adjust the height as desidarkgrey */
   }
 
   .popup-content iframe {
     width: 100%;
-    /* Adjust the width as desired */
+    /* Adjust the width as desidarkgrey */
     height: 100%;
-    /* Adjust the height as desired */
+    /* Adjust the height as desidarkgrey */
   }
 
 
@@ -267,17 +269,17 @@
 
 
     <div class="container">
-        <h1 align="center">Routewise Sale Report</h1><br>
-        <hr>
+        <h1 align="center">Sale Report</h1><br>
+        <hr style="top: -25px; position: relative;">
         <br>
         <div class="container1">
             <form id="loginForm1">
                 <div class="first-row">
                     <label for="userType">From Date :</label>
-                    <input type="date" id="fromdate" name="date" placeholder="From Date" required>
+                    <input type="date" id="fromdate" name="date" placeholder="From Date" requidarkgrey>
                     <br>
                     <label for="userType">To Date :</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date" required>
+                    <input type="date" id="todate" name="date" placeholder="To Date" requidarkgrey>
                 </div>
                 <br>
                 <label for="userType">Customer Name :</label>
@@ -305,8 +307,8 @@
 
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" style="background-color: green;" class="button">Submit</button>
-                    <button type='button' style="background-color: red;" class="button" onclick="exportToExcel()" id="button2">Export</button>
+                    <button type="submit" style="background-color: darkgrey;" class="button">Submit</button>
+                    <button type='button' style="background-color: darkgrey;" class="button" onclick="exportToExcel()" id="button2">Export</button>
                 <!-- </div> -->
             </form>
             <br>

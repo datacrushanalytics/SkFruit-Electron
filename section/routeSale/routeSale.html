@@ -123,14 +123,21 @@
             border-radius: 5px;
         }
         
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 12px;
-        }
+        th,
+    td {
+        border: 1px solid #dddddd;
+        background-color: #eafffb;
+        text-align: left;
+        padding: 12px;
+    }
         
         th {
-            background-color: #f2f2f2;
+            background-color: #c7d5d3;
+        }
+
+        hr {
+            position: relative;
+            top: -25px;
         }
 
         /* Styles for the modal */
@@ -211,10 +218,10 @@
             <form id="loginForm1">
                 <div class="first-row">
                     <label for="userType"> Date :</label>
-                    <input type="date" id="fromdate" name="date" placeholder="From Date" required>
+                    <input type="date" id="fromdate" name="date" placeholder="From Date" requidarkgrey>
                     <!-- <br>
                     <label for="userType">To Date :</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date" required> -->
+                    <input type="date" id="todate" name="date" placeholder="To Date" requidarkgrey> -->
                 </div>
                 <br>
                 <!-- <label for="userType">Customer Name :</label> -->
@@ -223,12 +230,12 @@
                 <!-- </select><br> -->
                 <!-- <br> -->
                 <label id='lable1111' for="userType">Route :</label>
-                <select class="drop1" id="route" name="name" required>
+                <select class="drop1" id="route" name="name" requidarkgrey>
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br><br>
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" style="background-color: green;" class="button">Submit</button>
+                    <button type="submit" style="background-color: darkgrey;" class="button">Submit</button>
                     <!-- <button type='button' class="button" onclick="exportToExcel()" id="button2">Export</button> -->
                 <!-- </div> -->
             </form>

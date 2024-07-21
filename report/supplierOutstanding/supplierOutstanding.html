@@ -85,14 +85,16 @@
             border-radius: 5px;
         }
         
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 12px;
-        }
+        th,
+    td {
+        border: 1px solid #dddddd;
+        background-color: #eafffb;
+        text-align: left;
+        padding: 12px;
+    }
         
         th {
-            background-color: #f2f2f2;
+            background-color: #c7d5d3;
         }
 
 /* Style the loader container */
@@ -126,7 +128,7 @@
     <div id="loader"></div>
     <div class="container">
         <h1 align="center">Supplier Outstanding</h1><br>
-        <hr>
+        <hr style="position: relative; top: -25px;">
 
         <div class="container1">
             <form id="loginForm1">
@@ -143,8 +145,8 @@
 
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" style="background-color: green;" class="button">Submit</button>
-                    <button type='button' style="background-color: red;" class="button" onclick="exportToExcel()" id="button2">Export</button>
+                    <button type="submit" style="background-color: darkgrey;" class="button">Submit</button>
+                    <button type='button' style="background-color: darkgrey;" class="button" onclick="exportToExcel()" id="button2">Export</button>
                 <!-- </div> -->
             </form>
             <br>

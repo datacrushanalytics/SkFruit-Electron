@@ -55,6 +55,7 @@ body {
 .btn:hover {
     background-color:#fff7c6;
     color: rgb(168, 168, 168);
+    border-color: #690202; 
 }
 
 h1, h2, h3 {
@@ -463,7 +464,7 @@ a{
                                     localStorage.removeItem('workerData');
                                     localStorage.setItem('workerData', JSON.stringify(item));
                                     localStorage.setItem('workerDataDate', JSON.stringify(document.getElementById('currentDate').value));
-                                    window.location.href = './dailySale.html'; // Replace 'anotherPage.html' with your desired page URL
+                                    window.location.href = './dailySale.html'; // Replace 'anotherPage.html' with your desidarkgrey page URL
                                 });
                                 
                                 container.appendChild(div);
@@ -514,7 +515,7 @@ a{
                     console.log(result)
                     populateTable4(result)
                     return result;
-                    // Optionally, you can redirect or show a success message here
+                    // Optionally, you can darkgreyirect or show a success message here
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -545,7 +546,7 @@ a{
                         
                     });
                     if (item.BillCount > 0) {
-                        row.style.backgroundColor = "#90EE90"; // Light green
+                        row.style.backgroundColor = "#90EE90"; // Light darkgrey
                     }
             
                     // Add a click event listener to the row

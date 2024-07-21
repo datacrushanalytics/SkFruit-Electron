@@ -100,10 +100,10 @@
             <form id="loginForm" method="POST">
                 <div class="first-row">
                     <lable for="name">VEHICLE NAME :</lable>
-                    <input type="text" id="name" name="name" placeholder="VEHICLE NAME" required>
+                    <input type="text" id="name" name="name" placeholder="VEHICLE NAME" requidarkgrey>
 
                     <lable for="number">VEHICLE NO :</lable>
-                    <input type="number" id="number" name="number" placeholder="VEHICLE NO" required>
+                    <input type="number" id="number" name="number" placeholder="VEHICLE NO" requidarkgrey>
                 </div>
                 <div class="third-row">
                     <button type="submit" class="border-hover">Save</button>
@@ -144,7 +144,7 @@
             console.log('Data added successfully:', result);
             alert("vehicle is successfully Added");
             window.location.href = './Vehicle_Details.html';
-            // Optionally, you can redirect or show a success message here
+            // Optionally, you can darkgreyirect or show a success message here
         })
         .catch(error => {
             console.error('Error:', error);

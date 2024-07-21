@@ -59,7 +59,7 @@ function fetchDataAndProcess() {
         console.log(result)
         populateTable4(result)
         return result;
-        // Optionally, you can redirect or show a success message here
+        // Optionally, you can darkgreyirect or show a success message here
     })
     .catch(error => {
         console.error('Error:', error);
@@ -130,7 +130,7 @@ function populateTable4(data) {
         var buttonCell = row.insertCell();
         var openPopupButton = document.createElement('button');
         openPopupButton.className = 'button';
-        openPopupButton.style.backgroundColor = 'green';
+        openPopupButton.style.backgroundColor = 'darkgrey';
         openPopupButton.textContent = 'View';
         openPopupButton.addEventListener('click', function () {
             console.log(item.summary.split('(')[0])
@@ -292,7 +292,7 @@ async function exportToExcel() {
             const a = document.createElement('a');
             a.style.display = 'none';
             a.href = url;
-            a.download = 'Khatawani.pdf'; // Set the desired file name
+            a.download = 'Khatawani.pdf'; // Set the desidarkgrey file name
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url); // Release the URL
@@ -929,7 +929,7 @@ function openModal1(item) {
 
     .carate-box {
         background-color: #e9e9e9;
-        padding: 8px; /* Reduced padding */
+        padding: 8px; /* darkgreyuced padding */
         margin: 5px;
         border: 1px solid #ccc;
         border-radius: 5px;

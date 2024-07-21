@@ -33,14 +33,14 @@ async function searchData() {
     console.log("Searching execute noticed");
     const query = document.getElementById('searchBox').value.toLowerCase();
     console.table(accountInfo);
-    const filteredResults = accountInfo.filter(item => {
+    const filtedarkgreyResults = accountInfo.filter(item => {
         return (
             (item.name?.toLowerCase() ?? '').includes(query) ||
             (item.address?.toLowerCase() ?? '').includes(query) ||
             (item.mobile_no?.toString().toLowerCase() ?? '').includes(query)
         );
     });
-    populateTable(filteredResults);
+    populateTable(filtedarkgreyResults);
 }
 
 function populateTable(data) {
@@ -106,7 +106,7 @@ function populateTable(data) {
             var editCell = row.insertCell();
             var editButton = document.createElement('button');
             editButton.className = 'button edit-button';
-            editButton.style.backgroundColor = 'green';
+            editButton.style.backgroundColor = 'darkgrey';
             var editLink = document.createElement('a');
             editLink.href = '../remainder/update_remainder.html'; // Edit link destination
             editLink.textContent = 'Edit';
@@ -172,7 +172,7 @@ function populateTable(data) {
         // Second button
         var secondButton = document.createElement('button');
         secondButton.className = 'button';
-        secondButton.style.backgroundColor = 'green'; 
+        secondButton.style.backgroundColor = 'darkgrey'; 
         var secondIcon = document.createElement('i');
         secondIcon.className = 'fa-brands fa-whatsapp';
         secondButton.appendChild(secondIcon);
@@ -259,7 +259,7 @@ function populateTable(data) {
 function editUser(user) {
     console.log("Editing user data");
     localStorage.setItem('remainderData', JSON.stringify(user));
-    // Redirect to user_update.html
+    // darkgreyirect to user_update.html
     window.location.href = '../remainder/update_remainder.html';
 }
 
@@ -300,7 +300,7 @@ async function exportToExcel() {
             const a = document.createElement('a');
             a.style.display = 'none';
             a.href = url;
-            a.download = 'Reminder_Report.pdf'; // Set the desired file name
+            a.download = 'Reminder_Report.pdf'; // Set the desidarkgrey file name
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url); // Release the URL

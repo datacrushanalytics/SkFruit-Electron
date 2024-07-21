@@ -51,7 +51,7 @@ function fetchDataAndProcess() {
             console.log(result)
             populateTable4(result)
             return result;
-            // Optionally, you can redirect or show a success message here
+            // Optionally, you can darkgreyirect or show a success message here
         })
         .catch(error => {
             console.error('Error:', error);
@@ -96,7 +96,7 @@ function populateTable4(data) {
         var buttonCell = row.insertCell();
         var openPopupButton = document.createElement('button');
         openPopupButton.className = 'button';
-        openPopupButton.style.backgroundColor = 'green';
+        openPopupButton.style.backgroundColor = 'darkgrey';
         openPopupButton.textContent = 'View';
         openPopupButton.addEventListener('click', function () {
             openModal(item); // Pass the data item to the openPopup function
@@ -125,7 +125,7 @@ function populateTable4(data) {
             var deleteCell = row.insertCell();
             var deleteButton = document.createElement('button');
             deleteButton.className = 'button delete-button';
-            deleteButton.style.backgroundColor = 'red';
+            deleteButton.style.backgroundColor = 'darkgrey';
             deleteButton.textContent = 'Delete';
             deleteButton.addEventListener('click', function () {
                 deleteaccount(item.receipt_id); // Pass the user id to the delete function
@@ -146,7 +146,7 @@ function populateTable4(data) {
 //     localStorage.removeItem('userData');
 //     console.log('Editing user: ' + JSON.stringify(user));
 //     localStorage.setItem('userData', JSON.stringify(user));
-//      // Redirect to user_update.html
+//      // darkgreyirect to user_update.html
 //      window.location.href = '../account/updateAccount.html';
 //   }
 
@@ -316,7 +316,7 @@ async function exportToExcel() {
             const a = document.createElement('a');
             a.style.display = 'none';
             a.href = url;
-            a.download = 'receiptReport.pdf'; // Set the desired file name
+            a.download = 'receiptReport.pdf'; // Set the desidarkgrey file name
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url); // Release the URL
@@ -554,7 +554,7 @@ function openModal(item) {
 
     .carate-box {
         background-color: #e9e9e9;
-        padding: 8px; /* Reduced padding */
+        padding: 8px; /* darkgreyuced padding */
         margin: 5px;
         border: 1px solid #ccc;
         border-radius: 5px;

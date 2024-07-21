@@ -71,7 +71,7 @@ function populateTable(data) {
 
 function editProduct(user) {
     localStorage.setItem('userData', JSON.stringify(user));
-     // Redirect to user_update.html
+     // darkgreyirect to user_update.html
      window.location.href = "./update_vehicle.html";
 }
 

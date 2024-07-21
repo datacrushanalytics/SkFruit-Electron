@@ -22,12 +22,12 @@ button[type="submit"] {
     margin: 10px;
     border-radius: 5px;
     outline: none;
-    background-color: green; /* Grey color */
+    background-color: darkgrey; /* Grey color */
     color: #fff; /* Text color */
 }
 
 button[type="submit"]:hover {
-    background-color:darkgreen; /* Dark grey color on hover */
+    background-color:darkdarkgrey; /* Dark grey color on hover */
 }
 
         /* Add border to the second form */
@@ -158,14 +158,16 @@ button[type="submit"]:hover {
             border-radius: 5px;
         }
         
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 12px;
-        }
+        th,
+    td {
+        border: 1px solid #dddddd;
+        background-color: #eafffb;
+        text-align: left;
+        padding: 12px;
+    }
         
         th {
-            background-color: #f2f2f2;
+            background-color: #c7d5d3;
         }
 
 
@@ -203,17 +205,17 @@ button[type="submit"]:hover {
     <div id="loader"></div>
     <div class="container">
         <h1 align="center">Carate Report</h1><br>
-        <hr>
+        <hr style="position: relative; top: -25px;">
         <br>
         <div class="container1">
             <form id="loginForm1">
 
                 <div class="first-row">
                     <label for="userType">From Date</label>
-                    <input type="date" id="fromdate" name="date" placeholder="From Date" required>
+                    <input type="date" id="fromdate" name="date" placeholder="From Date" requidarkgrey>
                     <br>
                     <label for="userType">To Date</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date" required>
+                    <input type="date" id="todate" name="date" placeholder="To Date" requidarkgrey>
                 </div>
 
                 <br>
@@ -228,7 +230,7 @@ button[type="submit"]:hover {
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
                     <button type="submit" id="button1">Submit</button>
-                    <button type='button' onclick="exportToExcel()" id="button2" style="background-color: red;">Export</button>
+                    <button type='button' onclick="exportToExcel()" id="button2" style="background-color: darkgrey;">Export</button>
                 <!-- </div> -->
             </form>
             <br>

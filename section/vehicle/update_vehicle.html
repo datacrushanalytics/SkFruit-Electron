@@ -121,11 +121,11 @@
             <form id="loginForm" method="POST">
                 <div class="first-row">
                     <lable for="ID">ID :</lable>
-                    <input type="text" id="id" name="id" placeholder="ID" required readonly>
+                    <input type="text" id="id" name="id" placeholder="ID" requidarkgrey readonly>
                     <lable for="text">VEHICLE NAME :</lable>
-                    <input type="text" id="name" name="name" placeholder="VEHICLE NAME" required>
+                    <input type="text" id="name" name="name" placeholder="VEHICLE NAME" requidarkgrey>
                     <lable for="text">VEHICLE NO :</lable>
-                    <input type="number" id="number" name="number" placeholder="VEHICLE NO" required>
+                    <input type="number" id="number" name="number" placeholder="VEHICLE NO" requidarkgrey>
                 </div> 
                 <div class="third-row">
                     <button type="submit" id="updateButton" class="border-hover">Save</button>
@@ -179,7 +179,7 @@
                 loader.style.display = 'none';
                 console.log('Data added successfully:', result);
                 alert('Data Updated successfully')
-                // Optionally, you can redirect or show a success message here
+                // Optionally, you can darkgreyirect or show a success message here
             } catch (error) {
                 console.error('Error:', error);
                 // Optionally, you can display an error message here

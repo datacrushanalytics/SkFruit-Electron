@@ -57,11 +57,11 @@
                 <div class="first-row">
                     <div style="margin-left: 3%;">
                         <label for="no">Bill No:</label>
-                        <input type="number" id="no" name="number" placeholder="Bill No" required>
+                        <input type="number" id="no" name="number" placeholder="Bill No" requidarkgrey>
                     </div>
                     <div style="margin-left:50px;">
                         <label for="date">Date:</label>
-                        <input type="date" id="date" name="date" required>
+                        <input type="date" id="date" name="date" requidarkgrey>
                     </div>
                 </div>
                 <br>
@@ -69,14 +69,14 @@
                     <div style="margin-left: 50px;">
                         <label for="dropdown">Supplier Name: </label>
                         <input type="supplier" id="supplier" name="supplier" readonly>
-                        <!-- <select id="supplier" name="supplier" class="drop" required>
+                        <!-- <select id="supplier" name="supplier" class="drop" requidarkgrey>
 
                         </select> <br> -->
                     </div> <br>
                     <div style="margin-left:50px;">
                         <label for="number">vehicle no : </label>
                         <input type="vehicle" id="vehicle" name="vehicle" readonly>
-                        <!-- <select id="vehicle" name="vehicle" required>
+                        <!-- <select id="vehicle" name="vehicle" requidarkgrey>
 
                         </select> -->
                     </div>
@@ -134,7 +134,7 @@
                     </div>
                     <br>
 
-                    <button type="submit" style="background-color: red;" class="border-hover" onclick="myFunction()">ADD</button></a>
+                    <button type="submit" style="background-color: darkgrey;" class="border-hover" onclick="myFunction()">ADD</button></a>
                 </div>
                 <br>
                 <div class="table-container">
@@ -162,11 +162,11 @@
                 <br>
                 <div style="margin-left: 400px;">
                     <label for="total">Total Amount :</label>
-                    <input type="number" id="total" name="name" placeholder="Total Amount " required>
+                    <input type="number" id="total" name="name" placeholder="Total Amount " requidarkgrey>
                 </div>
                 <br>
                 <div class="four-row">
-                    <button class="border-hover" style="background-color: green;" type="submit">Save</button>
+                    <button class="border-hover" style="background-color: darkgrey;" type="submit">Save</button>
                 </div>
             </form>
         </div>
@@ -388,7 +388,7 @@
                     .catch(error => {
                         console.error('Error:', error);
                     });
-                // Add your desired functionality here
+                // Add your desidarkgrey functionality here
             }
 
             function updateTable(entry, result) {
@@ -403,7 +403,7 @@
                   <td>${entry.quantity}</td>
                   <td>${entry.unit}</td>
                   <td>${entry.price}</td>
-                  <td><button type="button" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button></td>
+                  <td><button type="button" style="background-color:darkgrey;" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button></td>
               `;
 
                 document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) + entry.price;

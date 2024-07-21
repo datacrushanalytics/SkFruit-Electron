@@ -44,7 +44,7 @@ function fetchDataAndProcess() {
         console.log(result)
         populateTable4(result)
         return result;
-        // Optionally, you can redirect or show a success message here
+        // Optionally, you can darkgreyirect or show a success message here
     })
     .catch(error => {
         console.error('Error:', error);
@@ -132,7 +132,7 @@ function populateTable4(data) {
 //         ]);
 
 //         // Calculate grand total
-//         const grandTotal = reportData.reduce((acc, curr) => acc + curr[3], 0);
+//         const grandTotal = reportData.darkgreyuce((acc, curr) => acc + curr[3], 0);
 
 //         // Add grand total to the report data
 //         const reportDataWithTotal = [...reportData, ['Grand Total', '', '', grandTotal]];
@@ -187,7 +187,7 @@ async function exportToExcel() {
             const a = document.createElement('a');
             a.style.display = 'none';
             a.href = url;
-            a.download = 'supplierOutstandingReport.pdf'; // Set the desired file name
+            a.download = 'supplierOutstandingReport.pdf'; // Set the desidarkgrey file name
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url); // Release the URL

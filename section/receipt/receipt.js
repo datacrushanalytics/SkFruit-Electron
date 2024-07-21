@@ -328,7 +328,7 @@ function openModal(item) {
 
     .carate-box {
         background-color: #e9e9e9;
-        padding: 8px; /* Reduced padding */
+        padding: 8px; /* darkgreyuced padding */
         margin: 5px;
         border: 1px solid #ccc;
         border-radius: 5px;

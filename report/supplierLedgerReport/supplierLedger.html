@@ -126,13 +126,13 @@
      margin: 10px;
      border-radius: 5px;
      outline: none;
-     background-color:green; /* Grey background color */
+     background-color:darkgrey; /* Grey background color */
      color: #fff; /* White text color */
      box-shadow: none; /* Remove box shadow */
 }
 
    button[type="submit"]:hover {
-      background-color:darkgreen; /* Dark grey background color on hover */
+      background-color:darkdarkgrey; /* Dark grey background color on hover */
 }
 
 
@@ -156,14 +156,16 @@
             border-radius: 5px;
         }
         
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 12px;
-        }
+        th,
+    td {
+        border: 1px solid #dddddd;
+        background-color: #eafffb;
+        text-align: left;
+        padding: 12px;
+    }
         
         th {
-            background-color: #f2f2f2;
+            background-color: #c7d5d3;
         }
 /* Style the loader container */
 #loader {
@@ -202,10 +204,10 @@
             <form id="loginForm1">
                 <div class="first-row">
                     <label for="userType">From Date : </label>
-                    <input type="date" id="fromdate" name="date" placeholder="From Date" required>
+                    <input type="date" id="fromdate" name="date" placeholder="From Date" requidarkgrey>
                     <br>
                     <label for="userType">To Date : </label>
-                    <input type="date" id="todate" name="date" placeholder="To Date" required>
+                    <input type="date" id="todate" name="date" placeholder="To Date" requidarkgrey>
                 </div> <br>
                 <br><br>
                 <label for="userType">Supplier Name :</label>
@@ -218,7 +220,7 @@
                 <div class="third-row">
                     <!-- <button class="border-hover" >Save</button> -->
                     <button type="submit" class="border-hover">Submit</button>
-                    <button type='button' style="background-color: red;" class="border-hover" onclick="exportToExcel()" id="button2">Export</button>
+                    <button type='button' style="background-color: darkgrey;" class="border-hover" onclick="exportToExcel()" id="button2">Export</button>
                 </div>
             </form><br>
             <div class="table-container">

@@ -33,7 +33,7 @@ function account() {
 // Function to filter results based on the search input
 function searchData() {
   const query = document.getElementById('searchBox').value.toLowerCase();
-  const filteredResults = accountInfo.filter(item => {
+  const filtedarkgreyResults = accountInfo.filter(item => {
       return (
         (item.name?.toLowerCase() ?? '').includes(query) ||
         (item.company?.toLowerCase() ?? '').includes(query) ||
@@ -43,7 +43,7 @@ function searchData() {
         (item.optional_mobile?.toString().toLowerCase() ?? '').includes(query)
       );
   });
-  populateTable(filteredResults);
+  populateTable(filtedarkgreyResults);
 }
 
 
@@ -69,7 +69,7 @@ function populateTable(data) {
         var editCell = row.insertCell();
         var editButton = document.createElement('button');
         editButton.className = 'button edit-button';
-        editButton.style.backgroundColor = 'green';
+        editButton.style.backgroundColor = 'darkgrey';
         var editLink = document.createElement('a');
         editLink.href = '../account/updateAccount.html'; // Edit link destination
         editLink.textContent = 'Edit';
@@ -85,7 +85,7 @@ function populateTable(data) {
         var deleteCell = row.insertCell();
         var deleteButton = document.createElement('button');
         deleteButton.className = 'button delete-button';
-        deleteButton.style.backgroundColor = 'red';
+        deleteButton.style.backgroundColor = 'darkgrey';
         deleteButton.textContent = 'Delete';
         deleteButton.addEventListener('click', function() {
           deleteaccount(item.id); // Pass the user id to the delete function
@@ -100,7 +100,7 @@ function editAccount(user) {
   localStorage.removeItem('userData');
   console.log('Editing user: ' + JSON.stringify(user));
   localStorage.setItem('userData', JSON.stringify(user));
-   // Redirect to user_update.html
+   // darkgreyirect to user_update.html
    window.location.href = '../account/updateAccount.html';
 }
 
@@ -176,7 +176,7 @@ function insertAccount() {
         console.error('There was a problem with the fetch operation:', error);
       });
     } catch (error) {
-      console.error('An error occurred:', error);
+      console.error('An error occurdarkgrey:', error);
     }
   }
 
