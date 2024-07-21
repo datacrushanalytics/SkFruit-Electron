@@ -55,7 +55,7 @@ img{
 }
 
 
-#submitButton {
+#submitButton, #submitButton1{
     
     background-color: #808080; /* Grey color */
     color: #fff; /* White text color */
