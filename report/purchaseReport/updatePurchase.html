@@ -134,7 +134,7 @@
                     </div>
                     <br>
 
-                    <button type="submit" style="background-color: red;" class="border-hover" onclick="myFunction()">ADD</button></a>
+                    <button type="submit" style="background-color: darkgrey;" class="border-hover" onclick="myFunction()">ADD</button></a>
                 </div>
                 <br>
                 <div class="table-container">
@@ -403,7 +403,7 @@
                   <td>${entry.quantity}</td>
                   <td>${entry.unit}</td>
                   <td>${entry.price}</td>
-                  <td><button type="button" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button></td>
+                  <td><button type="button" style="background-color:red;" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button></td>
               `;
 
                 document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) + entry.price;
