@@ -23,7 +23,11 @@ function fetchDataAndProcess() {
     .then(response => {
         if (response.status === 404) {
         loader.style.display = 'none';
-            alert("No data found.");
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No data found.',
+          });
             throw new Error('Data not found');
         }
         if (!response.ok) {
@@ -51,7 +55,11 @@ function populateTable4(data) {
     var counter = 1;
     console.log(data.reports);
     if (data.reports.length === 0) {
-        alert("No Data Found");
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No data found.',
+          });
     }
     data.reports.forEach(function (item) {
         var row = tbody.insertRow();
@@ -71,7 +79,7 @@ function populateTable4(data) {
         row.addEventListener('click', function() {
             // Define what should happen when the row is clicked
             // For example, navigate to a new page or display more details
-            // alert('Row clicked: ' + JSON.stringify(item));
+           
             localStorage.removeItem('routeSaleData');
             console.log('Editing receipt: ' + JSON.stringify(item));
             localStorage.setItem('routeSaleData', JSON.stringify(item));

@@ -38,7 +38,11 @@ function fetchDataAndProcess() {
         .then(response => {
             if (response.status === 404) {
                 loader.style.display = 'none';
-                alert("No data found.");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No data found.',
+                  });
                 throw new Error('Data not found');
             }
             if (!response.ok) {
@@ -69,7 +73,11 @@ function populateTable4(data) {
     var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
     console.log(data.reports)
     if (data.reports.length === 0) {
-        alert("No Data Found");
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No data found.',
+          });
     }
     data.reports.forEach(function (item) {
         var row = tbody.insertRow();
@@ -160,7 +168,11 @@ function deleteaccount(userId) {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            alert("Record is successfully Deleted");
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Record is successfully Deleted',
+                })
             console.log('REcord deleted successfully');
             // Refresh the table or update UI as needed
             fetchDataAndProcess(); // Assuming you want to refresh the table after delete
@@ -300,7 +312,11 @@ async function exportToExcel() {
         .then(response => {
             if (response.status === 404) {
                 loader.style.display = 'none';
-                alert("No data found.");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No data found.',
+                  });
                 throw new Error('Data not found');
             }
             if (!response.ok) {
@@ -326,11 +342,19 @@ async function exportToExcel() {
         .catch(error => {
             loader.style.display = 'none';
             console.error('Error:', error);
-            alert('Error generating PDF. Please try again.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error generating PDF. Please try again.',
+              });
         });
     } catch (error) {
         console.error('Error:', error);
-        alert('Error generating PDF. Please try again.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error generating PDF. Please try again.',
+          });
     }
 }
 

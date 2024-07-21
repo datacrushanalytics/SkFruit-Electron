@@ -27,7 +27,13 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     .then(result => {
         loader.style.display = 'none';
         console.log('Data added successfully:', result);
-        alert("Route is successfully Added");
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Route is successfully Added',
+            })
+
         window.location.href = './Root_Details.html';
         // Optionally, you can darkgreyirect or show a success message here
     })

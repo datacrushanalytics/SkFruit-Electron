@@ -8,7 +8,11 @@ function product() {
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';
-            alert("No data found.");
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No data found.',
+              });
             throw new Error('Data not found');
         }
         if (!response.ok) {
@@ -62,7 +66,11 @@ function deleteProduct(userId) {
             throw new Error('Network response was not ok');
         }
         console.log('User deleted successfully');
-        alert("category is successfully Deleted");
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'category is successfully Deleted',
+            })
         // Refresh the table or update UI as needed
         product(); // Assuming you want to refresh the table after delete
     })

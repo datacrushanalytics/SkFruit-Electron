@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="../../section/purchase/purchase.css">
     <title>खरेदी</title>
     <style>
@@ -467,7 +468,12 @@
     .then(result => {
         loader.style.display = 'none';
         console.log('Entry added successfully:', result);
-        alert("Purchase Data is added Successfully");
+
+        Swal.fire({
+      icon: 'success',
+      title: 'Success!',
+      text: 'Purchase Data is added Successfully!!',
+    });
         window.location.href = './purchaseReport.html';
     })
     .catch(error => {

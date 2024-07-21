@@ -6,6 +6,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <title></title>
     <style>
@@ -378,28 +379,44 @@
 <script>
     // JavaScript functions remain unchanged
     function carate() {
-        /*
+        
     if (document.getElementById("carate100").value > document.getElementById('carate2100').value){
-        alert("Carate limit exceed");
+        Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Carate limit exceed",
+            });
         document.getElementById("carate100").value = 0;
     }
 
     if (document.getElementById("carate150").value > document.getElementById('carate2150').value){
-        alert("Carate limit exceed");
+        Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Carate limit exceed",
+            });
         document.getElementById("carate150").value = 0;
     }
 
     if (document.getElementById("carate250").value > document.getElementById('carate2250').value){
-        alert("Carate limit exceed");
+        Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Carate limit exceed",
+            });
         document.getElementById("carate250").value = 0;
     }
 
 
     if (document.getElementById("carate350").value > document.getElementById('carate2350').value){
-        alert("Carate limit exceed");
+        Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Carate limit exceed",
+            });
         document.getElementById("carate350").value = 0;
     }
-*/
+
         var value100 = parseInt(document.getElementById("carate100").value) || 0;
         var value150 = parseInt(document.getElementById("carate150").value) || 0;
         var value250 = parseInt(document.getElementById("carate250").value) || 0;
@@ -716,28 +733,6 @@ function totalbill(){
 
     
 
-
-    // if (document.getElementById("carate100").value > document.getElementById('carate2100').value){
-    //    alert("Carate limit exceed");
-    //    document.getElementById("carate100").value = 0;
-    //}
-
-    // if (document.getElementById("carate150").value > document.getElementById('carate2150').value){
-    //    alert("Carate limit exceed");
-    //    document.getElementById("carate150").value = 0;
-    //}
-
-    //if (document.getElementById("carate250").value > document.getElementById('carate2250').value){
-    //    alert("Carate limit exceed");
-    //    document.getElementById("carate250").value = 0;
-    //}
-
-
-    //if (document.getElementById("carate350").value > document.getElementById('carate2350').value){
-    //    alert("Carate limit exceed");
-    //    document.getElementById("carate350").value = 0;
-    //}
-    
 
 </script>
 </html>

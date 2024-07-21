@@ -45,7 +45,12 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     .then(result => {
         loader.style.display = 'none';
         console.log('Data added successfully:', result);
-        alert("Account is successfully Added");
+    
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Account is successfully Added',
+            })
         window.location.href = './account.html';
         // Optionally, you can darkgreyirect or show a success message here
     })

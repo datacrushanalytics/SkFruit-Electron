@@ -27,7 +27,11 @@ async function updateUser() {
         const result = await response.json();
         loader.style.display = 'none';
         console.log('Data added successfully:', result);
-        alert('Data Updated successfully')
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Data Updated successfully',
+            })
         // Optionally, you can darkgreyirect or show a success message here
     } catch (error) {
         console.error('Error:', error);

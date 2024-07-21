@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>User Form in Electron</title>
     <style>
         body {
@@ -142,7 +143,11 @@
         .then(result => {
         loader.style.display = 'none';
             console.log('Data added successfully:', result);
-            alert("vehicle is successfully Added");
+            Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'vehicle is successfully Added',
+                            })
             window.location.href = './Vehicle_Details.html';
             // Optionally, you can darkgreyirect or show a success message here
         })

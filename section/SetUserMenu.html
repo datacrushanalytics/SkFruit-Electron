@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>SK_Fruits</title>
     <link rel="stylesheet" href="../assets/css/Set_user_menu.css">
 </head>
@@ -208,7 +209,11 @@
                 fetch(apiUrl)
                     .then(response => {
                         if (response.status === 404) {
-                            alert("No data found.");
+                            Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No data found.',
+                    });
                             throw new Error('Data not found');
                         }
                         if (!response.ok) {
@@ -269,7 +274,13 @@
                 .then(response => {
                     if (response.ok) {
                         console.log("Data sent successfully");
-                        alert("Access updated Successfully");
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Access updated Successfully',
+                            })
+                
                         window.location.reload();
                         // Optionally, you can darkgreyirect the user or show a success message here
                     } else {

@@ -39,7 +39,11 @@ function fetchDataAndProcess(data = null) {
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';
-            alert("No data found.");
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No data found.',
+              });
             throw new Error('Data not found');
         }
         if (!response.ok) {
@@ -66,7 +70,11 @@ function populateTable4(data) {
     var columnsToDisplay = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'cash', 'online_amt', 'discount', 'inCarat', 'carate_amount','validate'];
     var counter = 1;
     if (data.reports.length === 0) {
-        alert("No Data Found");
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No data found.',
+          });
     }
     var grandTotals = {
         amount: 0,
@@ -135,7 +143,11 @@ function populateTable4(data) {
                     console.log("DTAASS")
                     if (!response.ok) {
                         loader.style.display = 'none';
-                        alert("Sale Bill is not Verified")
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: "Sale Bill is not Verified",
+                          });
                         throw new Error('Network response was not ok');
                         
                     }
@@ -144,7 +156,13 @@ function populateTable4(data) {
                 .then(result => {
                     loader.style.display = 'none';
                     console.log('Entry added successfully:', result);
-                    alert("Sale Bill is Verified Successfully");
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Sale Bill is Verified Successfully',
+                        })
+            
                     fetchDataAndProcess();
                     // window.location.reload();
                 })
@@ -217,7 +235,12 @@ function populateTable4(data) {
                     console.log("DTAASS")
                     if (!response.ok) {
                         loader.style.display = 'none';
-                        alert("SMS is failed with some error")
+              
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'SMS is failed with some error',
+                          });
                         throw new Error('Network response was not ok');
                         
                     }
@@ -226,7 +249,11 @@ function populateTable4(data) {
                 .then(result => {
                     loader.style.display = 'none';
                     console.log('Entry added successfully:', result);
-                    alert("SMS Sent Successfully");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'SMS Sent Successfully',
+                        })
                     //window.location.reload();
                 })
                 .catch(error => {
@@ -267,7 +294,12 @@ function populateTable4(data) {
                     console.log("DTAASS")
                     if (!response.ok) {
                         loader.style.display = 'none';
-                        alert("Whatsapp message is failed with some error")
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Whatsapp message is failed with some error',
+                          });
                         throw new Error('Network response was not ok');
                         
                     }
@@ -276,7 +308,12 @@ function populateTable4(data) {
                 .then(result => {
                     loader.style.display = 'none';
                     console.log('Entry added successfully:', result);
-                    alert("Whatsapp message Sent Successfully");
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Whatsapp message Sent Successfully',
+                        })
                     //window.location.reload();
                     // fetchDataAndProcess();
                 })
@@ -317,7 +354,11 @@ function populateTable5(data) {
     var columnsToDisplay = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'cash', 'online', 'discount', 'inCarat', 'Amt','validate'];
     var counter = 1;
     if (data.Receipt.length === 0) {
-        alert("No Data Found");
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No data found.',
+          });
     }
     var grandTotals = {
         cash: 0,
@@ -384,7 +425,13 @@ function populateTable5(data) {
                     console.log("DTAASS")
                     if (!response.ok) {
                         loader.style.display = 'none';
-                        alert("Receipt is not Verified")
+            
+
+ Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'Receipt is not Verified',
+  });
                         throw new Error('Network response was not ok');
                         
                     }
@@ -393,7 +440,12 @@ function populateTable5(data) {
                 .then(result => {
                     loader.style.display = 'none';
                     console.log('Entry added successfully:', result);
-                    alert("Receipt is Verified Successfully");
+       
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Receipt is Verified Successfully',
+                        })
                     fetchDataAndProcess();
                     
                 })
@@ -467,7 +519,13 @@ function populateTable5(data) {
                     console.log("DTAASS")
                     if (!response.ok) {
                         loader.style.display = 'none';
-                        alert("SMS is failed with some error")
+                    
+
+ Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: "SMS is failed with some error",
+  });
                         throw new Error('Network response was not ok');
                         
                     }
@@ -476,7 +534,11 @@ function populateTable5(data) {
                 .then(result => {
                     loader.style.display = 'none';
                     console.log('Entry added successfully:', result);
-                    alert("SMS Sent Successfully");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'SMS Sent Successfully',
+                        })
                     //window.location.reload();
                 })
                 .catch(error => {
@@ -515,7 +577,12 @@ function populateTable5(data) {
                     console.log("DTAASS")
                     if (!response.ok) {
                         loader.style.display = 'none';
-                        alert("Whatsapp message is failed with some error")
+                    
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: "Whatsapp message is failed with some error",
+                          });
                         throw new Error('Network response was not ok');
                         
                     }
@@ -524,7 +591,12 @@ function populateTable5(data) {
                 .then(result => {
                     loader.style.display = 'none';
                     console.log('Entry added successfully:', result);
-                    alert("Whatsapp message Sent Successfully");
+            
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Whatsapp message Sent Successfully',
+                        })
                     //window.location.reload();
                 })
                 .catch(error => {
@@ -608,7 +680,11 @@ async function exportToExcel() {
         .then(response => {
             if (response.status === 404) {
                 loader.style.display = 'none';
-                alert("No data found.");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No data found.',
+                  });
                 throw new Error('Data not found');
             }
             if (!response.ok) {
@@ -634,11 +710,19 @@ async function exportToExcel() {
         .catch(error => {
             loader.style.display = 'none';
             console.error('Error:', error);
-            alert('Error generating PDF. Please try again.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error generating PDF. Please try again.',
+              });
         });
     } catch (error) {
         console.error('Error:', error);
-        alert('Error generating PDF. Please try again.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error generating PDF. Please try again.',
+          });
     }
 }
 

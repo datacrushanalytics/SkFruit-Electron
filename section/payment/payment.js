@@ -125,7 +125,11 @@ console.log("jahsafhfa")
     .then(result => {
         loader.style.display = 'none';
         console.log('Entry added successfully:', result);
-        alert("Payment Data is added Successfully");
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Payment Data is added Successfully',
+            })
         window.location.reload();
     })
     .catch(error => {

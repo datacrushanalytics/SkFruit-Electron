@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <title>Account Master</title>
 
@@ -368,7 +369,13 @@
                 const result = await response.json();
                 loader.style.display = 'none';
                 console.log('Data added successfully:', result);
-                alert('Data Updated successfully')
+         
+                Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Data Updated successfully',
+                            })
+                
                 // Optionally, you can darkgreyirect or show a success message here
             } catch (error) {
                 console.error('Error:', error);

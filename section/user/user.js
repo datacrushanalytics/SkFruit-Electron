@@ -7,7 +7,12 @@ function user() {
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';
-            alert("No data found.");
+           
+Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'No data found.',
+  });
             throw new Error('Data not found');
         }
         if (!response.ok) {
@@ -100,7 +105,12 @@ function deleteUser(userId) {
             throw new Error('Network response was not ok');
         }
         console.log('User deleted successfully');
-        alert("User is successfully Deleted");
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'User is successfully Deleted',
+            })
+
         // Refresh the table or update UI as needed
         user(); // Assuming you want to refresh the table after delete
     })

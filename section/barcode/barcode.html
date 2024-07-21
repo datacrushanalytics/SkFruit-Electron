@@ -267,6 +267,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/JsBarcode/3.11.5/JsBarcode.all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
 
@@ -282,7 +283,11 @@
             .then(response => {
                 if (response.status === 404) {
                     loader.style.display = 'none';
-                    alert("No data found.");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No data found.',
+                    });
                     throw new Error('Data not found');
                 }
                 if (!response.ok) {
@@ -510,7 +515,11 @@
         })
         .then(response => {
             if (!response.ok) {
-                alert("Product not found on this Bata")
+                Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Product not found on this Bata.',
+                    });
                 loader.style.display = 'none';
                 throw new Error('Network response was not ok');
             }
@@ -549,7 +558,12 @@
         })
         .then(response => {
             if (!response.ok) {
-                alert("Product not found on this Bata")
+                Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Product not found on this Bata.',
+                    });
+        
                 loader.style.display = 'none';
                 throw new Error('Network response was not ok');
             }

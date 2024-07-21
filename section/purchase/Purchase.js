@@ -88,7 +88,11 @@ document.getElementById('Form').addEventListener('submit', async function(event)
     .then(result => {
         loader.style.display = 'none';
         console.log('Entry added successfully:', result);
-        alert("Purchase Data is added Successfully");
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Purchase Data is added Successfully',
+            })
         window.location.reload();
     })
     .catch(error => {

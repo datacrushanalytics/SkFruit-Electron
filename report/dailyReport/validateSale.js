@@ -23,7 +23,6 @@ function saleProduct(num){
     // .then(response => {
     //     if (response.status === 404) {
     //         loader.style.display = 'none';
-    //         alert("No data found.");
     //         throw new Error('Data not found');
     //     }
     //     if (!response.ok) {
@@ -97,7 +96,11 @@ function deleteUser(userId) {
                 throw new Error('Network response was not ok');
             }
             console.log('User deleted successfully');
-            alert("Sale Data is successfully Deleted");
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Sale Data is successfully Deleted',
+                })
             // Refresh the table or update UI as needed
             user(); // Assuming you want to refresh the table after delete
         })
@@ -157,7 +160,12 @@ function getProducts() {
 
 function updateTotal() {
     if (document.getElementById("nag").value > document.getElementById('nag1').value){
-        alert("Inventory Is not available");
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Inventory Is not available',
+          });
         document.getElementById("nag").value = 0;
     }
     document.getElementById("total").value = document.getElementById("kimmat").value * document.getElementById("nag").value

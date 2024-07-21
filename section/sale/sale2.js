@@ -52,9 +52,9 @@ document.getElementById('login').addEventListener('submit', async function(event
         const result = await response.json();
         loader.style.display = 'none';
         console.log('Entry added successfully:', result);
-        // alert("Sale Data is added Successfully");
+    
         openModal({"bill_no": formData.bill_no})
-        //window.location.reload(); // Reload the page after displaying the alert
+        //window.location.reload(); // 
     } catch (error) {
         console.error('Error:', error);
     }

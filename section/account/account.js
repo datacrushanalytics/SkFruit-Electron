@@ -10,7 +10,11 @@ function account() {
   .then(response => {
     if (response.status === 404) {
       loader.style.display = 'none';
-        alert("No data found.");
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No data found.',
+      });
         throw new Error('Data not found');
     }
     if (!response.ok) {
@@ -114,7 +118,11 @@ function deleteaccount(userId) {
       if (!response.ok) {
           throw new Error('Network response was not ok');
       }
-      alert("Account is successfully Deleted");
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Account is successfully Deleted',
+        })
       console.log('User deleted successfully');
       // Refresh the table or update UI as needed
       account(); // Assuming you want to refresh the table after delete
@@ -170,8 +178,13 @@ function insertAccount() {
       })
       .then(data => {
         loader.style.display = 'none';
-        alert("Account is inserted")
-      }) // Alert the response
+     
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Account is inserted',
+          })
+      }) 
       .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
       });

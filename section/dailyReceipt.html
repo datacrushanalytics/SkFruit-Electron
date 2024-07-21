@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>home page</title>
     <style>
         .container {
@@ -250,7 +251,11 @@ th {
             .then(response => {
                 if (response.status === 404) {
                     loader.style.display = 'none';
-                    alert("No data found.");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No data found.',
+                    });
                     throw new Error('Data not found');
                 }
                 if (!response.ok) {

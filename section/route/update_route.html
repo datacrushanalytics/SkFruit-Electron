@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>User Form in Electron</title>
     <style>
          body {
@@ -168,7 +169,12 @@
                 const result = await response.json();
                 loader.style.display = 'none';
                 console.log('Data added successfully:', result);
-                alert('Data Updated successfully')
+            
+                Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Data Updated successfully',
+                            })
                 // Optionally, you can darkgreyirect or show a success message here
             } catch (error) {
                 console.error('Error:', error);

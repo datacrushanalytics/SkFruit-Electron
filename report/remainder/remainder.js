@@ -10,7 +10,11 @@ async function remainder() {
         loader.style.display = 'none';
 
         if (response.status === 404) {
-            alert("No data found.");
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No data found.',
+              });
             throw new Error('Data not found');
         }
         if (!response.ok) {
@@ -52,7 +56,11 @@ function populateTable(data) {
     var totalCurrentBalance = 0;
 
     if (data.length === 0) {
-        alert("No Data Found");
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No data found.',
+          });
     }
 
     data.forEach(function(item) {
@@ -150,7 +158,12 @@ function populateTable(data) {
                     console.log("DTAASS")
                     if (!response.ok) {
                         loader.style.display = 'none';
-                        alert("SMS is failed with some error")
+    
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'SMS is failed with some error',
+                          });
                         throw new Error('Network response was not ok');
                         
                     }
@@ -159,7 +172,12 @@ function populateTable(data) {
                 .then(result => {
                     loader.style.display = 'none';
                     console.log('Entry added successfully:', result);
-                    alert("SMS Sent Successfully");
+            
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'SMS Sent Successfully',
+                        })
                     //window.location.reload();
                 })
                 .catch(error => {
@@ -198,7 +216,12 @@ function populateTable(data) {
                     console.log("DTAASS")
                     if (!response.ok) {
                         loader.style.display = 'none';
-                        alert("Whatsapp message is failed with some error")
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Whatsapp message is failed with some error',
+                          });
+             
                         throw new Error('Network response was not ok');
                         
                     }
@@ -207,7 +230,12 @@ function populateTable(data) {
                 .then(result => {
                     loader.style.display = 'none';
                     console.log('Entry added successfully:', result);
-                    alert("Whatsapp message Sent Successfully");
+                 
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Whatsapp message Sent Successfully',
+                        })
                     //window.location.reload();
                 })
                 .catch(error => {
@@ -284,7 +312,11 @@ async function exportToExcel() {
         .then(response => {
             if (response.status === 404) {
                 loader.style.display = 'none';
-                alert("No data found.");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No data found.',
+                  });
                 throw new Error('Data not found');
             }
             if (!response.ok) {
@@ -310,10 +342,18 @@ async function exportToExcel() {
         .catch(error => {
             loader.style.display = 'none';
             console.error('Error:', error);
-            alert('Error generating PDF. Please try again.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error generating PDF. Please try again.',
+              });
         });
     } catch (error) {
         console.error('Error:', error);
-        alert('Error generating PDF. Please try again.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error generating PDF. Please try again.',
+          });
     }
 }

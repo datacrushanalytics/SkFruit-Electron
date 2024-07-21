@@ -8,7 +8,11 @@ function route() {
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';
-            alert("No data found.");
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No data found.',
+              });
             throw new Error('Data not found');
         }
         if (!response.ok) {
@@ -89,7 +93,12 @@ function deleteRoute(userId) {
             throw new Error('Network response was not ok');
         }
         console.log('Route deleted successfully');
-        alert("Route is successfully Deleted");
+     
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Route is successfully Deleted',
+            })
         // Refresh the table or update UI as needed
         route(); // Assuming you want to refresh the table after delete
     })

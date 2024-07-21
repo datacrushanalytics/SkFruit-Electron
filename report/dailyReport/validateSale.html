@@ -7,6 +7,7 @@
   <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
   <title></title>
   <style>
@@ -1040,7 +1041,11 @@
       .catch(error => {
         console.error('Error:', error);
       });
-    alert('Product added Successfully!!');
+    Swal.fire({
+      icon: 'success',
+      title: 'Success!',
+      text: 'Product added Successfully!!',
+    });
     // Add your desidarkgrey functionality here
   }
 

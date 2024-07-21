@@ -74,7 +74,7 @@ document.getElementById('loginForm1').addEventListener('submit', async function(
     .then(result => {
         loader.style.display = 'none';
         console.log('Entry added successfully:', result);
-        //alert("Receipt Data is added Successfully");
+
         openModal({"receipt_id": formData.receiptId})
         //window.location.reload();
     })

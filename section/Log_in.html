@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>Login Form</title>
     <link rel="stylesheet" href="../assets/css/Log_in.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
     <img src="../assets/img/Sk_fruits1.jpeg" alt="Background image" style="height: 100%; width: 100%; object-fit: cover;">
@@ -53,7 +54,11 @@ function login() {
     .then(response => {
         if (!response.ok) {
           
-            alert("Please enter valid username and password")
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Please enter valid username and password',
+            });
             document.getElementById("username").value = null
             document.getElementById("password").value = null
             throw new Error('Network response was not ok');
