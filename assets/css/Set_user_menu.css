@@ -55,7 +55,7 @@ img{
 }
 
 
-#submitButton {
+#submitButton,  #submitButton1{
     
     background-color: #808080; /* Grey color */
     color: #fff; /* White text color */
@@ -66,7 +66,7 @@ img{
     transition: background-color 0.3s ease; /* Smooth transition for hover effect */
 }
 
-#submitButton:hover {
+#submitButton:hover , #submitButton1:hover {
     background-color: #606060; /* Darker grey color on hover */
 }
 

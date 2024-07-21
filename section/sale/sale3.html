@@ -609,15 +609,29 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     // Fetch data from API and populate Select2 dropdowns
-    fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'grahk', 'name');
+
+    var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    // Check if session data exists and if the user is an admin
+    var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+        // Check if the user is an admin and show/hide the button accordingly
+    if (isAdmin) {
+      fetchAndPopulateDropdown('http://52.66.126.53/mobile', 'number', 'mobile_no');
+      fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'Route', 'route_name');
+      fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'grahk', 'name');
+        }else{
+          var route = sessionData[0].route;
+          fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customerSale/' +route  , 'grahk','name');
+          fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customerSale/' +route  , 'number','mobile_no');
+          fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'Route','route_name',selectedValue=route,readOnly = true);
+        }
+    
     fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'product', 'product_name');
     fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'bta', 'bata');
-    fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'Route', 'route_name');
     fetchAndPopulateDropdown('http://52.66.126.53/list/Bank Account', 'onlineAcc', 'name');
-    fetchAndPopulateDropdown('http://52.66.126.53/mobile', 'number', 'mobile_no');
+    
   });
 
-  function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
+  function fetchAndPopulateDropdown(apiUrl, dropdownId, field,selectedValue = null, readOnly = false) {
     fetch(apiUrl)
       .then(response => {
         if (!response.ok) {
@@ -627,14 +641,14 @@
       })
       .then(data => {
         // Populate Select2 dropdown with API data
-        populateDropdownWithSelect2(data, dropdownId, field);
+        populateDropdownWithSelect2(data, dropdownId, field, selectedValue, readOnly);
       })
       .catch(error => {
         console.error('Error:', error);
       });
   }
 
-  function populateDropdownWithSelect2(data, dropdownId, field) {
+  function populateDropdownWithSelect2(data, dropdownId, field, selectedValue = null, readOnly = false) {
     var dropdown = $('#' + dropdownId);
     // Clear existing options
     dropdown.empty();
@@ -649,9 +663,30 @@
 
     // Initialize Select2
     dropdown.select2({
-      placeholder: "Select " + dropdownId + " type",
-      allowClear: true
-    });
+            placeholder: 'Select components',
+            closeOnSelect: false,
+            allowClear: true,
+            templateResult: function (data) {
+                if (!data.id) {
+                    return data.text;
+                }
+                var $element = $('<span>' + data.text + '</span>');
+                return $element;
+            }
+        });
+
+        // Set selected value if provided
+        if (selectedValue !== null) {
+        dropdown.val(selectedValue).trigger('change');
+        }
+
+        // Make the dropdown read-only if specified
+        if (readOnly) {
+            dropdown.prop('disabled', true);
+        }
+
+
+
   }
 
   function goToAccountPage() {
@@ -825,6 +860,31 @@
   }
 
   function carate1() {
+
+    if (document.getElementById("carate1100").value > document.getElementById('carate2100').value){
+        alert("Carate limit exceed");
+        document.getElementById("carate1100").value = 0;
+    }
+
+    if (document.getElementById("carate1150").value > document.getElementById('carate2150').value){
+        alert("Carate limit exceed");
+        document.getElementById("carate1150").value = 0;
+    }
+
+    if (document.getElementById("carate1250").value > document.getElementById('carate2250').value){
+        alert("Carate limit exceed");
+        document.getElementById("carate1250").value = 0;
+    }
+
+
+    if (document.getElementById("carate1350").value > document.getElementById('carate2350').value){
+        alert("Carate limit exceed");
+        document.getElementById("carate1350").value = 0;
+    }
+
+
+
+
     var value100 = parseInt(document.getElementById("carate1100").value) || 0;
     var value150 = parseInt(document.getElementById("carate1150").value) || 0;
     var value250 = parseInt(document.getElementById("carate1250").value) || 0;

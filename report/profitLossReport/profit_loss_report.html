@@ -91,7 +91,7 @@
   }
 
   
-  #vehicle, #customer{
+  #vehicle, #customer, #user{
     /* border-radius: 8px; */
     height: 35px;
     width: 600px;
@@ -240,6 +240,11 @@
                 <select class="drop" id="bata" id="bata" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br> <br>
+
+                <label for="userType">User :</label>
+                <select class="drop" id="user" id="user" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br> <br>
     
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
@@ -287,6 +292,7 @@
         fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle','vehicle_no');
         fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer','name');
         fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'bata', 'bata');
+        fetchAndPopulateDropdown('http://52.66.126.53/fetchData/user', 'user', 'added_by');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {

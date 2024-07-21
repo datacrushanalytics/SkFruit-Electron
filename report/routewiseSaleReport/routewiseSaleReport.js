@@ -26,7 +26,9 @@ function fetchDataAndProcess() {
         cust_name: getElementValueWithDefault('customer', '*'),
         route: getElementValueWithDefault('route', '*'),
         product: getElementValueWithDefault('product', '*'),
-        bata: getElementValueWithDefault('bata', '*')
+        bata: getElementValueWithDefault('bata', '*'),
+        user: getElementValueWithDefault('user', '*'),
+        vehicle: getElementValueWithDefault('vehicle', '*')
     };
     console.log(data);
     var loader = document.getElementById('loader');
@@ -176,6 +178,78 @@ function populateTable4(data) {
     // Add a final cell for the "Bill" column, leaving it empty
     totalRow.insertCell();
 }
+
+
+
+
+
+function deleteRecord(bill_no) {
+    fetch(`http://52.66.126.53/fetchData/saleProduct/${bill_no}`, {
+        method: 'GET'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Assuming the response is an array of objects
+        data.forEach(item => {
+            console.log(item.id); // Fetch and log the id from each item
+
+            fetch(`http://52.66.126.53/saleproductData/deletesaleproduct/${item.id}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                // alert("Account is successfully Deleted");
+                console.log('data deleted successfully');
+                // Refresh the table or update UI as needed
+                // account(); // Assuming you want to refresh the table after delete
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+    // Perform delete operation based on bill_no
+    fetch(`http://52.66.126.53/saleData/deletesaleId/${bill_no}`, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        alert("Sale is successfully Deleted");
+        console.log('Sale deleted successfully');
+        // Refresh the table or update UI as needed
+        fetchDataAndProcess(); // Assuming you want to refresh the table after delete
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

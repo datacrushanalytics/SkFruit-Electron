@@ -68,7 +68,7 @@
     margin-left: 0%;
   }
 
-  #vehicleNumber{
+  #route{
   /* border-radius: 8px; */
   height: 35px;
   width: 600px;
@@ -239,6 +239,10 @@
                     <input type="date" id="todate" name="date" placeholder="To Date" requidarkgrey>
                 </div><br>
 
+                <label id='lable1111' for="userType">Route :</label>
+                <select class="drop1" id="route" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br><br>
               
             <br>
 
@@ -392,10 +396,18 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicleNumber');
+        fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name');
+        var dailyReportData = JSON.parse(localStorage.getItem('dailyReportData'));
+        if(dailyReportData){
+            console.log("DailyReport",dailyReportData)
+            fetchDataAndProcess(dailyReportData);
+            localStorage.removeItem('dailyReportData');
+        }
+        
+
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId) {
+    function fetchAndPopulateDropdown(apiUrl, dropdownId, field,selectedValue = null, readOnly = false) {
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -405,14 +417,14 @@
             })
             .then(data => {
                 // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId);
+                populateDropdownWithSelect2(data, dropdownId, field, selectedValue , readOnly);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     }
 
-    function populateDropdownWithSelect2(data, dropdownId) {
+    function populateDropdownWithSelect2(data, dropdownId, field,selectedValue = null, readOnly = false) {
         var dropdown = $('#' + dropdownId);
         // Clear existing options
         dropdown.empty();
@@ -422,14 +434,39 @@
 
         // Populate dropdown with API data
         data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.vehicle_no ).text(item.vehicle_no));
+            dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
         });
 
         // Initialize Select2
         dropdown.select2({
-            placeholder: "Select Vehicle",
-            allowClear: true
+            placeholder: 'Select components',
+            closeOnSelect: false,
+            allowClear: true,
+            templateResult: function (data) {
+                if (!data.id) {
+                    return data.text;
+                }
+                var $element = $('<span>' + data.text + '</span>');
+                return $element;
+            }
         });
+
+
+        // Set selected value if provided
+        if (selectedValue !== null) {
+            dropdown.val(selectedValue).trigger('change');
+        }
+
+        // Make the dropdown read-only if specified
+        if (readOnly) {
+            dropdown.prop('disabled', true);
+        }
+
+        // // Initialize Select2
+        // dropdown.select2({
+        //     placeholder: "Select " + dropdownId + " type",
+        //     allowClear: true
+        // });
     }
 
     $(document).on('select2:open', function(e) {
@@ -437,7 +474,6 @@
             document.querySelector('input.select2-search__field').focus();
         }, 0);
     });
-
 </script>
 
 </html>

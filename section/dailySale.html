@@ -306,7 +306,7 @@ th {
         <!-- <div class="button-wrapper">
       <button id="account-page-button" name="ledger" >Leder Report</button>
     </div> -->
-        <button onclick="openPopup()">Route Sale</button>
+        <button onclick="openPopup()">Routewise Hishob</button>
         <div class="popup" id="popup">
           <div class="popup-content">
             <span class="close" onclick="closePopup()">&times;</span>
@@ -384,7 +384,7 @@ th {
                 var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
 
                 var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+                loader.style.display = 'block';
         
                 // Display current date and time
                 //var currentDateElement = document.getElementById('currentDate');
@@ -408,8 +408,13 @@ th {
         });
 
         let worker = "*"
+        let route_name = "*"
         async function fetchData1(){
-            console.log("Localdata", localStorage.getItem('workerData'))
+            var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+            var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+
+            if(isAdmin){
+                console.log("Localdata", localStorage.getItem('workerData'))
                 if (localStorage.getItem('workerData')===null){
                     console.log("Hello")
                     worker = "*"
@@ -422,13 +427,16 @@ th {
                         console.log(workerdate)
                         document.getElementById('currentDate').value = workerdate;
                     }
-                    document.getElementById('user').textContent = worker.name;
+                    document.getElementById('user').textContent = worker;
                     console.log(route)
                     localStorage.removeItem('workerDataDate');
                     localStorage.removeItem('workerData');
                     //localStorage.removeItem('workerData');
                 }
-        
+            }else{
+                worker = sessionData[0].name
+            }
+
                 const fetchData = async () => {
                     const response = await fetch("http://52.66.126.53/fetchData/sale", {
                         method: "POST",
@@ -515,12 +523,31 @@ th {
             totalCell.textContent = 'Total Sale : ' + data.Grand["Total Sale"];
         }
 
-
         function openPopup() {
             event.preventDefault();
             document.getElementById("popup").style.display = "block";
+            function formatDate(dateString) {
+                var date = new Date(dateString);
+                var year = date.getFullYear();
+                var month = ('0' + (date.getMonth() + 1)).slice(-2);
+                var day = ('0' + date.getDate()).slice(-2);
+                return year + '-' + month + '-' + day;
+            }
             var popupIframe = document.getElementById("popupIframe");
-            popupIframe.src = "./routeSale/routeSale.html"; //
+            localStorage.removeItem('dailyReportData');
+            console.log('Editing dailyReportData: ' + JSON.stringify({
+                from_date: formatDate(document.getElementById("currentDate").value),
+                to_date: formatDate(document.getElementById("currentDate").value),
+                added_by : document.getElementById('user').textContent,
+                route : route_name
+            }));
+            localStorage.setItem('dailyReportData', JSON.stringify({
+                from_date: formatDate(document.getElementById("currentDate").value),
+                to_date: formatDate(document.getElementById("currentDate").value),
+                added_by : document.getElementById('user').textContent,
+                route : route_name  
+            }));
+            popupIframe.src = "../report/dailyReport/dailyReport.html"; //
           }
         
           function closePopup() {

@@ -17,11 +17,16 @@ document.getElementById('loginForm1').addEventListener('submit', function(event)
 });
 
 
-function fetchDataAndProcess() {
-    var data = {
-        from_date: formatDate(document.getElementById("fromdate").value),
-        to_date: formatDate(document.getElementById("todate").value),
-    };
+function fetchDataAndProcess(data = null) {
+    if(!data){
+        var data = {
+            from_date: formatDate(document.getElementById("fromdate").value),
+            to_date: formatDate(document.getElementById("todate").value),
+            added_by : "*",
+            route: getElementValueWithDefault('route', '*')
+        };
+    }
+    
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
     return fetch('http://52.66.126.53/dailyReport', {
@@ -140,7 +145,8 @@ function populateTable4(data) {
                     loader.style.display = 'none';
                     console.log('Entry added successfully:', result);
                     alert("Sale Bill is Verified Successfully");
-                    window.location.reload();
+                    fetchDataAndProcess();
+                    // window.location.reload();
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -272,6 +278,7 @@ function populateTable4(data) {
                     console.log('Entry added successfully:', result);
                     alert("Whatsapp message Sent Successfully");
                     //window.location.reload();
+                    // fetchDataAndProcess();
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -387,7 +394,8 @@ function populateTable5(data) {
                     loader.style.display = 'none';
                     console.log('Entry added successfully:', result);
                     alert("Receipt is Verified Successfully");
-                    window.location.reload();
+                    fetchDataAndProcess();
+                    
                 })
                 .catch(error => {
                     console.error('Error:', error);

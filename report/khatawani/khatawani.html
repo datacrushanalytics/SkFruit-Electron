@@ -321,12 +321,24 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route');
-        fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer');
+
+        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+        // Check if session data exists and if the user is an admin
+        var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+        // Check if the user is an admin and show/hide the button accordingly
+        if (isAdmin) {
+            fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route');
+            fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer');
+        }else{
+            var route = sessionData[0].route;
+            fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customer/' +route  , 'customer',readOnly=false);
+            fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route',selectedValue=route,readOnly = true);
+        }
+        
         
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId) {
+    function fetchAndPopulateDropdown(apiUrl, dropdownId,selectedValue = null, readOnly = false) {
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -336,14 +348,14 @@
             })
             .then(data => {
                 // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId);
+                populateDropdownWithSelect2(data, dropdownId, selectedValue, readOnly);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     }
 
-    function populateDropdownWithSelect2(data, dropdownId) {
+    function populateDropdownWithSelect2(data, dropdownId, selectedValue = null, readOnly = false) {
         var dropdown = $('#' + dropdownId);
         // Clear existing options
         dropdown.empty();
@@ -354,7 +366,7 @@
         }
         // Populate dropdown with API data
         data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
+            dropdown.append($('<option></option>').attr('value', item.name || item.route_name || item.cust_name).text(item.name || item.route_name || item.cust_name));
         });
 
         // Initialize Select2
@@ -370,6 +382,18 @@
                 return $element;
             }
         });
+
+        // Set selected value if provided
+        if (selectedValue !== null) {
+            dropdown.val(selectedValue).trigger('change');
+        }
+
+        // Make the dropdown read-only if specified
+        if (readOnly) {
+            dropdown.prop('disabled', true);
+        }
+
+
     }
 
     $(document).on('select2:open', function(e) {
