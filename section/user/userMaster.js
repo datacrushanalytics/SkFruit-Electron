@@ -30,7 +30,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         console.log('Data added successfully:', result);
         alert("User is successfully Added");
         window.location.href = './user.html';
-        // Optionally, you can redirect or show a success message here
+        // Optionally, you can darkgreyirect or show a success message here
     })
     .catch(error => {
         console.error('Error:', error);

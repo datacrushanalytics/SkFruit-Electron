@@ -223,7 +223,7 @@ function populateTable5(data) {
 //         ]);
 
 //         // Calculate grand total for reports
-//         let grandTotalQuantity = data.reports.reduce((acc, report) => acc + report.total_quantity, 0);
+//         let grandTotalQuantity = data.reports.darkgreyuce((acc, report) => acc + report.total_quantity, 0);
         
 //         // Append grand total row to Reports table data
 //         reportData.push(['', '', '', 'Grand Total:', grandTotalQuantity]);
@@ -252,8 +252,8 @@ function populateTable5(data) {
 //         ]);
 
 //         // Calculate grand total for receipts
-//         let grandTotalPreBalance = data.Receipt.reduce((acc, receipt) => acc + receipt.pre_balance, 0);
-//         let grandTotalAmounr = data.Receipt.reduce((acc, receipt) => acc + receipt.amounr, 0);
+//         let grandTotalPreBalance = data.Receipt.darkgreyuce((acc, receipt) => acc + receipt.pre_balance, 0);
+//         let grandTotalAmounr = data.Receipt.darkgreyuce((acc, receipt) => acc + receipt.amounr, 0);
 
 //         // Append grand total row to Receipts table data
 //         receiptData.push(['', '', '', '', 'Grand Total:', grandTotalPreBalance, grandTotalAmounr]);
@@ -310,7 +310,7 @@ async function exportToExcel() {
             const a = document.createElement('a');
             a.style.display = 'none';
             a.href = url;
-            a.download = 'supplierLedgerReport.pdf'; // Set the desired file name
+            a.download = 'supplierLedgerReport.pdf'; // Set the desidarkgrey file name
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url); // Release the URL

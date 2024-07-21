@@ -130,14 +130,14 @@
             <form id="loginForm" method="POST">
                 <div class="first-row">
                     <label for="ID">ID :</label>
-                    <input type="text" id="id" name="id" placeholder="ID" value="" required readonly>
+                    <input type="text" id="id" name="id" placeholder="ID" value="" requidarkgrey readonly>
                 </div>
                 <!-- <input type="text" id="account_group" name="account_group" placeholder="Account Group">
                 <input type="text" id="route_detail" name="route_detail" placeholder="Route Detail">
  -->
 
                 <label for="account_group">Account Group :</label>
-                <select class="drop" id="account_group" name="account_group" required><br>
+                <select class="drop" id="account_group" name="account_group" requidarkgrey><br>
                     <!-- Options will be dynamically populated -->
                 </select>
                 <br>
@@ -149,17 +149,17 @@
                 <br> <br>
 
                 <label for="text"> Name: </label>
-                <input type="text" id="name" name="name" placeholder="Name" required>
+                <input type="text" id="name" name="name" placeholder="Name" requidarkgrey>
                 <label for="name">Company Name :</label>
                 <input type="text" id="company" name="company"><br>
                 <label for="text"> Address: </label>
-                <input type="text" id="address" name="address" placeholder="Address" required>
+                <input type="text" id="address" name="address" placeholder="Address" requidarkgrey>
                 <label for="text"> mobile_no: </label>
-                <input type="text" id="no" name="mobile_no" placeholder="Mobile No" required>
+                <input type="text" id="no" name="mobile_no" placeholder="Mobile No" requidarkgrey>
                 <label for="no">Optional Mobile No :</label>
                 <input type="text" id="optional_mobile" name="optional_mobile"> <br>
                 <label for="text"> prev_balance: </label>
-                <input type="text" id="preBalance" name="prev_balance" placeholder="Previous Balance" required>
+                <input type="text" id="preBalance" name="prev_balance" placeholder="Previous Balance" requidarkgrey>
 
                 <label>Ramaining Carate :</label>
                 <div class="row-container">
@@ -185,14 +185,14 @@
 
                 <div class="second-row">
                     Carate Bill : 
-                    <input type="radio" id="cr" name="cr_dr_type" value="yes" required>
+                    <input type="radio" id="cr" name="cr_dr_type" value="yes" requidarkgrey>
                     <label for="cr">Carate with payment</label>
-                    <input type="radio" id="dr" name="cr_dr_type" value="no" required>
+                    <input type="radio" id="dr" name="cr_dr_type" value="no" requidarkgrey>
                     <label for="dr">Carate without payment</label>
                 </div>
                 <div class="third-row">
-                    <button type="submit" style="background-color: green;" id="updateButton">Save</button>
-                    <a href="./account.html"><button type="button" style="background-color: red;">Back</button></a>
+                    <button type="submit" style="background-color: darkgrey;" id="updateButton">Save</button>
+                    <a href="./account.html"><button type="button" style="background-color: darkgrey;">Back</button></a>
                 </div>
             </form>
         </div>
@@ -369,7 +369,7 @@
                 loader.style.display = 'none';
                 console.log('Data added successfully:', result);
                 alert('Data Updated successfully')
-                // Optionally, you can redirect or show a success message here
+                // Optionally, you can darkgreyirect or show a success message here
             } catch (error) {
                 console.error('Error:', error);
                 // Optionally, you can display an error message here

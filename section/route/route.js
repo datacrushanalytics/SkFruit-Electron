@@ -46,7 +46,7 @@ function populateTable(data) {
             var editCell = row.insertCell();
             var editButton = document.createElement('button');
             editButton.className = 'button1 edit-button';
-            editButton.style.backgroundColor = 'green';
+            editButton.style.backgroundColor = 'darkgrey';
             var editLink = document.createElement('a');
             editLink.href = '../route/update_route.html'; // Edit link destination
             editLink.textContent = 'Edit';
@@ -73,7 +73,7 @@ function populateTable(data) {
 
 function editRoute(user) {
     localStorage.setItem('userData', JSON.stringify(user));
-     // Redirect to user_update.html
+     // darkgreyirect to user_update.html
      window.location.href = '../route/update_route.html';
 }
 

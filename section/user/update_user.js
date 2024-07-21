@@ -28,7 +28,7 @@ async function updateUser() {
         loader.style.display = 'none';
         console.log('Data added successfully:', result);
         alert('Data Updated successfully')
-        // Optionally, you can redirect or show a success message here
+        // Optionally, you can darkgreyirect or show a success message here
     } catch (error) {
         console.error('Error:', error);
         // Optionally, you can display an error message here

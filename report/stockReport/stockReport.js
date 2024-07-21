@@ -60,7 +60,7 @@ function fetchDataAndProcess() {
         console.log(result)
         populateTable4(result)
         return result;
-        // Optionally, you can redirect or show a success message here
+        // Optionally, you can darkgreyirect or show a success message here
     })
     .catch(error => {
         console.error('Error:', error);
@@ -192,7 +192,7 @@ async function exportToExcel() {
             const a = document.createElement('a');
             a.style.display = 'none';
             a.href = url;
-            a.download = 'stockReport.pdf'; // Set the desired file name
+            a.download = 'stockReport.pdf'; // Set the desidarkgrey file name
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url); // Release the URL

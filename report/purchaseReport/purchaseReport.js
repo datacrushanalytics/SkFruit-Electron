@@ -55,7 +55,7 @@ function fetchDataAndProcess() {
         console.log(result)
         populateTable4(result)
         return result;
-        // Optionally, you can redirect or show a success message here
+        // Optionally, you can darkgreyirect or show a success message here
     })
     .catch(error => {
         console.error('Error:', error);
@@ -128,7 +128,7 @@ function populateTable4(data) {
             var editCell = row.insertCell();
             var editButton = document.createElement('button');
             editButton.className = 'button edit-button';
-            editButton.style.backgroundColor = 'green';
+            editButton.style.backgroundColor = 'darkgrey';
             var editLink = document.createElement('a');
             editLink.href = './updatePurchase.html'; // Edit link destination
             editLink.textContent = 'Edit';
@@ -144,7 +144,7 @@ function populateTable4(data) {
             var deleteCell = row.insertCell();
             var deleteButton = document.createElement('button');
             deleteButton.className = 'button delete-button';
-            deleteButton.style.backgroundColor = 'red';
+            deleteButton.style.backgroundColor = 'darkgrey';
             deleteButton.textContent = 'Delete';
             deleteButton.addEventListener('click', function () {
                 deleteaccount(item.id); // Pass the user id to the delete function
@@ -186,7 +186,7 @@ function editAccount(user) {
     localStorage.removeItem('purchaseData');
     console.log('Editing user: ' + JSON.stringify(user));
     localStorage.setItem('purchaseData', JSON.stringify(user));
-     // Redirect to user_update.html
+     // darkgreyirect to user_update.html
      window.location.href = './updatePurchase.html';
   }
 
@@ -247,8 +247,8 @@ function deleteaccount(userId) {
 //         ]);
 
 //         // Calculate grand totals
-//         const grandTotalAmount = data.reports.reduce((total, report) => total + parseFloat(report.BillAmount), 0);
-//         const grandTotalQuantity = data.reports.reduce((total, report) => total + parseFloat(report.TotalQuantity), 0);
+//         const grandTotalAmount = data.reports.darkgreyuce((total, report) => total + parseFloat(report.BillAmount), 0);
+//         const grandTotalQuantity = data.reports.darkgreyuce((total, report) => total + parseFloat(report.TotalQuantity), 0);
 
 //         // Add grand totals row to reportData
 //         reportData.push(['Grand Total:', '', '', '','', grandTotalAmount.toFixed(2), grandTotalQuantity.toFixed(2)]);
@@ -302,7 +302,7 @@ async function exportToExcel() {
             const a = document.createElement('a');
             a.style.display = 'none';
             a.href = url;
-            a.download = 'purchaseReport.pdf'; // Set the desired file name
+            a.download = 'purchaseReport.pdf'; // Set the desidarkgrey file name
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url); // Release the URL
@@ -475,7 +475,7 @@ function openModal(item) {
             text-align: left;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #c7d5d3;
         }
         .total {
             font-weight: bold;

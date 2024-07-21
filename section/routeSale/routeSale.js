@@ -37,7 +37,7 @@ function fetchDataAndProcess() {
         console.log(result)
         populateTable4(result)
         return result;
-        // Optionally, you can redirect or show a success message here
+        // Optionally, you can darkgreyirect or show a success message here
     })
     .catch(error => {
         console.error('Error:', error);
@@ -65,7 +65,7 @@ function populateTable4(data) {
             
         });
         if (item.BillCount > 0) {
-            row.style.backgroundColor = "#90EE90"; // Light green
+            row.style.backgroundColor = "#90EE90"; // Light darkgrey
         }
 
         // Add a click event listener to the row

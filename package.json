@@ -10,7 +10,7 @@
     "make": "electron-forge make",
     "make:windows": "electron-forge make --platform=win32",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "lint": "echo \"No linting configudarkgrey\""
   },
   "keywords": [],
   "author": {

@@ -97,7 +97,7 @@ function populateTable4(data) {
                     let button = document.createElement('button');
                     button.textContent = "Edit";
                     button.className = 'button';
-                    button.style.backgroundColor = 'green';
+                    button.style.backgroundColor = 'darkgrey';
                     button.onclick = function() {
                         localStorage.removeItem('saleData');
                         console.log('Editing Sale: ' + JSON.stringify(item));
@@ -111,7 +111,7 @@ function populateTable4(data) {
 
                     // Create the second button
                     let button2 = document.createElement('button');
-                    button2.textContent = "Verify"; // Change this to the desired button text
+                    button2.textContent = "Verify"; // Change this to the desidarkgrey button text
                     button2.className = 'button';
                     button2.onclick = async function() {
                         // Add the functionality for the second button here
@@ -169,7 +169,7 @@ function populateTable4(data) {
         var buttonCell = row.insertCell();
         var openPopupButton = document.createElement('button');
         openPopupButton.className = 'button';
-        openPopupButton.style.backgroundColor = 'green';
+        openPopupButton.style.backgroundColor = 'darkgrey';
         openPopupButton.textContent = 'View';
         openPopupButton.addEventListener('click', function () {
             // console.log(item.summary.split('(')[0])
@@ -233,7 +233,7 @@ function populateTable4(data) {
         // Second button
         var secondButton = document.createElement('button');
         secondButton.className = 'button';
-        secondButton.style.backgroundColor = 'green';
+        secondButton.style.backgroundColor = 'darkgrey';
         var secondIcon = document.createElement('i');
         secondIcon.className = 'fa-brands fa-whatsapp';
         secondButton.appendChild(secondIcon);
@@ -344,7 +344,7 @@ function populateTable5(data) {
 
                     let button1 = document.createElement('button');
                     button1.textContent = "Edit";
-                    button1.style.backgroundColor = 'green';
+                    button1.style.backgroundColor = 'darkgrey';
                     button1.className = 'button';
                     button1.onclick = function() {
                         localStorage.removeItem('receiptData');
@@ -358,7 +358,7 @@ function populateTable5(data) {
 
                     // Create the second button
                     let button2 = document.createElement('button');
-                    button2.textContent = "Verify"; // Change this to the desired button text
+                    button2.textContent = "Verify"; // Change this to the desidarkgrey button text
                     button2.className = 'button';
                     button2.onclick = async function() {
                         // Add the functionality for the second button here
@@ -416,7 +416,7 @@ function populateTable5(data) {
         var buttonCell = row.insertCell();
         var openPopupButton = document.createElement('button');
         openPopupButton.className = 'button';
-        openPopupButton.style.backgroundColor = 'green';
+        openPopupButton.style.backgroundColor = 'darkgrey';
         openPopupButton.textContent = 'View';
         openPopupButton.addEventListener('click', function () {
             // console.log(item.summary.split('(')[0])
@@ -481,7 +481,7 @@ function populateTable5(data) {
         // Second button
         var secondButton = document.createElement('button');
         secondButton.className = 'button';
-        secondButton.style.backgroundColor = 'green';
+        secondButton.style.backgroundColor = 'darkgrey';
         var secondIcon = document.createElement('i');
         secondIcon.className = 'fa-brands fa-whatsapp';
         secondButton.appendChild(secondIcon);
@@ -616,12 +616,12 @@ function populateTable5(data) {
 //         ]);
 //         // Calculate grand totals for Reports
 //         const grandTotalReports = {
-//             amount: data.reports.reduce((total, item) => total + item.amount, 0),
-//             cash: data.reports.reduce((total, item) => total + item.cash, 0),
-//             online_amt: data.reports.reduce((total, item) => total + item.online_amt, 0),
-//             discount: data.reports.reduce((total, item) => total + item.discount, 0),
-//             inCarat: data.reports.reduce((total, item) => total + item.inCarat, 0),
-//             carate_amount: data.reports.reduce((total, item) => total + item.carate_amount, 0)
+//             amount: data.reports.darkgreyuce((total, item) => total + item.amount, 0),
+//             cash: data.reports.darkgreyuce((total, item) => total + item.cash, 0),
+//             online_amt: data.reports.darkgreyuce((total, item) => total + item.online_amt, 0),
+//             discount: data.reports.darkgreyuce((total, item) => total + item.discount, 0),
+//             inCarat: data.reports.darkgreyuce((total, item) => total + item.inCarat, 0),
+//             carate_amount: data.reports.darkgreyuce((total, item) => total + item.carate_amount, 0)
 //         };
 //         // Add Reports table to PDF
 //         doc.autoTable({
@@ -655,11 +655,11 @@ function populateTable5(data) {
 //         ]);
 //         // Calculate grand totals for Receipts
 //         const grandTotalReceipts = {
-//             cash: data.Receipt.reduce((total, item) => total + item.cash, 0),
-//             online: data.Receipt.reduce((total, item) => total + item.online, 0),
-//             discount: data.Receipt.reduce((total, item) => total + item.discount, 0),
-//             inCarat: data.Receipt.reduce((total, item) => total + item.inCarat, 0),
-//             Amt: data.Receipt.reduce((total, item) => total + item.Amt, 0)
+//             cash: data.Receipt.darkgreyuce((total, item) => total + item.cash, 0),
+//             online: data.Receipt.darkgreyuce((total, item) => total + item.online, 0),
+//             discount: data.Receipt.darkgreyuce((total, item) => total + item.discount, 0),
+//             inCarat: data.Receipt.darkgreyuce((total, item) => total + item.inCarat, 0),
+//             Amt: data.Receipt.darkgreyuce((total, item) => total + item.Amt, 0)
 //         };
 
 //         // Add grand total row
@@ -720,7 +720,7 @@ async function exportToExcel() {
             const a = document.createElement('a');
             a.style.display = 'none';
             a.href = url;
-            a.download = 'dailyReport.pdf'; // Set the desired file name
+            a.download = 'dailyReport.pdf'; // Set the desidarkgrey file name
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url); // Release the URL
@@ -1348,7 +1348,7 @@ function openModal1(item) {
 
     .carate-box {
         background-color: #e9e9e9;
-        padding: 8px; /* Reduced padding */
+        padding: 8px; /* darkgreyuced padding */
         margin: 5px;
         border: 1px solid #ccc;
         border-radius: 5px;

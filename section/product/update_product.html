@@ -123,25 +123,25 @@
             <form id="loginForm" method="POST">
                 <div class="first-row">
                     <label for="Id">ID :</label>
-                    <input type="text" id="id" name="id" placeholder="ID" value = "" required readonly> 
+                    <input type="text" id="id" name="id" placeholder="ID" value = "" requidarkgrey readonly> 
                     <label for="text">Category :</label>
-                    <select id="category" name="category" placeholder="Category" required>
+                    <select id="category" name="category" placeholder="Category" requidarkgrey>
                         <br>
                         <br>
                         <!-- Add options here -->
                     </select>
                 </div>
                 <label for="text">Name :</label>
-                <input type="text" id="name" name="name" placeholder="Product Name" required>
+                <input type="text" id="name" name="name" placeholder="Product Name" requidarkgrey>
                 <br>
                 <label for="text">Rate :</label>
-                <input type="text" id="rate" name="rate" placeholder="Rate" required>
+                <input type="text" id="rate" name="rate" placeholder="Rate" requidarkgrey>
                 <br>
                 <label for="text">W Rate :</label>
-                <input type="text" id="w_rate" name="w_rate" placeholder="W Rate" required>  
+                <input type="text" id="w_rate" name="w_rate" placeholder="W Rate" requidarkgrey>  
                 <br>
                 <label for="text">Minimum Stock :</label>
-                <input type="text" id="minimum_stock" name="minimum_stock" placeholder="Minimum Stock" required>
+                <input type="text" id="minimum_stock" name="minimum_stock" placeholder="Minimum Stock" requidarkgrey>
                 <br>
 
                 <div class="second-row">
@@ -151,8 +151,8 @@
                 </div>
 
                 <div class="third-row">
-                    <button type="submit" id="updateButton" style="background-color: green;" class="border-hover">Save</button>
-                    <a href="./product.html"><button type="button" style="background-color: red;" class="border-hover">Back</button></a>
+                    <button type="submit" id="updateButton" style="background-color: darkgrey;" class="border-hover">Save</button>
+                    <a href="./product.html"><button type="button" style="background-color: darkgrey;" class="border-hover">Back</button></a>
                 </div>
             </form>
         </div>
@@ -265,7 +265,7 @@
                 loader.style.display = 'none';
                 console.log('Data added successfully:', result);
                 alert('Data Updated successfully')
-                // Optionally, you can redirect or show a success message here
+                // Optionally, you can darkgreyirect or show a success message here
             } catch (error) {
                 console.error('Error:', error);
                 // Optionally, you can display an error message here

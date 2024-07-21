@@ -129,21 +129,21 @@
         <div class="container1">
             <form id="loginForm" method="POST">
                 <label for="text"> Name: </label>
-                <input type="text" id="name" name="name" placeholder="Name" required readonly>
+                <input type="text" id="name" name="name" placeholder="Name" requidarkgrey readonly>
                 <label for="text"> Address: </label>
-                <input type="text" id="address" name="address" placeholder="Address" required readonly>
+                <input type="text" id="address" name="address" placeholder="Address" requidarkgrey readonly>
                 <label for="text"> mobile_no: </label>
-                <input type="text" id="no" name="mobile_no" placeholder="Mobile No" required readonly>
+                <input type="text" id="no" name="mobile_no" placeholder="Mobile No" requidarkgrey readonly>
                 <label for="text"> Remainder Date: </label><br>
-                <input type="date" id="remainder" name="remainder" placeholder="Remainder date" required>
+                <input type="date" id="remainder" name="remainder" placeholder="Remainder date" requidarkgrey>
                 <br>
                 <label for="text"> Current Balance: </label>
-                <input type="text" id="preBalance" name="prev_balance" placeholder="Current Balance" required readonly>
+                <input type="text" id="preBalance" name="prev_balance" placeholder="Current Balance" requidarkgrey readonly>
 
 
                 <div class="third-row">
-                    <button type="submit" style="background-color: green;" id="updateButton">Save</button>
-                    <a href="./remainder.html"><button type="button" style="background-color: red;">Back</button></a>
+                    <button type="submit" style="background-color: darkgrey;" id="updateButton">Save</button>
+                    <a href="./remainder.html"><button type="button" style="background-color: darkgrey;">Back</button></a>
                 </div>
             </form>
         </div>
@@ -220,7 +220,7 @@ if (lastUpdate) {
                 loader.style.display = 'none';
                 console.log('Data added successfully:', result);
                 alert('Data Updated successfully')
-                // Optionally, you can redirect or show a success message here
+                // Optionally, you can darkgreyirect or show a success message here
             } catch (error) {
                 console.error('Error:', error);
                 // Optionally, you can display an error message here

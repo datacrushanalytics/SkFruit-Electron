@@ -56,7 +56,7 @@ function populateTable(data) {
             var editCell = row.insertCell();
             var editButton = document.createElement('button');
             editButton.className = 'button edit-button';
-            editButton.style.backgroundColor = 'green';
+            editButton.style.backgroundColor = 'darkgrey';
             var editLink = document.createElement('a');
             editLink.href = '../user/update_user.html'; // Edit link destination
             editLink.textContent = 'Edit';
@@ -72,7 +72,7 @@ function populateTable(data) {
             var deleteCell = row.insertCell();
             var deleteButton = document.createElement('button');
             deleteButton.className = 'button delete-button';
-            deleteButton.style.backgroundColor = 'red';
+            deleteButton.style.backgroundColor = 'darkgrey';
             deleteButton.textContent = 'Delete';
             deleteButton.addEventListener('click', function() {
                 deleteUser(item.id); // Pass the user id to the delete function
@@ -84,7 +84,7 @@ function populateTable(data) {
 
 function editUser(user) {
     localStorage.setItem('userData', JSON.stringify(user));
-     // Redirect to user_update.html
+     // darkgreyirect to user_update.html
      window.location.href = '../user/update_user.html';
 }
 
