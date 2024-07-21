@@ -433,7 +433,7 @@
     
 
     function displayBarcodePopup(item) {
-        var barcodeValue = item['bata'];
+        var barcodeValue = 'Product Name:' + item['product_name'].split('(')[0] + ' \nBata:' + item['bata'];
         var popupContent = `
             <div class="popup">
             
