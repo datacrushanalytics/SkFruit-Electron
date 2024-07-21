@@ -69,7 +69,7 @@
     margin-left: 4%;
   }
 
-  #customer, #route {
+  #customer, #route, #user, #vehicle {
     border: 1px solid;
     /* box-shadow: 5px 10px 8px grey; */
     /* border-radius: 8px; */
@@ -267,7 +267,7 @@
 
 
     <div class="container">
-        <h1 align="center">Routewise Sale Report</h1><br>
+        <h1 align="center">Sale Report</h1><br>
         <hr>
         <br>
         <div class="container1">
@@ -299,6 +299,19 @@
 
                 <label for="userType">Bata :</label>
                 <select class="drop" id="bata" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br><br>
+
+
+
+                <label for="userType">Vehicle :</label>
+                <select class="drop" id="vehicle" name="Vehicle">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br><br>
+
+
+                <label for="userType">User :</label>
+                <select class="drop" id="user" name="user">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br><br>
 
@@ -348,13 +361,27 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer','name');
-        fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name');
+        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+        // Check if session data exists and if the user is an admin
+        var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+        // Check if the user is an admin and show/hide the button accordingly
+        if (isAdmin) {
+            fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer','name');
+            fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name');
+            fetchAndPopulateDropdown('http://52.66.126.53/fetchData/user', 'user', 'added_by');
+        }else{
+            var route = sessionData[0].route;
+            var user = sessionData[0].name;
+            fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customer/' +route  , 'customer','cust_name');
+            fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name',selectedValue=route,readOnly = true);
+            fetchAndPopulateDropdown('http://52.66.126.53/fetchData/user', 'user', 'added_by',selectedValue=user,readOnly = true);
+        }
         fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'product', 'product_name');
         fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'bata', 'bata');
+        fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle','vehicle_no');
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
+    function fetchAndPopulateDropdown(apiUrl, dropdownId, field,selectedValue = null, readOnly = false) {
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -364,14 +391,14 @@
             })
             .then(data => {
                 // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId, field);
+                populateDropdownWithSelect2(data, dropdownId, field, selectedValue , readOnly);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     }
 
-    function populateDropdownWithSelect2(data, dropdownId, field) {
+    function populateDropdownWithSelect2(data, dropdownId, field,selectedValue = null, readOnly = false) {
         var dropdown = $('#' + dropdownId);
         // Clear existing options
         dropdown.empty();
@@ -386,9 +413,34 @@
 
         // Initialize Select2
         dropdown.select2({
-            placeholder: "Select " + dropdownId + " type",
-            allowClear: true
+            placeholder: 'Select components',
+            closeOnSelect: false,
+            allowClear: true,
+            templateResult: function (data) {
+                if (!data.id) {
+                    return data.text;
+                }
+                var $element = $('<span>' + data.text + '</span>');
+                return $element;
+            }
         });
+
+
+        // Set selected value if provided
+        if (selectedValue !== null) {
+            dropdown.val(selectedValue).trigger('change');
+        }
+
+        // Make the dropdown read-only if specified
+        if (readOnly) {
+            dropdown.prop('disabled', true);
+        }
+
+        // // Initialize Select2
+        // dropdown.select2({
+        //     placeholder: "Select " + dropdownId + " type",
+        //     allowClear: true
+        // });
     }
 
     $(document).on('select2:open', function(e) {

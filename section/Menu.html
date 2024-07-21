@@ -231,7 +231,7 @@ a{
                 </button>
 
                 <button class="btn">
-                    <a href="./dailyPayment.html">
+                    <a href="../report/dailyReport/dailyReport.html">
                     <div class="btn-image">
                         <img src="../assets/img/3.png" alt="Image Description">
                     </div>
@@ -270,7 +270,7 @@ a{
 
 
     <div class="table-container" id = "userContent">
-        <table>
+        <!-- <table>
             <thead>
             <tr>
                 <th>Sr. No</th>
@@ -278,11 +278,43 @@ a{
                 <th>Sale BILL</th>
             </tr>
             </thead>
-            <!-- Add more rows as needed -->
             <tbody id="tableBody">
-                <!-- Data will be inserted here -->
             </tbody>
-        </table>
+        </table> -->
+        <div class="scrollview">
+            
+
+            <button class="btn">
+                <a href="./dailySale.html">
+                <div class="btn-image">
+                    <img src="../assets/img/4.png" alt="Image Description">
+                </div>
+                <div class="btn-content">
+                    <h2>Sales</h2>
+                </div>
+                <div class="btn-number">
+                    <h2 id="saleTotal2">0</h2>
+                </div>
+                </a>
+            </button>
+
+            <button class="btn">
+                <a href="./dailyReceipt.html">
+                <div class="btn-image">
+                    <img src="../assets/img/2.png" alt="Image Description">
+                </div>
+                <div class="btn-content">
+                    <h2>Receipt</h2>
+                </div>
+                <div class="btn-number">
+                    <h2 id="receiptTotal2">0</h2>
+                </div>
+            </a>
+            </button>
+
+
+
+        </div>
     </div>
     </body> 
 
@@ -325,11 +357,11 @@ a{
         document.getElementById('currentDate').readOnly = true; // Hide the button for non-admin users
         document.getElementById('adminContent').style.display = 'none';
         document.getElementById('adminContent2').style.display = 'none';
-        routeSale(sessionData[0].route, document.getElementById('currentDate').value);
+        // routeSale(sessionData[0].route, document.getElementById('currentDate').value);
     }else{
         document.getElementById('userContent').style.display = 'none';
-        fetchTiles();
     }
+    fetchTiles();
     // Update the time every second
     setInterval(updateTime, 1000);
     updateTime();
@@ -375,14 +407,20 @@ a{
                     console.log( data[0][`Total${nn.charAt(0).toUpperCase() + nn.slice(1)}`] || 0)
                     document.getElementById(id).textContent = data[0][`Total${nn.charAt(0).toUpperCase() + nn.slice(1)}`] || 0;
                 };
-        
-                await Promise.all([
-                    renderData(),
-                    fetchAPI("http://52.66.126.53/fetchTotal/purchase", 'purhcaseTotal'),
-                    fetchAPI("http://52.66.126.53/fetchTotal/sale", 'saleTotal'),
-                    fetchAPI("http://52.66.126.53/fetchTotal/receipt", 'receiptTotal'),
-                    fetchAPI("http://52.66.126.53/fetchTotal/payment", 'paymentTotal')
-                ]);
+                var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+            var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+                if (isAdmin) {
+                    await Promise.all([
+                        renderData(),
+                        fetchAPI("http://52.66.126.53/fetchTotal/purchase", 'purhcaseTotal'),
+                        fetchAPI("http://52.66.126.53/fetchTotal/sale", 'saleTotal'),
+                        fetchAPI("http://52.66.126.53/fetchTotal/receipt", 'receiptTotal'),
+                        fetchAPI("http://52.66.126.53/fetchTotal/payment", 'paymentTotal')
+                    ]);
+                }else{
+                    fetchAPI(`http://52.66.126.53/fetchTotal/saleuser/${sessionData[0].name}`, 'saleTotal2'),
+                    fetchAPI(`http://52.66.126.53/fetchTotal/receiptuser/${sessionData[0].name}`, 'receiptTotal2')
+                }
         
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -482,84 +520,84 @@ a{
         
             // Defination of routeSale Function
 
-            function routeSale(route, date) {
-                var data = {
-                    route : route, 
-                    date : date
-                };
-                console.log(data);
+            // function routeSale(route, date) {
+            //     var data = {
+            //         route : route, 
+            //         date : date
+            //     };
+            //     console.log(data);
             
-                var loader = document.getElementById('loader');
-                    loader.style.display = 'block';
-                return fetch('http://52.66.126.53/routeSale/sale', {
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(response => {
-                    if (response.status === 404) {
-                    loader.style.display = 'none';
-                        alert("No data found.");
-                        throw new Error('Data not found');
-                    }
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(result => {
-                    loader.style.display = 'none';
-                    console.log(result)
-                    populateTable4(result)
-                    return result;
-                    // Optionally, you can redirect or show a success message here
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    // Optionally, you can display an error message here
-                });
+            //     var loader = document.getElementById('loader');
+            //         loader.style.display = 'block';
+            //     return fetch('http://52.66.126.53/routeSale/sale', {
+            //         method: 'POST',
+            //         body: JSON.stringify(data),
+            //         headers: {
+            //             'Content-Type': 'application/json'
+            //         }
+            //     })
+            //     .then(response => {
+            //         if (response.status === 404) {
+            //         loader.style.display = 'none';
+            //             alert("No data found.");
+            //             throw new Error('Data not found');
+            //         }
+            //         if (!response.ok) {
+            //             throw new Error('Network response was not ok');
+            //         }
+            //         return response.json();
+            //     })
+            //     .then(result => {
+            //         loader.style.display = 'none';
+            //         console.log(result)
+            //         populateTable4(result)
+            //         return result;
+            //         // Optionally, you can redirect or show a success message here
+            //     })
+            //     .catch(error => {
+            //         console.error('Error:', error);
+            //         // Optionally, you can display an error message here
+            //     });
 
-            }
+            // }
 
 
 
-            function populateTable4(data) {
-                var tbody = document.getElementById('tableBody');
-                tbody.innerHTML = ''; // Clear existing rows
-                var columnsToDisplay = ['name', 'BillCount'];
-                var counter = 1;
-                console.log(data.reports);
-                if (data.reports.length === 0) {
-                    alert("No Data Found");
-                }
-                data.reports.forEach(function (item) {
-                    var row = tbody.insertRow();
-                    var cell = row.insertCell();
-                    cell.textContent = counter++;
-                    columnsToDisplay.forEach(function (key) {
-                        var cell = row.insertCell();
-                        cell.textContent = item[key];
-                        // row.style.backgroundColor = "#90EE90";
+            // function populateTable4(data) {
+            //     var tbody = document.getElementById('tableBody');
+            //     tbody.innerHTML = ''; // Clear existing rows
+            //     var columnsToDisplay = ['name', 'BillCount'];
+            //     var counter = 1;
+            //     console.log(data.reports);
+            //     if (data.reports.length === 0) {
+            //         alert("No Data Found");
+            //     }
+            //     data.reports.forEach(function (item) {
+            //         var row = tbody.insertRow();
+            //         var cell = row.insertCell();
+            //         cell.textContent = counter++;
+            //         columnsToDisplay.forEach(function (key) {
+            //             var cell = row.insertCell();
+            //             cell.textContent = item[key];
+            //             // row.style.backgroundColor = "#90EE90";
                         
-                    });
-                    if (item.BillCount > 0) {
-                        row.style.backgroundColor = "#90EE90"; // Light green
-                    }
+            //         });
+            //         if (item.BillCount > 0) {
+            //             row.style.backgroundColor = "#90EE90"; // Light green
+            //         }
             
-                    // Add a click event listener to the row
-                    row.addEventListener('click', function() {
-                        // Define what should happen when the row is clicked
-                        // For example, navigate to a new page or display more details
-                        // alert('Row clicked: ' + JSON.stringify(item));
-                        localStorage.removeItem('routeSaleData');
-                        console.log('Editing receipt: ' + JSON.stringify(item));
-                        localStorage.setItem('routeSaleData', JSON.stringify(item));
-                        window.location.href = './routeSale/routeSale3.html';
-                    });
-                });
-            }
+            //         // Add a click event listener to the row
+            //         row.addEventListener('click', function() {
+            //             // Define what should happen when the row is clicked
+            //             // For example, navigate to a new page or display more details
+            //             // alert('Row clicked: ' + JSON.stringify(item));
+            //             localStorage.removeItem('routeSaleData');
+            //             console.log('Editing receipt: ' + JSON.stringify(item));
+            //             localStorage.setItem('routeSaleData', JSON.stringify(item));
+            //             window.location.href = './routeSale/routeSale3.html';
+            //         });
+            //     });
+            // }
             
    
 

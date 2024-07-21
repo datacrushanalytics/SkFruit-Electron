@@ -22,7 +22,8 @@ function fetchDataAndProcess() {
         to_date: formatDate(document.getElementById("todate").value),
         customer: getElementValueWithDefault('customer', '*'),
         vehicle: getElementValueWithDefault('vehicle', '*'),
-        bata: getElementValueWithDefault('bata', '*')
+        bata: getElementValueWithDefault('bata', '*'),
+        user: getElementValueWithDefault('user', '*')
     };
     console.log(data);
     var loader = document.getElementById('loader');

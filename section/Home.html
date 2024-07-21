@@ -193,10 +193,10 @@ h3 img {
 
       <!-- Footer within main-container -->
       <div class="footer" id="footer">
-        <a href="#" class="footer-link" onclick="loadPage('./Menu.html')"><i class="fas fa-home"></i> Home</a>
+        <!-- <a href="#" class="footer-link" onclick="loadPage('./Menu.html')"><i class="fas fa-home"></i> Home</a>
         <a href="#" class="footer-link" onclick="loadPage('../section/sale/sale3.html')"><i class="fas fa-tag"></i> Sale</a>
         <a href="#" class="footer-link" onclick="loadPage('../section/receipt/Receipt.html')"><i class="fas fa-receipt"></i> Receipt</a>
-        <a href="#" class="footer-link" onclick="loadPage('../section/payment/Payment.html')"><i class="fas fa-money-check-alt"></i> Payment</a>
+        <a href="#" class="footer-link" onclick="loadPage('../section/payment/Payment.html')"><i class="fas fa-money-check-alt"></i> Payment</a> -->
       </div>
       
     </div>
@@ -238,9 +238,6 @@ h3 img {
               button.onclick = handleButtonClick; // Use the handleButtonClick function
               sidebarContainer.appendChild(button);
             }
-     
-
-
 
           });
 
@@ -257,6 +254,37 @@ h3 img {
 
 
         })
+
+
+        fetch("http://52.66.126.53/footerconfigData")
+        .then(response => response.json())
+        .then(data => {
+          loader.style.display = 'none';
+          var footerContainer = document.getElementById('footer');
+
+          data.forEach(menu => {
+        if (isAdmin || menu.status === 'active') {
+          var footerLink = document.createElement('a');
+          footerLink.href = menu.link || "#"; // Use appropriate link from data
+          footerLink.classList.add('footer-link');
+          footerLink.textContent = menu.name;
+          footerLink.onclick = handleButtonClick;
+
+          // Optionally, add icons or other HTML elements here
+          if (menu.icon) {
+            var icon = document.createElement('i');
+            icon.classList.add('fas', `fa-${menu.icon}`);
+            footerLink.insertBefore(icon, footerLink.firstChild);
+          }
+
+          footerContainer.appendChild(footerLink);
+        }
+
+          });
+        })
+
+
+
         .catch(error => {
           console.error("Error fetching data:", error);
         });
@@ -318,15 +346,15 @@ h3 img {
         case 'Purchase Report':
           pageUrl = '../report/purchaseReport/purchaseReport.html'
           break;
-        case 'Routewise Sale Report':
+        case 'Sale Report':
           pageUrl = '../report/routewiseSaleReport/routewiseSaleReport.html'
           break;
         case 'Stock Report':
           pageUrl = '../report/stockReport/stockReport.html'
           break;
-        case 'Batawise Sale Report':
-          pageUrl = '../report/batawiseSaleReport/batawiseSaleReport.html'
-          break;
+        // case 'Batawise Sale Report':
+        //   pageUrl = '../report/batawiseSaleReport/batawiseSaleReport.html'
+        //   break;
         case 'Khatawani':
           pageUrl = '../report/khatawani/khatawani.html'
           break;
@@ -362,7 +390,7 @@ h3 img {
           break;
           // Add other cases as needed
         default:
-          pageUrl = './Home2.html';
+          pageUrl = './Menu.html';
       }
       document.getElementById('pageContent').src = pageUrl;
 

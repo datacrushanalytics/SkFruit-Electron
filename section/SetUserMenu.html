@@ -10,7 +10,7 @@
 
         <h1 align ="center">Set User Menu</h1>
     <div className="container">
-            <table>
+            <table id="userMenuTable">
                 <thead>
                     <tr>
                         <th>No.</th>
@@ -72,8 +72,8 @@
                     </tr>
                     <tr>
                         <td>11</td>
-                        <td>Routewise Sale Report</td>
-                        <td><input type="checkbox" name="menu" value="Routewise Sale Report"></td>
+                        <td>Sale Report</td>
+                        <td><input type="checkbox" name="menu" value="Sale Report"></td>
                     </tr>
                     <tr>
                         <td>12</td>
@@ -85,10 +85,15 @@
                         <td>Khatawani</td>
                         <td><input type="checkbox" name="menu" value="Khatawani"></td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td>14</td>
                         <td>Batawise sale report</td>
                         <td><input type="checkbox" name="menu" value="Batawise Sale Report"></td>
+                    </tr> -->
+                    <tr>
+                        <td>14</td>
+                        <td>Route Sale</td>
+                        <td><input type="checkbox" name="menu" value="Route Sale"></td>
                     </tr>
                     <tr>
                         <td>15</td>
@@ -136,75 +141,125 @@
                         <td>Remainder</td>
                         <td><input type="checkbox" name="menu" value="Remainder"></td>
                     </tr>
-                    <tr>
-                        <td>24</td>
-                        <td>Route Sale</td>
-                        <td><input type="checkbox" name="menu" value="Route Sale"></td>
-                    </tr>
+                   
                 </tbody>
             </table> <br><br>
             <div class="center">
-                <button type="submit" id="submitButton">Submit</button>
+                <button type="button" id="submitButton">Submit User Menu</button>
+            </div>
+
+            <h1 align ="center">Footer Menu</h1>
+            <table id="footerMenuTable">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>MENU</th>
+                        <th>STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Home</td>
+                        <td><input type="checkbox" name="menu" value="Home"></td>
+                    </tr>
+
+                    <tr>
+                        <td>2</td>
+                        <td>Sale</td>
+                        <td><input type="checkbox" name="menu" value="Sale"></td>
+                    </tr>
+
+                    <tr>
+                        <td>3</td>
+                        <td>Receipt</td>
+                        <td><input type="checkbox" name="menu" value="Receipt"></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Payment</td>
+                        <td><input type="checkbox" name="menu" value="Payment"></td>
+                    </tr>
+
+                    <tr>
+                        <td>5</td>
+                        <td>Route Sale</td>
+                        <td><input type="checkbox" name="menu" value="Route Sale"></td>
+                    </tr>
+
+
+                   
+                </tbody>
+            </table> <br><br>
+            <div class="center">
+                <button type="button" id="submitButton1">Submit Footer Menu</button>
             </div>
           
         </body>
 
 
         <script>
-
             document.addEventListener('DOMContentLoaded', function () {
-                fetchDataAndUpdateCheckboxes();
+                fetchDataAndUpdateCheckboxes('userMenuTable', 'http://52.66.126.53/accessconfigData');
+                fetchDataAndUpdateCheckboxes('footerMenuTable', 'http://52.66.126.53/footerconfigData');
             });
-
-            function fetchDataAndUpdateCheckboxes() {
-                fetch("http://52.66.126.53/accessconfigData") // Assuming this is your API endpoint to fetch data
-                .then(response => {
-                    if (response.status === 404) {
-                        alert("No data found.");
-                        throw new Error('Data not found');
-                    }
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Loop through the data received from the API
-                    data.forEach(menu => {
-                        // Only update checkboxes for menu items with an "active" status
-                    if (menu.status === 'active') {
-                        // Find the checkbox corresponding to the menu value and check it
-                        var checkbox = document.querySelector('input[type="checkbox"][value="' + menu.name + '"]');
-                        if (checkbox) {
-                            checkbox.checked = true;
+    
+            function fetchDataAndUpdateCheckboxes(tableId, apiUrl) {
+                fetch(apiUrl)
+                    .then(response => {
+                        if (response.status === 404) {
+                            alert("No data found.");
+                            throw new Error('Data not found');
                         }
-                    }
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Loop through the data received from the API
+                        data.forEach(menu => {
+                            // Only update checkboxes for menu items with an "active" status
+                            if (menu.status === 'active') {
+                                console.log(tableId,menu.name)
+                                // Find the checkbox corresponding to the menu value and check it
+                                var checkbox = document.querySelector(`#${tableId} input[type="checkbox"][value="${menu.name}"]`);
+                                if (checkbox) {
+                                    checkbox.checked = true;
+                                }
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Error fetching data:", error);
                     });
-                })
-                .catch(error => {
-                    console.error("Error fetching data:", error);
-                });
             }
-
-
-
-
+    
             document.getElementById("submitButton").addEventListener("click", function() {
-                // Gather data from checkboxes
-                var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                // Gather data from checkboxes in the User Menu table
+                gatherAndSendData('userMenuTable', 'http://52.66.126.53/accessconfigData/updateAccessconfig');
+            });
+    
+            document.getElementById("submitButton1").addEventListener("click", function() {
+                // Gather data from checkboxes in the Footer Menu table
+                gatherAndSendData('footerMenuTable', 'http://52.66.126.53/footerconfigData/updateFooterconfig');
+            });
+    
+            function gatherAndSendData(tableId, apiUrl) {
+                var checkboxes = document.querySelectorAll(`#${tableId} input[type="checkbox"]`);
                 var selectedMenus = [];
                 checkboxes.forEach(function(checkbox) {
                     if (checkbox.checked) {
                         selectedMenus.push(checkbox.value);
                     }
                 });
-            
+    
                 // Prepare data for API
-                var data = {
-                    name: selectedMenus
-            };
+                var data = { name: selectedMenus };
+                console.log("chchchch",data)
+    
                 // Make a POST request to your API endpoint
-                fetch("http://52.66.126.53/accessconfigData/updateAccessconfig", {
+                fetch(apiUrl, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json"
@@ -214,9 +269,8 @@
                 .then(response => {
                     if (response.ok) {
                         console.log("Data sent successfully");
-                        alert("Access updated Successfully")
+                        alert("Access updated Successfully");
                         window.location.reload();
-                        // Optionally, you can redirect the user or show a success message here
                     } else {
                         console.error("Failed to send data");
                         // Handle error
@@ -225,7 +279,6 @@
                 .catch(error => {
                     console.error("Error:", error);
                 });
-            });
-            
+            }
         </script>
 </html>

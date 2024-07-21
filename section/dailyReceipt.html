@@ -203,11 +203,15 @@ th {
 
         document.addEventListener('DOMContentLoaded', function() {
             // Retrieve user data from localStorage
+            let worker = "*"
             var sessionData = JSON.parse(localStorage.getItem('sessionData'));
             document.getElementById('user').textContent = sessionData[0].name;
             var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
             var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+            loader.style.display = 'block';
+            if(!isAdmin){
+                worker = sessionData[0].name
+            }
 
             // Display current date and time
             //var currentDateElement = document.getElementById('currentDate');
@@ -222,12 +226,13 @@ th {
             currentTimeElement.textContent = "Time: " + currentTime;
             //var currentDate1 = new Date();
 
-            fetchData();
+
+            fetchData(worker);
        
           });
 
 
-          function fetchData(){
+          function fetchData(worker){
             var tbody = document.getElementById('tableBody');
             tbody.innerHTML = ''; // Clear existing rows
 
@@ -237,7 +242,8 @@ th {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                   "date" : document.getElementById("currentDate").value
+                   "date" : document.getElementById("currentDate").value,
+                   added_by : worker
                 })
             })
             //"date" : 
