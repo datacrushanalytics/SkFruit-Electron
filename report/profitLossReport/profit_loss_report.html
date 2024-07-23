@@ -92,7 +92,7 @@
   }
 
   
-  #vehicle, #customer, #user{
+  #vehicle, #customer, #user, #route, #bill{
     /* border-radius: 8px; */
     height: 35px;
     width: 600px;
@@ -215,10 +215,10 @@
 
                 <div class="first-row">
                     <label for="userType">From Date :</label>
-                    <input type="date" id="fromdate" name="date" placeholder="From Date" requidarkgrey>
+                    <input type="date" id="fromdate" name="date" placeholder="From Date" required>
                     <br>
                     <label for="userType">To Date :</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date" requidarkgrey>
+                    <input type="date" id="todate" name="date" placeholder="To Date" required>
                 </div>
 
                 <br>
@@ -237,6 +237,11 @@
 
                 <br><br>
 
+                <label id='lable1111' for="userType">Route :</label>
+                <select class="drop" id="route" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br><br>
+
                 <label for="userType">Bata :</label>
                 <select class="drop" id="bata" id="bata" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
@@ -244,6 +249,11 @@
 
                 <label for="userType">User :</label>
                 <select class="drop" id="user" id="user" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br> <br>
+
+                <label for="userType">Bill Number :</label>
+                <select class="drop" id="bill" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br> <br>
     
@@ -294,6 +304,8 @@
         fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer','name');
         fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'bata', 'bata');
         fetchAndPopulateDropdown('http://52.66.126.53/fetchData/user', 'user', 'added_by');
+        fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name');
+        fetchAndPopulateDropdown('http://52.66.126.53/saleData', 'bill','bill_no');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {

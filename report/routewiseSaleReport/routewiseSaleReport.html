@@ -277,10 +277,10 @@
             <form id="loginForm1">
                 <div class="first-row">
                     <label for="userType">From Date :</label>
-                    <input type="date" id="fromdate" name="date" placeholder="From Date" requidarkgrey>
+                    <input type="date" id="fromdate" name="date" placeholder="From Date" required>
                     <br>
                     <label for="userType">To Date :</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date" requidarkgrey>
+                    <input type="date" id="todate" name="date" placeholder="To Date" required>
                 </div>
                 <br>
                 <label for="userType">Customer Name :</label>
@@ -311,6 +311,7 @@
                 <select class="drop" id="vehicle" name="Vehicle">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br><br>
+                
 
 
                 <label for="userType">User :</label>
@@ -372,16 +373,19 @@
             fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer','name');
             fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name');
             fetchAndPopulateDropdown('http://52.66.126.53/fetchData/user', 'user', 'added_by');
+            fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'product', 'product_name');
+        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'bata', 'bata');
+        fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle','vehicle_no');
         }else{
             var route = sessionData[0].route;
             var user = sessionData[0].name;
             fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customer/' +route  , 'customer','cust_name');
             fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name',selectedValue=route,readOnly = true);
             fetchAndPopulateDropdown('http://52.66.126.53/fetchData/user', 'user', 'added_by',selectedValue=user,readOnly = true);
+            fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'product', 'product_name',selectedValue= null,readOnly = true);
+            fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'bata', 'bata',selectedValue=null,readOnly = true);
+            fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle','vehicle_no',selectedValue=null,readOnly = true);
         }
-        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'product', 'product_name');
-        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'bata', 'bata');
-        fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle','vehicle_no');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId, field,selectedValue = null, readOnly = false) {

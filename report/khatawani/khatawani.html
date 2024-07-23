@@ -82,7 +82,7 @@
         }
 
         #customer,
-        #route {
+        #route, #user {
             border: 1px solid transparent;
             /* box-shadow: 5px 10px 8px grey; */
             border-radius: 8px;
@@ -246,10 +246,10 @@
 
                 <div class="first-row">
                     <label for="userType">From Date :</label>
-                    <input type="date" id="fromdate" name="date" placeholder="From Date" requidarkgrey>
+                    <input type="date" id="fromdate" name="date" placeholder="From Date" required>
                     <br>
                     <label for="userType">To Date :</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date" requidarkgrey>
+                    <input type="date" id="todate" name="date" placeholder="To Date" required>
                 </div>
 
                 <br>
@@ -269,6 +269,11 @@
                 </select>
 
                 <br><br>
+
+                <label for="userType">User :</label>
+                <select class="drop" id="user" name="user">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br><br>
                 <div class="third-row">
                     <!-- <button class="border-hover" >Save</button> -->
                     <button type="submit" style="background-color: darkgrey;" class="button">Submit</button>
@@ -330,6 +335,7 @@
         if (isAdmin) {
             fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route');
             fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer');
+            fetchAndPopulateDropdown('http://52.66.126.53/fetchData/user', 'user');
         }else{
             var route = sessionData[0].route;
             fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customer/' +route  , 'customer',readOnly=false);
@@ -367,7 +373,7 @@
         }
         // Populate dropdown with API data
         data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.name || item.route_name || item.cust_name).text(item.name || item.route_name || item.cust_name));
+            dropdown.append($('<option></option>').attr('value', item.name || item.route_name || item.cust_name || item.added_by).text(item.name || item.route_name || item.cust_name || item.added_by));
         });
 
         // Initialize Select2

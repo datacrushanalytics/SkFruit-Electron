@@ -23,7 +23,9 @@ function fetchDataAndProcess() {
         customer: getElementValueWithDefault('customer', '*'),
         vehicle: getElementValueWithDefault('vehicle', '*'),
         bata: getElementValueWithDefault('bata', '*'),
-        user: getElementValueWithDefault('user', '*')
+        user: getElementValueWithDefault('user', '*'),
+        route: getElementValueWithDefault('route', '*'),
+        bill: getElementValueWithDefault('bill', '*')
     };
     console.log(data);
     var loader = document.getElementById('loader');

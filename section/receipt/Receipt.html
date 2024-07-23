@@ -265,31 +265,31 @@
                 <form id="loginForm1">
                     <div class="first-row">
                         <label for="pavti" class="input-label">जमा पावती क्र :</label>
-                        <input type="number" id="pavti" name="number" placeholder="Receipt No." requidarkgrey>
+                        <input type="number" id="pavti" name="number" placeholder="Receipt No." required>
                     </div>
 
                     <!-- Rest of your form content -->
                     
                 <div class="first-row">
                     <label for="date1" class="input-label">तारीख :</label>
-                    <input type="date" id="date" name="date" placeholder="Date" requidarkgrey>
+                    <input type="date" id="date" name="date" placeholder="Date" required>
                 </div>
 
 
                 <div class="first-row">
                     <label for="account_group" class="input-label">ग्राहकाचे नाव:</label>
-                    <select class="drop" id="account_group" name="account_group" onchange="previousbalance()" requidarkgrey></select>
+                    <select class="drop" id="account_group" name="account_group" onchange="previousbalance()" required></select>
                     <input type="hidden" id="custid" name="custid">
                 </div>
 
                 <div class="dropdown-container">
                     <div id="number-wrapper" class="input-wrapper">
                       <label for="number">मोबाईल नंबर :</label>
-                      <select class="drop" id="mob" name="mob" onchange="getCust()" requidarkgrey></select>
+                      <select class="drop" id="mob" name="mob" onchange="getCust()" required></select>
                     </div><br>
                 <!-- <div class="first-row">
                     <label for="route_detail" class="input-label">खात्याकडे :</label>
-                    <select class="drop" id="route_detail" name="route_detail" requidarkgrey></select>
+                    <select class="drop" id="route_detail" name="route_detail" required></select>
                 </div> -->
 
                 <div class="first-row">
@@ -376,7 +376,7 @@
 <script>
     // JavaScript functions remain unchanged
     function carate() {
-    if (document.getElementById("carate100").value > document.getElementById('carate2100').value){
+    if (parseInt(document.getElementById("carate100").value) > parseInt(document.getElementById('carate2100').value)){
         Swal.fire({
               icon: 'error',
               title: 'Oops...',
@@ -385,7 +385,7 @@
         document.getElementById("carate100").value = 0;
     }
 
-    if (document.getElementById("carate150").value > document.getElementById('carate2150').value){
+    if (parseInt(document.getElementById("carate150").value) > parseInt(document.getElementById('carate2150').value)){
         Swal.fire({
               icon: 'error',
               title: 'Oops...',
@@ -394,7 +394,7 @@
         document.getElementById("carate150").value = 0;
     }
 
-    if (document.getElementById("carate250").value > document.getElementById('carate2250').value){
+    if (parseInt(document.getElementById("carate250").value) > parseInt(document.getElementById('carate2250').value)){
         Swal.fire({
               icon: 'error',
               title: 'Oops...',
@@ -404,7 +404,7 @@
     }
 
 
-    if (document.getElementById("carate350").value > document.getElementById('carate2350').value){
+    if (parseInt(document.getElementById("carate350").value) > parseInt(document.getElementById('carate2350').value)){
         Swal.fire({
               icon: 'error',
               title: 'Oops...',
@@ -647,7 +647,7 @@ function totalbill(){
     });
 
 
-    if (document.getElementById("carate100").value > document.getElementById('carate2100').value){
+    if (parseInt(document.getElementById("carate100").value) > parseInt(document.getElementById('carate2100').value)){
         Swal.fire({
               icon: 'error',
               title: 'Oops...',
@@ -656,7 +656,7 @@ function totalbill(){
         document.getElementById("carate100").value = 0;
     }
 
-    if (document.getElementById("carate150").value > document.getElementById('carate2150').value){
+    if (parseInt(document.getElementById("carate150").value) > parseInt(document.getElementById('carate2150').value)){
         Swal.fire({
               icon: 'error',
               title: 'Oops...',
@@ -665,7 +665,7 @@ function totalbill(){
         document.getElementById("carate150").value = 0;
     }
 
-    if (document.getElementById("carate250").value > document.getElementById('carate2250').value){
+    if (parseInt(document.getElementById("carate250").value) > parseInt(document.getElementById('carate2250').value)){
         Swal.fire({
               icon: 'error',
               title: 'Oops...',
@@ -675,7 +675,7 @@ function totalbill(){
     }
 
 
-    if (document.getElementById("carate350").value > document.getElementById('carate2350').value){
+    if (parseInt(document.getElementById("carate350").value) > parseInt(document.getElementById('carate2350').value)){
         Swal.fire({
               icon: 'error',
               title: 'Oops...',

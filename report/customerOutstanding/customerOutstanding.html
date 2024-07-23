@@ -219,44 +219,60 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer');
-        fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route');
+
+        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    // Check if session data exists and if the user is an admin
+    var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+        // Check if the user is an admin and show/hide the button accordingly
+    if (isAdmin) {
+      fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route', 'route_name');
+      fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer', 'name');
+        }else{
+          var route = sessionData[0].route;
+          fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customerSale/' +route  , 'customer','name');
+          fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name',selectedValue=route,readOnly = true);
+        }
+
+
+
+
+
+
+
         fetchDataAndProcess();
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId) {
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+    async function fetchAndPopulateDropdown(apiUrl, dropdownId, field,selectedValue = null, readOnly = false) {
+        try {
+            const response = await fetch(apiUrl);
+            
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            
+            const data = await response.json();
+            populateDropdownWithSelect2(data, dropdownId, field,selectedValue, readOnly);
+            
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
 
-    function populateDropdownWithSelect2(data, dropdownId) {
-        var dropdown = $('#' + dropdownId);
-        // Clear existing options
-        dropdown.empty();
+  function populateDropdownWithSelect2(data, dropdownId, field,selectedValue = null, readOnly = false) {
+    var dropdown = $('#' + dropdownId);
+    // Clear existing options
+    dropdown.empty();
 
-        // Add placeholder option
-        if (dropdownId== 'customer'){
-            dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
-        }
-        // Populate dropdown with API data
-        data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
-        });
+    // Add placeholder option
+    dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
 
-         // Initialize Select2
-         dropdown.select2({
+    // Populate dropdown with API data
+    data.forEach(function (item) {
+      dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
+    });
+
+       // Initialize Select2
+       dropdown.select2({
             placeholder: 'Select components',
             closeOnSelect: false,
             allowClear: true,
@@ -268,6 +284,17 @@
                 return $element;
             }
         });
+
+        // Set selected value if provided
+        if (selectedValue !== null) {
+        dropdown.val(selectedValue).trigger('change');
+        }
+
+        // Make the dropdown read-only if specified
+        if (readOnly) {
+            dropdown.prop('disabled', true);
+        }
+
     }
 
     $(document).on('select2:open', function(e) {

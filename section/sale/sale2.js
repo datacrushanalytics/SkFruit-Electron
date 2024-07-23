@@ -210,7 +210,15 @@ function openModal(item) {
     closeButton.onclick = function () {
         modalContent.innerHTML = '';
         modal.style.display = 'none'; // Close the modal when close button is clicked
-        window.location.reload();
+        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+        var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+        if(!isAdmin){
+            window.location.href = '../routeSale/routeSale.html';
+
+        }else{
+            window.location.reload();
+        }
+        
     };
     modalContent.appendChild(closeButton);
    

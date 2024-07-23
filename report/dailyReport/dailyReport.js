@@ -22,7 +22,7 @@ function fetchDataAndProcess(data = null) {
         var data = {
             from_date: formatDate(document.getElementById("fromdate").value),
             to_date: formatDate(document.getElementById("todate").value),
-            added_by : "*",
+            added_by : getElementValueWithDefault('user', '*'),
             route: getElementValueWithDefault('route', '*')
         };
     }

@@ -213,10 +213,10 @@ button[type="submit"]:hover {
 
                 <div class="first-row">
                     <label for="userType">From Date</label>
-                    <input type="date" id="fromdate" name="date" placeholder="From Date" requidarkgrey>
+                    <input type="date" id="fromdate" name="date" placeholder="From Date" required>
                     <br>
                     <label for="userType">To Date</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date" requidarkgrey>
+                    <input type="date" id="todate" name="date" placeholder="To Date" required>
                 </div>
 
                 <br>
@@ -265,7 +265,17 @@ button[type="submit"]:hover {
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
+        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    // Check if session data exists and if the user is an admin
+    var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+        // Check if the user is an admin and show/hide the button accordingly
+    if (isAdmin) {
         fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer'); 
+        }else{
+          var route = sessionData[0].route;
+          fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customer/' +route  , 'customer');
+        }
+        
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId) {
@@ -295,7 +305,7 @@ button[type="submit"]:hover {
 
         // Populate dropdown with API data
         data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
+            dropdown.append($('<option></option>').attr('value', item.name || item.cust_name).text(item.name || item.cust_name));
         });
 
         // Initialize Select2

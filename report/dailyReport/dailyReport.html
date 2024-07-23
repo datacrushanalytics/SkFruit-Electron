@@ -69,7 +69,7 @@
     margin-left: 0%;
   }
 
-  #route{
+  #route, #user{
   /* border-radius: 8px; */
   height: 35px;
   width: 600px;
@@ -132,7 +132,7 @@
         th,
     td {
         border: 1px solid #dddddd;
-        background-color: #eafffb;
+        /* background-color: #eafffb; */
         text-align: left;
         padding: 12px;
     }
@@ -234,14 +234,19 @@
 
                 <div class="first-row">
                     <label for="userType">From Date</label>
-                    <input type="date" id="fromdate" name="date" placeholder="From Date" requidarkgrey>
+                    <input type="date" id="fromdate" name="date" placeholder="From Date" required>
                     <br>
                     <label for="userType">To Date</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date" requidarkgrey>
+                    <input type="date" id="todate" name="date" placeholder="To Date" required>
                 </div><br>
 
                 <label id='lable1111' for="userType">Route :</label>
                 <select class="drop1" id="route" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br><br>
+
+                <label for="userType">User :</label>
+                <select class="drop1" id="user" name="user">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br><br>
               
@@ -398,6 +403,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
         fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name');
+        fetchAndPopulateDropdown('http://52.66.126.53/fetchData/user', 'user', 'added_by');
         var dailyReportData = JSON.parse(localStorage.getItem('dailyReportData'));
         if(dailyReportData){
             console.log("DailyReport",dailyReportData)

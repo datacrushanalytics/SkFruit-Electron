@@ -30,6 +30,7 @@ function fetchDataAndProcess() {
         from_date : formatDate(document.getElementById("fromdate").value),
         to_date : formatDate(document.getElementById("todate").value),
         cust_name : getElementValueWithDefault('customer', '*') , 
+        added_by : getElementValueWithDefault('user', '*') , 
         route : selectedValues || '*',
     };
     var loader = document.getElementById('loader');

@@ -143,17 +143,17 @@ function openModal(item) {
 
             const label = 
                 "बाकी कॅरेट : " +
-                (data.results[0].carate_100 > 0 ? "100 X " + data.results[0].carate_100 + " " : "") +
-                (data.results[0].carate_150 > 0 ? "150 X " + data.results[0].carate_150 + " " : "") +
-                (data.results[0].carate_250 > 0 ? "250 X " + data.results[0].carate_250 + " " : "") +
-                (data.results[0].carate_350 > 0 ? "350 X " + data.results[0].carate_350 : "");
+                (data.reports[0].carate_100 > 0 ? "100 X " + data.reports[0].carate_100 + " " : "") +
+                (data.reports[0].carate_150 > 0 ? "150 X " + data.reports[0].carate_150 + " " : "") +
+                (data.reports[0].carate_250 > 0 ? "250 X " + data.reports[0].carate_250 + " " : "") +
+                (data.reports[0].carate_350 > 0 ? "350 X " + data.reports[0].carate_350 : "");
 
             const label1 = 
                 "जमा कॅरेट : " +
-                (data.results[0].c100 > 0 ? "100 X " + data.results[0].c100 + " " : "") +
-                (data.results[0].c150 > 0 ? "150 X " + data.results[0].c150 + " " : "") +
-                (data.results[0].c250 > 0 ? "250 X " + data.results[0].c250 + " " : "") +
-                (data.results[0].c350 > 0 ? "350 X " + data.results[0].c350 : "");
+                (data.reports[0].c100 > 0 ? "100 X " + data.reports[0].c100 + " " : "") +
+                (data.reports[0].c150 > 0 ? "150 X " + data.reports[0].c150 + " " : "") +
+                (data.reports[0].c250 > 0 ? "250 X " + data.reports[0].c250 + " " : "") +
+                (data.reports[0].c350 > 0 ? "350 X " + data.reports[0].c350 : "");
 
             var footerDetails = [
                 //{ label: "गेलेले कॅरेट : +", value: data.results[0].carate_amount },
