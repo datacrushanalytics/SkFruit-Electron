@@ -609,11 +609,10 @@ function totalbill(){
         dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
 
         // Populate dropdown with API data
-        data.forEach(function (item) {
-            console.log(item.mobile_no)
-            console.log(item.name)
-            dropdown.append($('<option></option>').attr('value', item.name || item.route_name || item.mobile_no).text(item.name || item.route_name || item.mobile_no));
-        });
+         // Populate dropdown with API data
+    data.forEach(function (item) {
+      dropdown.append($('<option></option>').attr('value', item[name]).text(item[name]));
+    });
 
         // Initialize Select2
        dropdown.select2({

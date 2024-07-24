@@ -5,15 +5,24 @@ document.getElementById('loginForm1').addEventListener('submit', function(event)
 
 
 function fetchDataAndProcess() {
+    var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    // Check if session data exists and if the user is an admin
+    var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+    var user = "*"
+    if(!isAdmin){
+        user = sessionData[0].name;
+    }
+
     var data = {
         route : document.getElementById('route').value , 
-        date : document.getElementById('fromdate').value
+        date : document.getElementById('fromdate').value,
+        added_by : user
     };
     console.log(data);
 
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
-    return fetch('http://52.66.126.53/routeSale/sale', {
+    return fetch('http:// 52.66.126.53/routeSale/sale', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

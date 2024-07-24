@@ -2,11 +2,19 @@ let accountInfo = [];
 
 async function remainder() {
     console.log("product function executed");
-    var loader = document.getElementById('loader');
+    const loader = document.getElementById('loader');
     loader.style.display = 'block';
 
     try {
-        const response = await fetch('http://52.66.126.53/remainderReport');
+        const sessionData = JSON.parse(localStorage.getItem('sessionData'));
+        const isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+
+        const url = isAdmin 
+            ? 'http://52.66.126.53/remainderReport' 
+            : `http:// 52.66.126.53/remainderReport/${sessionData[0].route}`;
+        
+        const response = await fetch(url);
+
         loader.style.display = 'none';
 
         if (response.status === 404) {
@@ -14,18 +22,20 @@ async function remainder() {
                 icon: 'error',
                 title: 'Oops...',
                 text: 'No data found.',
-              });
+            });
             throw new Error('Data not found');
         }
+
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
 
         const data = await response.json();
         console.log(data);
-        accountInfo = data.reports;
+        const accountInfo = data.reports;
         populateTable(accountInfo);
         return data; // Return the data
+
     } catch (error) {
         loader.style.display = 'none';
         console.error('Error:', error);

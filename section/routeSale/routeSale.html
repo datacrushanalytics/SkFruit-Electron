@@ -127,7 +127,7 @@
         th,
     td {
         border: 1px solid #dddddd;
-        background-color: #eafffb;
+        /* background-color: #eafffb; */
         text-align: left;
         padding: 12px;
     }
@@ -287,7 +287,7 @@
 
 
 
-        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    var sessionData = JSON.parse(localStorage.getItem('sessionData'));
     // Check if session data exists and if the user is an admin
     var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
         // Check if the user is an admin and show/hide the button accordingly

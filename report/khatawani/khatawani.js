@@ -205,7 +205,7 @@ function populateTable4(data) {
 //         doc.text('Savata Fruits Suppliers', 50, 20);
 //         doc.setFontSize(12);
 //         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
-//         doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
+//         doc.text('Mobile NO:- 9860601102  / 9922676380 / 9156409970', 50, 40);
         
 //         let startY = 50;
 //         // Adding the headers and data
@@ -658,7 +658,7 @@ color: #666;
     <div >
       <center><h1>सावता फ्रुट सप्लायर्स</h1> 
         <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
-        <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
+        <p>मोबाईल नं:- 9860601102  / 9922676380 / 9156409970</p>
     </div> </center>
 </div>
 <div class="container2">
@@ -982,7 +982,7 @@ function openModal1(item) {
     <div>
         <h1>सावता फ्रुट सप्लायर्स</h1>
         <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
-        <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
+        <p>मोबाईल नं:- 9860601102  / 9922676380 / 9156409970</p>
     </div>
 </div>
 <div class="container2">

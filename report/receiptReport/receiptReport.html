@@ -319,8 +319,18 @@
 <script>
         
     document.addEventListener('DOMContentLoaded', function () {
-        // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer');
+
+        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    // Check if session data exists and if the user is an admin
+    var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+        // Check if the user is an admin and show/hide the button accordingly
+    if (isAdmin) {
+        fetchAndPopulateDropdown('http://52.66.126.53/list/Customer','customer');
+        }else{
+          var route = sessionData[0].route;
+          fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customerSale/' +route,'customer');
+        }
+
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId) {

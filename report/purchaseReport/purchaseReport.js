@@ -243,7 +243,7 @@ function deleteaccount(userId) {
 //         doc.text('Savata Fruits Suppliers', 50, 20);
 //         doc.setFontSize(12);
 //         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
-//         doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
+//         doc.text('Mobile NO:- 9860601102  / 9922676380 / 9156409970', 50, 40);
         
 //         let startY = 50;
         
@@ -382,7 +382,7 @@ function openModal(item) {
             var billDetails = [
                 { label: "बिल क्र.:", value: data.reports[0].id  },
                 { label: "तारीख:", value: utcDate.toLocaleString('en-IN', options) },
-                { label: "ग्राहकाचे नाव:", value: data.reports[0].supplier_name },
+                { label: "सप्लायर नाव:", value: data.reports[0].supplier_name },
                 { label: "गाडी नाव:", value: data.reports[0].gadi_number },
                 { label: "संपर्क क्र.:", value: data.reports[0].mobile_no },
                 { label: "पत्ता:", value: data.reports[0].address },
@@ -553,7 +553,7 @@ function openModal(item) {
         <div >
             <h1>सावता फ्रुट सप्लायर्स</h1>
             <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
-            <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
+            <p>मोबाईल नं:- 9860601102  / 9922676380 / 9156409970</p>
         </div>
     </div>
     <div class="container2">

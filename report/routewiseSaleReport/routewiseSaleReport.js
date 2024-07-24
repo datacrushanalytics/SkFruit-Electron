@@ -76,6 +76,7 @@ function populateTable4(data) {
     tbody.innerHTML = ''; // Clear existing rows
     var columnsToDisplay = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'carate_amount', 'pre_balance', 'total_amount', 'online_amt', 'discount', 'inCarat', 'PaidAmount', 'balance', 'comment'];
     var counter = 1;
+    var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
     console.log(data.reports)
     if (data.reports.length === 0) {
        
@@ -129,17 +130,20 @@ Swal.fire({
         });
         buttonCell.appendChild(openPopupButton);
 
+
         // Add button to delete record
-        var deleteCell = row.insertCell();
-        var deleteButton = document.createElement('button');
-        deleteButton.className = 'button';
-        deleteButton.textContent = 'Delete';
-        deleteButton.addEventListener('click', function () {
-            if (confirm('Are you sure you want to delete this record?')) {
-                deleteRecord(item.bill_no); // Call the delete function with the bill_no
-            }
-        });
-        deleteCell.appendChild(deleteButton);
+        if (isAdmin) {
+            var deleteCell = row.insertCell();
+            var deleteButton = document.createElement('button');
+            deleteButton.className = 'button';
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', function () {
+                if (confirm('Are you sure you want to delete this record?')) {
+                    deleteRecord(item.bill_no); // Call the delete function with the bill_no
+                }
+            });
+            deleteCell.appendChild(deleteButton);
+        }
     });
 
     // Add row for grand total
@@ -639,7 +643,7 @@ color: #666;
     <div >
       <center><h1>सावता फ्रुट सप्लायर्स</h1> 
         <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
-        <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
+        <p>मोबाईल नं:- 9860601102  / 9922676380 / 9156409970</p>
     </div> </center>
 </div>
 <div class="container2">
