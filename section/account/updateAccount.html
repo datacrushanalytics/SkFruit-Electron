@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <title>Account Master</title>
 
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            background-color: #fef7f7;
             margin: 0;
             padding: 20px;
         }
@@ -103,6 +104,22 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+
+  .row-container {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    margin-bottom: 10px; /* Add margin between the row container and other elements */
+  }
+  
+  .row-container label {
+    margin-right: 10px; /* Add space between label and inputs */
+  }
+  
+  .row-container .carat-inputs {
+    display: flex;
+    align-items: left; /* Align items vertically */
+  }
     </style>
 </head>
 <body>
@@ -127,19 +144,46 @@
                 <br>
                 <br>
                 <label for="route_detail">Route Details :</label>
-                <select class="drop" id="route_detail" name="route_detail" required>
+                <select class="drop" id="route_detail" name="route_detail">
                     <!-- Options will be dynamically populated -->
                 </select>
                 <br> <br>
 
                 <label for="text"> Name: </label>
                 <input type="text" id="name" name="name" placeholder="Name" required>
+                <label for="name">Company Name :</label>
+                <input type="text" id="company" name="company"><br>
                 <label for="text"> Address: </label>
                 <input type="text" id="address" name="address" placeholder="Address" required>
                 <label for="text"> mobile_no: </label>
                 <input type="text" id="no" name="mobile_no" placeholder="Mobile No" required>
+                <label for="no">Optional Mobile No :</label>
+                <input type="text" id="optional_mobile" name="optional_mobile"> <br>
                 <label for="text"> prev_balance: </label>
                 <input type="text" id="preBalance" name="prev_balance" placeholder="Previous Balance" required>
+
+                <label>Ramaining Carate :</label>
+                <div class="row-container">
+                    <div class="carat-inputs">
+                      <div class="input-wrapper">
+                        <label for="carate100">100 :</label>
+                        <input type="number" style="width: 93%;" id="carate2100" name="carate2100" placeholder="100" >
+                      </div>
+                      <div class="input-wrapper">
+                        <label for="carate150">150 :</label>
+                        <input type="number" style="width: 93%;" id="carate2150" name="carate2150" placeholder="150" >
+                      </div>
+                      <div class="input-wrapper">
+                        <label for="carate250">250 :</label>
+                        <input type="number" style="width: 93%;" id="carate2250" name="carate2250" placeholder="250" >
+                      </div>
+                      <div class="input-wrapper">
+                        <label for="carate350">350 :</label>
+                        <input type="number" style="width: 93%;" id="carate2350" name="carate2350" placeholder="350" >
+                      </div>
+                    </div>
+                  </div>
+
                 <div class="second-row">
                     Carate Bill : 
                     <input type="radio" id="cr" name="cr_dr_type" value="yes" required>
@@ -148,8 +192,8 @@
                     <label for="dr">Carate without payment</label>
                 </div>
                 <div class="third-row">
-                    <button type="submit" id="updateButton">Save</button>
-                    <a href="./account.html"><button type="button">Back</button></a>
+                    <button type="submit" style="background-color: darkgrey;" id="updateButton">Save</button>
+                    <a href="./account.html"><button type="button" style="background-color: darkgrey;">Back</button></a>
                 </div>
             </form>
         </div>
@@ -160,8 +204,8 @@
 
         document.addEventListener('DOMContentLoaded', async function() {
             // Retrieve user data from localStorage
-            await fetchAndPopulateDropdown('http://65.0.168.11/accountgroupData', 'account_group','name');
-            await fetchAndPopulateDropdown('http://65.0.168.11/routeData', 'route_detail','route_name');
+            await fetchAndPopulateDropdown('http://52.66.126.53/accountgroupData', 'account_group','name');
+            await fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route_detail','route_name');
         
             async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
                 try {
@@ -204,6 +248,7 @@
             if (userData) {
                 // Parse the user data
                 var user = JSON.parse(userData);
+                console.log("lapajcowjfocjwoj")
                 console.log(user)
 
                 // Populate form fields with user data
@@ -227,14 +272,38 @@
 
 
                 document.getElementById("name").value = user.name;
-                document.getElementById("no").value = user.mobile_no;
+                document.getElementById("no").value = user.mobile_no; 
+                document.getElementById("optional_mobile").value = user.optional_mobile || 0;
                 document.getElementById("address").value = user.address;
+                document.getElementById("company").value= user.company || null;
                 document.getElementById("preBalance").value = user.prev_balance;
-                if (user.cr_dr_type = 'CR'){
+                if (user.cr_dr_type = 'yes'){
                 document.getElementById("cr").checked = true;
                 }else{
                     document.getElementById("dr").checked = true;
                 }
+
+                fetch('http://52.66.126.53/carateuserData/' + user.name)
+                .then(response => {
+                if (response.status === 404) {
+                    loader.style.display = 'none';
+                    throw new Error('Data not found');
+                }
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+      }).then(data => {
+        console.log(data)
+        // Populate Select2 dropdown with API data
+            document.getElementById("carate2100").value = data[0].carate_100 || 0,
+            document.getElementById("carate2150").value = data[0].carate_150 || 0,
+            document.getElementById("carate2250").value = data[0].carate_250|| 0,
+            document.getElementById("carate2350").value = data[0].carate_350 || 0
+    })
+
+
+
                 // Clear user data from localStorage (optional)
                 localStorage.removeItem('userData');
             }
@@ -252,7 +321,7 @@
         async function updateUser() {
             try {
                 // Determine status based on radio button value
-                var status = document.querySelector('input[name="cr_dr_type"]:checked').value === 'CR' ? 'CR' : 'DR';
+                var status = document.querySelector('input[name="cr_dr_type"]:checked').value === 'cr' ? 'yes' : 'no';
         
                 var userData = {
                     id: parseInt(document.getElementById("id").value),
@@ -263,11 +332,13 @@
                     cr_dr_type: status,
                     name : document.getElementById("name").value,
                     prev_balance : document.getElementById("preBalance").value,
+                    company : document.getElementById("company").value,
+                    optional_mobile: document.getElementById("optional_mobile").value
                 };
         
                 var loader = document.getElementById('loader');
-        loader.style.display = 'block';
-                const response = await fetch('http://65.0.168.11/accountData/updateAccount/'+ userData.id, {
+                loader.style.display = 'block';
+                const response = await fetch('http://52.66.126.53/accountData/updateAccount/'+ userData.id, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {
@@ -278,12 +349,34 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-        
+
+                form2 = {
+                    userName : document.getElementById("name").value,
+                    carate_100 : parseInt(document.getElementById("carate2100").value) || 0,
+                    carate_150 : parseInt(document.getElementById("carate2150").value) || 0,
+                    carate_250 : parseInt(document.getElementById("carate2250").value) || 0,
+                    carate_350 : parseInt(document.getElementById("carate2350").value) || 0
+                }
+                console.log(form2)
+                const response1 =  fetch('http://52.66.126.53/carateuserData/updateCarateuser/' +form2.userName , {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(form2)
+                });
+                       
                 const result = await response.json();
                 loader.style.display = 'none';
                 console.log('Data added successfully:', result);
-                alert('Data Updated successfully')
-                // Optionally, you can redirect or show a success message here
+         
+                Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Data Updated successfully',
+                            })
+                
+                // Optionally, you can darkgreyirect or show a success message here
             } catch (error) {
                 console.error('Error:', error);
                 // Optionally, you can display an error message here

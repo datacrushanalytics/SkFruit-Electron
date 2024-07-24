@@ -7,7 +7,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>User Form in Electron</title>
     <style>
 
@@ -20,12 +23,12 @@ button[type="submit"] {
     margin: 10px;
     border-radius: 5px;
     outline: none;
-    background-color:grey; /* Grey color */
+    background-color: darkgrey; /* Grey color */
     color: #fff; /* Text color */
 }
 
 button[type="submit"]:hover {
-    background-color:darkgray; /* Dark grey color on hover */
+    background-color:darkdarkgrey; /* Dark grey color on hover */
 }
 
         /* Add border to the second form */
@@ -47,7 +50,7 @@ button[type="submit"]:hover {
 
         body {
             font-family: Arial, sans-serif;
-            background-color: rgba(242, 242, 242, 0.8);
+            background-color: #fef7f7;
             /* Transparent background */
             margin: 0;
             padding: 20px;
@@ -156,14 +159,16 @@ button[type="submit"]:hover {
             border-radius: 5px;
         }
         
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 12px;
-        }
+        th,
+    td {
+        border: 1px solid #dddddd;
+        background-color: #eafffb;
+        text-align: left;
+        padding: 12px;
+    }
         
         th {
-            background-color: #f2f2f2;
+            background-color: #c7d5d3;
         }
 
 
@@ -189,6 +194,10 @@ button[type="submit"]:hover {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+  
+  #totalCell {
+    white-space: pre-wrap;
+}
 
     </style>
 </head>
@@ -197,7 +206,7 @@ button[type="submit"]:hover {
     <div id="loader"></div>
     <div class="container">
         <h1 align="center">Carate Report</h1><br>
-        <hr>
+        <hr style="position: relative; top: -25px;">
         <br>
         <div class="container1">
             <form id="loginForm1">
@@ -222,7 +231,7 @@ button[type="submit"]:hover {
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
                     <button type="submit" id="button1">Submit</button>
-                    <button type='button' onclick="exportToExcel()" id="button2">Export</button>
+                    <button type='button' onclick="exportToExcel()" id="button2" style="background-color: darkgrey;">Export</button>
                 <!-- </div> -->
             </form>
             <br>
@@ -232,10 +241,10 @@ button[type="submit"]:hover {
                     <th>DATE</th>
                     <th>Customer Name</th>
                     <th>Summary</th>
-                    <th>In Carate</th>
-                    <th>Total InCarate Amt</th>
                     <th>Out Carate</th>
                     <th>Total OutCarate Amt</th>
+                    <th>In Carate</th>
+                    <th>Total InCarate Amt</th>
                 </tr>
                 <!-- Add more rows as needed -->
                 <tbody id="tableBody">
@@ -256,7 +265,17 @@ button[type="submit"]:hover {
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://65.0.168.11/list/Customer', 'customer'); 
+        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    // Check if session data exists and if the user is an admin
+    var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+        // Check if the user is an admin and show/hide the button accordingly
+    if (isAdmin) {
+        fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer'); 
+        }else{
+          var route = sessionData[0].route;
+          fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customer/' +route  , 'customer');
+        }
+        
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId) {
@@ -286,7 +305,7 @@ button[type="submit"]:hover {
 
         // Populate dropdown with API data
         data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
+            dropdown.append($('<option></option>').attr('value', item.name || item.cust_name).text(item.name || item.cust_name));
         });
 
         // Initialize Select2

@@ -11,7 +11,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://65.0.168.11/routeData/insertroute', {
+    fetch('http://52.66.126.53/routeData/insertroute', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -27,9 +27,15 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     .then(result => {
         loader.style.display = 'none';
         console.log('Data added successfully:', result);
-        alert("Route is successfully Added");
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Route is successfully Added',
+            })
+
         window.location.href = './Root_Details.html';
-        // Optionally, you can redirect or show a success message here
+        // Optionally, you can darkgreyirect or show a success message here
     })
     .catch(error => {
         console.error('Error:', error);

@@ -6,8 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>User Form in Electron</title>
     <!-- <link rel="stylesheet" href="../../assets/css/ledger.css"> -->
     <style>
@@ -30,7 +33,7 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-color: rgba(242, 242, 242, 0.8);
+            background-color: #fef7f7;
             /* Transparent background */
             margin: 0;
             padding: 20px;
@@ -124,29 +127,15 @@
      margin: 10px;
      border-radius: 5px;
      outline: none;
-     background-color:grey; /* Grey background color */
+     background-color:darkgrey; /* Grey background color */
      color: #fff; /* White text color */
      box-shadow: none; /* Remove box shadow */
 }
 
    button[type="submit"]:hover {
-      background-color:darkgrey; /* Dark grey background color on hover */
+      background-color:darkdarkgrey; /* Dark grey background color on hover */
 }
 
-
-
-
-        /* button {
-            padding: 10px 20px;
-            font-size: 16px;
-            width: 200px;
-            border: none;
-            cursor: pointer;
-            margin: 10px;
-            border-radius: 5px;
-            outline: none;
-            margin: 10px;
-        } */
 
         #container1 {
             display: flex;
@@ -168,14 +157,16 @@
             border-radius: 5px;
         }
         
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 12px;
-        }
+        th,
+    td {
+        border: 1px solid #dddddd;
+        background-color: #eafffb;
+        text-align: left;
+        padding: 12px;
+    }
         
         th {
-            background-color: #f2f2f2;
+            background-color: #c7d5d3;
         }
 /* Style the loader container */
 #loader {
@@ -232,7 +223,7 @@
                 <div class="third-row">
                     <!-- <button class="border-hover" >Save</button> -->
                     <button type="submit" class="border-hover">Submit</button>
-                    <button type='button' class="border-hover" onclick="exportToExcel()" id="button2">Export</button>
+                    <button type='button' style="background-color: darkgrey;" class="border-hover" onclick="exportToExcel()" id="button2">Export</button>
                 </div>
             </form><br>
             <div class="table-container">
@@ -269,45 +260,73 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://65.0.168.11/list/Customer', 'customer');
-        fetchAndPopulateDropdown('http://65.0.168.11/routeData', 'route');
+        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    // Check if session data exists and if the user is an admin
+    var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+        // Check if the user is an admin and show/hide the button accordingly
+    if (isAdmin) {
+      fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route', 'route_name');
+      fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer', 'name');
+        }else{
+          var route = sessionData[0].route;
+          fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customerSale/' +route  , 'customer','name');
+          fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name',selectedValue=route,readOnly = true);
+        }
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId) {
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+    async function fetchAndPopulateDropdown(apiUrl, dropdownId, field,selectedValue = null, readOnly = false) {
+        try {
+            const response = await fetch(apiUrl);
+            
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            
+            const data = await response.json();
+            populateDropdownWithSelect2(data, dropdownId, field,selectedValue, readOnly);
+            
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
 
-    function populateDropdownWithSelect2(data, dropdownId) {
-        var dropdown = $('#' + dropdownId);
-        // Clear existing options
-        dropdown.empty();
+  function populateDropdownWithSelect2(data, dropdownId, field,selectedValue = null, readOnly = false) {
+    var dropdown = $('#' + dropdownId);
+    // Clear existing options
+    dropdown.empty();
 
-        // Add placeholder option
-        dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+    // Add placeholder option
+    dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
 
-        // Populate dropdown with API data
-        data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
+    // Populate dropdown with API data
+    data.forEach(function (item) {
+      dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
+    });
+
+       // Initialize Select2
+       dropdown.select2({
+            placeholder: 'Select components',
+            closeOnSelect: false,
+            allowClear: true,
+            templateResult: function (data) {
+                if (!data.id) {
+                    return data.text;
+                }
+                var $element = $('<span>' + data.text + '</span>');
+                return $element;
+            }
         });
 
-        // Initialize Select2
-        dropdown.select2({
-            placeholder: "Select " + dropdownId + " type",
-            allowClear: true
-        });
+        // Set selected value if provided
+        if (selectedValue !== null) {
+        dropdown.val(selectedValue).trigger('change');
+        }
+
+        // Make the dropdown read-only if specified
+        if (readOnly) {
+            dropdown.prop('disabled', true);
+        }
+
     }
 
     $(document).on('select2:open', function(e) {

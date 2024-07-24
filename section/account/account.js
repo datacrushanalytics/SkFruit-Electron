@@ -1,13 +1,20 @@
+let accountInfo = [];
+
+
 function account() {
   console.log("user function executed");
   var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-  fetch('http://65.0.168.11/accountData')
+  fetch('http://52.66.126.53/accountData')
   .then(response => {
     if (response.status === 404) {
       loader.style.display = 'none';
-        alert("No data found.");
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No data found.',
+      });
         throw new Error('Data not found');
     }
     if (!response.ok) {
@@ -18,17 +25,38 @@ function account() {
       .then(data => {
         loader.style.display = 'none';
           console.log(data);
-          populateTable(data);
+          accountInfo = data;
+          populateTable(accountInfo);
       })
       .catch(error => {
           console.error('Error:', error);
       });
 }
 
+
+// Function to filter results based on the search input
+function searchData() {
+  const query = document.getElementById('searchBox').value.toLowerCase();
+  const filtedarkgreyResults = accountInfo.filter(item => {
+      return (
+        (item.name?.toLowerCase() ?? '').includes(query) ||
+        (item.company?.toLowerCase() ?? '').includes(query) ||
+        (item.account_group?.toLowerCase() ?? '').includes(query) ||
+        (item.address?.toLowerCase() ?? '').includes(query) ||
+        (item.mobile_no?.toString().toLowerCase() ?? '').includes(query) ||
+        (item.optional_mobile?.toString().toLowerCase() ?? '').includes(query)
+      );
+  });
+  populateTable(filtedarkgreyResults);
+}
+
+
+
+
 function populateTable(data) {
   var tbody = document.getElementById('tableBody');
   tbody.innerHTML = ''; // Clear existing rows
-  var columnsToDisplay = ['name', 'account_group','address','mobile_no','cr_dr_type'];
+  var columnsToDisplay = ['name','company' ,'account_group','address','mobile_no','optional_mobile','cr_dr_type'];
   var counter = 1;
   var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
   data.forEach(function(item) {
@@ -45,6 +73,7 @@ function populateTable(data) {
         var editCell = row.insertCell();
         var editButton = document.createElement('button');
         editButton.className = 'button edit-button';
+        editButton.style.backgroundColor = 'darkgrey';
         var editLink = document.createElement('a');
         editLink.href = '../account/updateAccount.html'; // Edit link destination
         editLink.textContent = 'Edit';
@@ -60,6 +89,7 @@ function populateTable(data) {
         var deleteCell = row.insertCell();
         var deleteButton = document.createElement('button');
         deleteButton.className = 'button delete-button';
+        deleteButton.style.backgroundColor = 'darkgrey';
         deleteButton.textContent = 'Delete';
         deleteButton.addEventListener('click', function() {
           deleteaccount(item.id); // Pass the user id to the delete function
@@ -71,22 +101,28 @@ function populateTable(data) {
 }
 
 function editAccount(user) {
+  localStorage.removeItem('userData');
+  console.log('Editing user: ' + JSON.stringify(user));
   localStorage.setItem('userData', JSON.stringify(user));
-   // Redirect to user_update.html
+   // darkgreyirect to user_update.html
    window.location.href = '../account/updateAccount.html';
 }
 
 
 function deleteaccount(userId) {
   // Perform delete operation based on userId
-  fetch('http://65.0.168.11/accountData/deleteaccountId/' + userId, {
+  fetch('http://52.66.126.53/accountData/deleteaccountId/' + userId, {
       method: 'DELETE'
   })
   .then(response => {
       if (!response.ok) {
           throw new Error('Network response was not ok');
       }
-      alert("Account is successfully Deleted");
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Account is successfully Deleted',
+        })
       console.log('User deleted successfully');
       // Refresh the table or update UI as needed
       account(); // Assuming you want to refresh the table after delete
@@ -142,13 +178,18 @@ function insertAccount() {
       })
       .then(data => {
         loader.style.display = 'none';
-        alert("Account is inserted")
-      }) // Alert the response
+     
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Account is inserted',
+          })
+      }) 
       .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
       });
     } catch (error) {
-      console.error('An error occurred:', error);
+      console.error('An error occurdarkgrey:', error);
     }
   }
 

@@ -3,11 +3,16 @@ function product() {
     console.log("product function executed");
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
-    fetch('http://65.0.168.11/vehicleData')
+    fetch('http://52.66.126.53/vehicleData')
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';
-            alert("No data found.");
+            
+Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'No data found.',
+  });
             throw new Error('Data not found');
         }
         if (!response.ok) {
@@ -70,18 +75,8 @@ function populateTable(data) {
 }
 
 function editProduct(user) {
-    // Convert user data to JSON and encode it for URL
-    // var userData = encodeURIComponent(JSON.stringify(user));
-    // console.log("Jell")
-    // console.log(userData)
-    // console.log(user.id);
-    // document.getElementById("id1").value = user.id;
-
-    // Redirect to user_master.html with user data in query parameter
-    // window.location.href = "../user/User_Master.html"
-    // window.location.href = '../user/user_update.html?userData=' + '%7B"id"%3A31%2C"name"%3A"Deepali"%2C"address"%3A"nsk"%2C"mobile_no"%3A1234567890%2C"username"%3A"dee"%2C"password"%3A"asd"%2C"status"%3A"1"%2C"usertype"%3A"Admin"%7D';
     localStorage.setItem('userData', JSON.stringify(user));
-     // Redirect to user_update.html
+     // darkgreyirect to user_update.html
      window.location.href = "./update_vehicle.html";
 }
 
@@ -89,7 +84,7 @@ function editProduct(user) {
 
 function deleteProduct(userId) {
     // Perform delete operation based on userId
-    fetch('http://65.0.168.11/vehicleData/deleteVehicle/' + userId, {
+    fetch('http://52.66.126.53/vehicleData/deleteVehicle/' + userId, {
         method: 'DELETE'
     })
     .then(response => {
@@ -97,7 +92,12 @@ function deleteProduct(userId) {
             throw new Error('Network response was not ok');
         }
         console.log('User deleted successfully');
-        alert("vehicle is successfully deleted");
+     
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'vehicle is successfully deleted',
+            })
         // Refresh the table or update UI as needed
         product(); // Assuming you want to refresh the table after delete
     })

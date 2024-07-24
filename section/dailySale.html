@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>home page</title>
     <style>
         .container {
@@ -13,7 +14,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+    background-color: #fef7f7;
     margin: 0;
     padding: 20px;
 }
@@ -64,6 +65,20 @@ body {
     background-color: rgb(249, 245, 245);
     color: rgb(168, 168, 168);
 }
+
+button {
+    background-color: grey;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: darkgrey;
+  }
+
 
 h1, h2, h3 {
     text-align: center;
@@ -154,6 +169,90 @@ th {
     100% { transform: rotate(360deg); }
   }
   
+  #user {
+    margin-left: 30%;
+}
+
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    width: 80%;
+    /* Adjust the width as desidarkgrey */
+    height: 80%;
+    /* Adjust the height as desidarkgrey */
+    max-width: 90vw;
+    /* Set maximum width relative to viewport width */
+    max-height: 90vh;
+    /* Set maximum height relative to viewport height */
+    overflow: auto;
+    /* Add scrollbars if content overflows */
+  }
+
+  .popup-content {
+    width: 100%;
+    /* Adjust the width as desidarkgrey */
+    height: 100%;
+    /* Adjust the height as desidarkgrey */
+  }
+
+  .popup-content iframe {
+    width: 100%;
+    /* Adjust the width as desidarkgrey */
+    height: 100%;
+    /* Adjust the height as desidarkgrey */
+  }
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+
+  /* Styles for the modal */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+
+  /* Styles for the modal content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+    /* Position relative for the close button */
+  }
+
+
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
 
 
     </style>
@@ -163,11 +262,14 @@ th {
     <div id="loader"></div>
         <div class="container">
             <div class="datetime" id="datetime">
-                <p id="currentDate"></p>
+                <!-- <p id="currentDate"></p> -->
+                <p>
+                    <label for="currentDate">Date:</label>
+                    <input type="date" id="currentDate" onchange="fetchData1()">
+                </p>
                 <h1 id="user">USER</h1>
                 <p id="currentTime"></p>
             </div>
-            
             <!-- <hr>
             <br>
             <br> -->
@@ -187,6 +289,36 @@ th {
             <!-- Data will be inserted here -->
         </tbody>
     </table>
+
+    <br>
+    <br>
+
+    <div class="row-container">
+        <!-- <div id="Route-wrapper" class="input-wrapper">
+          <label for="Route">रूट :</label>
+          <select type="root" id="Route" name="root" onchange="previousbalance()" required></select>
+          <input type="hidden" id="custid" name="custid">
+        </div>
+
+        <div class="button-wrapper">
+          <button id="account-page-button" onclick="goToAccountPage()">Add Customer</button>
+        </div> -->
+        
+        <!-- <div class="button-wrapper">
+      <button id="account-page-button" name="ledger" >Leder Report</button>
+    </div> -->
+        <button onclick="openPopup()">Routewise Hishob</button>
+        <div class="popup" id="popup">
+          <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <iframe id="popupIframe" frameborder="0" scrolling="auto"></iframe>
+            <!-- <p>This is a popup!</p> -->
+          </div>
+        </div>
+      </div>
+
+
+
     <h1>Sale Details : </h1>
     <div class="datetime" id="datetime">
         <p id="currentTime">Cash Received : <h2 id="saleCash"></h2></p>
@@ -199,7 +331,12 @@ th {
         <p id="currentTime">OutCarate 150 : <h2 id="carate150"></h2></p>
         <p id="currentTime">OutCarate 250 : <h2 id="carate250"></h2></p>
         <p id="currentTime">OutCarate 350 : <h2 id="carate350"></h2></p>
-        
+    </div>
+    <div class="datetime" id="datetime">
+        <p id="currentTime">InCarate 100 : <h2 id="carate1100"></h2></p>
+        <p id="currentTime">InCarate 150 : <h2 id="carate1150"></h2></p>
+        <p id="currentTime">InCarate 250 : <h2 id="carate2150"></h2></p>
+        <p id="currentTime">InCarate 350 : <h2 id="carate3150"></h2></p>
     </div>
     <h1>Receipt Details : </h1>
     <div class="datetime" id="datetime">
@@ -208,12 +345,30 @@ th {
         <p id="currentTime">Discount Amount : <h2 id="receiptDiscount"></h2></p>
         <p id="currentTime">In Carate Received : <h2 id="receiptIncarate"></h2></p>
     </div>
+    <div class="datetime" id="datetime">
+        <p id="currentTime">InCarate 100 : <h2 id="carate1200"></h2></p>
+        <p id="currentTime">InCarate 150 : <h2 id="carate1250"></h2></p>
+        <p id="currentTime">InCarate 250 : <h2 id="carate2250"></h2></p>
+        <p id="currentTime">InCarate 350 : <h2 id="carate3250"></h2></p>
+    </div>
     <h1>Total Details : </h1>
     <div class="datetime" id="datetime">
         <p id="currentTime">Cash Received : <h2 id="totalCash"></h2></p>
         <p id="currentTime">Online Received : <h2 id="totalOnline"></h2></p>
         <p id="currentTime">Discount Amount : <h2 id="totalDiscount"></h2></p>
         <p id="currentTime">In Carate Received : <h2 id="totalIncarate"></h2></p>
+    </div>
+    <div class="datetime" id="datetime">
+        <p id="currentTime">OutCarate 100 : <h2 id="carate1300"></h2></p>
+        <p id="currentTime">OutCarate 150 : <h2 id="carate1350"></h2></p>
+        <p id="currentTime">OutCarate 250 : <h2 id="carate2350"></h2></p>
+        <p id="currentTime">OutCarate 350 : <h2 id="carate3350"></h2></p>
+    </div>
+    <div class="datetime" id="datetime">
+        <p id="currentTime">InCarate 100 : <h2 id="carate1400"></h2></p>
+        <p id="currentTime">InCarate 150 : <h2 id="carate1450"></h2></p>
+        <p id="currentTime">InCarate 250 : <h2 id="carate2450"></h2></p>
+        <p id="currentTime">InCarate 350 : <h2 id="carate3450"></h2></p>
     </div>
 
         </div>
@@ -227,46 +382,81 @@ th {
                 // Retrieve user data from localStorage
                 var sessionData = JSON.parse(localStorage.getItem('sessionData'));
                 document.getElementById('user').textContent = sessionData[0].name;
+                var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+
                 var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+                loader.style.display = 'block';
         
                 // Display current date and time
-                var currentDateElement = document.getElementById('currentDate');
+                //var currentDateElement = document.getElementById('currentDate');
+                
                 var currentTimeElement = document.getElementById('currentTime');
         
                 var currentDate = new Date().toLocaleDateString();
                 var currentTime = new Date().toLocaleTimeString();
         
-                currentDateElement.textContent = "Date: " + currentDate;
+                //currentDateElement.textContent = "Date: " + currentDate;
+                var currentDate = new Date();
+            document.getElementById('currentDate').value = currentDate.getFullYear() + '-' + (String(currentDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(currentDate.getDate()).padStart(2, '0'));
                 currentTimeElement.textContent = "Time: " + currentTime;
                 var currentDate1 = new Date();
 
+                fetchData1();
+        
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        });
+
+        let worker = "*"
+        let route_name = "*"
+        async function fetchData1(){
+            var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+            var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+
+            if(isAdmin){
                 console.log("Localdata", localStorage.getItem('workerData'))
                 if (localStorage.getItem('workerData')===null){
                     console.log("Hello")
-                    route = "*"
+                    worker = "*"
                 }else{
-                    var user = JSON.parse(localStorage.getItem('workerData'));
-                    route = user.route_detail
+                    var data1 = JSON.parse(localStorage.getItem('workerData'));
+                    var worker = data1.name;
+                    var workerdate = JSON.parse(localStorage.getItem('workerDataDate'));
+                    route = worker.route_detail
+                    if (workerdate != null){
+                        console.log(workerdate)
+                        document.getElementById('currentDate').value = workerdate;
+                    }
+                    document.getElementById('user').textContent = worker;
                     console.log(route)
+                    localStorage.removeItem('workerDataDate');
                     localStorage.removeItem('workerData');
+                    //localStorage.removeItem('workerData');
                 }
-        
+            }else{
+                worker = sessionData[0].name
+            }
+
                 const fetchData = async () => {
-                    const response = await fetch("http://65.0.168.11/fetchData/sale", {
+                    const response = await fetch("http://52.66.126.53/fetchData/sale", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                           "date": currentDate1.getFullYear() + '-' + String(currentDate1.getMonth() + 1).padStart(2, '0') + '-' + String(currentDate1.getDate()).padStart(2, '0'),
-                           "route" : route
+                           "date": document.getElementById('currentDate').value,
+                           "added_by" : worker
                         })
                     });
         
                         if (response.status === 404) {
                             loader.style.display = 'none';
-                            alert("No data found.");
+                            Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No data found.',
+                    });
                             throw new Error('Data not found');
                         }
                     if (!response.ok) {
@@ -274,7 +464,7 @@ th {
                     }
         
                     const data = await response.json();
-        loader.style.display = 'none';
+                    loader.style.display = 'none';
                     console.log(data);
                     console.log("data fetched");
                     return data;
@@ -289,20 +479,32 @@ th {
                 document.getElementById('carate150').textContent = data.SaleDetails["carate150"] || 0
                 document.getElementById('carate250').textContent = data.SaleDetails["carate250"] || 0
                 document.getElementById('carate350').textContent = data.SaleDetails["carate350"] || 0
+                document.getElementById('carate1300').textContent = data.SaleDetails["carate100"] || 0
+                document.getElementById('carate1350').textContent = data.SaleDetails["carate150"] || 0
+                document.getElementById('carate2350').textContent = data.SaleDetails["carate250"] || 0
+                document.getElementById('carate3350').textContent = data.SaleDetails["carate350"] || 0
+                document.getElementById('carate1100').textContent = data.SaleDetails["carate1100"] || 0
+                document.getElementById('carate1150').textContent = data.SaleDetails["carate1150"] || 0
+                document.getElementById('carate2150').textContent = data.SaleDetails["carate2150"] || 0
+                document.getElementById('carate3150').textContent = data.SaleDetails["carate3150"] || 0
                 document.getElementById('receiptCash').textContent = data.ReceiptDetails["Cash"] || 0
                 document.getElementById('receiptOnline').textContent = data.ReceiptDetails["online"] || 0
                 document.getElementById('receiptDiscount').textContent = data.ReceiptDetails["discount"] || 0
                 document.getElementById('receiptIncarate').textContent = data.ReceiptDetails["incarat"] || 0
+                document.getElementById('carate1200').textContent = data.ReceiptDetails["carate1200"] || 0
+                document.getElementById('carate1250').textContent = data.ReceiptDetails["carate1250"] || 0
+                document.getElementById('carate2250').textContent = data.ReceiptDetails["carate2250"] || 0
+                document.getElementById('carate3250').textContent = data.ReceiptDetails["carate3250"] || 0
                 document.getElementById('totalCash').textContent = data.TotalDetails["Cash"] || 0
                 document.getElementById('totalOnline').textContent = data.TotalDetails["online"] || 0
                 document.getElementById('totalDiscount').textContent = data.TotalDetails["discount"] || 0
                 document.getElementById('totalIncarate').textContent = data.TotalDetails["incarat"] || 0
+                document.getElementById('carate1400').textContent = data.ReceiptDetails["carate1200"] || 0 + data.SaleDetails["carate1100"] || 0
+                document.getElementById('carate1450').textContent = data.ReceiptDetails["carate1250"] || 0 + data.SaleDetails["carate1150"] || 0
+                document.getElementById('carate2450').textContent = data.ReceiptDetails["carate2250"] || 0 + data.SaleDetails["carate2150"] || 0
+                document.getElementById('carate3450').textContent = data.ReceiptDetails["carate3250"] || 0 + data.SaleDetails["carate3150"] || 0
                 populateTable(data);
-        
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        });
+        }
         
         function populateTable(data) {
             var tbody = document.getElementById('tableBody');
@@ -325,6 +527,38 @@ th {
             totalCell.colSpan = columnsToDisplay.length;
             totalCell.textContent = 'Total Sale : ' + data.Grand["Total Sale"];
         }
+
+        function openPopup() {
+            event.preventDefault();
+            document.getElementById("popup").style.display = "block";
+            function formatDate(dateString) {
+                var date = new Date(dateString);
+                var year = date.getFullYear();
+                var month = ('0' + (date.getMonth() + 1)).slice(-2);
+                var day = ('0' + date.getDate()).slice(-2);
+                return year + '-' + month + '-' + day;
+            }
+            var popupIframe = document.getElementById("popupIframe");
+            localStorage.removeItem('dailyReportData');
+            console.log('Editing dailyReportData: ' + JSON.stringify({
+                from_date: formatDate(document.getElementById("currentDate").value),
+                to_date: formatDate(document.getElementById("currentDate").value),
+                added_by : document.getElementById('user').textContent,
+                route : route_name
+            }));
+            localStorage.setItem('dailyReportData', JSON.stringify({
+                from_date: formatDate(document.getElementById("currentDate").value),
+                to_date: formatDate(document.getElementById("currentDate").value),
+                added_by : document.getElementById('user').textContent,
+                route : route_name  
+            }));
+            popupIframe.src = "../report/dailyReport/dailyReport.html"; //
+          }
+        
+          function closePopup() {
+            document.getElementById("popup").style.display = "none";
+          }
+        
         
 
     </script>

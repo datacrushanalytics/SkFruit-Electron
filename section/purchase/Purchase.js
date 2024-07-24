@@ -6,12 +6,22 @@ document.addEventListener('DOMContentLoaded', function () {
     
     var currentDate = new Date();
     // Format the date as mm/dd/yyyy
-    var formattedDate = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
+    var formattedDate = currentDate.getFullYear() + '-' + (String(currentDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(currentDate.getDate()).padStart(2, '0'));
     // Set the placeholder of the input field to the formatted date
+    console.log(formattedDate);
     document.getElementById('date').value = formattedDate;
-    // console.log('hjgfqhagf',document.getElementById('date').value )
+        // Retrieve session data from localStorage
+    var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    // Check if session data exists and if the user is an admin
+    var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+    // Check if the user is an admin and show/hide the button accordingly
+    if (!isAdmin) {
+        document.getElementById('date').readOnly = true; // Hide the button for non-admin users
+    }
+    
 
-    fetch('http://65.0.168.11/fetchPurchaseid')
+
+    fetch('http://52.66.126.53/fetchPurchaseid')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -21,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             // Populate dropdown with API data
             document.getElementById('no').value = parseInt(data[0]['num']) + 1;
-            fetch('http://65.0.168.11/purchaseproductData/' + (parseInt(data[0]['num']) + 1))
+            fetch('http://52.66.126.53/purchaseproductData/' + (parseInt(data[0]['num']) + 1))
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -61,7 +71,7 @@ document.getElementById('Form').addEventListener('submit', async function(event)
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    await fetch('http://65.0.168.11/purchaseData/insertPurchase', {
+    await fetch('http://52.66.126.53/purchaseData/insertPurchase', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -78,7 +88,11 @@ document.getElementById('Form').addEventListener('submit', async function(event)
     .then(result => {
         loader.style.display = 'none';
         console.log('Entry added successfully:', result);
-        alert("Purchase Data is added Successfully");
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Purchase Data is added Successfully',
+            })
         window.location.reload();
     })
     .catch(error => {

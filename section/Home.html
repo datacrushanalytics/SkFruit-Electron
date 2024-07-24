@@ -26,8 +26,8 @@ h3 {
   display: flex; /* Makes the header content align horizontally */
   align-items: center; /* Aligns items vertically in the center */
   font-size: 24px; /* Sets font size */
-  color: #fff; /* Sets text color */
-  margin-left: 33%;
+  color: #000000; /* Sets text color */
+  margin-left: 20%;
 }
 
 h3 img {
@@ -39,7 +39,7 @@ h3 img {
 
     #sidebar-container {
     /*  width: 20%;  Occupy 1/5 of the page */
-      background-color: #333;
+      background-color: #fff7c6;
       color: white;
       z-index: 999; /* Ensure sidebar is above other content */
       overflow-y: auto; /* Add scrollbar to sidebar */
@@ -67,19 +67,20 @@ h3 img {
       width: 100%; /* Adjust to fill the sidebar */
       cursor: pointer;
       margin-bottom: 10px;
-      color: #fff;
-      background-color: #555;
+      color: #000000;
+      background-color: #f8a2a5;
       padding: 10px;
       border-radius: 5px;
       transition: background-color 0.3s ease;
+      font-weight: bold;
     }
 
     .component.active {
-      background-color:darkgray; /* Red color for active button */
+      background-color:#eafffb; /* darkgrey color for active button */
     }
 
     .component:hover {
-      background-color: #777;
+      background-color: #eafffb;
     }
 
     .logout {
@@ -88,7 +89,7 @@ h3 img {
       cursor: pointer;
       margin-top: 20px;
       color: #fff;
-      background-color: #c0392b; /* Red color for logout button */
+      background-color: #c0392b; /* darkgrey color for logout button */
       padding: 10px;
       border: none;
       border-radius: 5px;
@@ -96,7 +97,7 @@ h3 img {
     }
 
     .logout:hover {
-      background-color: #e74c3c; /* Darker red color on hover */
+      background-color: #e74c3c; /* Darker darkgrey color on hover */
     }
 
     @media (max-width: 768px) {
@@ -139,7 +140,7 @@ h3 img {
 
 
 .footer {
-  background-color: #333;
+  background-color: #333333;
   color: white;
   text-align: center;
   padding: 10px 0;
@@ -175,19 +176,6 @@ h3 img {
 </head>
 
 
-  <!-- <div class="hero-section">
-    <div id="main-container">
-      <iframe id="pageContent" src="./Menu.html" frameborder="0"></iframe>
-    </div>
-    <div id="sidebar-container">
-      <h3 onclick="openPage('home')">
-          <img src="../../assets/img/logo.png" alt="Company Logo">
-        SK Fruit
-      </h3>
-    </div>
-  </div> -->
-
-  <!-- ... -->
 
 <body>
   <div id="loader"></div>
@@ -206,10 +194,10 @@ h3 img {
 
       <!-- Footer within main-container -->
       <div class="footer" id="footer">
-        <a href="#" class="footer-link" onclick="loadPage('./Menu.html')"><i class="fas fa-home"></i> Home</a>
+        <!-- <a href="#" class="footer-link" onclick="loadPage('./Menu.html')"><i class="fas fa-home"></i> Home</a>
         <a href="#" class="footer-link" onclick="loadPage('../section/sale/sale3.html')"><i class="fas fa-tag"></i> Sale</a>
         <a href="#" class="footer-link" onclick="loadPage('../section/receipt/Receipt.html')"><i class="fas fa-receipt"></i> Receipt</a>
-        <a href="#" class="footer-link" onclick="loadPage('../section/payment/Payment.html')"><i class="fas fa-money-check-alt"></i> Payment</a>
+        <a href="#" class="footer-link" onclick="loadPage('../section/payment/Payment.html')"><i class="fas fa-money-check-alt"></i> Payment</a> -->
       </div>
       
     </div>
@@ -236,22 +224,12 @@ h3 img {
         console.log(localStorage.getItem('sessionData'))
         console.log(sessionData[0].usertype)
         // Fetch data from API and dynamically generate buttons
-        fetch("http://65.0.168.11/accessconfigData")
+        fetch("http://52.66.126.53/accessconfigData")
         .then(response => response.json())
         .then(data => {
           loader.style.display = 'none';
           var sidebarContainer = document.getElementById('sidebar-container');
-          // data.forEach(menu => {
-            //if (isAdmin || menu.status === 'active') {
-              //var button = document.createElement('button');
-              // button.classList.add('component');
-              // button.textContent = menu.name;
-              // button.onclick = function() {
-              //   openPage(menu.name);
-            // };
 
-            //sidebarContainer.appendChild(button);
-          //}
 
           data.forEach(menu => {
             if (isAdmin || menu.status === 'active') {
@@ -261,9 +239,6 @@ h3 img {
               button.onclick = handleButtonClick; // Use the handleButtonClick function
               sidebarContainer.appendChild(button);
             }
-     
-
-
 
           });
 
@@ -280,6 +255,37 @@ h3 img {
 
 
         })
+
+
+        fetch("http://52.66.126.53/footerconfigData")
+        .then(response => response.json())
+        .then(data => {
+          loader.style.display = 'none';
+          var footerContainer = document.getElementById('footer');
+
+          data.forEach(menu => {
+        if (isAdmin || menu.status === 'active') {
+          var footerLink = document.createElement('a');
+          footerLink.href = menu.link || "#"; // Use appropriate link from data
+          footerLink.classList.add('footer-link');
+          footerLink.textContent = menu.name;
+          footerLink.onclick = handleButtonClick;
+
+          // Optionally, add icons or other HTML elements here
+          if (menu.icon) {
+            var icon = document.createElement('i');
+            icon.classList.add('fas', `fa-${menu.icon}`);
+            footerLink.insertBefore(icon, footerLink.firstChild);
+          }
+
+          footerContainer.appendChild(footerLink);
+        }
+
+          });
+        })
+
+
+
         .catch(error => {
           console.error("Error fetching data:", error);
         });
@@ -311,7 +317,7 @@ h3 img {
         case 'User':
           pageUrl = "./user/user.html";
           break;
-          case 'Product':
+        case 'Product':
           pageUrl = './product/product.html';
           break;
         case 'Account':
@@ -341,15 +347,15 @@ h3 img {
         case 'Purchase Report':
           pageUrl = '../report/purchaseReport/purchaseReport.html'
           break;
-        case 'Routewise Sale Report':
+        case 'Sale Report':
           pageUrl = '../report/routewiseSaleReport/routewiseSaleReport.html'
           break;
         case 'Stock Report':
           pageUrl = '../report/stockReport/stockReport.html'
           break;
-        case 'Batawise Sale Report':
-          pageUrl = '../report/batawiseSaleReport/batawiseSaleReport.html'
-          break;
+        // case 'Batawise Sale Report':
+        //   pageUrl = '../report/batawiseSaleReport/batawiseSaleReport.html'
+        //   break;
         case 'Khatawani':
           pageUrl = '../report/khatawani/khatawani.html'
           break;
@@ -377,9 +383,15 @@ h3 img {
         case 'Profit Loss Report':
           pageUrl = '../report/profitLossReport/profit_loss_report.html'
           break;
+        case 'Supplier Ledger Report':
+          pageUrl = '../report/supplierLedgerReport/supplierLedger.html'
+          break;
+        case 'Route Sale':
+          pageUrl = './routeSale/routeSale.html'
+          break;
           // Add other cases as needed
         default:
-          pageUrl = './Home2.html';
+          pageUrl = './Menu.html';
       }
       document.getElementById('pageContent').src = pageUrl;
 

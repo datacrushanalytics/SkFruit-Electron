@@ -1,83 +1,3 @@
-// // Fetch data from API
-// document.addEventListener('DOMContentLoaded', function () {
-
-//     fetch('http://65.0.168.11/list/Customer')
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             // Populate dropdown with API data
-//             populateDropdown(data);
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-
-
-//     fetch('http://65.0.168.11/routeData')
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             // Populate dropdown with API data
-//             populateDropdown4(data);
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-// });
-
-
-// function populateDropdown(data) {
-//     var userNameDropdown = document.getElementById('customer');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.name; // Set the value
-//         option.textContent = item.name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Customer type"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-// function populateDropdown4(data) {
-//     var userNameDropdown = document.getElementById('route');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.route_name; // Set the value
-//         option.textContent = item.route_name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Route type"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-
-
 
 function getElementValueWithDefault(id, defaultValue) {
     var element = document.getElementById(id);
@@ -93,47 +13,10 @@ function formatDate(dateString) {
 }
 
 
-
-// document.getElementById('loginForm1').addEventListener('submit', function (event) {
-//     event.preventDefault(); // Prevent form submission
-//     var data = {
-//         from_date: formatDate(document.getElementById("fromdate").value),
-//         to_date: formatDate(document.getElementById("todate").value),
-//         cust_name: getElementValueWithDefault('customer', '*'),
-//         route: getElementValueWithDefault('route', '*')
-//     };
-//     console.log(data);
-
-//     fetch('http://65.0.168.11/routewiseSaleReport', {
-//         method: 'POST',
-//         body: JSON.stringify(data),
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     })
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then(result => {
-//             console.log(result)
-//             populateTable4(result)
-//             // Optionally, you can redirect or show a success message here
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//             // Optionally, you can display an error message here
-//         });
-// });
-
-
 document.getElementById('loginForm1').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
     fetchDataAndProcess();
 });
-
 
 
 function fetchDataAndProcess() {    
@@ -141,13 +24,17 @@ function fetchDataAndProcess() {
         from_date: formatDate(document.getElementById("fromdate").value),
         to_date: formatDate(document.getElementById("todate").value),
         cust_name: getElementValueWithDefault('customer', '*'),
-        route: getElementValueWithDefault('route', '*')
+        route: getElementValueWithDefault('route', '*'),
+        product: getElementValueWithDefault('product', '*'),
+        bata: getElementValueWithDefault('bata', '*'),
+        user: getElementValueWithDefault('user', '*'),
+        vehicle: getElementValueWithDefault('vehicle', '*')
     };
     console.log(data);
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://65.0.168.11/routewiseSaleReport', {
+    return fetch('http://52.66.126.53/routewiseSaleReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -157,7 +44,12 @@ function fetchDataAndProcess() {
     .then(response => {
         if (response.status === 404) {
         loader.style.display = 'none';
-            alert("No data found.");
+           
+Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'No data found.',
+  });
             throw new Error('Data not found');
         }
         if (!response.ok) {
@@ -170,7 +62,7 @@ function fetchDataAndProcess() {
             console.log(result)
             populateTable4(result)
             return result;
-            // Optionally, you can redirect or show a success message here
+            // Optionally, you can darkgreyirect or show a success message here
         })
         .catch(error => {
             console.error('Error:', error);
@@ -179,17 +71,19 @@ function fetchDataAndProcess() {
 }
 
 
-
-
-
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'carate_amount', 'total_amount', 'pre_balance', 'online_amt', 'discount', 'inCarat', 'PaidAmount', 'balance', 'comment'];
+    var columnsToDisplay = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'carate_amount', 'pre_balance', 'total_amount', 'online_amt', 'discount', 'inCarat', 'PaidAmount', 'balance', 'comment'];
     var counter = 1;
     console.log(data.reports)
     if (data.reports.length === 0) {
-        alert("No Data Found");
+       
+Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'No data found.',
+  });
     }
     data.reports.forEach(function (item) {
         var row = tbody.insertRow();
@@ -197,7 +91,7 @@ function populateTable4(data) {
         cell.textContent = counter++;
         columnsToDisplay.forEach(function (key) {
             var cell = row.insertCell();
-            if (key == 'date') {
+            if (key === 'date') {
                 console.log(item[key])
                 var utcDate = new Date(item[key]);
                 var options = {
@@ -213,25 +107,216 @@ function populateTable4(data) {
                 cell.textContent = item[key] !== '' ? item[key] : 'null';
             }
         });
+         // Add button to open popup
+         var buttonCell = row.insertCell();
+         var openPopupButton = document.createElement('button');
+         openPopupButton.className = 'button';
+         openPopupButton.style.backgroundColor = 'darkgrey';
+         openPopupButton.textContent = 'Products';
+         openPopupButton.addEventListener('click', function () {
+            openPopup(item); // Pass the data item to the openPopup function
+         });
+         buttonCell.appendChild(openPopupButton);
 
         // Add button to open popup
         var buttonCell = row.insertCell();
         var openPopupButton = document.createElement('button');
         openPopupButton.className = 'button';
+        openPopupButton.style.backgroundColor = 'darkgrey';
         openPopupButton.textContent = 'Bill';
         openPopupButton.addEventListener('click', function () {
             openModal(item); // Pass the data item to the openPopup function
         });
         buttonCell.appendChild(openPopupButton);
 
+        // Add button to delete record
+        var deleteCell = row.insertCell();
+        var deleteButton = document.createElement('button');
+        deleteButton.className = 'button';
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', function () {
+            if (confirm('Are you sure you want to delete this record?')) {
+                deleteRecord(item.bill_no); // Call the delete function with the bill_no
+            }
+        });
+        deleteCell.appendChild(deleteButton);
     });
-
 
     // Add row for grand total
     var totalRow = tbody.insertRow();
-    var totalCell = totalRow.insertCell();
-    totalCell.colSpan = columnsToDisplay.length;
-    totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Bill Amount'] + ' (Grand Bill Amount), ' + data.Grand['Grand outCarate'] + ' (Grand outCarate)' + data.Grand['Total Bill Amount'] + ' (Total Bill Amount), ' + data.Grand['Online Amount'] + ' (Online Amount)' + data.Grand['Grand Discount'] + ' (Grand Discount), ' + data.Grand['Grand inCarate'] + ' (Grand inCarate)' + data.Grand['Grand Paid Amount'] + ' (Grand Paid Amount), ' + data.Grand['Grand Balance'] + ' (Grand Balance)';
+    totalRow.insertCell().colSpan = 1; // Skip the first column
+
+    columnsToDisplay.forEach(function (key) {
+        var cell = totalRow.insertCell();
+        if (key === 'route') {
+            cell.textContent = 'Grand Total';
+            cell.style.fontWeight = 'bold'; // Make "Grand Total" bold
+        } else {
+            switch (key) {
+                case 'amount':
+                    cell.textContent = data.Grand['Grand Bill Amount'];
+                    break;
+                case 'carate_amount':
+                    cell.textContent = data.Grand['Grand outCarate'];
+                    break;
+                case 'total_amount':
+                    cell.textContent = data.Grand['Total Bill Amount'];
+                    break;
+                case 'online_amt':
+                    cell.textContent = data.Grand['Online Amount'];
+                    break;
+                case 'discount':
+                    cell.textContent = data.Grand['Grand Discount'];
+                    break;
+                case 'inCarat':
+                    cell.textContent = data.Grand['Grand inCarate'];
+                    break;
+                case 'PaidAmount':
+                    cell.textContent = data.Grand['Grand Paid Amount'];
+                    break;
+                case 'balance':
+                    cell.textContent = data.Grand['Grand Balance'];
+                    break;
+                default:
+                    cell.textContent = '';
+                    break;
+            }
+            cell.style.fontWeight = 'bold'; // Make the values bold
+        }
+    });
+
+    // Add a final cell for the "Bill" column, leaving it empty
+    totalRow.insertCell();
+}
+
+
+
+
+
+function deleteRecord(bill_no) {
+    fetch(`http://52.66.126.53/fetchData/saleProduct/${bill_no}`, {
+        method: 'GET'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Assuming the response is an array of objects
+        data.forEach(item => {
+            console.log(item.id); // Fetch and log the id from each item
+
+            fetch(`http://52.66.126.53/saleproductData/deletesaleproduct/${item.id}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                
+                console.log('data deleted successfully');
+                // Refresh the table or update UI as needed
+                // account(); // Assuming you want to refresh the table after delete
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+    // Perform delete operation based on bill_no
+    fetch(`http://52.66.126.53/saleData/deletesaleId/${bill_no}`, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+  
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Sale is successfully Deleted',
+            })
+        console.log('Sale deleted successfully');
+        // Refresh the table or update UI as needed
+        fetchDataAndProcess(); // Assuming you want to refresh the table after delete
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function openPopup(item) {
+    document.getElementById('popup').style.display = 'block';
+    // Set the src of the iframe to display content based on the item data
+    // var iframe = document.getElementById('popupIframe');
+    // iframe.src = './billDetails.html?bill_no=' + encodeURIComponent(item.bill_no);
+
+    fetch('http://52.66.126.53/saleproductData/' + String(item.bill_no))
+            .then(response => response.json())
+            .then(data => {
+                populatePopupTable(data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+}
+
+function closePopup() {
+    document.getElementById('popupTableBody').innerHTML = ''; 
+    document.getElementById('popup').style.display = 'none';
+     // Clear the iframe src
+}
+
+
+
+function populatePopupTable(data) {
+    var tbody = document.getElementById('popupTableBody');
+    tbody.innerHTML = ''; // Clear existing rows
+    var columnsToDisplay = ['product','bata','mark','quantity','rate','price'];
+    var counter = 1;
+    console.log(data)
+    // console.log(data.reports)
+    if (data.length === 0) {
+      
+Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'No data found.',
+  });
+    }
+    data.forEach(function (item) {
+        var row = tbody.insertRow();
+        var cell = row.insertCell();
+        cell.textContent = counter++;
+        columnsToDisplay.forEach(function (key) {
+            var cell = row.insertCell();
+            cell.textContent = item[key] !== '' ? item[key] : 'null';
+            
+        });
+    });
 }
 
 
@@ -241,7 +326,7 @@ function openModal(item) {
     console.log("Opening modal for item:", item.bill_no);
     
 
-    fetch('http://65.0.168.11/bill/' + item.bill_no)
+    fetch('http://52.66.126.53/bill/' + item.bill_no)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -286,16 +371,42 @@ function openModal(item) {
             var tablefooter = document.getElementById("tablefooter");
             tablefooter.innerHTML = ""; // Clear existing rows
 
+            const label = 
+                "बाकी कॅरेट : " +
+                (data.results[0].carate_100 > 0 ? "100 X " + data.results[0].carate_100 + " " : "") +
+                (data.results[0].carate_150 > 0 ? "150 X " + data.results[0].carate_150 + " " : "") +
+                (data.results[0].carate_250 > 0 ? "250 X " + data.results[0].carate_250 + " " : "") +
+                (data.results[0].carate_350 > 0 ? "350 X " + data.results[0].carate_350 : "");
+
+            const label1 = 
+                "गेलेले कॅरेट : " +
+                (data.results[0].in_carate_100 > 0 ? "100 X " + data.results[0].in_carate_100 + " " : "") +
+                (data.results[0].in_carate_150 > 0 ? "150 X " + data.results[0].in_carate_150 + " " : "") +
+                (data.results[0].in_carate_250 > 0 ? "250 X " + data.results[0].in_carate_250 + " " : "") +
+                (data.results[0].in_carate_350 > 0 ? "350 X " + data.results[0].in_carate_350 : "");
+
+            const label2 = 
+                "जमा कॅरेट : " +
+                (data.results[0].out_carate_100 > 0 ? "100 X " + data.results[0].out_carate_100 + " " : "") +
+                (data.results[0].out_carate_150 > 0 ? "150 X " + data.results[0].out_carate_150 + " " : "") +
+                (data.results[0].out_carate_250 > 0 ? "250 X " + data.results[0].out_carate_250 + " " : "") +
+                (data.results[0].out_carate_350 > 0 ? "350 X " + data.results[0].out_carate_350 : "");
+
             var footerDetails = [
-                { label: "गेलेले कॅरेट : +", value: data.results[0].carate_amount },
+                // { label: "गेलेले कॅरेट : 100 X  " + data.results[0].in_carate_100 + "  150 X  " + data.results[0].in_carate_150 + "  250 X  " + data.results[0].in_carate_250 + "  350 X  " +  data.results[0].in_carate_350, value: data.results[0].carate_amount },
+                { label: label1.trim(), value: data.results[0].carate_amount },
                 { label: "चालू कलम रक्कम:", value: data.results[0].amount },
                 { label: "मागील बाकी:", value: data.results[0].pre_balance },
                 { label: "एकूण रक्कम:", value: data.results[0].total_amount },
                 { label: "रोख जमा रक्कम:", value: data.results[0].cash },
+                { label: "ऑनलाईन जमा बँक :", value: data.results[0].online_acc },
                 { label: "ऑनलाईन जमा रक्कम:", value: data.results[0].online_amt },
                 { label: "सूट रक्कम:", value: data.results[0].discount },
-                { label: "जमा कॅरेट:   -", value: data.results[0].inCarat },
+                // { label: "जमा कॅरेट: 100 X  " + data.results[0].out_carate_100 + "  150 X  " + data.results[0].out_carate_150 + "  250 X  " + data.results[0].out_carate_250 + "  350 X  " +  data.results[0].out_carate_350, value: data.results[0].inCarat },
+                { label: label2.trim(), value: data.results[0].inCarat },
                 { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.results[0].balance },
+                //{ label: "बाकी कॅरेट : 100 X  " + data.results[0].carate_100 + "  150 X  " + data.results[0].carate_150 + "  250 X  " + data.results[0].carate_250 + "  350 X  " +  data.results[0].carate_350, value: ''} 
+                { label: label.trim(), value: ''} 
                 // Add other bill details similarly
             ];
 
@@ -307,6 +418,20 @@ function openModal(item) {
                     `;
                 tablefooter.appendChild(row);
             });
+
+            // document.getElementById('carate1100').textContent = data.results[0].in_carate_100;
+            // document.getElementById('carate1150').textContent = data.results[0].in_carate_150;
+            // document.getElementById('carate1250').textContent = data.results[0].in_carate_250;
+            // document.getElementById('carate1350').textContent = data.results[0].in_carate_350;
+            // document.getElementById('carate2100').textContent = data.results[0].out_carate_100;
+            // document.getElementById('carate2150').textContent = data.results[0].out_carate_150;
+            // document.getElementById('carate2250').textContent = data.results[0].out_carate_250;
+            // document.getElementById('carate2350').textContent = data.results[0].out_carate_350;
+            // document.getElementById('carate3100').textContent = data.results[0].carate_100;
+            // document.getElementById('carate3150').textContent = data.results[0].carate_150;
+            // document.getElementById('carate3250').textContent = data.results[0].carate_250;
+            // document.getElementById('carate3350').textContent = data.results[0].carate_350;
+
 
             // Populate table with fetched data
             var itemsTableBody = document.getElementById("itemsTableBody");
@@ -351,177 +476,206 @@ function openModal(item) {
     // Add item data to modal content
     var itemData = document.createElement('div');
     itemData.innerHTML = `
-        <style>        
-        .header {
-            background-color: #f9f9f9;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .header .logo {
-            width: auto; /* Adjust as needed */
-            margin-right: 20px; /* Adjust as needed */
-        }
-        .header .logo img {
-            height: 80px; /* Adjust as needed */
-        }
-        .header .details {
-            width: 80%; /* Adjust as needed */
-            text-align: right;
-        }
-        .header h1, .header p {
-            margin: 5px 0;
-            font-size: 16px;
-        }
+    <style>   
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+    }
+    
+    .box-container {
+        background-color: #fff;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h6{
+        top: -17px;
+       position: absolute;
+       font-size: 12px;
+    }
+    
+    .label {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 31px;
+        position: relative;
+        top: 17px;
+        right: -47px;
+
+    }
+    
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .carate-box {
+        background-color: #e9e9e9;
+        padding: 4px;
+        margin: 7px;
+        position: relative;
+        top: 10px;
+        max-width: 66px;
+        max-height: 24px;
+        left: -23px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        flex: 1 1 calc(25% - 20px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box; /* Ensures padding and border are included in the width calculation */
+    }
+    
+    
+    .carate {
+        font-weight: bold;
+    }
+    
+    .data {
+        margin-left: 10px;
+        color: #333;
+    }
+         
+    .header {
+        background-color: #f9f9f9;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .header .logo {
+        width: auto; /* Adjust as needed */
+        margin-right: 20px; /* Adjust as needed */
+    }
+    .header .logo img {
+        height: 80px; /* Adjust as needed */
+    }
+    .header .details {
+        width: 80%; /* Adjust as needed */
+        text-align: right;
+    }
+    .header h1, .header p {
+        margin: 5px 0;
+        font-size: 16px;
+    }
 
 
-        .container2 {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 12px; /* Adjust font size */
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 10px;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 6px; /* Adjust padding */
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .total {
-            font-weight: bold;
-        }
-        .details {
-            text-align: center;
-            margin-top: 10px;
-        }
+    .container2 {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 12px; /* Adjust font size */
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10px;
+    }
+    th, td {
+        border: 1px solid #ccc;
+        padding: 6px; /* Adjust padding */
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .total {
+        font-weight: bold;
+    }
+    .details {
+        text-align: center;
+        margin-top: 10px;
+    }
 
-        /* CSS styles for the print button */
+    /* CSS styles for the print button */
 .header-details button {
-    padding: 10px 20px;
-    background-color: #808080;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+padding: 10px 20px;
+background-color: #808080;
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s;
 }
 
 
 @media print {
-    .details, .header-details, .close{
-        display: none; /* Hide the print button and header details when printing */
-    }
+.details, .header-details, .close{
+    display: none; /* Hide the print button and header details when printing */
 }
-        </style>
-        <div class="header">
-        <div class="logo">
-            <img src="../../assets/img/logo.png" alt="Company Logo">
-        </div>
-        <div >
-            <h1>सावता फ्रुट सप्लायर्स</h1>
-            <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
-            <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
-        </div>
+}
+.container3 {
+max-width: 800px;
+margin: 0 auto;
+padding: 20px;
+text-align: center;
+}
+.box-container {
+display: flex;
+justify-content: space-around;
+margin: 16px
+}
+.carate {
+font-size: 16px;
+color: #333;
+}
+.data {
+font-size: 14px;
+color: #666;
+}
+    </style>
+    <div class="header">
+   <div> <h6> Mobile:- 9960607512  </h6> </div>
+    <div class="logo">
+        <img src="../../assets/img/logo.png" alt="Company Logo">
     </div>
-    <div class="container2">
+    <div >
+      <center><h1>सावता फ्रुट सप्लायर्स</h1> 
+        <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
+        <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
+    </div> </center>
+</div>
+<div class="container2">
 
-        <!-- Bill details -->
-        <table>
-            <tbody id = 'TableBody'>
-                <tr>
-                    <td><b>बिल क्र.:</b></td>
-                    <td>49746</td>
-                </tr>
-                <tr>
-                    <td><b>तारीख:</b></td>
-                    <td>01-03-2024</td>
-                </tr>
-                <tr>
-                    <td><b>ग्राहकाचे नाव:</b></td>
-                    <td id="cust_name" value= "test">Cash Bill</td>
-                </tr>
-                <tr>
-                    <td><b>संपर्क क्र.:</b></td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td><b>पत्ता:</b></td>
-                    <td>-</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <!-- Items table -->
-        <table>
-            <thead>
-                <tr>
-                    <th>अनु क्र.</th>
-                    <th>बटा</th>
-                    <th>Product</th>
-                    <th>नग</th>
-                    <th>किंमत</th>
-                    <th>रक्कम</th>
-                </tr>
-            </thead>
-            <tbody id= 'itemsTableBody'>
-            </tbody>
-            <tfoot style="background-color: #e8e6e4;"  id ="tablefooter">
-                <tr>
-                    <td align="right" colspan="6"><font color="black">गेलेले कॅरेट : +</font></td>
-                    <td align="right" colspan="1"><font color="black">0</font></td>
-                </tr>	
-                <tr>
-                    <td align="right" colspan="6" style="border-top: 1px solid #999"><font color="black">चालू कलम रक्कम:</font></td>
-                    <td align="right" colspan="1" style="border-top: 1px solid #999"><font color="black">800</font></td>
-                </tr>
-                <tr>
-                    <td align="right" colspan="6"><font color="black">मागील बाकी:</font></td>
-                    <td align="right" colspan="1"><font color="black">0</font></td>
-                </tr>
-                <tr>
-                    <td align="right" colspan="6" style="border-top: 1px solid #999"><font color="black">एकूण रक्कम:</font></td>
-                    <td align="right" colspan="1" style="border-top: 1px solid #999"><font color="black">800</font></td>
-                </tr>
-                <tr>
-                    <td align="right" colspan="6"><font color="black">रोख जमा रक्कम:</font></td>
-                    <td align="right" colspan="1"><font color="black">800</font></td>
-                </tr>
-                <tr>
-                    <td align="right" colspan="6"><font color="black">ऑनलाईन जमा रक्कम:</font></td>
-                    <td align="right" colspan="1"><font color="black">0</font></td>
-                </tr>
-                <tr>
-                    <td align="right" colspan="6"><font color="black">सूट रक्कम:</font></td>
-                    <td align="right" colspan="1"><font color="black">0</font></td>
-                </tr>
-                <tr>
-                    <td align="right" colspan="6"><font color="black">जमा कॅरेट:   -</font></td>
-                    <td align="right" colspan="1"><font color="black">0</font></td>
-                </tr>
-                <tr>
-                    <td align="right" colspan="6" style="border-top: 1px solid #999"><font color="black">आत्ता पर्यंतचे येणे बाकी:</font></td>
-                    <td align="right" colspan="1" style="border-top: 1px solid #999"><font color="black">0</font></td>
-                </tr>
-            </tfoot>
-        </table>
-        
+    <!-- Bill details -->
+    <table>
+        <tbody id = 'TableBody'>
+        </tbody>
+    </table>
+    <br><br>
+    <!-- Items table -->
+    <table>
+        <thead>
+            <tr>
+                <th>अनु क्र.</th>
+                <th>बटा</th>
+                <th>Product</th>
+                <th>नग</th>
+                <th>किंमत</th>
+                <th>रक्कम</th>
+            </tr>
+        </thead>
+        <tbody id= 'itemsTableBody'>
+        </tbody>
+        <tfoot style="background-color: #e8e6e4;"  id ="tablefooter">
+            
+        </tfoot>
+    </table>
+
         <!-- Thank you message -->
         <div class="details">
             <h4>Thank you, visit again!</h4>
             <p><a href="https://datacrushanalytics.com/" style="color: #B1B6BA; font-size: 14px;">www.DataCrushAnalytics.com (Contact No: 7040040015)</a></p>
         </div>
     </div>
-        
+    
 
 
         <!-- Print button -->
@@ -556,65 +710,69 @@ function openModal(item) {
 }
 
 
-
-
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
 
-        const customHeaders = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'carate_amount', 'total_amount', 'pre_balance', 'online_amt', 'discount', 'inCarat', 'PaidAmount', 'balance', 'comment'];
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
-        // Create a new worksheet with custom headers
-        const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
+        return fetch('http://52.66.126.53/routewiseSaleReport/generate-pdf', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.status === 404) {
+                loader.style.display = 'none';
+               
+Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'No data found.',
+  });
+                throw new Error('Data not found');
+            }
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob(); // Get the response as a Blob
+        })
+        .then(blob => {
+            loader.style.display = 'none';
 
-        // Append the data to the worksheet
-        data.reports.forEach((report) => {
-            const rowData = [
-                report.bill_no,
-                report.date,
-                report.cust_name,
-                report.route,
-                report.amount,
-                report.carate_amount,
-                report.total_amount,
-                report.pre_balance,
-                report.online_amt,
-                report.discount,
-                report.inCarat,
-                report.PaidAmount,
-                report.balance,
-                report.comment
-            ];
-            XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
+            // Create a URL for the Blob and trigger a download
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'SaleReport.pdf'; // Set the desidarkgrey file name
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url); // Release the URL
+
+            console.log('PDF downloaded successfully');
+        })
+        .catch(error => {
+            loader.style.display = 'none';
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error generating PDF. Please try again.',
+              });
         });
-
-        // Add Grand Totals to a new sheet
-        const grandTotals = [
-            ["Grand Bill Amount", "Grand outCarate", "Total Bill Amount", "Online Amount", "Grand Discount", "Grand inCarate", "Grand Paid Amount", "Grand Balance"],
-            [data.Grand['Grand Bill Amount'], data.Grand['Grand outCarate'], data.Grand['Total Bill Amount'], data.Grand['Online Amount'], data.Grand['Grand Discount'], data.Grand['Grand inCarate'], data.Grand['Grand Paid Amount'] ,data.Grand['Grand Balance']]
-        ];
-        const grandTotalsWorksheet = XLSX.utils.aoa_to_sheet(grandTotals);
-
-        // Create a new workbook
-        const workbook = XLSX.utils.book_new();
-
-        // Add the worksheet with data
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
-
-        // Add the worksheet with grand totals
-        XLSX.utils.book_append_sheet(workbook, grandTotalsWorksheet, 'Grand Totals');
-
-        /* generate XLSX file and prompt to download */
-        XLSX.writeFile(workbook, 'Routewise_Sale_Report.xlsx');
     } catch (error) {
-        console.error('Error exporting to Excel:', error);
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error generating PDF. Please try again.',
+          });
     }
 }
-
-
-
-
-
 
 
 

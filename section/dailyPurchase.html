@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>home page</title>
     <style>
         .container {
@@ -13,7 +14,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+    background-color: #fef7f7;
     margin: 0;
     padding: 20px;
 }
@@ -152,7 +153,10 @@ th {
     100% { transform: rotate(360deg); }
   }
   
-
+  #user {
+    margin-left: 30%;
+}
+  
 
     </style>
 
@@ -161,7 +165,11 @@ th {
     <div id="loader"></div>
         <div class="container">
             <div class="datetime" id="datetime">
-                <p id="currentDate"></p>
+                <!-- <p id="currentDate"></p> -->
+                <p>
+                    <label for="currentDate">Date:</label>
+                    <input type="date" id="currentDate" onchange="fetchData()">
+                </p>
                 <h1 id="user">USER</h1>
                 <p id="currentTime"></p>
             </div>
@@ -196,34 +204,49 @@ th {
             // Retrieve user data from localStorage
             var sessionData = JSON.parse(localStorage.getItem('sessionData'));
             document.getElementById('user').textContent = sessionData[0].name;
+            var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
             var loader = document.getElementById('loader');
             loader.style.display = 'block';
 
             // Display current date and time
-            var currentDateElement = document.getElementById('currentDate');
+            // var currentDateElement = document.getElementById('currentDate');
+            var currentDate = new Date();
+            document.getElementById('currentDate').value = currentDate.getFullYear() + '-' + (String(currentDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(currentDate.getDate()).padStart(2, '0'));
             var currentTimeElement = document.getElementById('currentTime');
 
             var currentDate = new Date().toLocaleDateString();
             var currentTime = new Date().toLocaleTimeString();
 
-            currentDateElement.textContent = "Date: " + currentDate;
+            //currentDateElement.textContent = "Date: " + currentDate;
             currentTimeElement.textContent = "Time: " + currentTime;
             var currentDate1 = new Date();
 
-            fetch("http://65.0.168.11/fetchData/purchase", {
+            fetchData(); 
+
+        });
+
+        function fetchData(){
+            var tbody = document.getElementById('tableBody');
+            tbody.innerHTML = ''; // Clear existing rows
+
+            fetch("http://52.66.126.53/fetchData/purchase", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                   "date" : currentDate1.getFullYear() + '-' + String(currentDate1.getMonth() + 1).padStart(2, '0') + '-' + String(currentDate1.getDate()).padStart(2, '0')
+                   "date" : document.getElementById("currentDate").value
                 })
             })
             //"date" : 
             .then(response => {
                 if (response.status === 404) {
                     loader.style.display = 'none';
-                    alert("No data found.");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No data found.',
+                    });
                     throw new Error('Data not found');
                 }
                 if (!response.ok) {
@@ -241,8 +264,8 @@ th {
             .catch(error => {
                 console.error("Error fetching data:", error);
             });        
-          });
-
+         
+        }
 
 
           function populateTable(data) {

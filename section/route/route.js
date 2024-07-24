@@ -4,11 +4,15 @@ function route() {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    fetch('http://65.0.168.11/routeData')
+    fetch('http://52.66.126.53/routeData')
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';
-            alert("No data found.");
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No data found.',
+              });
             throw new Error('Data not found');
         }
         if (!response.ok) {
@@ -46,6 +50,7 @@ function populateTable(data) {
             var editCell = row.insertCell();
             var editButton = document.createElement('button');
             editButton.className = 'button1 edit-button';
+            editButton.style.backgroundColor = 'darkgrey';
             var editLink = document.createElement('a');
             editLink.href = '../route/update_route.html'; // Edit link destination
             editLink.textContent = 'Edit';
@@ -72,7 +77,7 @@ function populateTable(data) {
 
 function editRoute(user) {
     localStorage.setItem('userData', JSON.stringify(user));
-     // Redirect to user_update.html
+     // darkgreyirect to user_update.html
      window.location.href = '../route/update_route.html';
 }
 
@@ -80,7 +85,7 @@ function editRoute(user) {
 
 function deleteRoute(userId) {
     // Perform delete operation based on userId
-    fetch('http://65.0.168.11/routeData/deleterouteId/' + userId, {
+    fetch('http://52.66.126.53/routeData/deleterouteId/' + userId, {
         method: 'DELETE'
     })
     .then(response => {
@@ -88,7 +93,12 @@ function deleteRoute(userId) {
             throw new Error('Network response was not ok');
         }
         console.log('Route deleted successfully');
-        alert("Route is successfully Deleted");
+     
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Route is successfully Deleted',
+            })
         // Refresh the table or update UI as needed
         route(); // Assuming you want to refresh the table after delete
     })

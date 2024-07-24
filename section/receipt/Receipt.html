@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title></title>
     <style>
 
@@ -18,7 +20,7 @@
 
       body {
           font-family: Arial, sans-serif;
-          background-color: rgba(242, 242, 242, 0.8); /* Transparent background */
+          background-color: #fef7f7; /* Transparent background */
           margin: 0;
           padding: 20px;
           display: flex;
@@ -34,7 +36,6 @@
           width: 80%; /* Adjust width as needed */
           max-width: 900px; /* Maximum width */
           margin: 0 auto; /* Center horizontally */
-          background-color: white; /* Background color */
       }
 
       .container {
@@ -58,7 +59,7 @@
           padding: 12px 24px;
           text-decoration: none;
           color: white;
-          background-color: #808080; /* Grey color */
+          background-color:darkgrey; /* Grey color */
           border: none;
           border-radius: 5px;
           cursor: pointer;
@@ -68,7 +69,7 @@
       }
 
       .button:hover {
-          background-color: #555; /* Darker grey on hover */
+          background-color: darkdarkgrey; /* Darker grey on hover */
       }
 
       .button a {
@@ -111,6 +112,7 @@
 
       input[type="number"],
       input[type="text"],
+      input[type="date"],
       select,
       textarea {
           flex: 1;
@@ -127,11 +129,11 @@
           /* Adjustments for smaller screens */
           th,
           td {
-              padding: 8px; /* Reduced padding for smaller screens */
+              padding: 8px; /* darkgreyuced padding for smaller screens */
           }
 
           .container {
-              padding: 10px; /* Reduce padding for smaller screens */
+              padding: 10px; /* darkgreyuce padding for smaller screens */
           }
 
           .input-label {
@@ -177,6 +179,78 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+    /* CSS */
+.popup {
+    /* Existing styles */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#companyInfo {
+    margin-bottom: 20px;
+}
+
+#companyLogo {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+#companyName {
+    font-size: 1.2em; /* Adjust the font size as needed */
+}
+
+#barcodeCanvas {
+    /* Existing styles */
+    margin-top: 20px; /* Add margin for spacing */
+    width: 220px;
+}
+
+/* Styles for the modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Styles for the modal content */
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+    /* Position relative for the close button */
+}
+
+/* Close button style */
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
   
   </style>
 </head>
@@ -184,32 +258,33 @@
     <div id="loader"></div>
     <div class="frame">
         <div class="container">
-            <h1 align="center"> Receipt</h1>
+            <h1 align="center"> जमा पावती</h1>
             <hr>
             <br>
             <div class="container1">
                 <form id="loginForm1">
                     <div class="first-row">
-                        <label for="pavti" class="input-label">Receipt No :</label>
+                        <label for="pavti" class="input-label">जमा पावती क्र :</label>
                         <input type="number" id="pavti" name="number" placeholder="Receipt No." required>
                     </div>
 
                     <!-- Rest of your form content -->
                     
                 <div class="first-row">
-                    <label for="date1" class="input-label">Date :</label>
-                    <input type="text" id="date" name="date" placeholder="Date" required>
+                    <label for="date1" class="input-label">तारीख :</label>
+                    <input type="date" id="date" name="date" placeholder="Date" required>
                 </div>
 
 
                 <div class="first-row">
-                    <label for="account_group" class="input-label">Customer Name :</label>
+                    <label for="account_group" class="input-label">ग्राहकाचे नाव:</label>
                     <select class="drop" id="account_group" name="account_group" onchange="previousbalance()" required></select>
+                    <input type="hidden" id="custid" name="custid">
                 </div>
 
                 <div class="dropdown-container">
                     <div id="number-wrapper" class="input-wrapper">
-                      <label for="number">Mobile No :</label>
+                      <label for="number">मोबाईल नंबर :</label>
                       <select class="drop" id="mob" name="mob" onchange="getCust()" required></select>
                     </div><br>
                 <!-- <div class="first-row">
@@ -218,39 +293,48 @@
                 </div> -->
 
                 <div class="first-row">
-                    <label for="message" class="input-label">Comment :</label>
+                    <label for="message" class="input-label">संदर्भ :</label>
                     <textarea id="message" name="message"></textarea>
                 </div>
 
                 <div class="first-row">
-                    <label for="input3" class="input-label">Privious Balance :</label>
+                    <label for="input3" class="input-label">मागील बाकी :</label>
                     <input type="text" id="input3" name="input1" readonly>
+                </div>
+                
+                <div class="first-row">
+                    <label class="input-label"> मागील बाकी कॅरेट :</label>
+                    <input type="number" id="carate2100" name="number" placeholder="100" readonly>
+                    <input type="number" id="carate2150" name="number" placeholder="150" readonly>
+                    <input type="number" id="carate2250" name="number" placeholder="250" readonly>
+                    <input type="number" id="carate2350" name="number" placeholder="350" readonly>
                 </div>
 
                 <div class="first-row">
-                    <label for="input6" class="input-label">Cash :</label>
+                    <label for="input6" class="input-label">रोख :</label>
                     <input type="text" id="input6" name="input1" onchange="totalbill()">
                 </div>
 
                 <div class="first-row">
-                    <label for="input1" class="input-label">online balance Account :</label>
+                    <label for="input1" class="input-label">बँक खाते :</label>
                     <select id="input1" name="input2"></select>
                 </div>
 
                 <div class="first-row">
-                    <label for="input1" class="input-label"> Online  :</label>
+                    <label for="input1" class="input-label"> ऑनलाईन :</label>
                     <input type="text" id="input7" name="input2" onchange="totalbill()"></select>
                 </div>
 
                
 
                 <div class="first-row">
-                    <label for="input8" class="input-label">Discount :</label>
+                    <label for="input8" class="input-label">सूट रक्कम :</label>
                     <input type="text" id="input8" name="input1" onchange="totalbill()">
                 </div>
 
+
                 <div class="first-row">
-                    <label class="input-label">In carate :</label>
+                    <label class="input-label">जमा कॅरेट:</label>
                     <input type="number" id="carate100" name="number" placeholder="100" onchange="carate()">
                     <input type="number" id="carate150" name="number" placeholder="150" onchange="carate()">
                     <input type="number" id="carate250" name="number" placeholder="250" onchange="carate()">
@@ -258,19 +342,24 @@
                 </div>
 
                 <div class="first-row">
-                    <label for="input4" class="input-label">Balance Carate price :</label>
-                    <input type="text" id="input4" name="input1" onchange="totalbill()">
+                    <!-- <label for="input4" class="input-label">Balance Carate price :</label> -->
+                    <input type="hidden" id="input4" name="input1" onchange="totalbill()">
                 </div>
 
                 <div class="first-row">
-                    <label for="input5" class="input-label">Total Due Balance :</label>
+                    <label for="input5" class="input-label">बाकी रक्कम :</label>
                     <input type="text" id="input5" name="input1">
                 </div>
 
                 <div class="first-row">
-                    <label for="input12" class="input-label">Total Due carate :</label>
-                    <input type="text" id="input12" name="input1">
+                    <label class="input-label">एकून बाकी कॅरेट :</label>
+                    <input type="number" id="carate3100" name="number" placeholder="100" readonly>
+                    <input type="number" id="carate3150" name="number" placeholder="150" readonly>
+                    <input type="number" id="carate3250" name="number" placeholder="250" readonly>
+                    <input type="number" id="carate3350" name="number" placeholder="350" readonly>
                 </div>
+
+
                 <div class="fourth-row">
                     
                     <div class="button-container">
@@ -278,6 +367,7 @@
                         <!-- <button class="border-hover2 button">Back</button> -->
                     </div>
                 </form>
+                <div id="popupContainer"></div>
             </div>
         </div>
     </div>
@@ -286,21 +376,92 @@
 <script>
     // JavaScript functions remain unchanged
     function carate() {
+    if (parseInt(document.getElementById("carate100").value) > parseInt(document.getElementById('carate2100').value)){
+        Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Carate limit exceed",
+            });
+        document.getElementById("carate100").value = 0;
+    }
+
+    if (parseInt(document.getElementById("carate150").value) > parseInt(document.getElementById('carate2150').value)){
+        Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Carate limit exceed",
+            });
+        document.getElementById("carate150").value = 0;
+    }
+
+    if (parseInt(document.getElementById("carate250").value) > parseInt(document.getElementById('carate2250').value)){
+        Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Carate limit exceed",
+            });
+        document.getElementById("carate250").value = 0;
+    }
+
+
+    if (parseInt(document.getElementById("carate350").value) > parseInt(document.getElementById('carate2350').value)){
+        Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Carate limit exceed",
+            });
+        document.getElementById("carate350").value = 0;
+    }
+
         var value100 = parseInt(document.getElementById("carate100").value) || 0;
         var value150 = parseInt(document.getElementById("carate150").value) || 0;
         var value250 = parseInt(document.getElementById("carate250").value) || 0;
         var value350 = parseInt(document.getElementById("carate350").value) || 0;
         document.getElementById("input4").value = value100 * 100 + value150 * 150 + value250 * 250 + value350 * 350;
+        document.getElementById('carate3100').value = parseInt(document.getElementById('carate2100').value) - value100;
+        document.getElementById('carate3150').value = parseInt(document.getElementById('carate2150').value) - value150;
+        document.getElementById('carate3250').value = parseInt(document.getElementById('carate2250').value) - value250;
+        document.getElementById('carate3350').value = parseInt(document.getElementById('carate2350').value) - value350;
         totalbill();
     }
 
-    function totalbill() {
-        document.getElementById("input5").value = parseInt(document.getElementById("input3").value || 0) - parseInt(document.getElementById("input6").value || 0) - parseInt(document.getElementById("input7").value || 0) - parseInt(document.getElementById("input8").value || 0) - parseInt(document.getElementById("input4").value || 0);
-    }
+   // function totalbill() {
+   //    document.getElementById("input5").value = parseInt(document.getElementById("input3").value || 0) - parseInt(document.getElementById("input6").value || 0) - parseInt(document.getElementById("input7").value || 0) - parseInt(document.getElementById("input8").value || 0) - parseInt(document.getElementById("input4").value || 0);
+   // }
 
+
+
+function totalbill(){
+    console.log("totalbill")
+    console.log(document.getElementById("custid").value)
+  
+    fetch('http://52.66.126.53/accountData/' + parseInt(document.getElementById("custid").value))
+          .then(response => {
+            if (!response.ok) {
+                loader.style.display = 'none';
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+          .then(data => {
+              console.log(data[0].cr_dr_type)
+              if(data[0].cr_dr_type == 'no'){
+                document.getElementById("input5").value = parseInt(document.getElementById("input3").value || 0) - parseInt(document.getElementById("input6").value || 0) - parseInt(document.getElementById("input7").value || 0) - parseInt(document.getElementById("input8").value || 0);
+              }else{
+                document.getElementById("input5").value = parseInt(document.getElementById("input3").value || 0) - parseInt(document.getElementById("input6").value || 0) - parseInt(document.getElementById("input7").value || 0) - parseInt(document.getElementById("input8").value || 0) - parseInt(document.getElementById("input4").value || 0);
+              }
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+  
+    
+    //document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0) - parseInt(document.getElementById("total2").value || 0);
+  }
+  
     function previousbalance() {
         const name = document.getElementById("account_group").value
-        fetch('http://65.0.168.11/fetchpv/' + name)
+        fetch('http://52.66.126.53/fetchpv/' + name)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -310,6 +471,7 @@
             .then(data => {
                 // Populate dropdown with API data
                 console.log(data)
+                document.getElementById('custid').value = parseInt(data[0]['id']);
                 document.getElementById('input3').value = parseInt(data[0]['current_balance'] || 0);
             })
             .catch(error => {
@@ -317,7 +479,7 @@
             });
 
 
-            fetch('http://65.0.168.11/fetchName/name/' + name)
+            fetch('http://52.66.126.53/fetchName/name/' + name)
                   .then(response => {
                     if (!response.ok) {
                         loader.style.display = 'none';
@@ -336,7 +498,36 @@
                   })
                   .catch(error => {
                       console.error('Error:', error);
-                  });   
+                  });
+
+
+
+    fetch('http://52.66.126.53/carateuserData/' + name)
+  .then(response => {
+      if (!response.ok) {
+        loader.style.display = 'none';
+          throw new Error('Network response was not ok');
+      }
+      return response.json();
+  })
+  .then(data => {
+      // Populate dropdown with API data
+      console.log(data)
+      document.getElementById('carate2100').value = parseInt(data[0]['carate_100']);
+      document.getElementById('carate2150').value = parseInt(data[0]['carate_150']);
+      document.getElementById('carate2250').value = parseInt(data[0]['carate_250']);
+      document.getElementById('carate2350').value = parseInt(data[0]['carate_350']);
+      document.getElementById('carate3100').value = parseInt(data[0]['carate_100']);
+      document.getElementById('carate3150').value = parseInt(data[0]['carate_150']);
+      document.getElementById('carate3250').value = parseInt(data[0]['carate_250']);
+      document.getElementById('carate3350').value = parseInt(data[0]['carate_350']);
+  })
+  .catch(error => {
+      console.error('Error:', error);
+  });
+                  
+
+
     }
 
 
@@ -344,7 +535,7 @@
     function getCust() {
         var number = document.getElementById('mob').value;
         console.log(number)
-        fetch('http://65.0.168.11/fetchName/mobile/' + number)
+        fetch('http://52.66.126.53/fetchName/mobile/' + number)
             .then(response => {
                 if (!response.ok) {
                     loader.style.display = 'none';
@@ -374,13 +565,25 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://65.0.168.11/list/Customer', 'account_group','customer');
-        fetchAndPopulateDropdown('http://65.0.168.11/list/Bank Account', 'route_detail','Account');
-        fetchAndPopulateDropdown('http://65.0.168.11/list/Bank Account', 'input1','Account');
-        fetchAndPopulateDropdown('http://65.0.168.11/mobile', 'mob','mobile_no');
+
+        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    // Check if session data exists and if the user is an admin
+    var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+        // Check if the user is an admin and show/hide the button accordingly
+    if (isAdmin) {
+        fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'account_group','customer');
+        fetchAndPopulateDropdown('http://52.66.126.53/mobile', 'mob','mobile_no');
+        }else{
+          var route = sessionData[0].route;
+          fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customerSale/' +route  , 'account_group','name');
+          fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customerSale/' +route  , 'mob','mobile_no');
+        }
+
+        // fetchAndPopulateDropdown('http://52.66.126.53/list/Bank Account', 'route_detail','Account');
+        fetchAndPopulateDropdown('http://52.66.126.53/list/Bank Account', 'input1','Account');
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId,name) {
+    function fetchAndPopulateDropdown(apiUrl, dropdownId,name,selectedValue = null, readOnly = false) {
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -390,14 +593,14 @@
             })
             .then(data => {
                 // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId,name);
+                populateDropdownWithSelect2(data, dropdownId,name,selectedValue, readOnly);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     }
 
-    function populateDropdownWithSelect2(data, dropdownId, name) {
+    function populateDropdownWithSelect2(data, dropdownId, name,selectedValue = null, readOnly = false) {
         var dropdown = $('#' + dropdownId);
         // Clear existing options
         dropdown.empty();
@@ -413,10 +616,28 @@
         });
 
         // Initialize Select2
-        dropdown.select2({
-            placeholder: "Select " + name + " type",
-            allowClear: true
+       dropdown.select2({
+            placeholder: 'Select components',
+            closeOnSelect: false,
+            allowClear: true,
+            templateResult: function (data) {
+                if (!data.id) {
+                    return data.text;
+                }
+                var $element = $('<span>' + data.text + '</span>');
+                return $element;
+            }
         });
+
+        // Set selected value if provided
+        if (selectedValue !== null) {
+        dropdown.val(selectedValue).trigger('change');
+        }
+
+        // Make the dropdown read-only if specified
+        if (readOnly) {
+            dropdown.prop('disabled', true);
+        }
     }
 
     $(document).on('select2:open', function(e) {
@@ -424,6 +645,45 @@
             document.querySelector('input.select2-search__field').focus();
         }, 0);
     });
+
+
+    if (parseInt(document.getElementById("carate100").value) > parseInt(document.getElementById('carate2100').value)){
+        Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Carate limit exceed",
+            });
+        document.getElementById("carate100").value = 0;
+    }
+
+    if (parseInt(document.getElementById("carate150").value) > parseInt(document.getElementById('carate2150').value)){
+        Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Carate limit exceed",
+            });
+        document.getElementById("carate150").value = 0;
+    }
+
+    if (parseInt(document.getElementById("carate250").value) > parseInt(document.getElementById('carate2250').value)){
+        Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Carate limit exceed",
+            });
+        document.getElementById("carate250").value = 0;
+    }
+
+
+    if (parseInt(document.getElementById("carate350").value) > parseInt(document.getElementById('carate2350').value)){
+        Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Carate limit exceed",
+            });
+        document.getElementById("carate350").value = 0;
+    }
+    
 
 </script>
 </html>

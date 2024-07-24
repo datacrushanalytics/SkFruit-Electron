@@ -6,19 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>User Form in Electron</title>
     <style>
         /* Add border to the second form */
-        /* .form1 {
-            border: 1px solid black;
-            padding: 10px;
-            margin-top: 20px;
-        } */
         body {
             font-family: Arial, sans-serif;
-            background-color: rgba(242, 242, 242, 0.8);
+            background-color: #fef7f7;
             /* Transparent background */
             margin: 0;
             padding: 20px;
@@ -69,7 +69,7 @@
     margin-left: 0%;
   }
 
-  #vehicleNumber{
+  #route, #user{
   /* border-radius: 8px; */
   height: 35px;
   width: 600px;
@@ -81,14 +81,14 @@
   margin-left: 2rem;
 }
         .button-container {
-            margin-bottom: 20px;
+            margin-bottom: 0px;
         }
 
         .button {
             padding: 12px 24px;
             text-decoration: none;
             color: white;
-            background-color: #808080;
+            background-color: grey;
             /* Grey color */
             border: none;
             border-radius: 5px;
@@ -96,14 +96,21 @@
             transition: background-color 0.3s;
             margin: 0 10px;
         }
+        .button i {
+            font-size: 20px; /* Adjust the size as needed */
+        }
 
         .button:hover {
-            background-color: #555;
+            background-color: darkgrey;
             /* Darker grey on hover */
         }
         .button a {
             color: white;
             text-decoration: none;
+        }
+        .button-container {
+            display: flex;
+            gap: 10px; /* Adjust the space between buttons */
         }
 
         .table-container {
@@ -122,14 +129,16 @@
             border-radius: 5px;
         }
         
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 12px;
-        }
+        th,
+    td {
+        border: 1px solid #dddddd;
+        /* background-color: #eafffb; */
+        text-align: left;
+        padding: 12px;
+    }
         
         th {
-            background-color: #f2f2f2;
+            background-color: #c7d5d3;
         }
 
         /* Style the loader container */
@@ -156,6 +165,61 @@
   }
   
 
+      /* CSS */
+.popup {
+    /* Existing styles */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+  
+
+
+        /* Styles for the modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Styles for the modal content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+            /* Position relative for the close button */
+        }
+
+        /* Close button style */
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 8px;
+            right: 16px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+
     </style>
 </head>
 
@@ -163,7 +227,7 @@
     <div id="loader"></div>
     <div class="container">
         <h1 align="center">Daily Report</h1><br>
-        <hr>
+        <hr style="position: relative; top: -25px;">
         <br>
         <div class="container1">
             <form id="loginForm1">
@@ -176,34 +240,43 @@
                     <input type="date" id="todate" name="date" placeholder="To Date" required>
                 </div><br>
 
-                <label for="userType">Vehicle Number</label>
-                <select class="drop" id="vehicleNumber" name="name"></select><br>
+                <label id='lable1111' for="userType">Route :</label>
+                <select class="drop1" id="route" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br><br>
+
+                <label for="userType">User :</label>
+                <select class="drop1" id="user" name="user">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br><br>
               
             <br>
 
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" class="button">Submit</button>
-                    <button type='button' class="button" onclick="exportToExcel()" id="button2">Export</button>
+                    <button type="submit" style="background-color: darkgrey;" class="button">Submit</button>
+                    <button type='button' style="background-color: darkgrey;" class="button" onclick="exportToExcel()" id="button2">Export</button>
                 <!-- </div> -->
             </form>
             <br>
             <div class="table-container">
+            <b>Daily Sale Details</b>
             <table>
                 <tr>
                     <th>Sr. No</th>
                     <th>BILL NO</th>
                     <th>DATE</th>
                     <th>Customer Name</th>
-                    <th>Gadi Number</th>
                     <th>Route</th>
-                    <th>Driver Name</th>
                     <th>Amount</th>
                     <th>Cash</th>
                     <th>Online Amount</th>
                     <th>Discount</th>
                     <th>In Carate</th>
                     <th>Carate Amount</th>
+                    <th>Validate</th>
+                    <th>Bill</th>
+                    <th>Communication</th>
                 </tr>
                 <!-- Add more rows as needed -->
                 <tbody id="tableBody">
@@ -215,25 +288,105 @@
             <br>
             <br>
 
+            <b>Daily Receipt Details</b>
             <table>
                 <tr>
                     <th>Sr. No</th>
                     <th>Receipt ID</th>
                     <th>DATE</th>
                     <th>Customer Name</th>
-                    <th>To Account</th>
+                    <th>Mobile No</th>
                     <th>Note</th>
                     <th>Cash</th>
                     <th>Online Amount</th>
                     <th>Discount</th>
                     <th>In Carate</th>
                     <th>Amount</th>
+                    <th>Validate</th>
+                    <th>Bill</th>
+                    <th>Communication</th>
                 </tr>
 
                 <!-- Add more rows as needed -->
                 <tbody id="tableBody1">
                     <!-- Data will be inserted here -->
                 </tbody>
+            </table>
+
+            <br>
+            <br>
+            <br>
+            <b>Daily Collection Details</b>
+            <table>
+                <tr>
+                    <th>Particular</th>
+                    <th>SALE</th>
+                    <th>CASH</th>
+                    <th>Online</th>
+                    <th>Discount</th>
+                    <th>Total Amount</th>
+                </tr>
+                <tr>
+                    <th>Sale</th>
+                    <td id='sale'></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Total Cash</th>
+                    <td></td>
+                    <td id="saleCash"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Total Receipt</th>
+                    <td></td>
+                    <td id="receiptCash"></td>
+                    <td id="receiptOnline"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Total Online</th>
+                    <td></td>
+                    <td></td>
+                    <td id="saleOnline"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Total Sale Discount</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td id="saleDiscount"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Total Receipt Discount</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td id="receiptDiscount"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Total</th>
+                    <th id="grandSale"></th>
+                    <th id="grandCash"></th>
+                    <th id="grandOnline"></th>
+                    <th id="grandDiscount"></th>
+                    <th id="grandTotal"></th>
+                </tr>
+
+                <!-- Add more rows as needed -->
+                <!-- <tbody id="tableBody1"> -->
+                    <!-- Data will be inserted here -->
+                <!-- </tbody> -->
             </table>
          </div>
         </div>
@@ -249,10 +402,19 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://65.0.168.11/vehicleData', 'vehicleNumber');
+        fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name');
+        fetchAndPopulateDropdown('http://52.66.126.53/fetchData/user', 'user', 'added_by');
+        var dailyReportData = JSON.parse(localStorage.getItem('dailyReportData'));
+        if(dailyReportData){
+            console.log("DailyReport",dailyReportData)
+            fetchDataAndProcess(dailyReportData);
+            localStorage.removeItem('dailyReportData');
+        }
+        
+
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId) {
+    function fetchAndPopulateDropdown(apiUrl, dropdownId, field,selectedValue = null, readOnly = false) {
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -262,14 +424,14 @@
             })
             .then(data => {
                 // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId);
+                populateDropdownWithSelect2(data, dropdownId, field, selectedValue , readOnly);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     }
 
-    function populateDropdownWithSelect2(data, dropdownId) {
+    function populateDropdownWithSelect2(data, dropdownId, field,selectedValue = null, readOnly = false) {
         var dropdown = $('#' + dropdownId);
         // Clear existing options
         dropdown.empty();
@@ -279,14 +441,39 @@
 
         // Populate dropdown with API data
         data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.vehicle_no ).text(item.vehicle_no));
+            dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
         });
 
         // Initialize Select2
         dropdown.select2({
-            placeholder: "Select Vehicle",
-            allowClear: true
+            placeholder: 'Select components',
+            closeOnSelect: false,
+            allowClear: true,
+            templateResult: function (data) {
+                if (!data.id) {
+                    return data.text;
+                }
+                var $element = $('<span>' + data.text + '</span>');
+                return $element;
+            }
         });
+
+
+        // Set selected value if provided
+        if (selectedValue !== null) {
+            dropdown.val(selectedValue).trigger('change');
+        }
+
+        // Make the dropdown read-only if specified
+        if (readOnly) {
+            dropdown.prop('disabled', true);
+        }
+
+        // // Initialize Select2
+        // dropdown.select2({
+        //     placeholder: "Select " + dropdownId + " type",
+        //     allowClear: true
+        // });
     }
 
     $(document).on('select2:open', function(e) {
@@ -294,7 +481,6 @@
             document.querySelector('input.select2-search__field').focus();
         }, 0);
     });
-
 </script>
 
 </html>

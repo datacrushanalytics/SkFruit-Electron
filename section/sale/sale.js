@@ -7,13 +7,25 @@ document.addEventListener('DOMContentLoaded', function () {
     // Set the placeholder of the input field to the formatted date
     console.log(formattedDate);
     document.getElementById('date').value = formattedDate;
+        // Retrieve session data from localStorage
+    var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    // Check if session data exists and if the user is an admin
+    var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+    // Check if the user is an admin and show/hide the button accordingly
+    if (!isAdmin) {
+        document.getElementById('date').readOnly = true; // Hide the button for non-admin users
+    }
     
 
-    fetch('http://65.0.168.11/fetchSaleid')
+    fetch('http://52.66.126.53/fetchSaleid')
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';
-            alert("No data found.");
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No data found.',
+              });
             throw new Error('Data not found');
         }
         if (!response.ok) {
@@ -24,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             // Populate dropdown with API data
             document.getElementById('bill').value = parseInt(data[0]['num']) + 1;
-            fetch('http://65.0.168.11/saleproductData/' + (parseInt(data[0]['num']) + 1))
+            fetch('http://52.66.126.53/saleproductData/' + (parseInt(data[0]['num']) + 1))
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -50,149 +62,8 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
         });
 
-    // fetch('http://65.0.168.11/list/Customer')
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         // Populate dropdown with API data
-    //         populateDropdown(data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
-
-    // fetch('http://65.0.168.11/purchaseproductData/')
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         // Populate dropdown with API data
-    //         populateDropdown1(data);
-    //         populateDropdown2(data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
-
-
-
-    // fetch('http://65.0.168.11/saleproductData/' +)
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         // Populate dropdown with API data
-    //         populateDropdown3(data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
-
-    // fetch('http://65.0.168.11/routeData')
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         // Populate dropdown with API data
-    //         populateDropdown4(data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
-
-    // fetch('http://65.0.168.11/list/Bank Account')
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         // Populate dropdown with API data
-    //         populateDropdown5(data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
 });
 
-
-// function populateDropdown(data) {
-//     var userNameDropdown = document.getElementById('grahk');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.name; // Set the value
-//         option.textContent = item.name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "ग्राहकाचे नाव"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-// function populateDropdown1(data) {
-//     var userNameDropdown = document.getElementById('bta');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.bata; // Set the value
-//         option.textContent = item.bata; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Bata"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-
-// function populateDropdown2(data) {
-//     var userNameDropdown = document.getElementById('product');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.product_name; // Set the value
-//         option.textContent = item.product_name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Product"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
 
 
 function populateDropdown3(data) {
@@ -220,7 +91,7 @@ function populateDropdown3(data) {
 
 function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('http://65.0.168.11/saleproductData/deletesaleproduct/' + userId, {
+    fetch('http://52.66.126.53/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
     })
         .then(response => {
@@ -228,7 +99,12 @@ function deleteUser(userId) {
                 throw new Error('Network response was not ok');
             }
             console.log('User deleted successfully');
-            alert("Sale Data is successfully Deleted");
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Sale Data is successfully Deleted',
+                })
             // Refresh the table or update UI as needed
             user(); // Assuming you want to refresh the table after delete
         })
@@ -238,57 +114,13 @@ function deleteUser(userId) {
 }
 
 
-// function populateDropdown4(data) {
-//     var userNameDropdown = document.getElementById('Route');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.route_name; // Set the value
-//         option.textContent = item.route_name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Route type"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-
-// function populateDropdown5(data) {
-//     var userNameDropdown = document.getElementById('onlineAcc');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.name; // Set the value
-//         option.textContent = item.name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Online Account"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-
 
 function getProducts() {
     var bataId = document.getElementById('bta').value;
     console.log(bataId)
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
-    fetch('http://65.0.168.11/purchaseproductData/getBataProduct/' + bataId)
+    fetch('http://52.66.126.53/purchaseproductData/getBataProduct/' + bataId)
         .then(response => response.json())
         .then(data => {
             loader.style.display = 'none';
@@ -302,16 +134,13 @@ function getProducts() {
             // Set the value of the Select2 dropdown
             $productDropdown.val(data[0].product_name).trigger('change');
 
-            // Update label with additional content
-            // var nagLabel = document.getElementById('nagLabel');
-            // nagLabel.innerHTML = 'नग: (' + data[0].selling_price + data[0].selling_price + ')'; 
         })
         .catch(error => {
             console.error('Error:', error);
         });
 
 
-    fetch('http://65.0.168.11/fetchStock/' + bataId)
+    fetch('http://52.66.126.53/fetchStock/' + bataId)
         .then(response => {
             if (!response.ok) {
                 loader.style.display = 'none';
@@ -324,6 +153,7 @@ function getProducts() {
             // Update label with additional content
             var nagLabel = document.getElementById('nagLabel');
             nagLabel.innerHTML = 'नग: (Remaining : ' + data[0].closing + ' '+ data[0].unit +')'; 
+            document.getElementById('nag1').value = data[0].closing;
         })
         .catch(error => {
             console.error('Error:', error);
@@ -332,35 +162,17 @@ function getProducts() {
 }
 
 
-
-// function getProducts() {
-//     var bataId = document.getElementById('bta').value;
-//     console.log(bataId)
-//     fetch('http://65.0.168.11/purchaseproductData/getBataProduct/' + bataId)
-//         .then(response => response.json())
-//         .then(data => {
-//             console.log(data[0].product_name)
-//             document.getElementById('mark').value = data[0].mark;
-//             document.getElementById('kimmat').value = data[0].selling_price;
-//             var productDropdown = document.getElementById('product');
-//             // Loop through the options in the dropdown
-//             for (var i = 0; i < productDropdown.options.length; i++) {
-//                 console.log(data[0].product_name);
-//                 // Check if the current option's value matches the fetched data
-//                 if (productDropdown.options[i].value == data[0].product_name) {
-//                     // Set the selected attribute of the matched option
-//                     productDropdown.options[i].selected = true;
-//                     // Exit the loop since we found the matching option
-//                     break;
-//                 }
-//             }
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-// }
-
 function updateTotal() {
+    if (parseInt(document.getElementById("nag").value) > parseInt(document.getElementById('nag1').value)){
+        console.log("AJAJAJ",document.getElementById('nag1').value)
+        console.log("JJJJJJ",document.getElementById('nag').value)
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Inventory Is not available',
+          });
+        document.getElementById("nag").value = 0;
+    }
     document.getElementById("total").value = document.getElementById("kimmat").value * document.getElementById("nag").value
 }
 
@@ -369,7 +181,7 @@ function updateTotal() {
 function getCust() {
     var number = document.getElementById('number').value;
     console.log(number)
-    fetch('http://65.0.168.11/fetchName/mobile/' + number)
+    fetch('http://52.66.126.53/fetchName/mobile/' + number)
         .then(response => {
             if (!response.ok) {
                 loader.style.display = 'none';
@@ -391,24 +203,3 @@ function getCust() {
             console.error('Error:', error);
         });
 }
-
-
-
-
-// function getMobile() {
-//     var name = document.getElementById('grahk').value;
-//     console.log(name)
-//     fetch('http://65.0.168.11/fetchName/name/' + name)
-//         .then(response => response.json())
-//         .then(data => {
-//             console.log(data[0].name)
-//             // Get the Select2 dropdown element
-//             var $productDropdown = $('#number');
-            
-//             // Set the value of the Select2 dropdown
-//             $productDropdown.val(data[0].name).trigger('change');
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-// }

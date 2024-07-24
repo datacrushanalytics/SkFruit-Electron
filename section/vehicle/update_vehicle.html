@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>User Form in Electron</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: rgba(242, 242, 242, 0.8);
+            background-color: #fef7f7;
             /* Transparent background */
             margin: 0;
             padding: 20px;
@@ -163,7 +164,7 @@
                 var loader = document.getElementById('loader');
                 loader.style.display = 'block';
         
-                const response = await fetch('http://65.0.168.11/vehicleData/updateVehicle/' + userData.id, {
+                const response = await fetch('http://52.66.126.53/vehicleData/updateVehicle/' + userData.id, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {
@@ -178,8 +179,12 @@
                 const result = await response.json();
                 loader.style.display = 'none';
                 console.log('Data added successfully:', result);
-                alert('Data Updated successfully')
-                // Optionally, you can redirect or show a success message here
+                Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Data Updated successfully',
+                            })
+                // Optionally, you can darkgreyirect or show a success message here
             } catch (error) {
                 console.error('Error:', error);
                 // Optionally, you can display an error message here

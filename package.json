@@ -1,6 +1,6 @@
 {
-  "name": "skfruits-30",
-  "productName": "skfruits-30",
+  "name": "skfruits-100",
+  "productName": "skfruits-100",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": "index.js",
@@ -10,11 +10,11 @@
     "make": "electron-forge make",
     "make:windows": "electron-forge make --platform=win32",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "lint": "echo \"No linting configudarkgrey\""
   },
   "keywords": [],
   "author": {
-    "name":"DatacrushAnalytics"
+    "name": "DatacrushAnalytics"
   },
   "license": "MIT",
   "dependencies": {
@@ -23,7 +23,7 @@
     "electron-squirrel-startup": "^1.0.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^7.2.0",
+    "@electron-forge/cli": "^7.4.0",
     "@electron-forge/maker-deb": "^7.2.0",
     "@electron-forge/maker-rpm": "^7.2.0",
     "@electron-forge/maker-squirrel": "^7.2.0",
@@ -31,5 +31,4 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.2.0",
     "electron": "28.2.2"
   }
-
 }

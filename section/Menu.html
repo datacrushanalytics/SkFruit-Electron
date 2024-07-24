@@ -13,7 +13,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+    background-color: #fef7f7;
     margin: 0;
     padding: 20px;
 }
@@ -43,8 +43,8 @@ body {
     justify-content: center;
     padding: 20px 25px; /* Increased padding for taller buttons */
     margin: 10px;
-    border: none;
-    background-color: grey;
+    border-color: #c4153b;
+    background-color: #eafffb;
     color: white;
     cursor: pointer;
     border-radius: 250px; /* Adjusted border-radius for a less extreme curve */
@@ -53,8 +53,9 @@ body {
 }
 
 .btn:hover {
-    background-color:black;
+    background-color:#fff7c6;
     color: rgb(168, 168, 168);
+    border-color: #690202; 
 }
 
 h1, h2, h3 {
@@ -66,6 +67,10 @@ h1, h2, h3 {
 .btn-image img {
     max-width: 50px; /* adjust as needed */
     height: auto;
+}
+
+#user {
+    margin-left: 30%;
 }
 
 
@@ -80,6 +85,8 @@ h1, h2, h3 {
     color: #555;
     border-bottom: 2px solid #ddd;
     padding-bottom: 10px;
+    text-align: center;
+    margin-top: 50px;
 }
 
 #currentDate, #currentTime {
@@ -87,7 +94,7 @@ h1, h2, h3 {
 }
 
 a{
-    color: white;
+    color: rgb(0, 0, 0);
     text-decoration: none;
 }
 
@@ -124,8 +131,40 @@ a{
     100% { transform: rotate(360deg); }
   }
 
+  .table-container {
+    overflow-x: auto;
+    margin: 0 auto;
+    max-width: 100%;
+    min-width: 600px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
 
+  table {
+    width: 100%;
+    min-width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
 
+  th,
+  td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 12px;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+ /* Adjustments for table rows */
+ .table-row {
+    text-align: center;
+    /* Center align table rows */
+  }
 
     </style>
 
@@ -134,7 +173,11 @@ a{
     <div id="loader"></div>
         <div class="container">
             <div class="datetime" id="datetime">
-                <p id="currentDate"></p>
+                <!-- <p id="currentDate"></p> -->
+                <p>
+                    <label for="currentDate">Date:</label>
+                    <input type="date" id="currentDate" onchange="fetchTiles()">
+                </p>
                 <h1 id="user">USER</h1>
                 <p id="currentTime"></p>
             </div>
@@ -144,7 +187,7 @@ a{
             <br> -->
 
             
-        <div class="container">
+        <div class="container" id="adminContent">
             <div class="scrollview">
                 <button class="btn">
                     <a href="./dailyPurchase.html">
@@ -174,7 +217,6 @@ a{
                     </a>
                 </button>
 
-
                 <button class="btn">
                     <a href="./dailyReceipt.html">
                     <div class="btn-image">
@@ -189,9 +231,8 @@ a{
                 </a>
                 </button>
 
-
                 <button class="btn">
-                    <a href="./dailyPayment.html">
+                    <a href="../report/dailyReport/dailyReport.html">
                     <div class="btn-image">
                         <img src="../assets/img/3.png" alt="Image Description">
                     </div>
@@ -203,16 +244,79 @@ a{
                     </div>
                 </a>
                 </button>
+
+                <button class="btn">
+                    <a href="./dailyRemainder.html">
+                    <div class="btn-image">
+                        <img src="../assets/img/5.png" alt="Image Description">
+                    </div>
+                    <div class="btn-content">
+                        <h2>Remainder</h2>
+                    </div>
+                </a>
+                </button>
+
+
             </div>
             <br>
         </div>
     </div>
-    <div class="container1">
+    <div class="container1" id="adminContent2">
         <!-- <h2>Sanjyot b</h2>
         <h3>Closing cash : 3000</h3>
         <h3>sale ammount : 3000</h3> -->
     </div>
     <br>
+
+
+
+    <div class="table-container" id = "userContent">
+        <!-- <table>
+            <thead>
+            <tr>
+                <th>Sr. No</th>
+                <th>Customer Name</th>
+                <th>Sale BILL</th>
+            </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table> -->
+        <div class="scrollview">
+            
+
+            <button class="btn">
+                <a href="./dailySale.html">
+                <div class="btn-image">
+                    <img src="../assets/img/4.png" alt="Image Description">
+                </div>
+                <div class="btn-content">
+                    <h2>Sales</h2>
+                </div>
+                <div class="btn-number">
+                    <h2 id="saleTotal2">0</h2>
+                </div>
+                </a>
+            </button>
+
+            <button class="btn">
+                <a href="./dailyReceipt.html">
+                <div class="btn-image">
+                    <img src="../assets/img/2.png" alt="Image Description">
+                </div>
+                <div class="btn-content">
+                    <h2>Receipt</h2>
+                </div>
+                <div class="btn-number">
+                    <h2 id="receiptTotal2">0</h2>
+                </div>
+            </a>
+            </button>
+
+
+
+        </div>
+    </div>
     </body> 
 
 
@@ -223,18 +327,62 @@ a{
 
             var sessionData = JSON.parse(localStorage.getItem('sessionData'));
             document.getElementById('user').textContent = sessionData[0].name;
+            var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+    // Check if the user is an admin and show/hide the button accordingly
+   
+    
         
             // Display current date and time
-            var currentDateElement = document.getElementById('currentDate');
+            //var currentDateElement = document.getElementById('currentDate');
             var currentTimeElement = document.getElementById('currentTime');
+
+            function updateTime() {
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        var seconds = now.getSeconds();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        var currentTime = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+        currentTimeElement.textContent = "Time: " + currentTime;
+    }
+
+    // Set the current date
+    var currentDate = new Date();
+    document.getElementById('currentDate').value = currentDate.getFullYear() + '-' + (String(currentDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(currentDate.getDate()).padStart(2, '0'));
+
+    if (!isAdmin) {
+        document.getElementById('currentDate').readOnly = true; // Hide the button for non-admin users
+        document.getElementById('adminContent').style.display = 'none';
+        document.getElementById('adminContent2').style.display = 'none';
+        // routeSale(sessionData[0].route, document.getElementById('currentDate').value);
+    }else{
+        document.getElementById('userContent').style.display = 'none';
+    }
+    fetchTiles();
+    // Update the time every second
+    setInterval(updateTime, 1000);
+    updateTime();
+    
+
+    //var currentDate1 = new Date();
         
-            var currentDate = new Date().toLocaleDateString();
-            var currentTime = new Date().toLocaleTimeString();
+            // var currentDate = new Date().toLocaleDateString();
+            // var currentTime = new Date().toLocaleTimeString();
         
-            currentDateElement.textContent = "Date: " + currentDate;
-            currentTimeElement.textContent = "Time: " + currentTime;
-            var currentDate1 = new Date();
+            // currentDateElement.textContent = "Date: " + currentDate;
+            // currentTimeElement.textContent = "Time: " + currentTime;
+            // var currentDate1 = new Date();
         
+
+        });
+        
+
+
+        async function fetchTiles(){
             try {
                 const fetchAPI = async (url, id) => {
                     const response = await fetch(url, {
@@ -243,10 +391,10 @@ a{
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                            "date": currentDate1.getFullYear() + '-' + String(currentDate1.getMonth() + 1).padStart(2, '0') + '-' + String(currentDate1.getDate()).padStart(2, '0')
+                            "date": document.getElementById("currentDate").value
                         })
                     });
-        
+                    //"date": currentDate1.getFullYear() + '-' + String(currentDate1.getMonth() + 1).padStart(2, '0') + '-' + String(currentDate1.getDate()).padStart(2, '0')
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
                     }
@@ -260,25 +408,33 @@ a{
                     console.log( data[0][`Total${nn.charAt(0).toUpperCase() + nn.slice(1)}`] || 0)
                     document.getElementById(id).textContent = data[0][`Total${nn.charAt(0).toUpperCase() + nn.slice(1)}`] || 0;
                 };
-        
-                await Promise.all([
-                    renderData(),
-                    fetchAPI("http://65.0.168.11/fetchTotal/purchase", 'purhcaseTotal'),
-                    fetchAPI("http://65.0.168.11/fetchTotal/sale", 'saleTotal'),
-                    fetchAPI("http://65.0.168.11/fetchTotal/receipt", 'receiptTotal'),
-                    fetchAPI("http://65.0.168.11/fetchTotal/payment", 'paymentTotal')
-                ]);
+                var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+            var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+                if (isAdmin) {
+                    await Promise.all([
+                        renderData(),
+                        fetchAPI("http://52.66.126.53/fetchTotal/purchase", 'purhcaseTotal'),
+                        fetchAPI("http://52.66.126.53/fetchTotal/sale", 'saleTotal'),
+                        fetchAPI("http://52.66.126.53/fetchTotal/receipt", 'receiptTotal'),
+                        fetchAPI("http://52.66.126.53/fetchTotal/payment", 'paymentTotal')
+                    ]);
+                }else{
+                    fetchAPI(`http://52.66.126.53/fetchTotal/saleuser/${sessionData[0].name}`, 'saleTotal2'),
+                    fetchAPI(`http://52.66.126.53/fetchTotal/receiptuser/${sessionData[0].name}`, 'receiptTotal2')
+                }
         
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
-        });
-        
+        }
 
+
+
+        
             // Function to fetch data from API
             async function fetchData() {
                 try {
-                    const response = await fetch('http://65.0.168.11/list/Worker'); // Replace with your API URL
+                    const response = await fetch('http://52.66.126.53/list/Worker'); // Replace with your API URL
                     const data = await response.json();
                     return data;
                 } catch (error) {
@@ -289,21 +445,23 @@ a{
             async function renderData() {
                 const container = document.querySelector('.container1'); // Target the existing .container1 div
                 const data = await fetchData(); // Assuming fetchData returns the list of items
-                var currentDate1 = new Date();
+                // var currentDate1 = new Date();
                 var loader = document.getElementById('loader');
+                // Clear previous content
+                 container.innerHTML = '';
                 loader.style.display = 'block';
                             
                 if (data && data.length > 0) {
                     for (const item of data) {
                         // Assuming userData contains the data you want to send
                         const userData = {
-                            "date": currentDate1.getFullYear() + '-' + String(currentDate1.getMonth() + 1).padStart(2, '0') + '-' + String(currentDate1.getDate()).padStart(2, '0'),
-                            "route": item.route
+                            "date": document.getElementById('currentDate').value,
+                            "name": item.name
                         };
                         
                         // Send POST request to update data (you can handle the response if needed)
                         try {
-                            const response = await fetch(`http://65.0.168.11/fetchTotal/worker/`, {
+                            const response = await fetch(`http://52.66.126.53/fetchTotal/worker/`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -318,32 +476,37 @@ a{
                             const result = await response.json();
                             loader.style.display = 'none';
                             console.log('Data added successfully:', result);
+
+                            if(result[0].closingCash > 0 || result[0].saleAmount > 0){
             
-                            // Create and append the div
-                            const div = document.createElement('div');
-                            div.className = 'container1-item';
-                                                    
-                            const h2 = document.createElement('h2');
-                            h2.textContent = item.name;
-                            div.appendChild(h2);
-                            
-                            const h3_1 = document.createElement('h3');
-                            h3_1.textContent = `Closing cash : ${result[0].closingCash || 0}`;
-                            div.appendChild(h3_1);
-                            
-                            const h3_2 = document.createElement('h3');
-                            h3_2.textContent = `Sale amount : ${result[0].saleAmount || 0}`;
-                            div.appendChild(h3_2);
-                            
-                            // Add event listener to navigate to another page
-                            div.addEventListener('click', function() {
-                                // Navigate to another page
-                                localStorage.setItem('workerData', JSON.stringify(item));
-                                window.location.href = './dailySale.html'; // Replace 'anotherPage.html' with your desired page URL
-                            });
-                            
-                            container.appendChild(div);
-            
+                                // Create and append the div
+                                const div = document.createElement('div');
+                                div.className = 'container1-item';
+                                                        
+                                const h2 = document.createElement('h2');
+                                h2.textContent = item.name;
+                                div.appendChild(h2);
+                                
+                                const h3_1 = document.createElement('h3');
+                                h3_1.textContent = `Closing cash : ${result[0].closingCash || 0}`;
+                                div.appendChild(h3_1);
+                                
+                                const h3_2 = document.createElement('h3');
+                                h3_2.textContent = `Sale amount : ${result[0].saleAmount || 0}`;
+                                div.appendChild(h3_2);
+                                
+                                // Add event listener to navigate to another page
+                                div.addEventListener('click', function() {
+                                    // Navigate to another page
+                                    localStorage.removeItem('workerDataDate');
+                                    localStorage.removeItem('workerData');
+                                    localStorage.setItem('workerData', JSON.stringify(item));
+                                    localStorage.setItem('workerDataDate', JSON.stringify(document.getElementById('currentDate').value));
+                                    window.location.href = './dailySale.html'; // Replace 'anotherPage.html' with your desidarkgrey page URL
+                                });
+                                
+                                container.appendChild(div);
+                            }
                         } catch (error) {
                             console.error('Error updating data:', error);
                         }
@@ -356,8 +519,87 @@ a{
             
             
         
-            // Call the renderData function
-           
+            // Defination of routeSale Function
+
+            // function routeSale(route, date) {
+            //     var data = {
+            //         route : route, 
+            //         date : date
+            //     };
+            //     console.log(data);
+            
+            //     var loader = document.getElementById('loader');
+            //         loader.style.display = 'block';
+            //     return fetch('http://52.66.126.53/routeSale/sale', {
+            //         method: 'POST',
+            //         body: JSON.stringify(data),
+            //         headers: {
+            //             'Content-Type': 'application/json'
+            //         }
+            //     })
+            //     .then(response => {
+            //         if (response.status === 404) {
+            //         loader.style.display = 'none';
+            //           
+            //             throw new Error('Data not found');
+            //         }
+            //         if (!response.ok) {
+            //             throw new Error('Network response was not ok');
+            //         }
+            //         return response.json();
+            //     })
+            //     .then(result => {
+            //         loader.style.display = 'none';
+            //         console.log(result)
+            //         populateTable4(result)
+            //         return result;
+            //         // Optionally, you can redirect or show a success message here
+            //     })
+            //     .catch(error => {
+            //         console.error('Error:', error);
+            //         // Optionally, you can display an error message here
+            //     });
+
+            // }
+
+
+
+            // function populateTable4(data) {
+            //     var tbody = document.getElementById('tableBody');
+            //     tbody.innerHTML = ''; // Clear existing rows
+            //     var columnsToDisplay = ['name', 'BillCount'];
+            //     var counter = 1;
+            //     console.log(data.reports);
+            //     if (data.reports.length === 0) {
+            //         
+            //     }
+            //     data.reports.forEach(function (item) {
+            //         var row = tbody.insertRow();
+            //         var cell = row.insertCell();
+            //         cell.textContent = counter++;
+            //         columnsToDisplay.forEach(function (key) {
+            //             var cell = row.insertCell();
+            //             cell.textContent = item[key];
+            //             // row.style.backgroundColor = "#90EE90";
+                        
+            //         });
+            //         if (item.BillCount > 0) {
+            //             row.style.backgroundColor = "#90EE90"; // Light green
+            //         }
+            
+            //         // Add a click event listener to the row
+            //         row.addEventListener('click', function() {
+            //             // Define what should happen when the row is clicked
+            //             // For example, navigate to a new page or display more details
+            //            
+            //             localStorage.removeItem('routeSaleData');
+            //             console.log('Editing receipt: ' + JSON.stringify(item));
+            //             localStorage.setItem('routeSaleData', JSON.stringify(item));
+            //             window.location.href = './routeSale/routeSale3.html';
+            //         });
+            //     });
+            // }
+            
    
 
 

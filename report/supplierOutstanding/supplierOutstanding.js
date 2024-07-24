@@ -1,85 +1,8 @@
-// // Fetch data from API
-// document.addEventListener('DOMContentLoaded', function () {
-
-//     fetch('http://65.0.168.11/list/Supplier')
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             // Populate dropdown with API data
-//             populateDropdown(data);
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-
-// });
-
-
-// function populateDropdown(data) {
-//     var userNameDropdown = document.getElementById('customer');
-//     userNameDropdown.innerHTML = ''; // Clear existing options
-
-//     // Create and append new options based on API data
-//     data.forEach(function (item) {
-//         var option = document.createElement('option');
-//         option.value = item.name; // Set the value
-//         option.textContent = item.name; // Set the display text
-//         userNameDropdown.appendChild(option);
-//     });
-
-//     // Add a placeholder option
-//     var placeholderOption = document.createElement('option');
-//     placeholderOption.value = ""; // Set an empty value
-//     placeholderOption.textContent = "Select Customer type"; // Set placeholder text
-//     placeholderOption.disabled = true; // Disable the option
-//     placeholderOption.selected = true; // Select the option by default
-//     userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
-// }
-
-
-
 
 function getElementValueWithDefault(id, defaultValue) {
     var element = document.getElementById(id);
     return element && element.value ? element.value : defaultValue;
 }
-
-
-
-// document.getElementById('loginForm1').addEventListener('submit', function(event) {
-//     event.preventDefault(); // Prevent form submission
-//     var data = {
-//         supplier_name : getElementValueWithDefault('customer', '*') , 
-//     };
-//     console.log(data);
-
-//     fetch('http://65.0.168.11/supplierOutstanding', {
-//         method: 'POST',
-//         body: JSON.stringify(data),
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     })
-//     .then(response => {
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok');
-//         }
-//         return response.json();
-//     })
-//     .then(result => {
-//         console.log(result)
-//         populateTable4(result)
-//         // Optionally, you can redirect or show a success message here
-//     })
-//     .catch(error => {
-//         console.error('Error:', error);
-//         // Optionally, you can display an error message here
-//     });
-// });
 
 
 
@@ -98,7 +21,7 @@ function fetchDataAndProcess() {
 
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
-    return fetch('http://65.0.168.11/supplierOutstanding', {
+    return fetch('http://52.66.126.53/supplierOutstanding', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -108,7 +31,11 @@ function fetchDataAndProcess() {
     .then(response => {
         if (response.status === 404) {
         loader.style.display = 'none';
-            alert("No data found.");
+            Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No data found.',
+                  });
             throw new Error('Data not found');
         }
         if (!response.ok) {
@@ -121,7 +48,7 @@ function fetchDataAndProcess() {
         console.log(result)
         populateTable4(result)
         return result;
-        // Optionally, you can redirect or show a success message here
+        // Optionally, you can darkgreyirect or show a success message here
     })
     .catch(error => {
         console.error('Error:', error);
@@ -129,78 +56,172 @@ function fetchDataAndProcess() {
     });
 }
 
-
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['name','address','mobile_no',"Amount"];
+    var columnsToDisplay = ['name', 'address', 'mobile_no', 'Amount'];
     var counter = 1;
-    console.log(data.reports)
+    console.log(data.reports);
     if (data.reports.length === 0) {
-        alert("No Data Found");
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No data found.',
+          });
     }
-    data.reports.forEach(function(item) {
+    data.reports.forEach(function (item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
         cell.textContent = counter++;
-        columnsToDisplay.forEach(function(key) {
+        columnsToDisplay.forEach(function (key) {
             var cell = row.insertCell();
-            if(key=='date'){
-                console.log(item[key])
+            if (key === 'date') {
+                console.log(item[key]);
                 var utcDate = new Date(item[key]);
-                var options = { 
-                    year: 'numeric', 
-                    month: '2-digit', 
-                    day: '2-digit', 
-                    timeZone: 'Asia/Kolkata' 
+                var options = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    timeZone: 'Asia/Kolkata'
                 };
                 cell.textContent = utcDate.toLocaleString('en-IN', options);
-            
-            }else{
-            cell.textContent = item[key];
+            } else {
+                cell.textContent = item[key];
             }
         });
     });
 
-     // Add row for grand total
-     var totalRow = tbody.insertRow();
-     var totalCell = totalRow.insertCell();
-     totalCell.colSpan = columnsToDisplay.length;
-     totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Amount'] + ' ("Grand Amount") ';                                                                                                                                                                                                                                                     
+    // Add row for grand total
+    var totalRow = tbody.insertRow();
+
+    // Insert empty cells for the first three columns
+    for (let i = 0; i < 3; i++) {
+        totalRow.insertCell();
+    }
+
+    var grandTotalLabelCell = totalRow.insertCell();
+    grandTotalLabelCell.textContent = 'Grand Total';
+    grandTotalLabelCell.style.fontWeight = 'bold'; // Make "Grand Total" label bold
+
+    var grandTotalValueCell = totalRow.insertCell();
+    grandTotalValueCell.textContent = data.Grand['Grand Amount']; // Assuming 'Grand Amount' is correct key in your data
+    grandTotalValueCell.style.fontWeight = 'bold'; // Make grand total value bold
 }
 
+
+
+// async function exportToExcel() {
+//     try {
+//         const data = await fetchDataAndProcess();
+
+//         // Initialize jsPDF
+//         const { jsPDF } = window.jspdf;
+//         const doc = new jsPDF();
+
+//         const customHeaders = ['name', 'address', 'mobile_no', 'Amount'];
+//         // Adding header details
+//         doc.setFontSize(10);
+//         doc.text('Mobile:- 9960607512', 10, 10);
+//         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
+//         doc.setFontSize(16);
+//         doc.text('Savata Fruits Suppliers', 50, 20);
+//         doc.setFontSize(12);
+//         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
+//         doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
+
+//         let startY = 50;
+        
+//         // Map data for autoTable
+//         const reportData = data.reports.map(report => [
+//             report.name,
+//             report.address,
+//             report.mobile_no,
+//             report.Amount
+//         ]);
+
+//         // Calculate grand total
+//         const grandTotal = reportData.darkgreyuce((acc, curr) => acc + curr[3], 0);
+
+//         // Add grand total to the report data
+//         const reportDataWithTotal = [...reportData, ['Grand Total', '', '', grandTotal]];
+
+//         // Add report data to PDF
+//         doc.autoTable({
+//             head: [customHeaders],
+//             body: reportDataWithTotal,
+//             startY: 50, // Adjust startY to leave space for header details and logo
+//             theme: 'grid',
+//         });
+
+//         // Save the PDF
+//         doc.save('Supplier_Outstanding_Report.pdf');
+
+//     } catch (error) {
+//         console.error('Error exporting data:', error);
+//     }
+// }
 
 
 async function exportToExcel() {
     try {
         const data = await fetchDataAndProcess();
 
-        const customHeaders = ['name','address','mobile_no',"Amount"];
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
 
-        // Create a new worksheet with custom headers
-        const worksheet = XLSX.utils.aoa_to_sheet([customHeaders]);
+        return fetch('http://52.66.126.53/supplierOutstanding/generate-pdf', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.status === 404) {
+                loader.style.display = 'none';
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No data found.',
+                  });
+                throw new Error('Data not found');
+            }
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob(); // Get the response as a Blob
+        })
+        .then(blob => {
+            loader.style.display = 'none';
 
-        // Append the data to the worksheet
-        data.reports.forEach((report) => {
-            const rowData = [
-                report.name,
-                report.address,
-                report.mobile_no,
-                report.Amount
-            ];
-            XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
+            // Create a URL for the Blob and trigger a download
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'supplierOutstandingReport.pdf'; // Set the desidarkgrey file name
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url); // Release the URL
+
+            console.log('PDF downloaded successfully');
+        })
+        .catch(error => {
+            loader.style.display = 'none';
+            console.error('Error:', error);
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error generating PDF. Please try again.',
+          });
         });
-
-        // Create a new workbook
-        const workbook = XLSX.utils.book_new();
-
-        // Add the worksheet with data
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
-
-        /* generate XLSX file and prompt to download */
-        XLSX.writeFile(workbook, 'Supplier_Outstanding_Report.xlsx');
     } catch (error) {
-        console.error('Error exporting to Excel:', error);
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error generating PDF. Please try again.',
+          });
     }
 }
 

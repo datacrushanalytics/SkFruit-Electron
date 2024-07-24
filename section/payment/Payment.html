@@ -7,76 +7,82 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <title>Payment</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            background-color: #fef7f7;
             margin: 0;
             padding: 20px;
         }
 
-        .container1 {
-            max-width: 600px;
-            width: 100%;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+            .container1 {
+                max-width: 600px;
+                width: 100%;
+                margin: 0 auto;
+                padding: 20px;
+                border-radius: 10px;
+                text-align: center;
+            }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
+            h1 {
+                text-align: center;
+                margin-bottom: 20px;
+                color: #333;
+            }
 
-        hr {
-            border: 0;
-            height: 1px;
-            background-color: #ddd;
-            margin-bottom: 20px;
-        }
+            hr {
+                border: 0;
+                height: 1px;
+                background-color: #ddd;
+                margin-bottom: 20px;
+            }
 
-        form {
-            text-align: left;
-        }
+            form {
+                text-align: left;
+                display: flex;
+                flex-direction: column;
+                gap: -10px; /* Equal spacing between elements */
+            }
 
-        label {
-            display: block;
-            margin-top: 3%;
-            text-align: left;
-        }
+            label {
+                display: block;
+                text-align: left;
+            }
 
-        input[type="text"],
-        input[type="number"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            margin: 0 auto;
-            display: block;
-        }
+            input[type="text"],
+            input[type="number"],
+            input[type="date"],
+            select,
+            textarea {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
 
-        .second-row {
-            text-align: center;
-        }
+            .second-row{
+                display: flex;
+                flex-direction: column;
+                gap: -10px; /* Equal spacing between elements */
+                text-align: center;
+            }
 
-        .third-row {
-            text-align: center;
-        }
+            .third-row {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-top: 20px; /* Adjust the spacing as needed */
+                }
 
         .border-hover {
             padding: 10px 20px;
             text-decoration: none;
             color: white;
-            background-color: #808080;
+            background-color: darkgrey;
             /* Grey color */
             border: none;
             border-radius: 5px;
@@ -86,30 +92,30 @@
         }
 
         .border-hover:hover {
-            background-color: #555;
+            background-color: darkdarkgrey;
             /* Darker grey on hover */
         }
 
-        /* Style the loader container */
-        #loader {
-            border: 4px solid #f3f3f3;
-            /* Light grey */
-            border-top: 4px solid #3498db;
-            /* Blue */
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            /* Apply animation */
-            display: none;
-            /* Hide loader by default */
+            /* Style the loader container */
+            #loader {
+                border: 4px solid #f3f3f3;
+                /* Light grey */
+                border-top: 4px solid #3498db;
+                /* Blue */
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                animation: spin 1s linear infinite;
+                /* Apply animation */
+                display: none;
+                /* Hide loader by default */
 
-            /* Center the loader */
-            position: absolute;
-            top: 60%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+                /* Center the loader */
+                position: absolute;
+                top: 60%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
 
         /* Animation */
         @keyframes spin {
@@ -121,6 +127,52 @@
                 transform: rotate(360deg);
             }
         }
+
+/* Styles for the modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Styles for the modal content */
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+    /* Position relative for the close button */
+}
+
+/* Close button style */
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
     </style>
 </head>
 
@@ -137,7 +189,7 @@
             <br>
 
             <label for="date">Date :</label>
-            <input type="text" id="date" name="date" placeholder="Date" required>
+            <input type="date" id="date" name="date" placeholder="Date" required>
             <br>
 
             <label for="product">From Account :</label>
@@ -162,7 +214,7 @@
                 <br>
 
                 <label for="amount">Paid Amount :</label>
-                <input type="number" id="amount" name="amount" onchange="totalBalance()" required>
+                <input type="number" id="amount" name="amount" required>
             </div>
             <br>
 
@@ -172,7 +224,10 @@
         </form>
     </div>
 
+    <script src="./payment.js"></script>
+
     <script>
+        /*
         // Function to get the current maximum payment ID from local storage
         function getCurrentMaxPaymentId() {
             return parseInt(localStorage.getItem('maxPaymentId') || 0);
@@ -199,16 +254,45 @@
         function populatePaymentId() {
             document.getElementById("id").value = generatePaymentId();
         }
+        */
+        fetch('http://52.66.126.53/fetchPaymentid')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Populate dropdown with API data
+            document.getElementById('id').value = parseInt(data[0]['num']) + 1;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 
         // Function to populate the current date into the date input field
         function populateCurrentDate() {
-            var currentDate = new Date().toISOString().slice(0, 10);
-            document.getElementById("date").value = currentDate;
+            var currentDate = new Date();
+            // Format the date as mm/dd/yyyy
+            var formattedDate = currentDate.getFullYear() + '-' + (String(currentDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(currentDate.getDate()).padStart(2, '0'));
+            // Set the placeholder of the input field to the formatted date
+            console.log(formattedDate);
+            document.getElementById('date').value = formattedDate;
+            // Retrieve session data from localStorage
+            var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+            // Check if session data exists and if the user is an admin
+            var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+            // Check if the user is an admin and show/hide the button accordingly
+            if (!isAdmin) {
+                document.getElementById('date').readOnly = true; // Hide the button for non-admin users
+            }
+
+            //document.getElementById("date").value = currentDate;
         }
 
         // Call populatePaymentId and populateCurrentDate functions when the page loads
         document.addEventListener("DOMContentLoaded", function () {
-            populatePaymentId();
+            // populatePaymentId();
             populateCurrentDate();
         });
 
@@ -219,7 +303,7 @@
     <script>
         function previousbalance() {
             const name = document.getElementById("bata").value
-            fetch('http://65.0.168.11/fetchpv/' + name)
+            fetch('http://52.66.126.53/fetchpv/' + name)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -241,11 +325,11 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Fetch data from API and populate Select2 dropdowns
-            fetchAndPopulateDropdown('http://65.0.168.11/list/Supplier', 'product');
-            fetchAndPopulateDropdown('http://65.0.168.11/list/Bank Account', 'bata');
+            fetchAndPopulateDropdown('http://52.66.126.53/list/Supplier', 'bata', 'bata');
+            fetchAndPopulateDropdown('http://52.66.126.53/list/Bank Account', 'product', 'bank');
         });
 
-        function fetchAndPopulateDropdown(apiUrl, dropdownId) {
+        function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
             fetch(apiUrl)
                 .then(response => {
                     if (!response.ok) {
@@ -255,14 +339,14 @@
                 })
                 .then(data => {
                     // Populate Select2 dropdown with API data
-                    populateDropdownWithSelect2(data, dropdownId);
+                    populateDropdownWithSelect2(data, dropdownId, field);
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
         }
 
-        function populateDropdownWithSelect2(data, dropdownId) {
+        function populateDropdownWithSelect2(data, dropdownId, field) {
             var dropdown = $('#' + dropdownId);
             // Clear existing options
             dropdown.empty();
@@ -270,6 +354,10 @@
             // Add placeholder option
             dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
 
+            // Add new option
+            if (field == 'bank') {
+                dropdown.append($('<option></option>').attr('cash', 'cash').text('Cash'));
+            }
             // Populate dropdown with API data
             data.forEach(function (item) {
                 dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
@@ -282,11 +370,16 @@
             });
         }
 
-        $(document).on('select2:open', function(e) {
+        $(document).on('select2:open', function (e) {
             window.setTimeout(function () {
                 document.querySelector('input.select2-search__field').focus();
             }, 0);
         });
+
+
+
+
+
     </script>
 </body>
 

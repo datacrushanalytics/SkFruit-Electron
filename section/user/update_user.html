@@ -6,6 +6,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <title>User Form in Electron</title>
 
@@ -16,7 +17,7 @@
             margin: 20px auto;
             max-width: 600px;
             padding: 20px;
-            background-color: #f9f9f9;
+            background-color: #fef7f7;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
@@ -74,12 +75,12 @@
             margin: 0 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            background-color: #f0f0f0;
+            background-color: darkgrey;
             cursor: pointer;
         }
         
         .border-hover:hover {
-            background-color: #e0e0e0;
+            background-color: darkdarkgrey;
         }
         
         .radio-container {
@@ -149,6 +150,15 @@
             <!-- <option value="User" disabled selected>Select Account</option> -->
         </select>
         <br>
+
+        <label for="userType">Route &nbsp; &nbsp;&nbsp;</label>
+        <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
+        <select id="route" id="route" name="route" required>
+            <!-- <option value="User" disabled selected>Select Account</option> -->
+        </select>
+        <br>
+
+
         <label fro="username">Username :</label>
         <input type="text" id="username" name="username" placeholder="Username" required> <br>
 
@@ -165,8 +175,8 @@
 </div>
 
         <div class="third-row">
-        <button type="submit" id="updateButton" class="border-hover">Update</button>
-        <a href="./user.html"><button type='button' class="border-hover">Back</button></a>
+        <button type="submit" id="updateButton" style="background-color: darkgrey;" class="border-hover">Update</button>
+        <a href="./user.html"><button type='button' style="background-color: darkgrey;"  class="border-hover">Back</button></a>
     </div>
     </form>
     </div>
@@ -174,7 +184,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
             // Retrieve user data from localStorage
-            await fetchAndPopulateDropdown('http://65.0.168.11/list/Worker', 'name', 'name');
+            await fetchAndPopulateDropdown('http://52.66.126.53/list/Worker', 'name', 'name');
+            await fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route', 'route_name');
         
             async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
                 try {
@@ -224,6 +235,12 @@
                 // Set the value of the Select2 dropdown if it's different
                 if ($productDropdown.val() !== user.name) {
                     $productDropdown.val(user.name).trigger('change');
+                }
+
+                var $productDropdown = $('#route');
+                // Set the value of the Select2 dropdown if it's different
+                if ($productDropdown.val() !== user.route) {
+                    $productDropdown.val(user.route).trigger('change');
                 }
         
                 document.getElementById("username").value = user.username;

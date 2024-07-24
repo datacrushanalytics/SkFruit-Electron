@@ -6,13 +6,16 @@
     <script src= "https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- <link rel="stylesheet" href="../../assets/css/khatawani.css"> -->
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: rgba(242, 242, 242, 0.8);
+            background-color: #fef7f7;
             /* Transparent background */
             margin: 0;
             padding: 20px;
@@ -67,7 +70,7 @@
     margin-left: 4%;
   }
 
-  #customer, #route {
+  #customer, #route, #user, #vehicle {
     border: 1px solid;
     /* box-shadow: 5px 10px 8px grey; */
     /* border-radius: 8px; */
@@ -121,14 +124,16 @@
             border-radius: 5px;
         }
         
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 12px;
-        }
+        th,
+    td {
+        border: 1px solid #dddddd;
+        background-color: #eafffb;
+        text-align: left;
+        padding: 12px;
+    }
         
         th {
-            background-color: #f2f2f2;
+            background-color: #c7d5d3;
         }
 
         /* Styles for the modal */
@@ -197,13 +202,76 @@
     100% { transform: rotate(360deg); }
   }
   
+
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    width: 80%;
+    /* Adjust the width as desidarkgrey */
+    height: 80%;
+    /* Adjust the height as desidarkgrey */
+    max-width: 90vw;
+    /* Set maximum width relative to viewport width */
+    max-height: 90vh;
+    /* Set maximum height relative to viewport height */
+    overflow: auto;
+    /* Add scrollbars if content overflows */
+  }
+
+  .popup-content {
+    width: 100%;
+    /* Adjust the width as desidarkgrey */
+    height: 100%;
+    /* Adjust the height as desidarkgrey */
+  }
+
+  .popup-content iframe {
+    width: 100%;
+    /* Adjust the width as desidarkgrey */
+    height: 100%;
+    /* Adjust the height as desidarkgrey */
+  }
+
+
     </style>
 </head>
 <body>
     <div id="loader"></div>
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <br>
+            <table id="popupTable">
+                <thead>
+                    <tr>
+                        <th>Sr. </th>
+                        <th>Product Name</th>
+                        <th>Bata</th>
+                        <th>Mark</th>
+                        <th>Quantity</th>
+                        <th>Rate</th>
+                        <th>Price</th>
+                        <!-- Add more columns as needed -->
+                    </tr>
+                </thead>
+                <tbody id="popupTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+
     <div class="container">
-        <h1 align="center">Routewise Sale Report</h1><br>
-        <hr>
+        <h1 align="center">Sale Report</h1><br>
+        <hr style="top: -25px; position: relative;">
         <br>
         <div class="container1">
             <form id="loginForm1">
@@ -224,10 +292,38 @@
                 <select class="drop1" id="route" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br><br>
+
+                <label for="userType"> Product :</label>
+                <select class="drop" id="product" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br>
+
+                <br>
+
+                <label for="userType">Bata :</label>
+                <select class="drop" id="bata" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br><br>
+
+
+
+                <label for="userType">Vehicle :</label>
+                <select class="drop" id="vehicle" name="Vehicle">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br><br>
+                
+
+
+                <label for="userType">User :</label>
+                <select class="drop" id="user" name="user">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br><br>
+
+
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" class="button">Submit</button>
-                    <button type='button' class="button" onclick="exportToExcel()" id="button2">Export</button>
+                    <button type="submit" style="background-color: darkgrey;" class="button">Submit</button>
+                    <button type='button' style="background-color: darkgrey;" class="button" onclick="exportToExcel()" id="button2">Export</button>
                 <!-- </div> -->
             </form>
             <br>
@@ -243,14 +339,15 @@
                     <th>Route</th>
                     <th>Amount</th>
                     <th>Carate Amount</th>
-                    <th>Total Kalam</th>
                     <th>Previous Balance</th>
+                    <th>Total Kalam</th>
                     <th>Online Amount</th>
                     <th>Discount</th>
                     <th>In Carte</th>
                     <th>Balance</th>
                     <th>Paid Amount</th>
                     <th>Comment</th>
+                    <th>Products</th>
                     <th>BILL</th>
                 </tr>
                 </thead>
@@ -268,11 +365,30 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://65.0.168.11/list/Customer', 'customer');
-        fetchAndPopulateDropdown('http://65.0.168.11/routeData', 'route');
+        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+        // Check if session data exists and if the user is an admin
+        var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+        // Check if the user is an admin and show/hide the button accordingly
+        if (isAdmin) {
+            fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer','name');
+            fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name');
+            fetchAndPopulateDropdown('http://52.66.126.53/fetchData/user', 'user', 'added_by');
+            fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'product', 'product_name');
+        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'bata', 'bata');
+        fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle','vehicle_no');
+        }else{
+            var route = sessionData[0].route;
+            var user = sessionData[0].name;
+            fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customer/' +route  , 'customer','cust_name');
+            fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name',selectedValue=route,readOnly = true);
+            fetchAndPopulateDropdown('http://52.66.126.53/fetchData/user', 'user', 'added_by',selectedValue=user,readOnly = true);
+            fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'product', 'product_name',selectedValue= null,readOnly = true);
+            fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'bata', 'bata',selectedValue=null,readOnly = true);
+            fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle','vehicle_no',selectedValue=null,readOnly = true);
+        }
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId) {
+    function fetchAndPopulateDropdown(apiUrl, dropdownId, field,selectedValue = null, readOnly = false) {
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -282,14 +398,14 @@
             })
             .then(data => {
                 // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId);
+                populateDropdownWithSelect2(data, dropdownId, field, selectedValue , readOnly);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     }
 
-    function populateDropdownWithSelect2(data, dropdownId) {
+    function populateDropdownWithSelect2(data, dropdownId, field,selectedValue = null, readOnly = false) {
         var dropdown = $('#' + dropdownId);
         // Clear existing options
         dropdown.empty();
@@ -299,14 +415,39 @@
 
         // Populate dropdown with API data
         data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
+            dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
         });
 
         // Initialize Select2
         dropdown.select2({
-            placeholder: "Select " + dropdownId + " type",
-            allowClear: true
+            placeholder: 'Select components',
+            closeOnSelect: false,
+            allowClear: true,
+            templateResult: function (data) {
+                if (!data.id) {
+                    return data.text;
+                }
+                var $element = $('<span>' + data.text + '</span>');
+                return $element;
+            }
         });
+
+
+        // Set selected value if provided
+        if (selectedValue !== null) {
+            dropdown.val(selectedValue).trigger('change');
+        }
+
+        // Make the dropdown read-only if specified
+        if (readOnly) {
+            dropdown.prop('disabled', true);
+        }
+
+        // // Initialize Select2
+        // dropdown.select2({
+        //     placeholder: "Select " + dropdownId + " type",
+        //     allowClear: true
+        // });
     }
 
     $(document).on('select2:open', function(e) {

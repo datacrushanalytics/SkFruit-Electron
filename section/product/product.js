@@ -3,11 +3,15 @@ function product() {
     console.log("product function executed");
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
-    fetch('http://65.0.168.11/productData')
+    fetch('http://52.66.126.53/productData')
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';
-            alert("No data found.");
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No data found.',
+              });
             throw new Error('Data not found');
         }
         if (!response.ok) {
@@ -45,6 +49,7 @@ function populateTable(data) {
             var editCell = row.insertCell();
             var editButton = document.createElement('button');
             editButton.className = 'button edit-button';
+            editButton.style.backgroundColor = 'darkgrey';
             var editLink = document.createElement('a');
             editLink.href = '../product/update_product.html'; // Edit link destination
             editLink.textContent = 'Edit';
@@ -60,6 +65,7 @@ function populateTable(data) {
             var deleteCell = row.insertCell();
             var deleteButton = document.createElement('button');
             deleteButton.className = 'button delete-button';
+            deleteButton.style.backgroundColor = 'darkgrey';
             deleteButton.textContent = 'Delete';
             deleteButton.addEventListener('click', function() {
                 deleteProduct(item.id); // Pass the user id to the delete function
@@ -71,7 +77,7 @@ function populateTable(data) {
 
 function editProduct(user) {
     localStorage.setItem('userData', JSON.stringify(user));
-     // Redirect to user_update.html
+     // darkgreyirect to user_update.html
      window.location.href = '../product/update_product.html';
 }
 
@@ -79,7 +85,7 @@ function editProduct(user) {
 
 function deleteProduct(userId) {
     // Perform delete operation based on userId
-    fetch('http://65.0.168.11/productData/deleteproductId/' + userId, {
+    fetch('http://52.66.126.53/productData/deleteproductId/' + userId, {
         method: 'DELETE'
     })
     .then(response => {
@@ -87,7 +93,12 @@ function deleteProduct(userId) {
             throw new Error('Network response was not ok');
         }
         console.log('User deleted successfully');
-        alert("Product is successfully Deleted");
+   
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Product is successfully Deleted',
+            })
         // Refresh the table or update UI as needed
         product(); // Assuming you want to refresh the table after delete
     })

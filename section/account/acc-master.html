@@ -6,12 +6,13 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Account Master</title>
 
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            background-color: #fef7f7;
             margin: 0;
             padding: 20px;
         }
@@ -108,6 +109,22 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+
+  .row-container {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    margin-bottom: 10px; /* Add margin between the row container and other elements */
+  }
+  
+  .row-container label {
+    margin-right: 10px; /* Add space between label and inputs */
+  }
+  
+  .row-container .carat-inputs {
+    display: flex;
+    align-items: left; /* Align items vertically */
+  }
     </style>
 </head>
 <body>
@@ -131,6 +148,9 @@
                 <label for="name">Name :</label>
                 <input type="text" id="name" name="name" required><br>
 
+                <label for="name">Company Name :</label>
+                <input type="text" id="company" name="company"><br>
+
                 <label for="address">Address :</label>
                 <input type="text" id="address" name="address" required> <br>
 
@@ -138,11 +158,34 @@
                 <input type="text" id="no" name="mobile_no" required> <br>
 
                 <label for="no">Optional Mobile No :</label>
-                <input type="text" id="optno" name="optmobile_no"> <br>
+                <input type="text" id="optional_mobile" name="optional_mobile" value="0"> <br>
 
 
                 <label for="preBalance">Previous Balance :</label>
-                <input type="text" id="preBalance" name="prev_balance"> <br>
+                <input type="text" id="preBalance" name="prev_balance" required value="0"> <br>
+
+                <label>Ramaining Carate :</label>
+                <div class="row-container">
+                    <div class="carat-inputs">
+                      <div class="input-wrapper">
+                        <label for="carate100">100 :</label>
+                        <input type="number" style="width: 93%;" id="carate2100" name="carate2100" placeholder="100" >
+                      </div>
+                      <div class="input-wrapper">
+                        <label for="carate150">150 :</label>
+                        <input type="number" style="width: 93%;" id="carate2150" name="carate2150" placeholder="150" >
+                      </div>
+                      <div class="input-wrapper">
+                        <label for="carate250">250 :</label>
+                        <input type="number" style="width: 93%;" id="carate2250" name="carate2250" placeholder="250" >
+                      </div>
+                      <div class="input-wrapper">
+                        <label for="carate350">350 :</label>
+                        <input type="number" style="width: 93%;" id="carate2350" name="carate2350" placeholder="350" >
+                      </div>
+                    </div>
+                  </div>
+                  <br>
                 <div class="second-row">
                     Carate Bill:
                     <input type="radio" id="cr" name="cr_dr_type" value="yes">
@@ -154,8 +197,8 @@
                 <br>
             
                 <div class="third-row">
-                    <center><button type="submit" class="border-hover">Save</button></a>
-                    <a href="./account.html"><button type="button" class="border-hover">Back</button></a>
+                    <center><button type="submit" style="background-color: darkgrey;" class="border-hover">Save</button></a>
+                    <a href="./account.html"><button type="button" style="background-color: darkgrey;" class="border-hover">Back</button></a>
                 </div>
             </form>
         </div>
@@ -168,8 +211,10 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://65.0.168.11/accountgroupData', 'account_group','name');
-        fetchAndPopulateDropdown('http://65.0.168.11/routeData', 'route_detail','route_name');
+        fetchAndPopulateDropdown('http://52.66.126.53/accountgroupData', 'account_group','name');
+        fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route_detail','route_name');
+
+
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {

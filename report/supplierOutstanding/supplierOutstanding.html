@@ -6,15 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>User Form in Electron</title>
     <style>
        
 
        body {
             font-family: Arial, sans-serif;
-            background-color: rgba(242, 242, 242, 0.8);
+            background-color: #fef7f7;
             /* Transparent background */
             margin: 0;
             padding: 20px;
@@ -48,7 +51,7 @@
             padding: 12px 24px;
             text-decoration: none;
             color: white;
-            background-color: #808080;
+            background-color: grey;
             /* Grey color */
             border: none;
             border-radius: 5px;
@@ -58,7 +61,7 @@
         }
 
         .button:hover {
-            background-color: #555;
+            background-color: darkgrey;
             /* Darker grey on hover */
         }
 
@@ -83,14 +86,16 @@
             border-radius: 5px;
         }
         
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 12px;
-        }
+        th,
+    td {
+        border: 1px solid #dddddd;
+        background-color: #eafffb;
+        text-align: left;
+        padding: 12px;
+    }
         
         th {
-            background-color: #f2f2f2;
+            background-color: #c7d5d3;
         }
 
 /* Style the loader container */
@@ -124,7 +129,7 @@
     <div id="loader"></div>
     <div class="container">
         <h1 align="center">Supplier Outstanding</h1><br>
-        <hr>
+        <hr style="position: relative; top: -25px;">
 
         <div class="container1">
             <form id="loginForm1">
@@ -141,8 +146,8 @@
 
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" class="button">Submit</button>
-                    <button type='button' class="button" onclick="exportToExcel()" id="button2">Export</button>
+                    <button type="submit" style="background-color: darkgrey;" class="button">Submit</button>
+                    <button type='button' style="background-color: darkgrey;" class="button" onclick="exportToExcel()" id="button2">Export</button>
                 <!-- </div> -->
             </form>
             <br>
@@ -176,7 +181,8 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://65.0.168.11/list/Supplier', 'customer');
+        fetchAndPopulateDropdown('http://52.66.126.53/list/Supplier', 'customer');
+        fetchDataAndProcess();
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId) {

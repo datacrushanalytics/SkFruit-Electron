@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: rgba(242, 242, 242, 0.8);
+    background-color: #fef7f7;
     margin: 0;
     padding: 20px;
     overflow-x: hidden;
@@ -67,6 +67,7 @@ body {
   /* Align and style inputs */
   input[type="text"],
   input[type="number"],
+  input[type="date"],
   select {
     padding: 10px;
     margin: 5px;

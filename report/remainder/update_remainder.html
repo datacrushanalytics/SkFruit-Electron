@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <title>Account Master</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff7c6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .container1 {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .container1 select,
+        .container1 input[type="text"],input[type="date"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .second-row {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .second-row input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .third-row button {
+            padding: 10px 20px;
+            background-color: #808080;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .third-row button:hover {
+            background-color: #555;
+        }
+
+        .third-row a button {
+            margin-left: 10px;
+        }
+
+        /* Style the loader container */
+#loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Apply animation */
+    display: none; /* Hide loader by default */
+    
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+
+  .row-container {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    margin-bottom: 10px; /* Add margin between the row container and other elements */
+  }
+  
+  .row-container label {
+    margin-right: 10px; /* Add space between label and inputs */
+  }
+  
+  .row-container .carat-inputs {
+    display: flex;
+    align-items: left; /* Align items vertically */
+  }
+    </style>
+</head>
+<body>
+    <div id="loader"></div>
+    <div class="container">
+        <h1>Remainder Info</h1>
+        <hr>
+        <div class="container1">
+            <form id="loginForm" method="POST">
+                <label for="text"> Name: </label>
+                <input type="text" id="name" name="name" placeholder="Name" required readonly>
+                <label for="text"> Address: </label>
+                <input type="text" id="address" name="address" placeholder="Address" required readonly>
+                <label for="text"> mobile_no: </label>
+                <input type="text" id="no" name="mobile_no" placeholder="Mobile No" required readonly>
+                <label for="text"> Remainder Date: </label><br>
+                <input type="date" id="remainder" name="remainder" placeholder="Remainder date" required>
+                <br>
+                <label for="text"> Current Balance: </label>
+                <input type="text" id="preBalance" name="prev_balance" placeholder="Current Balance" required readonly>
+
+
+                <div class="third-row">
+                    <button type="submit" style="background-color: darkgrey;" id="updateButton">Save</button>
+                    <a href="./remainder.html"><button type="button" style="background-color: darkgrey;">Back</button></a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+
+
+        document.addEventListener('DOMContentLoaded', async function() {
+  
+            var userData = localStorage.getItem('remainderData');
+            console.log(userData)
+            if (userData) {
+                // Parse the user data
+                var user = JSON.parse(userData);
+                console.log("lapajcowjfocjwoj")
+                console.log(user)
+
+
+                document.getElementById("name").value = user.name;
+                document.getElementById("no").value = user.mobile_no; 
+                document.getElementById("address").value = user.address;
+                //document.getElementById("remainder").value = user.last_update;
+                document.getElementById("preBalance").value = user.current_balance;
+
+                // Assuming user.last_update is a date string or timestamp
+var lastUpdate = user.last_update;
+
+if (lastUpdate) {
+    var date = new Date(lastUpdate);
+    var year = date.getFullYear();
+    var month = ('0' + (date.getMonth() + 1)).slice(-2); // Add leading zero
+    var day = ('0' + date.getDate()).slice(-2); // Add leading zero
+
+    var formattedDate = `${year}-${month}-${day}`;
+    document.getElementById("remainder").value = formattedDate;
+} else {
+    // Handle the case where last_update is null or undefined
+    document.getElementById("remainder").value = ''; // or any default value you prefer
+}
+                
+
+                // Clear user data from localStorage (optional)
+                localStorage.removeItem('remainderData');
+            }
+        });
+
+        
+
+
+        async function updateUser() {
+            try {
+
+                var userData = {
+                    name : document.getElementById("name").value,
+                    date : document.getElementById("remainder").value
+                };
+        
+                var loader = document.getElementById('loader');
+                loader.style.display = 'block';
+                const response = await fetch('http://52.66.126.53/remainderReport/updateRemainder/'+ userData.name, {
+                    method: 'PUT',
+                    body: JSON.stringify(userData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+        
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                       
+                const result = await response.json();
+                loader.style.display = 'none';
+                console.log('Data added successfully:', result);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Data Updated successfully',
+                    });
+                // Optionally, you can darkgreyirect or show a success message here
+            } catch (error) {
+                console.error('Error:', error);
+                // Optionally, you can display an error message here
+            }
+        
+            // Perform the update operation (e.g., send data to server)
+            console.log("Update user:", userData);
+            window.location.href = './remainder.html';
+        }
+        
+        // Add event listener to the "Update" button
+        document.getElementById("updateButton").addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent form submission
+            updateUser(); // Call the updateUser function to handle the update operation
+        });
+        
+        
+    </script>
+
+    
+</body>
+</html>

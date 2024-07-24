@@ -6,8 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>User Form in Electron</title>
     <style>
         /* Add border to the second form */
@@ -15,7 +19,7 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-color: rgba(242, 242, 242, 0.8);
+            background-color: #fef7f7;
             /* Transparent background */
             margin: 0;
             padding: 20px;
@@ -78,7 +82,7 @@
         }
 
         #customer,
-        #route {
+        #route, #user {
             border: 1px solid transparent;
             /* box-shadow: 5px 10px 8px grey; */
             border-radius: 8px;
@@ -100,7 +104,7 @@
             padding: 12px 24px;
             text-decoration: none;
             color: white;
-            background-color: #808080;
+            background-color: grey;
             /* Grey color */
             border: none;
             border-radius: 5px;
@@ -110,7 +114,7 @@
         }
 
         .button:hover {
-            background-color: #555;
+            background-color: darkgrey;
             /* Darker grey on hover */
         }
 
@@ -134,7 +138,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: #c7d5d3;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
         }
@@ -142,12 +146,13 @@
         th,
         td {
             border: 1px solid #dddddd;
+            background-color: #eafffb;
             text-align: left;
             padding: 12px;
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #c7d5d3;
         }
 
         /* Style the loader container */
@@ -172,7 +177,60 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+    /* CSS */
+.popup {
+    /* Existing styles */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
   
+
+
+        /* Styles for the modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Styles for the modal content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+            /* Position relative for the close button */
+        }
+
+        /* Close button style */
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 8px;
+            right: 16px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
     </style>
 </head>
@@ -211,10 +269,15 @@
                 </select>
 
                 <br><br>
+
+                <label for="userType">User :</label>
+                <select class="drop" id="user" name="user">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br><br>
                 <div class="third-row">
                     <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" class="button">Submit</button>
-                    <button type='button' class="button" onclick="exportToExcel()" id="button2">Export</button>
+                    <button type="submit" style="background-color: darkgrey;" class="button">Submit</button>
+                    <button type='button' style="background-color: darkgrey;" class="button" onclick="exportToExcel()" id="button2">Export</button>
                 </div>
             </form>
             <br>
@@ -223,25 +286,32 @@
                 <table>
                     <tr>
                         <th>Sr. No</th>
-                    <th>BILL NO</th>
+                    <th>Summary</th>
                     <th>DATE</th>
                     <th>Customer Name</th>
                     <th>Route</th>
                     <th>Amount</th>
                     <th>Carate Amount</th>
                     <th>Total Kalam</th>
-                    <th>Previous Balance</th>
                     <th>Cash</th>
+                    <th>Online Bank</th>
                     <th>Online Amount</th>
                     <th>Discount</th>
                     <th>In Carte</th>
                     <th>Balance</th>
                     </tr>
+                    <tfoot>
+                        <tr>
+                            <!-- <td colspan="13" style="text-align: right; font-weight: bold;">Grand Total</td> -->
+                            <td colspan="2" id="grandTotalCell"></td>
+                        </tr>
+                    </tfoot>
 
                     <!-- Add more rows as needed -->
                     <tbody id="tableBody">
                         <!-- Data will be inserted here -->
                     </tbody>
+                    <div id="popupContainer"></div>
                 </table>
             </div>
         </div>
@@ -257,12 +327,25 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://65.0.168.11/routeData', 'route');
-        fetchAndPopulateDropdown('http://65.0.168.11/list/Customer', 'customer');
+
+        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+        // Check if session data exists and if the user is an admin
+        var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+        // Check if the user is an admin and show/hide the button accordingly
+        if (isAdmin) {
+            fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route');
+            fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer');
+            fetchAndPopulateDropdown('http://52.66.126.53/fetchData/user', 'user');
+        }else{
+            var route = sessionData[0].route;
+            fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customer/' +route  , 'customer',readOnly=false);
+            fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route',selectedValue=route,readOnly = true);
+        }
+        
         
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId) {
+    function fetchAndPopulateDropdown(apiUrl, dropdownId,selectedValue = null, readOnly = false) {
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -272,14 +355,14 @@
             })
             .then(data => {
                 // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId);
+                populateDropdownWithSelect2(data, dropdownId, selectedValue, readOnly);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     }
 
-    function populateDropdownWithSelect2(data, dropdownId) {
+    function populateDropdownWithSelect2(data, dropdownId, selectedValue = null, readOnly = false) {
         var dropdown = $('#' + dropdownId);
         // Clear existing options
         dropdown.empty();
@@ -290,7 +373,7 @@
         }
         // Populate dropdown with API data
         data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
+            dropdown.append($('<option></option>').attr('value', item.name || item.route_name || item.cust_name || item.added_by).text(item.name || item.route_name || item.cust_name || item.added_by));
         });
 
         // Initialize Select2
@@ -306,6 +389,18 @@
                 return $element;
             }
         });
+
+        // Set selected value if provided
+        if (selectedValue !== null) {
+            dropdown.val(selectedValue).trigger('change');
+        }
+
+        // Make the dropdown read-only if specified
+        if (readOnly) {
+            dropdown.prop('disabled', true);
+        }
+
+
     }
 
     $(document).on('select2:open', function(e) {

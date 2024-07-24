@@ -6,91 +6,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>User Form in Electron</title>
     <style>
         /* Add border to the second form */
-      
+
 
         body {
             font-family: Arial, sans-serif;
-            background-color: rgba(242, 242, 242, 0.8);
+            background-color: #fef7f7;
             /* Transparent background */
             margin: 0;
             padding: 20px;
             overflow-x: hidden;
             /* Hide horizontal scrollbar */
         }
+
         .container {
             text-align: center;
             margin-bottom: 20px;
         }
-        .container h1{
-         margin-top: 1%;
-      }
-      .first-row {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-    }
-    
-    .first-row label {
-        margin-right: 10px;
-        margin-top: 9px;
-    }
-    
-    .first-row input,
-    .first-row select {
-        margin-right: 10px;
-    }
-  #fromdate{
-    /* border-radius: 8px; */
-    height: 35px;
-    width: 250px;
-    margin-left:0%;
-  }
-  label{
-    margin-left: 3%;
-  }
-  #todate{
-    /* border-radius: 8px; */
-    height: 35px;
-    width: 250px;
-    margin-left:0%;
-  }
 
-  .drop, .drop1 {
-    border: 1px solid;
-    /* box-shadow: 5px 10px 8px grey; */
-    /* border-radius: 8px; */
-    width: 50%;
-    height: 35px;
-    text-indent: 10%;
-    margin-left: 4%;
-  }
+        .container h1 {
+            margin-top: 1%;
+        }
 
-  #customer, #route {
-    border: 1px solid;
-    /* box-shadow: 5px 10px 8px grey; */
-    /* border-radius: 8px; */
-    width:30%;
-    height: 35px;
-    text-indent: 10%;
-    margin-left: 4%;
-}
+        .first-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
 
-#lable1111{
-    margin-left: 6%;
-}
+        .first-row label {
+            margin-right: 10px;
+            margin-top: 9px;
+        }
+
+        .first-row input,
+        .first-row select {
+            margin-right: 10px;
+        }
+
+        #fromdate {
+            /* border-radius: 8px; */
+            height: 35px;
+            width: 250px;
+            margin-left: 0%;
+        }
+
+        label {
+            margin-left: 3%;
+        }
+
+        #todate {
+            /* border-radius: 8px; */
+            height: 35px;
+            width: 250px;
+            margin-left: 0%;
+        }
+
+        .drop,
+        .drop1 {
+            border: 1px solid;
+            /* box-shadow: 5px 10px 8px grey; */
+            /* border-radius: 8px; */
+            width: 50%;
+            height: 35px;
+            text-indent: 10%;
+            margin-left: 4%;
+        }
+
+        #customer,
+        #route {
+            border: 1px solid;
+            /* box-shadow: 5px 10px 8px grey; */
+            /* border-radius: 8px; */
+            width: 30%;
+            height: 35px;
+            text-indent: 10%;
+            margin-left: 4%;
+        }
+
+        #lable1111 {
+            margin-left: 6%;
+        }
+
         .button-container {
             margin-bottom: 20px;
         }
+
         .button {
             padding: 12px 24px;
             text-decoration: none;
             color: white;
-            background-color: #808080;
+            background-color:grey;
             /* Grey color */
             border: none;
             border-radius: 5px;
@@ -98,24 +111,29 @@
             transition: background-color 0.3s;
             margin: 0 10px;
         }
+
         .button:hover {
-            background-color: #555;
+            background-color: darkgrey;
             /* Darker grey on hover */
         }
 
-        
+
         .button a {
             color: white;
             text-decoration: none;
         }
+
         .table-container {
             max-width: 100%;
-            overflow-x: auto; /* Enable horizontal scrolling */
+            overflow-x: auto;
+            /* Enable horizontal scrolling */
             margin: 0 auto;
-            max-height: calc(100vh - 200px); /* Adjust the height as needed */
-            overflow-y: auto; /* Enable vertical scrolling */
+            max-height: calc(100vh - 200px);
+            /* Adjust the height as needed */
+            overflow-y: auto;
+            /* Enable vertical scrolling */
         }
-        
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -123,39 +141,50 @@
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
         }
-        
-        th, td {
+
+        th,
+        td {
             border: 1px solid #dddddd;
+            background-color: #eafffb;
             text-align: left;
             padding: 12px;
         }
-        
+
         th {
-            background-color: #f2f2f2;
+            background-color: #c7d5d3;
         }
+
         /* Style the loader container */
-#loader {
-    border: 4px solid #f3f3f3; /* Light grey */
-    border-top: 4px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite; /* Apply animation */
-    display: none; /* Hide loader by default */
-    
-    /* Center the loader */
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  /* Animation */
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
+        #loader {
+            border: 4px solid #f3f3f3;
+            /* Light grey */
+            border-top: 4px solid #3498db;
+            /* Blue */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            /* Apply animation */
+            display: none;
+            /* Hide loader by default */
+
+            /* Center the loader */
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Animation */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
@@ -182,44 +211,61 @@
                 <select class="drop" id="product" id="product" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select>
-
                 <br>
                 <br>
-           
-
                 <label for="userType">Bata :</label>
                 <select class="drop" id="bata" id="bata" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select>
+                <br>
+                <br>
+                <label for="userType">Vehicle Number :</label>
+                <select class="drop" id="vehicle" id="vehicle" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select>
+                <br>
+                <br>
+                <label for="userType">Supplier Name :</label>
+                <select class="drop" id="supplier" id="supplier" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select>
+                <br>
+                <br>
+                <label for="userType">Purchase Id :</label>
+                <select class="drop" id="purchase_id" id="purchase_id" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select>
                 <br><br>
                 <div class="third-row">
                     <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" class="button">Submit</button>
-                    <button type='button' class="button" onclick="exportToExcel()" id="button2">Export</button>
-                
+                    <button type="submit" style="background-color: darkgrey;" class="button">Submit</button>
+                    <button type='button' style="background-color: darkgrey;" class="button" onclick="exportToExcel()" id="button2">Export</button>
+
                 </div>
             </form>
             <br>
             <br>
             <div class="table-container">
-            <table>
-                <tr>
-                    <th>Sr. No</th>
-                    <th>product_name</th>
-           
-            <th>Bata</th>
-            <th>purchase</th>
-            <th>opening</th>  
-            <th>purchase</th>  
-            <th>sale</th>  
-            <th>Closing</th>    
-                </tr>
+                <table>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Purchase ID</th>
+                        <th>Vehicle Number</th>
+                        <th>Suppplier Name</th>
+                        <th>product_name</th>
+                        <th>Bata</th>
+                        <th>purchase</th>
+                        <th>opening</th>
+                        <th>purchase</th>
+                        <th>sale</th>
+                        <th>Closing</th>
+                    </tr>
 
-                <!-- Add more rows as needed -->
-                <tbody id="tableBody">
-                    <!-- Data will be inserted here -->
-                </tbody>
-            </table>
+                    <!-- Add more rows as needed -->
+                    <tbody id="tableBody">
+                        <!-- Data will be inserted here -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -231,14 +277,17 @@
 <script src="./stockReport.js"></script>
 
 <script>
-        
+
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://65.0.168.11/purchaseproductData', 'product','product_name');
-        fetchAndPopulateDropdown('http://65.0.168.11/purchaseproductData', 'bata','bata');
+        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'product', 'product_name');
+        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'bata', 'bata');
+        fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle', 'vehicle_no');
+        fetchAndPopulateDropdown('http://52.66.126.53/list/Supplier', 'supplier', 'name');
+        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'purchase_id', 'purchase_id');
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
+    function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -248,7 +297,7 @@
             })
             .then(data => {
                 // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId,field);
+                populateDropdownWithSelect2(data, dropdownId, field);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -275,7 +324,7 @@
         });
     }
 
-    $(document).on('select2:open', function(e) {
+    $(document).on('select2:open', function (e) {
         window.setTimeout(function () {
             document.querySelector('input.select2-search__field').focus();
         }, 0);
