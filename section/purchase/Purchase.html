@@ -3,7 +3,6 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -44,6 +43,22 @@
                 transform: rotate(360deg);
             }
         }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            margin-right: 10px;
+            width: 150px; /* Adjust as necessary */
+        }
+
+        .form-group input,
+        .form-group select {
+            flex: 1;
+        }
     </style>
 </head>
 
@@ -55,54 +70,36 @@
         <br>
         <div class="container1">
             <form id="Form">
-                <div class="first-row">
-                    <div style="margin-left: 3%;">
-                        <label for="no">Bill No:</label>
-                        <input type="number" id="no" name="number" placeholder="Bill No" required>
-                    </div>
-                    <div style="margin-left:50px;">
-                        <label for="date">Date:</label>
-                        <input type="date" id="date" name="date" required>
-                    </div>
+                <div class="form-group">
+                    <label for="no">Bill No:</label>
+                    <input type="number" id="no" name="number" placeholder="Bill No" required>
                 </div>
-                <br>
-                <div class="second-row">
-                    <div style="margin-left: 50px;">
-                        <label for="dropdown">Supplier Name: </label>
-                        <select id="supplier" class="drop" required>
-
-                        </select> <br>
-                    </div> <br>
-                    <div style="margin-left:50px;">
-                        <label for="number">vehicle no : </label>
-                        <select id="vehicle" required>
-
-                        </select>
-                    </div>
-                    
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date" required>
                 </div>
-                <br>
-                <div class="third-row">
-                    <div style="margin-left: 50px;">
-                        <label for="dropdown">Product:</label>
-                        <select id="product">
-                            <br>
-                        </select>
-                    </div>
-                    <div style="margin-left: 50px;">
-                        <label for="bata">Bata:</label>
-                        <input type="text" id="bata" name="name" placeholder="Bata">
-                        <br>
-                        </select>
-                    </div>
-                    <div style="margin-left: 50px;">
-                        <label for="mark">Mark:</label>
-                        <input type="text" id="mark" name="name" placeholder="Mark">
-                    </div>
+                <div class="form-group">
+                    <label for="supplier" style="position: relative;left: 16px;">Supplier Name:</label>
+                    <select id="supplier" class="drop" required></select>
                 </div>
-                <br>
-                <div style="margin-left: 3%;">
-                    <label for="dropdown1"> Unit :</label>
+                <div class="form-group">
+                    <label for="vehicle">Vehicle No:</label>
+                    <select id="vehicle" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="product">Product:</label>
+                    <select id="product"></select>
+                </div>
+                <div class="form-group">
+                    <label for="bata">Bata:</label>
+                    <input type="text" id="bata" name="name" placeholder="Bata">
+                </div>
+                <div class="form-group">
+                    <label for="mark">Mark:</label>
+                    <input type="text" id="mark" name="name" placeholder="Mark">
+                </div>
+                <div class="form-group">
+                    <label for="unit">Unit:</label>
                     <select id="unit">
                         <option>यूनिट</option>
                         <option value="carate">कॅरेट</option>
@@ -113,35 +110,28 @@
                         <option value="dozon">डझन</option>
                         <option value="peti">पेटी</option>
                     </select>
-                </div><br><br>
-                <div class="fourth-row">
-                    <div style="display: flex;">
-                        <div style="margin-left: 4%;">
-                            <label for="purchase">Purchase Rate:</label>
-                            <input type="number" id="purchase" name="name" placeholder="Purchase Rate">
-                        </div>
-                        <div style=" margin-left: 4%;">
-                            <label for="sale">Sale Rate:</label>
-                            <input type="number" id="sale" name="name" placeholder="Sale Rate">
-                        </div>
-                        <div style="margin-left: 30px;">
-                            <label for="quantity"> &nbsp;&nbsp; Nag :</label>
-                            <input type="number" id="quantity" name="name" placeholder="Nag">
-                        </div>
-                        <div>
-                        </div>
-                    </div>
-                    <br>
-
-                    <button type="submit" style="background-color: darkgrey;" class="border-hover" onclick="myFunction()">ADD</button></a>
+                </div>
+                <div class="form-group">
+                    <label for="purchase">Purchase Rate:</label>
+                    <input type="number" id="purchase" name="name" placeholder="Purchase Rate">
+                </div>
+                <div class="form-group">
+                    <label for="sale">Sale Rate:</label>
+                    <input type="number" id="sale" name="name" placeholder="Sale Rate">
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Nag:</label>
+                    <input type="number" id="quantity" name="name" placeholder="Nag">
+                </div>
+                <div class="form-group">
+                    <button type="submit" style="background-color: darkgrey;position: relative; left: 342px;" class="border-hover" onclick="myFunction()">ADD</button>
                 </div>
                 <br>
                 <div class="table-container">
-
                     <table>
                         <thead>
                             <tr>
-                                <th>प्रॉडक्ट </th>
+                                <th>प्रॉडक्ट</th>
                                 <th>बटा</th>
                                 <th>मार्क</th>
                                 <th>खरेदी किंमत</th>
@@ -151,29 +141,25 @@
                                 <th>रक्कम</th>
                             </tr>
                         </thead>
-
                         <tbody id="tableBody1">
                             <!-- Data will be inserted here -->
                         </tbody>
-
                     </table>
                 </div>
                 <br>
-                <div style="margin-left: 400px;">
-                    <label for="total">Total Amount :</label>
-                    <input type="number" id="total" name="name" placeholder="Total Amount " required>
+                <div class="form-group">
+                    <label for="total">Total Amount:</label>
+                    <input type="number" id="total" name="name" placeholder="Total Amount" required>
                 </div>
                 <br>
-                <div class="four-row">
-                    <button class="border-hover" style="background-color: darkgrey;" type="submit">Save</button>
+                <div class="form-group">
+                    <button class="border-hover" style="background-color: darkgrey; position: relative; left: 342px;" type="submit">Save</button>
                 </div>
             </form>
         </div>
         <script src="./Purchase.js"></script>
         <script>
-
             document.addEventListener('DOMContentLoaded', function () {
-                // Fetch data from API and populate Select2 dropdowns
                 fetchAndPopulateDropdown('http://52.66.126.53/list/Supplier', 'supplier', 'name');
                 fetchAndPopulateDropdown('http://52.66.126.53/productData/', 'product', 'name');
                 fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle', 'vehicle_no');
@@ -188,7 +174,6 @@
                         return response.json();
                     })
                     .then(data => {
-                        // Populate Select2 dropdown with API data
                         populateDropdownWithSelect2(data, dropdownId, field);
                     })
                     .catch(error => {
@@ -198,41 +183,30 @@
 
             function populateDropdownWithSelect2(data, dropdownId, field) {
                 var dropdown = $('#' + dropdownId);
-                // Clear existing options
                 dropdown.empty();
-
-                // Add placeholder option
                 dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
-
-                // Populate dropdown with API data
                 data.forEach(function (item) {
                     dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
                 });
-
-               
-                // Initialize Select2 with tags
-            dropdown.select2({
-                placeholder: "Select or type " + dropdownId + " type",
-                allowClear: true,
-                tags: true,
-                createTag: function(params) {
-                    return {
-                        id: params.term,
-                        text: params.term,
-                        newOption: true
-                    };
-                }
-            });
-
-            // Show or hide input field based on selection
-            dropdown.on('select2:select', function (e) {
-                if (e.params.data.newOption) {
-                    $('#otherOption').show();
-                } else {
-                    $('#otherOption').hide();
-                }
-            });
- 
+                dropdown.select2({
+                    placeholder: "Select or type " + dropdownId + " type",
+                    allowClear: true,
+                    tags: true,
+                    createTag: function(params) {
+                        return {
+                            id: params.term,
+                            text: params.term,
+                            newOption: true
+                        };
+                    }
+                });
+                dropdown.on('select2:select', function (e) {
+                    if (e.params.data.newOption) {
+                        $('#otherOption').show();
+                    } else {
+                        $('#otherOption').hide();
+                    }
+                });
             }
 
             $(document).on('select2:open', function(e) {
@@ -240,20 +214,11 @@
                     document.querySelector('input.select2-search__field').focus();
                 }, 0);
             });
-            
 
         </script>
-
-
-
-
-
-
         <script>
-
             function myFunction() {
                 event.preventDefault();
-
                 var formData = {
                     purchase_id: parseInt(document.getElementById('no').value),
                     bata: document.getElementById('bata').value,
@@ -284,22 +249,18 @@
                     })
                     .then(result => {
                         console.log('Entry added successfully:', result);
-                        //document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) + formData.price;
                         updateTable(formData, result.insertId);
-                        // Clear input fields after successful submission
                         document.getElementById('bata').value = '';
                         document.getElementById('mark').value = '';
                         document.getElementById('purchase').value = '';
                         document.getElementById('sale').value = '';
                         document.getElementById('quantity').value = '';
                         document.getElementById('unit').value = '';
-                        // Clear Select2 dropdown for product
                         $('#product').val('').trigger('change');
                     })
                     .catch(error => {
                         console.error('Error:', error);
                     });
-                // Add your desidarkgrey functionality here
             }
 
             function updateTable(entry, result) {
@@ -322,7 +283,6 @@
             }
 
             function deleteUser(button, userId, price) {
-                // Perform delete operation based on userId
                 var button = event.target;
                 var row = button.parentNode.parentNode;
                 fetch('http://52.66.126.53/purchaseproductData/deletepurchaseproductId/' + userId, {
@@ -334,19 +294,13 @@
                         }
                         console.log('User deleted successfully');
                         document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) - price;
-                        // Refresh the table or update UI as needed
-                        //newRow.remove();
                         row.remove();
                     })
                     .catch(error => {
                         console.error('Error:', error);
                     });
             }
-
         </script>
-
-
-
 </body>
 
 </html>
