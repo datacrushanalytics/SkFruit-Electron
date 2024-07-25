@@ -11,7 +11,7 @@ async function remainder() {
 
         const url = isAdmin 
             ? 'http://52.66.126.53/remainderReport' 
-            : `http:// 52.66.126.53/remainderReport/${sessionData[0].route}`;
+            : `http://52.66.126.53/remainderReport/${sessionData[0].route}`;
         
         const response = await fetch(url);
 
