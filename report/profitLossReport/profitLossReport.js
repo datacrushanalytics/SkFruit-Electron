@@ -275,7 +275,7 @@ async function exportToExcel() {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        return fetch('http://52.66.126.53/profitLossReport/generate-pdf', {
+        return fetch('http://localhost:3000/profitLossReport/generate-pdf', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
