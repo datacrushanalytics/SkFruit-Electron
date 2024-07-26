@@ -748,29 +748,43 @@
   function autoFocusInput() {
             document.getElementById('barcodeInput').focus();
         }
+        let inputTimer;
         
-  function handleBarcodeInput(event) {
-      let barcodeValue = event.target.value;
-      let modifiedBarcodeValue = modifyBarcode(barcodeValue);
-      // Add the modified barcode value to the dropdown
-      let dropdown = document.getElementById('bta');
-      let option = document.createElement('option');
-      option.value = modifiedBarcodeValue;
-      option.text = modifiedBarcodeValue;
-      dropdown.add(option);
-      dropdown.value = modifiedBarcodeValue;  // Select the new option
+        function handleBarcodeInput(event) {
+            clearTimeout(inputTimer); // Clear previous timer
 
-      // Close the modal
-      closeScannerModal();
-  }
+            inputTimer = setTimeout(() => {
+              console.log("hello")
+                let barcodeValue = event.target.value;
+                if (barcodeValue) {  // Check if the input is not empty
+                    let modifiedBarcodeValue = modifyBarcode(barcodeValue);
+                    console.log("Modified",modifiedBarcodeValue)
+                    selectOption(modifiedBarcodeValue); // Select the existing option
 
-  function modifyBarcode(barcode) {
-      // Example modification: add a prefix and change certain digits
-      let prefix = 'MOD-';
-      let modifiedBarcode = prefix + barcode.substring(0, 5) + '-' + barcode.substring(5);
-      return modifiedBarcode;
-  }
+                    // Clear the input field
+                    event.target.value = '';
 
+                    // Close the modal
+                    closeScannerModal();
+                }
+            }, 500); // Adjust the timeout as needed
+        }
+
+        function modifyBarcode(barcode) {
+            // Example modification: add a prefix and change certain digits
+            let modifiedBarcode = barcode.split('Bata:')[1];
+            return modifiedBarcode;
+        }
+
+        function selectOption(value) {
+            // let dropdown = document.getElementById('bta');
+            // let options = dropdown.options;
+            var $productDropdown = $('#bta');
+        // Set the value of the Select2 dropdown if it's different
+        if ($productDropdown.val() !== value) {
+          $productDropdown.val(value).trigger('change');
+        }
+        }
 
 
 </script>
