@@ -227,17 +227,18 @@
     if (isAdmin) {
       await fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route');
       await fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer');
-      fetchDataAndProcess();
+      await fetchDataAndProcess();
         }else{
           var route = sessionData[0].route;
           await fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customerSale/' +route  , 'customer');
           await fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route',selectedValue=route,readOnly = true);
-          fetchDataAndProcess();
+          // fetchDataAndProcess();
         }
 
+        
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId,selectedValue = null, readOnly = false) {
+    async function fetchAndPopulateDropdown(apiUrl, dropdownId,selectedValue = null, readOnly = false) {
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {

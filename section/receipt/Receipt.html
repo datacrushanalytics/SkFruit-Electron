@@ -571,7 +571,7 @@ function totalbill(){
     var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
         // Check if the user is an admin and show/hide the button accordingly
     if (isAdmin) {
-        fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'account_group','customer');
+        fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'account_group','name');
         fetchAndPopulateDropdown('http://52.66.126.53/mobile', 'mob','mobile_no');
         }else{
           var route = sessionData[0].route;
@@ -580,7 +580,7 @@ function totalbill(){
         }
 
         // fetchAndPopulateDropdown('http://52.66.126.53/list/Bank Account', 'route_detail','Account');
-        fetchAndPopulateDropdown('http://52.66.126.53/list/Bank Account', 'input1','Account');
+        fetchAndPopulateDropdown('http://52.66.126.53/list/Bank Account', 'input1','name');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,name,selectedValue = null, readOnly = false) {

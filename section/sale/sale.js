@@ -35,8 +35,8 @@ document.addEventListener('DOMContentLoaded', function () {
     })
         .then(data => {
             // Populate dropdown with API data
-            document.getElementById('bill').value = parseInt(data[0]['num']) + 1;
-            fetch('http://52.66.126.53/saleproductData/' + (parseInt(data[0]['num']) + 1))
+            document.getElementById('bill').value = parseInt(data[0]['num']) + 1 || 1;
+            fetch('http://52.66.126.53/saleproductData/' + (parseInt(data[0]['num']) + 1) || 1)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');

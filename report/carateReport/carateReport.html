@@ -274,6 +274,7 @@ button[type="submit"]:hover {
         }else{
           var route = sessionData[0].route;
           fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customer/' +route  , 'customer');
+          $('#customer').attr('required', 'required');
         }
         
     });

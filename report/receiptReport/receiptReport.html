@@ -329,6 +329,7 @@
         }else{
           var route = sessionData[0].route;
           fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customerSale/' +route,'customer');
+          $('#customer').attr('required', 'required');
         }
 
     });

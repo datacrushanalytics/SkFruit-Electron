@@ -271,9 +271,10 @@
                 <br><br>
 
                 <label for="userType">User :</label>
-                <select class="drop" id="user" name="user">
+                <select class="drop" id="user">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select><br><br>
+                </select>
+                <br><br>
                 <div class="third-row">
                     <!-- <button class="border-hover" >Save</button> -->
                     <button type="submit" style="background-color: darkgrey;" class="button">Submit</button>
@@ -333,13 +334,16 @@
         var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
         // Check if the user is an admin and show/hide the button accordingly
         if (isAdmin) {
+            fetchAndPopulateDropdown1('http://52.66.126.53/fetchData/user', 'user','added_by');
             fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route');
             fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer');
-            fetchAndPopulateDropdown('http://52.66.126.53/fetchData/user', 'user');
+            
+            // document.getElementById('user').style.display = none
         }else{
             var route = sessionData[0].route;
             fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customer/' +route  , 'customer',readOnly=false);
             fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route',selectedValue=route,readOnly = true);
+            fetchAndPopulateDropdown('http://52.66.126.53/fetchData/user', 'user',selectedValue=sessionData[0].name,readOnly = true);
         }
         
         
@@ -408,6 +412,48 @@
             document.querySelector('input.select2-search__field').focus();
         }, 0);
     });
+
+
+
+
+    function fetchAndPopulateDropdown1(apiUrl, dropdownId, field) {
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Populate Select2 dropdown with API data
+                populateDropdownWithSelect21(data, dropdownId, field);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function populateDropdownWithSelect21(data, dropdownId, field) {
+        var dropdown = $('#' + dropdownId);
+        // Clear existing options
+        dropdown.empty();
+
+        // Add placeholder option
+        dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+
+        // Populate dropdown with API data
+        data.forEach(function (item) {
+            dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
+        });
+
+        // Initialize Select2
+        dropdown.select2({
+            placeholder: "Select " + dropdownId + " type",
+            allowClear: true
+        });
+    }
+
+
 
 </script>
 

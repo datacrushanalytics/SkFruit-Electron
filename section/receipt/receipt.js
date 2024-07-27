@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .then(data => {
         // Populate dropdown with API data
-        document.getElementById('pavti').value = parseInt(data[0]['num']) + 1;
+        document.getElementById('pavti').value = parseInt(data[0]['num']) + 1 || 1;
     })
     .catch(error => {
         console.error('Error:', error);

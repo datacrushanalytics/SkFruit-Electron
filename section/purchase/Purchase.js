@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(data => {
             // Populate dropdown with API data
-            document.getElementById('no').value = parseInt(data[0]['num']) + 1;
+            document.getElementById('no').value = parseInt(data[0]['num']) + 1 || 1;
             fetch('http://52.66.126.53/purchaseproductData/' + (parseInt(data[0]['num']) + 1))
                 .then(response => {
                     if (!response.ok) {

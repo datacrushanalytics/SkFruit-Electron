@@ -264,7 +264,7 @@
         })
         .then(data => {
             // Populate dropdown with API data
-            document.getElementById('id').value = parseInt(data[0]['num']) + 1;
+            document.getElementById('id').value = parseInt(data[0]['num']) + 1 || 1;
         })
         .catch(error => {
             console.error('Error:', error);
