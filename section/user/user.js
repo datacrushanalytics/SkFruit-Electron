@@ -3,7 +3,7 @@ function user() {
     console.log("user function executed");
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
-    fetch('http://52.66.126.53/userData')
+    fetch('http://13.201.94.88/userData')
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';
@@ -97,7 +97,7 @@ function editUser(user) {
 
 function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('http://52.66.126.53/userData/deleteUser/' + userId, {
+    fetch('http://13.201.94.88/userData/deleteUser/' + userId, {
         method: 'DELETE'
     })
     .then(response => {

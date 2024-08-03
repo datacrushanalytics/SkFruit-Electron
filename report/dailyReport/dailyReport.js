@@ -29,7 +29,7 @@ function fetchDataAndProcess(data = null) {
     
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
-    return fetch('http://52.66.126.53/dailyReport', {
+    return fetch('http://13.201.94.88/dailyReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -133,7 +133,7 @@ function populateTable4(data) {
 
                         var loader = document.getElementById('loader');
             loader.style.display = 'block';
-            await fetch('http://52.66.126.53/saleData/validate/'+ String(item.bill_no), {
+            await fetch('http://13.201.94.88/saleData/validate/'+ String(item.bill_no), {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -219,7 +219,7 @@ function populateTable4(data) {
             
             var loader = document.getElementById('loader');
             loader.style.display = 'block';
-            await fetch('http://52.66.126.53/sms/saleMessage', {
+            await fetch('http://13.201.94.88/sms/saleMessage', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -275,7 +275,7 @@ function populateTable4(data) {
 
             var loader = document.getElementById('loader');
             loader.style.display = 'block';
-            await fetch('http://52.66.126.53/whatsapp/saleMessage', {
+            await fetch('http://13.201.94.88/whatsapp/saleMessage', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -415,7 +415,7 @@ function populateTable5(data) {
 
                         var loader = document.getElementById('loader');
             loader.style.display = 'block';
-            await fetch('http://52.66.126.53/receiptData/validate/'+ String(item.receipt_id), {
+            await fetch('http://13.201.94.88/receiptData/validate/'+ String(item.receipt_id), {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -503,7 +503,7 @@ function populateTable5(data) {
             
             var loader = document.getElementById('loader');
             loader.style.display = 'block';
-            await fetch('http://52.66.126.53/sms/receiptMessage', {
+            await fetch('http://13.201.94.88/sms/receiptMessage', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -560,7 +560,7 @@ function populateTable5(data) {
 
             var loader = document.getElementById('loader');
             loader.style.display = 'block';
-            await fetch('http://52.66.126.53/whatsapp/receiptMessage', {
+            await fetch('http://13.201.94.88/whatsapp/receiptMessage', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -670,7 +670,7 @@ async function exportToExcel() {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        return fetch('http://52.66.126.53/dailyReport/generate-pdf', {
+        return fetch('http://13.201.94.88/dailyReport/generate-pdf', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -734,7 +734,7 @@ function openModal(item) {
     console.log("Opening modal for item:", item);
     
 
-    fetch('http://52.66.126.53/bill/' + item)
+    fetch('http://13.201.94.88/bill/' + item)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -1110,7 +1110,7 @@ function openModal1(item) {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://52.66.126.53/receiptReport/' + item.receipt_id)
+    fetch('http://13.201.94.88/receiptReport/' + item.receipt_id)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

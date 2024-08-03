@@ -162,9 +162,9 @@
         <script src="./Purchase.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                fetchAndPopulateDropdown('http://52.66.126.53/list/Supplier', 'supplier', 'name');
-                fetchAndPopulateDropdown('http://52.66.126.53/productData/', 'product', 'name');
-                fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle', 'vehicle_no');
+                fetchAndPopulateDropdown('http://13.201.94.88/list/Supplier', 'supplier', 'name');
+                fetchAndPopulateDropdown('http://13.201.94.88/productData/', 'product', 'name');
+                fetchAndPopulateDropdown('http://13.201.94.88/vehicleData', 'vehicle', 'vehicle_no');
             });
 
             function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
@@ -236,7 +236,7 @@
 
                 console.log(formData)
 
-                fetch('http://52.66.126.53/purchaseproductData/insertPurchaseproduct', {
+                fetch('http://13.201.94.88/purchaseproductData/insertPurchaseproduct', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -287,7 +287,7 @@
             function deleteUser(button, userId, price) {
                 var button = event.target;
                 var row = button.parentNode.parentNode;
-                fetch('http://52.66.126.53/purchaseproductData/deletepurchaseproductId/' + userId, {
+                fetch('http://13.201.94.88/purchaseproductData/deletepurchaseproductId/' + userId, {
                     method: 'DELETE'
                 })
                     .then(response => {

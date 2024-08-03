@@ -439,7 +439,7 @@ function totalbill(){
     console.log("totalbill")
     console.log(document.getElementById("custid").value)
   
-    fetch('http://52.66.126.53/accountData/' + parseInt(document.getElementById("custid").value))
+    fetch('http://13.201.94.88/accountData/' + parseInt(document.getElementById("custid").value))
           .then(response => {
             if (!response.ok) {
                 loader.style.display = 'none';
@@ -466,7 +466,7 @@ function totalbill(){
     function previousbalance() {
         const name = document.getElementById("account_group").value
         //const name = receipt.Customer
-        fetch('http://52.66.126.53/fetchpv/' + name)
+        fetch('http://13.201.94.88/fetchpv/' + name)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -484,7 +484,7 @@ function totalbill(){
             });
 
 
-            fetch('http://52.66.126.53/fetchName/name/' + name)
+            fetch('http://13.201.94.88/fetchName/name/' + name)
                   .then(response => {
                     if (!response.ok) {
                         loader.style.display = 'none';
@@ -507,7 +507,7 @@ function totalbill(){
 
 
 
-    fetch('http://52.66.126.53/carateuserData/' + name)
+    fetch('http://13.201.94.88/carateuserData/' + name)
   .then(response => {
       if (!response.ok) {
         loader.style.display = 'none';
@@ -540,7 +540,7 @@ function totalbill(){
     function getCust() {
         var number = document.getElementById('mob').value;
         console.log(number)
-        fetch('http://52.66.126.53/fetchName/mobile/' + number)
+        fetch('http://13.201.94.88/fetchName/mobile/' + number)
             .then(response => {
                 if (!response.ok) {
                     loader.style.display = 'none';
@@ -570,10 +570,10 @@ function totalbill(){
         
     document.addEventListener('DOMContentLoaded', async function () {
         // Fetch data from API and populate Select2 dropdowns
-        //await fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'account_group','customer');
-        //await fetchAndPopulateDropdown('http://52.66.126.53/list/Bank Account', 'route_detail','Account');
-        await fetchAndPopulateDropdown('http://52.66.126.53/list/Bank Account', 'input1','Account');
-        //await fetchAndPopulateDropdown('http://52.66.126.53/mobile', 'mob','mobile_no');
+        //await fetchAndPopulateDropdown('http://13.201.94.88/list/Customer', 'account_group','customer');
+        //await fetchAndPopulateDropdown('http://13.201.94.88/list/Bank Account', 'route_detail','Account');
+        await fetchAndPopulateDropdown('http://13.201.94.88/list/Bank Account', 'input1','Account');
+        //await fetchAndPopulateDropdown('http://13.201.94.88/mobile', 'mob','mobile_no');
     
 
         async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
@@ -636,7 +636,7 @@ function totalbill(){
       //}
       
 
-      fetch('http://52.66.126.53/fetchpv/' + receipt.Customer)
+      fetch('http://13.201.94.88/fetchpv/' + receipt.Customer)
       .then(response => {
         if (!response.ok) {
           loader.style.display = 'none';
@@ -701,7 +701,7 @@ function totalbill(){
 
       
 
-    fetch('http://52.66.126.53/carateuserData/' + receipt.Customer)
+    fetch('http://13.201.94.88/carateuserData/' + receipt.Customer)
     .then(response => {
         if (!response.ok) {
           loader.style.display = 'none';

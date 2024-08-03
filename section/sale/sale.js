@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
 
-    fetch('http://52.66.126.53/fetchSaleid')
+    fetch('http://13.201.94.88/fetchSaleid')
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             // Populate dropdown with API data
             document.getElementById('bill').value = parseInt(data[0]['num']) + 1 || 1;
-            fetch('http://52.66.126.53/saleproductData/' + (parseInt(data[0]['num']) + 1) || 1)
+            fetch('http://13.201.94.88/saleproductData/' + (parseInt(data[0]['num']) + 1) || 1)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -91,7 +91,7 @@ function populateDropdown3(data) {
 
 function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('http://52.66.126.53/saleproductData/deletesaleproduct/' + userId, {
+    fetch('http://13.201.94.88/saleproductData/deletesaleproduct/' + userId, {
         method: 'DELETE'
     })
         .then(response => {
@@ -120,7 +120,7 @@ function getProducts() {
     console.log(bataId)
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
-    fetch('http://52.66.126.53/purchaseproductData/getBataProduct/' + bataId)
+    fetch('http://13.201.94.88/purchaseproductData/getBataProduct/' + bataId)
         .then(response => response.json())
         .then(data => {
             loader.style.display = 'none';
@@ -140,7 +140,7 @@ function getProducts() {
         });
 
 
-    fetch('http://52.66.126.53/fetchStock/' + bataId)
+    fetch('http://13.201.94.88/fetchStock/' + bataId)
         .then(response => {
             if (!response.ok) {
                 loader.style.display = 'none';
@@ -181,7 +181,7 @@ function updateTotal() {
 function getCust() {
     var number = document.getElementById('number').value;
     console.log(number)
-    fetch('http://52.66.126.53/fetchName/mobile/' + number)
+    fetch('http://13.201.94.88/fetchName/mobile/' + number)
         .then(response => {
             if (!response.ok) {
                 loader.style.display = 'none';

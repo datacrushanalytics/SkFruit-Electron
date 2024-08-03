@@ -64,7 +64,7 @@ console.log("jahsafhfa")
     loader.style.display = 'block';
 
 
-    await fetch('http://52.66.126.53/paymentData/insertPayment', {
+    await fetch('http://13.201.94.88/paymentData/insertPayment', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -104,7 +104,7 @@ function openModal(item) {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://52.66.126.53/paymentData/' + String(item))
+    fetch('http://13.201.94.88/paymentData/' + String(item))
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

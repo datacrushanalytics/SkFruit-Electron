@@ -165,7 +165,7 @@
 
         document.addEventListener('DOMContentLoaded', async function() {
             // Retrieve user data from localStorage
-            await fetchAndPopulateDropdown('http://52.66.126.53/categoryData', 'category','name');
+            await fetchAndPopulateDropdown('http://13.201.94.88/categoryData', 'category','name');
         
             async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
                 try {
@@ -250,7 +250,7 @@
                 };
                 var loader = document.getElementById('loader');
                 loader.style.display = 'block';
-                const response = await fetch('http://52.66.126.53/productData/updateProduct/'+ userData.id, {
+                const response = await fetch('http://13.201.94.88/productData/updateProduct/'+ userData.id, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {

@@ -34,7 +34,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://52.66.126.53/routewiseSaleReport', {
+    return fetch('http://13.201.94.88/routewiseSaleReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -198,7 +198,7 @@ Swal.fire({
 
 
 function deleteRecord(bill_no) {
-    fetch(`http://52.66.126.53/fetchData/saleProduct/${bill_no}`, {
+    fetch(`http://13.201.94.88/fetchData/saleProduct/${bill_no}`, {
         method: 'GET'
     })
     .then(response => {
@@ -212,7 +212,7 @@ function deleteRecord(bill_no) {
         data.forEach(item => {
             console.log(item.id); // Fetch and log the id from each item
 
-            fetch(`http://52.66.126.53/saleproductData/deletesaleproduct/${item.id}`, {
+            fetch(`http://13.201.94.88/saleproductData/deletesaleproduct/${item.id}`, {
                 method: 'DELETE'
             })
             .then(response => {
@@ -234,7 +234,7 @@ function deleteRecord(bill_no) {
     });
 
     // Perform delete operation based on bill_no
-    fetch(`http://52.66.126.53/saleData/deletesaleId/${bill_no}`, {
+    fetch(`http://13.201.94.88/saleData/deletesaleId/${bill_no}`, {
         method: 'DELETE'
     })
     .then(response => {
@@ -278,7 +278,7 @@ function openPopup(item) {
     // var iframe = document.getElementById('popupIframe');
     // iframe.src = './billDetails.html?bill_no=' + encodeURIComponent(item.bill_no);
 
-    fetch('http://52.66.126.53/saleproductData/' + String(item.bill_no))
+    fetch('http://13.201.94.88/saleproductData/' + String(item.bill_no))
             .then(response => response.json())
             .then(data => {
                 populatePopupTable(data);
@@ -330,7 +330,7 @@ function openModal(item) {
     console.log("Opening modal for item:", item.bill_no);
     
 
-    fetch('http://52.66.126.53/bill/' + item.bill_no)
+    fetch('http://13.201.94.88/bill/' + item.bill_no)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -721,7 +721,7 @@ async function exportToExcel() {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        return fetch('http://52.66.126.53/routewiseSaleReport/generate-pdf', {
+        return fetch('http://13.201.94.88/routewiseSaleReport/generate-pdf', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

@@ -413,14 +413,14 @@ a{
                 if (isAdmin) {
                     await Promise.all([
                         renderData(),
-                        fetchAPI("http://52.66.126.53/fetchTotal/purchase", 'purhcaseTotal'),
-                        fetchAPI("http://52.66.126.53/fetchTotal/sale", 'saleTotal'),
-                        fetchAPI("http://52.66.126.53/fetchTotal/receipt", 'receiptTotal'),
-                        fetchAPI("http://52.66.126.53/fetchTotal/payment", 'paymentTotal')
+                        fetchAPI("http://13.201.94.88/fetchTotal/purchase", 'purhcaseTotal'),
+                        fetchAPI("http://13.201.94.88/fetchTotal/sale", 'saleTotal'),
+                        fetchAPI("http://13.201.94.88/fetchTotal/receipt", 'receiptTotal'),
+                        fetchAPI("http://13.201.94.88/fetchTotal/payment", 'paymentTotal')
                     ]);
                 }else{
-                    fetchAPI(`http://52.66.126.53/fetchTotal/saleuser/${sessionData[0].name}`, 'saleTotal2'),
-                    fetchAPI(`http://52.66.126.53/fetchTotal/receiptuser/${sessionData[0].name}`, 'receiptTotal2')
+                    fetchAPI(`http://13.201.94.88/fetchTotal/saleuser/${sessionData[0].name}`, 'saleTotal2'),
+                    fetchAPI(`http://13.201.94.88/fetchTotal/receiptuser/${sessionData[0].name}`, 'receiptTotal2')
                 }
         
             } catch (error) {
@@ -434,7 +434,7 @@ a{
             // Function to fetch data from API
             async function fetchData() {
                 try {
-                    const response = await fetch('http://52.66.126.53/list/Worker'); // Replace with your API URL
+                    const response = await fetch('http://13.201.94.88/list/Worker'); // Replace with your API URL
                     const data = await response.json();
                     return data;
                 } catch (error) {
@@ -461,7 +461,7 @@ a{
                         
                         // Send POST request to update data (you can handle the response if needed)
                         try {
-                            const response = await fetch(`http://52.66.126.53/fetchTotal/worker/`, {
+                            const response = await fetch(`http://13.201.94.88/fetchTotal/worker/`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -530,7 +530,7 @@ a{
             
             //     var loader = document.getElementById('loader');
             //         loader.style.display = 'block';
-            //     return fetch('http://52.66.126.53/routeSale/sale', {
+            //     return fetch('http://13.201.94.88/routeSale/sale', {
             //         method: 'POST',
             //         body: JSON.stringify(data),
             //         headers: {

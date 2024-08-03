@@ -14,7 +14,7 @@
 //         document.getElementById('date').readOnly = true; // Hide the button for non-admin users
 //     }
 
-//     fetch('http://52.66.126.53/fetchReceiptid')
+//     fetch('http://13.201.94.88/fetchReceiptid')
 //     .then(response => {
 //         if (!response.ok) {
 //             throw new Error('Network response was not ok');
@@ -57,7 +57,7 @@ document.getElementById('loginForm1').addEventListener('submit', async function(
     };
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
-    await fetch('http://52.66.126.53/receiptData/updateReceipt/' + formData.receiptId , {
+    await fetch('http://13.201.94.88/receiptData/updateReceipt/' + formData.receiptId , {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -91,7 +91,7 @@ function openModal(item) {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://52.66.126.53/receiptReport/' + item.receipt_id)
+    fetch('http://13.201.94.88/receiptReport/' + item.receipt_id)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

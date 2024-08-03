@@ -26,7 +26,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    return fetch('http://52.66.126.53/supplierLedger', {
+    return fetch('http://13.201.94.88/supplierLedger', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -233,7 +233,7 @@ async function exportToExcel() {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        return fetch('http://52.66.126.53/supplierLedger/generate-pdf', {
+        return fetch('http://13.201.94.88/supplierLedger/generate-pdf', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

@@ -201,8 +201,8 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                fetchDataAndUpdateCheckboxes('userMenuTable', 'http://52.66.126.53/accessconfigData');
-                fetchDataAndUpdateCheckboxes('footerMenuTable', 'http://52.66.126.53/footerconfigData');
+                fetchDataAndUpdateCheckboxes('userMenuTable', 'http://13.201.94.88/accessconfigData');
+                fetchDataAndUpdateCheckboxes('footerMenuTable', 'http://13.201.94.88/footerconfigData');
             });
     
             function fetchDataAndUpdateCheckboxes(tableId, apiUrl) {
@@ -242,12 +242,12 @@
     
             document.getElementById("submitButton").addEventListener("click", function() {
                 // Gather data from checkboxes in the User Menu table
-                gatherAndSendData('userMenuTable', 'http://52.66.126.53/accessconfigData/updateAccessconfig');
+                gatherAndSendData('userMenuTable', 'http://13.201.94.88/accessconfigData/updateAccessconfig');
             });
     
             document.getElementById("submitButton1").addEventListener("click", function() {
                 // Gather data from checkboxes in the Footer Menu table
-                gatherAndSendData('footerMenuTable', 'http://52.66.126.53/footerconfigData/updateFooterconfig');
+                gatherAndSendData('footerMenuTable', 'http://13.201.94.88/footerconfigData/updateFooterconfig');
             });
     
             function gatherAndSendData(tableId, apiUrl) {
