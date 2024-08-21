@@ -387,7 +387,7 @@
       <div class="row-container">
         <div id="Route-wrapper" class="input-wrapper">
           <label for="Route">रूट :</label>
-          <select type="root" id="Route" name="root" onchange="previousbalance()" required></select>
+          <select type="root" id="Route" name="root" onchange="setCustomer()" required></select>
           <input type="hidden" id="custid" name="custid">
         </div>
 
@@ -722,6 +722,11 @@
     }, 0);
   });
 
+  function setCustomer(){
+        var route = document.getElementById('Route').value
+        fetchAndPopulateDropdown('http://13.201.94.88/fetchData/customerSale/' +route  , 'grahk','name');
+          fetchAndPopulateDropdown('http://13.201.94.88/fetchData/customerSale/' +route  , 'number','mobile_no');
+    }
 
   function openPopup() {
     event.preventDefault();

@@ -268,6 +268,7 @@
                     <th>DATE</th>
                     <th>Customer Name</th>
                     <th>Route</th>
+                    <th>Balance</th>
                     <th>Amount</th>
                     <th>Cash</th>
                     <th>Online Amount</th>
@@ -297,6 +298,7 @@
                     <th>Customer Name</th>
                     <th>Mobile No</th>
                     <th>Note</th>
+                    <th>Balance</th>
                     <th>Cash</th>
                     <th>Online Amount</th>
                     <th>Discount</th>
@@ -329,28 +331,28 @@
                 <tr>
                     <th>Sale</th>
                     <td id='sale'></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td id="saleCash"></td>
+                    <td id="saleOnline"></td>
+                    <td id="saleDiscount"></td>
                     <td></td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <th>Total Cash</th>
                     <td></td>
                     <td id="saleCash"></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                </tr>
+                </tr> -->
                 <tr>
-                    <th>Total Receipt</th>
+                    <th>Receipt</th>
                     <td></td>
                     <td id="receiptCash"></td>
                     <td id="receiptOnline"></td>
-                    <td></td>
+                    <td id="receiptDiscount"></td>
                     <td></td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <th>Total Online</th>
                     <td></td>
                     <td></td>
@@ -373,7 +375,7 @@
                     <td></td>
                     <td id="receiptDiscount"></td>
                     <td></td>
-                </tr>
+                </tr> -->
                 <tr>
                     <th>Total</th>
                     <th id="grandSale"></th>
@@ -401,6 +403,18 @@
 <script>
         
     document.addEventListener('DOMContentLoaded', function () {
+        const now = new Date();
+
+    // Adjust to IST (UTC+5:30)
+    const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
+    const istTime = new Date(now.getTime() + istOffset);
+
+    // Format the date to YYYY-MM-DD
+    const todayIST = istTime.toISOString().split('T')[0];
+
+    // Set the value of the date inputs to today's date in IST
+    document.getElementById('fromdate').value = todayIST;
+    document.getElementById('todate').value = todayIST;
         // Fetch data from API and populate Select2 dropdowns
         fetchAndPopulateDropdown('http://13.201.94.88/routeData', 'route','route_name');
         fetchAndPopulateDropdown('http://13.201.94.88/fetchData/user', 'user', 'added_by');

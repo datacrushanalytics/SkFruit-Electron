@@ -216,7 +216,7 @@
                 <!-- <option value="User" disabled selected>Select Account</option> -->
                 <br><br>
                 <label for="userType">Route : </label>
-                <select class="drop" id="route" name="name">
+                <select class="drop" id="route" name="name" onchange="setCustomer()">
                 </select>
                 <!-- <option value="User" disabled selected>Select Account</option> -->
                 <br><br>
@@ -259,6 +259,18 @@
 <script>
         
     document.addEventListener('DOMContentLoaded', function () {
+        const now = new Date();
+
+    // Adjust to IST (UTC+5:30)
+    const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
+    const istTime = new Date(now.getTime() + istOffset);
+
+    // Format the date to YYYY-MM-DD
+    const todayIST = istTime.toISOString().split('T')[0];
+
+    // Set the value of the date inputs to today's date in IST
+    document.getElementById('fromdate').value = todayIST;
+    document.getElementById('todate').value = todayIST;
         // Fetch data from API and populate Select2 dropdowns
         var sessionData = JSON.parse(localStorage.getItem('sessionData'));
     // Check if session data exists and if the user is an admin
@@ -334,6 +346,11 @@
             document.querySelector('input.select2-search__field').focus();
         }, 0);
     });
+
+    function setCustomer(){
+        var route = document.getElementById('route').value
+        fetchAndPopulateDropdown('http://13.201.94.88/fetchData/customer/' +route  , 'customer','cust_name');
+    }
 
 </script>
 

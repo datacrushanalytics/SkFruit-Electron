@@ -255,7 +255,7 @@
                 <br>
 
                 <label for="userType">Route : </label>
-                <select class="drop" id="route" name="name" multiple="multiple">
+                <select class="drop" id="route" name="name" multiple="multiple" onchange="setCustomer()">
                     <!-- <option value="" disabled>Select Route</option> -->
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select>
@@ -328,6 +328,18 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
+        const now = new Date();
+
+    // Adjust to IST (UTC+5:30)
+    const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
+    const istTime = new Date(now.getTime() + istOffset);
+
+    // Format the date to YYYY-MM-DD
+    const todayIST = istTime.toISOString().split('T')[0];
+
+    // Set the value of the date inputs to today's date in IST
+    document.getElementById('fromdate').value = todayIST;
+    document.getElementById('todate').value = todayIST;
 
         var sessionData = JSON.parse(localStorage.getItem('sessionData'));
         // Check if session data exists and if the user is an admin
@@ -453,6 +465,10 @@
         });
     }
 
+    function setCustomer(){
+        var route = document.getElementById('route').value
+        fetchAndPopulateDropdown('http://13.201.94.88/fetchData/customer/' +route  , 'customer','cust_name');
+    }
 
 
 </script>

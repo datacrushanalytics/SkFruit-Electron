@@ -67,7 +67,7 @@ function fetchDataAndProcess(data = null) {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'cash', 'online_amt', 'discount', 'inCarat', 'carate_amount','validate'];
+    var columnsToDisplay = ['bill_no', 'date', 'cust_name', 'route', 'balance','amount', 'cash', 'online_amt', 'discount', 'inCarat', 'carate_amount','validate'];
     var counter = 1;
     if (data.reports.length === 0) {
         Swal.fire({
@@ -351,7 +351,7 @@ function populateTable4(data) {
 function populateTable5(data) {
     var tbody = document.getElementById('tableBody1');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'cash', 'online', 'discount', 'inCarat', 'Amt','validate'];
+    var columnsToDisplay = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'previous_balance','cash', 'online', 'discount', 'inCarat', 'Amt','validate'];
     var counter = 1;
     if (data.Receipt.length === 0) {
         Swal.fire({
