@@ -69,7 +69,7 @@ document.getElementById('Form').addEventListener('submit', async function(event)
         gadi_number: document.getElementById('vehicle').value,
         total_quantity: parseInt(document.getElementById('total').value) || 0,
         added_by: sessionData[0].name,
-        expenses: document.getElementById('expenses').value
+        expenses: document.getElementById('expenses').value || 0
     };
     var loader = document.getElementById('loader');
         loader.style.display = 'block';

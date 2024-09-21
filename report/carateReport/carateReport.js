@@ -133,7 +133,6 @@ Swal.fire({
     });
 
     if (document.getElementById('customer').value !== '') {
-        console.log("Customer not selected ");
         fetch('http://103.174.102.89:3000/carateuserData/' + document.getElementById('customer').value)
             .then(response => {
                 if (!response.ok) {
@@ -156,9 +155,27 @@ Swal.fire({
                     '350 => ' + data1[0]['carate_350'];
             });
     } else {
-        var lastCell = totalRow.insertCell();
-        lastCell.colSpan = columnsToDisplay.length - totalRow.cells.length + 1;
-        lastCell.textContent = '';
+        fetch('http://103.174.102.89:3000/carateuserData')
+            .then(response => {
+                if (!response.ok) {
+                    loader.style.display = 'none';
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data1 => {
+                // Populate dropdown with API data
+                console.log(data1);
+
+                // Add remaining carate data in the last cell
+                var lastCell = totalRow.insertCell();
+                lastCell.colSpan = columnsToDisplay.length - totalRow.cells.length + 1;
+                lastCell.innerHTML = 'Remaining Carate of Customer:<br>' +
+                    '100 => ' + data1[0]['carate_100'] + '<br>' +
+                    '150 => ' + data1[0]['carate_150'] + '<br>' +
+                    '250 => ' + data1[0]['carate_250'] + '<br>' +
+                    '350 => ' + data1[0]['carate_350'];
+            });
     }
 }
 

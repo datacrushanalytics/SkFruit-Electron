@@ -232,6 +232,9 @@ h3 img {
 
 
           data.forEach(menu => {
+            if (menu.name === 'User' && sessionData[0].status !== 'Super') {
+                return; // Skip this iteration
+            }
             if (isAdmin || menu.status === 'active') {
               var button = document.createElement('button');
               button.classList.add('component');

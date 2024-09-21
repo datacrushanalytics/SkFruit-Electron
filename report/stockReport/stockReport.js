@@ -77,7 +77,7 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['purchase_id','gadi_number','supplier_name','product_name','bata','purchase', 'opening','sale','closing' ];
+    var columnsToDisplay = ['purchase_id','gadi_number','supplier_name','product_name','bata','purchase','sale','closing' ];
     var counter = 1;
     console.log(data.reports)
     if (data.reports.length === 0) {
@@ -111,60 +111,6 @@ function populateTable4(data) {
     });
 }
 
-
-
-// async function exportToExcel() {
-//     try {
-//         const data = await fetchDataAndProcess();
-
-//         // Export to PDF using jsPDF and autoTable
-//         const { jsPDF } = window.jspdf;
-//         const doc = new jsPDF();
-
-        
-//         const customHeaders = ['purchase_id','gadi_number','supplier_name','product_name','bata','purchase', 'opening','purchase','sale','closing' ];
-
-//         // Adding header details
-//         doc.setFontSize(10);
-//         doc.text('Mobile:- 9960607512', 10, 10);
-//         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
-//         doc.setFontSize(16);
-//         doc.text('Savata Fruits Suppliers', 50, 20);
-//         doc.setFontSize(12);
-//         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
-//         doc.text('Mobile NO:- 9860601102  / 9922676380 / 9156409970', 50, 40);
-        
-//         let startY = 50;
-
-//         // Map data for autoTable Purchase ID	Vehicle Number	Suppplier Name
-//         const reportData = data.reports.map(report => [
-//             report.Purchase_iD,
-//             report.gadi_number,
-//             report.supplier_name,
-//             report.product_name,
-//             report.bata,
-//             report.purchase,
-//             report.opening,
-//             report.purchase,
-//             report.sale,
-//             report.closing
-//         ]);
-
-//         // Add Reports table to PDF
-//         doc.autoTable({
-//             head: [customHeaders],
-//             body: reportData,
-//             startY: 50,
-//             theme: 'grid'
-//         });
-
-//         // Save the PDF
-//         doc.save('Stock_Report.pdf');
-
-//     } catch (error) {
-//         console.error('Error exporting data:', error);
-//     }
-// }
 
 
 async function exportToExcel() {
