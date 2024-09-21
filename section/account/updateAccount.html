@@ -186,9 +186,9 @@
 
                 <div class="second-row">
                     Carate Bill : 
-                    <input type="radio" id="cr" name="cr_dr_type" value="yes" required>
+                    <input type="radio" id="cr" name="cr_dr_type" value="yes">
                     <label for="cr">Carate with payment</label>
-                    <input type="radio" id="dr" name="cr_dr_type" value="no" required>
+                    <input type="radio" id="dr" name="cr_dr_type" value="no">
                     <label for="dr">Carate without payment</label>
                 </div>
                 <div class="third-row">
@@ -204,8 +204,8 @@
 
         document.addEventListener('DOMContentLoaded', async function() {
             // Retrieve user data from localStorage
-            await fetchAndPopulateDropdown('http://13.201.94.88/accountgroupData', 'account_group','name');
-            await fetchAndPopulateDropdown('http://13.201.94.88/routeData', 'route_detail','route_name');
+            await fetchAndPopulateDropdown('http://103.174.102.89:3000/accountgroupData', 'account_group','name');
+            await fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route_detail','route_name');
         
             async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
                 try {
@@ -283,7 +283,7 @@
                     document.getElementById("dr").checked = true;
                 }
 
-                fetch('http://13.201.94.88/carateuserData/' + user.name)
+                fetch('http://103.174.102.89:3000/carateuserData/' + user.name)
                 .then(response => {
                 if (response.status === 404) {
                     loader.style.display = 'none';
@@ -321,8 +321,8 @@
         async function updateUser() {
             try {
                 // Determine status based on radio button value
-                var status = document.querySelector('input[name="cr_dr_type"]:checked').value === 'cr' ? 'yes' : 'no';
-        
+                var status = document.querySelector('input[name="cr_dr_type"]:checked').value === 'yes' ? 'yes' : 'no';
+                console.log('status',status)
                 var userData = {
                     id: parseInt(document.getElementById("id").value),
                     account_group: document.getElementById("account_group").value,
@@ -338,7 +338,7 @@
         
                 var loader = document.getElementById('loader');
                 loader.style.display = 'block';
-                const response = await fetch('http://13.201.94.88/accountData/updateAccount/'+ userData.id, {
+                const response = await fetch('http://103.174.102.89:3000/accountData/updateAccount/'+ userData.id, {
                     method: 'PUT',
                     body: JSON.stringify(userData),
                     headers: {
@@ -358,7 +358,7 @@
                     carate_350 : parseInt(document.getElementById("carate2350").value) || 0
                 }
                 console.log(form2)
-                const response1 =  fetch('http://13.201.94.88/carateuserData/updateCarateuser/' +form2.userName , {
+                const response1 =  fetch('http://103.174.102.89:3000/carateuserData/updateCarateuser/' +form2.userName , {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'

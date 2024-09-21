@@ -228,11 +228,20 @@
                 <table>
                     <tr>
                         <th>Sr. No</th>
-                        <th>Purchase NO</th>
+                        <th>Record NO</th>
+                        <th>Type</th>
                         <th>DATE</th>
                         <th>Supplier Name</th>
-                        <th>Vehicle Number</th>
+                        <th>Mobile Number</th>
+                        <th>Vehicle</th>
+                        <th>Cash</th>
+                        <th>Bank Account</th>
+                        <th>Online</th>
+                        <th>Expenses</th>
+                        <th>Previous Balance</th>
+                        <th>Discount</th>
                         <th>Amount</th>
+                        <th>Comment</th>
                     </tr>
                     <!-- Add more rows as needed -->
                     <tbody id="tableBody">
@@ -244,7 +253,7 @@
                 <br>
                 <br>
     
-                <table>
+                <!-- <table>
                     <tr>
                         <th>Sr. No</th>
                         <th>Payment ID</th>
@@ -255,12 +264,13 @@
                         <th>Previous Balance</th>
                         <th>Amount</th>
                     </tr>
+                     -->
     
                     <!-- Add more rows as needed -->
-                    <tbody id="tableBody1">
+                    <!-- <tbody id="tableBody1"> -->
                         <!-- Data will be inserted here -->
-                    </tbody>
-                </table>
+                    <!-- </tbody>
+                </table> -->
              </div>
         </div>
     </div>
@@ -283,7 +293,7 @@
     document.getElementById('fromdate').value = todayIST;
     document.getElementById('todate').value = todayIST;
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://13.201.94.88/list/Supplier', 'supplier','name');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Supplier', 'supplier','name');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {

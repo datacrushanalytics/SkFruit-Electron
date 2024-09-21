@@ -31,7 +31,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://13.201.94.88/profitLossReport', {
+    return fetch('http://103.174.102.89:3000/profitLossReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -275,7 +275,7 @@ async function exportToExcel() {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        return fetch('http://13.201.94.88/profitLossReport/generate-pdf', {
+        return fetch('http://103.174.102.89:3000/profitLossReport/generate-pdf', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

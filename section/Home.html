@@ -224,7 +224,7 @@ h3 img {
         console.log(localStorage.getItem('sessionData'))
         console.log(sessionData[0].usertype)
         // Fetch data from API and dynamically generate buttons
-        fetch("http://13.201.94.88/accessconfigData")
+        fetch("http://103.174.102.89:3000/accessconfigData")
         .then(response => response.json())
         .then(data => {
           loader.style.display = 'none';
@@ -257,7 +257,7 @@ h3 img {
         })
 
 
-        fetch("http://13.201.94.88/footerconfigData")
+        fetch("http://103.174.102.89:3000/footerconfigData")
         .then(response => response.json())
         .then(data => {
           loader.style.display = 'none';

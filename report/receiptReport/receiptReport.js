@@ -22,13 +22,15 @@ function fetchDataAndProcess() {
     var data = {
         from_date: formatDate(document.getElementById("fromdate").value),
         to_date: formatDate(document.getElementById("todate").value),
-        customer_name: getElementValueWithDefault('customer', '*')
+        customer_name: getElementValueWithDefault('customer', '*'),
+        route: getElementValueWithDefault('route', '*'),
+        user: getElementValueWithDefault('user', '*')
     };
     console.log(data);
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    return fetch('http://13.201.94.88/receiptReport', {
+    return fetch('http://103.174.102.89:3000/receiptReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -161,7 +163,7 @@ function populateTable4(data) {
 
 function deleteaccount(userId) {
     // Perform delete operation based on userId
-    fetch('http://13.201.94.88/receiptReport/deleteReceiptReport/' + userId, {
+    fetch('http://103.174.102.89:3000/receiptReport/deleteReceiptReport/' + userId, {
         method: 'DELETE'
     })
         .then(response => {
@@ -302,7 +304,7 @@ async function exportToExcel() {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        return fetch('http://13.201.94.88/receiptReport/generate-pdf', {
+        return fetch('http://103.174.102.89:3000/receiptReport/generate-pdf', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -366,7 +368,7 @@ function openModal(item) {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://13.201.94.88/receiptReport/' + item.receipt_id)
+    fetch('http://103.174.102.89:3000/receiptReport/' + item.receipt_id)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

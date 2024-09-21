@@ -10,8 +10,8 @@ async function remainder() {
         const isAdmin = sessionData && sessionData[0].usertype === 'Admin';
 
         const url = isAdmin 
-            ? 'http://13.201.94.88/remainderReport' 
-            : `http://13.201.94.88/remainderReport/${sessionData[0].route}`;
+            ? 'http://103.174.102.89:3000/remainderReport' 
+            : `http://103.174.102.89:3000/remainderReport/${sessionData[0].route}`;
         
         const response = await fetch(url);
 
@@ -152,7 +152,7 @@ function populateTable(data) {
             
             var loader = document.getElementById('loader');
             loader.style.display = 'block';
-            await fetch('http://13.201.94.88/sms/remainderMessage', {
+            await fetch('http://103.174.102.89:3000/sms/remainderMessage', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -209,7 +209,7 @@ function populateTable(data) {
 
             var loader = document.getElementById('loader');
             loader.style.display = 'block';
-            await fetch('http://13.201.94.88/whatsapp/remainderMessage', {
+            await fetch('http://103.174.102.89:3000/whatsapp/remainderMessage', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -312,7 +312,7 @@ async function exportToExcel() {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        return fetch('http://13.201.94.88/remainderReport/generate-pdf', {
+        return fetch('http://103.174.102.89:3000/remainderReport/generate-pdf', {
             method: 'POST',
             body: JSON.stringify(data1),
             headers: {

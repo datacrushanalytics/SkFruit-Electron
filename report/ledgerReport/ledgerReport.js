@@ -24,7 +24,7 @@ async function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
     try {
-        const response = await fetch('http://13.201.94.88/ledgerReport', {
+        const response = await fetch('http://103.174.102.89:3000/ledgerReport', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -165,7 +165,7 @@ function populateTable4(data) {
     // Conditional logic for additional content based on customer selection
     if (document.getElementById('customer').value !== '') {
         console.log("Customer selected");
-        fetch('http://13.201.94.88/carateuserData/' + document.getElementById('customer').value)
+        fetch('http://103.174.102.89:3000/carateuserData/' + document.getElementById('customer').value)
             .then(response => {
                 if (!response.ok) {
                     loader.style.display = 'none';
@@ -270,7 +270,7 @@ async function exportToExcel() {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        return fetch('http://13.201.94.88/ledgerReport/generate-pdf', {
+        return fetch('http://103.174.102.89:3000/ledgerReport/generate-pdf', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

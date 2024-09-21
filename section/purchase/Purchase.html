@@ -149,9 +149,14 @@
                     </table>
                 </div>
                 <br>
+                <div class="form-group"></div>
+                    <label for="total">Expenses:</label>
+                    <input type="number" id="expenses" name="expenses" placeholder="Total Amount" onchange="addamount()">
+                </div>
                 <div class="form-group">
                     <label for="total">Total Amount:</label>
                     <input type="number" id="total" name="name" placeholder="Total Amount" required readonly>
+                    <input type="hidden" id="total1" name="name" placeholder="Total Amount" required readonly>
                 </div>
                 <br>
                 <div class="form-group">
@@ -162,9 +167,9 @@
         <script src="./Purchase.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                fetchAndPopulateDropdown('http://13.201.94.88/list/Supplier', 'supplier', 'name');
-                fetchAndPopulateDropdown('http://13.201.94.88/productData/', 'product', 'name');
-                fetchAndPopulateDropdown('http://13.201.94.88/vehicleData', 'vehicle', 'vehicle_no');
+                fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Supplier', 'supplier', 'name');
+                fetchAndPopulateDropdown('http://103.174.102.89:3000/productData/', 'product', 'name');
+                fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle', 'vehicle_no');
             });
 
             function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
@@ -219,6 +224,13 @@
 
         </script>
         <script>
+            function addamount(){
+                document.getElementById('total').value = parseInt(document.getElementById('total1').value || 0) + parseInt(document.getElementById('expenses').value)
+            }
+
+
+
+
             function myFunction() {
                 event.preventDefault();
                 var formData = {
@@ -236,7 +248,7 @@
 
                 console.log(formData)
 
-                fetch('http://13.201.94.88/purchaseproductData/insertPurchaseproduct', {
+                fetch('http://103.174.102.89:3000/purchaseproductData/insertPurchaseproduct', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -281,13 +293,14 @@
               `;
 
                 document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) + entry.price;
+                document.getElementById('total1').value = parseInt(document.getElementById('total1').value || 0) + entry.price;
                 tableBody.appendChild(newRow);
             }
 
             function deleteUser(button, userId, price) {
                 var button = event.target;
                 var row = button.parentNode.parentNode;
-                fetch('http://13.201.94.88/purchaseproductData/deletepurchaseproductId/' + userId, {
+                fetch('http://103.174.102.89:3000/purchaseproductData/deletepurchaseproductId/' + userId, {
                     method: 'DELETE'
                 })
                     .then(response => {

@@ -616,24 +616,24 @@
     var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
         // Check if the user is an admin and show/hide the button accordingly
     if (isAdmin) {
-      fetchAndPopulateDropdown('http://13.201.94.88/mobile', 'number', 'mobile_no');
-      fetchAndPopulateDropdown('http://13.201.94.88/routeData', 'Route', 'route_name');
-      fetchAndPopulateDropdown('http://13.201.94.88/list/Customer', 'grahk', 'name');
+      fetchAndPopulateDropdown('http://103.174.102.89:3000/mobile', 'number', 'mobile_no');
+      fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'Route', 'route_name');
+      fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'grahk', 'name');
     }else{
       var route = sessionData[0].route;
-      fetchAndPopulateDropdown('http://13.201.94.88/fetchData/customerSale/' +route  , 'number','mobile_no',selectedValue = null,readOnly = true);     
+      fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'number','mobile_no',selectedValue = null,readOnly = true);     
       var routeSaleData = localStorage.getItem('routeSaleData');
       var routeSale = JSON.parse(routeSaleData);
       console.log(routeSaleData)
       const cust_name = routeSale.name
       console.log("kfgkdfjk",cust_name)
-      fetchAndPopulateDropdown('http://13.201.94.88/fetchData/customerSale/' +route  , 'grahk','name',selectedValue=cust_name,readOnly = true);
-      fetchAndPopulateDropdown('http://13.201.94.88/routeData', 'Route','route_name',selectedValue=route,readOnly = true);
+      fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'grahk','name',selectedValue=cust_name,readOnly = true);
+      fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'Route','route_name',selectedValue=route,readOnly = true);
     }
     
-    fetchAndPopulateDropdown('http://13.201.94.88/purchaseproductData', 'product', 'product_name');
-    fetchAndPopulateDropdown('http://13.201.94.88/purchaseproductData', 'bta', 'bata');
-    fetchAndPopulateDropdown('http://13.201.94.88/list/Bank Account', 'onlineAcc', 'name');
+    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'product', 'product_name');
+    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'bta', 'bata');
+    fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'onlineAcc', 'name');
   
 
     async function fetchAndPopulateDropdown(apiUrl, dropdownId, field,selectedValue = null, readOnly = false) {
@@ -759,7 +759,7 @@
     var preBalance = parseInt(document.getElementById("previousBalance").value) || 0;
     var total1 = parseInt(document.getElementById("total1").value) || 0;
 
-    fetch('http://13.201.94.88/accountData/' + parseInt(document.getElementById("custid").value))
+    fetch('http://103.174.102.89:3000/accountData/' + parseInt(document.getElementById("custid").value))
       .then(response => {
         if (!response.ok) {
           loader.style.display = 'none';
@@ -786,7 +786,7 @@
   function previousbalance() {
     const name = document.getElementById("grahk").value
 
-    fetch('http://13.201.94.88/fetchName/name/' + name)
+    fetch('http://103.174.102.89:3000/fetchName/name/' + name)
       .then(response => {
         if (!response.ok) {
           loader.style.display = 'none';
@@ -818,7 +818,7 @@
 
 
 
-    fetch('http://13.201.94.88/fetchpv/' + name)
+    fetch('http://103.174.102.89:3000/fetchpv/' + name)
       .then(response => {
         if (!response.ok) {
           loader.style.display = 'none';
@@ -840,7 +840,7 @@
       });
 
 
-    fetch('http://13.201.94.88/carateuserData/' + name)
+    fetch('http://103.174.102.89:3000/carateuserData/' + name)
       .then(response => {
         if (!response.ok) {
           loader.style.display = 'none';
@@ -912,7 +912,7 @@
     console.log("totalbill")
     console.log(document.getElementById("custid").value)
 
-    fetch('http://13.201.94.88/accountData/' + parseInt(document.getElementById("custid").value))
+    fetch('http://103.174.102.89:3000/accountData/' + parseInt(document.getElementById("custid").value))
       .then(response => {
         if (!response.ok) {
           loader.style.display = 'none';
@@ -954,7 +954,7 @@
 
     console.log(formData)
 
-    fetch('http://13.201.94.88/saleproductData/insertsaleproduct', {
+    fetch('http://103.174.102.89:3000/saleproductData/insertsaleproduct', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -1020,7 +1020,7 @@
     totalBalance()
     var button = event.target;
     var row = button.parentNode.parentNode;
-    fetch('http://13.201.94.88/saleproductData/deletesaleproduct/' + userId, {
+    fetch('http://103.174.102.89:3000/saleproductData/deletesaleproduct/' + userId, {
       method: 'DELETE'
     })
       .then(response => {

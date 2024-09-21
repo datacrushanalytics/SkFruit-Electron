@@ -51,20 +51,26 @@ function populateDropdown1(data) {
 document.getElementById('paymentForm').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
 console.log("jahsafhfa")
+var sessionData = JSON.parse(localStorage.getItem('sessionData'));
 // function form2(){
     var formData = {
         date: document.getElementById('date').value,
         from_account: document.getElementById('product').value,
         to_account: document.getElementById('bata').value,
         comment: document.getElementById('comment').value,
+        mobile_no: document.getElementById('number').value,
         prev_balance: parseInt(document.getElementById('previousBalance').value) || 0,
-        amounr: parseInt(document.getElementById('amount').value) || 0        
+        amounr: parseInt(document.getElementById('amount').value) || 0 ,
+        cash: parseInt(document.getElementById('bill_cash').value) || 0 ,
+        online: parseInt(document.getElementById('online').value) || 0 ,
+        discount: parseInt(document.getElementById('discount').value) || 0 ,
+        added_by: sessionData[0].name     
     };
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
 
-    await fetch('http://13.201.94.88/paymentData/insertPayment', {
+    await fetch('http://103.174.102.89:3000/paymentData/insertPayment', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -104,7 +110,7 @@ function openModal(item) {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://13.201.94.88/paymentData/' + String(item))
+    fetch('http://103.174.102.89:3000/paymentData/' + String(item))
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

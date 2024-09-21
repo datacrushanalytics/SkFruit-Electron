@@ -12,7 +12,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     });
     console.log(data);
 
-    fetch('http://13.201.94.88/userData/insertUser', {
+    fetch('http://103.174.102.89:3000/userData/insertUser', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

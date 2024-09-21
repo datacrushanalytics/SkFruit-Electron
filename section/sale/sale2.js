@@ -37,7 +37,7 @@ document.getElementById('login').addEventListener('submit', async function(event
     };
 
     try {
-        const response = await fetch('http://13.201.94.88/saleData/insertsale', {
+        const response = await fetch('http://103.174.102.89:3000/saleData/insertsale', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -67,7 +67,7 @@ function openModal(item) {
     console.log("Opening modal for item:", item.bill_no);
     
 
-    fetch('http://13.201.94.88/bill/' + item.bill_no)
+    fetch('http://103.174.102.89:3000/bill/' + item.bill_no)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -133,31 +133,36 @@ function openModal(item) {
                 (data.results[0].out_carate_250 > 0 ? "250 X " + data.results[0].out_carate_250 + " " : "") +
                 (data.results[0].out_carate_350 > 0 ? "350 X " + data.results[0].out_carate_350 : "");
 
+            var showLabels  = true
+            if (data.results[0].cr_dr_type == 'no') { showLabels = false }
+                
             var footerDetails = [
                 // { label: "गेलेले कॅरेट : 100 X  " + data.results[0].in_carate_100 + "  150 X  " + data.results[0].in_carate_150 + "  250 X  " + data.results[0].in_carate_250 + "  350 X  " +  data.results[0].in_carate_350, value: data.results[0].carate_amount },
-                { label: label1.trim(), value: data.results[0].carate_amount },
-                { label: "चालू कलम रक्कम:", value: data.results[0].amount },
-                { label: "मागील बाकी:", value: data.results[0].pre_balance },
-                { label: "एकूण रक्कम:", value: data.results[0].total_amount },
-                { label: "रोख जमा रक्कम:", value: data.results[0].cash },
-                { label: "ऑनलाईन जमा बँक :", value: data.results[0].online_acc },
-                { label: "ऑनलाईन जमा रक्कम:", value: data.results[0].online_amt },
-                { label: "सूट रक्कम:", value: data.results[0].discount },
+                { label: label1.trim(), value: data.results[0].carate_amount, visible: showLabels },
+                { label: "चालू कलम रक्कम:", value: data.results[0].amount, visible: true },
+                { label: "मागील बाकी:", value: data.results[0].pre_balance, visible: true },
+                { label: "एकूण रक्कम:", value: data.results[0].total_amount, visible: true },
+                { label: "रोख जमा रक्कम:", value: data.results[0].cash, visible: true },
+                { label: "ऑनलाईन जमा बँक :", value: data.results[0].online_acc, visible: true },
+                { label: "ऑनलाईन जमा रक्कम:", value: data.results[0].online_amt, visible: true },
+                { label: "सूट रक्कम:", value: data.results[0].discount, visible: true },
                 // { label: "जमा कॅरेट: 100 X  " + data.results[0].out_carate_100 + "  150 X  " + data.results[0].out_carate_150 + "  250 X  " + data.results[0].out_carate_250 + "  350 X  " +  data.results[0].out_carate_350, value: data.results[0].inCarat },
-                { label: label2.trim(), value: data.results[0].inCarat },
-                { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.results[0].balance },
+                { label: label2.trim(), value: data.results[0].inCarat,visible: showLabels },
+                { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.results[0].balance,visible: true },
                 //{ label: "बाकी कॅरेट : 100 X  " + data.results[0].carate_100 + "  150 X  " + data.results[0].carate_150 + "  250 X  " + data.results[0].carate_250 + "  350 X  " +  data.results[0].carate_350, value: ''} 
-                { label: label.trim(), value: ''} 
+                { label: label.trim(), value: '' , visible: showLabels} 
                 // Add other bill details similarly
             ];
 
             footerDetails.forEach(function (detail) {
+                if (detail.visible) {
                 var row = document.createElement("tr");
                 row.innerHTML = `
                     <td align="right" colspan="6"><font color="black">${detail.label}</font></td>
                     <td align="right" colspan="1"><font color="black">${detail.value}</font></td>
                     `;
                 tablefooter.appendChild(row);
+                }
             });
 
             // document.getElementById('carate1100').textContent = data.results[0].in_carate_100;

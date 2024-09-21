@@ -277,12 +277,12 @@
     var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
         // Check if the user is an admin and show/hide the button accordingly
     if (isAdmin) {
-      fetchAndPopulateDropdown('http://13.201.94.88/routeData', 'route', 'route_name');
-      fetchAndPopulateDropdown('http://13.201.94.88/list/Customer', 'customer', 'name');
+      fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route', 'route_name');
+      fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'customer', 'name');
         }else{
           var route = sessionData[0].route;
-          fetchAndPopulateDropdown('http://13.201.94.88/fetchData/customerSale/' +route  , 'customer','name');
-          fetchAndPopulateDropdown('http://13.201.94.88/routeData', 'route','route_name',selectedValue=route,readOnly = true);
+          fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'customer','name');
+          fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route','route_name',selectedValue=route,readOnly = true);
         }
     });
 
@@ -349,7 +349,7 @@
 
     function setCustomer(){
         var route = document.getElementById('route').value
-        fetchAndPopulateDropdown('http://13.201.94.88/fetchData/customer/' +route  , 'customer','cust_name');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customer/' +route  , 'customer','cust_name');
     }
 
 </script>

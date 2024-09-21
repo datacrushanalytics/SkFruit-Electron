@@ -282,12 +282,12 @@ button[type="submit"]:hover {
     var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
         // Check if the user is an admin and show/hide the button accordingly
     if (isAdmin) {
-        fetchAndPopulateDropdown('http://13.201.94.88/list/Customer', 'customer'); 
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'customer'); 
         }else{
           var route = sessionData[0].route;
-          fetchAndPopulateDropdown('http://13.201.94.88/fetchData/customer/' +route  , 'customer');
+          fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customer/' +route  , 'customer');
           $('#customer').attr('required', 'required');
-        }
+        }cd
         
     });
 

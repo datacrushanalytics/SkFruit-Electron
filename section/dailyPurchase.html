@@ -186,7 +186,9 @@ th {
                     <tr>
                         <th>NO.</th>
                         <th>Product Name</th>
-                        <th>Stock</th>                   
+                        <th>Stock</th>
+                        <th>Rate</th>
+                        <th>Total Amount</th>                   
                     </tr>
                 </thead>
                 <tbody id="tableBody">
@@ -229,7 +231,7 @@ th {
             var tbody = document.getElementById('tableBody');
             tbody.innerHTML = ''; // Clear existing rows
 
-            fetch("http://13.201.94.88/fetchData/purchase", {
+            fetch("http://103.174.102.89:3000/fetchData/purchase", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -271,7 +273,7 @@ th {
           function populateTable(data) {
             var tbody = document.getElementById('tableBody');
             tbody.innerHTML = ''; // Clear existing rows
-            var columnsToDisplay = ['product_name', 'quantity'];
+            var columnsToDisplay = ['product_name', 'quantity','purchase_price','amount'];
             var counter = 1;
             data.forEach(function(item) {
                 var row = tbody.insertRow();

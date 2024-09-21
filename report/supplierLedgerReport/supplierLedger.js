@@ -26,7 +26,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    return fetch('http://13.201.94.88/supplierLedger', {
+    return fetch('http://103.174.102.89:3000/supplierLedger', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -52,7 +52,7 @@ function fetchDataAndProcess() {
     .then(result => {
         console.log(result);
         populateTable4(result);
-        populateTable5(result);
+        // populateTable5(result);
         return result;
     })
     .catch(error => {
@@ -63,7 +63,8 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['id', 'date', 'supplier_name', 'gadi_number', 'total_quantity'];
+
+    var columnsToDisplay = ['record_id','type','date', 'account_name', 'mobile_no','reference','cash','from_account', 'online','expenses','prev_balance','discount','amount','comment'];
     var counter = 1;
     console.log(data.reports);
     if (data.reports.length === 0) {
@@ -233,7 +234,7 @@ async function exportToExcel() {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        return fetch('http://13.201.94.88/supplierLedger/generate-pdf', {
+        return fetch('http://103.174.102.89:3000/supplierLedger/generate-pdf', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

@@ -11,7 +11,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://13.201.94.88/routeData/insertroute', {
+    fetch('http://103.174.102.89:3000/routeData/insertroute', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
