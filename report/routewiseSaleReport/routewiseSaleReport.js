@@ -45,13 +45,23 @@ function fetchDataAndProcess() {
         if (response.status === 404) {
         loader.style.display = 'none';
            
-Swal.fire({
-    icon: 'error',
-    title: 'Oops...',
-    text: 'No data found.',
-  });
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No data found.',
+            });
             throw new Error('Data not found');
         }
+        if (response.status === 500) {
+            loader.style.display = 'none';
+               
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No data found.',
+                });
+                throw new Error('Data not found');
+            }
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -80,11 +90,11 @@ function populateTable4(data) {
     console.log(data.reports)
     if (data.reports.length === 0) {
        
-Swal.fire({
-    icon: 'error',
-    title: 'Oops...',
-    text: 'No data found.',
-  });
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No data found.',
+    });
     }
     data.reports.forEach(function (item) {
         var row = tbody.insertRow();

@@ -215,7 +215,7 @@
     
                     <div class="input-row">
                         <label for="grahk">Product:  </label>
-                        <select class="drop" id="grahk" name="account_group"></select>
+                        <select class="drop" id="grahk" name="account_group" onchange="selectProduct()"></select>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <label for="Route">Bata:   </label>
                         <select class="drop" id="Route" name="route_detail"></select>
@@ -273,8 +273,8 @@
 <script>
 
     document.addEventListener('DOMContentLoaded', function () {
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'grahk','product_name');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'Route','bata');
+        fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData/product', 'grahk','product_name');
+        fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData/bata', 'Route','bata');
         fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle','vehicle_no');
         
         var loader = document.getElementById('loader');
@@ -309,8 +309,10 @@
 
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
+        console.log("Hello Deva",apiUrl)
         fetch(apiUrl)
             .then(response => {
+                loader.style.display = 'none';
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -434,6 +436,15 @@
             infoCell.appendChild(infoButton);
 
         });
+    }
+
+
+    function selectProduct(){
+        var bataId = document.getElementById('grahk').value;
+        console.log(bataId)
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
+        fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData/bata/' + bataId, 'Route','bata');
     }
 
     

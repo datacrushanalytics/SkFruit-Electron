@@ -248,7 +248,7 @@
 
                 console.log(formData)
 
-                fetch('http://103.174.102.89:3000/purchaseproductData/insertPurchaseproduct', {
+                fetch('http://localhost:3000/purchaseproductData/insertPurchaseproduct', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -257,7 +257,9 @@
                 })
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error('Network response was not ok');
+                            return response.json().then(err => {
+                                throw new Error(err.message || 'Network response was not ok');
+                            });
                         }
                         return response.json();
                     })
@@ -271,9 +273,21 @@
                         document.getElementById('quantity').value = '';
                         document.getElementById('unit').value = '';
                         $('#product').val('').trigger('change');
+
+                        // Show success message using SweetAlert2
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Entry added successfully!'
+                        });
                     })
                     .catch(error => {
                         console.error('Error:', error);
+                            Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: error.message
+                        });
                     });
             }
 

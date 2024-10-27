@@ -10,28 +10,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>User Form in Electron</title>
-    <!-- <link rel="stylesheet" href="../../assets/css/ledger.css"> -->
     <style>
-        /* Add border to the second form */
-        .form1 {
-            border: 1px solid black;
-            padding: 10px;
-            margin-top: 20px;
-        }
+       
 
-        #route {
-            border-radius: 8px;
-            height: 25%;
-            width: 150px;
-            border: 1px solid transparent;
-            padding: 10px;
-            /* box-shadow: 5px 5px 5px grey; */
-            margin: 20px;
-        }
-
-        body {
+       body {
             font-family: Arial, sans-serif;
             background-color: #fef7f7;
             /* Transparent background */
@@ -46,99 +30,44 @@
             margin-bottom: 20px;
         }
 
-        .first-row {
-            display: flex;
-            justify-content: center;
+        .container h1{
+         margin-top: 1%;
+      }
+
+      
+      #customer{
+       border-radius: 8px;
+       height: 35px;
+       width:580px;
+       margin-left: 1%;
+      }
+
+
+      .button-container {
             margin-bottom: 20px;
         }
-        
-        .first-row label {
-            margin-right: 10px;
-            margin-top: 9px;
-        }
-        
-        .first-row input,
-        .first-row select {
-            margin-right: 10px;
-        }
 
-        #todate {
-            /* border-radius: 8px; */
-            height: 30px;
-            width: 200px;
-            /* box-shadow: 5px 10px 8px grey;
-            border-color: rgb(24, 24, 24); */
-            text-indent: 10%;
-            margin-left: 3px;
-        }
-
-        #fromdate {
-            /* border-radius: 8px; */
-            height: 30px;
-            width: 200px;
-            /* box-shadow: 5px 10px 8px grey;
-            border-color: rgb(24, 24, 24); */
-            text-indent: 10%;
-            margin-right: 8%;
-            margin-left: 10px;
-        }
-
-        .drop {
-            border-radius: 8px;
-            height: 35px;
-            width: 450px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #fff;
-            color: #333;
-            margin-right: 55px;
-        }
-
-        #route {
-            width: 550px;
-        }
-
-        .border-hover {
+        .button {
             padding: 12px 24px;
-            font-size: 16px;
-            /* width: 200px; */
+            text-decoration: none;
+            color: white;
+            background-color: grey;
+            /* Grey color */
             border: none;
-            cursor: pointer;
-            margin: 10px;
             border-radius: 5px;
-            outline: none;
-            background-color:grey; /* Grey background color */
-            color: #fff; /* White text color */
-            box-shadow: none; /* Remove box shadow */
-        }
-        
-
-        .border-hover:hover {
-            background-color: #555;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 0 10px;
         }
 
-  button[type="submit"] {
-     padding: 12px 24px;
-     font-size: 16px;
-     /* width: 200px; */
-     border: none;
-     cursor: pointer;
-     margin: 10px;
-     border-radius: 5px;
-     outline: none;
-     background-color:darkgrey; /* Grey background color */
-     color: #fff; /* White text color */
-     box-shadow: none; /* Remove box shadow */
-}
+        .button:hover {
+            background-color: darkgrey;
+            /* Darker grey on hover */
+        }
 
-   button[type="submit"]:hover {
-      background-color:darkdarkgrey; /* Dark grey background color on hover */
-}
-
-
-        #container1 {
-            display: flex;
+        .button a {
+            color: white;
+            text-decoration: none;
         }
 
         .table-container {
@@ -168,6 +97,7 @@
         th {
             background-color: #c7d5d3;
         }
+
 /* Style the loader container */
 #loader {
     border: 4px solid #f3f3f3; /* Light grey */
@@ -190,7 +120,7 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
-  
+
 
     </style>
 </head>
@@ -198,105 +128,94 @@
 <body>
     <div id="loader"></div>
     <div class="container">
-        <h1 align="center">Supplier Ledger Report</h1>
-        <hr>
-        <br>
+        <h1 align="center">Supplier Outstanding</h1><br>
+        <hr style="position: relative; top: -25px;">
+
+        <div class="datetime" id="datetime">
+            <!-- <p id="currentDate"></p> -->
+            <p>
+                <label for="currentDate">Date:</label>
+                <input type="date" id="currentDate" onchange="fetchTiles()">
+            </p>
+            <p id="currentTime"></p>
+        </div>
+
         <div class="container1">
             <form id="loginForm1">
-                <div class="first-row">
-                    <label for="userType">From Date : </label>
-                    <input type="date" id="fromdate" name="date" placeholder="From Date" required>
-                    <br>
-                    <label for="userType">To Date : </label>
-                    <input type="date" id="todate" name="date" placeholder="To Date" required>
-                </div> <br>
-                <br><br>
+
+                <br>
+
                 <label for="userType">Supplier Name :</label>
-                <select class="drop" id="supplier" id="name" name="name">
+                <select class="drop" id="customer"  name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select>
-                <br><br>
-                <!-- <option value="User" disabled selected>Select Account</option> -->
-                <br><br>
-                <div class="third-row">
+                </select><br>
+
+                <br>
+
+
+                <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" class="border-hover">Submit</button>
-                    <button type='button' style="background-color: darkgrey;" class="border-hover" onclick="exportToExcel()" id="button2">Export</button>
-                </div>
-            </form><br>
+                    <button type="submit" style="background-color: darkgrey;" class="button">Submit</button>
+                    <button type='button' style="background-color: darkgrey;" class="button" onclick="exportToExcel()" id="button2">Export</button>
+                <!-- </div> -->
+            </form>
+            <br>
+
             <div class="table-container">
-                <table>
-                    <tr>
-                        <th>Sr. No</th>
-                        <th>Record NO</th>
-                        <th>Type</th>
-                        <th>DATE</th>
-                        <th>Supplier Name</th>
-                        <th>Mobile Number</th>
-                        <th>Vehicle</th>
-                        <th>Cash</th>
-                        <th>Bank Account</th>
-                        <th>Online</th>
-                        <th>Expenses</th>
-                        <th>Previous Balance</th>
-                        <th>Discount</th>
-                        <th>Amount</th>
-                        <th>Comment</th>
-                    </tr>
-                    <!-- Add more rows as needed -->
-                    <tbody id="tableBody">
-                        <!-- Data will be inserted here -->
-                    </tbody>
-                </table>
-    
-                <br>
-                <br>
-                <br>
-    
-                <!-- <table>
-                    <tr>
-                        <th>Sr. No</th>
-                        <th>Payment ID</th>
-                        <th>DATE</th>
-                        <th>From Account</th>
-                        <th>To Account</th>
-                        <th>Comment</th>
-                        <th>Previous Balance</th>
-                        <th>Amount</th>
-                    </tr>
-                     -->
-    
-                    <!-- Add more rows as needed -->
-                    <!-- <tbody id="tableBody1"> -->
-                        <!-- Data will be inserted here -->
-                    <!-- </tbody>
-                </table> -->
-             </div>
+            <table>
+                <tr>
+                    <th>Sr. No</th>             
+                    <th>Supplier Name</th>
+                    <th>Address</th>                  
+                    <th>Mobile Number</th>
+                    <th>Amount</th>
+                </tr>
+                
+                <!-- Add more rows as needed -->
+                <tbody id="tableBody">
+                    <!-- Data will be inserted here -->
+                </tbody>
+            </table>
+    </div>
         </div>
     </div>
+
+
+
+
 </body>
-<script src="./supplierLedger.js"></script>
+<script src="./supplierOutstanding.js"></script>
 
 <script>
         
+        var currentTimeElement = document.getElementById('currentTime');
+
+function updateTime() {
+var now = new Date();
+var hours = now.getHours();
+var minutes = now.getMinutes();
+var seconds = now.getSeconds();
+var ampm = hours >= 12 ? 'PM' : 'AM';
+hours = hours % 12;
+hours = hours ? hours : 12; // the hour '0' should be '12'
+minutes = minutes < 10 ? '0' + minutes : minutes;
+seconds = seconds < 10 ? '0' + seconds : seconds;
+var currentTime = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+currentTimeElement.textContent = "Time: " + currentTime;
+}
+
+// Set the current date
+var currentDate = new Date();
+document.getElementById('currentDate').value = currentDate.getFullYear() + '-' + (String(currentDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(currentDate.getDate()).padStart(2, '0'));
+
+
     document.addEventListener('DOMContentLoaded', function () {
-        const now = new Date();
-
-    // Adjust to IST (UTC+5:30)
-    const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
-    const istTime = new Date(now.getTime() + istOffset);
-
-    // Format the date to YYYY-MM-DD
-    const todayIST = istTime.toISOString().split('T')[0];
-
-    // Set the value of the date inputs to today's date in IST
-    document.getElementById('fromdate').value = todayIST;
-    document.getElementById('todate').value = todayIST;
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Supplier', 'supplier','name');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Supplier', 'customer');
+        fetchDataAndProcess();
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
+    function fetchAndPopulateDropdown(apiUrl, dropdownId) {
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -306,14 +225,14 @@
             })
             .then(data => {
                 // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId, field);
+                populateDropdownWithSelect2(data, dropdownId);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     }
 
-    function populateDropdownWithSelect2(data, dropdownId,field) {
+    function populateDropdownWithSelect2(data, dropdownId) {
         var dropdown = $('#' + dropdownId);
         // Clear existing options
         dropdown.empty();
@@ -323,12 +242,12 @@
 
         // Populate dropdown with API data
         data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
+            dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
         });
 
         // Initialize Select2
         dropdown.select2({
-            placeholder: "Select " + dropdownId + " type",
+            placeholder: "Select Supplier type",
             allowClear: true
         });
     }
@@ -338,7 +257,6 @@
             document.querySelector('input.select2-search__field').focus();
         }, 0);
     });
-
 
 </script>
 

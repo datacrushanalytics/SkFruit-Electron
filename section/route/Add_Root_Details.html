@@ -109,7 +109,7 @@
         <div class="container1">
             <form id="loginForm" method="POST">
                 <label for="routeId">ID :</label>
-                <input type="text" id="routeId" name="routeId" placeholder="ID" > <br>
+                <input type="text" id="routeId" name="routeId" placeholder="ID" readonly> <br>
 
                 <label for="route_name">Route Name :</label>
                 <input type="text" id="route_name" name="route_name" placeholder="Route Name" required> <br>
@@ -127,6 +127,38 @@
         </div>
     </div>
     <script src="./addRoute.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    
+
+    fetch('http://localhost:3000/fetchRouteid')
+    .then(response => {
+        if (response.status === 404) {
+            loader.style.display = 'none';
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No data found.',
+              });
+            throw new Error('Data not found');
+        }
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+        .then(data => {
+            // Populate dropdown with API data
+            document.getElementById('routeId').value = parseInt(data[0]['num']) + 1 || 1;
+
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+});
+    </script>
 </body>
+
 
 </html>

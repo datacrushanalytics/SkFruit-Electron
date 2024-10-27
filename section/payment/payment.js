@@ -136,8 +136,11 @@ function openModal(item) {
             var billDetails = [
                 { label: "Payment Id", value:  data[0].p_id},
                 { label: "तारीख:", value: utcDate.toLocaleString('en-IN', options) },
-                { label: "from Account:", value: data[0].from_account },
-                { label: "to_account:", value: data[0].to_account },
+                { label: "Bank Account:", value: data[0].from_account },
+                { label: "Supplier:", value: data[0].to_account },
+                { label: "Cash", value: data[0].cash },
+                { label: "Online", value: data[0].online },
+                { label: "Discount", value: data[0].discount },
                 { label: "comment", value: data[0].comment },
                 { label: "prev_balance", value: data[0].prev_balance },
                 { label: "amount", value: data[0].amounr }

@@ -369,7 +369,7 @@ function openModal(item) {
             tableBody.innerHTML = ""; // Clear existing rows
 
             var billDetails = [
-                { label: "बिल क्र.:", value: item.bill_no },
+                { label: "बिल क्र.:", value: item },
                 { label: "तारीख:", value: utcDate.toLocaleString('en-IN', options) },
                 { label: "ग्राहकाचे नाव:", value: data.results[0].cust_name },
                 { label: "संपर्क क्र.:", value: data.results[0].mobile_no },
