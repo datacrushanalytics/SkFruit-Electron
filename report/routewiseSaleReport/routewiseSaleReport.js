@@ -112,7 +112,7 @@ Swal.fire({
          var buttonCell = row.insertCell();
          var openPopupButton = document.createElement('button');
          openPopupButton.className = 'button';
-         openPopupButton.style.backgroundColor = 'darkgrey';
+         openPopupButton.style.backgroundColor = 'green';
          openPopupButton.textContent = 'Products';
          openPopupButton.addEventListener('click', function () {
             openPopup(item); // Pass the data item to the openPopup function
@@ -136,6 +136,7 @@ Swal.fire({
             var deleteCell = row.insertCell();
             var deleteButton = document.createElement('button');
             deleteButton.className = 'button';
+            deleteButton.style.backgroundColor = 'red';
             deleteButton.textContent = 'Delete';
             deleteButton.addEventListener('click', function () {
                 if (confirm('Are you sure you want to delete this record?')) {

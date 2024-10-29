@@ -131,6 +131,15 @@
         <h1 align="center">Supplier Outstanding</h1><br>
         <hr style="position: relative; top: -25px;">
 
+        <div class="datetime" id="datetime">
+            <!-- <p id="currentDate"></p> -->
+            <p>
+                <label for="currentDate">Date:</label>
+                <input type="date" id="currentDate" onchange="fetchTiles()">
+            </p>
+            <p id="currentTime"></p>
+        </div>
+
         <div class="container1">
             <form id="loginForm1">
 
@@ -146,7 +155,7 @@
 
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" style="background-color: darkgrey;" class="button">Submit</button>
+                    <button type="submit" style="background-color: green;" class="button">Submit</button>
                     <button type='button' style="background-color: darkgrey;" class="button" onclick="exportToExcel()" id="button2">Export</button>
                 <!-- </div> -->
             </form>
@@ -179,6 +188,27 @@
 
 <script>
         
+        var currentTimeElement = document.getElementById('currentTime');
+
+function updateTime() {
+var now = new Date();
+var hours = now.getHours();
+var minutes = now.getMinutes();
+var seconds = now.getSeconds();
+var ampm = hours >= 12 ? 'PM' : 'AM';
+hours = hours % 12;
+hours = hours ? hours : 12; // the hour '0' should be '12'
+minutes = minutes < 10 ? '0' + minutes : minutes;
+seconds = seconds < 10 ? '0' + seconds : seconds;
+var currentTime = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+currentTimeElement.textContent = "Time: " + currentTime;
+}
+
+// Set the current date
+var currentDate = new Date();
+document.getElementById('currentDate').value = currentDate.getFullYear() + '-' + (String(currentDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(currentDate.getDate()).padStart(2, '0'));
+
+
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
         fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Supplier', 'customer');
