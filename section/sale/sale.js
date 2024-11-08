@@ -80,6 +80,7 @@ function populateDropdown3(data) {
         var deleteCell = row.insertCell();
         var deleteButton = document.createElement('button');
         deleteButton.className = 'button delete-button';
+        deleteButton.style.backgroundColor = 'red';
         deleteButton.textContent = 'Delete';
         deleteButton.addEventListener('click', function () {
             deleteUser(item.id); // Pass the user id to the delete function
