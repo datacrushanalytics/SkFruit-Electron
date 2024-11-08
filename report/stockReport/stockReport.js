@@ -77,7 +77,7 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['purchase_id','gadi_number','supplier_name','product_name','bata','purchase','sale','closing' ];
+    var columnsToDisplay = ['purchase_id','supplier_name','gadi_number','opening','product_name','bata','sale','closing' ];
     var counter = 1;
     console.log(data.reports)
     if (data.reports.length === 0) {

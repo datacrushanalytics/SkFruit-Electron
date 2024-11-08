@@ -67,14 +67,14 @@ function fetchDataAndProcess(data = null) {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['bill_no', 'date', 'cust_name', 'route', 'balance','amount', 'cash', 'online_amt', 'discount', 'inCarat', 'carate_amount','added_by','validate'];
+    var columnsToDisplay = ['added_by','bill_no', 'date', 'cust_name', 'route','amount', 'cash', 'online_amt', 'discount', 'inCarat', 'carate_amount','balance','validate'];
     var counter = 1;
     if (data.reports.length === 0) {
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
             text: 'No data found.',
-          });
+          });       
     }
     var grandTotals = {
         amount: 0,
@@ -351,7 +351,7 @@ function populateTable4(data) {
 function populateTable5(data) {
     var tbody = document.getElementById('tableBody1');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'previous_balance','cash', 'online', 'discount', 'inCarat', 'Amt','added_by','validate'];
+    var columnsToDisplay = ['receipt_id', 'date', 'Customer', 'mobile_no','cash', 'online', 'discount', 'inCarat', 'Amt','added_by','note','previous_balance','validate'];
     var counter = 1;
     if (data.Receipt.length === 0) {
         Swal.fire({

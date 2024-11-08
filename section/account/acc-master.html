@@ -134,6 +134,9 @@
         <hr>
         <div class="container1">
             <form id="loginForm" method="POST">
+                <label for="name">ID :</label>
+                <input type="text" id="id" name="id" required readonly><br>
+                
                 <label for="account_group">Account Group</label>
                 <select class="drop" id="account_group" name="account_group" required>
                     <!-- Options will be dynamically populated -->
@@ -214,6 +217,30 @@
         fetchAndPopulateDropdown('http://103.174.102.89:3000/accountgroupData', 'account_group','name');
         fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route_detail','route_name');
 
+        fetch('http://103.174.102.89:3000/fetchAccountid')
+    .then(response => {
+        if (response.status === 404) {
+            loader.style.display = 'none';
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No data found.',
+              });
+            throw new Error('Data not found');
+        }
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+        .then(data => {
+            // Populate dropdown with API data
+            document.getElementById('id').value = parseInt(data[0]['num']) + 1 || 1;
+
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 
     });
 

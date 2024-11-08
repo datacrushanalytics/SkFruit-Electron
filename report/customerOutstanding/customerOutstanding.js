@@ -105,6 +105,154 @@ function populateTable4(data) {
                 cell.textContent = item[key];
             }
         });
+
+        function convertUTCToISTDate(dateString) {
+            // Parse the date string
+            const date = new Date(dateString);
+          
+            // Calculate the IST time offset (UTC+5:30)
+            const offset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
+          
+            // Adjust for IST
+            const istDate = new Date(date.getTime() + offset);
+          
+            // Extract the date part (year, month, day)
+            const year = istDate.getUTCFullYear();
+            const month = ('0' + (istDate.getUTCMonth() + 1)).slice(-2); // Months are zero-based
+            const day = ('0' + istDate.getUTCDate()).slice(-2);
+          
+            // Return date in YYYY-MM-DD format
+            return `${year}-${month}-${day}`;
+          }
+          
+
+        var buttonCell = row.insertCell();
+
+        // Container for the buttons
+        var buttonContainer = document.createElement('div');
+        buttonContainer.className = 'button-container';
+
+        var openPopupButton = document.createElement('button');
+        openPopupButton.className = 'button';
+        var billIcon = document.createElement('i');
+        billIcon.className = 'fa-sharp fa-regular fa-envelope'; 
+        openPopupButton.style.backgroundColor = '#C48B58';  
+        openPopupButton.appendChild(billIcon);
+        //openPopupButton.textContent = 'Bill';
+        openPopupButton.addEventListener('click', async function () {
+            
+            var loader = document.getElementById('loader');
+            loader.style.display = 'block';
+            await fetch('http://103.174.102.89:3000/sms/remainderMessage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                        "mobile_no" : item.mobile_no,
+                        "name": item.name,
+                        "date": convertUTCToISTDate(item.last_update),
+                        "remaining": item.current_balance
+                })
+            })
+                .then(response => {
+                    console.log("DTAASS")
+                    if (!response.ok) {
+                        loader.style.display = 'none';
+    
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'SMS is failed with some error',
+                          });
+                        throw new Error('Network response was not ok');
+                        
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    loader.style.display = 'none';
+                    console.log('Entry added successfully:', result);
+            
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'SMS Sent Successfully',
+                        })
+                    //window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+        });
+        buttonContainer.appendChild(openPopupButton);
+        
+        // Second button
+        var secondButton = document.createElement('button');
+        secondButton.className = 'button';
+        secondButton.style.backgroundColor = 'darkgrey'; 
+        var secondIcon = document.createElement('i');
+        secondIcon.className = 'fa-brands fa-whatsapp';
+        secondButton.appendChild(secondIcon);
+        //secondButton.textContent = 'Second Button'; // Change the text as needed
+        secondButton.addEventListener('click', async function () {
+
+            var loader = document.getElementById('loader');
+            loader.style.display = 'block';
+            await fetch('http://103.174.102.89:3000/whatsapp/remainderMessage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "campaignName" : "SK_fruits_remainder",
+                    "mobile_no" : item.mobile_no,
+                    "userName" : item.name,
+                    "remainderDate" : convertUTCToISTDate(item.last_update),
+                    "remaining" : item.current_balance
+                })
+            })
+                .then(response => {
+                    console.log("DTAASS")
+                    if (!response.ok) {
+                        loader.style.display = 'none';
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Whatsapp message is failed with some error',
+                          });
+             
+                        throw new Error('Network response was not ok');
+                        
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    loader.style.display = 'none';
+                    console.log('Entry added successfully:', result);
+                 
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Whatsapp message Sent Successfully',
+                        })
+                    //window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+
+        });
+        buttonContainer.appendChild(secondButton);
+
+        // Append the button container to the cell
+        buttonCell.appendChild(buttonContainer);
+
+
+
+
     });
 
     // Add row for grand total

@@ -189,7 +189,7 @@ function populateTable4(data) {
     columnsToDisplay.forEach(function (key, index) {
         if (index >= 4) { // Start populating totals after the first four columns
             var cell = totalRow.insertCell();
-            if (['sold_quantity', 'purchase_price', "selling_price", 'Amount', 'profit_loss'].includes(key)) {
+            if (['sold_quantity', 'purchase_price', "selling_price", 'Amount'].includes(key)) {
                 if (key === 'profit_loss') {
                     cell.style.color = grandTotals[key] < 0 ? 'red' : 'green';
                 }
