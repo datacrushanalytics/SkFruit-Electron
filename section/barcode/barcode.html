@@ -273,8 +273,8 @@
 <script>
 
     document.addEventListener('DOMContentLoaded', function () {
-        fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData/product', 'grahk','product_name');
-        fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData/bata', 'Route','bata');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'grahk','product_name');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'Route','bata');
         fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle','vehicle_no');
         
         var loader = document.getElementById('loader');
@@ -444,7 +444,7 @@
         console.log(bataId)
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
-        fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData/bata/' + bataId, 'Route','bata');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata/' + bataId, 'Route','bata');
     }
 
     

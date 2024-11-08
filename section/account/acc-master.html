@@ -217,7 +217,7 @@
         fetchAndPopulateDropdown('http://103.174.102.89:3000/accountgroupData', 'account_group','name');
         fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route_detail','route_name');
 
-        fetch('http://localhost:3000/fetchAccountid')
+        fetch('http://103.174.102.89:3000/fetchAccountid')
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';

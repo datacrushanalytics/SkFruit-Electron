@@ -1194,7 +1194,7 @@ function toggleReadonly(){
 
     console.log(formData)
 
-    fetch('http://localhost:3000/saleproductData/insertsaleproduct', {
+    fetch('http://103.174.102.89:3000/saleproductData/insertsaleproduct', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -1213,7 +1213,7 @@ function toggleReadonly(){
         // document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + parseInt(document.getElementById('total').value);
         // totalBalance()
         // updateTable(formData, result.insertId);
-        fetch('http://localhost:3000/saleproductData/' + (formData.bill_id))
+        fetch('http://103.174.102.89:3000/saleproductData/' + (formData.bill_id))
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
