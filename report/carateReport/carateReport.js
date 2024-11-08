@@ -28,7 +28,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    return fetch('http://52.66.126.53/carateReport', {
+    return fetch('http://103.174.102.89:3000/carateReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -133,8 +133,7 @@ Swal.fire({
     });
 
     if (document.getElementById('customer').value !== '') {
-        console.log("Customer not selected ");
-        fetch('http://52.66.126.53/carateuserData/' + document.getElementById('customer').value)
+        fetch('http://103.174.102.89:3000/carateuserData/' + document.getElementById('customer').value)
             .then(response => {
                 if (!response.ok) {
                     loader.style.display = 'none';
@@ -156,74 +155,30 @@ Swal.fire({
                     '350 => ' + data1[0]['carate_350'];
             });
     } else {
-        var lastCell = totalRow.insertCell();
-        lastCell.colSpan = columnsToDisplay.length - totalRow.cells.length + 1;
-        lastCell.textContent = '';
+        fetch('http://103.174.102.89:3000/carateuserData')
+            .then(response => {
+                if (!response.ok) {
+                    loader.style.display = 'none';
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data1 => {
+                // Populate dropdown with API data
+                console.log(data1);
+
+                // Add remaining carate data in the last cell
+                var lastCell = totalRow.insertCell();
+                lastCell.colSpan = columnsToDisplay.length - totalRow.cells.length + 1;
+                lastCell.innerHTML = 'Remaining Carate of Customer:<br>' +
+                    '100 => ' + data1[0]['carate_100'] + '<br>' +
+                    '150 => ' + data1[0]['carate_150'] + '<br>' +
+                    '250 => ' + data1[0]['carate_250'] + '<br>' +
+                    '350 => ' + data1[0]['carate_350'];
+            });
     }
 }
 
-
-// async function exportToExcel() {
-//     try {
-//         const data = await fetchDataAndProcess();
-
-//         // Ensure jsPDF and autoTable are correctly imported
-//         const { jsPDF } = window.jspdf;
-//         const doc = new jsPDF();
-
-
-//         // Adding header details
-//         doc.setFontSize(10);
-//         doc.text('Mobile:- 9960607512', 10, 10);
-//         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
-//         doc.setFontSize(16);
-//         doc.text('Savata Fruits Suppliers', 50, 20);
-//         doc.setFontSize(12);
-//         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
-//         doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
-
-//         let startY = 50;
-
-
-//         // Define custom headers
-//         const customHeaders = ['Date', 'Customer Name', 'Summary', 'Out Carate', 'Out Carate Total', 'In Carate', 'In Carate Total'];
-
-//         // Map data for autoTable
-//         const reportData = data.reports.map(report => [
-//             report.carate_date,
-//             report.customer_name,
-//             report.summary,
-//             report.OutCarate,
-//             report.out_carate_total,
-//             report.inCarate,
-//             report.in_carate_total
-//         ]);
-
-//         // Add grand totals as the last row in reportData
-//         const grandTotalRow = [
-//             'Grand Total', '', '', '', 
-//             data.Grand['Grand out_carate_total'], 
-//             '', 
-//             data.Grand['Grand in_carate_total']
-//         ];
-
-//         reportData.push(grandTotalRow);
-
-//         // Add report data and grand total to PDF
-//         doc.autoTable({
-//             head: [customHeaders],
-//             body: reportData,
-//             startY: 50,
-//             theme: 'grid',
-//         });
-
-//         // Save the PDF
-//         doc.save('Carate_Report.pdf');
-
-//     } catch (error) {
-//         console.error('Error exporting data:', error);
-//     }
-// }
 
 async function exportToExcel() {
     try {
@@ -232,7 +187,7 @@ async function exportToExcel() {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        return fetch('http://52.66.126.53/carateReport/generate-pdf', {
+        return fetch('http://103.174.102.89:3000/carateReport/generate-pdf', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

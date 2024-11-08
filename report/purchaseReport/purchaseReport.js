@@ -30,7 +30,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    return fetch('http://52.66.126.53/purchaseReport', {
+    return fetch('http://103.174.102.89:3000/purchaseReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -201,7 +201,7 @@ function editAccount(user) {
 
 function deleteaccount(userId) {
     // Perform delete operation based on userId
-    fetch('http://52.66.126.53/purchaseReport/deletePurchaseReport/' + userId, {
+    fetch('http://103.174.102.89:3000/purchaseReport/deletePurchaseReport/' + userId, {
         method: 'DELETE'
     })
         .then(response => {
@@ -243,7 +243,7 @@ function deleteaccount(userId) {
 //         doc.text('Savata Fruits Suppliers', 50, 20);
 //         doc.setFontSize(12);
 //         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
-//         doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
+//         doc.text('Mobile NO:- 9860601102  / 9922676380 / 9156409970', 50, 40);
         
 //         let startY = 50;
         
@@ -288,7 +288,7 @@ async function exportToExcel() {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        return fetch('http://52.66.126.53/purchaseReport/generate-pdf', {
+        return fetch('http://103.174.102.89:3000/purchaseReport/generate-pdf', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -356,7 +356,7 @@ function openModal(item) {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://52.66.126.53/purchaseReport/' + item.id)
+    fetch('http://103.174.102.89:3000/purchaseReport/' + item.id)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -382,7 +382,7 @@ function openModal(item) {
             var billDetails = [
                 { label: "बिल क्र.:", value: data.reports[0].id  },
                 { label: "तारीख:", value: utcDate.toLocaleString('en-IN', options) },
-                { label: "ग्राहकाचे नाव:", value: data.reports[0].supplier_name },
+                { label: "सप्लायर नाव:", value: data.reports[0].supplier_name },
                 { label: "गाडी नाव:", value: data.reports[0].gadi_number },
                 { label: "संपर्क क्र.:", value: data.reports[0].mobile_no },
                 { label: "पत्ता:", value: data.reports[0].address },
@@ -553,7 +553,7 @@ function openModal(item) {
         <div >
             <h1>सावता फ्रुट सप्लायर्स</h1>
             <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
-            <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
+            <p>मोबाईल नं:- 9860601102  / 9922676380 / 9156409970</p>
         </div>
     </div>
     <div class="container2">

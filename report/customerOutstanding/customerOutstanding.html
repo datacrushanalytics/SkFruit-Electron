@@ -11,6 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>User Form in Electron</title>
     <style>
         body {
@@ -193,6 +194,7 @@
                     <th>Route</th>                   
                     <th>Mobile Number</th>
                     <th>Current Balance</th>
+                    <th>Communication</th>
                 </tr>
                 </thead>
                 
@@ -217,7 +219,7 @@
     // Set current date to the date input field
     document.getElementById('date').valueAsDate = new Date();
         
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded',async function () {
         // Fetch data from API and populate Select2 dropdowns
 
         var sessionData = JSON.parse(localStorage.getItem('sessionData'));
@@ -225,54 +227,52 @@
     var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
         // Check if the user is an admin and show/hide the button accordingly
     if (isAdmin) {
-      fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route', 'route_name');
-      fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer', 'name');
+      await fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route');
+      await fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'customer');
+      await fetchDataAndProcess();
         }else{
           var route = sessionData[0].route;
-          fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customerSale/' +route  , 'customer','name');
-          fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name',selectedValue=route,readOnly = true);
+          await fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'customer');
+          await fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route',selectedValue=route,readOnly = true);
+          // fetchDataAndProcess();
         }
 
-
-
-
-
-
-
-        fetchDataAndProcess();
+        
     });
 
-    async function fetchAndPopulateDropdown(apiUrl, dropdownId, field,selectedValue = null, readOnly = false) {
-        try {
-            const response = await fetch(apiUrl);
-            
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            
-            const data = await response.json();
-            populateDropdownWithSelect2(data, dropdownId, field,selectedValue, readOnly);
-            
-        } catch (error) {
-            console.error('Error:', error);
-        }
+    async function fetchAndPopulateDropdown(apiUrl, dropdownId,selectedValue = null, readOnly = false) {
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Populate Select2 dropdown with API data
+                populateDropdownWithSelect2(data, dropdownId, selectedValue, readOnly);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 
-  function populateDropdownWithSelect2(data, dropdownId, field,selectedValue = null, readOnly = false) {
-    var dropdown = $('#' + dropdownId);
-    // Clear existing options
-    dropdown.empty();
+    function populateDropdownWithSelect2(data, dropdownId, selectedValue = null, readOnly = false) {
+        var dropdown = $('#' + dropdownId);
+        // Clear existing options
+        dropdown.empty();
 
-    // Add placeholder option
-    dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+        // Add placeholder option
+        if (dropdownId== 'customer'){
+            dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+        }
+        // Populate dropdown with API data
+        data.forEach(function (item) {
+            dropdown.append($('<option></option>').attr('value', item.name || item.route_name || item.cust_name || item.added_by).text(item.name || item.route_name || item.cust_name || item.added_by));
+        });
 
-    // Populate dropdown with API data
-    data.forEach(function (item) {
-      dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
-    });
-
-       // Initialize Select2
-       dropdown.select2({
+        // Initialize Select2
+        dropdown.select2({
             placeholder: 'Select components',
             closeOnSelect: false,
             allowClear: true,
@@ -287,13 +287,14 @@
 
         // Set selected value if provided
         if (selectedValue !== null) {
-        dropdown.val(selectedValue).trigger('change');
+            dropdown.val(selectedValue).trigger('change');
         }
 
         // Make the dropdown read-only if specified
         if (readOnly) {
             dropdown.prop('disabled', true);
         }
+
 
     }
 

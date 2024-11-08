@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <title></title>
@@ -214,7 +215,7 @@
     
                     <div class="input-row">
                         <label for="grahk">Product:  </label>
-                        <select class="drop" id="grahk" name="account_group"></select>
+                        <select class="drop" id="grahk" name="account_group" onchange="selectProduct()"></select>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <label for="Route">Bata:   </label>
                         <select class="drop" id="Route" name="route_detail"></select>
@@ -272,14 +273,14 @@
 <script>
 
     document.addEventListener('DOMContentLoaded', function () {
-        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'grahk','product_name');
-        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'Route','bata');
-        fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle','vehicle_no');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'grahk','product_name');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'Route','bata');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle','vehicle_no');
         
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        fetch('http://52.66.126.53/purchaseproductData/')
+        fetch('http://103.174.102.89:3000/purchaseproductData/')
             .then(response => {
                 if (response.status === 404) {
                     loader.style.display = 'none';
@@ -308,8 +309,10 @@
 
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
+        console.log("Hello Deva",apiUrl)
         fetch(apiUrl)
             .then(response => {
+                loader.style.display = 'none';
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -435,11 +438,37 @@
         });
     }
 
+
+    function selectProduct(){
+        var bataId = document.getElementById('grahk').value;
+        console.log(bataId)
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata/' + bataId, 'Route','bata');
+    }
+
     
 
     
     function displayBarcodePopup(item) {
-        var barcodeValue = 'Product Name:' + item['product_name'].split('(')[0] + ' \nBata:' + item['bata'];
+        console.log('barcode',item)
+        // Convert the date to a JavaScript Date object
+var utcDate = new Date(item.p_date);
+
+// Convert the UTC date to IST (UTC+5:30)
+const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
+const istDate = new Date(utcDate.getTime() + istOffset);
+
+// Extract day, month, and year and format as DD/MM/YYYY
+const day = String(istDate.getDate()).padStart(2, '0');  // Add leading zero if needed
+const month = String(istDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+const year = istDate.getFullYear();
+
+// Combine the parts into DD/MM/YYYY format
+const formattedISTDate = `${day}/${month}/${year}`;
+
+
+        var barcodeValue = 'Product Name:' + item['product_name'].split('(')[0] + ' \nBata:' + item['bata'] + ' ' + formattedISTDate;
         var popupContent = `
             <div class="popup">
             
@@ -449,6 +478,7 @@
                 </div>
                 <canvas id="barcodeCanvas"></canvas>
                 <button id="downloadButton">Download Barcode</button>
+                <button id="printButton">Print Barcode</button>
                 <button onclick="closePopup()">Close</button>
             </div>
         `;
@@ -479,9 +509,21 @@
         //document.body.removeChild(link);
     });
 
+    // Print barcode logic
+    var printButton = document.getElementById('printButton');
+    printButton.addEventListener('click', function () {
+        printJS({
+            printable: 'barcodeCanvas', // ID of the element to print
+            type: 'html', // Type of content
+            scanStyles: true, // Scan for styles
+            targetStyles: ['*'] // Apply all styles
+        });
+    });
+
         
         document.querySelector('.popup').style.display = 'block';
     }
+
 
 
 
@@ -506,7 +548,7 @@
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
     
-        fetch('http://52.66.126.53/purchaseproductData', {
+        fetch('http://103.174.102.89:3000/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -549,7 +591,7 @@
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        fetch('http://52.66.126.53/purchaseproductData', {
+        fetch('http://103.174.102.89:3000/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

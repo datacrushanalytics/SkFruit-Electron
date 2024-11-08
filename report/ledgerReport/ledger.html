@@ -216,7 +216,7 @@
                 <!-- <option value="User" disabled selected>Select Account</option> -->
                 <br><br>
                 <label for="userType">Route : </label>
-                <select class="drop" id="route" name="name">
+                <select class="drop" id="route" name="name" onchange="setCustomer()">
                 </select>
                 <!-- <option value="User" disabled selected>Select Account</option> -->
                 <br><br>
@@ -235,9 +235,9 @@
                             <th>Route</th>
                             <th>Customer Name</th>
                             <th>Summary</th>
-                            <th>Balance</th>
+                            <th>Sale Amount</th>
                             <th>Out Carate</th>
-                            <th>Total Balance</th>
+                            <th>Total Amount</th>
                             <th>Cash</th>
                             <th>Online Amount</th>
                             <th>Discount</th>
@@ -259,18 +259,30 @@
 <script>
         
     document.addEventListener('DOMContentLoaded', function () {
+        const now = new Date();
+
+    // Adjust to IST (UTC+5:30)
+    const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
+    const istTime = new Date(now.getTime() + istOffset);
+
+    // Format the date to YYYY-MM-DD
+    const todayIST = istTime.toISOString().split('T')[0];
+
+    // Set the value of the date inputs to today's date in IST
+    document.getElementById('fromdate').value = todayIST;
+    document.getElementById('todate').value = todayIST;
         // Fetch data from API and populate Select2 dropdowns
         var sessionData = JSON.parse(localStorage.getItem('sessionData'));
     // Check if session data exists and if the user is an admin
     var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
         // Check if the user is an admin and show/hide the button accordingly
     if (isAdmin) {
-      fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route', 'route_name');
-      fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer', 'name');
+      fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route', 'route_name');
+      fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'customer', 'name');
         }else{
           var route = sessionData[0].route;
-          fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customerSale/' +route  , 'customer','name');
-          fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name',selectedValue=route,readOnly = true);
+          fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'customer','name');
+          fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route','route_name',selectedValue=route,readOnly = true);
         }
     });
 
@@ -334,6 +346,11 @@
             document.querySelector('input.select2-search__field').focus();
         }, 0);
     });
+
+    function setCustomer(){
+        var route = document.getElementById('route').value
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customer/' +route  , 'customer','cust_name');
+    }
 
 </script>
 

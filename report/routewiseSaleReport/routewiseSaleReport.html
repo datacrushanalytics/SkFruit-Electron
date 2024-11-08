@@ -283,36 +283,30 @@
                     <input type="date" id="todate" name="date" placeholder="To Date" required>
                 </div>
                 <br>
-                <label for="userType">Customer Name :</label>
-                <select class="drop" id="customer" id="name" name="name">
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select><br>
-                <br>
-                <label id='lable1111' for="userType">Route :</label>
-                <select class="drop1" id="route" name="name">
+                <label for="userType">Vehicle :</label>
+                <select class="drop" id="vehicle" name="Vehicle">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br><br>
-
                 <label for="userType"> Product :</label>
                 <select class="drop" id="product" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br>
-
                 <br>
-
                 <label for="userType">Bata :</label>
                 <select class="drop" id="bata" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br><br>
 
-
-
-                <label for="userType">Vehicle :</label>
-                <select class="drop" id="vehicle" name="Vehicle">
+                <label id='lable1111' for="userType">Route :</label>
+                <select class="drop1" id="route" name="name" onchange="setCustomer()">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br><br>
-                
 
+                <label for="userType">Customer Name :</label>
+                <select class="drop" id="customer" id="name" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br>
+                <br>
 
                 <label for="userType">User :</label>
                 <select class="drop" id="user" name="user">
@@ -364,27 +358,39 @@
 <script>
         
     document.addEventListener('DOMContentLoaded', function () {
+        const now = new Date();
+
+    // Adjust to IST (UTC+5:30)
+    const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
+    const istTime = new Date(now.getTime() + istOffset);
+
+    // Format the date to YYYY-MM-DD
+    const todayIST = istTime.toISOString().split('T')[0];
+
+    // Set the value of the date inputs to today's date in IST
+    document.getElementById('fromdate').value = todayIST;
+    document.getElementById('todate').value = todayIST;
         // Fetch data from API and populate Select2 dropdowns
         var sessionData = JSON.parse(localStorage.getItem('sessionData'));
         // Check if session data exists and if the user is an admin
         var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
         // Check if the user is an admin and show/hide the button accordingly
         if (isAdmin) {
-            fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer','name');
-            fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name');
-            fetchAndPopulateDropdown('http://52.66.126.53/fetchData/user', 'user', 'added_by');
-            fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'product', 'product_name');
-        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'bata', 'bata');
-        fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle','vehicle_no');
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'customer','name');
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route','route_name');
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/user', 'user', 'added_by');
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'product', 'product_name');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'bata', 'bata');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle','vehicle_no');
         }else{
             var route = sessionData[0].route;
             var user = sessionData[0].name;
-            fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customer/' +route  , 'customer','cust_name');
-            fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name',selectedValue=route,readOnly = true);
-            fetchAndPopulateDropdown('http://52.66.126.53/fetchData/user', 'user', 'added_by',selectedValue=user,readOnly = true);
-            fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'product', 'product_name',selectedValue= null,readOnly = true);
-            fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'bata', 'bata',selectedValue=null,readOnly = true);
-            fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle','vehicle_no',selectedValue=null,readOnly = true);
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customer/' +route  , 'customer','cust_name');
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route','route_name',selectedValue=route,readOnly = true);
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/user', 'user', 'added_by',selectedValue=user,readOnly = true);
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'product', 'product_name',selectedValue= null,readOnly = true);
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'bata', 'bata',selectedValue=null,readOnly = true);
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle','vehicle_no',selectedValue=null,readOnly = true);
         }
     });
 
@@ -455,6 +461,11 @@
             document.querySelector('input.select2-search__field').focus();
         }, 0);
     });
+
+    function setCustomer(){
+        var route = document.getElementById('route').value
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customer/' +route  , 'customer','cust_name');
+    }
 </script>
 
 </html>

@@ -307,7 +307,7 @@ th {
         <!-- <div class="button-wrapper">
       <button id="account-page-button" name="ledger" >Leder Report</button>
     </div> -->
-        <button onclick="openPopup()">Routewise Hishob</button>
+        <button onclick="openPopup()" id="botton_pop">Routewise Hishob</button>
         <div class="popup" id="popup">
           <div class="popup-content">
             <span class="close" onclick="closePopup()">&times;</span>
@@ -436,10 +436,11 @@ th {
                 }
             }else{
                 worker = sessionData[0].name
+                document.getElementById('botton_pop').style.display = 'none';
             }
 
                 const fetchData = async () => {
-                    const response = await fetch("http://52.66.126.53/fetchData/sale", {
+                    const response = await fetch("http://103.174.102.89:3000/fetchData/sale", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"

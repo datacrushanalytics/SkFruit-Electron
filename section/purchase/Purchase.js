@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
 
 
-    fetch('http://52.66.126.53/fetchPurchaseid')
+    fetch('http://103.174.102.89:3000/fetchPurchaseid')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(data => {
             // Populate dropdown with API data
-            document.getElementById('no').value = parseInt(data[0]['num']) + 1;
-            fetch('http://52.66.126.53/purchaseproductData/' + (parseInt(data[0]['num']) + 1))
+            document.getElementById('no').value = parseInt(data[0]['num']) + 1 || 1;
+            fetch('http://103.174.102.89:3000/purchaseproductData/' + (parseInt(data[0]['num']) + 1))
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -61,17 +61,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.getElementById('Form').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
+    var sessionData = JSON.parse(localStorage.getItem('sessionData'));
 // function form2(){
     var formData = {
         date: document.getElementById('date').value,
         supplier_name: document.getElementById('supplier').value,
         gadi_number: document.getElementById('vehicle').value,
-        total_quantity: parseInt(document.getElementById('total').value) || 0
+        total_quantity: parseInt(document.getElementById('total').value) || 0,
+        added_by: sessionData[0].name,
+        expenses: document.getElementById('expenses').value || 0
     };
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    await fetch('http://52.66.126.53/purchaseData/insertPurchase', {
+    await fetch('http://103.174.102.89:3000/purchaseData/insertPurchase', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

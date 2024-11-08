@@ -51,20 +51,26 @@ function populateDropdown1(data) {
 document.getElementById('paymentForm').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
 console.log("jahsafhfa")
+var sessionData = JSON.parse(localStorage.getItem('sessionData'));
 // function form2(){
     var formData = {
         date: document.getElementById('date').value,
         from_account: document.getElementById('product').value,
         to_account: document.getElementById('bata').value,
         comment: document.getElementById('comment').value,
+        mobile_no: document.getElementById('number').value,
         prev_balance: parseInt(document.getElementById('previousBalance').value) || 0,
-        amounr: parseInt(document.getElementById('amount').value) || 0        
+        amounr: parseInt(document.getElementById('amount').value) || 0 ,
+        cash: parseInt(document.getElementById('bill_cash').value) || 0 ,
+        online: parseInt(document.getElementById('online').value) || 0 ,
+        discount: parseInt(document.getElementById('discount').value) || 0 ,
+        added_by: sessionData[0].name     
     };
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
 
-    await fetch('http://52.66.126.53/paymentData/insertPayment', {
+    await fetch('http://103.174.102.89:3000/paymentData/insertPayment', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -104,7 +110,7 @@ function openModal(item) {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://52.66.126.53/paymentData/' + String(item))
+    fetch('http://103.174.102.89:3000/paymentData/' + String(item))
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -130,8 +136,11 @@ function openModal(item) {
             var billDetails = [
                 { label: "Payment Id", value:  data[0].p_id},
                 { label: "तारीख:", value: utcDate.toLocaleString('en-IN', options) },
-                { label: "from Account:", value: data[0].from_account },
-                { label: "to_account:", value: data[0].to_account },
+                { label: "Bank Account:", value: data[0].from_account },
+                { label: "Supplier:", value: data[0].to_account },
+                { label: "Cash", value: data[0].cash },
+                { label: "Online", value: data[0].online },
+                { label: "Discount", value: data[0].discount },
                 { label: "comment", value: data[0].comment },
                 { label: "prev_balance", value: data[0].prev_balance },
                 { label: "amount", value: data[0].amounr }
@@ -331,7 +340,7 @@ function openModal(item) {
     <div>
         <h1>सावता फ्रुट सप्लायर्स</h1>
         <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
-        <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
+        <p>मोबाईल नं:- 9860601102  / 9922676380 / 9156409970</p>
     </div>
 </div>
 <div class="container2">

@@ -333,7 +333,7 @@
                     <thead>
                         <tr>
                             <th>Sr. No</th>
-                            <th>BILL NO</th>
+                            <th>PURCHASE ID</th>
                             <th>DATE</th>
                             <th>Gadi Number</th>
                             <!-- <th>Bata</th> -->
@@ -358,11 +358,23 @@
 <script>
         
     document.addEventListener('DOMContentLoaded', function () {
+        const now = new Date();
+
+// Adjust to IST (UTC+5:30)
+const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
+const istTime = new Date(now.getTime() + istOffset);
+
+// Format the date to YYYY-MM-DD
+const todayIST = istTime.toISOString().split('T')[0];
+
+// Set the value of the date inputs to today's date in IST
+document.getElementById('fromdate').value = todayIST;
+document.getElementById('todate').value = todayIST;
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicleNumber','vehicle_no');
-        fetchAndPopulateDropdown('http://52.66.126.53/list/Supplier', 'supplier','name');
-        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'bata','bata');
-        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'purchase_id', 'purchase_id');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicleNumber','vehicle_no');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Supplier', 'supplier','name');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'bata','bata');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'purchase_id', 'purchase_id');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {

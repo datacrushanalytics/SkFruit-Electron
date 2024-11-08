@@ -265,7 +265,7 @@
                 <form id="loginForm1">
                     <div class="first-row">
                         <label for="pavti" class="input-label">जमा पावती क्र :</label>
-                        <input type="number" id="pavti" name="number" placeholder="Receipt No." required>
+                        <input type="number" id="pavti" name="number" placeholder="Receipt No." required readonly>
                     </div>
 
                     <!-- Rest of your form content -->
@@ -317,12 +317,12 @@
 
                 <div class="first-row">
                     <label for="input1" class="input-label">बँक खाते :</label>
-                    <select id="input1" name="input2"></select>
+                    <select id="input1" name="input2" onchange="toggleReadonly()"></select>
                 </div>
 
                 <div class="first-row">
                     <label for="input1" class="input-label"> ऑनलाईन :</label>
-                    <input type="text" id="input7" name="input2" onchange="totalbill()"></select>
+                    <input type="text" id="input7" name="input2" onchange="totalbill()" readonly></select>
                 </div>
 
                
@@ -348,7 +348,7 @@
 
                 <div class="first-row">
                     <label for="input5" class="input-label">बाकी रक्कम :</label>
-                    <input type="text" id="input5" name="input1">
+                    <input type="text" id="input5" name="input1" readonly>
                 </div>
 
                 <div class="first-row">
@@ -364,6 +364,7 @@
                     
                     <div class="button-container">
                         <button class="border-hover1 button">Save</button>
+                        <a href="../Menu.html"><button type="button" style="background-color: darkgrey;" class="border-hover1 button">Back</button></a>
                         <!-- <button class="border-hover2 button">Back</button> -->
                     </div>
                 </form>
@@ -374,6 +375,18 @@
 </body>
 <script src="./receipt.js"></script>
 <script>
+
+function toggleReadonly(){
+  var inputField = document.getElementById("input7");
+      
+      // Check if 'readonly' is set, and toggle it
+      if (inputField.hasAttribute("readonly")) {
+        inputField.removeAttribute("readonly");  // Make it editable
+        inputField.focus();  // Optional: Focus on the input field
+      } else {
+        inputField.setAttribute("readonly", true);  // Make it read-only again
+      }
+}
     // JavaScript functions remain unchanged
     function carate() {
     if (parseInt(document.getElementById("carate100").value) > parseInt(document.getElementById('carate2100').value)){
@@ -435,7 +448,7 @@ function totalbill(){
     console.log("totalbill")
     console.log(document.getElementById("custid").value)
   
-    fetch('http://52.66.126.53/accountData/' + parseInt(document.getElementById("custid").value))
+    fetch('http://103.174.102.89:3000/accountData/' + parseInt(document.getElementById("custid").value))
           .then(response => {
             if (!response.ok) {
                 loader.style.display = 'none';
@@ -461,7 +474,7 @@ function totalbill(){
   
     function previousbalance() {
         const name = document.getElementById("account_group").value
-        fetch('http://52.66.126.53/fetchpv/' + name)
+        fetch('http://103.174.102.89:3000/fetchpv/' + name)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -479,7 +492,7 @@ function totalbill(){
             });
 
 
-            fetch('http://52.66.126.53/fetchName/name/' + name)
+            fetch('http://103.174.102.89:3000/fetchName/name/' + name)
                   .then(response => {
                     if (!response.ok) {
                         loader.style.display = 'none';
@@ -495,6 +508,7 @@ function totalbill(){
                       if ($productDropdown.val() !== data[0].mobile_no) {
                         $productDropdown.val(data[0].mobile_no).trigger('change');
                       }
+                    $productDropdown.prop('disabled', true);
                   })
                   .catch(error => {
                       console.error('Error:', error);
@@ -502,7 +516,7 @@ function totalbill(){
 
 
 
-    fetch('http://52.66.126.53/carateuserData/' + name)
+    fetch('http://103.174.102.89:3000/carateuserData/' + name)
   .then(response => {
       if (!response.ok) {
         loader.style.display = 'none';
@@ -535,7 +549,7 @@ function totalbill(){
     function getCust() {
         var number = document.getElementById('mob').value;
         console.log(number)
-        fetch('http://52.66.126.53/fetchName/mobile/' + number)
+        fetch('http://103.174.102.89:3000/fetchName/mobile/' + number)
             .then(response => {
                 if (!response.ok) {
                     loader.style.display = 'none';
@@ -571,16 +585,16 @@ function totalbill(){
     var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
         // Check if the user is an admin and show/hide the button accordingly
     if (isAdmin) {
-        fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'account_group','customer');
-        fetchAndPopulateDropdown('http://52.66.126.53/mobile', 'mob','mobile_no');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'account_group','name');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/mobile', 'mob','mobile_no');
         }else{
           var route = sessionData[0].route;
-          fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customerSale/' +route  , 'account_group','name');
-          fetchAndPopulateDropdown('http://52.66.126.53/fetchData/customerSale/' +route  , 'mob','mobile_no');
+          fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'account_group','name');
+          fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'mob','mobile_no');
         }
 
-        // fetchAndPopulateDropdown('http://52.66.126.53/list/Bank Account', 'route_detail','Account');
-        fetchAndPopulateDropdown('http://52.66.126.53/list/Bank Account', 'input1','Account');
+        // fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'route_detail','Account');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'input1','name');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,name,selectedValue = null, readOnly = false) {
@@ -609,11 +623,10 @@ function totalbill(){
         dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
 
         // Populate dropdown with API data
-        data.forEach(function (item) {
-            console.log(item.mobile_no)
-            console.log(item.name)
-            dropdown.append($('<option></option>').attr('value', item.name || item.route_name || item.mobile_no).text(item.name || item.route_name || item.mobile_no));
-        });
+         // Populate dropdown with API data
+    data.forEach(function (item) {
+      dropdown.append($('<option></option>').attr('value', item[name]).text(item[name]));
+    });
 
         // Initialize Select2
        dropdown.select2({

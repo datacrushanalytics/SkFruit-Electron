@@ -24,7 +24,7 @@ async function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
     try {
-        const response = await fetch('http://52.66.126.53/ledgerReport', {
+        const response = await fetch('http://103.174.102.89:3000/ledgerReport', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -165,7 +165,7 @@ function populateTable4(data) {
     // Conditional logic for additional content based on customer selection
     if (document.getElementById('customer').value !== '') {
         console.log("Customer selected");
-        fetch('http://52.66.126.53/carateuserData/' + document.getElementById('customer').value)
+        fetch('http://103.174.102.89:3000/carateuserData/' + document.getElementById('customer').value)
             .then(response => {
                 if (!response.ok) {
                     loader.style.display = 'none';
@@ -205,7 +205,7 @@ function populateTable4(data) {
 //         doc.text('Savata Fruits Suppliers', 50, 20);
 //         doc.setFontSize(12);
 //         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
-//         doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
+//         doc.text('Mobile NO:- 9860601102  / 9922676380 / 9156409970', 50, 40);
 
 //         // Add customer name and route
 //         if (document.getElementById('customer').value !== '') {
@@ -270,7 +270,7 @@ async function exportToExcel() {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        return fetch('http://52.66.126.53/ledgerReport/generate-pdf', {
+        return fetch('http://103.174.102.89:3000/ledgerReport/generate-pdf', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

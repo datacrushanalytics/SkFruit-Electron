@@ -6,7 +6,7 @@ function account() {
   var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-  fetch('http://52.66.126.53/accountData')
+  fetch('http://103.174.102.89:3000/accountData')
   .then(response => {
     if (response.status === 404) {
       loader.style.display = 'none';
@@ -111,7 +111,7 @@ function editAccount(user) {
 
 function deleteaccount(userId) {
   // Perform delete operation based on userId
-  fetch('http://52.66.126.53/accountData/deleteaccountId/' + userId, {
+  fetch('http://103.174.102.89:3000/accountData/deleteaccountId/' + userId, {
       method: 'DELETE'
   })
   .then(response => {

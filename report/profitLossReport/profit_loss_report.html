@@ -223,12 +223,12 @@
 
                 <br>
 
-                <label for="userType"> Customer :</label>
-                <select class="drop" id="customer" id="customer" name="name">
+                <!-- <label for="userType"> Customer :</label>
+                <select class="drop" id="customer" id="customer" name="name"> -->
                     <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select>
+                <!-- </select> -->
 
-                <br><br>
+                <!-- <br><br> -->
 
                 <label for="userType"> Vehicle No :</label>
                 <select class="drop" id="vehicle" id="vehicle" name="name">
@@ -237,25 +237,25 @@
 
                 <br><br>
 
-                <label id='lable1111' for="userType">Route :</label>
-                <select class="drop" id="route" name="name">
+                <!-- <label id='lable1111' for="userType">Route :</label>
+                <select class="drop" id="route" name="name" onchange="setCustomer()"> -->
                     <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select><br><br>
+                <!-- </select><br><br> -->
 
                 <label for="userType">Bata :</label>
                 <select class="drop" id="bata" id="bata" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br> <br>
 
-                <label for="userType">User :</label>
-                <select class="drop" id="user" id="user" name="name">
+                <!-- <label for="userType">User :</label>
+                <select class="drop" id="user" id="user" name="name"> -->
                     <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select><br> <br>
+                <!-- </select><br> <br> -->
 
-                <label for="userType">Bill Number :</label>
-                <select class="drop" id="bill" name="name">
+                <!-- <label for="userType">Bill Number :</label>
+                <select class="drop" id="bill" name="name"> -->
                     <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select><br> <br>
+                <!-- </select><br> <br> -->
     
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
@@ -299,13 +299,25 @@
 <script src="./profitLossReport.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        const now = new Date();
+
+    // Adjust to IST (UTC+5:30)
+    const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
+    const istTime = new Date(now.getTime() + istOffset);
+
+    // Format the date to YYYY-MM-DD
+    const todayIST = istTime.toISOString().split('T')[0];
+
+    // Set the value of the date inputs to today's date in IST
+    document.getElementById('fromdate').value = todayIST;
+    document.getElementById('todate').value = todayIST;
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle','vehicle_no');
-        fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer','name');
-        fetchAndPopulateDropdown('http://52.66.126.53/purchaseproductData', 'bata', 'bata');
-        fetchAndPopulateDropdown('http://52.66.126.53/fetchData/user', 'user', 'added_by');
-        fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name');
-        fetchAndPopulateDropdown('http://52.66.126.53/saleData', 'bill','bill_no');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle','vehicle_no');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'customer','name');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'bata', 'bata');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/user', 'user', 'added_by');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route','route_name');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/saleData', 'bill','bill_no');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
@@ -350,6 +362,11 @@
             document.querySelector('input.select2-search__field').focus();
         }, 0);
     });
+
+    function setCustomer(){
+        var route = document.getElementById('route').value
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'customer','name');
+    }
 </script>
 
 

@@ -4,7 +4,7 @@ function route() {
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    fetch('http://52.66.126.53/routeData')
+    fetch('http://103.174.102.89:3000/routeData')
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';
@@ -85,7 +85,7 @@ function editRoute(user) {
 
 function deleteRoute(userId) {
     // Perform delete operation based on userId
-    fetch('http://52.66.126.53/routeData/deleterouteId/' + userId, {
+    fetch('http://103.174.102.89:3000/routeData/deleterouteId/' + userId, {
         method: 'DELETE'
     })
     .then(response => {

@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('date').readOnly = true; // Hide the button for non-admin users
     }
 
-    fetch('http://52.66.126.53/fetchReceiptid')
+    fetch('http://103.174.102.89:3000/fetchReceiptid')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .then(data => {
         // Populate dropdown with API data
-        document.getElementById('pavti').value = parseInt(data[0]['num']) + 1;
+        document.getElementById('pavti').value = parseInt(data[0]['num']) + 1 || 1;
     })
     .catch(error => {
         console.error('Error:', error);
@@ -57,7 +57,7 @@ document.getElementById('loginForm1').addEventListener('submit', async function(
     };
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
-    await fetch('http://52.66.126.53/receiptData/insertReceipt', {
+    await fetch('http://103.174.102.89:3000/receiptData/insertReceipt', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -92,7 +92,7 @@ function openModal(item) {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://52.66.126.53/receiptReport/' + item.receipt_id)
+    fetch('http://103.174.102.89:3000/receiptReport/' + item.receipt_id)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -361,7 +361,7 @@ function openModal(item) {
     <div>
         <h1>सावता फ्रुट सप्लायर्स</h1>
         <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
-        <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
+        <p>मोबाईल नं:- 9860601102  / 9922676380 / 9156409970</p>
     </div>
 </div>
 <div class="container2">

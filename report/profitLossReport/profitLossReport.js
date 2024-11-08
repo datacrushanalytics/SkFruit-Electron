@@ -31,7 +31,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://52.66.126.53/profitLossReport', {
+    return fetch('http://103.174.102.89:3000/profitLossReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -189,7 +189,7 @@ function populateTable4(data) {
     columnsToDisplay.forEach(function (key, index) {
         if (index >= 4) { // Start populating totals after the first four columns
             var cell = totalRow.insertCell();
-            if (['sold_quantity', 'purchase_price', "selling_price", 'Amount', 'profit_loss'].includes(key)) {
+            if (['sold_quantity', 'purchase_price', "selling_price", 'Amount'].includes(key)) {
                 if (key === 'profit_loss') {
                     cell.style.color = grandTotals[key] < 0 ? 'red' : 'green';
                 }
@@ -225,7 +225,7 @@ function populateTable4(data) {
 //         doc.text('Savata Fruits Suppliers', 50, 20);
 //         doc.setFontSize(12);
 //         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
-//         doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
+//         doc.text('Mobile NO:- 9860601102  / 9922676380 / 9156409970', 50, 40);
         
 //         let startY = 50;
         
@@ -275,7 +275,7 @@ async function exportToExcel() {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        return fetch('http://52.66.126.53/profitLossReport/generate-pdf', {
+        return fetch('http://103.174.102.89:3000/profitLossReport/generate-pdf', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

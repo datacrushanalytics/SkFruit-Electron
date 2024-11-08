@@ -192,34 +192,55 @@
             <input type="date" id="date" name="date" placeholder="Date" required>
             <br>
 
-            <label for="product">From Account :</label>
-            <select id="product" name="from_account" required>
-                <!-- Options for from account -->
-            </select>
-            <br>
-
             <label for="bata">Supplier Name :</label>
             <select id="bata" name="to_account" onchange="previousbalance()" required>
                 <!-- Options for to account -->
-            </select>
-            <br>
-
-            <label for="comment">Comment :</label>
-            <textarea id="comment" name="comment" required></textarea>
-            <br>
+            </select><br>
+            <div id="number-wrapper" class="input-wrapper">
+                <label for="number">Mobile Number :</label>
+                <select class="drop" id="number" name="number" onchange="getCust()" required></select>
+              </div><br>
 
             <div class="second-row">
                 <label for="previousBalance">Prev. Balance :</label>
-                <input type="number" id="previousBalance" name="previous_balance">
+                <input type="number" id="previousBalance" name="previous_balance" readonly>
                 <br>
-
-                <label for="amount">Paid Amount :</label>
-                <input type="number" id="amount" name="amount" required>
             </div>
+
+            <div class="row-container1">
+                <label for="totalCarat">Cash :</label>
+                <input type="number" id="bill_cash" name="number" placeholder="Cash" onchange="totalBalance()">
+              </div>
+
+            <label for="product">Bank Account :</label>
+            <select id="product" name="from_account" required onchange="toggleReadonly()">
+                <!-- Options for from account -->
+            </select>
             <br>
+            <div class="row-container1">
+                <label for="totalCarat">Online Payment :</label>
+                <input type="number" id="online" name="number" placeholder="Online Payment" onchange="totalBalance()" readonly>
+              </div>
+
+            
+            <br>
+
+            <label for="amount"> Discount :</label>
+            <input type="number" id="discount" name="amount"  onchange="totalBalance()">
+
+            
+            <br>
+
+            <label for="amount">Remaining Amount :</label>
+            <input type="number" id="amount" name="amount" required readonly>
+          
+            <br>
+            <label for="comment">Comment :</label>
+            <textarea id="comment" name="comment" required></textarea>
 
             <div class="third-row">
                 <button type="submit" class="border-hover">Save</button>
+                <a href="../Menu.html"><button type="button" style="background-color: darkgrey;" class="border-hover button">Back</button></a>
             </div>
         </form>
     </div>
@@ -227,35 +248,7 @@
     <script src="./payment.js"></script>
 
     <script>
-        /*
-        // Function to get the current maximum payment ID from local storage
-        function getCurrentMaxPaymentId() {
-            return parseInt(localStorage.getItem('maxPaymentId') || 0);
-        }
-
-        // Function to set the current maximum payment ID in local storage
-        function setCurrentMaxPaymentId(paymentId) {
-            localStorage.setItem('maxPaymentId', paymentId);
-        }
-
-        // Function to generate the next payment ID
-        function generatePaymentId() {
-            // Get the current max payment ID
-            var currentMaxPaymentId = getCurrentMaxPaymentId();
-            // Increment the current max payment ID to get the next payment ID
-            var nextPaymentId = currentMaxPaymentId + 1;
-            // Save the next payment ID as the new max payment ID
-            setCurrentMaxPaymentId(nextPaymentId);
-            // Return the next payment ID
-            return nextPaymentId;
-        }
-
-        // Function to populate the payment ID input field
-        function populatePaymentId() {
-            document.getElementById("id").value = generatePaymentId();
-        }
-        */
-        fetch('http://52.66.126.53/fetchPaymentid')
+        fetch('http://103.174.102.89:3000/fetchPaymentid')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -264,7 +257,7 @@
         })
         .then(data => {
             // Populate dropdown with API data
-            document.getElementById('id').value = parseInt(data[0]['num']) + 1;
+            document.getElementById('id').value = parseInt(data[0]['num']) + 1 || 1;
         })
         .catch(error => {
             console.error('Error:', error);
@@ -294,16 +287,80 @@
         document.addEventListener("DOMContentLoaded", function () {
             // populatePaymentId();
             populateCurrentDate();
+            
         });
 
-        // Rest of your JavaScript code
-        // ...
     </script>
 
     <script>
+
+
+function totalBalance(){
+    var total = 0;
+    total = parseInt(document.getElementById('bill_cash').value || 0) + parseInt(document.getElementById('online').value || 0) + parseInt(document.getElementById('discount').value || 0)
+    if(document.getElementById('previousBalance').value - total < 0){
+        Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Value Should be Grater than Zero",
+            });
+
+    }else{
+        document.getElementById('amount').value = document.getElementById('previousBalance').value- total 
+    }
+
+}
+
+function toggleReadonly(){
+  var inputField = document.getElementById("online");
+      
+      // Check if 'readonly' is set, and toggle it
+    //   if (inputField.hasAttribute("readonly")) {
+        inputField.removeAttribute("readonly");  // Make it editable
+    //     inputField.focus();  // Optional: Focus on the input field
+    //   } else {
+    //     inputField.setAttribute("readonly", true);  // Make it read-only again
+    //   }
+}
+
         function previousbalance() {
             const name = document.getElementById("bata").value
-            fetch('http://52.66.126.53/fetchpv/' + name)
+
+            fetch('http://103.174.102.89:3000/fetchName/name/' + name)
+      .then(response => {
+        if (!response.ok) {
+          loader.style.display = 'none';
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data[0].mobile_no)
+        // Get the Select2 dropdown element
+        var $productDropdown = $('#number');
+        // Set the value of the Select2 dropdown if it's different
+        if ($productDropdown.val() !== data[0].mobile_no) {
+          $productDropdown.val(data[0].mobile_no).trigger('change');
+        }
+
+        // var $routeDropdown = $('#Route');
+        // // Set the value of the Select2 dropdown if it's different
+        // if ($routeDropdown.val() !== data[0].route_detail) {
+        //   $routeDropdown.val(data[0].route_detail).trigger('change');
+        // }
+        $productDropdown.prop('disabled', true);
+        // $routeDropdown.prop('disabled', true);
+        // document.getElementById('address').value = data[0].address;
+        // document.getElementById('address').readOnly = true;
+
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
+
+
+            fetch('http://103.174.102.89:3000/fetchpv/' + name)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -320,13 +377,42 @@
                 });
 
         }
+
+    
+        function getCust() {
+    var number = document.getElementById('number').value;
+    console.log(number)
+    fetch('http://103.174.102.89:3000/fetchName/mobile/' + number)
+        .then(response => {
+            if (!response.ok) {
+                loader.style.display = 'none';
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data[0].name)
+            // Get the Select2 dropdown element
+            var $productDropdown = $('#grahk');
+            
+            // Set the value of the Select2 dropdown if it's different
+            if ($productDropdown.val() !== data[0].name) {
+                $productDropdown.val(data[0].name).trigger('change');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
     </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Fetch data from API and populate Select2 dropdowns
-            fetchAndPopulateDropdown('http://52.66.126.53/list/Supplier', 'bata', 'bata');
-            fetchAndPopulateDropdown('http://52.66.126.53/list/Bank Account', 'product', 'bank');
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Supplier', 'bata', 'bata');
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'product', 'bank');
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/mobile/supplier', 'number', 'mobile_no');
         });
 
         function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
@@ -355,12 +441,12 @@
             dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
 
             // Add new option
-            if (field == 'bank') {
-                dropdown.append($('<option></option>').attr('cash', 'cash').text('Cash'));
-            }
+            // if (field == 'bank') {
+            //     dropdown.append($('<option></option>').attr('cash', 'cash').text('Cash'));
+            // }
             // Populate dropdown with API data
             data.forEach(function (item) {
-                dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
+                dropdown.append($('<option></option>').attr('value', item.name || item.route_name || item.mobile_no).text(item.name || item.route_name || item.mobile_no));
             });
 
             // Initialize Select2

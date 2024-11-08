@@ -3,7 +3,7 @@ function user() {
     console.log("user function executed");
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
-    fetch('http://52.66.126.53/userData')
+    fetch('http://103.174.102.89:3000/userData')
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';
@@ -80,7 +80,28 @@ function populateTable(data) {
             deleteButton.style.backgroundColor = 'darkgrey';
             deleteButton.textContent = 'Delete';
             deleteButton.addEventListener('click', function() {
-                deleteUser(item.id); // Pass the user id to the delete function
+                // SweetAlert2 confirmation dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Do you really want to delete this user?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Call the deleteUser function only if confirmed
+                        deleteUser(item.id); // Pass the user id to the delete function
+        
+                        // Optional: Show success message
+                        Swal.fire(
+                            'Deleted!',
+                            'The user has been deleted.',
+                            'success'
+                        );
+                    }
+                });
             });
             deleteCell.appendChild(deleteButton);
         }
@@ -97,7 +118,7 @@ function editUser(user) {
 
 function deleteUser(userId) {
     // Perform delete operation based on userId
-    fetch('http://52.66.126.53/userData/deleteUser/' + userId, {
+    fetch('http://103.174.102.89:3000/userData/deleteUser/' + userId, {
         method: 'DELETE'
     })
     .then(response => {

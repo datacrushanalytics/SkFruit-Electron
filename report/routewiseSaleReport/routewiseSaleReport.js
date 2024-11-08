@@ -34,7 +34,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://52.66.126.53/routewiseSaleReport', {
+    return fetch('http://103.174.102.89:3000/routewiseSaleReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -45,13 +45,23 @@ function fetchDataAndProcess() {
         if (response.status === 404) {
         loader.style.display = 'none';
            
-Swal.fire({
-    icon: 'error',
-    title: 'Oops...',
-    text: 'No data found.',
-  });
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No data found.',
+            });
             throw new Error('Data not found');
         }
+        if (response.status === 500) {
+            loader.style.display = 'none';
+               
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No data found.',
+                });
+                throw new Error('Data not found');
+            }
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -76,14 +86,15 @@ function populateTable4(data) {
     tbody.innerHTML = ''; // Clear existing rows
     var columnsToDisplay = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'carate_amount', 'pre_balance', 'total_amount', 'online_amt', 'discount', 'inCarat', 'PaidAmount', 'balance', 'comment'];
     var counter = 1;
+    var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
     console.log(data.reports)
     if (data.reports.length === 0) {
        
-Swal.fire({
-    icon: 'error',
-    title: 'Oops...',
-    text: 'No data found.',
-  });
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No data found.',
+    });
     }
     data.reports.forEach(function (item) {
         var row = tbody.insertRow();
@@ -129,17 +140,20 @@ Swal.fire({
         });
         buttonCell.appendChild(openPopupButton);
 
+
         // Add button to delete record
-        var deleteCell = row.insertCell();
-        var deleteButton = document.createElement('button');
-        deleteButton.className = 'button';
-        deleteButton.textContent = 'Delete';
-        deleteButton.addEventListener('click', function () {
-            if (confirm('Are you sure you want to delete this record?')) {
-                deleteRecord(item.bill_no); // Call the delete function with the bill_no
-            }
-        });
-        deleteCell.appendChild(deleteButton);
+        if (isAdmin) {
+            var deleteCell = row.insertCell();
+            var deleteButton = document.createElement('button');
+            deleteButton.className = 'button';
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', function () {
+                if (confirm('Are you sure you want to delete this record?')) {
+                    deleteRecord(item.bill_no); // Call the delete function with the bill_no
+                }
+            });
+            deleteCell.appendChild(deleteButton);
+        }
     });
 
     // Add row for grand total
@@ -194,7 +208,7 @@ Swal.fire({
 
 
 function deleteRecord(bill_no) {
-    fetch(`http://52.66.126.53/fetchData/saleProduct/${bill_no}`, {
+    fetch(`http://103.174.102.89:3000/fetchData/saleProduct/${bill_no}`, {
         method: 'GET'
     })
     .then(response => {
@@ -208,7 +222,7 @@ function deleteRecord(bill_no) {
         data.forEach(item => {
             console.log(item.id); // Fetch and log the id from each item
 
-            fetch(`http://52.66.126.53/saleproductData/deletesaleproduct/${item.id}`, {
+            fetch(`http://103.174.102.89:3000/saleproductData/deletesaleproduct/${item.id}`, {
                 method: 'DELETE'
             })
             .then(response => {
@@ -230,7 +244,7 @@ function deleteRecord(bill_no) {
     });
 
     // Perform delete operation based on bill_no
-    fetch(`http://52.66.126.53/saleData/deletesaleId/${bill_no}`, {
+    fetch(`http://103.174.102.89:3000/saleData/deletesaleId/${bill_no}`, {
         method: 'DELETE'
     })
     .then(response => {
@@ -274,7 +288,7 @@ function openPopup(item) {
     // var iframe = document.getElementById('popupIframe');
     // iframe.src = './billDetails.html?bill_no=' + encodeURIComponent(item.bill_no);
 
-    fetch('http://52.66.126.53/saleproductData/' + String(item.bill_no))
+    fetch('http://103.174.102.89:3000/saleproductData/' + String(item.bill_no))
             .then(response => response.json())
             .then(data => {
                 populatePopupTable(data);
@@ -326,7 +340,7 @@ function openModal(item) {
     console.log("Opening modal for item:", item.bill_no);
     
 
-    fetch('http://52.66.126.53/bill/' + item.bill_no)
+    fetch('http://103.174.102.89:3000/bill/' + item.bill_no)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -392,21 +406,24 @@ function openModal(item) {
                 (data.results[0].out_carate_250 > 0 ? "250 X " + data.results[0].out_carate_250 + " " : "") +
                 (data.results[0].out_carate_350 > 0 ? "350 X " + data.results[0].out_carate_350 : "");
 
+            var showLabels  = true
+            if (data.results[0].cr_dr_type == 'no') { showLabels = false }
+
             var footerDetails = [
                 // { label: "गेलेले कॅरेट : 100 X  " + data.results[0].in_carate_100 + "  150 X  " + data.results[0].in_carate_150 + "  250 X  " + data.results[0].in_carate_250 + "  350 X  " +  data.results[0].in_carate_350, value: data.results[0].carate_amount },
-                { label: label1.trim(), value: data.results[0].carate_amount },
-                { label: "चालू कलम रक्कम:", value: data.results[0].amount },
-                { label: "मागील बाकी:", value: data.results[0].pre_balance },
-                { label: "एकूण रक्कम:", value: data.results[0].total_amount },
-                { label: "रोख जमा रक्कम:", value: data.results[0].cash },
-                { label: "ऑनलाईन जमा बँक :", value: data.results[0].online_acc },
-                { label: "ऑनलाईन जमा रक्कम:", value: data.results[0].online_amt },
-                { label: "सूट रक्कम:", value: data.results[0].discount },
+                { label: label1.trim(), value: data.results[0].carate_amount, visible: showLabels },
+                { label: "चालू कलम रक्कम:", value: data.results[0].amount, visible: true },
+                { label: "मागील बाकी:", value: data.results[0].pre_balance , visible: true},
+                { label: "एकूण रक्कम:", value: data.results[0].total_amount, visible: true },
+                { label: "रोख जमा रक्कम:", value: data.results[0].cash, visible: true },
+                { label: "ऑनलाईन जमा बँक :", value: data.results[0].online_acc, visible: true },
+                { label: "ऑनलाईन जमा रक्कम:", value: data.results[0].online_amt, visible: true },
+                { label: "सूट रक्कम:", value: data.results[0].discount, visible: true },
                 // { label: "जमा कॅरेट: 100 X  " + data.results[0].out_carate_100 + "  150 X  " + data.results[0].out_carate_150 + "  250 X  " + data.results[0].out_carate_250 + "  350 X  " +  data.results[0].out_carate_350, value: data.results[0].inCarat },
-                { label: label2.trim(), value: data.results[0].inCarat },
-                { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.results[0].balance },
+                { label: label2.trim(), value: data.results[0].inCarat, visible: showLabels },
+                { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.results[0].balance, visible: true },
                 //{ label: "बाकी कॅरेट : 100 X  " + data.results[0].carate_100 + "  150 X  " + data.results[0].carate_150 + "  250 X  " + data.results[0].carate_250 + "  350 X  " +  data.results[0].carate_350, value: ''} 
-                { label: label.trim(), value: ''} 
+                { label: label.trim(), value: '', visible: showLabels} 
                 // Add other bill details similarly
             ];
 
@@ -639,7 +656,7 @@ color: #666;
     <div >
       <center><h1>सावता फ्रुट सप्लायर्स</h1> 
         <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
-        <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
+        <p>मोबाईल नं:- 9860601102  / 9922676380 / 9156409970</p>
     </div> </center>
 </div>
 <div class="container2">
@@ -717,7 +734,7 @@ async function exportToExcel() {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        return fetch('http://52.66.126.53/routewiseSaleReport/generate-pdf', {
+        return fetch('http://103.174.102.89:3000/routewiseSaleReport/generate-pdf', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

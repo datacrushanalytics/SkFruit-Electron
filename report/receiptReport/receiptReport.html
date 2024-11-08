@@ -23,15 +23,7 @@
         margin-top: 20px;
     }
 
-    #route {
-        /* border-radius: 8px; */
-        height: 25%;
-        width: 150px;
-        border: 1px solid;
-        padding: 10px;
-        /* box-shadow: 5px 5px 5px grey; */
-        margin: 20px;
-    }
+
 
     body {
         font-family: Arial, sans-serif;
@@ -276,6 +268,18 @@
                 <label for="userType">Customer Name :</label>
                 <select class="drop" id="customer" name="name">
                 </select>
+                <br><br>
+                <label ifor="userType">Route :</label>
+                <select class="drop" id="route" name="name" onchange="setCustomer()">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br><br>
+
+                <label for="userType">User :</label>
+                <select class="drop" id="user" name="user">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br><br>
+
+                
                 <!-- <option value="User" disabled selected>Select Account</option> -->
                 <!-- <option value="User" disabled selected>Select Account</option> -->
                 <br><br>
@@ -319,8 +323,33 @@
 <script>
         
     document.addEventListener('DOMContentLoaded', function () {
-        // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer');
+        const now = new Date();
+
+    // Adjust to IST (UTC+5:30)
+    const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
+    const istTime = new Date(now.getTime() + istOffset);
+
+    // Format the date to YYYY-MM-DD
+    const todayIST = istTime.toISOString().split('T')[0];
+
+    // Set the value of the date inputs to today's date in IST
+    document.getElementById('fromdate').value = todayIST;
+    document.getElementById('todate').value = todayIST;
+
+        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    // Check if session data exists and if the user is an admin
+    var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+        // Check if the user is an admin and show/hide the button accordingly
+    if (isAdmin) {
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer','customer');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route','route_name');
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/user', 'user', 'added_by');
+        }else{
+          var route = sessionData[0].route;
+          fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route,'customer');
+          $('#customer').attr('required', 'required');
+        }
+
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId) {
@@ -350,7 +379,7 @@
 
         // Populate dropdown with API data
         data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.name || item.route_name).text(item.name || item.route_name));
+            dropdown.append($('<option></option>').attr('value', item.name || item.route_name || item.added_by).text(item.name || item.route_name || item.added_by));
         });
 
         // Initialize Select2
@@ -365,6 +394,11 @@
             document.querySelector('input.select2-search__field').focus();
         }, 0);
     });
+
+    function setCustomer(){
+        var route = document.getElementById('route').value
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customer/' +route  , 'customer','cust_name');
+    }
 
 </script>
 

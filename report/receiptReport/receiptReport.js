@@ -22,13 +22,15 @@ function fetchDataAndProcess() {
     var data = {
         from_date: formatDate(document.getElementById("fromdate").value),
         to_date: formatDate(document.getElementById("todate").value),
-        customer_name: getElementValueWithDefault('customer', '*')
+        customer_name: getElementValueWithDefault('customer', '*'),
+        route: getElementValueWithDefault('route', '*'),
+        user: getElementValueWithDefault('user', '*')
     };
     console.log(data);
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    return fetch('http://52.66.126.53/receiptReport', {
+    return fetch('http://103.174.102.89:3000/receiptReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -161,7 +163,7 @@ function populateTable4(data) {
 
 function deleteaccount(userId) {
     // Perform delete operation based on userId
-    fetch('http://52.66.126.53/receiptReport/deleteReceiptReport/' + userId, {
+    fetch('http://103.174.102.89:3000/receiptReport/deleteReceiptReport/' + userId, {
         method: 'DELETE'
     })
         .then(response => {
@@ -203,7 +205,7 @@ function deleteaccount(userId) {
 //         doc.text('Savata Fruits Suppliers', 50, 10);
 //         doc.setFontSize(12);
 //         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 20);
-//         doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 30);
+//         doc.text('Mobile NO:- 9860601102  / 9922676380 / 9156409970', 50, 30);
         
 //         let startY = 50;
         
@@ -258,7 +260,7 @@ function deleteaccount(userId) {
 //         doc.text('Savata Fruits Suppliers', 50, 20);
 //         doc.setFontSize(12);
 //         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
-//         doc.text('Mobile NO:- 9860601102 / 9175129393/ 9922676380 / 9156409970', 50, 40);
+//         doc.text('Mobile NO:- 9860601102  / 9922676380 / 9156409970', 50, 40);
         
 //         let startY = 50;
         
@@ -302,7 +304,7 @@ async function exportToExcel() {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        return fetch('http://52.66.126.53/receiptReport/generate-pdf', {
+        return fetch('http://103.174.102.89:3000/receiptReport/generate-pdf', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -366,7 +368,7 @@ function openModal(item) {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://52.66.126.53/receiptReport/' + item.receipt_id)
+    fetch('http://103.174.102.89:3000/receiptReport/' + item.receipt_id)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -610,7 +612,7 @@ function openModal(item) {
     <div>
         <h1>सावता फ्रुट सप्लायर्स</h1>
         <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
-        <p>मोबाईल नं:- 9860601102 / 9175129393/ 9922676380 / 9156409970</p>
+        <p>मोबाईल नं:- 9860601102  / 9922676380 / 9156409970</p>
     </div>
 </div>
 <div class="container2">

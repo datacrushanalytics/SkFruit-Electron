@@ -162,8 +162,12 @@
                 </div>
                 <br>
                 <div style="margin-left: 400px;">
+                    <label for="total">Expenses :</label>
+                    <input type="number" id="expenses" name="expenses" placeholder="Expenses" required readonly>
+                </div>
+                <div style="margin-left: 400px;">
                     <label for="total">Total Amount :</label>
-                    <input type="number" id="total" name="name" placeholder="Total Amount " required>
+                    <input type="number" id="total" name="name" placeholder="Total Amount " required readonly>
                 </div>
                 <br>
                 <div class="four-row">
@@ -176,9 +180,9 @@
 
             document.addEventListener('DOMContentLoaded', async function () {
                 // Fetch data from API and populate Select2 dropdowns
-                // await fetchAndPopulateDropdown('http://52.66.126.53/list/Supplier', 'supplier', 'name');
-                await fetchAndPopulateDropdown('http://52.66.126.53/productData/', 'product', 'name');
-                // await fetchAndPopulateDropdown('http://52.66.126.53/vehicleData', 'vehicle', 'vehicle_no');
+                // await fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Supplier', 'supplier', 'name');
+                await fetchAndPopulateDropdown('http://103.174.102.89:3000/productData/', 'product', 'name');
+                // await fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle', 'vehicle_no');
                 
 
         
@@ -277,7 +281,7 @@
                     // Set the value of the date input
                     document.getElementById("date").value = formattedDate;
 
-
+                    document.getElementById("expenses").value = user.gadi_number;
                     // document.getElementById("date").value = user.date.getFullYear() + '-' + (String(currentDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(currentDate.getDate()).padStart(2, '0'));
                     //document.getElementById("total").value = user.BillAmount;
 
@@ -286,7 +290,7 @@
                     // setDropdownValue('vehicle', user.gadi_number);
 
                     
-            fetch('http://52.66.126.53/purchaseproductData/' + (user.id))
+            fetch('http://103.174.102.89:3000/purchaseproductData/' + (user.id))
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -359,7 +363,7 @@
 
                 console.log(formData)
 
-                fetch('http://52.66.126.53/purchaseproductData/insertPurchaseproduct', {
+                fetch('http://103.174.102.89:3000/purchaseproductData/insertPurchaseproduct', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -415,7 +419,7 @@
                 // Perform delete operation based on userId
                 var button = event.target;
                 var row = button.parentNode.parentNode;
-                fetch('http://52.66.126.53/purchaseproductData/deletepurchaseproductId/' + userId, {
+                fetch('http://103.174.102.89:3000/purchaseproductData/deletepurchaseproductId/' + userId, {
                     method: 'DELETE'
                 })
                     .then(response => {
@@ -451,7 +455,7 @@
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    await fetch('http://52.66.126.53/purchaseData/updatePurchase/' + formData.purchase_id, {
+    await fetch('http://103.174.102.89:3000/purchaseData/updatePurchase/' + formData.purchase_id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'

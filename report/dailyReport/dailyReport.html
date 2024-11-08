@@ -264,16 +264,18 @@
             <table>
                 <tr>
                     <th>Sr. No</th>
+                    <th>User Name</th>
                     <th>BILL NO</th>
                     <th>DATE</th>
                     <th>Customer Name</th>
                     <th>Route</th>
-                    <th>Amount</th>
+                    <th>Sale Amount</th>
                     <th>Cash</th>
                     <th>Online Amount</th>
                     <th>Discount</th>
                     <th>In Carate</th>
-                    <th>Carate Amount</th>
+                    <th>Out Carate</th>
+                    <th>Balance</th>
                     <th>Validate</th>
                     <th>Bill</th>
                     <th>Communication</th>
@@ -296,12 +298,14 @@
                     <th>DATE</th>
                     <th>Customer Name</th>
                     <th>Mobile No</th>
-                    <th>Note</th>
                     <th>Cash</th>
                     <th>Online Amount</th>
                     <th>Discount</th>
                     <th>In Carate</th>
                     <th>Amount</th>
+                    <th>User</th>
+                    <th>Note</th>
+                    <th>Remaining Balance</th>
                     <th>Validate</th>
                     <th>Bill</th>
                     <th>Communication</th>
@@ -329,28 +333,28 @@
                 <tr>
                     <th>Sale</th>
                     <td id='sale'></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td id="saleCash"></td>
+                    <td id="saleOnline"></td>
+                    <td id="saleDiscount"></td>
                     <td></td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <th>Total Cash</th>
                     <td></td>
                     <td id="saleCash"></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                </tr>
+                </tr> -->
                 <tr>
-                    <th>Total Receipt</th>
+                    <th>Receipt</th>
                     <td></td>
                     <td id="receiptCash"></td>
                     <td id="receiptOnline"></td>
-                    <td></td>
+                    <td id="receiptDiscount"></td>
                     <td></td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <th>Total Online</th>
                     <td></td>
                     <td></td>
@@ -373,7 +377,7 @@
                     <td></td>
                     <td id="receiptDiscount"></td>
                     <td></td>
-                </tr>
+                </tr> -->
                 <tr>
                     <th>Total</th>
                     <th id="grandSale"></th>
@@ -401,9 +405,21 @@
 <script>
         
     document.addEventListener('DOMContentLoaded', function () {
+        const now = new Date();
+
+    // Adjust to IST (UTC+5:30)
+    const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
+    const istTime = new Date(now.getTime() + istOffset);
+
+    // Format the date to YYYY-MM-DD
+    const todayIST = istTime.toISOString().split('T')[0];
+
+    // Set the value of the date inputs to today's date in IST
+    document.getElementById('fromdate').value = todayIST;
+    document.getElementById('todate').value = todayIST;
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name');
-        fetchAndPopulateDropdown('http://52.66.126.53/fetchData/user', 'user', 'added_by');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route','route_name');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/user', 'user', 'added_by');
         var dailyReportData = JSON.parse(localStorage.getItem('dailyReportData'));
         if(dailyReportData){
             console.log("DailyReport",dailyReportData)

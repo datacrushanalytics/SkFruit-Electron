@@ -127,7 +127,7 @@
         th,
     td {
         border: 1px solid #dddddd;
-        background-color: #eafffb;
+        /* background-color: #eafffb; */
         text-align: left;
         padding: 12px;
     }
@@ -212,7 +212,7 @@
 <body>
     <div id="loader"></div>
     <div class="container">
-        <h1 align="center">Sale Report</h1><br>
+        <h1 align="center">Route Sale</h1><br>
         <hr>
         <br>
         <div class="container1">
@@ -237,6 +237,7 @@
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
                     <button type="submit" style="background-color: darkgrey;" class="button">Submit</button>
+                    <a href="../Menu.html"><button type="button" class="button">Back</button></a>
                     <!-- <button type='button' class="button" onclick="exportToExcel()" id="button2">Export</button> -->
                 <!-- </div> -->
             </form>
@@ -265,8 +266,8 @@
         
     document.addEventListener('DOMContentLoaded',async function () {
         // Fetch data from API and populate Select2 dropdowns
-        // fetchAndPopulateDropdown('http://52.66.126.53/list/Customer', 'customer');
-        fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route');
+        // fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'customer');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route');
 
 
 
@@ -287,15 +288,15 @@
 
 
 
-        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    var sessionData = JSON.parse(localStorage.getItem('sessionData'));
     // Check if session data exists and if the user is an admin
     var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
         // Check if the user is an admin and show/hide the button accordingly
     if (isAdmin) {
-      fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route', 'route_name');
+      fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route', 'route_name');
         }else{
           var route = sessionData[0].route;
-          await fetchAndPopulateDropdown('http://52.66.126.53/routeData', 'route','route_name',selectedValue=route,readOnly = true);
+          await fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route','route_name',selectedValue=route,readOnly = true);
           fetchDataAndProcess();
         }
     });

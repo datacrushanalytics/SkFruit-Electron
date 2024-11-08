@@ -14,7 +14,7 @@
       <form id="loginForm" method="post">
         <input type="text" id="username" name="username" required placeholder="User Name" required>
   
-        <input type="text" id="password" name="password" required placeholder="Password" required>
+        <input type="password" id="password" name="password" required placeholder="Password" required>
         <div class="loginbtn">
         <!-- <a href="../section/Home.html"><button type="button" type="submit" onclick="login()" style="text-decoration: none;">LOGIN</button> </a>  -->
        <button type="button" id= "submitButton" type="submit" onclick="login()" style="text-decoration: none;">LOGIN</button>
@@ -41,7 +41,7 @@
 function login() {
   localStorage.removeItem('sessionData');
 
-      fetch('http://52.66.126.53/user/login', {
+      fetch('http://103.174.102.89:3000/user/login', {
         method: 'POST',
         body: JSON.stringify({
           name: document.getElementById("username").value,

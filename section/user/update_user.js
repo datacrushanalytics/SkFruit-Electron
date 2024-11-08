@@ -12,7 +12,7 @@ async function updateUser() {
             status: status
         };
 
-        const response = await fetch('http://52.66.126.53/userData/updateUser/'+ parseInt(document.getElementById("id").value), {
+        const response = await fetch('http://103.174.102.89:3000/userData/updateUser/'+ parseInt(document.getElementById("id").value), {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

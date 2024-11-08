@@ -11,7 +11,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    fetch('http://52.66.126.53/accountData/insertaccount', {
+    fetch('http://103.174.102.89:3000/accountData/insertaccount', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -31,7 +31,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
             carate_350 : parseInt(document.getElementById("carate2350").value) || 0
         }
         console.log(form2)
-        const response1 =  fetch('http://52.66.126.53/carateuserData/insertcarateuser', {
+        const response1 =  fetch('http://103.174.102.89:3000/carateuserData/insertcarateuser', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
