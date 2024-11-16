@@ -338,6 +338,7 @@
                             <th>Gadi Number</th>
                             <!-- <th>Bata</th> -->
                             <th>SUPPLIER_NAME</th>
+                            <th>EXPENSES</th>
                             <th>BILL AMT</th>
                             <th>TOTAL QTY</th>
                             <th>VIEW</th>
@@ -373,8 +374,8 @@ document.getElementById('todate').value = todayIST;
         // Fetch data from API and populate Select2 dropdowns
         fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicleNumber','vehicle_no');
         fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Supplier', 'supplier','name');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'bata','bata');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'purchase_id', 'purchase_id');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'bata','bata');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/purchaseId', 'purchase_id', 'purchase_id');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {

@@ -161,6 +161,7 @@
                 <br>
                 <div class="form-group">
                     <button class="border-hover" style="background-color: green; position: relative; left: 342px;" type="submit">Save</button>
+                    <button class="border-hover" style="background-color: green; position: relative; left: 342px;" onclick="confirmAndProceed()">Back</button>
                 </div>
             </form>
         </div>
@@ -193,7 +194,7 @@ function confirmAndProceed() {
             allowNavigation = true; // Mark that navigation is confirmed
 
             // Call the GET API to fetch the IDs
-            fetch(`http://localhost:3000/fetchData/purchaseProduct/${document.getElementById('no').value}`, {
+            fetch(`http://103.174.102.89:3000/fetchData/purchaseProduct/${document.getElementById('no').value}`, {
                 method: 'GET',
                 keepalive: true, // Ensures the request completes
             })
@@ -206,7 +207,7 @@ function confirmAndProceed() {
             .then(data => {
                 // Loop through IDs and call the DELETE API for each
                 const deletePromises = data.map(item => {
-                    return fetch(`http://103.174.102.89:3000/productproductData/deletepurchaseproductId/${item.id}`, {
+                    return fetch(`http://103.174.102.89:3000/purchaseproductData/deletepurchaseproductId/${item.id}`, {
                         method: 'DELETE',
                         keepalive: true
                     })

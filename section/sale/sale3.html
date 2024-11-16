@@ -771,8 +771,8 @@ function confirmAndProceed() {
           fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'Route','route_name',selectedValue=route,readOnly = true);
         }
     
-    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'product', 'product_name');
-    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'bta', 'bata');
+    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'product', 'product_name');
+    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'bta', 'bata');
     fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'onlineAcc', 'name');
     
   });
@@ -846,11 +846,22 @@ function confirmAndProceed() {
     }, 0);
   });
 
-  function setCustomer(){
-        var route = document.getElementById('Route').value
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'grahk','name');
-          fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'number','mobile_no');
+  
+  function setCustomer() {
+    var route = document.getElementById('Route').value;
+    
+    // Check if the dropdowns already have selected values
+    var grahkDropdown = document.getElementById('grahk');
+    var numberDropdown = document.getElementById('number');
+    
+    if (!grahkDropdown.value) {
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' + route, 'grahk', 'name');
     }
+
+    if (!numberDropdown.value) {
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' + route, 'number', 'mobile_no');
+    }
+}
 
   function openPopup() {
     event.preventDefault();

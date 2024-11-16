@@ -73,7 +73,7 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['id', 'date', 'gadi_number', 'supplier_name', 'BillAmount', 'TotalQuantity'];
+    var columnsToDisplay = ['id', 'date', 'gadi_number', 'supplier_name', 'expenses','BillAmount', 'TotalQuantity'];
     var counter = 1;
     var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
     console.log(data.reports);

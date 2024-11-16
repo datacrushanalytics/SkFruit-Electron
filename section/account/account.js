@@ -92,7 +92,28 @@ function populateTable(data) {
         deleteButton.style.backgroundColor = 'red';
         deleteButton.textContent = 'Delete';
         deleteButton.addEventListener('click', function() {
-          deleteaccount(item.id); // Pass the user id to the delete function
+          // SweetAlert2 confirmation dialog
+          Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you really want to delete this Account?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Call the deleteUser function only if confirmed
+                deleteaccount(item.id); // Pass the user id to the delete function
+
+                // Optional: Show success message
+                Swal.fire(
+                    'Deleted!',
+                    'The Account has been deleted.',
+                    'success'
+                );
+            }
+          });
         });
         deleteCell.appendChild(deleteButton);
     }

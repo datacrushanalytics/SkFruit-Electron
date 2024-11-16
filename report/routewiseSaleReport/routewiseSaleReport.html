@@ -379,8 +379,8 @@
             fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'customer','name');
             fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route','route_name');
             fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/user', 'user', 'added_by');
-            fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'product', 'product_name');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'bata', 'bata');
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'product', 'product_name');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'bata', 'bata');
         fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle','vehicle_no');
         }else{
             var route = sessionData[0].route;
@@ -388,8 +388,8 @@
             fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customer/' +route  , 'customer','cust_name');
             fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route','route_name',selectedValue=route,readOnly = true);
             fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/user', 'user', 'added_by',selectedValue=user,readOnly = true);
-            fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'product', 'product_name',selectedValue= null,readOnly = true);
-            fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'bata', 'bata',selectedValue=null,readOnly = true);
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'product', 'product_name',selectedValue= null,readOnly = true);
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'bata', 'bata',selectedValue=null,readOnly = true);
             fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle','vehicle_no',selectedValue=null,readOnly = true);
         }
     });
