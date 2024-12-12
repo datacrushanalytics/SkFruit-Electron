@@ -453,7 +453,7 @@
       <div class="row-container">
         <div class="input-wrapper">
           <label for="nag" id="nagLabel">नग :</label>
-          <input type="text" id="nag" name="nag" placeholder="नग" value="1" readonly>
+          <input type="text" id="nag" name="nag" placeholder="नग" value="1" onchange="updateTotal()">
           <input type="hidden" id="nag1" name="nag1">
         </div>
 
@@ -1087,8 +1087,16 @@ function toggleReadonly(){
   }
 
   function carate1() {
+    console.log("Data 1", document.getElementById("carate1100").value)
+    console.log("Data 1", document.getElementById("carate2100").value)
+    console.log("Data 2", document.getElementById("carate1150").value)
+    console.log("Data 2", document.getElementById("carate2150").value)
+    console.log("Data 3", document.getElementById("carate1250").value)
+    console.log("Data 3", document.getElementById("carate2250").value)
+    console.log("Data 4", document.getElementById("carate1350").value)
+    console.log("Data 4", document.getElementById("carate2350").value)
 
-    if (parseInt(document.getElementById("carate1100").value) > parseInt(document.getElementById('carate2100').value)){
+    if (parseInt(document.getElementById("carate1100").value) > (parseInt(document.getElementById('carate22100').value) + parseInt(document.getElementById("carate100").value))){
       Swal.fire({
               icon: 'error',
               title: 'Oops...',
@@ -1097,7 +1105,7 @@ function toggleReadonly(){
         document.getElementById("carate1100").value = 0;
     }
 
-    if (parseInt(document.getElementById("carate1150").value) > parseInt(document.getElementById('carate2150').value)){
+    if (parseInt(document.getElementById("carate1150").value) > (parseInt(document.getElementById('carate22150').value) + parseInt(document.getElementById("carate150").value))){
       Swal.fire({
               icon: 'error',
               title: 'Oops...',
@@ -1106,7 +1114,7 @@ function toggleReadonly(){
         document.getElementById("carate1150").value = 0;
     }
 
-    if (parseInt(document.getElementById("carate1250").value) > parseInt(document.getElementById('carate2250').value)){
+    if (parseInt(document.getElementById("carate1250").value) > (parseInt(document.getElementById('carate22250').value) + parseInt(document.getElementById("carate250").value))){
       Swal.fire({
               icon: 'error',
               title: 'Oops...',
@@ -1116,7 +1124,7 @@ function toggleReadonly(){
     }
 
 
-    if (parseInt(document.getElementById("carate1350").value) > parseInt(document.getElementById('carate2350').value)){
+    if (parseInt(document.getElementById("carate1350").value) > (parseInt(document.getElementById('carate22350').value) + parseInt(document.getElementById("carate350").value))){
       Swal.fire({
               icon: 'error',
               title: 'Oops...',
