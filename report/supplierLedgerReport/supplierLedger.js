@@ -64,7 +64,7 @@ function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
 
-    var columnsToDisplay = ['record_id','type','date', 'account_name', 'mobile_no','reference','cash','from_account', 'online','expenses','prev_balance','discount','amount','comment'];
+    var columnsToDisplay = ['record_id','type','date', 'account_name', 'mobile_no','reference','amount','expenses','cash','from_account', 'online','discount','prev_balance','comment'];
     var counter = 1;
     console.log(data.reports);
     if (data.reports.length === 0) {
@@ -118,114 +118,114 @@ function populateTable4(data) {
     valueCell.style.fontWeight = 'bold'; // Make value text bold
 }
 
-function populateTable5(data) {
-    var tbody = document.getElementById('tableBody1');
-    tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['p_id', 'date', 'from_account', 'to_account', 'comment', 'prev_balance', 'amounr'];
-    var counter = 1;
-    console.log(data.Receipt);
-    if (data.Receipt.length === 0) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'No data found.',
-          });
+// function populateTable5(data) {
+//     var tbody = document.getElementById('tableBody1');
+//     tbody.innerHTML = ''; // Clear existing rows
+//     var columnsToDisplay = ['p_id', 'date', 'from_account', 'to_account', 'comment', 'prev_balance', 'amounr'];
+//     var counter = 1;
+//     console.log(data.Receipt);
+//     if (data.Receipt.length === 0) {
+//         Swal.fire({
+//             icon: 'error',
+//             title: 'Oops...',
+//             text: 'No data found.',
+//           });
 
-        return;
-    }
-    let grandTotalPreBalance = 0;
-    let grandTotalAmounr = 0;
-    let lastPreBalance = 0; // Variable to store the previous balance of the last entry
-    let lastAmounr = 0; // Variable to store the amount of the last entry
+//         return;
+//     }
+//     let grandTotalPreBalance = 0;
+//     let grandTotalAmounr = 0;
+//     let lastPreBalance = 0; // Variable to store the previous balance of the last entry
+//     let lastAmounr = 0; // Variable to store the amount of the last entry
 
-    data.Receipt.forEach(function (item, index) {
-        var row = tbody.insertRow();
-        var cell = row.insertCell();
-        cell.textContent = counter++;
-        columnsToDisplay.forEach(function (key) {
-            var cell = row.insertCell();
-            if (key === 'date') {
-                var utcDate = new Date(item[key]);
-                var options = {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    timeZone: 'Asia/Kolkata'
-                };
-                cell.textContent = utcDate.toLocaleString('en-IN', options);
-            } else {
-                cell.textContent = item[key];
-                if (key === 'prev_balance') {
-                    grandTotalPreBalance += item[key];
-                    if (index === data.Receipt.length - 1) {
-                        lastPreBalance = item[key]; // Capture the previous balance of the last entry
-                    }
-                }
-                if (key === 'amounr') {
-                    grandTotalAmounr += item[key];
-                    if (index === data.Receipt.length - 1) {
-                        lastAmounr = item[key]; // Capture the amount of the last entry
-                    }
-                }
-            }
-        });
-    });
+//     data.Receipt.forEach(function (item, index) {
+//         var row = tbody.insertRow();
+//         var cell = row.insertCell();
+//         cell.textContent = counter++;
+//         columnsToDisplay.forEach(function (key) {
+//             var cell = row.insertCell();
+//             if (key === 'date') {
+//                 var utcDate = new Date(item[key]);
+//                 var options = {
+//                     year: 'numeric',
+//                     month: '2-digit',
+//                     day: '2-digit',
+//                     timeZone: 'Asia/Kolkata'
+//                 };
+//                 cell.textContent = utcDate.toLocaleString('en-IN', options);
+//             } else {
+//                 cell.textContent = item[key];
+//                 if (key === 'prev_balance') {
+//                     grandTotalPreBalance += item[key];
+//                     if (index === data.Receipt.length - 1) {
+//                         lastPreBalance = item[key]; // Capture the previous balance of the last entry
+//                     }
+//                 }
+//                 if (key === 'amounr') {
+//                     grandTotalAmounr += item[key];
+//                     if (index === data.Receipt.length - 1) {
+//                         lastAmounr = item[key]; // Capture the amount of the last entry
+//                     }
+//                 }
+//             }
+//         });
+//     });
 
-    // Append grand total row
-    var row = tbody.insertRow();
-    row.insertCell().textContent = ''; // Empty cell for serial number
-    row.insertCell().textContent = ''; // Empty cell for date
-    row.insertCell().textContent = ''; // Empty cell for from_account
-    row.insertCell().textContent = ''; // Empty cell for to_account
-    row.insertCell().textContent = ''; // Empty cell for comment
-    row.insertCell().textContent = ''; // Empty cell for prev_balance
+//     // Append grand total row
+//     var row = tbody.insertRow();
+//     row.insertCell().textContent = ''; // Empty cell for serial number
+//     row.insertCell().textContent = ''; // Empty cell for date
+//     row.insertCell().textContent = ''; // Empty cell for from_account
+//     row.insertCell().textContent = ''; // Empty cell for to_account
+//     row.insertCell().textContent = ''; // Empty cell for comment
+//     row.insertCell().textContent = ''; // Empty cell for prev_balance
 
-    // Cell for Grand Total label
-    var labelCell = row.insertCell();
-    labelCell.textContent = 'Grand Total:';
-    labelCell.style.fontWeight = 'bold'; // Make label text bold
+//     // Cell for Grand Total label
+//     var labelCell = row.insertCell();
+//     labelCell.textContent = 'Grand Total:';
+//     labelCell.style.fontWeight = 'bold'; // Make label text bold
 
-    // Cell for Grand Total amounr
-    var amounrCell = row.insertCell();
-    amounrCell.textContent = grandTotalAmounr;
-    amounrCell.style.fontWeight = 'bold'; // Make value text bold
+//     // Cell for Grand Total amounr
+//     var amounrCell = row.insertCell();
+//     amounrCell.textContent = grandTotalAmounr;
+//     amounrCell.style.fontWeight = 'bold'; // Make value text bold
 
-    // // Append last entry's previous balance row
-    // var lastPreBalanceRow = tbody.insertRow();
-    // lastPreBalanceRow.insertCell().textContent = ''; // Empty cell for serial number
-    // lastPreBalanceRow.insertCell().textContent = ''; // Empty cell for date
-    // lastPreBalanceRow.insertCell().textContent = ''; // Empty cell for from_account
-    // lastPreBalanceRow.insertCell().textContent = ''; // Empty cell for to_account
-    // lastPreBalanceRow.insertCell().textContent = ''; // Empty cell for comment
+//     // // Append last entry's previous balance row
+//     // var lastPreBalanceRow = tbody.insertRow();
+//     // lastPreBalanceRow.insertCell().textContent = ''; // Empty cell for serial number
+//     // lastPreBalanceRow.insertCell().textContent = ''; // Empty cell for date
+//     // lastPreBalanceRow.insertCell().textContent = ''; // Empty cell for from_account
+//     // lastPreBalanceRow.insertCell().textContent = ''; // Empty cell for to_account
+//     // lastPreBalanceRow.insertCell().textContent = ''; // Empty cell for comment
 
-    // // Cell for Last Entry Previous Balance label
-    // var lastPreBalanceLabelCell = lastPreBalanceRow.insertCell();
-    // lastPreBalanceLabelCell.textContent = 'Previous Balance:';
-    // lastPreBalanceLabelCell.style.fontWeight = 'bold'; // Make label text bold
+//     // // Cell for Last Entry Previous Balance label
+//     // var lastPreBalanceLabelCell = lastPreBalanceRow.insertCell();
+//     // lastPreBalanceLabelCell.textContent = 'Previous Balance:';
+//     // lastPreBalanceLabelCell.style.fontWeight = 'bold'; // Make label text bold
 
-    // // Cell for Last Entry Previous Balance value
-    // var lastPreBalanceValueCell = lastPreBalanceRow.insertCell();
-    // lastPreBalanceValueCell.textContent = lastPreBalance;
-    // lastPreBalanceValueCell.style.fontWeight = 'bold'; // Make value text bold
+//     // // Cell for Last Entry Previous Balance value
+//     // var lastPreBalanceValueCell = lastPreBalanceRow.insertCell();
+//     // lastPreBalanceValueCell.textContent = lastPreBalance;
+//     // lastPreBalanceValueCell.style.fontWeight = 'bold'; // Make value text bold
 
-    // Append last entry's balance after subtraction row
-    var lastBalanceRow = tbody.insertRow();
-    lastBalanceRow.insertCell().textContent = ''; // Empty cell for serial number
-    lastBalanceRow.insertCell().textContent = ''; // Empty cell for date
-    lastBalanceRow.insertCell().textContent = ''; // Empty cell for from_account
-    lastBalanceRow.insertCell().textContent = ''; // Empty cell for to_account
-    lastBalanceRow.insertCell().textContent = ''; // Empty cell for comment
+//     // Append last entry's balance after subtraction row
+//     var lastBalanceRow = tbody.insertRow();
+//     lastBalanceRow.insertCell().textContent = ''; // Empty cell for serial number
+//     lastBalanceRow.insertCell().textContent = ''; // Empty cell for date
+//     lastBalanceRow.insertCell().textContent = ''; // Empty cell for from_account
+//     lastBalanceRow.insertCell().textContent = ''; // Empty cell for to_account
+//     lastBalanceRow.insertCell().textContent = ''; // Empty cell for comment
 
-    // // Cell for Last Entry Balance After Subtraction label
-    var lastBalanceLabelCell = lastBalanceRow.insertCell();
-    lastBalanceLabelCell.textContent = 'Total Previous Balance:';
-    lastBalanceLabelCell.style.fontWeight = 'bold'; // Make label text bold
+//     // // Cell for Last Entry Balance After Subtraction label
+//     var lastBalanceLabelCell = lastBalanceRow.insertCell();
+//     lastBalanceLabelCell.textContent = 'Total Previous Balance:';
+//     lastBalanceLabelCell.style.fontWeight = 'bold'; // Make label text bold
 
-    // Cell for Last Entry Balance After Subtraction value
-    var lastBalanceValueCell = lastBalanceRow.insertCell();
-    lastBalanceValueCell.textContent = lastPreBalance - lastAmounr;
-    lastBalanceValueCell.style.fontWeight = 'bold'; // Make value text bold
-}
+//     // Cell for Last Entry Balance After Subtraction value
+//     var lastBalanceValueCell = lastBalanceRow.insertCell();
+//     lastBalanceValueCell.textContent = lastPreBalance - lastAmounr;
+//     lastBalanceValueCell.style.fontWeight = 'bold'; // Make value text bold
+// }
 
 async function exportToExcel() {
     try {

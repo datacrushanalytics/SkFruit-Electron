@@ -298,16 +298,17 @@
 function totalBalance(){
     var total = 0;
     total = parseInt(document.getElementById('bill_cash').value || 0) + parseInt(document.getElementById('online').value || 0) + parseInt(document.getElementById('discount').value || 0)
-    if(document.getElementById('previousBalance').value - total < 0){
-        Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: "Value Should be Grater than Zero",
-            });
+    document.getElementById('amount').value = document.getElementById('previousBalance').value- total 
+    // if(document.getElementById('previousBalance').value - total < 0){
+    //     Swal.fire({
+    //           icon: 'error',
+    //           title: 'Oops...',
+    //           text: "Value Should be Grater than Zero",
+    //         });
 
-    }else{
-        document.getElementById('amount').value = document.getElementById('previousBalance').value- total 
-    }
+    // }else{
+    //     document.getElementById('amount').value = document.getElementById('previousBalance').value- total 
+    // }
 
 }
 

@@ -64,7 +64,7 @@ function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
 
-    var columnsToDisplay = ['date', 'bill_no', 'cust_name','cash','online_acc', 'online_amt','balance'];
+    var columnsToDisplay = ['date', 'bill_no', 'cust_name','online_acc', 'online_amt'];
     var counter = 1;
     console.log(data.reports);
     if (data.reports.length === 0) {
