@@ -110,7 +110,7 @@ function populateTable4(data) {
                     let button = document.createElement('button');
                     button.textContent = "Edit";
                     button.className = 'button';
-                    button.style.backgroundColor = 'green';
+                    button.style.backgroundColor = '#26a653';
                     button.onclick = function() {
                         localStorage.removeItem('saleData');
                         console.log('Editing Sale: ' + JSON.stringify(item));
@@ -126,6 +126,7 @@ function populateTable4(data) {
                     let button2 = document.createElement('button');
                     button2.textContent = "Verify"; // Change this to the desidarkgrey button text
                     button2.className = 'button';
+                    button2.style.backgroundColor = '#18b3a4';
                     button2.onclick = async function() {
                         // Add the functionality for the second button here
                         console.log('Another action for receipt: ' + JSON.stringify(item));
@@ -193,7 +194,7 @@ function populateTable4(data) {
         var buttonCell = row.insertCell();
         var openPopupButton = document.createElement('button');
         openPopupButton.className = 'button';
-        openPopupButton.style.backgroundColor = 'green';
+        openPopupButton.style.backgroundColor = '#26a653';
         openPopupButton.textContent = 'View';
         openPopupButton.addEventListener('click', function () {
             // console.log(item.summary.split('(')[0])
@@ -392,7 +393,7 @@ function populateTable5(data) {
 
                     let button1 = document.createElement('button');
                     button1.textContent = "Edit";
-                    button1.style.backgroundColor = 'green';
+                    button1.style.backgroundColor = '#26a653';
                     button1.className = 'button';
                     button1.onclick = function() {
                         localStorage.removeItem('receiptData');
@@ -408,6 +409,7 @@ function populateTable5(data) {
                     let button2 = document.createElement('button');
                     button2.textContent = "Verify"; // Change this to the desidarkgrey button text
                     button2.className = 'button';
+                    button2.style.backgroundColor = '#18b3a4';
                     button2.onclick = async function() {
                         // Add the functionality for the second button here
                         console.log('Another action for receipt: ' + JSON.stringify(item));
@@ -476,7 +478,7 @@ function populateTable5(data) {
         var buttonCell = row.insertCell();
         var openPopupButton = document.createElement('button');
         openPopupButton.className = 'button';
-        openPopupButton.style.backgroundColor = 'green';
+        openPopupButton.style.backgroundColor = '#26a653';
         openPopupButton.textContent = 'View';
         openPopupButton.addEventListener('click', function () {
             // console.log(item.summary.split('(')[0])

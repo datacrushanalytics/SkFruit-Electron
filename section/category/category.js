@@ -47,6 +47,7 @@ function populateTable(data) {
          // Add Delete button
          var deleteCell = row.insertCell();
          var deleteButton = document.createElement('button');
+         deleteButton.style.backgroundColor = '#ff355f';
          deleteButton.className = 'button delete-button';
          deleteButton.textContent = 'Delete';
          deleteButton.addEventListener('click', function() {
@@ -56,7 +57,7 @@ function populateTable(data) {
                 text: "Do you really want to delete this Category?",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
+                confirmButtonColor: '#ff355f',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {

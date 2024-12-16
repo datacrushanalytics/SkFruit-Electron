@@ -101,80 +101,71 @@ function populateTable4(data) {
     });
 
 }
-
 function populateTable5(data) {
+    // Clear the existing rows in the table
     var tbody = document.getElementById('tableBody1');
-    tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['p_id', 'date', 'from_account', 'to_account', 'comment', 'prev_balance', 'amounr'];
-    var counter = 1;
-    console.log(data.Receipt);
-    if (data.Receipt.length === 0) {
+    tbody.innerHTML = ''; // Clear any existing rows
+    
+    if (!data.Receipt || data.Receipt.length === 0) {
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
             text: 'No data found.',
-          });
-
+        });
         return;
     }
+
+    var columnsToDisplay = ['p_id', 'date', 'from_account', 'to_account', 'comment', 'prev_balance', 'amounr'];
+    var counter = 1;
     let grandTotalPreBalance = 0;
     let grandTotalAmounr = 0;
-    let lastPreBalance = 0; // Variable to store the previous balance of the last entry
-    let lastAmounr = 0; // Variable to store the amount of the last entry
 
-    data.Receipt.forEach(function (item, index) {
+    // Loop through each item in the Receipt data
+    data.Receipt.forEach(function (item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
         cell.textContent = counter++;
+
         columnsToDisplay.forEach(function (key) {
             var cell = row.insertCell();
+
             if (key === 'date') {
                 var utcDate = new Date(item[key]);
-                var options = {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    timeZone: 'Asia/Kolkata'
-                };
+                var options = { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' };
                 cell.textContent = utcDate.toLocaleString('en-IN', options);
             } else {
                 cell.textContent = item[key];
                 if (key === 'prev_balance') {
-                    grandTotalPreBalance += item[key];
-                    if (index === data.Receipt.length - 1) {
-                        lastPreBalance = item[key]; // Capture the previous balance of the last entry
-                    }
+                    grandTotalPreBalance += parseFloat(item[key] || 0);
                 }
                 if (key === 'amounr') {
-                    grandTotalAmounr += item[key];
-                    if (index === data.Receipt.length - 1) {
-                        lastAmounr = item[key]; // Capture the amount of the last entry
-                    }
+                    grandTotalAmounr += parseFloat(item[key] || 0);
                 }
             }
         });
     });
 
-   
-    // // Append last entry's previous balance row
-    // var lastPreBalanceRow = tbody.insertRow();
-    // lastPreBalanceRow.insertCell().textContent = ''; // Empty cell for serial number
-    // lastPreBalanceRow.insertCell().textContent = ''; // Empty cell for date
-    // lastPreBalanceRow.insertCell().textContent = ''; // Empty cell for from_account
-    // lastPreBalanceRow.insertCell().textContent = ''; // Empty cell for to_account
-    // lastPreBalanceRow.insertCell().textContent = ''; // Empty cell for comment
+    // Add the Grand Total Row
+    var totalRow = tbody.insertRow();
 
-    // // Cell for Last Entry Previous Balance label
-    // var lastPreBalanceLabelCell = lastPreBalanceRow.insertCell();
-    // lastPreBalanceLabelCell.textContent = 'Previous Balance:';
-    // lastPreBalanceLabelCell.style.fontWeight = 'bold'; // Make label text bold
+    // Empty cells for serial number, date, etc.
+    totalRow.insertCell().textContent = ''; // Serial number
+    totalRow.insertCell().textContent = ''; // Date
+    totalRow.insertCell().textContent = ''; // From account
+    totalRow.insertCell().textContent = ''; // To account
+    totalRow.insertCell().textContent = ''; // Comment
 
-    // // Cell for Last Entry Previous Balance value
-    // var lastPreBalanceValueCell = lastPreBalanceRow.insertCell();
-    // lastPreBalanceValueCell.textContent = lastPreBalance;
-    // lastPreBalanceValueCell.style.fontWeight = 'bold'; // Make value text bold
+    // Cell for "Grand Total" label
+    var grandTotalLabelCell = totalRow.insertCell();
+    grandTotalLabelCell.textContent = 'Grand Total:';
+    grandTotalLabelCell.style.fontWeight = 'bold';
+    grandTotalLabelCell.colSpan = 2; // Adjust if needed to span across columns
 
-    // Append last entry's balance after subtraction row
+    // Cell for the Grand Total value for "amounr"
+    var grandTotalValueCell = totalRow.insertCell();
+    grandTotalValueCell.textContent = grandTotalAmounr.toFixed(2); // Display grand total with 2 decimal places
+    grandTotalValueCell.style.fontWeight = 'bold';
+    grandTotalValueCell.style.textAlign = 'right'; // Align to the right
 }
 
 async function exportToExcel() {
