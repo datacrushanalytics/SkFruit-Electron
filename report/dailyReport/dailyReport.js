@@ -1,3 +1,4 @@
+
 function getElementValueWithDefault(id, defaultValue) {
     var element = document.getElementById(id);
     return element && element.value ? element.value : defaultValue;
@@ -351,7 +352,7 @@ function populateTable4(data) {
 function populateTable5(data) {
     var tbody = document.getElementById('tableBody1');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['receipt_id', 'date', 'Customer', 'mobile_no','cash', 'online', 'discount', 'inCarat', 'Amt','added_by','note','previous_balance','validate'];
+    var columnsToDisplay = ['receipt_id', 'added_by','date', 'Customer','cash', 'online_deposite_bank','online', 'discount', 'inCarat','note','previous_balance','validate'];
     var counter = 1;
     if (data.Receipt.length === 0) {
         Swal.fire({

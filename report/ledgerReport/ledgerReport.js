@@ -60,7 +60,7 @@ async function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['date', 'route', 'customer_name', 'summary', 'balance', 'out_carate', 'total_balance', 'cash', 'online', 'discount', 'in_carate', 'remaining'];
+    var columnsToDisplay = ['date', 'route', 'customer_name', 'summary', 'balance', 'out_carate', 'total_balance', 'cash', 'online_bank','online', 'discount', 'in_carate', 'remaining'];
     var counter = 1;
 
     if (data.reports.length === 0) {
@@ -135,25 +135,25 @@ function populateTable4(data) {
 
     // Display remaining amount from the last entry
     if (data.reports.length > 0) {
-        var lastEntry = data.reports[data.reports.length - 1];
-        var remainingRow = tbody.insertRow();
-        var remainingCellLabel = remainingRow.insertCell();
-        var remainingCellLabel = remainingRow.insertCell();
-        var remainingCellLabel = remainingRow.insertCell();
-        var remainingCellLabel = remainingRow.insertCell();
-        var remainingCellLabel = remainingRow.insertCell();
-        var remainingCellLabel = remainingRow.insertCell();
-        var remainingCellLabel = remainingRow.insertCell();
-        var remainingCellLabel = remainingRow.insertCell();
-        var remainingCellLabel = remainingRow.insertCell();
-        var remainingCellLabel = remainingRow.insertCell();
-        var remainingCellLabel = remainingRow.insertCell();
-        var remainingCellLabel = remainingRow.insertCell();
-        remainingCellLabel.textContent = 'Remaining Amount:';
-        remainingCellLabel.style.fontWeight = 'bold';
+        // var lastEntry = data.reports[data.reports.length - 1];
+        // var remainingRow = tbody.insertRow();
+        // var remainingCellLabel = remainingRow.insertCell();
+        // var remainingCellLabel = remainingRow.insertCell();
+        // var remainingCellLabel = remainingRow.insertCell();
+        // var remainingCellLabel = remainingRow.insertCell();
+        // var remainingCellLabel = remainingRow.insertCell();
+        // var remainingCellLabel = remainingRow.insertCell();
+        // var remainingCellLabel = remainingRow.insertCell();
+        // var remainingCellLabel = remainingRow.insertCell();
+        // var remainingCellLabel = remainingRow.insertCell();
+        // var remainingCellLabel = remainingRow.insertCell();
+        // var remainingCellLabel = remainingRow.insertCell();
+        // var remainingCellLabel = remainingRow.insertCell();
+        // remainingCellLabel.textContent = 'Remaining Amount:';
+        // remainingCellLabel.style.fontWeight = 'bold';
 
-        var remainingValueCell = remainingRow.insertCell();
-        remainingValueCell.textContent = lastEntry['remaining'];
+        // var remainingValueCell = remainingRow.insertCell();
+        // remainingValueCell.textContent = lastEntry['remaining'];
     } else {
         var noDataRow = tbody.insertRow();
         var noDataCell = noDataRow.insertCell();

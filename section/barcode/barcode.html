@@ -542,7 +542,8 @@ const formattedISTDate = `${day}/${month}/${year}`;
         var data = {
             product : getElementValueWithDefault('grahk', '*') , 
             bata : getElementValueWithDefault('Route', '*'),
-            gadi_number : getElementValueWithDefault('vehicle', '*') 
+            gadi_number : getElementValueWithDefault('vehicle', '*'),
+            barcode : 'yes'
         };
         console.log(data); 
         var loader = document.getElementById('loader');
@@ -585,7 +586,8 @@ const formattedISTDate = `${day}/${month}/${year}`;
         var data = {
             product: getElementValueWithDefault('grahk', '*'),
             bata: getElementValueWithDefault('Route', '*'),
-            gadi_number: getElementValueWithDefault('vehicle', '*')
+            gadi_number: getElementValueWithDefault('vehicle', '*'),
+            barcode: 'yes'
         };
         console.log(data);
         var loader = document.getElementById('loader');
