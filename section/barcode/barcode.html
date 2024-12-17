@@ -225,8 +225,8 @@
                     </div>
                     <br>
                     <br>
-                    <button id="border-hover" style="background-color: darkgrey;" type="submit">Show </button>
-                    <button id="border-hover" style="background-color: darkgrey;" type="button"  onclick="download()">Download </button>
+                    <button id="border-hover" style="background-color: #26a653;" type="submit">Show </button>
+                    <button id="border-hover" style="background-color: #ff355f;" type="button"  onclick="download()">Download </button>
                 </form>
                 <br>
                 <br>
@@ -542,9 +542,10 @@ const formattedISTDate = `${day}/${month}/${year}`;
         var data = {
             product : getElementValueWithDefault('grahk', '*') , 
             bata : getElementValueWithDefault('Route', '*'),
-            gadi_number : getElementValueWithDefault('vehicle', '*') 
+            gadi_number : getElementValueWithDefault('vehicle', '*'),
+            barcode : 'yes'
         };
-        console.log(data);
+        console.log(data); 
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
     
@@ -585,7 +586,8 @@ const formattedISTDate = `${day}/${month}/${year}`;
         var data = {
             product: getElementValueWithDefault('grahk', '*'),
             bata: getElementValueWithDefault('Route', '*'),
-            gadi_number: getElementValueWithDefault('vehicle', '*')
+            gadi_number: getElementValueWithDefault('vehicle', '*'),
+            barcode: 'yes'
         };
         console.log(data);
         var loader = document.getElementById('loader');

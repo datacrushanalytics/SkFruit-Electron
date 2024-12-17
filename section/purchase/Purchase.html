@@ -85,7 +85,7 @@
                 </div>
                 <div class="form-group">
                     <label for="vehicle">Vehicle No:</label>
-                    <select id="vehicle" required>
+                    <select id="vehicle" >
                 </select>
                 </div>
                 <div class="form-group">
@@ -126,7 +126,7 @@
                     <input type="number" id="quantity" name="name" placeholder="Nag">
                 </div>
                 <div class="form-group">
-                    <button type="submit" style="background-color:green;position: relative; left: 342px;" class="border-hover" onclick="myFunction()">ADD</button>
+                    <button type="submit" style="background-color:#26a653 ;position: relative; left: 370px;" class="border-hover" onclick="myFunction()">ADD</button>
                 </div>
                 <br>
                 <div class="table-container">
@@ -160,7 +160,8 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <button class="border-hover" style="background-color: green; position: relative; left: 342px;" type="submit">Save</button>
+                    <button class="border-hover" style="background-color: #26a653; position: relative; left: 342px;" type="submit">Save</button>
+                    <button class="border-hover" style="background-color: #ff355f; position: relative; left: 370px;" onclick="confirmAndProceed()">Back</button>
                 </div>
             </form>
         </div>
@@ -171,6 +172,75 @@
                 fetchAndPopulateDropdown('http://103.174.102.89:3000/productData/', 'product', 'name');
                 fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle', 'vehicle_no');
             });
+
+
+let allowNavigation = false; // Flag to track if user confirmed the leave
+
+function confirmAndProceed() {
+    if (allowNavigation) {
+        return; // If already confirmed, do nothing
+    }
+
+    // Show SweetAlert dialog to confirm leaving
+    Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure you want to leave?',
+        text: "This action will clear the page and delete the data.",
+        showCancelButton: true,
+        confirmButtonText: 'Yes, leave!',
+        cancelButtonText: 'No, stay',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            allowNavigation = true; // Mark that navigation is confirmed
+
+            // Call the GET API to fetch the IDs
+            fetch(`http://103.174.102.89:3000/fetchData/purchaseProduct/${document.getElementById('no').value}`, {
+                method: 'GET',
+                keepalive: true, // Ensures the request completes
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch IDs');
+                }
+                return response.json(); // Parse the JSON response
+            })
+            .then(data => {
+                // Loop through IDs and call the DELETE API for each
+                const deletePromises = data.map(item => {
+                    return fetch(`http://103.174.102.89:3000/purchaseproductData/deletepurchaseproductId/${item.id}`, {
+                        method: 'DELETE',
+                        keepalive: true
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Failed to delete ID ${item.id}`);
+                        }
+                        return response.json(); // Parse delete response
+                    })
+                    .catch(error => {
+                        console.error(`Error deleting ID ${item.id}:`, error);
+                    });
+                });
+
+                // Wait for all delete requests to complete
+                return Promise.all(deletePromises);
+            })
+            .then(() => {
+                console.log('All items deleted successfully');
+                // Perform any further actions like navigating or reloading
+                window.location.href = '../Menu.html';
+                //window.location.reload(); // Optional: trigger page reload
+            })
+            .catch(error => {
+              allowNavigation = true;
+                console.error('Error during API calls:', error);
+                window.location.href = '../Menu.html';
+            });
+        }
+    });
+}
+
+
 
             function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
                 fetch(apiUrl)

@@ -37,6 +37,20 @@ document.getElementById('login').addEventListener('submit', async function(event
     };
 
     try {
+        console.log("Emissin", parseInt(document.getElementById('bill1').value))
+        const value = parseInt(document.getElementById('bill1').value);
+
+        if (isNaN(value)) {
+            console.log("Hello");
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: "Please add the product",
+            });
+            loader.style.display = 'none';
+            throw new Error('Product Was not added');
+        }
+
         const response = await fetch('http://103.174.102.89:3000/saleData/insertsale', {
             method: 'POST',
             headers: {

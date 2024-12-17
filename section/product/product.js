@@ -49,7 +49,7 @@ function populateTable(data) {
             var editCell = row.insertCell();
             var editButton = document.createElement('button');
             editButton.className = 'button edit-button';
-            editButton.style.backgroundColor = 'green';
+            editButton.style.backgroundColor = '#26a653';
             var editLink = document.createElement('a');
             editLink.href = '../product/update_product.html'; // Edit link destination
             editLink.textContent = 'Edit';
@@ -65,15 +65,37 @@ function populateTable(data) {
             var deleteCell = row.insertCell();
             var deleteButton = document.createElement('button');
             deleteButton.className = 'button delete-button';
-            deleteButton.style.backgroundColor = 'red';
+            deleteButton.style.backgroundColor = '#ff355f';
             deleteButton.textContent = 'Delete';
             deleteButton.addEventListener('click', function() {
-                deleteProduct(item.id); // Pass the user id to the delete function
+                // SweetAlert2 confirmation dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Do you really want to delete this user?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Call the deleteUser function only if confirmed
+                        deleteProduct(item.id); // Pass the user id to the delete function
+        
+                        // Optional: Show success message
+                        Swal.fire(
+                            'Deleted!',
+                            'The Product has been deleted.',
+                            'success'
+                        );
+                    }
+                });
             });
             deleteCell.appendChild(deleteButton);
         }
     });
 }
+
 
 function editProduct(user) {
     localStorage.setItem('userData', JSON.stringify(user));

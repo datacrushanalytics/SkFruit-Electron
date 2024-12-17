@@ -92,7 +92,7 @@
   }
 
   
-  #vehicle, #customer, #user, #route, #bill{
+  #vehicle, #customer, #user, #route, #product{
     /* border-radius: 8px; */
     height: 35px;
     width: 600px;
@@ -222,71 +222,66 @@
                 </div>
 
                 <br>
-
-                <!-- <label for="userType"> Customer :</label>
-                <select class="drop" id="customer" id="customer" name="name"> -->
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
-                <!-- </select> -->
-
-                <!-- <br><br> -->
-
                 <label for="userType"> Vehicle No :</label>
                 <select class="drop" id="vehicle" id="vehicle" name="name">
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                    <option value="User" disabled selected>Select Account</option>
                 </select>
-
                 <br><br>
-
-                <!-- <label id='lable1111' for="userType">Route :</label>
-                <select class="drop" id="route" name="name" onchange="setCustomer()"> -->
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
-                <!-- </select><br><br> -->
-
+                <label for="userType">Product :</label>
+                <select class="drop" id="product" name="name">
+                    <option value="Product" disabled selected>Select Account</option>
+                </select>
+                <br> <br>
                 <label for="userType">Bata :</label>
                 <select class="drop" id="bata" id="bata" name="name">
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                    <option value="User" disabled selected>Select Account</option>
                 </select><br> <br>
-
-                <!-- <label for="userType">User :</label>
-                <select class="drop" id="user" id="user" name="name"> -->
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
-                <!-- </select><br> <br> -->
-
-                <!-- <label for="userType">Bill Number :</label>
-                <select class="drop" id="bill" name="name"> -->
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
-                <!-- </select><br> <br> -->
+                <label id='lable1111' for="userType">Route :</label>
+                <select class="drop" id="route" name="name" onchange="setCustomer()">
+                    <option value="User" disabled selected>Select Account</option>
+                </select><br><br>
+                <label for="userType"> Customer :</label>
+                <select class="drop" id="customer" id="customer" name="name">
+                    <option value="User" disabled selected>Select Account</option>
+                </select>
+                <br><br>
+                <label for="userType">User :</label>
+                <select class="drop" id="user" id="user" name="name">
+                    <option value="User" disabled selected>Select Account</option>
+                </select><br> <br>
+                <label>
+                    <input type="checkbox" id="toggleTableCheckbox" default="off"> UnDetail Statement
+                </label>
     
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" style="background-color: green;" class="button">Submit</button>
-                    <button type='button' style="background-color: darkgrey;" class="border-hover" onclick="exportToExcel()" id="button2">Export</button>
+                    <button type="submit" style="background-color: #26a653;" class="button">Submit</button>
+                    <button type='button' style="background-color: #ff355f;" class="border-hover" onclick="exportToExcel()" id="button2">Export</button>
                 <!-- </div> -->
             </form>
           <br>
           <div class="table-container">
-            <table>
+            <table id="table1">
                 <tr>
                     <th>Id</th>
-                    <th>Bill No</th>
-                    <th>Vehicle No</th>
-                    <th>Customer</th>
+                    <th id = 'hide'>Bill No</th>
+                    <th id = 'hide1'>Vehicle No</th>
+                    <th id = 'hide2'>Customer</th>
                     <th>Bata</th>
                     <th>Product</th>
                     <th>Sold Quantity</th>
-                    <th>Purchase Price</th>
-                    <th>Selling Price</th>
-                    <th>Amount</th>
+                    <th>Purchase Amount</th>
+                    <!-- <th>Sale Amount</th> -->
+                    <th>Sale Amount</th>
                     <th>Profit Loss</th> 
                 </tr>
-               
-
-
                 <!-- Add more rows as needed -->
                 <tbody id="tableBody">
                     <!-- Data will be inserted here -->
                 </tbody>
-            </table><br>
+            </table>
+
+            <br>
           </div>
            
         </div>
@@ -298,7 +293,33 @@
 </body>
 <script src="./profitLossReport.js"></script>
 <script>
+    // Get the checkbox and the table
+    const toggleTableCheckbox = document.getElementById('toggleTableCheckbox');
+    console.log('toggleTableCheckbox',toggleTableCheckbox.value)
+    const table = document.getElementById('hide');
+    const table1 = document.getElementById('hide1');
+    const table2 = document.getElementById('hide2');
+
+    // Add an event listener to the checkbox
+    toggleTableCheckbox.addEventListener('change', (e) => {
+        if (e.target.checked) {
+            // Hide the table when checkbox is selected
+            table.style.display = 'none';
+            table1.style.display = 'none';
+            table2.style.display = 'none';
+            fetchDataAndProcess();
+        } else {
+            // Show the table when checkbox is deselected
+            table.style.display = '';
+            table1.style.display = '';
+            table2.style.display = '';
+            fetchDataAndProcess1();
+        }
+    });
+
+
     document.addEventListener('DOMContentLoaded', function () {
+        
         const now = new Date();
 
     // Adjust to IST (UTC+5:30)
@@ -314,10 +335,10 @@
         // Fetch data from API and populate Select2 dropdowns
         fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle','vehicle_no');
         fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'customer','name');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'bata', 'bata');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'bata', 'bata');
         fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/user', 'user', 'added_by');
         fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route','route_name');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/saleData', 'bill','bill_no');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'product','product_name');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {

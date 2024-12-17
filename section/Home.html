@@ -236,6 +236,7 @@ h3 img {
                 return; // Skip this iteration
             }
             if (isAdmin || menu.status === 'active') {
+              // if (isAdmin ) {
               var button = document.createElement('button');
               button.classList.add('component');
               button.textContent = menu.name;
@@ -391,6 +392,9 @@ h3 img {
           break;
         case 'Route Sale':
           pageUrl = './routeSale/routeSale.html'
+          break;
+        case 'Account Ledger Report':
+          pageUrl = '../report/AccountLedgerReport/accountLedger.html'
           break;
           // Add other cases as needed
         default:

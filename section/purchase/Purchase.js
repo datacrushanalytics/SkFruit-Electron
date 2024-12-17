@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             // Populate dropdown with API data
             document.getElementById('no').value = parseInt(data[0]['num']) + 1 || 1;
-            fetch('http://103.174.102.89:3000/purchaseproductData/' + (parseInt(data[0]['num']) + 1))
+            fetch('http://103.174.102.89:3000/purchaseproductData/productBata/' + (parseInt(data[0]['num']) + 1))
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -66,7 +66,7 @@ document.getElementById('Form').addEventListener('submit', async function(event)
     var formData = {
         date: document.getElementById('date').value,
         supplier_name: document.getElementById('supplier').value,
-        gadi_number: document.getElementById('vehicle').value,
+        gadi_number: document.getElementById('vehicle').value || "Dummy",
         total_quantity: parseInt(document.getElementById('total').value) || 0,
         added_by: sessionData[0].name,
         expenses: document.getElementById('expenses').value || 0

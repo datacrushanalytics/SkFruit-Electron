@@ -6,31 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>User Form in Electron</title>
+    <!-- <link rel="stylesheet" href="../../assets/css/ledger.css"> -->
     <style>
-
-button[type="submit"] {
-    padding: 10px 20px;
-    font-size: 16px;
-    width: 200px;
-    border: none;
-    cursor: pointer;
-    margin: 10px;
-    border-radius: 5px;
-    outline: none;
-    background-color: darkgrey; /* Grey color */
-    color: #fff; /* Text color */
-}
-
-button[type="submit"]:hover {
-    background-color:darkdarkgrey; /* Dark grey color on hover */
-}
-
         /* Add border to the second form */
         .form1 {
             border: 1px solid black;
@@ -44,7 +27,7 @@ button[type="submit"]:hover {
             width: 150px;
             border: 1px solid transparent;
             padding: 10px;
-            box-shadow: 5px 5px 5px grey;
+            /* box-shadow: 5px 5px 5px grey; */
             margin: 20px;
         }
 
@@ -83,10 +66,10 @@ button[type="submit"]:hover {
             /* border-radius: 8px; */
             height: 30px;
             width: 200px;
-            /* box-shadow: 5px 10px 8px grey; */
-            /* border-color: rgb(24, 24, 24); */
+            /* box-shadow: 5px 10px 8px grey;
+            border-color: rgb(24, 24, 24); */
             text-indent: 10%;
-            margin-left: 0%;
+            margin-left: 3px;
         }
 
         #fromdate {
@@ -97,7 +80,7 @@ button[type="submit"]:hover {
             border-color: rgb(24, 24, 24); */
             text-indent: 10%;
             margin-right: 8%;
-            margin-left: 0%;
+            margin-left: 10px;
         }
 
         .drop {
@@ -113,31 +96,46 @@ button[type="submit"]:hover {
         }
 
         #route {
-            width: 560px;
+            width: 550px;
         }
 
         .border-hover {
-            border: 1px solid transparent;
-            padding: 10px;
-            box-shadow: 5px 5px 5px grey;
-        }
-
-        .border-hover:hover {
-            background-color: #555;
-        }
-
-        button {
-            padding: 10px 20px;
+            padding: 12px 24px;
             font-size: 16px;
-            width: 200px;
+            /* width: 200px; */
             border: none;
             cursor: pointer;
             margin: 10px;
             border-radius: 5px;
             outline: none;
-            background-color:grey; /* Grey color */
-            color: #fff; /* Text color */
+            background-color:grey; /* Grey background color */
+            color: #fff; /* White text color */
+            box-shadow: none; /* Remove box shadow */
         }
+        
+
+        .border-hover:hover {
+            background-color: #555;
+        }
+
+  button[type="submit"] {
+     padding: 12px 24px;
+     font-size: 16px;
+     /* width: 200px; */
+     border: none;
+     cursor: pointer;
+     margin: 10px;
+     border-radius: 5px;
+     outline: none;
+     background-color:darkgrey; /* Grey background color */
+     color: #fff; /* White text color */
+     box-shadow: none; /* Remove box shadow */
+}
+
+   button[type="submit"]:hover {
+      background-color:darkdarkgrey; /* Dark grey background color on hover */
+}
+
 
         #container1 {
             display: flex;
@@ -170,8 +168,6 @@ button[type="submit"]:hover {
         th {
             background-color: #c7d5d3;
         }
-
-
 /* Style the loader container */
 #loader {
     border: 4px solid #f3f3f3; /* Light grey */
@@ -195,9 +191,6 @@ button[type="submit"]:hover {
     100% { transform: rotate(360deg); }
   }
   
-  #totalCell {
-    white-space: pre-wrap;
-}
 
     </style>
 </head>
@@ -205,61 +198,78 @@ button[type="submit"]:hover {
 <body>
     <div id="loader"></div>
     <div class="container">
-        <h1 align="center">Carate Report</h1><br>
-        <hr style="position: relative; top: -25px;">
+        <h1 align="center">Account Ledger Report</h1>
+        <hr>
         <br>
         <div class="container1">
             <form id="loginForm1">
-
                 <div class="first-row">
-                    <label for="userType">From Date</label>
+                    <label for="userType">From Date : </label>
                     <input type="date" id="fromdate" name="date" placeholder="From Date" required>
                     <br>
-                    <label for="userType">To Date</label>
+                    <label for="userType">To Date : </label>
                     <input type="date" id="todate" name="date" placeholder="To Date" required>
-                </div>
-
-                <br>
-
-                <label for="userType">Customer Name :</label>
-                <select class="drop" id="customer"  name="name">
+                </div> <br>
+                <br><br>
+                <label for="userType">Account Name :</label>
+                <select class="drop" id="account" id="name" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select><br>
-
-                <br>
-
-                <!-- <div class="third-row"> -->
+                </select>
+                <br><br>
+                <br><br>
+                <div class="third-row">
                     <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" id="button1" style="background-color: #26a653;">Submit</button>
-                    <button type='button' onclick="exportToExcel()" id="button2" style="background-color: #ff355f;">Export</button>
-                <!-- </div> -->
-            </form>
-            <br>
-            <table>
-                <tr>
-                    <th>Sr. No</th>
-                    <th>DATE</th>
-                    <th>Customer Name</th>
-                    <th>Summary</th>
-                    <th>Out Carate</th>
-                    <th>Total OutCarate Amt</th>
-                    <th>In Carate</th>
-                    <th>Total InCarate Amt</th>
-                </tr>
-                <!-- Add more rows as needed -->
-                <tbody id="tableBody">
-                    <!-- Data will be inserted here -->
-                </tbody>
-            </table>
-
+                    <button type="submit" class="border-hover"  style="background-color: #26a653;">Submit</button>
+                    <button type='button' style="background-color: #ff355f;" class="border-hover" onclick="exportToExcel()" id="button2">Export</button>
+                </div>
+            </form><br>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>DATE</th>
+                        <th>Bill NO/ Recipet NO </th>
+                        <th>Customer Name</th>
+                        <!-- <th>Mobile Number</th> -->
+                        <!-- <th>Vehicle</th> -->
+                        <th>Bank Account</th>
+                        <!-- <th>Cash</th> -->
+                        <th>Amount</th>
+                        <!-- <th>Amount</th> -->
+                    </tr>
+                    <!-- Add more rows as needed -->
+                    <tbody id="tableBody">
+                        <!-- Data will be inserted here -->
+                    </tbody>
+                </table>
+    
+                <br>
+                <br>
+                <br>
+    
+                <!-- <table>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Payment ID</th>
+                        <th>DATE</th>
+                        <th>From Account</th>
+                        <th>To Account</th>
+                        <th>Comment</th>
+                        <th>Previous Balance</th>
+                        <th>Amount</th>
+                    </tr>
+                     -->
+    
+                    <!-- Add more rows as needed -->
+                    <!-- <tbody id="tableBody1"> -->
+                        <!-- Data will be inserted here -->
+                    <!-- </tbody>
+                </table> -->
+             </div>
         </div>
     </div>
-
-
-
-
 </body>
-<script src="./carateReport.js"></script>
+<script src="./accountLedger.js"></script>
 
 <script>
         
@@ -277,21 +287,10 @@ button[type="submit"]:hover {
     document.getElementById('fromdate').value = todayIST;
     document.getElementById('todate').value = todayIST;
         // Fetch data from API and populate Select2 dropdowns
-        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
-    // Check if session data exists and if the user is an admin
-    var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
-        // Check if the user is an admin and show/hide the button accordingly
-    if (isAdmin) {
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'customer'); 
-        }else{
-          var route = sessionData[0].route;
-          fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customer/' +route  , 'customer');
-          $('#customer').attr('required', 'required');
-        }cd
-        
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'account','name');
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId) {
+    function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -301,39 +300,59 @@ button[type="submit"]:hover {
             })
             .then(data => {
                 // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId);
+                populateDropdownWithSelect2(data, dropdownId, field);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     }
 
-    function populateDropdownWithSelect2(data, dropdownId) {
-        var dropdown = $('#' + dropdownId);
-        // Clear existing options
-        dropdown.empty();
+    function populateDropdownWithSelect2(data, dropdownId, field) {
+    var dropdown = $('#' + dropdownId);
 
-        // Add placeholder option
-        dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+    // Clear existing options
+    dropdown.empty();
 
-        // Populate dropdown with API data
-        data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.name || item.cust_name).text(item.name || item.cust_name));
-        });
+    // Add placeholder option
+    dropdown.append(
+        $('<option></option>')
+            .attr('value', '')
+            .text('Select ' + dropdownId + ' type')
+            .prop('disabled', true)
+            .prop('selected', true)
+    );
 
-        // Initialize Select2
-        dropdown.select2({
-            placeholder: "Select " + dropdownId + " type",
-            allowClear: true
-        });
-    }
-    
-    $(document).on('select2:open', function(e) {
-        window.setTimeout(function () {
-            document.querySelector('input.select2-search__field').focus();
-        }, 0);
+    // Populate dropdown with API data
+    data.forEach(function (item) {
+        dropdown.append(
+            $('<option></option>')
+                .attr('value', item[field])
+                .text(item[field])
+        );
     });
-</script>
 
+    // Add the hardcoded "Cash" option
+    dropdown.append(
+        $('<option></option>')
+            .attr('value', 'Cash')
+            .text('Cash')
+    );
+
+    // Initialize Select2
+    dropdown.select2({
+        placeholder: "Select " + dropdownId + " type",
+        allowClear: true
+    });
+}
+
+// Focus on the search field when Select2 is opened
+$(document).on('select2:open', function (e) {
+    window.setTimeout(function () {
+        document.querySelector('input.select2-search__field').focus();
+    }, 0);
+});
+
+
+</script>
 
 </html>

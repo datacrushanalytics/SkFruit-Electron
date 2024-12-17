@@ -47,10 +47,32 @@ function populateTable(data) {
          // Add Delete button
          var deleteCell = row.insertCell();
          var deleteButton = document.createElement('button');
+         deleteButton.style.backgroundColor = '#ff355f';
          deleteButton.className = 'button delete-button';
          deleteButton.textContent = 'Delete';
          deleteButton.addEventListener('click', function() {
-            deleteProduct(item.id); // Pass the user id to the delete function
+            // SweetAlert2 confirmation dialog
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Do you really want to delete this Category?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ff355f',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Call the deleteUser function only if confirmed
+                    deleteProduct(item.id); // Pass the user id to the delete function
+    
+                    // Optional: Show success message
+                    Swal.fire(
+                        'Deleted!',
+                        'The Category has been deleted.',
+                        'success'
+                    );
+                }
+            });
         });
         deleteCell.appendChild(deleteButton);
     });

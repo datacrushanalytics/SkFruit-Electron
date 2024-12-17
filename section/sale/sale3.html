@@ -391,19 +391,17 @@
           <input type="hidden" id="custid" name="custid">
         </div>
 
-        <div class="button-wrapper">
-          <button id="account-page-button" style="background-color: darkgrey;" onclick="goToAccountPage()">Add Customer</button>
-        </div>
-        
         <!-- <div class="button-wrapper">
-      <button id="account-page-button" name="ledger" >Leder Report</button>
-    </div> -->
-        <button onclick="openPopup()">Ledger</button>
+          <button id="account-page-button" style="background-color: #18b3a4;" onclick="goToAccountPage(event)">Add Customer</button>
+        </div> -->
+        
+        <div class="button-wrapper">
+    </div>
+        <button  style="background-color: #ff355f;"  onclick="openPopup()">Ledger</button>
         <div class="popup" id="popup">
           <div class="popup-content">
             <span class="close" onclick="closePopup()">&times;</span>
             <iframe id="popupIframe" frameborder="0" scrolling="auto"></iframe>
-            <!-- <p>This is a popup!</p> -->
           </div>
         </div>
       </div>
@@ -433,7 +431,7 @@
         </div>
         <div id="scannerModal" class="modal">
           <div class="modal-content">
-              <span class="close" onclick="closeScannerModal()">&times;</span>
+              <span class="close" onclick="closeScannerModal1()">&times;</span>
               <p>Scan barcode here:</p>
               <input type="text" id="barcodeInput" placeholder="Scan barcode here" oninput="handleBarcodeInput(event)">
           </div>
@@ -453,7 +451,7 @@
       <div class="row-container">
         <div class="input-wrapper">
           <label for="nag" id="nagLabel">नग :</label>
-          <input type="text" id="nag" name="nag" placeholder="नग" value="1" readonly>
+          <input type="text" id="nag" name="nag" placeholder="नग" value="1" onchange="updateTotal()">
           <input type="hidden" id="nag1" name="nag1">
         </div>
 
@@ -468,7 +466,7 @@
         </div>
 
         <div class="button-wrapper">
-          <button type="button" style="background-color: green;" onclick="myFunction()" class="button">ADD</button>
+          <button type="button" style="background-color: #26a653;" onclick="myFunction()" class="button">ADD</button>
         </div>
       </div>
 
@@ -615,8 +613,8 @@
         </div>
       </div>
 
-      <button type="submit" style="background-color: green;" class="save">Save</button>
-     <button type="button" style="background-color: green;" class="save" onclick="confirmAndProceed()">Back</button>
+      <button type="submit" style="background-color: #26a653;" class="save">Save</button>
+     <button type="button" style="background-color: #ff355f;" class="save" onclick="confirmAndProceed()">Back</button>
   </div>
   </form>
 
@@ -771,8 +769,8 @@ function confirmAndProceed() {
           fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'Route','route_name',selectedValue=route,readOnly = true);
         }
     
-    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'product', 'product_name');
-    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'bta', 'bata');
+    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'product', 'product_name');
+    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'bta', 'bata');
     fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'onlineAcc', 'name');
     
   });
@@ -835,7 +833,8 @@ function confirmAndProceed() {
 
   }
 
-  function goToAccountPage() {
+  function goToAccountPage(event) {
+    event.preventDefault(); 
     // Perform the desidarkgrey action when the button is clicked
     window.location.href = "../account/acc-master.html"; // darkgreyirect to the account page
   }
@@ -846,13 +845,24 @@ function confirmAndProceed() {
     }, 0);
   });
 
-  function setCustomer(){
-        var route = document.getElementById('Route').value
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'grahk','name');
-          fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'number','mobile_no');
+  
+  function setCustomer() {
+    var route = document.getElementById('Route').value;
+    
+    // Check if the dropdowns already have selected values
+    var grahkDropdown = document.getElementById('grahk');
+    var numberDropdown = document.getElementById('number');
+    
+    if (!grahkDropdown.value) {
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' + route, 'grahk', 'name');
     }
 
-  function openPopup() {
+    if (!numberDropdown.value) {
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' + route, 'number', 'mobile_no');
+    }
+}
+
+  function openPopup(event) {
     event.preventDefault();
     document.getElementById("popup").style.display = "block";
     var popupIframe = document.getElementById("popupIframe");
@@ -863,21 +873,35 @@ function confirmAndProceed() {
     document.getElementById("popup").style.display = "none";
   }
 
-
+ 
 
   function openScannerModal() {
       document.getElementById('scannerModal').style.display = 'block';
       autoFocusInput();
   }
 
-  function closeScannerModal() {
+  // document.getElementById('openPopupBtn').addEventListener('click', openPopup);
+
+  async function closeScannerModal() {
+      // document.getElementById('scannerModal').style.display = 'none';
+      setTimeout(async () => {
+    await myFunction();
+    // Additional logic to set values to the input section after delay
+  }, 1000); // 1000ms delay
+  document.getElementById('barcodeInput').value = '';
+  document.getElementById('barcodeInput').focus();
+  }
+
+
+  async function closeScannerModal1() {
       document.getElementById('scannerModal').style.display = 'none';
   }
+
 
   function autoFocusInput() {
             document.getElementById('barcodeInput').focus();
         }
-        let inputTimer;
+        let inputTimer = 0;
         
         function handleBarcodeInput(event) {
             clearTimeout(inputTimer); // Clear previous timer
@@ -1076,8 +1100,16 @@ function toggleReadonly(){
   }
 
   function carate1() {
+    console.log("Data 1", document.getElementById("carate1100").value)
+    console.log("Data 1", document.getElementById("carate2100").value)
+    console.log("Data 2", document.getElementById("carate1150").value)
+    console.log("Data 2", document.getElementById("carate2150").value)
+    console.log("Data 3", document.getElementById("carate1250").value)
+    console.log("Data 3", document.getElementById("carate2250").value)
+    console.log("Data 4", document.getElementById("carate1350").value)
+    console.log("Data 4", document.getElementById("carate2350").value)
 
-    if (parseInt(document.getElementById("carate1100").value) > parseInt(document.getElementById('carate2100').value)){
+    if (parseInt(document.getElementById("carate1100").value) > (parseInt(document.getElementById('carate22100').value) + parseInt(document.getElementById("carate100").value))){
       Swal.fire({
               icon: 'error',
               title: 'Oops...',
@@ -1086,7 +1118,7 @@ function toggleReadonly(){
         document.getElementById("carate1100").value = 0;
     }
 
-    if (parseInt(document.getElementById("carate1150").value) > parseInt(document.getElementById('carate2150').value)){
+    if (parseInt(document.getElementById("carate1150").value) > (parseInt(document.getElementById('carate22150').value) + parseInt(document.getElementById("carate150").value))){
       Swal.fire({
               icon: 'error',
               title: 'Oops...',
@@ -1095,7 +1127,7 @@ function toggleReadonly(){
         document.getElementById("carate1150").value = 0;
     }
 
-    if (parseInt(document.getElementById("carate1250").value) > parseInt(document.getElementById('carate2250').value)){
+    if (parseInt(document.getElementById("carate1250").value) > (parseInt(document.getElementById('carate22250').value) + parseInt(document.getElementById("carate250").value))){
       Swal.fire({
               icon: 'error',
               title: 'Oops...',
@@ -1105,7 +1137,7 @@ function toggleReadonly(){
     }
 
 
-    if (parseInt(document.getElementById("carate1350").value) > parseInt(document.getElementById('carate2350').value)){
+    if (parseInt(document.getElementById("carate1350").value) > (parseInt(document.getElementById('carate22350').value) + parseInt(document.getElementById("carate350").value))){
       Swal.fire({
               icon: 'error',
               title: 'Oops...',
@@ -1177,8 +1209,8 @@ function toggleReadonly(){
   }
 
 
-  function myFunction() {
-    event.preventDefault();
+  async function myFunction() {
+    // event.preventDefault();
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
@@ -1252,6 +1284,12 @@ function toggleReadonly(){
                             icon: 'success',
                             title: 'Success!',
                             text: 'Product added successfully',
+                            timer: 500, // 2000 ms = 2 seconds
+  timerProgressBar: true, // Optional: show progress bar during the timer
+  didClose: () => {
+    // Optional: Perform any actions after the alert closes
+    console.log("Alert closed automatically");
+  }
                             })
     // Add your desidarkgrey functionality here
   }

@@ -20,13 +20,13 @@ function fetchDataAndProcess() {
     var data = {
         from_date: formatDate(document.getElementById("fromdate").value),
         to_date: formatDate(document.getElementById("todate").value),
-        supplier_name: getElementValueWithDefault('supplier', '*')
+        account_name: getElementValueWithDefault('account', '*')
     };
     console.log(data);
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
 
-    return fetch('http://103.174.102.89:3000/supplierLedger', {
+    return fetch('http://103.174.102.89:3000/accountLedger', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -59,78 +59,114 @@ function fetchDataAndProcess() {
         console.error('Error:', error);
     });
 }
+
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
 
-    var columnsToDisplay = ['record_id', 'type', 'date', 'account_name', 'mobile_no', 'reference', 'amount', 'expenses', 'cash', 'from_account', 'online', 'discount', 'prev_balance', 'comment'];
+    var columnsToDisplay = ['date', 'bill_no', 'cust_name','online_acc', 'online_amt'];
     var counter = 1;
     console.log(data.reports);
-
     if (data.reports.length === 0) {
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
             text: 'No data found.',
-        });
+          });
+
     }
-
     let grandTotalQuantity = 0;
-    let lastBalance = 0; // Variable to store the last balance value
-
     data.reports.forEach(function(item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
         cell.textContent = counter++;
-
         columnsToDisplay.forEach(function(key) {
             var cell = row.insertCell();
             if (key === 'date') {
                 var utcDate = new Date(item[key]);
-                var options = {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    timeZone: 'Asia/Kolkata'
+                var options = { 
+                    year: 'numeric', 
+                    month: '2-digit', 
+                    day: '2-digit', 
+                    timeZone: 'Asia/Kolkata' 
                 };
                 cell.textContent = utcDate.toLocaleString('en-IN', options);
             } else {
                 cell.textContent = item[key];
-
-                // Store the balance value of the last row
-                if (key === 'prev_balance') {
-                    lastBalance = item[key];
+                if (key === 'total_quantity') {
+                    grandTotalQuantity += item[key];
                 }
             }
         });
     });
 
-    // Append grand total row
-    var row = tbody.insertRow();
-    row.insertCell().textContent = ''; // Empty cell for serial number
-    row.insertCell().textContent = ''; // Empty cell for date
-    row.insertCell().textContent = ''; // Empty cell for supplier_name
-    row.insertCell().textContent = ''; // Empty cell for gadi_number
-    row.insertCell().textContent = ''; // Empty cell for gadi_number
-    row.insertCell().textContent = ''; // Empty cell for gadi_number
-    row.insertCell().textContent = ''; // Empty cell for gadi_number
-    row.insertCell().textContent = ''; // Empty cell for gadi_number
-    row.insertCell().textContent = ''; // Empty cell for gadi_number
-    row.insertCell().textContent = ''; // Empty cell for gadi_number
-    row.insertCell().textContent = ''; // Empty cell for gadi_number
-    row.insertCell().textContent = ''; // Empty cell for gadi_number
-
-    // Cell for Grand Total label
-    var labelCell = row.insertCell();
-    labelCell.textContent = 'Net Balance:';
-    labelCell.style.fontWeight = 'bold'; // Make label text bold
-
-    // Cell for Grand Total value
-    var valueCell = row.insertCell();
-    valueCell.textContent = lastBalance; // Display the last balance value
-    valueCell.style.fontWeight = 'bold'; // Make value text bold
 }
+function populateTable5(data) {
+    // Clear the existing rows in the table
+    var tbody = document.getElementById('tableBody1');
+    tbody.innerHTML = ''; // Clear any existing rows
+    
+    if (!data.Receipt || data.Receipt.length === 0) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No data found.',
+        });
+        return;
+    }
 
+    var columnsToDisplay = ['p_id', 'date', 'from_account', 'to_account', 'comment', 'prev_balance', 'amounr'];
+    var counter = 1;
+    let grandTotalPreBalance = 0;
+    let grandTotalAmounr = 0;
+
+    // Loop through each item in the Receipt data
+    data.Receipt.forEach(function (item) {
+        var row = tbody.insertRow();
+        var cell = row.insertCell();
+        cell.textContent = counter++;
+
+        columnsToDisplay.forEach(function (key) {
+            var cell = row.insertCell();
+
+            if (key === 'date') {
+                var utcDate = new Date(item[key]);
+                var options = { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' };
+                cell.textContent = utcDate.toLocaleString('en-IN', options);
+            } else {
+                cell.textContent = item[key];
+                if (key === 'prev_balance') {
+                    grandTotalPreBalance += parseFloat(item[key] || 0);
+                }
+                if (key === 'amounr') {
+                    grandTotalAmounr += parseFloat(item[key] || 0);
+                }
+            }
+        });
+    });
+
+    // Add the Grand Total Row
+    var totalRow = tbody.insertRow();
+
+    // Empty cells for serial number, date, etc.
+    totalRow.insertCell().textContent = ''; // Serial number
+    totalRow.insertCell().textContent = ''; // Date
+    totalRow.insertCell().textContent = ''; // From account
+    totalRow.insertCell().textContent = ''; // To account
+    totalRow.insertCell().textContent = ''; // Comment
+
+    // Cell for "Grand Total" label
+    var grandTotalLabelCell = totalRow.insertCell();
+    grandTotalLabelCell.textContent = 'Grand Total:';
+    grandTotalLabelCell.style.fontWeight = 'bold';
+    grandTotalLabelCell.colSpan = 2; // Adjust if needed to span across columns
+
+    // Cell for the Grand Total value for "amounr"
+    var grandTotalValueCell = totalRow.insertCell();
+    grandTotalValueCell.textContent = grandTotalAmounr.toFixed(2); // Display grand total with 2 decimal places
+    grandTotalValueCell.style.fontWeight = 'bold';
+    grandTotalValueCell.style.textAlign = 'right'; // Align to the right
+}
 
 async function exportToExcel() {
     try {
