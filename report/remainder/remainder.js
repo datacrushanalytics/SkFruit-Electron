@@ -124,7 +124,7 @@ function populateTable(data) {
             var editCell = row.insertCell();
             var editButton = document.createElement('button');
             editButton.className = 'button edit-button';
-            editButton.style.backgroundColor = 'green';
+            editButton.style.backgroundColor = '#26a653';
             var editLink = document.createElement('a');
             editLink.href = '../remainder/update_remainder.html'; // Edit link destination
             editLink.textContent = 'Edit';

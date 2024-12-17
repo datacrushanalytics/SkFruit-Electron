@@ -136,7 +136,7 @@ function populateTable4(data) {
             var editCell = row.insertCell();
             var editButton = document.createElement('button');
             editButton.className = 'button edit-button';
-            editButton.style.backgroundColor = 'green';
+            editButton.style.backgroundColor = '#26a653';
             var editLink = document.createElement('a');
             editLink.href = './updatePurchase.html'; // Edit link destination
             editLink.textContent = 'Edit';
@@ -152,7 +152,7 @@ function populateTable4(data) {
             var deleteCell = row.insertCell();
             var deleteButton = document.createElement('button');
             deleteButton.className = 'button delete-button';
-            deleteButton.style.backgroundColor = 'red';
+            deleteButton.style.backgroundColor = '#ff355f';
             deleteButton.textContent = 'Delete';
             deleteButton.addEventListener('click', function () {
                 deleteaccount(item.id); // Pass the user id to the delete function
