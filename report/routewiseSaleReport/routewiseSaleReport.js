@@ -30,11 +30,35 @@ function fetchDataAndProcess() {
         user: getElementValueWithDefault('user', '*'),
         vehicle: getElementValueWithDefault('vehicle', '*')
     };
+
+    const toggleVisibility = (element,show) => {
+        element.forEach((el) => {
+            el.style.display = show ? '' : 'none';
+        });
+    };
+
+    const isChecked = document.getElementById('toggleTableCheckbox').checked;
+    if (isChecked){
+        var url = "http://localhost:3000/routewiseSaleReport/undetail"
+        const element = document.querySelectorAll('.hide');
+        const element1 = document.querySelectorAll('.toggle-hide');
+        toggleVisibility(element, false);
+        toggleVisibility(element1, true);
+    
+    }else{
+        var url = "http://localhost:3000/routewiseSaleReport/detail"
+        const element = document.querySelectorAll('.toggle-hide');
+        const element1 = document.querySelectorAll('.hide');
+        toggleVisibility(element, false);
+        toggleVisibility(element1, true);
+    }
+
+
     console.log(data);
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://103.174.102.89:3000/routewiseSaleReport', {
+    return fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -70,7 +94,13 @@ function fetchDataAndProcess() {
         .then(result => {
         loader.style.display = 'none';
             console.log(result)
-            populateTable4(result)
+            if (isChecked){
+                populateTable5(result)
+            }else{
+                populateTable4(result)
+            }
+
+            
             return result;
             // Optionally, you can darkgreyirect or show a success message here
         })
@@ -87,6 +117,7 @@ function populateTable4(data) {
     var columnsToDisplay = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'carate_amount', 'pre_balance', 'total_amount', 'online_amt', 'discount', 'inCarat', 'PaidAmount', 'balance', 'comment'];
     var counter = 1;
     var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
+    var isSuperAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].status === 'Super';
     console.log(data.reports)
     if (data.reports.length === 0) {
        
@@ -142,7 +173,7 @@ function populateTable4(data) {
 
 
         // Add button to delete record
-        if (isAdmin) {
+        if (isSuperAdmin) {
             var deleteCell = row.insertCell();
             var deleteButton = document.createElement('button');
             deleteButton.className = 'button';
@@ -207,6 +238,80 @@ function populateTable4(data) {
 
 
 
+function populateTable5(data) {
+    var tbody = document.getElementById('tableBody');
+    tbody.innerHTML = ''; // Clear existing rows
+    var columnsToDisplay = ['bill_no', 'date', 'cust_name', 'mobile_no', 'quantity','rate','price'];
+    var counter = 1;
+    var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
+    console.log(data.reports)
+    if (data.reports.length === 0) {
+       
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No data found.',
+    });
+    }
+    data.reports.forEach(function (item) {
+        var row = tbody.insertRow();
+        var cell = row.insertCell();
+        cell.textContent = counter++;
+        columnsToDisplay.forEach(function (key) {
+            var cell = row.insertCell();
+            if (key === 'date') {
+                console.log(item[key])
+                var utcDate = new Date(item[key]);
+                var options = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    timeZone: 'Asia/Kolkata'
+                };
+                cell.textContent = utcDate.toLocaleString('en-IN', options);
+
+            } else {
+                // If the value for the column is empty, set it to null
+                cell.textContent = item[key] !== '' ? item[key] : 'null';
+            }
+        });
+
+    });
+
+    // Add row for grand total
+    var totalRow = tbody.insertRow();
+    totalRow.insertCell().colSpan = 1; // Skip the first column
+
+    columnsToDisplay.forEach(function (key) {
+        var cell = totalRow.insertCell();
+        if (key === 'route') {
+            cell.textContent = 'Grand Total';
+            cell.style.fontWeight = 'bold'; // Make "Grand Total" bold
+        } else {
+            switch (key) {
+                case 'quantity':
+                    cell.textContent = data.Grand['Grand Quantity'];
+                    break;
+                case 'rate':
+                    cell.textContent = data.Grand['Grand Rate'];
+                    break;
+                case 'price':
+                    cell.textContent = data.Grand['Total Price'];
+                    break;
+                default:
+                    cell.textContent = '';
+                    break;
+            }
+            cell.style.fontWeight = 'bold'; // Make the values bold
+        }
+    });
+
+    // Add a final cell for the "Bill" column, leaving it empty
+    totalRow.insertCell();
+}
+
+
+
 
 function deleteRecord(bill_no) {
     fetch(`http://103.174.102.89:3000/fetchData/saleProduct/${bill_no}`, {
@@ -266,16 +371,6 @@ function deleteRecord(bill_no) {
         console.error('Error:', error);
     });
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

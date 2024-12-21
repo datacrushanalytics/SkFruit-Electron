@@ -35,6 +35,7 @@ function populateTable(data) {
     var columnsToDisplay = ['name', 'rate'];
     var counter = 1;
     var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
+    var isSuperAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].status === 'Super';
     data.forEach(function(item) {
         var row = tbody.insertRow();
         var cell = row.insertCell();
@@ -45,7 +46,7 @@ function populateTable(data) {
         });
 
          // Add Edit button if user is admin
-         if (isAdmin) {
+         if (isSuperAdmin) {
             var editCell = row.insertCell();
             var editButton = document.createElement('button');
             editButton.className = 'button edit-button';
@@ -61,7 +62,7 @@ function populateTable(data) {
         }
  
         // Add Delete button if user is admin
-        if (isAdmin) {
+        if (isSuperAdmin) {
             var deleteCell = row.insertCell();
             var deleteButton = document.createElement('button');
             deleteButton.className = 'button delete-button';
@@ -95,7 +96,6 @@ function populateTable(data) {
         }
     });
 }
-
 
 function editProduct(user) {
     localStorage.setItem('userData', JSON.stringify(user));

@@ -338,8 +338,8 @@
                     <td id="saleCash"></td>
                     <td id="saleOnline"></td>
                     <td id="saleDiscount"></td>
-                    <td></td>
-                    <td></td>
+                    <td id="saleInCarat"></td>
+                    <td id="saleCarate"></td>
                     <td></td>
                 </tr>
                 <!-- <tr>
@@ -356,49 +356,22 @@
                     <td id="receiptCash"></td>
                     <td id="receiptOnline"></td>
                     <td id="receiptDiscount"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <!-- <tr>
-                    <th>Total Online</th>
-                    <td></td>
-                    <td></td>
-                    <td id="saleOnline"></td>
+                    <td id="receiptInCarat"></td>
                     <td></td>
                     <td></td>
                 </tr>
-                <tr>
-                    <th>Total Sale Discount</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td id="saleDiscount"></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>Total Receipt Discount</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td id="receiptDiscount"></td>
-                    <td></td>
-                </tr> -->
                 <tr>
                     <th>Total</th>
                     <th id="grandSale"></th>
                     <th id="grandCash"></th>
                     <th id="grandOnline"></th>
                     <th id="grandDiscount"></th>
+                    <th id="grandInCarate"></th>
+                    <th id="grandOutCarate"></th>
                     <th id="grandTotal"></th>
-                    <td></td>
-                    <td></td>
+                    
                 </tr>
 
-                <!-- Add more rows as needed -->
-                <!-- <tbody id="tableBody1"> -->
-                    <!-- Data will be inserted here -->
-                <!-- </tbody> -->
             </table>
          </div>
         </div>
@@ -432,10 +405,9 @@
         if(dailyReportData){
             console.log("DailyReport",dailyReportData)
             fetchDataAndProcess(dailyReportData);
-            localStorage.removeItem('dailyReportData');
+            //localStorage.removeItem('dailyReportData');
         }
-        
-
+        fetchDataAndProcess();
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId, field,selectedValue = null, readOnly = false) {

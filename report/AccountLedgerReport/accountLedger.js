@@ -93,12 +93,34 @@ function populateTable4(data) {
                 cell.textContent = utcDate.toLocaleString('en-IN', options);
             } else {
                 cell.textContent = item[key];
-                if (key === 'total_quantity') {
+                if (key === 'online_amt') {
                     grandTotalQuantity += item[key];
                 }
             }
         });
     });
+
+    // Add the Grand Total Row
+    var totalRow = tbody.insertRow();
+
+    // Empty cells for serial number, date, etc.
+    totalRow.insertCell().textContent = ''; // Serial number
+    totalRow.insertCell().textContent = ''; // Date
+    totalRow.insertCell().textContent = ''; // From account
+    totalRow.insertCell().textContent = ''; // To account
+    // totalRow.insertCell().textContent = ''; // Comment
+
+    // Cell for "Grand Total" label
+    var grandTotalLabelCell = totalRow.insertCell();
+    grandTotalLabelCell.textContent = 'Grand Total:';
+    grandTotalLabelCell.style.fontWeight = 'bold';
+    grandTotalLabelCell.colSpan = 1; // Adjust if needed to span across columns
+
+    // Cell for the Grand Total value for "amounr"
+    var grandTotalValueCell = totalRow.insertCell();
+    grandTotalValueCell.textContent = grandTotalQuantity.toFixed(2); // Display grand total with 2 decimal places
+    grandTotalValueCell.style.fontWeight = 'bold';
+    grandTotalValueCell.style.textAlign = 'right'; // Align to the right
 
 }
 function populateTable5(data) {
@@ -137,6 +159,7 @@ function populateTable5(data) {
                 cell.textContent = item[key];
                 if (key === 'prev_balance') {
                     grandTotalPreBalance += parseFloat(item[key] || 0);
+
                 }
                 if (key === 'amounr') {
                     grandTotalAmounr += parseFloat(item[key] || 0);
@@ -149,17 +172,12 @@ function populateTable5(data) {
     var totalRow = tbody.insertRow();
 
     // Empty cells for serial number, date, etc.
-    totalRow.insertCell().textContent = ''; // Serial number
-    totalRow.insertCell().textContent = ''; // Date
-    totalRow.insertCell().textContent = ''; // From account
-    totalRow.insertCell().textContent = ''; // To account
-    totalRow.insertCell().textContent = ''; // Comment
+    // totalRow.insertCell().textContent = ''; // Serial number
+    // totalRow.insertCell().textContent = ''; // Date
+    // totalRow.insertCell().textContent = ''; // From account
 
     // Cell for "Grand Total" label
-    var grandTotalLabelCell = totalRow.insertCell();
-    grandTotalLabelCell.textContent = 'Grand Total:';
-    grandTotalLabelCell.style.fontWeight = 'bold';
-    grandTotalLabelCell.colSpan = 2; // Adjust if needed to span across columns
+
 
     // Cell for the Grand Total value for "amounr"
     var grandTotalValueCell = totalRow.insertCell();

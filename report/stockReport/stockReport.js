@@ -37,7 +37,7 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://103.174.102.89:3000/stockReport', {
+    return fetch('http://localhost:3000/stockReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -77,7 +77,7 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['purchase_id','gadi_number','supplier_name','bata','product_name','opening','sale','closing' ];
+    var columnsToDisplay = ['purchase_id','gadi_number','supplier_name','bata','mark','product_name','opening','sale','closing' ];
     var counter = 1;
     console.log(data.reports)
     if (data.reports.length === 0) {

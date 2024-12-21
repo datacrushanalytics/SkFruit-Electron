@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>SK_Fruits</title>
+    <link rel="stylesheet" href="../assets/css/Set_user_menu.css">
+</head>
+    <body>
+
+        <h1 align ="center">Set Admin Menu</h1>
+    <div className="container">
+            <table id="userMenuTable">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>MENU</th>
+                        <th>STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="superAdminRow">1</td>
+                        <td>Users</td>
+                        <td><input type="checkbox" name="menu" value="User"></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Product</td>
+                        <td><input type="checkbox" name="menu" value="Product"></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Accounts</td>
+                        <td><input type="checkbox" name="menu" value="Account"></td>
+                    </tr>
+
+                    <tr>
+                        <td>4</td>
+                        <td>Route</td>
+                        <td><input type="checkbox" name="menu" value="Route"></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Purchase</td>
+                        <td><input type="checkbox" name="menu" value="Purchase"></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Sale</td>
+                        <td><input type="checkbox" name="menu" value="Sale"></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Barcode</td>
+                        <td><input type="checkbox" name="menu" value="Barcode"></td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Receipt</td>
+                        <td><input type="checkbox" name="menu" value="Receipt"></td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Payment</td>
+                        <td><input type="checkbox" name="menu" value="Payment"></td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Purchase Report</td>
+                        <td><input type="checkbox" name="menu" value="Purchase Report"></td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>Sale Report</td>
+                        <td><input type="checkbox" name="menu" value="Sale Report"></td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>stock Report</td>
+                        <td><input type="checkbox" name="menu" value="Stock Report"></td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>Khatawani</td>
+                        <td><input type="checkbox" name="menu" value="Khatawani"></td>
+                    </tr>
+                    <!-- <tr>
+                        <td>14</td>
+                        <td>Batawise sale report</td>
+                        <td><input type="checkbox" name="menu" value="Batawise Sale Report"></td>
+                    </tr> -->
+                    <!-- <tr>
+                        <td>14</td>
+                        <td>Route Sale</td>
+                        <td><input type="checkbox" name="menu" value="Route Sale"></td>
+                    </tr> -->
+                    <tr>
+                        <td>14</td>
+                        <td>Daily Report</td>
+                        <td><input type="checkbox" name="menu" value="Daily Report"></td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td>Receipt Report</td>
+                        <td><input type="checkbox" name="menu" value="Receipt Report"></td>
+                    </tr>
+                    <tr>
+                        <td>16</td>
+                        <td>Ledger Report</td>
+                        <td><input type="checkbox" name="menu" value="Ledger Report"></td>
+                    </tr>
+                    <tr>
+                        <td>17</td>
+                        <td>Supplier Ledger Report</td>
+                        <td><input type="checkbox" name="menu" value="Supplier Ledger Report"></td>
+                    </tr>
+                    <tr>
+                        <td>18</td>
+                        <td>Customer Outstanding</td>
+                        <td><input type="checkbox" name="menu" value="Customer Outstanding"></td>
+                    </tr>
+                    <tr>
+                        <td>19</td>
+                        <td>Supplier Outstanding</td>
+                        <td><input type="checkbox" name="menu" value="Supplier Outstanding"></td>
+                    </tr>
+                    <tr>
+                        <td>20</td>
+                        <td>Profit Loss Report</td>
+                        <td><input type="checkbox" name="menu" value="Profit Loss Report"></td>
+                    </tr>
+                    <tr>
+                        <td>21</td>
+                        <td>Carate Report</td>
+                        <td><input type="checkbox" name="menu" value="Carate Report"></td>
+                    </tr>
+                <!-- </tr> -->
+                    <tr>
+                        <td>22</td>
+                        <td>Remainder</td>
+                        <td><input type="checkbox" name="menu" value="Remainder"></td>
+                    </tr>
+                    <tr>
+                        <td>23</td>
+                        <td>Account Ledger Report</td>
+                        <td><input type="checkbox" name="menu" value="Account Ledger Report"></td>
+                    </tr>
+                   
+                </tbody>
+            </table> <br><br>
+            <div class="center">
+                <button type="button" id="submitButton" style="background-color: #18b3a4;">Submit Admin Menu</button>
+            </div>
+
+          
+        </body>
+
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                fetchDataAndUpdateCheckboxes('userMenuTable', 'http://localhost:3000/adminaccessconfigData');
+            });
+    
+            function fetchDataAndUpdateCheckboxes(tableId, apiUrl) {
+                fetch(apiUrl)
+                    .then(response => {
+                        if (response.status === 404) {
+                            Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No data found.',
+                    });
+                            throw new Error('Data not found');
+                        }
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Loop through the data received from the API
+                        data.forEach(menu => {
+                            // Only update checkboxes for menu items with an "active" status
+                            if (menu.status === 'active') {
+                                console.log(tableId,menu.name)
+                                // Find the checkbox corresponding to the menu value and check it
+                                var checkbox = document.querySelector(`#${tableId} input[type="checkbox"][value="${menu.name}"]`);
+                                if (checkbox) {
+                                    checkbox.checked = true;
+                                }
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Error fetching data:", error);
+                    });
+            }
+    
+            document.getElementById("submitButton").addEventListener("click", function() {
+                // Gather data from checkboxes in the User Menu table
+                gatherAndSendData('userMenuTable', 'http://localhost:3000/adminaccessconfigData/updateAccessconfig');
+            });
+    
+    
+            function gatherAndSendData(tableId, apiUrl) {
+                var checkboxes = document.querySelectorAll(`#${tableId} input[type="checkbox"]`);
+                var selectedMenus = [];
+                checkboxes.forEach(function(checkbox) {
+                    if (checkbox.checked) {
+                        selectedMenus.push(checkbox.value);
+                    }
+                });
+    
+                // Prepare data for API
+                var data = { name: selectedMenus };
+                console.log("chchchch",data)
+    
+                // Make a POST request to your API endpoint
+                fetch(apiUrl, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Data sent successfully");
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Access updated Successfully',
+                            })
+                
+                        window.location.reload();
+                        // Optionally, you can darkgreyirect the user or show a success message here
+                    } else {
+                        console.error("Failed to send data");
+                        // Handle error
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+            }
+        </script>
+
+        
+</html>

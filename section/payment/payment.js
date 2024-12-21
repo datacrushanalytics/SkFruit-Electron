@@ -63,6 +63,7 @@ var sessionData = JSON.parse(localStorage.getItem('sessionData'));
         amounr: parseInt(document.getElementById('amount').value) || 0 ,
         cash: parseInt(document.getElementById('bill_cash').value) || 0 ,
         online: parseInt(document.getElementById('online').value) || 0 ,
+        SupplierAccount:  document.getElementById('SupplierAccount').value || "Dummy",
         discount: parseInt(document.getElementById('discount').value) || 0 ,
         added_by: sessionData[0].name     
     };
@@ -70,7 +71,7 @@ var sessionData = JSON.parse(localStorage.getItem('sessionData'));
     loader.style.display = 'block';
 
 
-    await fetch('http://103.174.102.89:3000/paymentData/insertPayment', {
+    await fetch('http://localhost:3000/paymentData/insertPayment', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

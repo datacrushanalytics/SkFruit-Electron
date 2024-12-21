@@ -31,7 +31,15 @@ function fetchDataAndProcess() {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://103.174.102.89:3000/profitLossReport', {
+    
+    const isChecked = document.getElementById('toggleTableCheckbox').checked;
+    if (isChecked){
+        var url = "http://localhost:3000/profitLossReport/undetail"
+    }else{
+        var url = "http://localhost:3000/profitLossReport/detail"
+    }
+
+    return fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -57,7 +65,12 @@ function fetchDataAndProcess() {
         .then(result => {
         loader.style.display = 'none';
             console.log(result);
-            populateTable4(result);
+            // populateTable4(result);
+            if (isChecked){
+                populateTable5(result);
+            }else{
+                populateTable4(result);
+            }
             return result;
             // Optionally, you can redirect or show a success message here
         })
@@ -131,6 +144,87 @@ function fetchDataAndProcess() {
 
 
 function populateTable4(data) {
+    var tbody = document.getElementById('tableBody');
+    tbody.innerHTML = ''; // Clear existing rows
+    const isChecked = document.getElementById('toggleTableCheckbox').checked;
+    if (isChecked){
+        var columnsToDisplay = ['bata', 'product', 'sold_quantity', 'purchase_price', 'Amount', 'profit_loss'];
+    }else{
+        var columnsToDisplay = ['bill_no', 'gadi_number','cust_name', 'bata', 'product', 'sold_quantity', 'purchase_price', 'Amount', 'profit_loss'];
+    }
+    
+    var counter = 1;
+    var grandTotals = {
+        sold_quantity: 0,
+        purchase_price: 0,
+        selling_price: 0,
+        Amount: 0,
+        profit_loss: 0
+    };
+    console.log(data.reports);
+    if (data.reports.length === 0) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No data found.',
+          });
+
+        return;
+    }
+    data.reports.forEach(function (item) {
+        var row = tbody.insertRow();
+        var cell = row.insertCell();
+        cell.textContent = counter++;
+        columnsToDisplay.forEach(function (key) {
+            var cell = row.insertCell();
+            if (key === 'profit_loss') {
+                if (item[key].startsWith('Loss')) {
+                    cell.style.color = 'red';
+                    grandTotals[key] -= parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
+                } else {
+                    cell.style.color = 'green';
+                    grandTotals[key] += parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
+                }
+                // grandTotals[key] += parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
+            } else if (['sold_quantity', 'purchase_price', "selling_price", 'Amount'].includes(key)) {
+                grandTotals[key] += parseFloat(item[key]) || 0;
+            }
+            cell.textContent = item[key];
+            console.log("grandTotals",grandTotals)
+        });
+    });
+
+    // Create the grand total row
+    var totalRow = tbody.insertRow();
+    
+    // Create cell for 'Grand Total' heading
+    var headingCell = totalRow.insertCell();
+    headingCell.textContent = 'Grand Total';
+    headingCell.style.fontWeight = 'bold';
+    headingCell.colSpan = 4; // Span across the first four columns
+
+    // Create an empty cell to shift the totals to the right
+    var emptyCell = totalRow.insertCell();
+    emptyCell.textContent = ''; // Empty cell to shift totals to the right
+
+    // Create cells for the total values
+    columnsToDisplay.forEach(function (key, index) {
+        if (index >= 4) { // Start populating totals after the first four columns
+            var cell = totalRow.insertCell();
+            if (['sold_quantity', 'purchase_price', "selling_price", 'Amount','profit_loss'].includes(key)) {
+                if (key === 'profit_loss') {
+                    cell.style.color = grandTotals[key] < 0 ? 'red' : 'green';
+                }
+                cell.textContent = grandTotals[key].toFixed(2); // Format the total to 2 decimal places
+            } else {
+                cell.textContent = ''; // Empty cells for the specified columns
+            }
+        }
+    });
+}
+
+
+function populateTable5(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
     const isChecked = document.getElementById('toggleTableCheckbox').checked;

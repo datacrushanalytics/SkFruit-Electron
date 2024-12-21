@@ -198,6 +198,43 @@
     width: 220px;
 }
 
+.first-row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .first-row label {
+        margin-right: 10px;
+        margin-top: 9px;
+    }
+
+    .first-row input,
+    .first-row select {
+        margin-right: 10px;
+    }
+
+    #todate {
+        /* border-radius: 8px; */
+        height: 30px;
+        width: 200px;
+        /* box-shadow: 5px 10px 8px grey;
+        border-color: rgb(24, 24, 24); */
+        text-indent: 10%;
+        margin-left: 3px;
+    }
+
+    #fromdate {
+        /* border-radius: 8px; */
+        height: 30px;
+        width: 200px;
+        /* box-shadow: 5px 10px 8px grey;
+        border-color: rgb(24, 24, 24); */
+        text-indent: 10%;
+        margin-right: 8%;
+        margin-left: 10px;
+    }
+
 
     </style>
 </head>
@@ -212,6 +249,13 @@
     
             <div class="container1">
                 <form id="Form">
+                    <div class="first-row">
+                        <label for="userType">From Date :</label>
+                        <input type="date" id="fromdate" name="date" placeholder="From Date" required>
+                        <br>
+                        <label for="userType">To Date :</label>
+                        <input type="date" id="todate" name="date" placeholder="To Date" required>
+                    </div> <br>
     
                     <div class="input-row">
                         <label for="grahk">Product:  </label>
@@ -273,37 +317,24 @@
 <script>
 
     document.addEventListener('DOMContentLoaded', function () {
+    
+        const now = new Date();
+        // Adjust to IST (UTC+5:30)
+        const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
+        const istTime = new Date(now.getTime() + istOffset);
+        // Format the date to YYYY-MM-DD
+        const todayIST = istTime.toISOString().split('T')[0];
+
+        // Set the value of the date inputs to today's date in IST
+        document.getElementById('fromdate').value = todayIST;
+        document.getElementById('todate').value = todayIST;
+
         fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'grahk','product_name');
         fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'Route','bata');
         fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle','vehicle_no');
         
-        var loader = document.getElementById('loader');
-        loader.style.display = 'block';
 
-        fetch('http://103.174.102.89:3000/purchaseproductData/')
-            .then(response => {
-                if (response.status === 404) {
-                    loader.style.display = 'none';
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'No data found.',
-                    });
-                    throw new Error('Data not found');
-                }
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Hide loader
-                loader.style.display = 'none';
-                populateDropdown3(data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+   
 
     });
 
@@ -536,20 +567,30 @@ const formattedISTDate = `${day}/${month}/${year}`;
         return element && element.value ? element.value : defaultValue;
     }
 
+    function formatDate(dateString) {
+        var date = new Date(dateString);
+        var year = date.getFullYear();
+        var month = ('0' + (date.getMonth() + 1)).slice(-2);
+        var day = ('0' + date.getDate()).slice(-2);
+        return year + '-' + month + '-' + day;
+    }
 
     document.getElementById('Form').addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent form submission
         var data = {
+            fromdate: formatDate(document.getElementById("fromdate").value),
+            todate: formatDate(document.getElementById("todate").value),
             product : getElementValueWithDefault('grahk', '*') , 
             bata : getElementValueWithDefault('Route', '*'),
             gadi_number : getElementValueWithDefault('vehicle', '*'),
-            barcode : 'yes'
+            barcode : 'yes',
+            date : 'yes'
         };
         console.log(data); 
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
     
-        fetch('http://103.174.102.89:3000/purchaseproductData', {
+        fetch('http://localhost:3000/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -584,6 +625,8 @@ const formattedISTDate = `${day}/${month}/${year}`;
 
     function download() {
         var data = {
+            from_date: formatDate(document.getElementById("fromdate").value),
+            to_date: formatDate(document.getElementById("todate").value),
             product: getElementValueWithDefault('grahk', '*'),
             bata: getElementValueWithDefault('Route', '*'),
             gadi_number: getElementValueWithDefault('vehicle', '*'),

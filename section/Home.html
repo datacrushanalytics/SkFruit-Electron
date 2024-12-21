@@ -223,28 +223,43 @@ h3 img {
 
         console.log(localStorage.getItem('sessionData'))
         console.log(sessionData[0].usertype)
+
+        var url = 'http://localhost:3000/adminaccessconfigData';
+        if(isAdmin){
+          var url = 'http://localhost:3000/adminaccessconfigData';
+        }else{
+          var url = 'http://103.174.102.89:3000/accessconfigData';
+        }
+
         // Fetch data from API and dynamically generate buttons
-        fetch("http://103.174.102.89:3000/accessconfigData")
+        fetch(url)
         .then(response => response.json())
         .then(data => {
           loader.style.display = 'none';
           var sidebarContainer = document.getElementById('sidebar-container');
 
 
-          data.forEach(menu => {
+        function createButton(menuName) {
+          const button = document.createElement('button');
+          button.classList.add('component');
+          button.textContent = menuName;
+          button.onclick = handleButtonClick; // Use the handleButtonClick function
+          sidebarContainer.appendChild(button);
+        }
+
+        data.forEach(menu => {
+            // Skip if 'User' menu and the session status is not 'Super'
             if (menu.name === 'User' && sessionData[0].status !== 'Super') {
-                return; // Skip this iteration
-            }
-            if (isAdmin || menu.status === 'active') {
-              // if (isAdmin ) {
-              var button = document.createElement('button');
-              button.classList.add('component');
-              button.textContent = menu.name;
-              button.onclick = handleButtonClick; // Use the handleButtonClick function
-              sidebarContainer.appendChild(button);
+                return;
             }
 
-          });
+            if (sessionData[0].status === 'Super' || menu.status === 'active') {
+                createButton(menu.name);
+            }
+        });
+
+
+
 
           // Add logout button at the bottom
         var logoutButton = document.createElement('button');
