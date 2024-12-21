@@ -288,7 +288,7 @@
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br><br>
                 <label for="userType"> Product :</label>
-                <select class="drop" id="product" name="name">
+                <select class="drop" id="product" name="name" onchange="selectProduct()">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br>
                 <br>
@@ -313,6 +313,10 @@
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br><br>
 
+                <label>
+                    <input type="checkbox" id="toggleTableCheckbox" default="off" onchange="fetchDataAndProcess()"> UnDetail Statement
+                </label>
+
 
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
@@ -327,22 +331,26 @@
                 <thead>
                 <tr>
                     <th>Sr. No</th>
-                    <th>BILL NO</th>
+                    <th id = 'hide'>BILL NO</th>
                     <th>DATE</th>
                     <th>Customer Name</th>
-                    <th>Route</th>
-                    <th>Amount</th>
-                    <th>Carate Amount</th>
-                    <th>Previous Balance</th>
-                    <th>Total Kalam</th>
-                    <th>Online Amount</th>
-                    <th>Discount</th>
-                    <th>In Carte</th>
-                    <th>Balance</th>
-                    <th>Paid Amount</th>
-                    <th>Comment</th>
-                    <th>Products</th>
-                    <th>BILL</th>
+                    <th class="hide">Route</th>
+                    <th class="hide">Amount</th>
+                    <th class="hide">Carate Amount</th>
+                    <th class="hide">Previous Balance</th>
+                    <th class="hide">Total Kalam</th>
+                    <th class="hide">Online Amount</th>
+                    <th class="hide">Discount</th>
+                    <th class="hide">In Carte</th>
+                    <th class="hide">Balance</th>
+                    <th class="hide">Paid Amount</th>
+                    <th class="hide">Comment</th>
+                    <th class="hide">Products</th>
+                    <th class="hide">BILL</th>
+                    <th class="toggle-hide">Mobile</th>
+                    <th class="toggle-hide">QTY</th>
+                    <th class="toggle-hide">Rate</th>
+                    <th class="toggle-hide">Total</th>
                 </tr>
                 </thead>
                 <!-- Add more rows as needed -->
@@ -364,8 +372,24 @@
     const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
     const istTime = new Date(now.getTime() + istOffset);
 
+
     // Format the date to YYYY-MM-DD
     const todayIST = istTime.toISOString().split('T')[0];
+    // Add an event listener to the checkbox
+
+     // Select all toggle-hide elements
+    const toggleElements = document.querySelectorAll('.toggle-hide');
+    const toggleTableCheckbox = document.getElementById('toggleTableCheckbox'); // Make sure to add this checkbox in HTML
+
+    // Function to toggle visibility
+    const toggleVisibility = (show) => {
+        toggleElements.forEach((el) => {
+            el.style.display = show ? '' : 'none';
+        });
+    };
+
+    // Initialize as hidden
+    toggleVisibility(false);
 
     // Set the value of the date inputs to today's date in IST
     document.getElementById('fromdate').value = todayIST;
@@ -393,6 +417,7 @@
             fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle','vehicle_no',selectedValue=null,readOnly = true);
         }
     });
+    
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId, field,selectedValue = null, readOnly = false) {
         fetch(apiUrl)
@@ -465,6 +490,15 @@
     function setCustomer(){
         var route = document.getElementById('route').value
         fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customer/' +route  , 'customer','cust_name');
+    }
+
+    function selectProduct(){
+        var bataId = document.getElementById('product').value;
+        console.log(bataId)
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata/' + bataId, 'bata','bata');
+        loader.style.display = 'none';
     }
 </script>
 

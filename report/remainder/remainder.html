@@ -7,6 +7,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
@@ -42,7 +45,7 @@
             gap: 10px; /* Adjust the space between buttons */
         }
 
-        .button {
+        button {
             padding: 12px 24px;
             text-decoration: none;
             color: white;
@@ -109,6 +112,47 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
+  .first-row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .first-row label {
+        margin-right: 10px;
+        margin-top: 9px;
+    }
+
+    .first-row input,
+    .first-row select {
+        margin-right: 10px;
+    }
+    .drop {
+        border-radius: 8px;
+        height: 35px;
+        width: 500px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+        color: #333;
+        margin-right: 55px;
+    }
+/* 
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        width: 200px;
+        border: none;
+        cursor: pointer;
+        margin: 10px;
+        border-radius: 5px;
+        outline: none;
+        margin: 10px;
+    } */
+
+
   
   /* Animation */
   @keyframes spin {
@@ -122,11 +166,21 @@
     <div id="loader"></div>
     <div class="container">
         <h1 align="center">Remainder</h1><br>
+        <form id="loginForm1">
+            <br><br>
+            <label for="userType">Customer Name :</label>
+                <select class="drop" id="customer" name="name">
+                </select>
+            <br><br>
+            <div class="third-row">
+                <button type="submit" class="border-hover"  style="background-color: #26a653;">Submit</button>
+            </div>
+        </form><br>
 
-        <div class="button-container">
+        <!-- <div class="button-container">
             <input type="text" id="searchBox" placeholder="Search" oninput="searchData()">
-            <!-- <button class="button"><a href="../SetUserMenu.html">Set User Menu</a></button> -->
-        </div>
+            <button class="button"><a href="../SetUserMenu.html">Set User Menu</a></button>
+        </div> -->
         <hr>
         <br>
       
@@ -158,46 +212,97 @@
 </div>
 <script src="./remainder.js"></script>
 <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
 
-    // async function exportToPDF() {
-    //     try {
-    //         const data = await remainder();
 
-    //         // Export to PDF using jsPDF and autoTable
-    //     const { jsPDF } = window.jspdf;
+        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    // Check if session data exists and if the user is an admin
+    var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+        // Check if the user is an admin and show/hide the button accordingly
+    // if (isAdmin) {
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer','customer','name');
+        // fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route','route_name');
+        //     fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/user', 'user', 'added_by');
+        // }else{
+        //   var route = sessionData[0].route;
+        //   fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route,'customer');
+        //   $('#customer').attr('required', 'required');
+        // }
 
-    
-    //         const customHeaders = ['name','address','mobile_no',"last_update",'current_balance'];
-    
-    //         // Prepare data for autoTable
-    //         const rows = data.reports.map((report) => [
-    //             report.name,
-    //             report.address,
-    //             report.mobile_no,
-    //             new Date(report.last_update).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
-    //             report.current_balance
-    //         ]);
-    
-    //         // Create a new jsPDF instance
-    //         const doc = new jsPDF();
-    
-    //         // Add a title to the PDF
-    //         doc.text('Remainder Reports', 20, 10);
-    
-    //         // Add the table to the PDF
-    //         doc.autoTable({
-    //             head: [customHeaders],
-    //             body: rows,
-    //             startY: 20
-    //         });
-    
-    //         // Save the PDF and prompt to download
-    //         doc.save('Remainder.pdf');
-    //     } catch (error) {
-    //         console.error('Error exporting to PDF:', error);
-    //     }
+    });
+
+   async  function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Populate Select2 dropdown with API data
+                  populateDropdownWithSelect2(data, dropdownId, field);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+  async  function populateDropdownWithSelect2(data, dropdownId, field) {
+    var dropdown = $('#' + dropdownId);
+
+    // Clear existing options
+    dropdown.empty();
+
+    // Add placeholder option
+    dropdown.append(
+        $('<option></option>')
+            .attr('value', '')
+            .text('Select ' + dropdownId + ' type')
+            .prop('disabled', true)
+            .prop('selected', true)
+    );
+
+    // Populate dropdown with API data
+    data.forEach(function (item) {
+        dropdown.append(
+            $('<option></option>')
+                .attr('value', item[field])
+                .text(item[field])
+        );
+    });
+
+    // Add the hardcoded "Cash" option
+    dropdown.append(
+        $('<option></option>')
+            .attr('value', 'Cash')
+            .text('Cash')
+    );
+
+    // Initialize Select2
+    dropdown.select2({
+        placeholder: "Select " + dropdownId + " type",
+        allowClear: true
+    });
+}
+
+// Focus on the search field when Select2 is opened
+$(document).on('select2:open', function (e) {
+    window.setTimeout(function () {
+        document.querySelector('input.select2-search__field').focus();
+    }, 0);
+});
+    // $(document).on('select2:open', function(e) {
+    //     window.setTimeout(function () {
+    //         document.querySelector('input.select2-search__field').focus();
+    //     }, 0);
+    // });
+
+    // function setCustomer(){
+    //     var route = document.getElementById('route').value
+    //     fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customer/' +route  , 'customer','cust_name');
     // }
-    
 
 
 </script>

@@ -30,7 +30,7 @@ function fetchDataAndProcess(data = null) {
     
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
-    return fetch('http://103.174.102.89:3000/dailyReport', {
+    return fetch('http://localhost:3000/dailyReport', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -506,7 +506,7 @@ function populateTable5(data) {
             
             var loader = document.getElementById('loader');
             loader.style.display = 'block';
-            await fetch('http://103.174.102.89:3000/sms/receiptMessage', {
+            await fetch('http://localhost:3000/sms/receiptMessage', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -657,12 +657,17 @@ function populateTable5(data) {
     document.getElementById('receiptOnline').textContent = data.GrandReceipt['receiptOnline'] || 0;
     document.getElementById('saleOnline').textContent = data.GrandSale['saleOnline'] || 0;
     document.getElementById('saleDiscount').textContent = data.GrandSale['saleDiscount'] || 0;
+    document.getElementById('saleInCarat').textContent = data.GrandSale['saleInCarat'] || 0;
+    document.getElementById('saleCarate').textContent = data.GrandSale['saleCarate'] || 0;
     document.getElementById('receiptDiscount').textContent = data.GrandReceipt['receiptDiscount'] || 0;
+    document.getElementById('receiptInCarat').textContent = data.GrandReceipt['receiptInCarat'] || 0;
     document.getElementById('grandSale').textContent = data.GrandSale['saleAmount'] || 0;
     document.getElementById('grandCash').textContent = data.GrandSale['saleCash'] + data.GrandReceipt['receiptCash'];
     document.getElementById('grandOnline').textContent = data.GrandReceipt['receiptOnline'] + data.GrandSale['saleOnline'];
     document.getElementById('grandDiscount').textContent = data.GrandReceipt['receiptDiscount'] + data.GrandSale['saleDiscount'];
     document.getElementById('grandTotal').textContent = data.GrandSale['saleCash'] + data.GrandReceipt['receiptCash'] + data.GrandReceipt['receiptOnline'] + data.GrandSale['saleOnline'];
+    document.getElementById('grandInCarate').textContent = data.GrandSale['saleInCarat']+ data.GrandReceipt['receiptInCarat'];
+    document.getElementById('grandOutCarate').textContent =  data.GrandSale['saleCarate'] 
 
 }
 

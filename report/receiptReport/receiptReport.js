@@ -73,6 +73,7 @@ function populateTable4(data) {
     var columnsToDisplay = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'PaidAmt', 'online_deposite_bank', "onlineAmt", 'discount', 'inCarat', 'Balance'];
     var counter = 1;
     var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
+    var isSuperAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].status === 'Super';
     console.log(data.reports)
     if (data.reports.length === 0) {
         Swal.fire({
@@ -131,14 +132,36 @@ function populateTable4(data) {
         // }
 
         // Add Delete button if user is admin
-        if (isAdmin) {
+        if (isSuperAdmin) {
             var deleteCell = row.insertCell();
             var deleteButton = document.createElement('button');
             deleteButton.className = 'button delete-button';
             deleteButton.style.backgroundColor = '#ff355f';
             deleteButton.textContent = 'Delete';
             deleteButton.addEventListener('click', function () {
-                deleteaccount(item.receipt_id); // Pass the user id to the delete function
+                // deleteaccount(item.receipt_id); // Pass the user id to the delete function
+                // SweetAlert2 confirmation dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Do you really want to delete this user?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Call the deleteUser function only if confirmed
+                        deleteaccount(item.receipt_id);// Pass the user id to the delete function
+        
+                        // Optional: Show success message
+                        Swal.fire(
+                            'Deleted!',
+                            'The Product has been deleted.',
+                            'success'
+                        );
+                    }
+                });
             });
             deleteCell.appendChild(deleteButton);
         }

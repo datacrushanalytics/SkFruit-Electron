@@ -76,6 +76,7 @@ function populateTable4(data) {
     var columnsToDisplay = ['id', 'date', 'gadi_number', 'supplier_name', 'expenses','BillAmount', 'TotalQuantity'];
     var counter = 1;
     var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
+    var isSuperAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].status === 'Super';
     console.log(data.reports);
 
     if (data.reports.length === 0) {
@@ -132,7 +133,7 @@ function populateTable4(data) {
         buttonCell.appendChild(openPopupButton);
 
         // Add Edit button if user is admin
-        if (isAdmin) {
+        if (isSuperAdmin) {
             var editCell = row.insertCell();
             var editButton = document.createElement('button');
             editButton.className = 'button edit-button';
@@ -148,14 +149,48 @@ function populateTable4(data) {
         }
 
         // Add Delete button if user is admin
-        if (isAdmin) {
+        if (isSuperAdmin) {
             var deleteCell = row.insertCell();
             var deleteButton = document.createElement('button');
             deleteButton.className = 'button delete-button';
             deleteButton.style.backgroundColor = '#ff355f';
             deleteButton.textContent = 'Delete';
             deleteButton.addEventListener('click', function () {
-                deleteaccount(item.id); // Pass the user id to the delete function
+                // deleteaccount(item.id); // Pass the user id to the delete function
+                // SweetAlert2 confirmation dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Do you really want to delete this Purchase Record?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Call the deleteUser function only if confirmed
+                        deleteaccount(item.id); // Pass the user id to the delete function
+        
+                        // Optional: Show success message
+                        Swal.fire(
+                            'Deleted!',
+                            'The Purchase has been deleted.',
+                            'success'
+                        );
+                    }
+                });
+
+
+
+
+
+
+
+
+
+
+
+
             });
             deleteCell.appendChild(deleteButton);
         }
