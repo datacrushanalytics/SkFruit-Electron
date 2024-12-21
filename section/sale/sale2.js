@@ -326,23 +326,18 @@ function openModal(item) {
     }
          
     .header {
-        background-color: #f9f9f9;
         padding: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
-    .header .logo {
-        width: auto; /* Adjust as needed */
-        margin-right: 20px; /* Adjust as needed */
-    }
+
     .header .logo img {
-        height: 80px; /* Adjust as needed */
+        height: 125px; /* Adjust the size of the logo */
+        width: full;  /* Maintain the aspect ratio */
+        margin-top: 10px; /* Adjust the top margin if needed */
     }
-    .header .details {
-        width: 80%; /* Adjust as needed */
-        text-align: right;
-    }
+
     .header h1, .header p {
         margin: 5px 0;
         font-size: 16px;
@@ -417,15 +412,10 @@ color: #666;
 }
     </style>
     <div class="header">
-   <div> <h6> Mobile:- 9960607512  </h6> </div>
+   <div></h6> </div>
     <div class="logo">
-        <img src="../../assets/img/logo.png" alt="Company Logo">
+        <img src="../../assets/img/a4.png" alt="Company Logo">
     </div>
-    <div >
-      <center><h1>सावता फ्रुट सप्लायर्स</h1> 
-        <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
-        <p>मोबाईल नं:- 9860601102  / 9922676380 / 9156409970</p>
-    </div> </center>
 </div>
 <div class="container2">
 
