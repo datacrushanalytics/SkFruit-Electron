@@ -977,10 +977,9 @@ function openModal(item) {
         border: 1px solid #ccc;
         padding: 6px; /* Adjust padding */
         text-align: left;
+        background-color: #fffef4;
     }
-    th {
-        background-color: #f2f2f2;
-    }
+
     .total {
         font-weight: bold;
     }
@@ -1252,10 +1251,7 @@ function openModal1(item) {
         border: 1px solid #ccc;
         padding: 6px; /* Adjust padding */
         text-align: left;
-    }
-
-    th {
-        background-color: #f2f2f2;
+        background-color: #fffef4;
     }
 
     .total {

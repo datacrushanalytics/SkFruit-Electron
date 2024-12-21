@@ -476,6 +476,7 @@ function openModal(item) {
     <style>
     body {
         font-family: Arial, sans-serif;
+
         padding: 20px;
     }
 
@@ -516,11 +517,9 @@ function openModal(item) {
         border: 1px solid #ccc;
         padding: 6px; /* Adjust padding */
         text-align: left;
-    }
+        background-color: #fffef4;
+}
 
-    th {
-        background-color: #f2f2f2;
-    }
 
     .total {
         font-weight: bold;

@@ -593,9 +593,7 @@ function openModal(item) {
         border: 1px solid #ccc;
         padding: 6px; /* Adjust padding */
         text-align: left;
-    }
-    th {
-        background-color: #f2f2f2;
+        background-color: #fffef4;
     }
     .total {
         font-weight: bold;
