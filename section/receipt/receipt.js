@@ -115,15 +115,18 @@ function openModal(item) {
             var tableBody = document.getElementById("TableBody");
             tableBody.innerHTML = ""; // Clear existing rows
 
+            const currentDate = new Date(); // Get the current date and time
+            const timestamp = currentDate.toLocaleString('en-IN', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit', 
+                hour12: true 
+            }); // Format only the time (HH:MM:SS AM/PM)
             var billDetails = [
-                { label: "जमा पावती क्र.:", value: item.receipt_id },
-                { label: "तारीख:", value: utcDate.toLocaleString('en-IN', options) },
-                { label: "ग्राहकाचे नाव:", value: data.reports[0].Customer },
-                { label: "संपर्क क्र.:", value: data.reports[0].mobile_no },
-                { label: "पत्ता:", value: data.reports[0].address },
-                // Add other bill details similarly
+                { label: "जमा पावती क्र.:   " + item.receipt_id, value: "तारीख:   " + utcDate.toLocaleString('en-IN', options) },
+                { label: "ग्राहकाचे नाव:   " + data.reports[0].Customer, value: "संपर्क क्र.:   " + data.reports[0].mobile_no },
+                { label: "पत्ता:   " + data.reports[0].address, value: "Time:   " + timestamp },
             ];
-
             billDetails.forEach(function (detail) {
                 var row = document.createElement("tr");
                 row.innerHTML = `
@@ -259,6 +262,7 @@ function openModal(item) {
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 12px; /* Adjust font size */
+        font-weight: bold;
     }
 
     table {

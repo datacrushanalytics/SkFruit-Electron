@@ -380,12 +380,9 @@ function openModal(item) {
             tableBody.innerHTML = ""; // Clear existing rows
 
             var billDetails = [
-                { label: "बिल क्र.:", value: data.reports[0].id  },
-                { label: "तारीख:", value: utcDate.toLocaleString('en-IN', options) },
-                { label: "सप्लायर नाव:", value: data.reports[0].supplier_name },
-                { label: "गाडी नाव:", value: data.reports[0].gadi_number },
-                { label: "संपर्क क्र.:", value: data.reports[0].mobile_no },
-                { label: "पत्ता:", value: data.reports[0].address },
+                { label: "बिल क्र.:   " + data.reports[0].id, value: "तारीख:    "+ utcDate.toLocaleString('en-IN', options) },
+                { label: "सप्लायर नाव:   " + data.reports[0].supplier_name, value: "गाडी नंबर:    "+ data.reports[0].gadi_number},
+                { label: "संपर्क क्र.:   " + data.reports[0].mobile_no,  value: "पत्ता:   " + data.reports[0].address},
                 // Add other bill details similarly
             ];
 
@@ -487,6 +484,7 @@ function openModal(item) {
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 12px; /* Adjust font size */
+            font-weight: bold;
         }
         table {
             width: 100%;

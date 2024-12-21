@@ -363,13 +363,17 @@ function openModal(item) {
 
             var tableBody = document.getElementById("TableBody");
             tableBody.innerHTML = ""; // Clear existing rows
-
+            const currentDate = new Date(); // Get the current date and time
+            const timestamp = currentDate.toLocaleString('en-IN', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit', 
+                hour12: true 
+            }); // Format onl
             var billDetails = [
-                { label: "बिल क्र.:", value: item.bill_no },
-                { label: "तारीख:", value: utcDate.toLocaleString('en-IN', options) },
-                { label: "ग्राहकाचे नाव:", value: data.results[0].cust_name },
-                { label: "संपर्क क्र.:", value: data.results[0].mobile_no },
-                { label: "पत्ता:", value: data.results[0].address },
+                { label: "बिल क्र.:" + item.bill_no, value: "तारीख:" + utcDate.toLocaleString('en-IN', options) },
+                { label: "ग्राहकाचे नाव:"+ data.results[0].cust_name, value: "संपर्क क्र.:" + data.results[0].mobile_no },
+                { label: "पत्ता:" + data.results[0].address,   value: "Time:   " + timestamp },
                 // Add other bill details similarly
             ];
 
@@ -590,6 +594,7 @@ function openModal(item) {
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 12px; /* Adjust font size */
+        font-weight: bold;
     }
     table {
         width: 100%;
