@@ -228,7 +228,7 @@
                 </select>
                 <br><br>
                 <label for="userType">Product :</label>
-                <select class="drop" id="product" name="name">
+                <select class="drop" id="product" name="name" onchange="selectProduct()" >
                     <option value="Product" disabled selected>Select Account</option>
                 </select>
                 <br> <br>
@@ -250,7 +250,7 @@
                     <option value="User" disabled selected>Select Account</option>
                 </select><br> <br>
                 <label>
-                    <input type="checkbox" id="toggleTableCheckbox" default="off"> UnDetail Statement
+                    <input type="checkbox" id="toggleTableCheckbox" default="off" onchange="fetchDataAndProcess()"> UnDetail Statement
                 </label>
     
                 <!-- <div class="third-row"> -->
@@ -388,6 +388,17 @@
         var route = document.getElementById('route').value
         fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'customer','name');
     }
+
+
+    function selectProduct(){
+        var bataId = document.getElementById('product').value;
+        console.log(bataId)
+        var loader = document.getElementById('loader');
+        loader.style.display = 'block';
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata/' + bataId, 'bata','bata');
+        loader.style.display = 'none';
+    }
+
 </script>
 
 

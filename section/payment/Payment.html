@@ -221,9 +221,11 @@
                 <label for="totalCarat">Online Payment :</label>
                 <input type="number" id="online" name="number" placeholder="Online Payment" onchange="totalBalance()" readonly>
               </div>
-
-            
             <br>
+            <div class="form-group">
+                <label for="vehicle">TO Supplier Account :</label>
+                <select id="SupplierAccount" >
+            </select>
 
             <label for="amount"> Discount :</label>
             <input type="number" id="discount" name="amount"  onchange="totalBalance()">
@@ -411,9 +413,10 @@ function toggleReadonly(){
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Fetch data from API and populate Select2 dropdowns
-            fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Supplier', 'bata', 'bata');
-            fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'product', 'bank');
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Supplier', 'bata', 'name');
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'product', 'name');
             fetchAndPopulateDropdown('http://103.174.102.89:3000/mobile/supplier', 'number', 'mobile_no');
+            fetchAndPopulateDropdown('http://localhost:3000/fetchData/SupplierAccount', 'SupplierAccount','supplier_bank_account');
         });
 
         function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
@@ -434,28 +437,32 @@ function toggleReadonly(){
         }
 
         function populateDropdownWithSelect2(data, dropdownId, field) {
-            var dropdown = $('#' + dropdownId);
-            // Clear existing options
-            dropdown.empty();
-
-            // Add placeholder option
-            dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
-
-            // Add new option
-            // if (field == 'bank') {
-            //     dropdown.append($('<option></option>').attr('cash', 'cash').text('Cash'));
-            // }
-            // Populate dropdown with API data
-            data.forEach(function (item) {
-                dropdown.append($('<option></option>').attr('value', item.name || item.route_name || item.mobile_no).text(item.name || item.route_name || item.mobile_no));
-            });
-
-            // Initialize Select2
-            dropdown.select2({
-                placeholder: "Select Account",
-                allowClear: true
-            });
-        }
+                var dropdown = $('#' + dropdownId);
+                dropdown.empty();
+                dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+                data.forEach(function (item) {
+                    dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
+                });
+                dropdown.select2({
+                    placeholder: "Select or type " + dropdownId + " type",
+                    allowClear: true,
+                    tags: true,
+                    createTag: function(params) {
+                        return {
+                            id: params.term,
+                            text: params.term,
+                            newOption: true
+                        };
+                    }
+                });
+                dropdown.on('select2:select', function (e) {
+                    if (e.params.data.newOption) {
+                        $('#otherOption').show();
+                    } else {
+                        $('#otherOption').hide();
+                    }
+                });
+            }
 
         $(document).on('select2:open', function (e) {
             window.setTimeout(function () {

@@ -30,11 +30,35 @@ function fetchDataAndProcess() {
         user: getElementValueWithDefault('user', '*'),
         vehicle: getElementValueWithDefault('vehicle', '*')
     };
+
+    const toggleVisibility = (element,show) => {
+        element.forEach((el) => {
+            el.style.display = show ? '' : 'none';
+        });
+    };
+
+    const isChecked = document.getElementById('toggleTableCheckbox').checked;
+    if (isChecked){
+        var url = "http://localhost:3000/routewiseSaleReport/undetail"
+        const element = document.querySelectorAll('.hide');
+        const element1 = document.querySelectorAll('.toggle-hide');
+        toggleVisibility(element, false);
+        toggleVisibility(element1, true);
+    
+    }else{
+        var url = "http://localhost:3000/routewiseSaleReport/detail"
+        const element = document.querySelectorAll('.toggle-hide');
+        const element1 = document.querySelectorAll('.hide');
+        toggleVisibility(element, false);
+        toggleVisibility(element1, true);
+    }
+
+
     console.log(data);
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    return fetch('http://103.174.102.89:3000/routewiseSaleReport', {
+    return fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -70,7 +94,13 @@ function fetchDataAndProcess() {
         .then(result => {
         loader.style.display = 'none';
             console.log(result)
-            populateTable4(result)
+            if (isChecked){
+                populateTable5(result)
+            }else{
+                populateTable4(result)
+            }
+
+            
             return result;
             // Optionally, you can darkgreyirect or show a success message here
         })
@@ -87,6 +117,7 @@ function populateTable4(data) {
     var columnsToDisplay = ['bill_no', 'date', 'cust_name', 'route', 'amount', 'carate_amount', 'pre_balance', 'total_amount', 'online_amt', 'discount', 'inCarat', 'PaidAmount', 'balance', 'comment'];
     var counter = 1;
     var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
+    var isSuperAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].status === 'Super';
     console.log(data.reports)
     if (data.reports.length === 0) {
        
@@ -142,7 +173,7 @@ function populateTable4(data) {
 
 
         // Add button to delete record
-        if (isAdmin) {
+        if (isSuperAdmin) {
             var deleteCell = row.insertCell();
             var deleteButton = document.createElement('button');
             deleteButton.className = 'button';
@@ -207,6 +238,80 @@ function populateTable4(data) {
 
 
 
+function populateTable5(data) {
+    var tbody = document.getElementById('tableBody');
+    tbody.innerHTML = ''; // Clear existing rows
+    var columnsToDisplay = ['bill_no', 'date', 'cust_name', 'mobile_no', 'quantity','rate','price'];
+    var counter = 1;
+    var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
+    console.log(data.reports)
+    if (data.reports.length === 0) {
+       
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No data found.',
+    });
+    }
+    data.reports.forEach(function (item) {
+        var row = tbody.insertRow();
+        var cell = row.insertCell();
+        cell.textContent = counter++;
+        columnsToDisplay.forEach(function (key) {
+            var cell = row.insertCell();
+            if (key === 'date') {
+                console.log(item[key])
+                var utcDate = new Date(item[key]);
+                var options = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    timeZone: 'Asia/Kolkata'
+                };
+                cell.textContent = utcDate.toLocaleString('en-IN', options);
+
+            } else {
+                // If the value for the column is empty, set it to null
+                cell.textContent = item[key] !== '' ? item[key] : 'null';
+            }
+        });
+
+    });
+
+    // Add row for grand total
+    var totalRow = tbody.insertRow();
+    totalRow.insertCell().colSpan = 1; // Skip the first column
+
+    columnsToDisplay.forEach(function (key) {
+        var cell = totalRow.insertCell();
+        if (key === 'route') {
+            cell.textContent = 'Grand Total';
+            cell.style.fontWeight = 'bold'; // Make "Grand Total" bold
+        } else {
+            switch (key) {
+                case 'quantity':
+                    cell.textContent = data.Grand['Grand Quantity'];
+                    break;
+                case 'rate':
+                    cell.textContent = data.Grand['Grand Rate'];
+                    break;
+                case 'price':
+                    cell.textContent = data.Grand['Total Price'];
+                    break;
+                default:
+                    cell.textContent = '';
+                    break;
+            }
+            cell.style.fontWeight = 'bold'; // Make the values bold
+        }
+    });
+
+    // Add a final cell for the "Bill" column, leaving it empty
+    totalRow.insertCell();
+}
+
+
+
 
 function deleteRecord(bill_no) {
     fetch(`http://103.174.102.89:3000/fetchData/saleProduct/${bill_no}`, {
@@ -266,16 +371,6 @@ function deleteRecord(bill_no) {
         console.error('Error:', error);
     });
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -363,13 +458,17 @@ function openModal(item) {
 
             var tableBody = document.getElementById("TableBody");
             tableBody.innerHTML = ""; // Clear existing rows
-
+            const currentDate = new Date(); // Get the current date and time
+            const timestamp = currentDate.toLocaleString('en-IN', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit', 
+                hour12: true 
+            }); // Format onl
             var billDetails = [
-                { label: "बिल क्र.:", value: item.bill_no },
-                { label: "तारीख:", value: utcDate.toLocaleString('en-IN', options) },
-                { label: "ग्राहकाचे नाव:", value: data.results[0].cust_name },
-                { label: "संपर्क क्र.:", value: data.results[0].mobile_no },
-                { label: "पत्ता:", value: data.results[0].address },
+                { label: "बिल क्र.:" + item.bill_no, value: "तारीख:" + utcDate.toLocaleString('en-IN', options) },
+                { label: "ग्राहकाचे नाव:"+ data.results[0].cust_name, value: "संपर्क क्र.:" + data.results[0].mobile_no },
+                { label: "पत्ता:" + data.results[0].address,   value: "Time:   " + timestamp },
                 // Add other bill details similarly
             ];
 
@@ -510,12 +609,6 @@ function openModal(item) {
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
-    h6{
-        top: -17px;
-       position: absolute;
-       font-size: 12px;
-    }
-    
     .label {
         font-size: 16px;
         font-weight: bold;
@@ -560,27 +653,21 @@ function openModal(item) {
     }
          
     .header {
-        background-color: #f9f9f9;
+        
         padding: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
-    .header .logo {
-        width: auto; /* Adjust as needed */
-        margin-right: 20px; /* Adjust as needed */
-    }
+
+
+
     .header .logo img {
-        height: 80px; /* Adjust as needed */
+        height: 125px; /* Adjust the size of the logo */
+        width: full;  /* Maintain the aspect ratio */
+        margin-top: 10px; /* Adjust the top margin if needed */
     }
-    .header .details {
-        width: 80%; /* Adjust as needed */
-        text-align: right;
-    }
-    .header h1, .header p {
-        margin: 5px 0;
-        font-size: 16px;
-    }
+
 
 
     .container2 {
@@ -590,6 +677,7 @@ function openModal(item) {
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 12px; /* Adjust font size */
+        font-weight: bold;
     }
     table {
         width: 100%;
@@ -600,9 +688,7 @@ function openModal(item) {
         border: 1px solid #ccc;
         padding: 6px; /* Adjust padding */
         text-align: left;
-    }
-    th {
-        background-color: #f2f2f2;
+        background-color: #fffef4;
     }
     .total {
         font-weight: bold;
@@ -650,15 +736,9 @@ color: #666;
 }
     </style>
     <div class="header">
-   <div> <h6> Mobile:- 9960607512  </h6> </div>
     <div class="logo">
-        <img src="../../assets/img/logo.png" alt="Company Logo">
+        <img src="../../assets/img/a4.png" alt="Company Logo">
     </div>
-    <div >
-      <center><h1>सावता फ्रुट सप्लायर्स</h1> 
-        <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
-        <p>मोबाईल नं:- 9860601102  / 9922676380 / 9156409970</p>
-    </div> </center>
 </div>
 <div class="container2">
 

@@ -37,7 +37,7 @@ document.getElementById('login').addEventListener('submit', async function(event
     };
 
     try {
-        const response = await fetch('http://103.174.102.89:3000/saleData/updateSale/' + formData.bill_no, {
+        const response = await fetch('http://localhost:3000/saleData/updateSale/' + formData.bill_no, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -338,9 +338,7 @@ function openModal(item) {
         border: 1px solid #ccc;
         padding: 6px; /* Adjust padding */
         text-align: left;
-    }
-    th {
-        background-color: #f2f2f2;
+        background-color: #fffef4;
     }
     .total {
         font-weight: bold;

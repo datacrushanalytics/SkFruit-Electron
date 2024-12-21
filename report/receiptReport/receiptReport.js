@@ -73,6 +73,7 @@ function populateTable4(data) {
     var columnsToDisplay = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'PaidAmt', 'online_deposite_bank', "onlineAmt", 'discount', 'inCarat', 'Balance'];
     var counter = 1;
     var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
+    var isSuperAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].status === 'Super';
     console.log(data.reports)
     if (data.reports.length === 0) {
         Swal.fire({
@@ -131,14 +132,36 @@ function populateTable4(data) {
         // }
 
         // Add Delete button if user is admin
-        if (isAdmin) {
+        if (isSuperAdmin) {
             var deleteCell = row.insertCell();
             var deleteButton = document.createElement('button');
             deleteButton.className = 'button delete-button';
             deleteButton.style.backgroundColor = '#ff355f';
             deleteButton.textContent = 'Delete';
             deleteButton.addEventListener('click', function () {
-                deleteaccount(item.receipt_id); // Pass the user id to the delete function
+                // deleteaccount(item.receipt_id); // Pass the user id to the delete function
+                // SweetAlert2 confirmation dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Do you really want to delete this user?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Call the deleteUser function only if confirmed
+                        deleteaccount(item.receipt_id);// Pass the user id to the delete function
+        
+                        // Optional: Show success message
+                        Swal.fire(
+                            'Deleted!',
+                            'The Product has been deleted.',
+                            'success'
+                        );
+                    }
+                });
             });
             deleteCell.appendChild(deleteButton);
         }
@@ -390,16 +413,19 @@ function openModal(item) {
 
             var tableBody = document.getElementById("TableBody");
             tableBody.innerHTML = ""; // Clear existing rows
-
+            const currentDate = new Date(); // Get the current date and time
+            const timestamp = currentDate.toLocaleString('en-IN', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit', 
+                hour12: true 
+            }); // Format only the time (HH:MM:SS AM/PM)
             var billDetails = [
-                { label: "जमा पावती क्र.:", value: item.receipt_id },
-                { label: "तारीख:", value: utcDate.toLocaleString('en-IN', options) },
-                { label: "ग्राहकाचे नाव:", value: data.reports[0].Customer },
-                { label: "संपर्क क्र.:", value: data.reports[0].mobile_no },
-                { label: "पत्ता:", value: data.reports[0].address },
-                // Add other bill details similarly
+                { label: "जमा पावती क्र.:   " + item.receipt_id, value: "तारीख:   " + utcDate.toLocaleString('en-IN', options) },
+                { label: "ग्राहकाचे नाव:   " + data.reports[0].Customer, value: "संपर्क क्र.:   " + data.reports[0].mobile_no },
+                { label: "पत्ता:   " + data.reports[0].address, value: "Time:   " + timestamp },
             ];
-
+            
             billDetails.forEach(function (detail) {
                 var row = document.createElement("tr");
                 row.innerHTML = `
@@ -473,36 +499,26 @@ function openModal(item) {
     <style>
     body {
         font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
+
         padding: 20px;
     }
 
     .header {
-        background-color: #f9f9f9;
+        
         padding: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
-    .header .logo {
-        width: auto; /* Adjust as needed */
-        margin-right: 20px; /* Adjust as needed */
-    }
+
 
     .header .logo img {
-        height: 80px; /* Adjust as needed */
+        height: 125px; /* Adjust the size of the logo */
+        width: full;  /* Maintain the aspect ratio */
+        margin-top: 10px; /* Adjust the top margin if needed */
     }
 
-    .header .details {
-        width: 80%; /* Adjust as needed */
-        text-align: right;
-    }
-
-    .header h1, .header p {
-        margin: 5px 0;
-        font-size: 16px;
-    }
 
     .container2 {
         max-width: 600px;
@@ -511,6 +527,7 @@ function openModal(item) {
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 12px; /* Adjust font size */
+        font-weight: bold;
     }
 
     table {
@@ -523,11 +540,9 @@ function openModal(item) {
         border: 1px solid #ccc;
         padding: 6px; /* Adjust padding */
         text-align: left;
-    }
+        background-color: #fffef4;
+}
 
-    th {
-        background-color: #f2f2f2;
-    }
 
     .total {
         font-weight: bold;
@@ -607,12 +622,7 @@ function openModal(item) {
 <body>
 <div class="header">
     <div class="logo">
-        <img src="../../assets/img/logo.png" alt="Company Logo">
-    </div>
-    <div>
-        <h1>सावता फ्रुट सप्लायर्स</h1>
-        <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
-        <p>मोबाईल नं:- 9860601102  / 9922676380 / 9156409970</p>
+        <img src="../../assets/img/a4.png" alt="Company Logo">
     </div>
 </div>
 <div class="container2">
