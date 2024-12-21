@@ -765,12 +765,17 @@ function openModal(item) {
             var tableBody = document.getElementById("TableBody");
             tableBody.innerHTML = ""; // Clear existing rows
 
+            const currentDate = new Date(); // Get the current date and time
+            const timestamp = currentDate.toLocaleString('en-IN', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit', 
+                hour12: true 
+            }); // Format onl
             var billDetails = [
-                { label: "बिल क्र.:", value: item },
-                { label: "तारीख:", value: utcDate.toLocaleString('en-IN', options) },
-                { label: "ग्राहकाचे नाव:", value: data.results[0].cust_name },
-                { label: "संपर्क क्र.:", value: data.results[0].mobile_no },
-                { label: "पत्ता:", value: data.results[0].address },
+                { label: "बिल क्र.:" + item.bill_no, value: "तारीख:" + utcDate.toLocaleString('en-IN', options) },
+                { label: "ग्राहकाचे नाव:"+ data.results[0].cust_name, value: "संपर्क क्र.:" + data.results[0].mobile_no },
+                { label: "पत्ता:" + data.results[0].address,   value: "Time:   " + timestamp },
                 // Add other bill details similarly
             ];
 
@@ -886,7 +891,6 @@ function openModal(item) {
     <style>   
     body {
         font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
         padding: 20px;
     }
     
@@ -949,28 +953,16 @@ function openModal(item) {
     }
          
     .header {
-        background-color: #f9f9f9;
         padding: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
-    .header .logo {
-        width: auto; /* Adjust as needed */
-        margin-right: 20px; /* Adjust as needed */
-    }
     .header .logo img {
-        height: 80px; /* Adjust as needed */
+        height: 125px; /* Adjust the size of the logo */
+        width: full;  /* Maintain the aspect ratio */
+        margin-top: 10px; /* Adjust the top margin if needed */
     }
-    .header .details {
-        width: 80%; /* Adjust as needed */
-        text-align: right;
-    }
-    .header h1, .header p {
-        margin: 5px 0;
-        font-size: 16px;
-    }
-
 
     .container2 {
         max-width: 600px;
@@ -979,6 +971,7 @@ function openModal(item) {
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 12px; /* Adjust font size */
+        font-weight: bold;
     }
     table {
         width: 100%;
@@ -989,10 +982,9 @@ function openModal(item) {
         border: 1px solid #ccc;
         padding: 6px; /* Adjust padding */
         text-align: left;
+        background-color: #fffef4;
     }
-    th {
-        background-color: #f2f2f2;
-    }
+
     .total {
         font-weight: bold;
     }
@@ -1039,15 +1031,9 @@ color: #666;
 }
     </style>
     <div class="header">
-   <div> <h6> Mobile:- 9960607512  </h6> </div>
     <div class="logo">
-        <img src="../../assets/img/logo.png" alt="Company Logo">
+        <img src="../../assets/img/a4.png" alt="Company Logo">
     </div>
-    <div >
-      <center><h1>सावता फ्रुट सप्लायर्स</h1> 
-        <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
-        <p>मोबाईल नं:- 9860601102  / 9922676380 / 9156409970</p>
-    </div> </center>
 </div>
 <div class="container2">
 
@@ -1146,13 +1132,17 @@ function openModal1(item) {
             var tableBody = document.getElementById("TableBody");
             tableBody.innerHTML = ""; // Clear existing rows
 
+            const currentDate = new Date(); // Get the current date and time
+            const timestamp = currentDate.toLocaleString('en-IN', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit', 
+                hour12: true 
+            }); // Format only the time (HH:MM:SS AM/PM)
             var billDetails = [
-                { label: "जमा पावती क्र.:", value: item.receipt_id },
-                { label: "तारीख:", value: utcDate.toLocaleString('en-IN', options) },
-                { label: "ग्राहकाचे नाव:", value: data.reports[0].Customer },
-                { label: "संपर्क क्र.:", value: data.reports[0].mobile_no },
-                { label: "पत्ता:", value: data.reports[0].address },
-                // Add other bill details similarly
+                { label: "जमा पावती क्र.:   " + item.receipt_id, value: "तारीख:   " + utcDate.toLocaleString('en-IN', options) },
+                { label: "ग्राहकाचे नाव:   " + data.reports[0].Customer, value: "संपर्क क्र.:   " + data.reports[0].mobile_no },
+                { label: "पत्ता:   " + data.reports[0].address, value: "Time:   " + timestamp },
             ];
 
             billDetails.forEach(function (detail) {
@@ -1228,35 +1218,22 @@ function openModal1(item) {
     <style>
     body {
         font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
         padding: 20px;
     }
 
     .header {
-        background-color: #f9f9f9;
         padding: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
-    .header .logo {
-        width: auto; /* Adjust as needed */
-        margin-right: 20px; /* Adjust as needed */
-    }
+
 
     .header .logo img {
-        height: 80px; /* Adjust as needed */
-    }
-
-    .header .details {
-        width: 80%; /* Adjust as needed */
-        text-align: right;
-    }
-
-    .header h1, .header p {
-        margin: 5px 0;
-        font-size: 16px;
+        height: 125px; /* Adjust the size of the logo */
+        width: full;  /* Maintain the aspect ratio */
+        margin-top: 10px; /* Adjust the top margin if needed */
     }
 
     .container2 {
@@ -1266,6 +1243,7 @@ function openModal1(item) {
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 12px; /* Adjust font size */
+        font-weight: bold;
     }
 
     table {
@@ -1278,10 +1256,7 @@ function openModal1(item) {
         border: 1px solid #ccc;
         padding: 6px; /* Adjust padding */
         text-align: left;
-    }
-
-    th {
-        background-color: #f2f2f2;
+        background-color: #fffef4;
     }
 
     .total {
@@ -1362,12 +1337,7 @@ function openModal1(item) {
 <body>
 <div class="header">
     <div class="logo">
-        <img src="../../assets/img/logo.png" alt="Company Logo">
-    </div>
-    <div>
-        <h1>सावता फ्रुट सप्लायर्स</h1>
-        <p>ममु.पोस्ट- काष्टी ता.- श्रीगोंदा, जि. अहमदनगर - 414701</p>
-        <p>मोबाईल नं:- 9860601102  / 9922676380 / 9156409970</p>
+        <img src="../../assets/img/a4.png" alt="Company Logo">
     </div>
 </div>
 <div class="container2">
