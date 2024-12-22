@@ -416,7 +416,7 @@ function toggleReadonly(){
             fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Supplier', 'bata', 'name');
             fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'product', 'name');
             fetchAndPopulateDropdown('http://103.174.102.89:3000/mobile/supplier', 'number', 'mobile_no');
-            fetchAndPopulateDropdown('http://localhost:3000/fetchData/SupplierAccount', 'SupplierAccount','supplier_bank_account');
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/SupplierAccount', 'SupplierAccount','supplier_bank_account');
         });
 
         function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {

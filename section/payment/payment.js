@@ -71,7 +71,7 @@ var sessionData = JSON.parse(localStorage.getItem('sessionData'));
     loader.style.display = 'block';
 
 
-    await fetch('http://localhost:3000/paymentData/insertPayment', {
+    await fetch('http://103.174.102.89:3000/paymentData/insertPayment', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

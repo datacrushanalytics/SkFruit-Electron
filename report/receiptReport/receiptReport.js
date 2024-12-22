@@ -175,15 +175,6 @@ function populateTable4(data) {
 }
 
 
-// function editAccount(user) {
-//     localStorage.removeItem('userData');
-//     console.log('Editing user: ' + JSON.stringify(user));
-//     localStorage.setItem('userData', JSON.stringify(user));
-//      // darkgreyirect to user_update.html
-//      window.location.href = '../account/updateAccount.html';
-//   }
-
-
 function deleteaccount(userId) {
     // Perform delete operation based on userId
     fetch('http://103.174.102.89:3000/receiptReport/deleteReceiptReport/' + userId, {
@@ -208,116 +199,6 @@ function deleteaccount(userId) {
 }
 
 
-
-
-// async function exportToExcel() {
-//     try {
-//         const data = await fetchDataAndProcess();
-
-//         // Export to PDF using jsPDF and autoTable
-//         const { jsPDF } = window.jspdf;
-//         const doc = new jsPDF();
-
-//         const customHeaders = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'PaidAmt','online_deposite_bank', 'onlineAmt', 'discount', 'inCarat', 'Balance'];
-        
-//         // Adding header details
-//         doc.setFontSize(10);
-//         doc.text('Mobile:- 9960607512', 10, 10);
-//         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
-//         doc.setFontSize(16);
-//         doc.text('Savata Fruits Suppliers', 50, 10);
-//         doc.setFontSize(12);
-//         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 20);
-//         doc.text('Mobile NO:- 9860601102  / 9922676380 / 9156409970', 50, 30);
-        
-//         let startY = 50;
-        
-
-//         // Map data for autoTable
-//         const reportData = data.reports.map(report => [
-//             report.receipt_id,
-//             new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
-//             report.Customer,
-//             report.mobile_no,
-//             report.note,
-//             report.PaidAmt,
-//             report.online_deposite_bank,
-//             report.onlineAmt,
-//             report.discount,
-//             report.inCarat,
-//             report.Amt,
-//             report.Balance // Ensure this field matches the actual field name in your data
-//         ]);
-
-//         // Add Reports table to PDF
-//         doc.autoTable({
-//             head: [customHeaders],
-//             body: reportData,
-//             startY: 50,
-//             theme: 'grid'
-//         });
-
-//         // Save the PDF
-//         doc.save('Receipt_Report.pdf');
-
-//     } catch (error) {
-//         console.error('Error exporting data:', error);
-//     }
-// }
-
-// async function exportToExcel() {
-//     try {
-//         const data = await fetchDataAndProcess();
-
-//         // Export to PDF using jsPDF and autoTable
-//         const { jsPDF } = window.jspdf;
-//         const doc = new jsPDF();
-
-//         const customHeaders = ['receipt_id', 'date', 'Customer', 'mobile_no', 'note', 'PaidAmt', 'online_deposite_bank', 'onlineAmt', 'discount', 'inCarat', 'Balance'];
-        
-//         // Adding header details
-//         doc.setFontSize(10);
-//         doc.text('Mobile:- 9960607512', 10, 10);
-//         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
-//         doc.setFontSize(16);
-//         doc.text('Savata Fruits Suppliers', 50, 20);
-//         doc.setFontSize(12);
-//         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
-//         doc.text('Mobile NO:- 9860601102  / 9922676380 / 9156409970', 50, 40);
-        
-//         let startY = 50;
-        
-
-//         // Map data for autoTable
-//         const reportData = data.reports.map(report => [
-//             report.receipt_id,
-//             new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
-//             report.Customer,
-//             report.mobile_no,
-//             report.note,
-//             report.PaidAmt,
-//             report.online_deposite_bank,
-//             report.onlineAmt,
-//             report.discount,
-//             report.inCarat,
-//             report.Balance // Ensure this field matches the actual field name in your data
-//         ]);
-
-//         // Add Reports table to PDF
-//         doc.autoTable({
-//             head: [customHeaders],
-//             body: reportData,
-//             startY: 50,
-//             theme: 'grid'
-//         });
-
-//         // Save the PDF
-//         doc.save('Receipt_Report.pdf');
-
-//     } catch (error) {
-//         console.error('Error exporting data:', error);
-//     }
-// }
 
 
 async function exportToExcel() {
@@ -390,8 +271,7 @@ function openModal(item) {
     console.log("Opening receipt modal for item:", item);
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
-
-    fetch('http://103.174.102.89:3000/receiptReport/' + item.receipt_id)
+        fetch('http://103.174.102.89:3000/receiptReport/' + item.receipt_id)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -411,8 +291,21 @@ function openModal(item) {
             };
 
 
+            function convertToIST(dateString) {
+                const utcDate = new Date(dateString); // Parse the UTC date
+                const options = {
+                    timeZone: 'Asia/Kolkata',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: true
+                };
+                return utcDate.toLocaleString('en-IN', options);
+            }
+
             var tableBody = document.getElementById("TableBody");
             tableBody.innerHTML = ""; // Clear existing rows
+
             const currentDate = new Date(); // Get the current date and time
             const timestamp = currentDate.toLocaleString('en-IN', { 
                 hour: '2-digit', 
@@ -423,9 +316,8 @@ function openModal(item) {
             var billDetails = [
                 { label: "जमा पावती क्र.:   " + item.receipt_id, value: "तारीख:   " + utcDate.toLocaleString('en-IN', options) },
                 { label: "ग्राहकाचे नाव:   " + data.reports[0].Customer, value: "संपर्क क्र.:   " + data.reports[0].mobile_no },
-                { label: "पत्ता:   " + data.reports[0].address, value: "Time:   " + timestamp },
+                { label: "पत्ता:   " + data.reports[0].address, value: "Time:   " + convertToIST(data.reports[0].created_at) },
             ];
-            
             billDetails.forEach(function (detail) {
                 var row = document.createElement("tr");
                 row.innerHTML = `
@@ -435,35 +327,54 @@ function openModal(item) {
                 tableBody.appendChild(row);
             });
 
-            // document.getElementById('carate3100').textContent = data.reports[0].carate_100;
-            // document.getElementById('carate3150').textContent = data.reports[0].carate_150;
-            // document.getElementById('carate3250').textContent = data.reports[0].carate_250;
-            // document.getElementById('carate3350').textContent = data.reports[0].carate_350;
-
-
             var tablefooter = document.getElementById("tablefooter");
             tablefooter.innerHTML = ""; // Clear existing rows
+
+
+            const label = 
+                "बाकी कॅरेट : " +
+                (data.reports[0].carate_100 > 0 ? "100 X " + data.reports[0].carate_100 + " " : "") +
+                (data.reports[0].carate_150 > 0 ? "150 X " + data.reports[0].carate_150 + " " : "") +
+                (data.reports[0].carate_250 > 0 ? "250 X " + data.reports[0].carate_250 + " " : "") +
+                (data.reports[0].carate_350 > 0 ? "350 X " + data.reports[0].carate_350 : "");
+
+            const label1 = 
+                "जमा कॅरेट : " +
+                (data.reports[0].c100 > 0 ? "100 X " + data.reports[0].c100 + " " : "") +
+                (data.reports[0].c150 > 0 ? "150 X " + data.reports[0].c150 + " " : "") +
+                (data.reports[0].c250 > 0 ? "250 X " + data.reports[0].c250 + " " : "") +
+                (data.reports[0].c350 > 0 ? "350 X " + data.reports[0].c350 : "");
+
+            const label2 = 
+                "आत्ता पर्यंतचे येणे बाकी कॅरेट: " +
+                (data.reports[0].baki_100 > 0 ? "100 X " + data.reports[0].baki_100 + " " : "") +
+                (data.reports[0].baki_150 > 0 ? "150 X " + data.reports[0].baki_150 + " " : "") +
+                (data.reports[0].baki_250 > 0 ? "250 X " + data.reports[0].baki_250 + " " : "") +
+                (data.reports[0].baki_350 > 0 ? "350 X " + data.reports[0].baki_350 : "");
 
             var footerDetails = [
                 //{ label: "गेलेले कॅरेट : +", value: data.results[0].carate_amount },
                 //{ label: "चालू कलम रक्कम:", value: data.results[0].amount },
                 { label: "मागील बाकी:", value: data.reports[0].previous_balance },
-                { label: "बाकी कॅरेट : 100 X  " + data.reports[0].carate_100 + "  150 X  " + data.reports[0].carate_150 + "  250 X  " + data.reports[0].carate_250 + "  350 X  " +  data.reports[0].carate_350, value: ''},
+                // { label: "बाकी कॅरेट : 100 X  " + data.reports[0].carate_100 + "  150 X  " + data.reports[0].carate_150 + "  250 X  " + data.reports[0].carate_250 + "  350 X  " +  data.reports[0].carate_350, value: ''},
+                { label: label.trim(), value: ''},
                 //{ label: "एकूण रक्कम:", value: data.results[0].total_amount },
                 { label: "रोख जमा रक्कम:", value: data.reports[0].PaidAmt },
-                { label: "ऑनलाईन जमा बँक :", value: data.reports[0].online_deposite_bank },
-                { label: "ऑनलाईन जमा रक्कम:", value: data.reports[0].onlineAmt },
+                { label: "ऑनलाईन जमा बँक (जमा रक्कम) :", value: data.reports[0].online_deposite_bank + '(' + data.reports[0].onlineAmt + ')' },
+                // { label: "ऑनलाईन जमा रक्कम:", value: data.reports[0].onlineAmt },
                 { label: "सूट रक्कम:", value: data.reports[0].discount },
-                { label: "जमा कॅरेट:  -" + "100 * " +data.reports[0].c100 +" | 150 * " + data.reports[0].c150+ " | 250 * " +data.reports[0].c250 + " | 350 * " + data.reports[0].c350, value: data.reports[0].inCarat },
-                { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.reports[0].Balance },
-                
+                // { label: "जमा कॅरेट:  -" + "100 * " +data.reports[0].c100 +" | 150 * " + data.reports[0].c150+ " | 250 * " +data.reports[0].c250 + " | 350 * " + data.reports[0].c350, value: data.reports[0].inCarat },
+                { label: label1.trim(), value: data.reports[0].inCarat },
+                { label: label2.trim(), value: '' },  
+                { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.reports[0].Balance },  
                 // Add other bill details similarly
             ];
+            
 
             footerDetails.forEach(function (detail) {
                 var row = document.createElement("tr");
                 row.innerHTML = `
-                    <td align="right" colspan="6"><font color="black">${detail.label}</font></td>
+                    <td align="right" colspan="6" style="text-align: right;"><font color="black" >${detail.label}</font></td>
                     <td align="right" colspan="1"><font color="black">${detail.value}</font></td>
                     `;
                 tablefooter.appendChild(row);
@@ -488,7 +399,7 @@ function openModal(item) {
     closeButton.onclick = function () {
         modalContent.innerHTML = '';
         modal.style.display = 'none'; // Close the modal when close button is clicked
-        //window.location.reload();
+        window.location.reload();
     };
     modalContent.appendChild(closeButton);
    
@@ -499,19 +410,16 @@ function openModal(item) {
     <style>
     body {
         font-family: Arial, sans-serif;
-
+        background-color: #f4f4f4;
         padding: 20px;
     }
 
     .header {
-        
         padding: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
-
-
 
     .header .logo img {
         height: 125px; /* Adjust the size of the logo */
@@ -539,10 +447,8 @@ function openModal(item) {
     th, td {
         border: 1px solid #ccc;
         padding: 6px; /* Adjust padding */
-        text-align: left;
         background-color: #fffef4;
-}
-
+    }
 
     .total {
         font-weight: bold;
@@ -563,12 +469,90 @@ function openModal(item) {
         transition: background-color 0.3s;
     }
 
-    @media print {
-        .details, .header-details, .close {
-            display: none; /* Hide the print button and header details when printing */
-        }
-    }
+    
+   @media print {
+  @page {
+    size: A5 portrait; /* A5 paper size in portrait orientation */
+    margin: 5mm; /* Reduced margins */
+  }
 
+  .details, .header-details, .close {
+    display: none; /* Hide unnecessary elements when printing */
+  }
+
+  body {
+    border: 2px solid #000; /* Black border surrounding the entire content */
+    margin: 0;
+    padding: 0;
+    background-color: #e8e6e4; /* Light gray background */
+    width: 156mm;
+    height: 210mm;
+    box-sizing: border-box; /* Include borders in width/height calculations */
+    -webkit-print-color-adjust: exact; /* Ensure background color prints in WebKit-based browsers */
+    color-adjust: exact; /* Standard property for consistent printing */
+  }
+
+  .content {
+    background-color: #e8e6e4; /* Light gray background for the bill content */
+    border: 2px solid #000; /* Black border surrounding the content */
+    border-radius: 5px;
+    width: 138mm; /* Fit within reduced margins */
+    height: auto;
+    margin: 0 auto;
+    padding: 10px; /* Internal padding for spacing */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+    -webkit-print-color-adjust: exact; /* Ensure content background color prints */
+    color-adjust: exact;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #000; /* Bottom border for the header */
+    padding-bottom: 5px;
+  }
+
+  header img {
+    display: block;
+    margin: 0 auto; /* Center the image */
+    max-width: 100%; /* Ensure the image is responsive */
+    width: 100%; /* Full width of the content area */
+    height: auto;
+    box-sizing: border-box; /* Ensure image width fits within the border */
+  }
+
+  table {
+    width: 100%; /* Full width for table */
+    border-collapse: collapse; /* Remove gaps between cells */
+    margin-top: 10px;
+    border: none;
+  }
+
+  th, td {
+    padding: 5px; /* Optimized padding for reduced page size */
+    text-align: left;
+    font-size: 11px; /* Slightly smaller font size to fit content */
+  }
+
+  th {
+    background-color: #e8e6e4; /* Light gray background for headers */
+    font-size: 12px;
+    -webkit-print-color-adjust: exact; /* Ensure header background color prints */
+    color-adjust: exact;
+  }
+
+  footer {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 11px; /* Footer font size adjusted */
+  }
+}
+
+
+
+
+
+      
     .container3 {
         max-width: 800px;
         margin: 0 auto;
@@ -621,6 +605,7 @@ function openModal(item) {
 </head>
 <body>
 <div class="header">
+<div></h6> </div>
     <div class="logo">
         <img src="../../assets/img/a4.png" alt="Company Logo">
     </div>
@@ -634,7 +619,7 @@ function openModal(item) {
     
     <!-- Items table -->
     <table>
-        <tfoot style="background-color: #e8e6e4;" id="tablefooter">
+        <tfoot style="background-color: #e8e6e4; text-align : left;" id="tablefooter">
         </tfoot>
     </table>
 

@@ -34,9 +34,9 @@ function fetchDataAndProcess() {
     
     const isChecked = document.getElementById('toggleTableCheckbox').checked;
     if (isChecked){
-        var url = "http://localhost:3000/profitLossReport/undetail"
+        var url = "http://103.174.102.89:3000/profitLossReport/undetail"
     }else{
-        var url = "http://localhost:3000/profitLossReport/detail"
+        var url = "http://103.174.102.89:3000/profitLossReport/detail"
     }
 
     return fetch(url, {

@@ -37,7 +37,7 @@ document.getElementById('login').addEventListener('submit', async function(event
     };
 
     try {
-        const response = await fetch('http://localhost:3000/saleData/updateSale/' + formData.bill_no, {
+        const response = await fetch('http://103.174.102.89:3000/saleData/updateSale/' + formData.bill_no, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

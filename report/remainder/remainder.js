@@ -21,8 +21,8 @@ async function remainder() {
         const isAdmin = sessionData && sessionData[0].usertype === 'Admin';
 
         const url = isAdmin 
-            ? 'http://localhost:3000/remainderReport' 
-            : `http://localhost:3000/remainderReport/${sessionData[0].route}`;
+            ? 'http://103.174.102.89:3000/remainderReport' 
+            : `http://103.174.102.89:3000/remainderReport/${sessionData[0].route}`;
         
         var data1 = {
             customer: getElementValueWithDefault('customer', '*')

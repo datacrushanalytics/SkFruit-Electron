@@ -53,7 +53,11 @@ document.getElementById('loginForm1').addEventListener('submit', async function(
         carate_350: parseInt(document.getElementById('carate350').value) || 0,
         deposite_carate_price: parseInt(document.getElementById('input4').value) || 0,
         remaining: parseInt(document.getElementById('input5').value) || 0,
-        added_by: isAdmin,     
+        added_by: isAdmin,
+        baki_100: parseInt(document.getElementById('carate3100').value) || 0,
+        baki_150: parseInt(document.getElementById('carate3150').value) || 0,
+        baki_250: parseInt(document.getElementById('carate3250').value) || 0,
+        baki_350: parseInt(document.getElementById('carate3350').value) || 0,     
     };
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
@@ -112,6 +116,18 @@ function openModal(item) {
             };
 
 
+            function convertToIST(dateString) {
+                const utcDate = new Date(dateString); // Parse the UTC date
+                const options = {
+                    timeZone: 'Asia/Kolkata',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: true
+                };
+                return utcDate.toLocaleString('en-IN', options);
+            }
+
             var tableBody = document.getElementById("TableBody");
             tableBody.innerHTML = ""; // Clear existing rows
 
@@ -125,7 +141,7 @@ function openModal(item) {
             var billDetails = [
                 { label: "जमा पावती क्र.:   " + item.receipt_id, value: "तारीख:   " + utcDate.toLocaleString('en-IN', options) },
                 { label: "ग्राहकाचे नाव:   " + data.reports[0].Customer, value: "संपर्क क्र.:   " + data.reports[0].mobile_no },
-                { label: "पत्ता:   " + data.reports[0].address, value: "Time:   " + timestamp },
+                { label: "पत्ता:   " + data.reports[0].address, value: "Time:   " + convertToIST(data.reports[0].created_at) },
             ];
             billDetails.forEach(function (detail) {
                 var row = document.createElement("tr");
@@ -135,12 +151,6 @@ function openModal(item) {
                     `;
                 tableBody.appendChild(row);
             });
-
-            // document.getElementById('carate3100').textContent = data.reports[0].carate_100;
-            // document.getElementById('carate3150').textContent = data.reports[0].carate_150;
-            // document.getElementById('carate3250').textContent = data.reports[0].carate_250;
-            // document.getElementById('carate3350').textContent = data.reports[0].carate_350;
-
 
             var tablefooter = document.getElementById("tablefooter");
             tablefooter.innerHTML = ""; // Clear existing rows
@@ -160,6 +170,13 @@ function openModal(item) {
                 (data.reports[0].c250 > 0 ? "250 X " + data.reports[0].c250 + " " : "") +
                 (data.reports[0].c350 > 0 ? "350 X " + data.reports[0].c350 : "");
 
+            const label2 = 
+                "आत्ता पर्यंतचे येणे बाकी कॅरेट: " +
+                (data.reports[0].baki_100 > 0 ? "100 X " + data.reports[0].baki_100 + " " : "") +
+                (data.reports[0].baki_150 > 0 ? "150 X " + data.reports[0].baki_150 + " " : "") +
+                (data.reports[0].baki_250 > 0 ? "250 X " + data.reports[0].baki_250 + " " : "") +
+                (data.reports[0].baki_350 > 0 ? "350 X " + data.reports[0].baki_350 : "");
+
             var footerDetails = [
                 //{ label: "गेलेले कॅरेट : +", value: data.results[0].carate_amount },
                 //{ label: "चालू कलम रक्कम:", value: data.results[0].amount },
@@ -168,11 +185,12 @@ function openModal(item) {
                 { label: label.trim(), value: ''},
                 //{ label: "एकूण रक्कम:", value: data.results[0].total_amount },
                 { label: "रोख जमा रक्कम:", value: data.reports[0].PaidAmt },
-                { label: "ऑनलाईन जमा बँक :", value: data.reports[0].online_deposite_bank },
-                { label: "ऑनलाईन जमा रक्कम:", value: data.reports[0].onlineAmt },
+                { label: "ऑनलाईन जमा बँक (जमा रक्कम) :", value: data.reports[0].online_deposite_bank + '(' + data.reports[0].onlineAmt + ')' },
+                // { label: "ऑनलाईन जमा रक्कम:", value: data.reports[0].onlineAmt },
                 { label: "सूट रक्कम:", value: data.reports[0].discount },
                 // { label: "जमा कॅरेट:  -" + "100 * " +data.reports[0].c100 +" | 150 * " + data.reports[0].c150+ " | 250 * " +data.reports[0].c250 + " | 350 * " + data.reports[0].c350, value: data.reports[0].inCarat },
                 { label: label1.trim(), value: data.reports[0].inCarat },
+                { label: label2.trim(), value: '' },  
                 { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.reports[0].Balance },  
                 // Add other bill details similarly
             ];
@@ -181,7 +199,7 @@ function openModal(item) {
             footerDetails.forEach(function (detail) {
                 var row = document.createElement("tr");
                 row.innerHTML = `
-                    <td align="right" colspan="6"><font color="black">${detail.label}</font></td>
+                    <td align="right" colspan="6" style="text-align: right;"><font color="black" >${detail.label}</font></td>
                     <td align="right" colspan="1"><font color="black">${detail.value}</font></td>
                     `;
                 tablefooter.appendChild(row);
@@ -254,7 +272,6 @@ function openModal(item) {
     th, td {
         border: 1px solid #ccc;
         padding: 6px; /* Adjust padding */
-        text-align: left;
         background-color: #fffef4;
     }
 
@@ -277,11 +294,87 @@ function openModal(item) {
         transition: background-color 0.3s;
     }
 
+    
+
     @media print {
-        .details, .header-details, .close {
-            display: none; /* Hide the print button and header details when printing */
-        }
-    }
+  @page {
+    size: A5 portrait; /* A5 paper size in portrait orientation */
+    margin: 5mm; /* Reduced margins */
+  }
+
+  .details, .header-details, .close {
+    display: none; /* Hide unnecessary elements when printing */
+  }
+
+  body {
+    border: 2px solid #000; /* Black border surrounding the entire content */
+    margin: 0;
+    padding: 0;
+    background-color: #e8e6e4; /* Light gray background */
+    width: 156mm;
+    height: 210mm;
+    box-sizing: border-box; /* Include borders in width/height calculations */
+    -webkit-print-color-adjust: exact; /* Ensure background color prints in WebKit-based browsers */
+    color-adjust: exact; /* Standard property for consistent printing */
+  }
+
+  .content {
+    background-color: #e8e6e4; /* Light gray background for the bill content */
+    border: 2px solid #000; /* Black border surrounding the content */
+    border-radius: 5px;
+    width: 138mm; /* Fit within reduced margins */
+    height: auto;
+    margin: 0 auto;
+    padding: 10px; /* Internal padding for spacing */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+    -webkit-print-color-adjust: exact; /* Ensure content background color prints */
+    color-adjust: exact;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #000; /* Bottom border for the header */
+    padding-bottom: 5px;
+  }
+
+  header img {
+    display: block;
+    margin: 0 auto; /* Center the image */
+    max-width: 100%; /* Ensure the image is responsive */
+    width: 100%; /* Full width of the content area */
+    height: auto;
+    box-sizing: border-box; /* Ensure image width fits within the border */
+  }
+
+  table {
+    width: 100%; /* Full width for table */
+    border-collapse: collapse; /* Remove gaps between cells */
+    margin-top: 10px;
+    border: none;
+  }
+
+  th, td {
+    padding: 5px; /* Optimized padding for reduced page size */
+    text-align: left;
+    font-size: 11px; /* Slightly smaller font size to fit content */
+  }
+
+  th {
+    background-color: #e8e6e4; /* Light gray background for headers */
+    font-size: 12px;
+    -webkit-print-color-adjust: exact; /* Ensure header background color prints */
+    color-adjust: exact;
+  }
+
+  footer {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 11px; /* Footer font size adjusted */
+  }
+}
+
+
 
     .container3 {
         max-width: 800px;
@@ -349,7 +442,7 @@ function openModal(item) {
     
     <!-- Items table -->
     <table>
-        <tfoot style="background-color: #e8e6e4;" id="tablefooter">
+        <tfoot style="background-color: #e8e6e4; text-align : left;" id="tablefooter">
         </tfoot>
     </table>
 
