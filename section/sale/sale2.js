@@ -1,30 +1,32 @@
 document.getElementById('login').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
-    var sessionData = JSON.parse(localStorage.getItem('sessionData'));
-    var isAdmin = sessionData[0].name;
-    console.log('admin name',isAdmin);
-    var loader = document.getElementById('loader');
+    const sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    const isAdmin = sessionData[0]?.name || 'Unknown';
+    console.log('Admin name:', isAdmin);
+
+    const loader = document.getElementById('loader');
     loader.style.display = 'block';
-    console.log(document.getElementById('number').value)
-    var formData = {
+
+    // Form Data
+    const formData = {
         bill_no: parseInt(document.getElementById('bill').value),
         date: document.getElementById('date').value,
-        cust_name: document.getElementById('grahk').value,
-        route: document.getElementById('Route').value,
-        address: document.getElementById('address').value,
-        mobile_no: document.getElementById('number').value,
-        comment: document.getElementById('sandarbh').value,
+        cust_name: document.getElementById('grahk').value.trim(),
+        route: document.getElementById('Route').value.trim(),
+        address: document.getElementById('address').value.trim(),
+        mobile_no: document.getElementById('number').value.trim(),
+        comment: document.getElementById('sandarbh').value.trim(),
         amount: parseInt(document.getElementById('bill1').value) || 0,
         carate_amount: parseInt(document.getElementById('total1').value) || 0,
         pre_balance: parseInt(document.getElementById('previousBalance').value) || 0,
         total_amount: parseInt(document.getElementById('totalBill').value) || 0,
         cash: parseInt(document.getElementById('bill_cash').value) || 0,
-        online_acc: document.getElementById('onlineAcc').value,
+        online_acc: document.getElementById('onlineAcc').value.trim(),
         online_amt: parseInt(document.getElementById('online').value) || 0,
         discount: parseInt(document.getElementById('discount').value) || 0,
         inCarate: parseInt(document.getElementById('total2').value) || 0,
         balance: parseInt(document.getElementById('baki').value) || 0,
-        note: document.getElementById('note').value,
+        note: document.getElementById('note').value.trim(),
         in_carate_100: parseInt(document.getElementById('carate100').value) || 0,
         in_carate_150: parseInt(document.getElementById('carate150').value) || 0,
         in_carate_250: parseInt(document.getElementById('carate250').value) || 0,
@@ -40,44 +42,83 @@ document.getElementById('login').addEventListener('submit', async function(event
         baki_350: parseInt(document.getElementById('carate2350').value) || 0,
     };
 
-    try {
-        console.log("Emissin", parseInt(document.getElementById('bill1').value))
-        const value = parseInt(document.getElementById('bill1').value);
+    // Validations
+    if (!formData.bill_no || isNaN(formData.bill_no)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Validation Error',
+            text: 'Bill Number is required and must be a valid number.',
+        });
+        loader.style.display = 'none';
+        return;
+    }
 
-        if (isNaN(value)) {
-            console.log("Hello");
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: "Please add the product",
-            });
-            loader.style.display = 'none';
-            throw new Error('Product Was not added');
-        }
+    if (!formData.date) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Validation Error',
+            text: 'Date is required.',
+        });
+        loader.style.display = 'none';
+        return;
+    }
+
+    if (!formData.cust_name) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Validation Error',
+            text: 'Customer Name is required.',
+        });
+        loader.style.display = 'none';
+        return;
+    }
+
+    if (!formData.mobile_no || formData.mobile_no.length !== 10 || isNaN(formData.mobile_no)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Validation Error',
+            text: 'Mobile Number is required and must be a valid 10-digit number.',
+        });
+        loader.style.display = 'none';
+        return;
+    }
+
+    try {
+        console.log('Submitting Form Data:', formData);
 
         const response = await fetch('http://103.174.102.89:3000/saleData/insertsale', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formData)
+            body: JSON.stringify(formData),
         });
-        
+
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        console.log("response of API: ", response);
+
         const result = await response.json();
         loader.style.display = 'none';
         console.log('Entry added successfully:', result);
-    
-        openModal({"bill_no": formData.bill_no})
-        //window.location.reload(); // 
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Entry added successfully!',
+        });
+
+        openModal({ bill_no: formData.bill_no });
     } catch (error) {
         console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred while submitting the form. Please try again.',
+        });
+        loader.style.display = 'none';
     }
 });
-
 
 
 function openModal(item) {

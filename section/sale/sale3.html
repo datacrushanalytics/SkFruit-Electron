@@ -10,345 +10,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="./sale.css">
   <title></title>
-  <style>
-    #input13 {
-      margin: 1px;
-      width: auto;
-      text-align: left;
-    }
-
-
-
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #fef7f7;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-    }
-
-    .container {
-      text-align: center;
-      margin-bottom: 20px;
-      padding: 0 20px;
-    }
-
-    .table-container {
-      overflow-x: auto;
-      margin: 0 auto;
-      max-width: 100%;
-      min-width: 600px;
-      max-height: 400px;
-      overflow-y: auto;
-    }
-
-    table {
-      width: 100%;
-      min-width: 100%;
-      border-collapse: collapse;
-      background-color: rgba(255, 255, 255, 0.8);
-      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
-    }
-
-    th,
-    td {
-      border: 1px solid #dddddd;
-      text-align: left;
-      padding: 12px;
-    }
-
-    th {
-      background-color: #f2f2f2;
-    }
-
-    button {
-      background-color: #ff355f;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: darkgrey;
-    }
-
-    /* Adjustments for input elements */
-    input[type="text"],
-    input[type="number"],
-    input[type="date"],
-    select {
-      height: 40px;
-      width: calc(100% - 20px);
-      /* Adjusted width */
-      margin: 10px;
-      padding: 0 10px;
-      /* Adjusted padding */
-      border-radius: 5px;
-      /* Added border-radius */
-      box-sizing: border-box;
-    }
-
-    /* Adjustments for labels */
-    label {
-      margin: 10px;
-    }
-
-    /* Adjustments for buttons */
-    .save {
-      margin: 20px;
-      /* Added margin */
-    }
-
-    /* Adjustments for table rows */
-    .table-row {
-      text-align: center;
-      /* Center align table rows */
-    }
-
-    /* CSS for bill and date container */
-    .bill-date-container {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-
-    /* CSS for individual input wrappers */
-    .input-wrapper {
-      display: flex;
-      flex: 1;
-      align-items: center;
-      margin: 0 5px;
-      /* darkgreyuce the margin between input wrappers */
-    }
-
-    /* Adjustments for input elements */
-    .input-wrapper input[type="text"],
-    .input-wrapper input[type="number"],
-    .input-wrapper input[type="date"],
-    .input-wrapper select {
-      flex: 1;
-      margin-right: 0;
-      /* Remove margin between input boxes */
-    }
-
-    /* Adjustments for labels */
-    .input-wrapper label {
-      margin-right: 10px;
-      /* Add margin between label and input box */
-      width: 100px;
-      /* Fixed width for labels */
-      text-align: right;
-      /* Align label text to the right */
-    }
-
-    /* Adjustments for individual input wrappers */
-    #bill-wrapper,
-    #date-wrapper {
-      margin-right: 10px;
-      /* darkgreyuce the margin between input wrappers */
-    }
-
-    .dropdown-container {
-      display: flex;
-      justify-content: space-between;
-      /* Distribute space evenly between dropdowns */
-      margin-bottom: 10px;
-      /* Add margin between the dropdown container and other elements */
-    }
-
-    .dropdown-container .input-wrapper {
-      flex: 1;
-      /* Each dropdown takes equal width */
-      margin-right: 10px;
-      /* Add space between dropdowns */
-    }
-
-    .dropdown-container .input-wrapper:last-child {
-      margin-right: 0;
-      /* Remove margin from the last dropdown */
-    }
-
-
-
-    .row-container .input-wrapper {
-      flex: 1;
-      /* Each dropdown takes equal width */
-      margin-right: 10px;
-      /* Add space between dropdown and button */
-    }
-
-    .row-container .button-wrapper {
-      flex: 1;
-      /* Button takes equal width as dropdown */
-    }
-
-    .row-container {
-      display: flex;
-      align-items: center;
-      /* Align items vertically */
-      margin-bottom: 10px;
-      /* Add margin between the row container and other elements */
-    }
-
-    .row-container label {
-      margin-right: 10px;
-      /* Add space between label and inputs */
-    }
-
-    .row-container .carat-inputs {
-      display: flex;
-      align-items: left;
-      /* Align items vertically */
-    }
-
-    .row-container .input-wrapper:last-child {
-      margin-right: 0;
-      /* Remove margin for the last input wrapper */
-    }
-
-    .totalCarat {
-      margin-left: auto;
-      /* Push the total carat container to the right */
-    }
-
-    .row-container1 {
-      display: flex;
-      margin-bottom: 10px;
-      /* Add margin between rows */
-      margin-left: 50%;
-      margin-right: 10%;
-    }
-
-    .row-container1 label {
-      margin-left: auto;
-      /* Move the label to the right side */
-      margin-right: 10px;
-      /* Add space between label and input */
-    }
-
-    /* Style the loader container */
-    #loader {
-      border: 4px solid #f3f3f3;
-      /* Light grey */
-      border-top: 4px solid #3498db;
-      /* Blue */
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      animation: spin 1s linear infinite;
-      /* Apply animation */
-      display: none;
-      /* Hide loader by default */
-
-      /* Center the loader */
-      position: absolute;
-      top: 60%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    /* Animation */
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-
-
-    .popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: white;
-      padding: 20px;
-      border: 1px solid #ccc;
-      box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-      z-index: 9999;
-      width: 80%;
-      /* Adjust the width as desidarkgrey */
-      height: 80%;
-      /* Adjust the height as desidarkgrey */
-      max-width: 90vw;
-      /* Set maximum width relative to viewport width */
-      max-height: 90vh;
-      /* Set maximum height relative to viewport height */
-      overflow: auto;
-      /* Add scrollbars if content overflows */
-    }
-
-    .popup-content {
-      width: 100%;
-      /* Adjust the width as desidarkgrey */
-      height: 100%;
-      /* Adjust the height as desidarkgrey */
-    }
-
-    .popup-content iframe {
-      width: 100%;
-      /* Adjust the width as desidarkgrey */
-      height: 100%;
-      /* Adjust the height as desidarkgrey */
-    }
-
-    .close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      cursor: pointer;
-    }
-
-    /* Styles for the modal */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-
-
-    /* Styles for the modal content */
-    .modal-content {
-      background-color: #fefefe;
-      margin: 10% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      max-width: 600px;
-      position: relative;
-      /* Position relative for the close button */
-    }
-
-
-
-    .close:hover,
-    .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
-    .scanner-icon {
-            cursor: pointer;
-            font-size: 1.5em;
-            border: 2px solid #000;  /* Add border to the icon */
-            padding: 5px;            /* Add padding inside the border */
-            border-radius: 5px;      /* Optional: make the corners rounded */
-        }
-  </style>
 
 </head>
 
@@ -391,13 +54,13 @@
           <input type="hidden" id="custid" name="custid">
         </div>
 
-        <!-- <div class="button-wrapper">
-          <button id="account-page-button" style="background-color: #18b3a4;" onclick="goToAccountPage(event)">Add Customer</button>
-        </div> -->
-        
         <div class="button-wrapper">
-    </div>
-        <button  style="background-color: #ff355f;"  onclick="openPopup()">Ledger</button>
+          <button type="button" id="account-page-button" style="background-color: #18b3a4;" onclick="goToAccountPage(event)">Add Customer</button>
+        </div>
+
+        <div class="button-wrapper">
+        </div>
+        <button style="background-color: #ff355f;" onclick="openPopup()">Ledger</button>
         <div class="popup" id="popup">
           <div class="popup-content">
             <span class="close" onclick="closePopup()">&times;</span>
@@ -423,7 +86,7 @@
           <label for="bta">बटा :</label>
           <select type="root" id="bta" name="bta" onchange="getProducts()"></select>
           <!-- <button onclick="openScanner()">Scan Barcode</button> -->
-           &nbsp; &nbsp;
+          &nbsp; &nbsp;
           <!-- <i class="fa-solid fa-scanner-gun" onclick="openScanner()"></i> -->
           <!-- <i class="fa-sharp-duotone fa-solid fa-barcode-scan"></i> -->
           <!-- <i class="fa-sharp-duotone fa-solid fa-scanner-touchscreen"></i> -->
@@ -431,15 +94,15 @@
         </div>
         <div id="scannerModal" class="modal">
           <div class="modal-content">
-              <span class="close" onclick="closeScannerModal1()">&times;</span>
-              <p>Scan barcode here:</p>
-              <input type="text" id="barcodeInput" placeholder="Scan barcode here" oninput="handleBarcodeInput(event)">
+            <span class="close" onclick="closeScannerModal1()">&times;</span>
+            <p>Scan barcode here:</p>
+            <input type="text" id="barcodeInput" placeholder="Scan barcode here" oninput="handleBarcodeInput(event)">
           </div>
-      </div>
+        </div>
 
         <div class="input-wrapper">
           <label for="mark">मार्क :</label>
-          <input type="text" id="mark" name="mark" placeholder="मार्क" >
+          <input type="text" id="mark" name="mark" placeholder="मार्क">
         </div>
 
         <div class="input-wrapper">
@@ -613,729 +276,140 @@
         </div>
       </div>
 
-      <button type="submit" style="background-color: #26a653;" class="save">Save</button>
-     <button type="button" style="background-color: #ff355f;" class="save" onclick="confirmAndProceed()">Back</button>
+      <button type="button" style="background-color: #26a653;" class="save">Save</button>
+      <button type="button" style="background-color: #ff355f;" class="save" onclick="confirmAndProceed()">Back</button>
   </div>
   </form>
 
 </body>
 <script src="./sale.js"></script>
 <script src="./sale2.js"></script>
-<!-- <Script src="../../report/routewiseSaleReport/routewiseSaleReport.js"></Script> -->
-
-
-
-
 <script>
-//   window.addEventListener('beforeunload', function (event) {
-//     // Send a request to your server or log the event
-//     console.log("User is leaving the page");
-//     // Optionally show a confirmation dialog
-//     event.preventDefault();
-//     event.returnValue = '';
-// });
 
-// let allowNavigation = false; // Flag to track if user confirmed the leave
+function editRow(button, id) {
+    var row = button.parentElement.parentElement;
+    var cells = row.querySelectorAll('td');
 
-//         window.addEventListener('beforeunload', function (event) {
-//             // If user already confirmed, allow the default behavior
-//             if (allowNavigation) return;
+    // Save current values of quantity and rate
+    const originalQuantity = cells[3].textContent;
+    const originalRate = cells[4].textContent;
 
-//             // Prevent the page from unloading
-//             event.preventDefault();
-//             event.returnValue = ''; // Some browsers require this
+    // Convert quantity and rate cells to input fields with onchange handlers
+    cells[3].innerHTML = `<input type="number" value="${originalQuantity}" min="1" style="width: 60px;" onchange="updateRowTotal(this)">`;
+    cells[4].innerHTML = `<input type="number" value="${originalRate}" min="0" style="width: 60px;" onchange="updateRowTotal(this)">`;
 
-//             // Show the custom SweetAlert dialog
-//             Swal.fire({
-//                 icon: 'error',
-//                 title: 'Oops...',
-//                 text: "Are you sure you want to leave? Clearing the page.",
-//                 showCancelButton: true,
-//                 confirmButtonText: 'Yes, leave!',
-//                 cancelButtonText: 'No, stay'
-//             }).then((result) => {
-//                 if (result.isConfirmed) {
-//                     allowNavigation = true; // Set flag to allow navigation
-//                     console.log("Inside")
+    // Calculate the initial total and set it in the price cell
+    updateRowTotal(cells[3].querySelector('input'));
 
-
-
-//                     fetch('http://103.174.102.89:3000/saleproductData/deletesaleproductbybill/' + document.getElementById('bill').value, {
-//                         method: 'DELETE'
-//                     })
-//                     .then(response => {
-//                         if (!response.ok) {
-//                             throw new Error('Network response was not ok');
-//                         }
-//                         console.log('Sale Product deleted successfully');
-//                     })
-//                     .catch(error => {
-//                         console.error('Error:', error);
-//                     });
-                                  
-//                     window.removeEventListener('beforeunload', arguments.callee);
-//                     window.dispatchEvent(new Event('beforeunload'));
-//                     // document.getElementById("carate1100").value = 0; // Reset value
-//                     // window.location.reload(); // Trigger page reload to simulate leaving
-//                 }
-//             });
-//         });
-
-
-
-let allowNavigation = false; // Flag to track if user confirmed the leave
-
-function confirmAndProceed() {
-    if (allowNavigation) {
-        return; // If already confirmed, do nothing
-    }
-
-    // Show SweetAlert dialog to confirm leaving
-    Swal.fire({
-        icon: 'warning',
-        title: 'Are you sure you want to leave?',
-        text: "This action will clear the page and delete the data.",
-        showCancelButton: true,
-        confirmButtonText: 'Yes, leave!',
-        cancelButtonText: 'No, stay',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            allowNavigation = true; // Mark that navigation is confirmed
-
-            // Call the GET API to fetch the IDs
-            fetch(`http://103.174.102.89:3000/fetchData/saleProduct/${document.getElementById('bill').value}`, {
-                method: 'GET',
-                keepalive: true, // Ensures the request completes
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch IDs');
-                }
-                return response.json(); // Parse the JSON response
-            })
-            .then(data => {
-                // Loop through IDs and call the DELETE API for each
-                const deletePromises = data.map(item => {
-                    return fetch(`http://103.174.102.89:3000/saleproductData/deletesaleproduct/${item.id}`, {
-                        method: 'DELETE',
-                        keepalive: true
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`Failed to delete ID ${item.id}`);
-                        }
-                        return response.json(); // Parse delete response
-                    })
-                    .catch(error => {
-                        console.error(`Error deleting ID ${item.id}:`, error);
-                    });
-                });
-
-                // Wait for all delete requests to complete
-                return Promise.all(deletePromises);
-            })
-            .then(() => {
-                console.log('All items deleted successfully');
-                // Perform any further actions like navigating or reloading
-                window.location.href = '../Menu.html';
-                //window.location.reload(); // Optional: trigger page reload
-            })
-            .catch(error => {
-              allowNavigation = true;
-                console.error('Error during API calls:', error);
-                window.location.href = '../Menu.html';
-            });
-        }
-    });
+    // Replace action buttons with "Save" and "Cancel"
+    cells[6].innerHTML = `
+        <button type="button" onclick="saveRow(this,'${id}')">Save</button>
+        <button type="button" onclick="cancelEdit(this, '${originalQuantity}', '${originalRate}')">Cancel</button>
+    `;
 }
-
-
-
-  document.addEventListener('DOMContentLoaded', function () {
-    // Fetch data from API and populate Select2 dropdowns
-
-    var sessionData = JSON.parse(localStorage.getItem('sessionData'));
-    // Check if session data exists and if the user is an admin
-    var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
-        // Check if the user is an admin and show/hide the button accordingly
-    if (isAdmin) {
-      fetchAndPopulateDropdown('http://103.174.102.89:3000/mobile', 'number', 'mobile_no');
-      fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'Route', 'route_name');
-      fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'grahk', 'name');
-        }else{
-          var route = sessionData[0].route;
-          fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'grahk','name');
-          fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'number','mobile_no');
-          fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'Route','route_name',selectedValue=route,readOnly = true);
-        }
-    
-    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'product', 'product_name');
-    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'bta', 'bata');
-    fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'onlineAcc', 'name');
-    
-  });
-
-  function fetchAndPopulateDropdown(apiUrl, dropdownId, field,selectedValue = null, readOnly = false) {
-    fetch(apiUrl)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        // Populate Select2 dropdown with API data
-        populateDropdownWithSelect2(data, dropdownId, field, selectedValue, readOnly);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  }
-
-  function populateDropdownWithSelect2(data, dropdownId, field, selectedValue = null, readOnly = false) {
-    var dropdown = $('#' + dropdownId);
-    // Clear existing options
-    dropdown.empty();
-
-    // Add placeholder option
-    dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
-
-    // Populate dropdown with API data
-    data.forEach(function (item) {
-      dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
-    });
-
-    // Initialize Select2
-    dropdown.select2({
-            placeholder: 'Select components',
-            closeOnSelect: false,
-            allowClear: true,
-            templateResult: function (data) {
-                if (!data.id) {
-                    return data.text;
-                }
-                var $element = $('<span>' + data.text + '</span>');
-                return $element;
-            }
-        });
-
-        // Set selected value if provided
-        if (selectedValue !== null) {
-        dropdown.val(selectedValue).trigger('change');
-        }
-
-        // Make the dropdown read-only if specified
-        if (readOnly) {
-            dropdown.prop('disabled', true);
-        }
-
-
-
-  }
-
-  function goToAccountPage(event) {
-    event.preventDefault(); 
-    // Perform the desidarkgrey action when the button is clicked
-    window.location.href = "../account/acc-master.html"; // darkgreyirect to the account page
-  }
-
-  $(document).on('select2:open', function (e) {
-    window.setTimeout(function () {
-      document.querySelector('input.select2-search__field').focus();
-    }, 0);
-  });
-
   
-  function setCustomer() {
-    var route = document.getElementById('Route').value;
-    
-    // Check if the dropdowns already have selected values
-    var grahkDropdown = document.getElementById('grahk');
-    var numberDropdown = document.getElementById('number');
-    
-    if (!grahkDropdown.value) {
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' + route, 'grahk', 'name');
+  function updateRowTotal(inputElement) {
+    var row = inputElement.parentElement.parentElement;
+    var cells = row.querySelectorAll('td');
+
+    // Get quantity and rate values from the row's input fields
+    var quantity = parseInt(cells[3].querySelector('input').value, 10) || 0;
+    var rate = parseInt(cells[4].querySelector('input').value, 10) || 0;
+
+    // Get available inventory from a hidden field (like 'nag1')
+    var availableInventory = parseInt(document.getElementById("nag1").value, 10) || 0;
+
+    // Check if quantity exceeds available inventory
+    if (quantity > availableInventory) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Inventory Is not available',
+        });
+        cells[3].querySelector('input').value = 0;  // Reset the quantity
+        return; // Exit the function
     }
 
-    if (!numberDropdown.value) {
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' + route, 'number', 'mobile_no');
-    }
+    // Calculate total as quantity * rate
+    var total = quantity * rate;
+
+    // Update the total in the table
+    cells[5].textContent = total;
+
+    // Update the hidden total field if needed (to reflect the updated total)
+    document.getElementById("total").value = total;
 }
 
-  function openPopup(event) {
-    event.preventDefault();
-    document.getElementById("popup").style.display = "block";
-    var popupIframe = document.getElementById("popupIframe");
-    popupIframe.src = "../../report/ledgerReport/ledger.html"; //
-  }
+function saveRow(button, id1) {
+    var row = button.parentElement.parentElement;
+    var cells = row.querySelectorAll('td');
 
-  function closePopup() {
-    document.getElementById("popup").style.display = "none";
-  }
+    // Get updated values from input fields
+    var updatedQuantity = parseInt(cells[3].querySelector('input').value, 10) || 0;
+    var updatedRate = parseInt(cells[4].querySelector('input').value, 10) || 0;
+    var updatedPrice = updatedQuantity * updatedRate;
 
- 
+    // Update the table cells with new values
+    cells[3].innerHTML = updatedQuantity;
+    cells[4].innerHTML = updatedRate;
+    cells[5].innerHTML = updatedPrice;
 
-  function openScannerModal() {
-      document.getElementById('scannerModal').style.display = 'block';
-      autoFocusInput();
-  }
+    // Restore original action buttons
+    cells[6].innerHTML = `
+        <button type="button" onclick="deleteUser(this)">Delete</button>
+        <button type="button" onclick="editRow(this)">Edit</button>
+    `;
 
-  // document.getElementById('openPopupBtn').addEventListener('click', openPopup);
+    const id = row.getAttribute('data-id');
 
-  async function closeScannerModal() {
-      // document.getElementById('scannerModal').style.display = 'none';
-      setTimeout(async () => {
-    await myFunction();
-    // Additional logic to set values to the input section after delay
-  }, 1000); // 1000ms delay
-  document.getElementById('barcodeInput').value = '';
-  document.getElementById('barcodeInput').focus();
-  }
+    // Get the bill_id, bata, mark, and product values for the API request
+    const bill_id = document.getElementById('bill').value;  // Assuming the bill ID is available
+    const bata = cells[1].textContent;  // Assuming bata is in the second column
+    const mark = cells[2].textContent;  // Assuming mark is in the third column
+    const product = cells[0].textContent; // Assuming product is in the first column
 
-
-  async function closeScannerModal1() {
-      document.getElementById('scannerModal').style.display = 'none';
-  }
-
-
-  function autoFocusInput() {
-            document.getElementById('barcodeInput').focus();
-        }
-        let inputTimer = 0;
-        
-        function handleBarcodeInput(event) {
-            clearTimeout(inputTimer); // Clear previous timer
-
-            inputTimer = setTimeout(() => {
-              console.log("hello")
-                let barcodeValue = event.target.value;
-                if (barcodeValue) {  // Check if the input is not empty
-                    let modifiedBarcodeValue = modifyBarcode(barcodeValue);
-                    console.log("Modified",modifiedBarcodeValue)
-                    selectOption(modifiedBarcodeValue); // Select the existing option
-
-                    // Clear the input field
-                    event.target.value = '';
-
-                    // Close the modal
-                    closeScannerModal();
-                }
-            }, 500); // Adjust the timeout as needed
-        }
-
-        function modifyBarcode(barcode) {
-            // Example modification: add a prefix and change certain digits
-            let modifiedBarcode = barcode.split('Bata:')[1];
-            return modifiedBarcode;
-        }
-
-        function selectOption(value) {
-            // let dropdown = document.getElementById('bta');
-            // let options = dropdown.options;
-            var $productDropdown = $('#bta');
-        // Set the value of the Select2 dropdown if it's different
-        if ($productDropdown.val() !== value) {
-          $productDropdown.val(value).trigger('change');
-        }
-        }
-
-
-</script>
-
-
-
-<script>
-
-function toggleReadonly(){
-  var inputField = document.getElementById("online");
-      
-      // Check if 'readonly' is set, and toggle it
-      if (inputField.hasAttribute("readonly")) {
-        inputField.removeAttribute("readonly");  // Make it editable
-        inputField.focus();  // Optional: Focus on the input field
-      } else {
-        inputField.setAttribute("readonly", true);  // Make it read-only again
-      }
+    // Optional: Make an API call to save the changes
+    fetch('http://localhost:3000/saleproductData/updatesaleproduct', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id,  // Unique identifier for the row
+            bill_id: bill_id,  // Bill ID
+            bata: bata,        // Bata
+            mark: mark,        // Mark
+            product: product,  // Product
+            quantity: updatedQuantity,  // Updated Quantity
+            rate: updatedRate,         // Updated Rate
+            price: updatedPrice        // Updated Price
+        })
+    })
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(data => {
+            console.log('Update successful:', data);
+            Swal.fire({
+                icon: 'success',
+                title: 'Updated successfully',
+                text: 'Product details updated successfully!',
+                timer: 2000,
+                timerProgressBar: true,
+            });
+        })
+        .catch(error => {
+            console.error('Error updating:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error updating product details.',
+            });
+        });
 }
 
 
-
-  function totalBalance() {
-    var balance = parseInt(document.getElementById("bill1").value) || 0;
-    var preBalance = parseInt(document.getElementById("previousBalance").value) || 0;
-    var total1 = parseInt(document.getElementById("total1").value) || 0;
-
-    fetch('http://103.174.102.89:3000/accountData/' + parseInt(document.getElementById("custid").value))
-      .then(response => {
-        if (!response.ok) {
-          loader.style.display = 'none';
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data[0].cr_dr_type)
-        if (data[0].cr_dr_type == 'no') {
-          document.getElementById("total1").disabled = true;
-          document.getElementById("total2").disabled = true;
-          document.getElementById("totalBill").value = balance + preBalance;
-        } else {
-          document.getElementById("totalBill").value = total1 + balance + preBalance;
-        }
-        totalbill()
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-    //document.getElementById("totalBill").value = total1 + balance + preBalance;
-    //totalbill()
-  }
-
-  function previousbalance() {
-    const name = document.getElementById("grahk").value
-
-    fetch('http://103.174.102.89:3000/fetchName/name/' + name)
-      .then(response => {
-        if (!response.ok) {
-          loader.style.display = 'none';
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data[0].mobile_no)
-        // Get the Select2 dropdown element
-        var $productDropdown = $('#number');
-        // Set the value of the Select2 dropdown if it's different
-        if ($productDropdown.val() !== data[0].mobile_no) {
-          $productDropdown.val(data[0].mobile_no).trigger('change');
-        }
-
-        var $routeDropdown = $('#Route');
-        // Set the value of the Select2 dropdown if it's different
-        if ($routeDropdown.val() !== data[0].route_detail) {
-          $routeDropdown.val(data[0].route_detail).trigger('change');
-        }
-        $productDropdown.prop('disabled', true);
-        $routeDropdown.prop('disabled', true);
-        document.getElementById('address').value = data[0].address;
-        document.getElementById('address').readOnly = true;
-
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-
-
-
-    fetch('http://103.174.102.89:3000/fetchpv/' + name)
-      .then(response => {
-        if (!response.ok) {
-          loader.style.display = 'none';
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        // Populate dropdown with API data
-        console.log(data)
-        document.getElementById('custid').value = parseInt(data[0]['id']);
-        document.getElementById('previousBalance').value = parseInt(data[0]['current_balance'] || 0);
-        totalBalance();
-        totalbill();
-
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-
-
-    fetch('http://103.174.102.89:3000/carateuserData/' + name)
-      .then(response => {
-        if (!response.ok) {
-          loader.style.display = 'none';
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        // Populate dropdown with API data
-        console.log(data)
-        document.getElementById('carate2100').value = parseInt(data[0]['carate_100']);
-        document.getElementById('carate2150').value = parseInt(data[0]['carate_150']);
-        document.getElementById('carate2250').value = parseInt(data[0]['carate_250']);
-        document.getElementById('carate2350').value = parseInt(data[0]['carate_350']);
-        document.getElementById('carate22100').value = parseInt(data[0]['carate_100']);
-        document.getElementById('carate22150').value = parseInt(data[0]['carate_150']);
-        document.getElementById('carate22250').value = parseInt(data[0]['carate_250']);
-        document.getElementById('carate22350').value = parseInt(data[0]['carate_350']);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-
-  }
-
-  // Here in Carate is the carate send to the customer
-  // Out carate is the carate received from the customer
-  function carate() {
-    var value100 = parseInt(document.getElementById("carate100").value) || 0;
-    var value150 = parseInt(document.getElementById("carate150").value) || 0;
-    var value250 = parseInt(document.getElementById("carate250").value) || 0;
-    var value350 = parseInt(document.getElementById("carate350").value) || 0;
-    var value1100 = parseInt(document.getElementById("carate1100").value) || 0;
-    var value1150 = parseInt(document.getElementById("carate1150").value) || 0;
-    var value1250 = parseInt(document.getElementById("carate1250").value) || 0;
-    var value1350 = parseInt(document.getElementById("carate1350").value) || 0;
-
-
-    document.getElementById("total1").value = value100 * 100 + value150 * 150 + value250 * 250 + value350 * 350;
-    document.getElementById("carate2100").value = parseInt(document.getElementById("carate22100").value) + value100 - value1100; 
-    document.getElementById("carate2150").value = parseInt(document.getElementById("carate22150").value) + value150 - value1150;
-    document.getElementById("carate2250").value = parseInt(document.getElementById("carate22250").value) + value250 - value1250;
-    document.getElementById("carate2350").value = parseInt(document.getElementById("carate22350").value) + value350 - value1350;
-    totalbill();
-    totalBalance();
-    //document.getElementById("total1").value = parseInt(document.getElementById("carate100").value) * 100 +  parseInt(document.getElementById("carate150").value) * 150 +  parseInt(document.getElementById("carate250").value) * 250 +  parseInt(document.getElementById("carate350").value) * 350
-  }
-
-  function carate1() {
-    console.log("Data 1", document.getElementById("carate1100").value)
-    console.log("Data 1", document.getElementById("carate2100").value)
-    console.log("Data 2", document.getElementById("carate1150").value)
-    console.log("Data 2", document.getElementById("carate2150").value)
-    console.log("Data 3", document.getElementById("carate1250").value)
-    console.log("Data 3", document.getElementById("carate2250").value)
-    console.log("Data 4", document.getElementById("carate1350").value)
-    console.log("Data 4", document.getElementById("carate2350").value)
-
-    if (parseInt(document.getElementById("carate1100").value) > (parseInt(document.getElementById('carate22100').value) + parseInt(document.getElementById("carate100").value))){
-      Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: "Carate limit exceed",
-            });
-        document.getElementById("carate1100").value = 0;
-    }
-
-    if (parseInt(document.getElementById("carate1150").value) > (parseInt(document.getElementById('carate22150').value) + parseInt(document.getElementById("carate150").value))){
-      Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: "Carate limit exceed",
-            });
-        document.getElementById("carate1150").value = 0;
-    }
-
-    if (parseInt(document.getElementById("carate1250").value) > (parseInt(document.getElementById('carate22250').value) + parseInt(document.getElementById("carate250").value))){
-      Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: "Carate limit exceed",
-            });
-        document.getElementById("carate1250").value = 0;
-    }
-
-
-    if (parseInt(document.getElementById("carate1350").value) > (parseInt(document.getElementById('carate22350').value) + parseInt(document.getElementById("carate350").value))){
-      Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: "Carate limit exceed",
-            });
-        document.getElementById("carate1350").value = 0;
-    }
-
-
-
-
-    var value100 = parseInt(document.getElementById("carate1100").value) || 0;
-    var value150 = parseInt(document.getElementById("carate1150").value) || 0;
-    var value250 = parseInt(document.getElementById("carate1250").value) || 0;
-    var value350 = parseInt(document.getElementById("carate1350").value) || 0;
-    var value1100 = parseInt(document.getElementById("carate100").value) || 0;
-    var value1150 = parseInt(document.getElementById("carate150").value) || 0;
-    var value1250 = parseInt(document.getElementById("carate250").value) || 0;
-    var value1350 = parseInt(document.getElementById("carate350").value) || 0;
-    document.getElementById("total2").value = value100 * 100 + value150 * 150 + value250 * 250 + value350 * 350;
-    document.getElementById("carate2100").value = parseInt(document.getElementById("carate22100").value) + value1100 - value100;
-    document.getElementById("carate2150").value = parseInt(document.getElementById("carate22150").value) + value1150 - value150;
-    document.getElementById("carate2250").value = parseInt(document.getElementById("carate22250").value) + value1250 - value250;
-    document.getElementById("carate2350").value = parseInt(document.getElementById("carate22350").value) + value1350 - value350;
-    totalbill();
-    //document.getElementById("total1").value = parseInt(document.getElementById("carate100").value) * 100 +  parseInt(document.getElementById("carate150").value) * 150 +  parseInt(document.getElementById("carate250").value) * 250 +  parseInt(document.getElementById("carate350").value) * 350
-  }
-
-
-  function totalbill() {
-    console.log("totalbill")
-    console.log(document.getElementById("custid").value)
-
-    fetch('http://103.174.102.89:3000/accountData/' + parseInt(document.getElementById("custid").value))
-      .then(response => {
-        if (!response.ok) {
-          loader.style.display = 'none';
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data[0].cr_dr_type)
-        var set = 0
-        if (data[0].cr_dr_type == 'no') {
-          set = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0)
-          // document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0);
-        } else {
-          set = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0) - parseInt(document.getElementById("total2").value || 0);
-          // document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0) - parseInt(document.getElementById("total2").value || 0);
-        }
-        if(set < 0){
-          Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: "Value Should be Grater than Zero",
-            });
-
-        }else{
-          document.getElementById("baki").value = set
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-
-
-    //document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0) - parseInt(document.getElementById("total2").value || 0);
-  }
-
-
-  async function myFunction() {
-    // event.preventDefault();
-    var loader = document.getElementById('loader');
-    loader.style.display = 'block';
-
-    var formData = {
-      bill_id: parseInt(document.getElementById('bill').value),
-      bata: document.getElementById('bta').value,
-      mark: document.getElementById('mark').value,
-      product: document.getElementById('product').value,
-      quantity: parseInt(document.getElementById('nag').value),
-      rate: parseInt(document.getElementById('kimmat').value),
-      price: parseInt(document.getElementById('total').value)
-    };
-
-    console.log(formData)
-
-    fetch('http://103.174.102.89:3000/saleproductData/insertsaleproduct', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(result => {
-        loader.style.display = 'none';
-        console.log('Entry added successfully:', result);
-        // document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + parseInt(document.getElementById('total').value);
-        // totalBalance()
-        // updateTable(formData, result.insertId);
-        fetch('http://103.174.102.89:3000/saleproductData/' + (formData.bill_id))
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    var tableBody = document.getElementById('tableBody1');
-                    tableBody.innerHTML = '';
-                    // Populate dropdown with API data
-                    //populateDropdown3(data);
-                    document.getElementById('bill1').value = 0;
-                    console.log('outside',document.getElementById('bill1').value)
-                    data.forEach(function (item) {
-                        updateTable(item,item.id);
-                        console.log('inside',document.getElementById('bill1').value)
-                        //document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + item.price;
-                    });  
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        $('#product').val('').trigger('change');
-        $('#bta').val('').trigger('change');
-        document.getElementById('mark').value = '';
-        document.getElementById('nag').value = 1;
-        document.getElementById('kimmat').value = '';
-        document.getElementById('total').value = '';
-        var nagLabel = document.getElementById('nagLabel');
-        nagLabel.innerHTML = '';
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-    Swal.fire({
-                            icon: 'success',
-                            title: 'Success!',
-                            text: 'Product added successfully',
-                            timer: 500, // 2000 ms = 2 seconds
-  timerProgressBar: true, // Optional: show progress bar during the timer
-  didClose: () => {
-    // Optional: Perform any actions after the alert closes
-    console.log("Alert closed automatically");
-  }
-                            })
-    // Add your desidarkgrey functionality here
-  }
-
-  function updateTable(entry, result) {
-    console.log("table")
-    var tableBody = document.getElementById('tableBody1');
-    var newRow = document.createElement('tr');
-    newRow.innerHTML = `
-          <td>${entry.product}</td>
-          <td>${entry.bata}</td>
-          <td>${entry.mark}</td>
-          <td>${entry.quantity}</td>
-          <td>${entry.rate}</td>
-          <td>${entry.price}</td>
-          <td><button type="button" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button></td>
-      `;
-    document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + entry.price;
-    totalBalance()
-    tableBody.appendChild(newRow);
-  }
-
-  function deleteUser(button, userId, price) {
-    // Perform delete operation based on userId
-    console.log(price)
-    console.log(userId)
-    document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) - price;
-    totalBalance()
-    var button = event.target;
-    var row = button.parentNode.parentNode;
-    fetch('http://103.174.102.89:3000/saleproductData/deletesaleproduct/' + userId, {
-      method: 'DELETE'
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        console.log('User deleted successfully');
-        // Refresh the table or update UI as needed
-        //newRow.remove();
-        row.remove();
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  }
 </script>
 
 </html>
