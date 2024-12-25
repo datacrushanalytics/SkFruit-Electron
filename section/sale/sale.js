@@ -524,6 +524,7 @@ function totalBalance() {
 
 function previousbalance() {
     const name = document.getElementById("grahk").value
+    console.log("Name", name)
 
     fetch('http://103.174.102.89:3000/fetchName/name/' + name)
         .then(response => {
