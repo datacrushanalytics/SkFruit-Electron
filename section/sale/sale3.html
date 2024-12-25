@@ -369,7 +369,7 @@ function saveRow(button, id1) {
     const product = cells[0].textContent; // Assuming product is in the first column
 
     // Optional: Make an API call to save the changes
-    fetch('http://localhost:3000/saleproductData/updatesaleproduct', {
+    fetch('http://103.174.102.89:3000/saleproductData/updatesaleproduct', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
