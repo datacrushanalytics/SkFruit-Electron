@@ -143,12 +143,14 @@ function fetchDataAndProcess() {
 // }
 
 
+
+
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
     const isChecked = document.getElementById('toggleTableCheckbox').checked;
     if (isChecked){
-        var columnsToDisplay = ['bata', 'product', 'sold_quantity', 'purchase_price', 'Amount', 'profit_loss'];
+        var columnsToDisplay = ['bata', 'product', 'total_sold_quantity', 'total_purchase_price', 'total_amount', 'net_profit_loss'];
     }else{
         var columnsToDisplay = ['bill_no', 'gadi_number','cust_name', 'bata', 'product', 'sold_quantity', 'purchase_price', 'Amount', 'profit_loss'];
     }
@@ -229,7 +231,7 @@ function populateTable5(data) {
     tbody.innerHTML = ''; // Clear existing rows
     const isChecked = document.getElementById('toggleTableCheckbox').checked;
     if (isChecked){
-        var columnsToDisplay = ['bata', 'product', 'sold_quantity', 'purchase_price', 'Amount', 'profit_loss'];
+        var columnsToDisplay = ['bata', 'product', 'total_sold_quantity', 'total_purchase_price', 'total_amount', 'net_profit_loss'];
     }else{
         var columnsToDisplay = ['bill_no', 'gadi_number','cust_name', 'bata', 'product', 'sold_quantity', 'purchase_price', 'Amount', 'profit_loss'];
     }
@@ -258,7 +260,7 @@ function populateTable5(data) {
         cell.textContent = counter++;
         columnsToDisplay.forEach(function (key) {
             var cell = row.insertCell();
-            if (key === 'profit_loss') {
+            if (key === 'net_profit_loss') {
                 if (item[key].startsWith('Loss')) {
                     cell.style.color = 'red';
                     grandTotals[key] -= parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
@@ -267,7 +269,7 @@ function populateTable5(data) {
                     grandTotals[key] += parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
                 }
                 // grandTotals[key] += parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
-            } else if (['sold_quantity', 'purchase_price', "selling_price", 'Amount'].includes(key)) {
+            } else if (['total_sold_quantity', 'total_purchase_price', 'total_amount', 'net_profit_loss'].includes(key)) {
                 grandTotals[key] += parseFloat(item[key]) || 0;
             }
             cell.textContent = item[key];

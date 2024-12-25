@@ -784,7 +784,7 @@ function openModal(item) {
             hour12: true 
         }); // Format onl
         var billDetails = [
-            { label: "बिल क्र.:" + item.bill_no, value: "तारीख:" + utcDate.toLocaleString('en-IN', options) },
+            { label: "बिल क्र.:" + item, value: "तारीख:" + utcDate.toLocaleString('en-IN', options) },
             { label: "ग्राहकाचे नाव:"+ data.results[0].cust_name, value: "संपर्क क्र.:" + data.results[0].mobile_no },
             { label: "पत्ता:" + data.results[0].address,   value: "Time:   " + convertToIST(data.results[0].created_at) },
             // Add other bill details similarly

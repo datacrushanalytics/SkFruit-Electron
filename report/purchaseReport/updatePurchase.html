@@ -44,6 +44,22 @@
                 transform: rotate(360deg);
             }
         }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            margin-right: 10px;
+            width: 150px; /* Adjust as necessary */
+        }
+
+        .form-group input,
+        .form-group select {
+            flex: 1;
+        }
     </style>
 </head>
 
@@ -55,26 +71,24 @@
         <br>
         <div class="container1">
             <form id="Form">
-                <div class="first-row">
-                    <div style="margin-left: 3%;">
+                    <div class="form-group">
                         <label for="no">Bill No:</label>
                         <input type="number" id="no" name="number" placeholder="Bill No" required>
                     </div>
-                    <div style="margin-left:50px;">
+                    <div class="form-group">
                         <label for="date">Date:</label>
                         <input type="date" id="date" name="date" required>
                     </div>
-                </div>
                 <br>
-                <div class="second-row">
-                    <div style="margin-left: 50px;">
+                <!-- <div class="second-row"> -->
+                    <div class="form-group">
                         <label for="dropdown">Supplier Name: </label>
                         <input type="supplier" id="supplier" name="supplier" readonly>
                         <!-- <select id="supplier" name="supplier" class="drop" required>
 
                         </select> <br> -->
                     </div> <br>
-                    <div style="margin-left:50px;">
+                    <div class="form-group">
                         <label for="number">vehicle no : </label>
                         <input type="vehicle" id="vehicle" name="vehicle" readonly>
                         <!-- <select id="vehicle" name="vehicle" required>
@@ -82,28 +96,28 @@
                         </select> -->
                     </div>
 
-                </div>
+                <!-- </div> -->
                 <br>
-                <div class="third-row">
-                    <div style="margin-left: 50px;">
+                <!-- <div class="third-row"> -->
+                    <div class="form-group">
                         <label for="dropdown">Product:</label>
                         <select id="product">
                             <br>
                         </select>
                     </div>
-                    <div style="margin-left: 50px;">
+                    <div class="form-group">
                         <label for="bata">Bata:</label>
                         <input type="text" id="bata" name="name" placeholder="Bata">
                         <br>
                         </select>
                     </div>
-                    <div style="margin-left: 50px;">
+                    <div class="form-group">
                         <label for="mark">Mark:</label>
                         <input type="text" id="mark" name="name" placeholder="Mark">
                     </div>
-                </div>
+                <!-- </div> -->
                 <br>
-                <div style="margin-left: 3%;">
+                <div class="form-group">
                     <label for="dropdown1"> Unit :</label>
                     <select id="unit">
                         <option>यूनिट</option>
@@ -116,7 +130,7 @@
                         <option value="पेटी">पेटी</option>
                     </select>
                 </div><br><br>
-                <div class="fourth-row">
+                <!-- <div class="fourth-row"> -->
                     <div style="display: flex;">
                         <div style="margin-left: 4%;">
                             <label for="purchase">Purchase Rate:</label>
@@ -132,7 +146,7 @@
                         </div>
                         <div>
                         </div>
-                    </div>
+                    <!-- </div> -->
                     <br>
 
                     <button type="submit" style="background-color: #26a653;" class="border-hover" onclick="myFunction()">ADD</button></a>
