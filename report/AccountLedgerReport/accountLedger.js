@@ -63,67 +63,63 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-
-    var columnsToDisplay = ['date', 'bill_no', 'cust_name','online_acc', 'online_amt'];
+  
+    var columnsToDisplay = ['date', 'bill_no', 'cust_name', 'online_acc', 'online_amt'];
     var counter = 1;
     console.log(data.reports);
+  
     if (data.reports.length === 0) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'No data found.',
-          });
-
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No data found.',
+      });
+  
+      return;
     }
+  
     let grandTotalQuantity = 0;
-    data.reports.forEach(function(item) {
+    data.reports.forEach(function (item) {
+      if (item.online_amt !== 0) { // Check if online_amt is not zero
         var row = tbody.insertRow();
         var cell = row.insertCell();
         cell.textContent = counter++;
-        columnsToDisplay.forEach(function(key) {
-            var cell = row.insertCell();
-            if (key === 'date') {
-                var utcDate = new Date(item[key]);
-                var options = { 
-                    year: 'numeric', 
-                    month: '2-digit', 
-                    day: '2-digit', 
-                    timeZone: 'Asia/Kolkata' 
-                };
-                cell.textContent = utcDate.toLocaleString('en-IN', options);
-            } else {
-                cell.textContent = item[key];
-                if (key === 'online_amt') {
-                    grandTotalQuantity += item[key];
-                }
-            }
+  
+        columnsToDisplay.forEach(function (key) {
+          var cell = row.insertCell();
+          if (key === 'date') {
+            var utcDate = new Date(item[key]);
+            var options = { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' };
+            cell.textContent = utcDate.toLocaleString('en-IN', options);
+          } else if (key === 'online_amt') { 
+            cell.textContent = item[key];
+            grandTotalQuantity += item[key]; 
+          } else {
+            cell.textContent = item[key];
+          }
         });
+      }
     });
-
+  
     // Add the Grand Total Row
     var totalRow = tbody.insertRow();
-
+  
     // Empty cells for serial number, date, etc.
-    totalRow.insertCell().textContent = ''; // Serial number
-    totalRow.insertCell().textContent = ''; // Date
-    totalRow.insertCell().textContent = ''; // From account
-    totalRow.insertCell().textContent = ''; // To account
-    // totalRow.insertCell().textContent = ''; // Comment
-
+    for (let i = 0; i < columnsToDisplay.length - 1; i++) { 
+      totalRow.insertCell(); 
+    }
+  
     // Cell for "Grand Total" label
     var grandTotalLabelCell = totalRow.insertCell();
     grandTotalLabelCell.textContent = 'Grand Total:';
     grandTotalLabelCell.style.fontWeight = 'bold';
-    grandTotalLabelCell.colSpan = 1; // Adjust if needed to span across columns
-
-    // Cell for the Grand Total value for "amounr"
+  
+    // Cell for the Grand Total value
     var grandTotalValueCell = totalRow.insertCell();
     grandTotalValueCell.textContent = grandTotalQuantity.toFixed(2); // Display grand total with 2 decimal places
     grandTotalValueCell.style.fontWeight = 'bold';
     grandTotalValueCell.style.textAlign = 'right'; // Align to the right
-
-}
-
+  }
 // function populateTable5(data) {
 //     var tbody = document.getElementById('tableBody1');
 //     tbody.innerHTML = ''; // Clear existing rows

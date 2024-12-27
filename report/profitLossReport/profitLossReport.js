@@ -148,12 +148,12 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    const isChecked = document.getElementById('toggleTableCheckbox').checked;
-    if (isChecked){
-        var columnsToDisplay = ['bata', 'product', 'total_sold_quantity', 'total_purchase_price', 'total_amount', 'net_profit_loss'];
-    }else{
-        var columnsToDisplay = ['bill_no', 'gadi_number','cust_name', 'bata', 'product', 'sold_quantity', 'purchase_price', 'Amount', 'profit_loss'];
-    }
+    // const isChecked = document.getElementById('toggleTableCheckbox').checked;
+    // if (isChecked){
+    //     var columnsToDisplay = ['bata', 'product', 'total_sold_quantity', 'total_purchase_price', 'total_amount', 'net_profit_loss'];
+    // }else{
+        var columnsToDisplay = ['bill_no','date', 'gadi_number','cust_name', 'bata', 'product', 'sold_quantity', 'purchase_price', 'Amount', 'profit_loss'];
+    // }
     
     var counter = 1;
     var grandTotals = {
@@ -191,7 +191,20 @@ function populateTable4(data) {
             } else if (['sold_quantity', 'purchase_price', "selling_price", 'Amount'].includes(key)) {
                 grandTotals[key] += parseFloat(item[key]) || 0;
             }
-            cell.textContent = item[key];
+            if (key == 'date') {
+                console.log(item[key])
+                var utcDate = new Date(item[key]);
+                var options = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    timeZone: 'Asia/Kolkata'
+                };
+                console.log( "Date",utcDate.toLocaleString('en-IN', options))
+                cell.textContent = utcDate.toLocaleString('en-IN', options);
+            }else{
+                cell.textContent = item[key];
+            }
             console.log("grandTotals",grandTotals)
         });
     });
@@ -229,12 +242,12 @@ function populateTable4(data) {
 function populateTable5(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    const isChecked = document.getElementById('toggleTableCheckbox').checked;
-    if (isChecked){
+    // const isChecked = document.getElementById('toggleTableCheckbox').checked;
+    // if (isChecked){
         var columnsToDisplay = ['bata', 'product', 'total_sold_quantity', 'total_purchase_price', 'total_amount', 'net_profit_loss'];
-    }else{
-        var columnsToDisplay = ['bill_no', 'gadi_number','cust_name', 'bata', 'product', 'sold_quantity', 'purchase_price', 'Amount', 'profit_loss'];
-    }
+    // }else{
+    //     var columnsToDisplay = ['bill_no', 'gadi_number','cust_name', 'bata', 'product', 'sold_quantity', 'purchase_price', 'Amount', 'profit_loss'];
+    // }
     
     var counter = 1;
     var grandTotals = {
@@ -242,7 +255,11 @@ function populateTable5(data) {
         purchase_price: 0,
         selling_price: 0,
         Amount: 0,
-        profit_loss: 0
+        profit_loss: 0,
+        total_sold_quantity: 0,
+        total_purchase_price: 0,
+        total_amount: 0,
+        net_profit_loss: 0
     };
     console.log(data.reports);
     if (data.reports.length === 0) {
@@ -284,7 +301,7 @@ function populateTable5(data) {
     var headingCell = totalRow.insertCell();
     headingCell.textContent = 'Grand Total';
     headingCell.style.fontWeight = 'bold';
-    headingCell.colSpan = 4; // Span across the first four columns
+    headingCell.colSpan = 2; // Span across the first four columns
 
     // Create an empty cell to shift the totals to the right
     var emptyCell = totalRow.insertCell();
@@ -292,9 +309,9 @@ function populateTable5(data) {
 
     // Create cells for the total values
     columnsToDisplay.forEach(function (key, index) {
-        if (index >= 4) { // Start populating totals after the first four columns
+        if (index >= 2) { // Start populating totals after the first four columns
             var cell = totalRow.insertCell();
-            if (['sold_quantity', 'purchase_price', "selling_price", 'Amount','profit_loss'].includes(key)) {
+            if (['total_sold_quantity', 'total_purchase_price', 'total_amount', 'net_profit_loss'].includes(key)) {
                 if (key === 'profit_loss') {
                     cell.style.color = grandTotals[key] < 0 ? 'red' : 'green';
                 }

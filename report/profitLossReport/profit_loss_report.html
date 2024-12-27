@@ -265,6 +265,7 @@
                 <tr>
                     <th>Id</th>
                     <th id = 'hide'>Bill No</th>
+                    <th id = 'hide3'>Date</th>
                     <th id = 'hide1'>Vehicle No</th>
                     <th id = 'hide2'>Customer</th>
                     <th>Bata</th>
@@ -299,6 +300,7 @@
     const table = document.getElementById('hide');
     const table1 = document.getElementById('hide1');
     const table2 = document.getElementById('hide2');
+    const table3 = document.getElementById('hide3');
 
     // Add an event listener to the checkbox
     toggleTableCheckbox.addEventListener('change', (e) => {
@@ -307,12 +309,14 @@
             table.style.display = 'none';
             table1.style.display = 'none';
             table2.style.display = 'none';
+            table3.style.display = 'none';
             fetchDataAndProcess();
         } else {
             // Show the table when checkbox is deselected
             table.style.display = '';
             table1.style.display = '';
             table2.style.display = '';
+            table3.style.display = '';
             fetchDataAndProcess1();
         }
     });

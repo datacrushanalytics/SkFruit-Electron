@@ -1,3 +1,4 @@
+let accountInfo = [];
 
 function getElementValueWithDefault(id, defaultValue) {
     var element = document.getElementById(id);
@@ -61,6 +62,7 @@ function fetchDataAndProcess() {
     .then(result => {
         loader.style.display = 'none';
         console.log(result);
+        accountInfo = result.reports;
         populateTable4(result);
         return result;
         // Optionally, you can darkgreyirect or show a success message here
@@ -264,7 +266,132 @@ function populateTable4(data) {
     grandTotalCell.style.fontWeight = 'bold'; // Make "Grand Total" label bold
     grandTotalCell.textContent = 'Grand Total: ' + data.Grand['Grand Amournt']; 
 
+    var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
+    // Add an empty cell after the total amount if there are admin columns
+    // if (isAdmin) {
+    //     var adminCell = totalRow.insertCell();
+    //     adminCell.textContent = '';
+    // }
+
+    var buttonCell = totalRow.insertCell();
+
+        // Container for the buttons
+        var buttonContainer = document.createElement('div');
+        buttonContainer.className = 'button-container';
+
+        var openPopupButton = document.createElement('button');
+        openPopupButton.className = 'button';
+        var billIcon = document.createElement('i');
+        billIcon.className = 'fa-sharp fa-regular fa-envelope'; 
+        openPopupButton.style.backgroundColor = '#C48B58';  
+        openPopupButton.appendChild(billIcon);
+        //openPopupButton.textContent = 'Bill';
+        openPopupButton.addEventListener('click', async function () {
+            await sendMessagesToAll('sms');
+        });
+        buttonContainer.appendChild(openPopupButton);
+        
+        // Second button
+        var secondButton = document.createElement('button');
+        secondButton.className = 'button';
+        secondButton.style.backgroundColor = 'green'; 
+        var secondIcon = document.createElement('i');
+        secondIcon.className = 'fa-brands fa-whatsapp';
+        secondButton.appendChild(secondIcon);
+        //secondButton.textContent = 'Second Button'; // Change the text as needed
+        secondButton.addEventListener('click', async function () {
+            await sendMessagesToAll('whatsapp');
+        });
+        buttonContainer.appendChild(secondButton);
+
+        // Append the button container to the cell
+        buttonCell.appendChild(buttonContainer);
+
+
 }
+
+
+function convertUTCToISTDate(dateString) {
+    // Parse the date string
+    const date = new Date(dateString);
+  
+    // Calculate the IST time offset (UTC+5:30)
+    const offset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
+  
+    // Adjust for IST
+    const istDate = new Date(date.getTime() + offset);
+  
+    // Extract the date part (year, month, day)
+    const year = istDate.getUTCFullYear();
+    const month = ('0' + (istDate.getUTCMonth() + 1)).slice(-2); // Months are zero-based
+    const day = ('0' + istDate.getUTCDate()).slice(-2);
+  
+    // Return date in YYYY-MM-DD format
+    return `${year}-${month}-${day}`;
+  }
+
+
+async function sendMessagesToAll(type) {
+    const loader = document.getElementById('loader');
+    loader.style.display = 'block';
+    console.log("accountInfo", accountInfo)
+
+    try {
+        // Loop through all users in accountInfo
+        for (const item of accountInfo) {
+            console.log(item)
+            const payload = type === 'sms' 
+                ? {
+                    "mobile_no": item.mobile_no,
+                    "name": item.name,
+                    "date": convertUTCToISTDate(item.last_update),
+                    "remaining": item.current_balance
+                }
+                : {
+                    "campaignName": "SK_fruits_remainder",
+                    "mobile_no": item.mobile_no,
+                    "userName": item.name,
+                    "remainderDate": convertUTCToISTDate(item.last_update),
+                    "remaining": item.current_balance
+                };
+
+            const endpoint = type === 'sms' 
+                ? 'http://103.174.102.89:3000/sms/remainderMessage' 
+                : 'http://103.174.102.89:3000/whatsapp/remainderMessage';
+
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+            console.log("response",response)
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error(`Failed to send ${type} for ${item.name}:`, errorText);
+                continue;
+            }
+        }
+
+        Swal.fire({
+            icon: 'success',
+            title: `Success!`,
+            text: `${type === 'sms' ? 'SMS' : 'WhatsApp'} messages sent successfully to all users.`,
+        });
+
+    } catch (error) {
+        console.error('Error sending messages:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `Failed to send ${type === 'sms' ? 'SMS' : 'WhatsApp'} messages.`,
+        });
+    } finally {
+        loader.style.display = 'none';
+    }
+}
+
 
 
 // async function exportToExcel() {

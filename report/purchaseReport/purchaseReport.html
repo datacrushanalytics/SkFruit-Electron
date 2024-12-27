@@ -317,6 +317,13 @@
                 </select> 
                 <br>
                 <br>
+                <label id='label' for="userType">Product :</label>
+                <select class="drop" id="product" id="product" name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select> 
+                <br>
+                <br>
+
                 <label for="userType">Purchase Id :</label>
                 <select class="drop" id="purchase_id" id="purchase_id" name="name">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
@@ -375,6 +382,7 @@ document.getElementById('todate').value = todayIST;
         fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicleNumber','vehicle_no');
         fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Supplier', 'supplier','name');
         fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'bata','bata');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'product','product_name');
         fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/purchaseId', 'purchase_id', 'purchase_id');
     });
 

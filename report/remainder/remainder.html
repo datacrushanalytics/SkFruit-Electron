@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
@@ -274,11 +275,11 @@
     });
 
     // Add the hardcoded "Cash" option
-    dropdown.append(
-        $('<option></option>')
-            .attr('value', 'Cash')
-            .text('Cash')
-    );
+    // dropdown.append(
+    //     $('<option></option>')
+    //         .attr('value', 'Cash')
+    //         .text('Cash')
+    // );
 
     // Initialize Select2
     dropdown.select2({
@@ -288,11 +289,11 @@
 }
 
 // Focus on the search field when Select2 is opened
-$(document).on('select2:open', function (e) {
-    window.setTimeout(function () {
-        document.querySelector('input.select2-search__field').focus();
-    }, 0);
-});
+$(document).on('select2:open', function(e) {
+        window.setTimeout(function () {
+            document.querySelector('input.select2-search__field').focus();
+        }, 0);
+    });
     // $(document).on('select2:open', function(e) {
     //     window.setTimeout(function () {
     //         document.querySelector('input.select2-search__field').focus();

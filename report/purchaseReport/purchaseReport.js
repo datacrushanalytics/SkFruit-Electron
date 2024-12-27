@@ -24,6 +24,7 @@ function fetchDataAndProcess() {
         to_date : formatDate(document.getElementById("todate").value),
         supplier_name : getElementValueWithDefault('supplier', '*') , 
         bata : getElementValueWithDefault('bata', '*') , 
+        product : getElementValueWithDefault('product', '*') , 
         gadi_number : getElementValueWithDefault('vehicleNumber', '*'),
         purchase_id : getElementValueWithDefault('purchase_id', '*') 
     };
@@ -138,6 +139,7 @@ function populateTable4(data) {
             var editButton = document.createElement('button');
             editButton.className = 'button edit-button';
             editButton.style.backgroundColor = '#26a653';
+            editButton.style.textDecorationColor = 'white';
             var editLink = document.createElement('a');
             editLink.href = './updatePurchase.html'; // Edit link destination
             editLink.textContent = 'Edit';

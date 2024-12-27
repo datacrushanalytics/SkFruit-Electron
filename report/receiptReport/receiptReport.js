@@ -360,7 +360,7 @@ function openModal(item) {
                 { label: label.trim(), value: ''},
                 //{ label: "एकूण रक्कम:", value: data.results[0].total_amount },
                 { label: "रोख जमा रक्कम:", value: data.reports[0].PaidAmt },
-                { label: "ऑनलाईन जमा बँक (जमा रक्कम) :", value: data.reports[0].online_deposite_bank + '(' + data.reports[0].onlineAmt + ')' },
+                { label: "जमा रक्कम  (ऑनलाईन जमा बँक) :", value: data.reports[0].onlineAmt + '(' + data.reports[0].online_deposite_bank + ')' },
                 // { label: "ऑनलाईन जमा रक्कम:", value: data.reports[0].onlineAmt },
                 { label: "सूट रक्कम:", value: data.reports[0].discount },
                 // { label: "जमा कॅरेट:  -" + "100 * " +data.reports[0].c100 +" | 150 * " + data.reports[0].c150+ " | 250 * " +data.reports[0].c250 + " | 350 * " + data.reports[0].c350, value: data.reports[0].inCarat },
@@ -438,6 +438,18 @@ function openModal(item) {
         font-weight: bold;
     }
 
+    .container2::after {
+        content: url("../../assets/img/logo.png"); /* Replace with your watermark image path */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Center the watermark */
+        opacity: 0.2; /* Adjust watermark opacity (0 for transparent, 1 for solid) */
+        z-index: -0; /* Place the watermark behind the content */
+        }
+
+
+
     table {
         width: 100%;
         border-collapse: collapse;
@@ -504,6 +516,16 @@ function openModal(item) {
     -webkit-print-color-adjust: exact; /* Ensure content background color prints */
     color-adjust: exact;
   }
+
+    .content::after {
+        content: url("../../assets/img/logo.png"); /* Replace with your watermark image path */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Center the watermark */
+        opacity: 0.2; /* Adjust watermark opacity (0 for transparent, 1 for solid) */
+        z-index: -0; /* Place the watermark behind the content */
+        }
 
   header {
     text-align: center;

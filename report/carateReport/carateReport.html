@@ -224,6 +224,13 @@ button[type="submit"]:hover {
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br>
                 <br>
+
+                <label for="userType">Route :</label>
+                <select class="drop" id="route"  name="name">
+                    <!-- <option value="User" disabled selected>Select Account</option> -->
+                </select><br>
+
+                <br>
                 <!-- <div class="third-row"> -->
                     <!-- <button class="border-hover" >Save</button> -->
                     <button type="submit" id="button1" style="background-color: #26a653;">Submit</button>
@@ -236,6 +243,7 @@ button[type="submit"]:hover {
                     <th>Sr. No</th>
                     <th>DATE</th>
                     <th>Customer Name</th>
+                    <th>Route</th>
                     <th>Summary</th>
                     <th>Out Carate</th>
                     <th>Total OutCarate Amt</th>
@@ -279,6 +287,7 @@ button[type="submit"]:hover {
         // Check if the user is an admin and show/hide the button accordingly
     if (isAdmin) {
         fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'customer'); 
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route');
         }else{
           var route = sessionData[0].route;
           fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customer/' +route  , 'customer');
@@ -314,7 +323,7 @@ button[type="submit"]:hover {
 
         // Populate dropdown with API data
         data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.name || item.cust_name).text(item.name || item.cust_name));
+            dropdown.append($('<option></option>').attr('value', item.name || item.cust_name || item.route_name).text(item.name || item.cust_name || item.route_name));
         });
 
         // Initialize Select2

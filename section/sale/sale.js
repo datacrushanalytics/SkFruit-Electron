@@ -827,7 +827,9 @@ async function myFunction() {
 function updateTable(entry, result) {
     var tableBody = document.getElementById('tableBody1');
     var newRow = document.createElement('tr');
-    newRow.setAttribute('data-id', result);  // Store the existing `id` from the response
+    newRow.setAttribute('data-id', result); // Store the existing `id` from the response
+
+    // Create row content
     newRow.innerHTML = `
         <td>${entry.product}</td>
         <td>${entry.bata}</td>
@@ -837,13 +839,41 @@ function updateTable(entry, result) {
         <td>${entry.price}</td>
         <td>
             <button type="button" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button>
-            <button type="button" onclick="editRow(this, ${result})">Edit</button>
         </td>
     `;
-    document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + entry.price;
-    totalBalance();
+
+    // Debugging: Log entry and editable flag
+    console.log('Entry:', entry);
+    console.log('Editable:', entry.editable);
+
+    // Conditionally append the "Edit" button
+    if (entry.editable) {
+        var editButton = document.createElement('button');
+        editButton.type = 'button';
+        editButton.textContent = 'Edit';
+        editButton.onclick = function () {
+            editRow(this, result);
+        };
+
+        // Append the edit button to the last cell
+        newRow.lastElementChild.appendChild(editButton);
+    }
+
+    // Update the bill total
+    var billInput = document.getElementById('bill1');
+    billInput.value = parseInt(billInput.value || 0) + entry.price;
+
+    // Debugging: Log the updated bill total
+    console.log('Updated Bill Total:', billInput.value);
+
+    // Append the row to the table
     tableBody.appendChild(newRow);
+
+    // Debugging: Log the table content for verification
+    console.log('Updated Table HTML:', tableBody.innerHTML);
 }
+
+
 
 function deleteUser(button, userId, price) {
     // Perform delete operation based on userId

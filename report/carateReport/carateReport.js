@@ -24,6 +24,7 @@ function fetchDataAndProcess() {
         from_date: formatDate(document.getElementById("fromdate").value),
         to_date: formatDate(document.getElementById("todate").value),
         customer_name: getElementValueWithDefault('customer', '*'),
+        route: getElementValueWithDefault('route', '*'),
     };
     var loader = document.getElementById('loader');
     loader.style.display = 'block';
@@ -70,7 +71,7 @@ function fetchDataAndProcess() {
 function populateTable4(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['carate_date', 'customer_name', 'summary', "outCarate", 'out_carate_total', "inCarate", 'in_carate_total'];
+    var columnsToDisplay = ['carate_date', 'customer_name', 'route_detail','summary', "outCarate", 'out_carate_total', "inCarate", 'in_carate_total'];
     var counter = 1;
     console.log(data.reports);
     if (data.reports.length === 0) {

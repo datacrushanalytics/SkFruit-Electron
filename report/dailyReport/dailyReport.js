@@ -666,8 +666,8 @@ function populateTable5(data) {
     document.getElementById('grandOnline').textContent = data.GrandReceipt['receiptOnline'] + data.GrandSale['saleOnline'];
     document.getElementById('grandDiscount').textContent = data.GrandReceipt['receiptDiscount'] + data.GrandSale['saleDiscount'];
     document.getElementById('grandTotal').textContent = data.GrandSale['saleCash'] + data.GrandReceipt['receiptCash'] + data.GrandReceipt['receiptOnline'] + data.GrandSale['saleOnline'];
-    document.getElementById('grandInCarate').textContent = data.GrandSale['saleInCarat']+ data.GrandReceipt['receiptInCarat'];
-    document.getElementById('grandOutCarate').textContent =  data.GrandSale['saleCarate'] 
+    // document.getElementById('grandInCarate').textContent = data.GrandSale['saleInCarat']+ data.GrandReceipt['receiptInCarat'];
+    // document.getElementById('grandOutCarate').textContent =  data.GrandSale['saleCarate'] 
 
 }
 
@@ -834,7 +834,7 @@ function openModal(item) {
             { label: "मागील बाकी:", value: data.results[0].pre_balance , visible: true},
             { label: "एकूण रक्कम:", value: data.results[0].total_amount, visible: true },
             { label: "रोख जमा रक्कम:", value: data.results[0].cash, visible: true },
-            { label: "ऑनलाईन जमा बँक (जमा रक्कम) :", value: data.results[0].online_acc + '(' + data.results[0].online_amt + ')', visible: true },
+            { label: "ऑनलाईन जमा रक्कम (जमा बँक) :", value: data.results[0].online_amt + '(' + data.results[0].online_acc + ')', visible: true },
             // { label: "ऑनलाईन जमा बँक :", value: data.results[0].online_acc, visible: true },
             // { label: "ऑनलाईन जमा रक्कम:", value: data.results[0].online_amt, visible: true },
             { label: "सूट रक्कम:", value: data.results[0].discount, visible: true },
@@ -848,12 +848,16 @@ function openModal(item) {
         ];
 
         footerDetails.forEach(function (detail) {
-            var row = document.createElement("tr");
-            row.innerHTML = `
-                <td align="right" colspan="6" style="text-align:right;"><font color="black">${detail.label}</font></td>
-                <td align="right" colspan="1" style="text-align:right;"><font color="black">${detail.value}</font></td>
-                `;
-            tablefooter.appendChild(row);
+                var row = document.createElement("tr");
+                row.innerHTML = `
+                    <td align="right" colspan="6" style="text-align:right;"><font color="black">${detail.label}</font></td>
+                    `;
+
+                    if(detail.visible){
+                        row.innerHTML += `<td align="right" colspan="1" style="text-align:right;"><font color="black">${detail.value}</font></td>`;
+                }
+                tablefooter.appendChild(row);
+
         });
 
         // document.getElementById('carate1100').textContent = data.results[0].in_carate_100;
@@ -1005,6 +1009,16 @@ border: none; /* Removes the table's border */
     font-size: 12px; /* Adjust font size */
     font-weight: bold;
 }
+    .container2::after {
+    content: url("../../assets/img/logo.png"); /* Replace with your watermark image path */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the watermark */
+    opacity: 0.2; /* Adjust watermark opacity (0 for transparent, 1 for solid) */
+    z-index: -0; /* Place the watermark behind the content */
+    }
+
 .tablefooter {
     width: 100%;
     border-collapse: separate;
@@ -1042,85 +1056,98 @@ cursor: pointer;
 transition: background-color 0.3s;
 }
 
-
-
 @media print {
-  @page {
-    size: A5 portrait; /* A5 paper size in portrait orientation */
-    margin: 5mm; /* Reduced margins */
-  }
 
-  .details, .header-details, .close {
-    display: none; /* Hide unnecessary elements when printing */
-  }
-
-  body {
-    border: 2px solid #000; /* Black border surrounding the entire content */
-    margin: 0;
-    padding: 0;
-    background-color: #e8e6e4; /* Light gray background */
-    width: 156mm;
-    height: 210mm;
-    box-sizing: border-box; /* Include borders in width/height calculations */
-    -webkit-print-color-adjust: exact; /* Ensure background color prints in WebKit-based browsers */
-    color-adjust: exact; /* Standard property for consistent printing */
-  }
-
-  .content {
-    background-color: #e8e6e4; /* Light gray background for the bill content */
-    border: 2px solid #000; /* Black border surrounding the content */
-    border-radius: 5px;
-    width: 138mm; /* Fit within reduced margins */
-    height: auto;
-    margin: 0 auto;
-    padding: 10px; /* Internal padding for spacing */
-    box-sizing: border-box; /* Ensure padding doesn't affect width */
-    -webkit-print-color-adjust: exact; /* Ensure content background color prints */
-    color-adjust: exact;
-  }
-
-  header {
-    text-align: center;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #000; /* Bottom border for the header */
-    padding-bottom: 5px;
-  }
-
-  header img {
-    display: block;
-    margin: 0 auto; /* Center the image */
-    max-width: 100%; /* Ensure the image is responsive */
-    width: 100%; /* Full width of the content area */
-    height: auto;
-    box-sizing: border-box; /* Ensure image width fits within the border */
-  }
-
-  table {
-    width: 100%; /* Full width for table */
-    border-collapse: collapse; /* Remove gaps between cells */
-    margin-top: 10px;
-    border: none;
-  }
-
-  th, td {
-    padding: 5px; /* Optimized padding for reduced page size */
-    text-align: left;
-    font-size: 11px; /* Slightly smaller font size to fit content */
-  }
-
-  th {
-    background-color: #e8e6e4; /* Light gray background for headers */
-    font-size: 12px;
-    -webkit-print-color-adjust: exact; /* Ensure header background color prints */
-    color-adjust: exact;
-  }
-
-  footer {
-    margin-top: 15px;
-    text-align: center;
-    font-size: 11px; /* Footer font size adjusted */
-  }
+@page {
+size: A5 portrait; /* A5 paper size in portrait orientation */
+margin: 5mm; /* Reduced margins */
 }
+
+.details, .header-details, .close {
+display: none; /* Hide unnecessary elements when printing */
+}
+
+body {
+border: 2px solid #000; /* Black border surrounding the entire content */
+margin: 0;
+padding: 0;
+background-color: #e8e6e4; /* Light gray background */
+width: 156mm;
+height: 210mm;
+box-sizing: border-box; /* Include borders in width/height calculations */
+-webkit-print-color-adjust: exact; /* Ensure background color prints in WebKit-based browsers */
+color-adjust: exact; /* Standard property for consistent printing */
+}
+
+.content {
+background-color: #e8e6e4; /* Light gray background for the bill content */
+border: 2px solid #000; /* Black border surrounding the content */
+border-radius: 5px;
+width: 138mm; /* Fit within reduced margins */
+height: auto;
+margin: 0 auto;
+padding: 10px; /* Internal padding for spacing */
+box-sizing: border-box; /* Ensure padding doesn't affect width */
+-webkit-print-color-adjust: exact; /* Ensure content background color prints */
+color-adjust: exact;
+}
+
+.content::after {
+    content: url("../../assets/img/logo.png"); /* Replace with your watermark image path */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the watermark */
+    opacity: 0.2; /* Adjust watermark opacity (0 for transparent, 1 for solid) */
+    z-index: -0; /* Place the watermark behind the content */
+    }
+
+header {
+text-align: center;
+margin-bottom: 10px;
+border-bottom: 1px solid #000; /* Bottom border for the header */
+padding-bottom: 5px;
+}
+
+header img {
+display: block;
+margin: 0 auto; /* Center the image */
+max-width: 100%; /* Ensure the image is responsive */
+width: 100%; /* Full width of the content area */
+height: auto;
+box-sizing: border-box; /* Ensure image width fits within the border */
+}
+
+
+
+table {
+width: 100%; /* Full width for table */
+border-collapse: collapse; /* Remove gaps between cells */
+margin-top: 10px;
+border: none;
+}
+
+th, td {
+padding: 5px; /* Optimized padding for reduced page size */
+text-align: left;
+font-size: 11px; /* Slightly smaller font size to fit content */
+}
+
+th {
+background-color: #e8e6e4; /* Light gray background for headers */
+font-size: 12px;
+-webkit-print-color-adjust: exact; /* Ensure header background color prints */
+color-adjust: exact;
+}
+
+footer {
+margin-top: 15px;
+text-align: center;
+font-size: 11px; /* Footer font size adjusted */
+}
+
+}
+
 
 
 
@@ -1223,6 +1250,7 @@ printButton.addEventListener('click', function () {
 
 
 
+
 function openModal1(item) {
     // Your code to open the modal with the data from 'item'
     console.log("Opening receipt modal for item:", item);
@@ -1318,7 +1346,7 @@ function openModal1(item) {
                 { label: label.trim(), value: ''},
                 //{ label: "एकूण रक्कम:", value: data.results[0].total_amount },
                 { label: "रोख जमा रक्कम:", value: data.reports[0].PaidAmt },
-                { label: "ऑनलाईन जमा बँक (जमा रक्कम) :", value: data.reports[0].online_deposite_bank + '(' + data.reports[0].onlineAmt + ')' },
+                { label: "जमा रक्कम  (ऑनलाईन जमा बँक) :", value: data.reports[0].onlineAmt + '(' + data.reports[0].online_deposite_bank + ')' },
                 // { label: "ऑनलाईन जमा रक्कम:", value: data.reports[0].onlineAmt },
                 { label: "सूट रक्कम:", value: data.reports[0].discount },
                 // { label: "जमा कॅरेट:  -" + "100 * " +data.reports[0].c100 +" | 150 * " + data.reports[0].c150+ " | 250 * " +data.reports[0].c250 + " | 350 * " + data.reports[0].c350, value: data.reports[0].inCarat },
@@ -1396,6 +1424,18 @@ function openModal1(item) {
         font-weight: bold;
     }
 
+    .container2::after {
+        content: url("../../assets/img/logo.png"); /* Replace with your watermark image path */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Center the watermark */
+        opacity: 0.2; /* Adjust watermark opacity (0 for transparent, 1 for solid) */
+        z-index: -0; /* Place the watermark behind the content */
+        }
+
+
+
     table {
         width: 100%;
         border-collapse: collapse;
@@ -1427,8 +1467,8 @@ function openModal1(item) {
         transition: background-color 0.3s;
     }
 
-
-    @media print {
+    
+   @media print {
   @page {
     size: A5 portrait; /* A5 paper size in portrait orientation */
     margin: 5mm; /* Reduced margins */
@@ -1462,6 +1502,16 @@ function openModal1(item) {
     -webkit-print-color-adjust: exact; /* Ensure content background color prints */
     color-adjust: exact;
   }
+
+    .content::after {
+        content: url("../../assets/img/logo.png"); /* Replace with your watermark image path */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Center the watermark */
+        opacity: 0.2; /* Adjust watermark opacity (0 for transparent, 1 for solid) */
+        z-index: -0; /* Place the watermark behind the content */
+        }
 
   header {
     text-align: center;
@@ -1507,9 +1557,10 @@ function openModal1(item) {
 }
 
 
-   
 
 
+
+      
     .container3 {
         max-width: 800px;
         margin: 0 auto;
@@ -1621,10 +1672,3 @@ function openModal1(item) {
         });
     });
 }
-
-
-
-
-
-
-

@@ -241,7 +241,7 @@ function populateTable4(data) {
 function populateTable5(data) {
     var tbody = document.getElementById('tableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['bill_no', 'date', 'cust_name', 'mobile_no', 'quantity','rate','price'];
+    var columnsToDisplay = ['bill_no', 'date', 'cust_name', 'mobile_no', 'product','bata','mark','quantity','rate','price'];
     var counter = 1;
     var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
     console.log(data.reports)
@@ -528,7 +528,7 @@ function openModal(item) {
                 { label: "मागील बाकी:", value: data.results[0].pre_balance , visible: true},
                 { label: "एकूण रक्कम:", value: data.results[0].total_amount, visible: true },
                 { label: "रोख जमा रक्कम:", value: data.results[0].cash, visible: true },
-                { label: "ऑनलाईन जमा बँक (जमा रक्कम) :", value: data.results[0].online_acc + '(' + data.results[0].online_amt + ')', visible: true },
+                { label: "ऑनलाईन जमा रक्कम (जमा बँक) :", value: data.results[0].online_amt + '(' + data.results[0].online_acc + ')', visible: true },
                 // { label: "ऑनलाईन जमा बँक :", value: data.results[0].online_acc, visible: true },
                 // { label: "ऑनलाईन जमा रक्कम:", value: data.results[0].online_amt, visible: true },
                 { label: "सूट रक्कम:", value: data.results[0].discount, visible: true },
@@ -542,12 +542,16 @@ function openModal(item) {
             ];
 
             footerDetails.forEach(function (detail) {
-                var row = document.createElement("tr");
-                row.innerHTML = `
-                    <td align="right" colspan="6" style="text-align:right;"><font color="black">${detail.label}</font></td>
-                    <td align="right" colspan="1" style="text-align:right;"><font color="black">${detail.value}</font></td>
-                    `;
-                tablefooter.appendChild(row);
+                    var row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td align="right" colspan="6" style="text-align:right;"><font color="black">${detail.label}</font></td>
+                        `;
+
+                        if(detail.visible){
+                            row.innerHTML += `<td align="right" colspan="1" style="text-align:right;"><font color="black">${detail.value}</font></td>`;
+                    }
+                    tablefooter.appendChild(row);
+    
             });
 
             // document.getElementById('carate1100').textContent = data.results[0].in_carate_100;
@@ -699,6 +703,16 @@ function openModal(item) {
         font-size: 12px; /* Adjust font size */
         font-weight: bold;
     }
+        .container2::after {
+        content: url("../../assets/img/logo.png"); /* Replace with your watermark image path */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Center the watermark */
+        opacity: 0.2; /* Adjust watermark opacity (0 for transparent, 1 for solid) */
+        z-index: -0; /* Place the watermark behind the content */
+        }
+
     .tablefooter {
         width: 100%;
         border-collapse: separate;
@@ -737,6 +751,7 @@ transition: background-color 0.3s;
 }
 
 @media print {
+
   @page {
     size: A5 portrait; /* A5 paper size in portrait orientation */
     margin: 5mm; /* Reduced margins */
@@ -771,6 +786,16 @@ transition: background-color 0.3s;
     color-adjust: exact;
   }
 
+  .content::after {
+        content: url("../../assets/img/logo.png"); /* Replace with your watermark image path */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Center the watermark */
+        opacity: 0.2; /* Adjust watermark opacity (0 for transparent, 1 for solid) */
+        z-index: -0; /* Place the watermark behind the content */
+        }
+
   header {
     text-align: center;
     margin-bottom: 10px;
@@ -786,6 +811,8 @@ transition: background-color 0.3s;
     height: auto;
     box-sizing: border-box; /* Ensure image width fits within the border */
   }
+
+
 
   table {
     width: 100%; /* Full width for table */
@@ -812,6 +839,7 @@ transition: background-color 0.3s;
     text-align: center;
     font-size: 11px; /* Footer font size adjusted */
   }
+
 }
 
 

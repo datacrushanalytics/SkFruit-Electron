@@ -129,39 +129,44 @@ function populateTable4(data) {
             }
             cell.style.fontWeight = 'bold'; // Make grand total values bold
         } else {
-            cell.textContent = ''; // Leave 'remaining' column empty for grand total row
+            var lastEntry = data.reports[data.reports.length - 1];
+            cell.textContent = lastEntry['remaining'];; // Leave 'remaining' column empty for grand total row
         }
     });
 
     // Display remaining amount from the last entry
-    if (data.reports.length > 0) {
-        // var lastEntry = data.reports[data.reports.length - 1];
-        // var remainingRow = tbody.insertRow();
-        // var remainingCellLabel = remainingRow.insertCell();
-        // var remainingCellLabel = remainingRow.insertCell();
-        // var remainingCellLabel = remainingRow.insertCell();
-        // var remainingCellLabel = remainingRow.insertCell();
-        // var remainingCellLabel = remainingRow.insertCell();
-        // var remainingCellLabel = remainingRow.insertCell();
-        // var remainingCellLabel = remainingRow.insertCell();
-        // var remainingCellLabel = remainingRow.insertCell();
-        // var remainingCellLabel = remainingRow.insertCell();
-        // var remainingCellLabel = remainingRow.insertCell();
-        // var remainingCellLabel = remainingRow.insertCell();
-        // var remainingCellLabel = remainingRow.insertCell();
-        // remainingCellLabel.textContent = 'Remaining Amount:';
-        // remainingCellLabel.style.fontWeight = 'bold';
+    // if (data.reports.length > 0) {
+    //     var lastEntry = data.reports[data.reports.length - 1];
+    //     var remainingRow = tbody.insertRow();
+    //     // var remainingCellLabel = remainingRow.insertCell();
+    //     // var remainingCellLabel = remainingRow.insertCell();
+    //     // var remainingCellLabel = remainingRow.insertCell();
+    //     // var remainingCellLabel = remainingRow.insertCell();
+    //     // var remainingCellLabel = remainingRow.insertCell();
+    //     // var remainingCellLabel = remainingRow.insertCell();
+    //     // var remainingCellLabel = remainingRow.insertCell();
+    //     // var remainingCellLabel = remainingRow.insertCell();
+    //     // var remainingCellLabel = remainingRow.insertCell();
+    //     // var remainingCellLabel = remainingRow.insertCell();
+    //     // var remainingCellLabel = remainingRow.insertCell();
+    //     var remainingCellLabel = remainingRow.insertCell();
+    //     remainingCellLabel.textContent = 'Remaining Amount:';
+    //     remainingCellLabel.style.fontWeight = 'bold';
 
-        // var remainingValueCell = remainingRow.insertCell();
-        // remainingValueCell.textContent = lastEntry['remaining'];
-    } else {
-        var noDataRow = tbody.insertRow();
-        var noDataCell = noDataRow.insertCell();
-        noDataCell.textContent = 'No Data Available';
-        noDataCell.colSpan = columnsToDisplay.length;
-        noDataCell.style.textAlign = 'center';
-    }
+    //     var remainingValueCell = remainingRow.insertCell();
+    //     remainingValueCell.textContent = lastEntry['remaining'];
+    // } else {
+    //     var noDataRow = tbody.insertRow();
+    //     var noDataCell = noDataRow.insertCell();
+    //     noDataCell.textContent = 'No Data Available';
+    //     noDataCell.colSpan = columnsToDisplay.length;
+    //     noDataCell.style.textAlign = 'center';
+    // }
 
+    var grandTotalRow = tbody.insertRow();
+    var TotalCell = grandTotalRow.insertCell();
+    TotalCell.textContent = 'Grand Total:';
+    TotalCell.style.fontWeight = 'bold';
     // Conditional logic for additional content based on customer selection
     if (document.getElementById('customer').value !== '') {
         console.log("Customer selected");
@@ -174,8 +179,9 @@ function populateTable4(data) {
                 return response.json();
             })
             .then(data1 => {
+                // var TotalCell = tbody.insertRow();
                 // Assuming 'totalCell' is defined somewhere in your context
-                totalCell.innerHTML = 'Remaining Carate of Customer :<br>' +
+                TotalCell.innerHTML += 'Remaining Carate of Customer :<br>' +
                     '100 => ' + data1[0]['carate_100'] + '<br>' +
                     '150 => ' + data1[0]['carate_150'] + '<br>' +
                     '250 => ' + data1[0]['carate_250'] + '<br>' +
@@ -183,84 +189,11 @@ function populateTable4(data) {
             });
     } else {
         // Assuming 'totalCell' is defined somewhere in your context
-        totalCell.textContent = ''; // Clear the totalCell if no customer is selected
+        TotalCell.textContent = ''; // Clear the totalCell if no customer is selected
     }
 }
 
 
-
-// async function exportToExcel() {
-//     try {
-//         // Export to PDF using jsPDF and autoTable
-//         const { jsPDF } = window.jspdf;
-//         const data = await fetchDataAndProcess();
-//         const doc = new jsPDF();
-
-//         console.log("AJAJAJ",data)
-//         // Adding header details
-//         doc.setFontSize(10);
-//         doc.text('Mobile:- 9960607512', 10, 10);
-//         doc.addImage('../../assets/img/logo.png', 'PNG', 10, 15, 30, 30); // Adjust the position and size as needed
-//         doc.setFontSize(16);
-//         doc.text('Savata Fruits Suppliers', 50, 20);
-//         doc.setFontSize(12);
-//         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
-//         doc.text('Mobile NO:- 9860601102  / 9922676380 / 9156409970', 50, 40);
-
-//         // Add customer name and route
-//         if (document.getElementById('customer').value !== '') {
-//             doc.text(`Customer Name: ${data.customer_name}`, 50, 40);
-//         }
-//         if (document.getElementById('route').value !== '') {
-//             doc.text(`Route: ${data.route}`, 50, 50);
-//         }
-//         // Add some space before the table
-//         doc.setFontSize(12);
-//         doc.text(' ', 10, 60);
-//         // Map data for autoTable
-//         const reportData = data.reports.map(report => [
-//             new Date(report.date).toLocaleString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }),
-//             report.summary,
-//             report.balance,
-//             report.out_carate,
-//             report.total_balance,
-//             report.cash,
-//             report.online,
-//             report.discount,
-//             report.in_carate,
-//             report.remaining
-//         ]);
-//         const customHeaders = [
-//             'Date', 'Summary', 'Balance', 'Out Carate', 'Total Balance', 'Cash', 'Online', 'Discount', 'In Carate', 'Remaining'
-//         ];
-//         // Append the grand total row
-//         const grandTotalRow = [
-//             'Grand Total',
-
-//             '',
-//             data.Grand["Grand Balance"],
-//             data.Grand['Grand outCarate'],
-//             data.Grand['Total Balance'],
-//             data.Grand['Total Cash'],
-//             data.Grand['Total Online'],
-//             data.Grand['Grand Discount'],
-//             data.Grand['Grand inCarate'],
-//             data.Grand['Grand Remaining Amount']
-//         ];
-//         reportData.push(grandTotalRow);
-//         // Add Reports table to PDF
-//         doc.autoTable({
-//             head: [customHeaders],
-//             body: reportData,
-//             startY: 70, // Adjust startY based on the header height
-//             theme: 'grid'
-//         });
-//         // Save the PDF
-//         doc.save('Ledger_Report.pdf');
-//     } catch (error) {
-//         console.error('Error exporting data:', error);
-//     }
-// }
 
 
 async function exportToExcel() {

@@ -616,10 +616,9 @@
   document.addEventListener('DOMContentLoaded', async function () {
     // Fetch data from API and populate Select2 dropdowns
     // await fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'grahk', 'name');
-    await fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'product', 'product_name');
-    await fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'bta', 'bata');
-    // await fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'Route', 'route_name');
-    await fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'onlineAcc', 'name');
+    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'product', 'product_name');
+    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'bta', 'bata');
+    fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'onlineAcc', 'name');
     // await fetchAndPopulateDropdown('http://103.174.102.89:3000/mobile', 'number', 'mobile_no');
 
 
@@ -685,6 +684,7 @@
     if (saleData) {
       // Parse the user data
       var sale = JSON.parse(saleData);
+      localStorage.removeItem('saleData');
       console.log("lapajcowjfocjwoj")
       console.log(sale)
 

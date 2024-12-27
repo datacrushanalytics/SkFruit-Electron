@@ -100,6 +100,7 @@
                     <label for="mark">Mark:</label>
                     <input type="text" id="mark" name="name" placeholder="Mark">
                 </div>
+                <input type="checkbox" id = 'toggleTableCheckbox' style="position: relative; left: -245px; top: 35px;  transform: scale(1.5);">
                 <div class="form-group">
                     <label for="unit">Unit:</label>
                     <select id="unit">
@@ -139,6 +140,7 @@
                                 <th>खरेदी किंमत</th>
                                 <th>विक्री किंमत</th>
                                 <th>नग</th>
+                                <th>Editable</th>
                                 <th>यूनिट</th>
                                 <th>रक्कम</th>
                             </tr>
@@ -312,6 +314,7 @@ function confirmAndProceed() {
                     purchase_price: parseInt(document.getElementById('purchase').value),
                     selling_price: parseInt(document.getElementById('sale').value),
                     quantity: parseInt(document.getElementById('quantity').value),
+                    editable: document.getElementById('toggleTableCheckbox').checked,
                     unit: document.getElementById('unit').value,
                     price: parseInt(document.getElementById('purchase').value) * parseInt(document.getElementById('quantity').value)
                 };
@@ -342,6 +345,7 @@ function confirmAndProceed() {
                         document.getElementById('sale').value = '';
                         document.getElementById('quantity').value = '';
                         document.getElementById('unit').value = '';
+                        document.getElementById('toggleTableCheckbox').checked = false;
                         $('#product').val('').trigger('change');
 
                         // Show success message using SweetAlert2
@@ -371,6 +375,7 @@ function confirmAndProceed() {
                   <td>${entry.purchase_price}</td>
                   <td>${entry.selling_price}</td>
                   <td>${entry.quantity}</td>
+                  <td>${entry.editable}</td>
                   <td>${entry.unit}</td>
                   <td>${entry.price}</td>
                   <td><button type="button" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button></td>

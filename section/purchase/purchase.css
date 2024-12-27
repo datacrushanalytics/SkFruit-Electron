@@ -100,7 +100,7 @@ body {
   
   /* Style for buttons */
   button {
-    background-color:grey;
+    background-color:#ff3558;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -110,7 +110,7 @@ body {
   }
   
   button:hover {
-    background-color:darkgray;
+    background-color:#ff3558;
   }
   
  
