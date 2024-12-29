@@ -116,6 +116,7 @@
                         <input type="text" id="mark" name="name" placeholder="Mark">
                     </div>
                 <!-- </div> -->
+                <input type="checkbox" id = 'toggleTableCheckbox' style="position: relative; left: -245px; top: 35px;  transform: scale(1.5);">
                 <br>
                 <div class="form-group">
                     <label for="dropdown1"> Unit :</label>
@@ -163,6 +164,7 @@
                                 <th>खरेदी किंमत</th>
                                 <th>विक्री किंमत</th>
                                 <th>नग</th>
+                                <th>Editable</th>
                                 <th>यूनिट</th>
                                 <th>रक्कम</th>
                             </tr>
@@ -372,6 +374,7 @@
                     selling_price: parseInt(document.getElementById('sale').value),
                     quantity: parseInt(document.getElementById('quantity').value),
                     unit: document.getElementById('unit').value,
+                    editable: document.getElementById('toggleTableCheckbox').checked,
                     price: parseInt(document.getElementById('purchase').value) * parseInt(document.getElementById('quantity').value)
                 };
 
@@ -420,6 +423,7 @@
                   <td>${entry.purchase_price}</td>
                   <td>${entry.selling_price}</td>
                   <td>${entry.quantity}</td>
+                  <td>${entry.editable}</td>
                   <td>${entry.unit}</td>
                   <td>${entry.price}</td>
                   <td><button type="button" style="background-color:#ff355f;" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button></td>

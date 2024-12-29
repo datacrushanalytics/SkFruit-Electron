@@ -302,6 +302,8 @@ closeButton.innerHTML = '&times;';
 closeButton.onclick = function () {
     modalContent.innerHTML = '';
     modal.style.display = 'none'; // Close the modal when close button is clicked
+    window.location.reload();
+
 };
 modalContent.appendChild(closeButton);
 

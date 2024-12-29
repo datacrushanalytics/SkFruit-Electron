@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'Route', 'route_name');
         fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'grahk', 'name');
     } else {
-        var route = sessionData[0].route;
+        var route = sessionData[0].route;   
         fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' + route, 'grahk', 'name');
         fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' + route, 'number', 'mobile_no');
         fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'Route', 'route_name', selectedValue = route, readOnly = true);
@@ -492,6 +492,7 @@ function toggleReadonly() {
 
 
 function totalBalance() {
+    console.log("Hello Deva")
     var balance = parseInt(document.getElementById("bill1").value) || 0;
     var preBalance = parseInt(document.getElementById("previousBalance").value) || 0;
     var total1 = parseInt(document.getElementById("total1").value) || 0;
@@ -792,6 +793,7 @@ async function myFunction() {
                     data.forEach(function (item) {
                         updateTable(item, item.id);
                         console.log('inside', document.getElementById('bill1').value)
+                        totalBalance();
                         //document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + item.price;
                     });
                 })
