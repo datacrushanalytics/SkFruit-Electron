@@ -332,53 +332,53 @@ function selectOption(value) {
 
 
 
-function populateDropdown3(data) {
-    var tbody = document.getElementById('tableBody1');
-    tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['product', 'bata', 'mark', 'quantity', 'rate', 'price'];
-    data.forEach(function (item) {
-        var row = tbody.insertRow();
-        columnsToDisplay.forEach(function (key) {
-            var cell = row.insertCell();
-            cell.textContent = item[key];
-        });
-        // Add Delete button
-        var deleteCell = row.insertCell();
-        var deleteButton = document.createElement('button');
-        deleteButton.className = 'button delete-button';
-        deleteButton.style.backgroundColor = '#ff355f';
-        deleteButton.textContent = 'Delete';
-        deleteButton.addEventListener('click', function () {
-            deleteUser(item.id); // Pass the user id to the delete function
-        });
-        deleteCell.appendChild(deleteButton);
+// function populateDropdown3(data) {
+//     var tbody = document.getElementById('tableBody1');
+//     tbody.innerHTML = ''; // Clear existing rows
+//     var columnsToDisplay = ['product', 'bata', 'mark', 'quantity', 'rate', 'price'];
+//     data.forEach(function (item) {
+//         var row = tbody.insertRow();
+//         columnsToDisplay.forEach(function (key) {
+//             var cell = row.insertCell();
+//             cell.textContent = item[key];
+//         });
+//         // Add Delete button
+//         var deleteCell = row.insertCell();
+//         var deleteButton = document.createElement('button');
+//         deleteButton.className = 'button delete-button';
+//         deleteButton.style.backgroundColor = '#ff355f';
+//         deleteButton.textContent = 'Delete';
+//         deleteButton.addEventListener('click', function () {
+//             deleteUser(item.id); // Pass the user id to the delete function
+//         });
+//         deleteCell.appendChild(deleteButton);
 
-    });
-}
+//     });
+// }
 
-function deleteUser(userId) {
-    // Perform delete operation based on userId
-    fetch('http://103.174.102.89:3000/saleproductData/deletesaleproduct/' + userId, {
-        method: 'DELETE'
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            console.log('User deleted successfully');
+// function deleteUser(userId) {
+//     // Perform delete operation based on userId
+//     fetch('http://103.174.102.89:3000/saleproductData/deletesaleproduct/' + userId, {
+//         method: 'DELETE'
+//     })
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error('Network response was not ok');
+//             }
+//             console.log('User deleted successfully');
 
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: 'Sale Data is successfully Deleted',
-            })
-            // Refresh the table or update UI as needed
-            user(); // Assuming you want to refresh the table after delete
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
+//             Swal.fire({
+//                 icon: 'success',
+//                 title: 'Success!',
+//                 text: 'Sale Data is successfully Deleted',
+//             })
+//             // Refresh the table or update UI as needed
+//             user(); // Assuming you want to refresh the table after delete
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// }
 
 
 
@@ -841,6 +841,7 @@ function updateTable(entry, result) {
         <td>${entry.price}</td>
         <td>
             <button type="button" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button>
+            <button type="button" onclick="editRow(this, ${result},${entry.editable})">Edit</button>
         </td>
     `;
 
@@ -849,17 +850,17 @@ function updateTable(entry, result) {
     console.log('Editable:', entry.editable);
 
     // Conditionally append the "Edit" button
-    if (entry.editable) {
-        var editButton = document.createElement('button');
-        editButton.type = 'button';
-        editButton.textContent = 'Edit';
-        editButton.onclick = function () {
-            editRow(this, result);
-        };
+    // if (entry.editable) {
+    //     var editButton = document.createElement('button');
+    //     editButton.type = 'button';
+    //     editButton.textContent = 'Edit';
+    //     editButton.onclick = function () {
+    //         editRow(this, result);
+    //     };
 
-        // Append the edit button to the last cell
-        newRow.lastElementChild.appendChild(editButton);
-    }
+    //     // Append the edit button to the last cell
+    //     newRow.lastElementChild.appendChild(editButton);
+    // }
 
     // Update the bill total
     var billInput = document.getElementById('bill1');

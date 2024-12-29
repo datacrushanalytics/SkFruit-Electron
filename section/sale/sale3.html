@@ -240,8 +240,8 @@
 
       <div class="row-container">
         <div class="input-wrapper">
-          <label for="note">संदर्भ :</label>
-          <input type="text" id="note" name="note" placeholder="संदर्भ">
+          <label for="note">Note :</label>
+          <input type="text" id="note" name="note" placeholder="Note">
         </div>
 
         <div class="input-wrapper">
@@ -285,8 +285,10 @@
 <script src="./sale.js"></script>
 <script src="./sale2.js"></script>
 <script>
+// Assuming `editable` is a global flag (true or false)
+// let editable = true; // Set this value based on your requirements
 
-function editRow(button, id) {
+function editRow(button, id,editable) {
     var row = button.parentElement.parentElement;
     var cells = row.querySelectorAll('td');
 
@@ -294,40 +296,52 @@ function editRow(button, id) {
     const originalQuantity = cells[3].textContent;
     const originalRate = cells[4].textContent;
 
-    // Convert quantity and rate cells to input fields with onchange handlers
-    cells[3].innerHTML = `<input type="number" value="${originalQuantity}" min="1" style="width: 60px;" onchange="updateRowTotal(this)">`;
+    // Conditionally render input fields based on the `editable` flag
+    if (editable) {
+        cells[3].innerHTML = `<input type="number" value="${originalQuantity}" min="1" style="width: 60px;" onchange="updateRowTotal(this)">`;
+    } else {
+        cells[3].textContent = originalQuantity; // Keep the original value as plain text
+    }
+
+    // Always allow editing the rate
     cells[4].innerHTML = `<input type="number" value="${originalRate}" min="0" style="width: 60px;" onchange="updateRowTotal(this)">`;
 
     // Calculate the initial total and set it in the price cell
-    updateRowTotal(cells[3].querySelector('input'));
+    if (editable) {
+        updateRowTotal(cells[3].querySelector('input'));
+    }
 
     // Replace action buttons with "Save" and "Cancel"
     cells[6].innerHTML = `
-        <button type="button" onclick="saveRow(this,'${id}')">Save</button>
+        <button type="button" onclick="saveRow(this,'${id}', '${editable}')">Save</button>
         <button type="button" onclick="cancelEdit(this, '${originalQuantity}', '${originalRate}')">Cancel</button>
     `;
 }
-  
-  function updateRowTotal(inputElement) {
+
+function updateRowTotal(inputElement) {
     var row = inputElement.parentElement.parentElement;
     var cells = row.querySelectorAll('td');
 
-    // Get quantity and rate values from the row's input fields
-    var quantity = parseInt(cells[3].querySelector('input').value, 10) || 0;
-    var rate = parseInt(cells[4].querySelector('input').value, 10) || 0;
+    // Safely get quantity and rate input values
+    var quantityInput = cells[3]?.querySelector('input');
+    var rateInput = cells[4]?.querySelector('input');
+    console.log(cells[3].textContent.trim(),"quantityInput")
+    var quantity = quantityInput ? parseInt(quantityInput.value, 10) || 0 : parseInt(cells[3].textContent.trim(), 10) || 0;
+    var rate = rateInput ? parseInt(rateInput.value, 10) || 0 : 0;
 
     // Get available inventory from a hidden field (like 'nag1')
-    var availableInventory = parseInt(document.getElementById("nag1").value, 10) || 0;
+    var availableInventoryElement = document.getElementById("nag1");
+    var availableInventory = availableInventoryElement ? parseInt(availableInventoryElement.value, 10) || 0 : 0;
 
     // Check if quantity exceeds available inventory
     if (quantity > availableInventory) {
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Inventory Is not available',
+            text: 'Inventory is not available for the entered quantity.',
         });
-        cells[3].querySelector('input').value = 0;  // Reset the quantity
-        return; // Exit the function
+        if (quantityInput) quantityInput.value = availableInventory; // Reset quantity to max available inventory
+        quantity = availableInventory; // Update the quantity variable
     }
 
     // Calculate total as quantity * rate
@@ -337,15 +351,50 @@ function editRow(button, id) {
     cells[5].textContent = total;
 
     // Update the hidden total field if needed (to reflect the updated total)
-    document.getElementById("total").value = total;
+    var totalField = document.getElementById("total");
+    if (totalField) {
+        totalField.value = total;
+    }
 }
 
-function saveRow(button, id1) {
+
+function cancelEdit(button, originalQuantity, originalRate) {
     var row = button.parentElement.parentElement;
     var cells = row.querySelectorAll('td');
 
-    // Get updated values from input fields
-    var updatedQuantity = parseInt(cells[3].querySelector('input').value, 10) || 0;
+    // Restore the original quantity and rate
+    cells[3].innerHTML = originalQuantity; // Restore original quantity value
+    cells[4].innerHTML = originalRate;    // Restore original rate value
+
+    // Restore the original action buttons
+    cells[6].innerHTML = `
+        <button type="button" onclick="deleteUser(this, '${row.getAttribute('data-id')}','${cells[5].textContent}')">Delete</button>
+        <button type="button" onclick="editRow(this, '${row.getAttribute('data-id')}')">Edit</button>
+    `;
+
+    // Optional: Log or notify cancellation
+    console.log('Edit canceled. Values restored.');
+}
+
+
+
+function saveRow(button, id1, editable) {
+  console.log("editable", editable)
+    var row = button.parentElement.parentElement;
+    var cells = row.querySelectorAll('td');
+
+    var flag = editable == 0 ? false : true;
+    // if (editable == 0){
+    //   flag = false;
+    // }else{
+    //   flag = true;
+    // }
+
+    // Get updated values
+    var updatedQuantity = flag
+        ? parseInt(cells[3].querySelector('input').value, 10) || 0
+        : parseInt(cells[3].textContent, 10) || 0;
+
     var updatedRate = parseInt(cells[4].querySelector('input').value, 10) || 0;
     var updatedPrice = updatedQuantity * updatedRate;
 
@@ -356,33 +405,33 @@ function saveRow(button, id1) {
 
     // Restore original action buttons
     cells[6].innerHTML = `
-        <button type="button" onclick="deleteUser(this)">Delete</button>
+        <button type="button" onclick="deleteUser(this, '${row.getAttribute('data-id')}','${updatedPrice}')">Delete</button>
         <button type="button" onclick="editRow(this)">Edit</button>
     `;
 
     const id = row.getAttribute('data-id');
 
-    // Get the bill_id, bata, mark, and product values for the API request
+    // Prepare API payload
     const bill_id = document.getElementById('bill').value;  // Assuming the bill ID is available
-    const bata = cells[1].textContent;  // Assuming bata is in the second column
-    const mark = cells[2].textContent;  // Assuming mark is in the third column
-    const product = cells[0].textContent; // Assuming product is in the first column
+    const bata = cells[1].textContent;
+    const mark = cells[2].textContent;
+    const product = cells[0].textContent;
 
-    // Optional: Make an API call to save the changes
+    // Make an API call to save the changes
     fetch('http://103.174.102.89:3000/saleproductData/updatesaleproduct', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            id: id,  // Unique identifier for the row
-            bill_id: bill_id,  // Bill ID
-            bata: bata,        // Bata
-            mark: mark,        // Mark
-            product: product,  // Product
-            quantity: updatedQuantity,  // Updated Quantity
-            rate: updatedRate,         // Updated Rate
-            price: updatedPrice        // Updated Price
+            id: id,
+            bill_id: bill_id,
+            bata: bata,
+            mark: mark,
+            product: product,
+            quantity: updatedQuantity,
+            rate: updatedRate,
+            price: updatedPrice
         })
     })
         .then(response => {
@@ -390,7 +439,6 @@ function saveRow(button, id1) {
             return response.json();
         })
         .then(data => {
-            console.log('Update successful:', data);
             Swal.fire({
                 icon: 'success',
                 title: 'Updated successfully',
@@ -400,7 +448,6 @@ function saveRow(button, id1) {
             });
         })
         .catch(error => {
-            console.error('Error updating:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -408,6 +455,7 @@ function saveRow(button, id1) {
             });
         });
 }
+
 
 
 </script>
