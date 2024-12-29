@@ -111,72 +111,82 @@ function populateTable4(data) {
     });
 }
 
-
-
-async function exportToExcel() {
+async function exportToPdf() {
     try {
         const data = await fetchDataAndProcess();
+        
+        if (!data || !data.reports || data.reports.length === 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No data available for PDF export.',
+            });
+            return;
+        }
 
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        return fetch('http://103.174.102.89:3000/stockReport/generate-pdf', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => {
-            if (response.status === 404) {
-                loader.style.display = 'none';
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'No data found.',
-                  });
-                throw new Error('Data not found');
-            }
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.blob(); // Get the response as a Blob
-        })
-        .then(blob => {
-            loader.style.display = 'none';
+        // Create jsPDF instance
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        // Add header image
+        const headerImageUrl = "../../assets/img/a4.png";
+        const imageX = 10; // X position of the image
+        const imageY = 8; // Y position of the image
+        const imageWidth = 190; // Width of the image
+        const imageHeight = 50; // Height of the image
+        doc.addImage(headerImageUrl, 'PNG', imageX, imageY, imageWidth, imageHeight); // Adjust image size and position
 
-            // Create a URL for the Blob and trigger a download
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = url;
-            a.download = 'stockReport.pdf'; // Set the desidarkgrey file name
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url); // Release the URL
+        // Calculate the startY for the table based on image height and positioning
+        const tableStartY = imageX + imageY + imageHeight + 10; // Add some space below the image
+ 
+        // Add table header
+        const columns = ['S.No', 'Purchase ID', 'Gadi Number', 'Supplier Name', 'Bata', 'Mark', 'Product Name', 'Quantity', 'Sale', 'Closing'];
+        const rows = [];
+        let counter = 1;
 
-            console.log('PDF downloaded successfully');
-        })
-        .catch(error => {
-            loader.style.display = 'none';
-            console.error('Error:', error);
-           
- Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Error generating PDF. Please try again.',
-          });
-
+        // Populate rows with the data
+        data.reports.forEach(item => {
+            const row = [
+                counter++, 
+                item.purchase_id, 
+                item.gadi_number, 
+                item.supplier_name, 
+                item.bata, 
+                item.mark, 
+                item.product_name, 
+                item.opening, 
+                item.sale, 
+                item.closing
+            ];
+            rows.push(row);
         });
+
+        const bodyColor = '#fffef4';    
+        
+        doc.autoTable({
+            head: [columns],
+            body: rows,
+            startY: tableStartY,  // Adjusted to start below the image
+            bodyStyles: {
+                fillColor: bodyColor,  // Body row background color
+            },
+        });
+
+        // Download the PDF
+        loader.style.display = 'none';
+        doc.save('stockReport.pdf');
+        console.log('PDF downloaded successfully');
     } catch (error) {
+        loader.style.display = 'none';
         console.error('Error:', error);
-       
- Swal.fire({
+        Swal.fire({
             icon: 'error',
             title: 'Oops...',
             text: 'Error generating PDF. Please try again.',
-          });
-
+        });
     }
 }
 
