@@ -267,7 +267,7 @@ async function exportToExcel() {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        return fetch('http://103.174.102.89:3000/supplierLedger/generate-pdf', {
+        return fetch('http://103.174.102.89:3000/accountLedger/generate-pdf', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -298,7 +298,7 @@ async function exportToExcel() {
             const a = document.createElement('a');
             a.style.display = 'none';
             a.href = url;
-            a.download = 'supplierLedgerReport.pdf'; // Set the desidarkgrey file name
+            a.download = 'AccountLedgerReport.pdf'; // Set the desidarkgrey file name
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url); // Release the URL
