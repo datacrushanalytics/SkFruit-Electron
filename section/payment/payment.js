@@ -235,6 +235,16 @@ function openModal(item) {
         font-size: 12px; /* Adjust font size */
     }
 
+    .container2::after {
+    content: url("../../assets/img/logo.png"); /* Replace with your watermark image path */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the watermark */
+    opacity: 0.2; /* Adjust watermark opacity (0 for transparent, 1 for solid) */
+    z-index: -0; /* Place the watermark behind the content */
+    }
+
     table {
         width: 100%;
         border-collapse: collapse;
