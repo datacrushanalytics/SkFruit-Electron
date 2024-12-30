@@ -625,12 +625,13 @@ const formattedISTDate = `${day}/${month}/${year}`;
 
     function download() {
         var data = {
-            from_date: formatDate(document.getElementById("fromdate").value),
-            to_date: formatDate(document.getElementById("todate").value),
-            product: getElementValueWithDefault('grahk', '*'),
-            bata: getElementValueWithDefault('Route', '*'),
-            gadi_number: getElementValueWithDefault('vehicle', '*'),
-            barcode: 'yes'
+            fromdate: formatDate(document.getElementById("fromdate").value),
+            todate: formatDate(document.getElementById("todate").value),
+            product : getElementValueWithDefault('grahk', '*') , 
+            bata : getElementValueWithDefault('Route', '*'),
+            gadi_number : getElementValueWithDefault('vehicle', '*'),
+            barcode : 'yes',
+            date : 'yes'
         };
         console.log(data);
         var loader = document.getElementById('loader');
@@ -669,51 +670,177 @@ const formattedISTDate = `${day}/${month}/${year}`;
     }
 
 
-    function generateBarcodesAndDownloadPDF(items) {
-            const { jsPDF } = window.jspdf;
-            const barcodeWidth = 80; // Adjust the width to fit two barcodes in a row
-            const barcodeHeight = 40;
-            const itemsPerRow = 2; // Two items per row
-            const rowsPerPage = 5; // Adjust this to fit the number of rows per page
-            const itemsPerPage = itemsPerRow * rowsPerPage; // Calculate total items per page
-            const spacing = 10; // Space between barcodes
+// function generateBarcodesAndDownloadPDF(items) {
+//     const { jsPDF } = window.jspdf;
 
-            var pdf = new jsPDF(); // Create a new jsPDF instance
+//     // Sticker dimensions in mm
+//     const stickerWidth = 38; // Sticker width
+//     const stickerHeight = 25; // Sticker height
 
-            items.forEach((item, index) => {
-                var barcodeValue = 'Product Name:' + item['product_name'].split('(')[0] + ' \nBata:' + item['bata'];
+//     // Barcode dimensions in mm
+//     const barcodeWidth = 30; // Barcode width
+//     const barcodeHeight = 10; // Barcode height
 
-                // Create a canvas element for each barcode
-                var canvas = document.createElement('canvas');
-                JsBarcode(canvas, barcodeValue, {
-                    format: "CODE128", // Adjust the barcode format as needed
-                    displayValue: true, // Show text under the barcode
-                    width: 1, // Set the width of the bars
-                    text: barcodeValue // Add text below the barcode
-                });
+//     // Logo dimensions in mm
+//     const logoWidth = 10; // Logo width
+//     const logoHeight = 10; // Logo height
 
-                // Convert the canvas to an image
-                var image = canvas.toDataURL('image/png');
+//     // Margins within the sticker
+//     const horizontalMargin = 4; // Horizontal margin
+//     const verticalMargin = 2; // Vertical margin
 
-                // Calculate position for this barcode on the page
-                const rowIndex = Math.floor((index % itemsPerPage) / itemsPerRow);
-                const colIndex = index % itemsPerRow;
+//     // Number of stickers per row and column
+//     const stickersPerRow = Math.floor(210 / stickerWidth); // A4 width is 210mm
+//     const stickersPerColumn = Math.floor(297 / stickerHeight); // A4 height is 297mm
+//     const stickersPerPage = stickersPerRow * stickersPerColumn;
 
-                const xOffset = 10 + (colIndex * (barcodeWidth + spacing));
-                const yOffset = 20 + (rowIndex * (barcodeHeight + spacing));
+//     // Create a new PDF instance
+//     const pdf = new jsPDF({
+//         unit: "mm",
+//         format: "a4", // A4 size
+//     });
 
-                // Add the barcode image
-                pdf.addImage(image, 'PNG', xOffset, yOffset, barcodeWidth, barcodeHeight); // Adjust position and size as needed
+//     items.forEach((item, index) => {
+//         const barcodeValue = `Product: ${item.product_name.split('(')[0]}\nBata: ${item.bata}`;
 
-                // Add a new page if we've added itemsPerPage barcodes to the current page
-                if ((index + 1) % itemsPerPage === 0 && index < items.length - 1) {
-                    pdf.addPage();
-                }
-            });
+//         // Create a canvas for the barcode
+//         const canvas = document.createElement('canvas');
+//         JsBarcode(canvas, barcodeValue, {
+//             format: "CODE128",
+//             displayValue: true,
+//             width: 1, // Adjust barcode bar width
+//             height: barcodeHeight, // Barcode height
+//             textMargin: 2, // Space between barcode and text
+//             fontSize: 8, // Text font size
+//         });
 
-            // Save the PDF
-            pdf.save('barcodes.pdf');
+//         // Convert the canvas to an image
+//         const barcodeImage = canvas.toDataURL('image/png');
+
+//         // Calculate row and column positions
+//         const rowIndex = Math.floor(index / stickersPerRow) % stickersPerColumn; // Current row
+//         const colIndex = index % stickersPerRow; // Current column
+
+//         // Calculate the x and y position for this sticker
+//         const xOffset = colIndex * stickerWidth + horizontalMargin;
+//         const yOffset = rowIndex * stickerHeight + verticalMargin;
+
+//         // Add logo to the PDF
+//         pdf.addImage("../../assets/img/logo.png", "PNG", xOffset + 4, yOffset, logoWidth, logoHeight);
+
+//         // Add company name below the logo
+//         pdf.setFontSize(8);
+//         pdf.text("Savata Fruits", xOffset + logoWidth + 2, yOffset + 6);
+
+//         // Add the barcode image
+//         pdf.addImage(barcodeImage, "PNG", xOffset + 4, yOffset + logoHeight + 2, barcodeWidth, barcodeHeight);
+
+//         // Add a new page if the current page is full
+//         if ((index + 1) % stickersPerPage === 0 && index < items.length - 1) {
+//             pdf.addPage();
+//         }
+//     });
+
+//     // Save the PDF file
+//     pdf.save("barcodes.pdf");
+// }
+    
+
+function generateBarcodesAndDownloadPDF(items) {
+    const { jsPDF } = window.jspdf;
+
+    // Page dimensions in mm
+    const pageWidth = 38; // A4 width in mm
+    const pageHeight = 25; // A4 height in mm
+
+    // Label dimensions in mm
+    const labelWidth = 38; // Label width
+    const labelHeight = 25; // Label height
+
+    // Logo dimensions in mm
+    const logoWidth = 4; // Logo width
+    const logoHeight = 4; // Logo height
+
+    // Barcode dimensions in mm
+    const barcodeWidth = 25; // Barcode width
+    const barcodeHeight = 10; // Barcode height
+
+    // Margins within each label
+    const horizontalMargin = 0; // Horizontal margin
+    const verticalMargin = 0; // Vertical margin
+
+    // Number of labels per row and column
+    const labelsPerRow = Math.floor(pageWidth / labelWidth);
+    const labelsPerColumn = Math.floor(pageHeight / labelHeight);
+
+    // Create a new PDF instance
+    const pdf = new jsPDF({
+        unit: "mm",
+        // format: "a4",
+        format: [pageWidth, pageHeight], // Set page size to 38mm x 25mm
+    });
+
+    items.forEach((item, index) => {
+        var utcDate = new Date(item.p_date);
+
+// Convert the UTC date to IST (UTC+5:30)
+const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
+const istDate = new Date(utcDate.getTime() + istOffset);
+
+// Extract day, month, and year and format as DD/MM/YYYY
+const day = String(istDate.getDate()).padStart(2, '0');  // Add leading zero if needed
+const month = String(istDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+const year = istDate.getFullYear();
+
+// Combine the parts into DD/MM/YYYY format
+const formattedISTDate = `${day}/${month}/${year}`;
+        const barcodeValue = `Product: ${item.product_name.split('(')[0]}\nBata: ${item.bata}` + ' ' + formattedISTDate;
+
+        // Create a canvas for the barcode
+        const canvas = document.createElement('canvas');
+        JsBarcode(canvas, barcodeValue, {
+            format: "CODE128",
+            displayValue: true,
+            width: 1, // Adjust barcode width
+            // height: barcodeHeight, // Barcode height
+            // fontSize: 10, // Text font size
+            textMargin: 2, // Space between barcode and text
+            text: barcodeValue
+        });
+                    
+
+        // Convert the canvas to an image
+        const image = canvas.toDataURL('image/png');
+
+        // Calculate row and column positions
+        const rowIndex = Math.floor(index / labelsPerRow) % labelsPerColumn; // Current row
+        const colIndex = index % labelsPerRow; // Current column
+
+        // Calculate the x and y position for this label
+        const xOffset = colIndex * labelWidth + horizontalMargin;
+        const yOffset = rowIndex * labelHeight + verticalMargin;
+
+        // Add logo to the PDF
+        pdf.addImage("../../assets/img/logo.png", "PNG", xOffset + 4, yOffset, logoWidth, logoHeight);
+
+        // Add company name below the logo
+        pdf.setFontSize(5);
+        pdf.text("Savata Fruits", xOffset + logoWidth + 6, yOffset + 3);
+
+
+        // Add the barcode image to the PDF
+        pdf.addImage(image, 'PNG', xOffset , yOffset + logoHeight, barcodeWidth, barcodeHeight);
+        // pdf.addImage(barcodeImage, "PNG", xOffset + 4, yOffset + logoHeight + 2, barcodeWidth, barcodeHeight);
+
+        // Add a new page if the current page is full
+        if ((index + 1) % (labelsPerRow * labelsPerColumn) === 0 && index < items.length - 1) {
+            pdf.addPage();
         }
+    });
+
+    // Save the PDF file
+    pdf.save('barcodes.pdf');
+}
 
     
 

@@ -312,7 +312,7 @@ function populateTable5(data) {
         if (index >= 2) { // Start populating totals after the first four columns
             var cell = totalRow.insertCell();
             if (['total_sold_quantity', 'total_purchase_price', 'total_amount', 'net_profit_loss'].includes(key)) {
-                if (key === 'profit_loss') {
+                if (key === 'net_profit_loss') {
                     cell.style.color = grandTotals[key] < 0 ? 'red' : 'green';
                 }
                 cell.textContent = grandTotals[key].toFixed(2); // Format the total to 2 decimal places

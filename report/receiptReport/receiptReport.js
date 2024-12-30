@@ -331,6 +331,7 @@ function openModal(item) {
             tablefooter.innerHTML = ""; // Clear existing rows
 
 
+            
             const label = 
                 "बाकी कॅरेट : " +
                 (data.reports[0].carate_100 > 0 ? "100 X " + data.reports[0].carate_100 + " " : "") +
@@ -352,21 +353,24 @@ function openModal(item) {
                 (data.reports[0].baki_250 > 0 ? "250 X " + data.reports[0].baki_250 + " " : "") +
                 (data.reports[0].baki_350 > 0 ? "350 X " + data.reports[0].baki_350 : "");
 
+            var showLabels  = true
+            if (data.reports[0].cr_dr_type == 'no') { showLabels = false }
+
             var footerDetails = [
                 //{ label: "गेलेले कॅरेट : +", value: data.results[0].carate_amount },
                 //{ label: "चालू कलम रक्कम:", value: data.results[0].amount },
-                { label: "मागील बाकी:", value: data.reports[0].previous_balance },
+                { label: "मागील बाकी:", value: data.reports[0].previous_balance, visible: true },
                 // { label: "बाकी कॅरेट : 100 X  " + data.reports[0].carate_100 + "  150 X  " + data.reports[0].carate_150 + "  250 X  " + data.reports[0].carate_250 + "  350 X  " +  data.reports[0].carate_350, value: ''},
-                { label: label.trim(), value: ''},
+                { label: label.trim(), value: '', visible: showLabels},
                 //{ label: "एकूण रक्कम:", value: data.results[0].total_amount },
-                { label: "रोख जमा रक्कम:", value: data.reports[0].PaidAmt },
-                { label: "जमा रक्कम  (ऑनलाईन जमा बँक) :", value: data.reports[0].onlineAmt + '(' + data.reports[0].online_deposite_bank + ')' },
+                { label: "रोख जमा रक्कम:", value: data.reports[0].PaidAmt, visible: true },
+                { label: "जमा रक्कम  (ऑनलाईन जमा बँक) :", value: data.reports[0].onlineAmt + '(' + data.reports[0].online_deposite_bank + ')' , visible: true},
                 // { label: "ऑनलाईन जमा रक्कम:", value: data.reports[0].onlineAmt },
-                { label: "सूट रक्कम:", value: data.reports[0].discount },
+                { label: "सूट रक्कम:", value: data.reports[0].discount , visible: true},
                 // { label: "जमा कॅरेट:  -" + "100 * " +data.reports[0].c100 +" | 150 * " + data.reports[0].c150+ " | 250 * " +data.reports[0].c250 + " | 350 * " + data.reports[0].c350, value: data.reports[0].inCarat },
-                { label: label1.trim(), value: data.reports[0].inCarat },
-                { label: label2.trim(), value: '' },  
-                { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.reports[0].Balance },  
+                { label: label1.trim(), value: data.reports[0].inCarat, visible: showLabels },
+                { label: label2.trim(), value: '', visible: showLabels },  
+                { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.reports[0].Balance, visible: true },  
                 // Add other bill details similarly
             ];
             
@@ -374,9 +378,12 @@ function openModal(item) {
             footerDetails.forEach(function (detail) {
                 var row = document.createElement("tr");
                 row.innerHTML = `
-                    <td align="right" colspan="6" style="text-align: right;"><font color="black" >${detail.label}</font></td>
-                    <td align="right" colspan="1"><font color="black">${detail.value}</font></td>
-                    `;
+                        <td align="right" colspan="6" style="text-align:right;"><font color="black">${detail.label}</font></td>
+                        `;
+
+                        if(detail.visible){
+                            row.innerHTML += `<td align="right" colspan="1" style="text-align:right;"><font color="black">${detail.value}</font></td>`;
+                    }
                 tablefooter.appendChild(row);
             });
 
