@@ -865,24 +865,21 @@ function generateBarcodesAndDownloadPDF(items) {
 
     // Dimensions for labels and barcode
     const pageWidth = 50; // Page width in mm
+    const pageHeight = 40; // Custom page height in mm
     const labelHeight = 30; // Label height
     const barcodeWidth = 35; // Barcode width
     const barcodeHeight = 20; // Barcode height
-    const verticalMargin = 0; // Margin between labels
-    // const borderPadding = 1; // Padding inside the border
-
-    // Calculate total required height
     const gap = 3; // Gap between labels in mm
     const labelWithGapHeight = labelHeight + gap;
-    const totalHeight = items.length * labelWithGapHeight;
-    console.log(totalHeight, labelWithGapHeight , "totalHeight")
-    // const totalHeight = items.length * labelHeight;
 
-    // Create a new PDF instance with the required height
+    // Create a new PDF instance with the specified page size
     const pdf = new jsPDF({
         unit: "mm",
-        format: [pageWidth, totalHeight],
+        format: [pageWidth, pageHeight],
+        orientation: "p",
     });
+
+    let yOffset = 3.5; // Start position on the first page
 
     items.forEach((item, index) => {
         // Format date
@@ -911,20 +908,25 @@ function generateBarcodesAndDownloadPDF(items) {
         // Convert the canvas to an image
         const image = canvas.toDataURL('image/png');
 
-        // Calculate the y position for this label
-        const yOffset = index * labelHeight + (index > 0 ? 0 : 3 ) + verticalMargin;
-        console.log("index", index, yOffset , labelHeight, verticalMargin) 
+        // Check if the barcode fits on the current page
+        if (yOffset + labelWithGapHeight > 40 * 2) {
+            pdf.addPage(); // Add a new page
+            yOffset = 3.5; // Reset yOffset for the new page
+        }
 
         // Add the barcode image to the PDF
-        console.log( 4, yOffset , barcodeWidth, barcodeHeight)
-        pdf.addImage(image, 'PNG', 4, yOffset , barcodeWidth, barcodeHeight);
+        console.log(index, 3, yOffset, barcodeWidth, barcodeHeight)
+        pdf.addImage(image, 'PNG', 3.5, yOffset, barcodeWidth, barcodeHeight);
 
+        // Update yOffset for the next barcode
+        yOffset += labelHeight - 3.5;
     });
 
     // Trigger the print operation
     pdf.autoPrint();
     window.open(pdf.output('bloburl'), '_blank');
 }
+
 
 
 
