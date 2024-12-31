@@ -307,7 +307,7 @@ function handleBarcodeInput(event) {
 
 function modifyBarcode(barcode) {
     // Example modification: add a prefix and change certain digits
-    let modifiedBarcode = barcode.split('Bata:')[1];
+    let modifiedBarcode = barcode.split(': ')[1];
     return modifiedBarcode;
 }
 

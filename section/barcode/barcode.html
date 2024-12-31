@@ -893,16 +893,17 @@ function generateBarcodesAndDownloadPDF(items) {
         const formattedISTDate = `${day}/${month}/${year}`;
 
         // Barcode value
-        const barcodeValue = `Product: ${item.product_name.split('(')[0]}\nBata: ${item.bata} ${formattedISTDate}`;
+        const barcodeValue = `${item.product_name.split('(')[0]}: ${item.bata}`;
+        const barcodeValue1 = `Product: ${item.product_name.split('(')[0]}\nBata: ${item.bata} ${formattedISTDate}`;
 
         // Create a canvas for the barcode
         const canvas = document.createElement('canvas');
         JsBarcode(canvas, barcodeValue, {
             format: "CODE128",
             displayValue: true,
-            width: 1, // Adjust barcode width
+            width: 5, // Adjust barcode width
             textMargin: 1, // Space between barcode and text
-            text: barcodeValue,
+            text: barcodeValue1,
         });
 
         // Convert the canvas to an image
