@@ -353,7 +353,7 @@ function populateTable4(data) {
 function populateTable5(data) {
     var tbody = document.getElementById('tableBody1');
     tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['receipt_id', 'added_by','date', 'Customer','cash', 'online_deposite_bank','online', 'discount', 'inCarat','note','previous_balance','validate'];
+    var columnsToDisplay = ['receipt_id', 'added_by','date', 'Customer','cash', 'online_deposite_bank','online', 'discount', 'inCarat','note','remaining','validate'];
     var counter = 1;
     if (data.Receipt.length === 0) {
         Swal.fire({

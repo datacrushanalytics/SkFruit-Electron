@@ -673,6 +673,264 @@ const formattedISTDate = `${day}/${month}/${year}`;
 // function generateBarcodesAndDownloadPDF(items) {
 //     const { jsPDF } = window.jspdf;
 
+//      // Dimensions for labels and barcode
+//     const pageWidth = 50; // Page width in mm
+//     const labelHeight = 30; // Label height
+// //     const verticalMargin = 0; // Margin between labels
+
+// //     // Calculate total required height
+//     const gap = 3; // Gap between labels in mm
+//     const labelWithGapHeight = labelHeight + gap;
+//     const totalHeight = items.length * labelWithGapHeight;
+//     console.log(totalHeight, labelWithGapHeight , "totalHeight")
+//     // const totalHeight = items.length * labelHeight;
+
+//     // Sticker dimensions in mm
+//     const stickerWidth = 50; // Sticker width
+//     const stickerHeight = 30; // Sticker height
+
+//     // Barcode dimensions in mm
+//     const barcodeWidth = 35; // Barcode width
+//     const barcodeHeight = 20; // Barcode height
+
+//     // Logo dimensions in mm
+//     const logoWidth = 10; // Logo width
+//     const logoHeight = 10; // Logo height
+
+//     // Margins within the sticker
+//     const horizontalMargin = 4; // Horizontal margin
+//     const verticalMargin = 2; // Vertical margin
+
+//     // Number of stickers per row and column
+//     const stickersPerRow = Math.floor(210 / stickerWidth); // A4 width is 210mm
+//     const stickersPerColumn = Math.floor(297 / stickerHeight); // A4 height is 297mm
+//     const stickersPerPage = stickersPerRow * stickersPerColumn;
+
+//     // Create a new PDF instance
+//     const pdf = new jsPDF({
+//         unit: "mm",
+//         format: [pageWidth, totalHeight], // A4 size
+//     });
+
+//     items.forEach((item, index) => {
+//         const barcodeValue = `Product: ${item.product_name.split('(')[0]}\nBata: ${item.bata}`;
+
+//         // Create a canvas for the barcode
+//         const canvas = document.createElement('canvas');
+//         JsBarcode(canvas, barcodeValue, {
+//             format: "CODE128",
+//             displayValue: true,
+//             width: 1, // Adjust barcode bar width 
+//             textMargin: 1, // Space between barcode and text,
+//             text: barcodeValue,
+//         });
+
+//         // Convert the canvas to an image
+//         const barcodeImage = canvas.toDataURL('image/png');
+
+//         // Calculate row and column positions
+//         const rowIndex = Math.floor(index / stickersPerRow) % stickersPerColumn; // Current row
+//         const colIndex = index % stickersPerRow; // Current column
+
+//         // Calculate the x and y position for this sticker
+//         // const xOffset = colIndex * stickerWidth + horizontalMargin;
+//         // const yOffset = rowIndex * stickerHeight + verticalMargin;
+
+//         // Calculate the y position for this label
+//         const yOffset = index * labelHeight + (index > 0 ? 0 : 3 ) + verticalMargin;
+// //         console.log("index", index, yOffset , labelHeight, verticalMargin) 
+//         // Add the barcode image
+//         pdf.addImage(barcodeImage, "PNG", 4, yOffset, barcodeWidth, barcodeHeight);
+
+//         // Add a new page if the current page is full
+//         if ((index + 1) % stickersPerPage === 0 && index < items.length - 1) {
+//             pdf.addPage();
+//         }
+//     });
+
+//     // Save the PDF file
+//     pdf.save("barcodes.pdf");
+// }
+    
+
+// function generateBarcodesAndDownloadPDF(items) {
+//     const { jsPDF } = window.jspdf;
+
+//     // Page dimensions in mm
+//     // const pageWidth = 50; // Page width in mm
+//     // const pageHeight = 40; // Page height in mm
+
+//     // // Label dimensions in mm
+//     // const labelWidth = 50; // Label width
+//     // const labelHeight = 40; // Label height
+
+//     // // Barcode dimensions in mm
+//     // const barcodeWidth = 35; // Barcode width
+//     // const barcodeHeight = 20; // Barcode height
+
+//     // // Margins within each label
+//     // const horizontalMargin = 1; // Horizontal margin
+//     // const verticalMargin = 2; // Vertical margin
+
+//     // // Number of labels per row and column
+//     // const labelsPerRow = Math.floor(pageWidth / labelWidth);
+//     // const labelsPerColumn = Math.floor(pageHeight / labelHeight);
+
+//       // Dimensions for labels and barcode
+//     const pageWidth = 50; // Page width in mm
+//     const labelHeight = 40; // Label height
+//     const barcodeWidth = 35; // Barcode width
+//     const barcodeHeight = 20; // Barcode height
+//     const verticalMargin = 2; // Margin between labels
+
+
+//     // Number of stickers per row and column
+//     // const stickersPerRow = Math.floor(210 / stickerWidth); // A4 width is 210mm
+//     // const stickersPerColumn = Math.floor(297 / stickerHeight); // A4 height is 297mm
+//     // const stickersPerPage = stickersPerRow * stickersPerColumn;
+//     const totalHeight = items.length * labelHeight;
+
+//     // Create a new PDF instance
+//     const pdf = new jsPDF({
+//         unit: "mm",
+//         format: [pageWidth, totalHeight], // Set custom page size
+//     });
+
+//     items.forEach((item, index) => {
+//         // Format date
+//         const utcDate = new Date(item.p_date);
+//         const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
+//         const istDate = new Date(utcDate.getTime() + istOffset);
+
+//         const day = String(istDate.getDate()).padStart(2, '0');
+//         const month = String(istDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+//         const year = istDate.getFullYear();
+//         const formattedISTDate = `${day}/${month}/${year}`;
+
+//         // Barcode value
+//         const barcodeValue = `Product: ${item.product_name.split('(')[0]}\nBata: ${item.bata} ${formattedISTDate}`;
+
+//         // Create a canvas for the barcode
+//         const canvas = document.createElement('canvas');
+//         JsBarcode(canvas, barcodeValue, {
+//             format: "CODE128",
+//             displayValue: true,
+//             width: 1, // Adjust barcode width
+//             textMargin: 1, // Space between barcode and text
+//             text: barcodeValue,
+//         });
+
+//         // Convert the canvas to an image
+//         const image = canvas.toDataURL('image/png');
+
+//         // Calculate row and column positions
+//         // const rowIndex = Math.floor(index / labelsPerRow) % labelsPerColumn; // Current row
+//         // const colIndex = index % labelsPerRow; // Current column
+
+//         // // Calculate the x and y position for this label
+//         // const xOffset = colIndex * labelWidth + horizontalMargin;
+//         // const yOffset = rowIndex * labelHeight + verticalMargin;
+//         // console.log("xOffset", xOffset, "yOffset", yOffset)
+
+//         const yOffset = index * labelHeight + verticalMargin;
+
+
+//         // Add the barcode image to the PDF
+//         pdf.addImage(image, 'PNG', 3, yOffset + 1, barcodeWidth, barcodeHeight);
+
+//         // if (
+//         //     xOffset + labelWidth > pageWidth || // Horizontal space overflow
+//         //     yOffset + labelHeight > pageHeight // Vertical space overflow
+//         // ) {
+//         //     pdf.addPage();
+//         // }
+
+//         // if ((index + 1) % (labelsPerRow * labelsPerColumn) === 0 && index < items.length - 1) {
+//         //     console.log("labelsPerRow * labelsPerColumn",labelsPerRow * labelsPerColumn)
+//         //     pdf.addPage();
+//         // }
+
+
+//     });
+//     // Add a new page if the current page is full
+    
+//     // Save the PDF file
+//     pdf.save('barcodes.pdf');
+// }
+
+
+
+function generateBarcodesAndDownloadPDF(items) {
+    const { jsPDF } = window.jspdf;
+
+    // Dimensions for labels and barcode
+    const pageWidth = 50; // Page width in mm
+    const labelHeight = 30; // Label height
+    const barcodeWidth = 35; // Barcode width
+    const barcodeHeight = 20; // Barcode height
+    const verticalMargin = 0; // Margin between labels
+    // const borderPadding = 1; // Padding inside the border
+
+    // Calculate total required height
+    const gap = 3; // Gap between labels in mm
+    const labelWithGapHeight = labelHeight + gap;
+    const totalHeight = items.length * labelWithGapHeight;
+    console.log(totalHeight, labelWithGapHeight , "totalHeight")
+    // const totalHeight = items.length * labelHeight;
+
+    // Create a new PDF instance with the required height
+    const pdf = new jsPDF({
+        unit: "mm",
+        format: [pageWidth, totalHeight],
+    });
+
+    items.forEach((item, index) => {
+        // Format date
+        const utcDate = new Date(item.p_date);
+        const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
+        const istDate = new Date(utcDate.getTime() + istOffset);
+
+        const day = String(istDate.getDate()).padStart(2, '0');
+        const month = String(istDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const year = istDate.getFullYear();
+        const formattedISTDate = `${day}/${month}/${year}`;
+
+        // Barcode value
+        const barcodeValue = `Product: ${item.product_name.split('(')[0]}\nBata: ${item.bata} ${formattedISTDate}`;
+
+        // Create a canvas for the barcode
+        const canvas = document.createElement('canvas');
+        JsBarcode(canvas, barcodeValue, {
+            format: "CODE128",
+            displayValue: true,
+            width: 1, // Adjust barcode width
+            textMargin: 1, // Space between barcode and text
+            text: barcodeValue,
+        });
+
+        // Convert the canvas to an image
+        const image = canvas.toDataURL('image/png');
+
+        // Calculate the y position for this label
+        const yOffset = index * labelHeight + (index > 0 ? 0 : 3 ) + verticalMargin;
+        console.log("index", index, yOffset , labelHeight, verticalMargin) 
+
+        // Add the barcode image to the PDF
+        console.log( 4, yOffset , barcodeWidth, barcodeHeight)
+        pdf.addImage(image, 'PNG', 4, yOffset , barcodeWidth, barcodeHeight);
+
+    });
+
+    // Trigger the print operation
+    pdf.autoPrint();
+    window.open(pdf.output('bloburl'), '_blank');
+}
+
+
+
+// function generateBarcodesAndDownloadPDF(items) {
+//     const { jsPDF } = window.jspdf;
+
 //     // Sticker dimensions in mm
 //     const stickerWidth = 38; // Sticker width
 //     const stickerHeight = 25; // Sticker height
@@ -745,103 +1003,6 @@ const formattedISTDate = `${day}/${month}/${year}`;
 //     pdf.save("barcodes.pdf");
 // }
     
-
-function generateBarcodesAndDownloadPDF(items) {
-    const { jsPDF } = window.jspdf;
-
-    // Page dimensions in mm
-    const pageWidth = 38; // A4 width in mm
-    const pageHeight = 25; // A4 height in mm
-
-    // Label dimensions in mm
-    const labelWidth = 38; // Label width
-    const labelHeight = 25; // Label height
-
-    // Logo dimensions in mm
-    const logoWidth = 4; // Logo width
-    const logoHeight = 4; // Logo height
-
-    // Barcode dimensions in mm
-    const barcodeWidth = 25; // Barcode width
-    const barcodeHeight = 10; // Barcode height
-
-    // Margins within each label
-    const horizontalMargin = 0; // Horizontal margin
-    const verticalMargin = 0; // Vertical margin
-
-    // Number of labels per row and column
-    const labelsPerRow = Math.floor(pageWidth / labelWidth);
-    const labelsPerColumn = Math.floor(pageHeight / labelHeight);
-
-    // Create a new PDF instance
-    const pdf = new jsPDF({
-        unit: "mm",
-        // format: "a4",
-        format: [pageWidth, pageHeight], // Set page size to 38mm x 25mm
-    });
-
-    items.forEach((item, index) => {
-        var utcDate = new Date(item.p_date);
-
-// Convert the UTC date to IST (UTC+5:30)
-const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
-const istDate = new Date(utcDate.getTime() + istOffset);
-
-// Extract day, month, and year and format as DD/MM/YYYY
-const day = String(istDate.getDate()).padStart(2, '0');  // Add leading zero if needed
-const month = String(istDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-const year = istDate.getFullYear();
-
-// Combine the parts into DD/MM/YYYY format
-const formattedISTDate = `${day}/${month}/${year}`;
-        const barcodeValue = `Product: ${item.product_name.split('(')[0]}\nBata: ${item.bata}` + ' ' + formattedISTDate;
-
-        // Create a canvas for the barcode
-        const canvas = document.createElement('canvas');
-        JsBarcode(canvas, barcodeValue, {
-            format: "CODE128",
-            displayValue: true,
-            width: 1, // Adjust barcode width
-            // height: barcodeHeight, // Barcode height
-            // fontSize: 10, // Text font size
-            textMargin: 2, // Space between barcode and text
-            text: barcodeValue
-        });
-                    
-
-        // Convert the canvas to an image
-        const image = canvas.toDataURL('image/png');
-
-        // Calculate row and column positions
-        const rowIndex = Math.floor(index / labelsPerRow) % labelsPerColumn; // Current row
-        const colIndex = index % labelsPerRow; // Current column
-
-        // Calculate the x and y position for this label
-        const xOffset = colIndex * labelWidth + horizontalMargin;
-        const yOffset = rowIndex * labelHeight + verticalMargin;
-
-        // Add logo to the PDF
-        pdf.addImage("../../assets/img/logo.png", "PNG", xOffset + 4, yOffset, logoWidth, logoHeight);
-
-        // Add company name below the logo
-        pdf.setFontSize(5);
-        pdf.text("Savata Fruits", xOffset + logoWidth + 6, yOffset + 3);
-
-
-        // Add the barcode image to the PDF
-        pdf.addImage(image, 'PNG', xOffset , yOffset + logoHeight, barcodeWidth, barcodeHeight);
-        // pdf.addImage(barcodeImage, "PNG", xOffset + 4, yOffset + logoHeight + 2, barcodeWidth, barcodeHeight);
-
-        // Add a new page if the current page is full
-        if ((index + 1) % (labelsPerRow * labelsPerColumn) === 0 && index < items.length - 1) {
-            pdf.addPage();
-        }
-    });
-
-    // Save the PDF file
-    pdf.save('barcodes.pdf');
-}
-
     
 
 </script>
