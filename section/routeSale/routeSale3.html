@@ -6,9 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="../sale/sale.css">
   <title></title>
   <style>
     #input13 {
@@ -354,7 +356,7 @@
       <div class="bill-date-container">
         <div id="bill-wrapper" class="input-wrapper">
           <label for="bill">बिल नं :</label>
-          <input type="text" id="bill" name="number" placeholder="बिल नं." required>
+          <input type="text" id="bill" name="number" placeholder="बिल नं." required readonly>
         </div>
 
         <div id="date-wrapper" class="input-wrapper">
@@ -379,23 +381,21 @@
       <div class="row-container">
         <div id="Route-wrapper" class="input-wrapper">
           <label for="Route">रूट :</label>
-          <select type="root" id="Route" name="root" onchange="previousbalance()" required></select>
+          <select type="root" id="Route" name="root" onchange="setCustomer()" required></select>
           <input type="hidden" id="custid" name="custid">
         </div>
 
         <div class="button-wrapper">
-          <button id="account-page-button" onclick="goToAccountPage()">Add Customer</button>
+          <button type="button" id="account-page-button" style="background-color: #18b3a4;" onclick="goToAccountPage(event)">Add Customer</button>
         </div>
-        
-        <!-- <div class="button-wrapper">
-      <button id="account-page-button" name="ledger" >Leder Report</button>
-    </div> -->
-        <button onclick="openPopup()">Ledger</button>
+
+        <div class="button-wrapper">
+        </div>
+        <button type="button" style="background-color: #ff355f;" onclick="openPopup(event)">Ledger</button>
         <div class="popup" id="popup">
           <div class="popup-content">
             <span class="close" onclick="closePopup()">&times;</span>
             <iframe id="popupIframe" frameborder="0" scrolling="auto"></iframe>
-            <!-- <p>This is a popup!</p> -->
           </div>
         </div>
       </div>
@@ -416,6 +416,19 @@
         <div class="input-wrapper">
           <label for="bta">बटा :</label>
           <select type="root" id="bta" name="bta" onchange="getProducts()"></select>
+          <!-- <button onclick="openScanner()">Scan Barcode</button> -->
+          &nbsp; &nbsp;
+          <!-- <i class="fa-solid fa-scanner-gun" onclick="openScanner()"></i> -->
+          <!-- <i class="fa-sharp-duotone fa-solid fa-barcode-scan"></i> -->
+          <!-- <i class="fa-sharp-duotone fa-solid fa-scanner-touchscreen"></i> -->
+          <i class="fa-sharp-duotone fa-solid fa-barcode scanner-icon" onclick="openScannerModal()"></i>
+        </div>
+        <div id="scannerModal" class="modal">
+          <div class="modal-content">
+            <span class="close" onclick="closeScannerModal1()">&times;</span>
+            <p>Scan barcode here:</p>
+            <input type="text" id="barcodeInput" placeholder="Scan barcode here" oninput="handleBarcodeInput(event)">
+          </div>
         </div>
 
         <div class="input-wrapper">
@@ -425,14 +438,14 @@
 
         <div class="input-wrapper">
           <label for="product">Product :</label>
-          <select type="root" id="product" name="product"></select>
+          <select type="root" id="product" name="product" onchange="updateTotal()"></select>
         </div>
       </div>
 
       <div class="row-container">
         <div class="input-wrapper">
           <label for="nag" id="nagLabel">नग :</label>
-          <input type="text" id="nag" name="nag" placeholder="नग" onchange="updateTotal()">
+          <input type="text" id="nag" name="nag" placeholder="नग" value="1" onchange="updateTotal()">
           <input type="hidden" id="nag1" name="nag1">
         </div>
 
@@ -443,11 +456,11 @@
 
         <div class="input-wrapper">
           <label for="total">रक्कम :</label>
-          <input type="number" id="total" name="total" placeholder="रक्कम">
+          <input type="number" id="total" name="total" placeholder="रक्कम" readonly>
         </div>
 
         <div class="button-wrapper">
-          <button type="button" onclick="myFunction()" class="button" style="background-color: green;">ADD</button>
+          <button type="button" style="background-color: #26a653;" onclick="myFunction()" class="button">ADD</button>
         </div>
       </div>
 
@@ -518,12 +531,12 @@
       </div>
       <div class="row-container1">
         <label for="totalCarat">ऑनलाईन जमा बँक :</label>
-        <select type="root" id="onlineAcc" name="onlineAcc">
+        <select type="root" id="onlineAcc" name="onlineAcc" onchange="toggleReadonly()">
         </select>
       </div>
       <div class="row-container1">
         <label for="totalCarat">ऑनलाईन जमा :</label>
-        <input type="number" id="online" name="number" placeholder="ऑनलाईन जमा" onchange="totalBalance()">
+        <input type="number" id="online" name="number" placeholder="ऑनलाईन जमा" onchange="totalBalance()" readonly>
       </div>
       <div class="row-container1">
         <label for="totalCarat">सूट रक्कम :</label>
@@ -558,13 +571,13 @@
 
       <div class="row-container">
         <div class="input-wrapper">
-          <label for="note">संदर्भ :</label>
-          <input type="text" id="note" name="note" placeholder="संदर्भ">
+          <label for="note">Note :</label>
+          <input type="text" id="note" name="note" placeholder="Note">
         </div>
 
         <div class="input-wrapper">
           <label for="baki">बाकी रक्कम :</label>
-          <input type="number" id="baki" name="baki" placeholder="बाकी रक्कम">
+          <input type="number" id="baki" name="baki" placeholder="बाकी रक्कम" readonly>
         </div>
       </div>
 
@@ -594,7 +607,8 @@
         </div>
       </div>
 
-      <button type="submit" class="save" style="background-color: green;">Save</button>
+      <button type="button" style="background-color: #26a653;" class="save" onclick="insertSale()">Save</button>
+      <button type="button" style="background-color: #ff355f;" class="save" onclick="confirmAndProceed()">Back</button>
   </div>
   </form>
 
@@ -631,8 +645,8 @@
       fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'Route','route_name',selectedValue=route,readOnly = true);
     }
     
-    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'product', 'product_name');
-    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData', 'bta', 'bata');
+    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'product', 'product_name');
+    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'bta', 'bata');
     fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'onlineAcc', 'name');
   
 
@@ -692,350 +706,10 @@
   }
 
 
-
-
-
-
-  // var routeSaleData = localStorage.getItem('routeSaleData');
-
-  //   if (routeSaleData) {
-  //     // Parse the user data
-  //     var routeSale = JSON.parse(routeSaleData);
-  //     console.log("lapajcowjfocjwoj")
-  //     console.log(routeSale)
-
-
-
-  //     var $routeDropdown = $('#grahk');
-  //       // Set the value of the Select2 dropdown if it's different
-  //       if ($routeDropdown.val() !== routeSale.name) {
-  //         console.log("Customer data", $routeDropdown.val())
-  //         $routeDropdown.val(routeSale.name).trigger('change');
-  //       }
-
-
-  //   }
-
-
 });
 
-  function goToAccountPage() {
-    // Perform the desidarkgrey action when the button is clicked
-    window.location.href = "../account/acc-master.html"; // darkgreyirect to the account page
-  }
-
-  $(document).on('select2:open', function (e) {
-    window.setTimeout(function () {
-      document.querySelector('input.select2-search__field').focus();
-    }, 0);
-  });
-
-
-  function openPopup() {
-    event.preventDefault();
-    document.getElementById("popup").style.display = "block";
-    var popupIframe = document.getElementById("popupIframe");
-    popupIframe.src = "../../report/ledgerReport/ledger.html"; //
-  }
-
-  function closePopup() {
-    document.getElementById("popup").style.display = "none";
-  }
-
-
-
-
-
+  
 </script>
 
-
-
-<script>
-
-
-
-  function totalBalance() {
-    var balance = parseInt(document.getElementById("bill1").value) || 0;
-    var preBalance = parseInt(document.getElementById("previousBalance").value) || 0;
-    var total1 = parseInt(document.getElementById("total1").value) || 0;
-
-    fetch('http://103.174.102.89:3000/accountData/' + parseInt(document.getElementById("custid").value))
-      .then(response => {
-        if (!response.ok) {
-          loader.style.display = 'none';
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data[0].cr_dr_type)
-        if (data[0].cr_dr_type == 'no') {
-          document.getElementById("totalBill").value = balance + preBalance;
-        } else {
-          document.getElementById("totalBill").value = total1 + balance + preBalance;
-        }
-        totalbill()
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-    //document.getElementById("totalBill").value = total1 + balance + preBalance;
-    //totalbill()
-  }
-
-  function previousbalance() {
-    const name = document.getElementById("grahk").value
-
-    fetch('http://103.174.102.89:3000/fetchName/name/' + name)
-      .then(response => {
-        if (!response.ok) {
-          loader.style.display = 'none';
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data[0].mobile_no)
-        // Get the Select2 dropdown element
-        var $productDropdown = $('#number');
-        // Set the value of the Select2 dropdown if it's different
-        if ($productDropdown.val() !== data[0].mobile_no) {
-          $productDropdown.val(data[0].mobile_no).trigger('change');
-        }
-
-        var $routeDropdown = $('#Route');
-        // Set the value of the Select2 dropdown if it's different
-        if ($routeDropdown.val() !== data[0].route_detail) {
-          $routeDropdown.val(data[0].route_detail).trigger('change');
-        }
-
-        document.getElementById('address').value = data[0].address;
-
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-
-
-
-    fetch('http://103.174.102.89:3000/fetchpv/' + name)
-      .then(response => {
-        if (!response.ok) {
-          loader.style.display = 'none';
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        // Populate dropdown with API data
-        console.log(data)
-        document.getElementById('custid').value = parseInt(data[0]['id']);
-        document.getElementById('previousBalance').value = parseInt(data[0]['current_balance'] || 0);
-        totalBalance();
-        totalbill();
-
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-
-
-    fetch('http://103.174.102.89:3000/carateuserData/' + name)
-      .then(response => {
-        if (!response.ok) {
-          loader.style.display = 'none';
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        // Populate dropdown with API data
-        console.log(data)
-        document.getElementById('carate2100').value = parseInt(data[0]['carate_100']);
-        document.getElementById('carate2150').value = parseInt(data[0]['carate_150']);
-        document.getElementById('carate2250').value = parseInt(data[0]['carate_250']);
-        document.getElementById('carate2350').value = parseInt(data[0]['carate_350']);
-        document.getElementById('carate22100').value = parseInt(data[0]['carate_100']);
-        document.getElementById('carate22150').value = parseInt(data[0]['carate_150']);
-        document.getElementById('carate22250').value = parseInt(data[0]['carate_250']);
-        document.getElementById('carate22350').value = parseInt(data[0]['carate_350']);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-
-  }
-
-  // Here in Carate is the carate send to the customer
-  // Out carate is the carate received from the customer
-  function carate() {
-    var value100 = parseInt(document.getElementById("carate100").value) || 0;
-    var value150 = parseInt(document.getElementById("carate150").value) || 0;
-    var value250 = parseInt(document.getElementById("carate250").value) || 0;
-    var value350 = parseInt(document.getElementById("carate350").value) || 0;
-    var value1100 = parseInt(document.getElementById("carate1100").value) || 0;
-    var value1150 = parseInt(document.getElementById("carate1150").value) || 0;
-    var value1250 = parseInt(document.getElementById("carate1250").value) || 0;
-    var value1350 = parseInt(document.getElementById("carate1350").value) || 0;
-
-
-    document.getElementById("total1").value = value100 * 100 + value150 * 150 + value250 * 250 + value350 * 350;
-    document.getElementById("carate2100").value = parseInt(document.getElementById("carate22100").value) + value100 - value1100; 
-    document.getElementById("carate2150").value = parseInt(document.getElementById("carate22150").value) + value150 - value1150;
-    document.getElementById("carate2250").value = parseInt(document.getElementById("carate22250").value) + value250 - value1250;
-    document.getElementById("carate2350").value = parseInt(document.getElementById("carate22350").value) + value350 - value1350;
-    totalbill();
-    totalBalance();
-    //document.getElementById("total1").value = parseInt(document.getElementById("carate100").value) * 100 +  parseInt(document.getElementById("carate150").value) * 150 +  parseInt(document.getElementById("carate250").value) * 250 +  parseInt(document.getElementById("carate350").value) * 350
-  }
-
-  function carate1() {
-    var value100 = parseInt(document.getElementById("carate1100").value) || 0;
-    var value150 = parseInt(document.getElementById("carate1150").value) || 0;
-    var value250 = parseInt(document.getElementById("carate1250").value) || 0;
-    var value350 = parseInt(document.getElementById("carate1350").value) || 0;
-    var value1100 = parseInt(document.getElementById("carate100").value) || 0;
-    var value1150 = parseInt(document.getElementById("carate150").value) || 0;
-    var value1250 = parseInt(document.getElementById("carate250").value) || 0;
-    var value1350 = parseInt(document.getElementById("carate350").value) || 0;
-    document.getElementById("total2").value = value100 * 100 + value150 * 150 + value250 * 250 + value350 * 350;
-    document.getElementById("carate2100").value = parseInt(document.getElementById("carate22100").value) + value1100 - value100;
-    document.getElementById("carate2150").value = parseInt(document.getElementById("carate22150").value) + value1150 - value150;
-    document.getElementById("carate2250").value = parseInt(document.getElementById("carate22250").value) + value1250 - value250;
-    document.getElementById("carate2350").value = parseInt(document.getElementById("carate22350").value) + value1350 - value350;
-    totalbill();
-    //document.getElementById("total1").value = parseInt(document.getElementById("carate100").value) * 100 +  parseInt(document.getElementById("carate150").value) * 150 +  parseInt(document.getElementById("carate250").value) * 250 +  parseInt(document.getElementById("carate350").value) * 350
-  }
-
-
-  function totalbill() {
-    console.log("totalbill")
-    console.log(document.getElementById("custid").value)
-
-    fetch('http://103.174.102.89:3000/accountData/' + parseInt(document.getElementById("custid").value))
-      .then(response => {
-        if (!response.ok) {
-          loader.style.display = 'none';
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data[0].cr_dr_type)
-        if (data[0].cr_dr_type == 'no') {
-          document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0);
-        } else {
-          document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0) - parseInt(document.getElementById("total2").value || 0);
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-
-
-    //document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0) - parseInt(document.getElementById("total2").value || 0);
-  }
-
-
-  function myFunction() {
-    event.preventDefault();
-    var loader = document.getElementById('loader');
-    loader.style.display = 'block';
-
-    var formData = {
-      bill_id: parseInt(document.getElementById('bill').value),
-      bata: document.getElementById('bta').value,
-      mark: document.getElementById('mark').value,
-      product: document.getElementById('product').value,
-      quantity: parseInt(document.getElementById('nag').value),
-      rate: parseInt(document.getElementById('kimmat').value),
-      price: parseInt(document.getElementById('total').value)
-    };
-
-    console.log(formData)
-
-    fetch('http://103.174.102.89:3000/saleproductData/insertsaleproduct', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(result => {
-        loader.style.display = 'none';
-        console.log('Entry added successfully:', result);
-        // document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + parseInt(document.getElementById('total').value);
-        // totalBalance()
-        updateTable(formData, result.insertId);
-        $('#product').val('').trigger('change');
-        $('#bta').val('').trigger('change');
-        document.getElementById('mark').value = '';
-        document.getElementById('nag').value = '';
-        document.getElementById('kimmat').value = '';
-        document.getElementById('total').value = '';
-        var nagLabel = document.getElementById('nagLabel');
-        nagLabel.innerHTML = '';
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-
-    Swal.fire({
-                            icon: 'success',
-                            title: 'Success!',
-                            text: 'Product added successfully',
-                            })
-    // Add your desidarkgrey functionality here
-  }
-
-  function updateTable(entry, result) {
-    console.log("table")
-    var tableBody = document.getElementById('tableBody1');
-    var newRow = document.createElement('tr');
-    newRow.innerHTML = `
-          <td>${entry.product}</td>
-          <td>${entry.bata}</td>
-          <td>${entry.mark}</td>
-          <td>${entry.quantity}</td>
-          <td>${entry.rate}</td>
-          <td>${entry.price}</td>
-          <td><button type="button" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button></td>
-      `;
-    document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + entry.price;
-    totalBalance()
-    tableBody.appendChild(newRow);
-  }
-
-  function deleteUser(button, userId, price) {
-    // Perform delete operation based on userId
-    console.log(price)
-    console.log(userId)
-    document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) - price;
-    totalBalance()
-    var button = event.target;
-    var row = button.parentNode.parentNode;
-    fetch('http://103.174.102.89:3000/saleproductData/deletesaleproduct/' + userId, {
-      method: 'DELETE'
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        console.log('User deleted successfully');
-        // Refresh the table or update UI as needed
-        //newRow.remove();
-        row.remove();
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  }
-</script>
 
 </html>

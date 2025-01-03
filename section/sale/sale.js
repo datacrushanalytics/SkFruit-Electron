@@ -68,152 +68,175 @@ function confirmAndProceed() {
 
 
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Get the current date
-    var currentDate = new Date();
-    // Format the date as mm/dd/yyyy
-    var formattedDate = currentDate.getFullYear() + '-' + (String(currentDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(currentDate.getDate()).padStart(2, '0'));
-    // Set the placeholder of the input field to the formatted date
-    console.log(formattedDate);
-    document.getElementById('date').value = formattedDate;
-    // Retrieve session data from localStorage
-    var sessionData = JSON.parse(localStorage.getItem('sessionData'));
-    // Check if session data exists and if the user is an admin
-    var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
-    // Check if the user is an admin and show/hide the button accordingly
-    if (!isAdmin) {
-        document.getElementById('date').readOnly = true; // Hide the button for non-admin users
-    }
+function editRow(button, id,editable) {
+    var row = button.parentElement.parentElement;
+    var cells = row.querySelectorAll('td');
 
+    // Save current values of quantity and rate
+    const originalQuantity = cells[3].textContent;
+    const originalRate = cells[4].textContent;
 
-    fetch('http://103.174.102.89:3000/fetchSaleid')
-        .then(response => {
-            if (response.status === 404) {
-                loader.style.display = 'none';
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'No data found.',
-                });
-                throw new Error('Data not found');
-            }
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Populate dropdown with API data
-            document.getElementById('bill').value = parseInt(data[0]['num']) + 1 || 1;
-            fetch('http://103.174.102.89:3000/saleproductData/' + (parseInt(data[0]['num']) + 1) || 1)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Populate dropdown with API data
-                    //populateDropdown3(data);
-                    data.forEach(function (item) {
-                        updateTable(item, item.id);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-
-
-
-
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-
-
-
-    // Fetch data from API and populate Select2 dropdowns
-
-    var sessionData = JSON.parse(localStorage.getItem('sessionData'));
-    // Check if session data exists and if the user is an admin
-    var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
-    // Check if the user is an admin and show/hide the button accordingly
-    if (isAdmin) {
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/mobile', 'number', 'mobile_no');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'Route', 'route_name');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'grahk', 'name');
+    // Conditionally render input fields based on the `editable` flag
+    if (editable) {
+        cells[3].innerHTML = `<input type="number" value="${originalQuantity}" min="1" style="width: 60px;" onchange="updateRowTotal(this)">`;
     } else {
-        var route = sessionData[0].route;   
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' + route, 'grahk', 'name');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' + route, 'number', 'mobile_no');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'Route', 'route_name', selectedValue = route, readOnly = true);
+        cells[3].textContent = originalQuantity; // Keep the original value as plain text
     }
 
-    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'product', 'product_name');
-    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'bta', 'bata');
-    fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'onlineAcc', 'name');
+    // Always allow editing the rate
+    cells[4].innerHTML = `<input type="number" value="${originalRate}" min="0" style="width: 60px;" onchange="updateRowTotal(this)">`;
 
-});
+    // Calculate the initial total and set it in the price cell
+    if (editable) {
+        updateRowTotal(cells[3].querySelector('input'));
+    }
 
-function fetchAndPopulateDropdown(apiUrl, dropdownId, field, selectedValue = null, readOnly = false) {
-    fetch(apiUrl)
+    // Replace action buttons with "Save" and "Cancel"
+    cells[6].innerHTML = `
+        <button type="button" onclick="saveRow(this,'${id}', '${editable}')">Save</button>
+        <button type="button" onclick="cancelEdit(this, '${originalQuantity}', '${originalRate}')">Cancel</button>
+    `;
+}
+
+function updateRowTotal(inputElement) {
+    var row = inputElement.parentElement.parentElement;
+    var cells = row.querySelectorAll('td');
+
+    // Safely get quantity and rate input values
+    var quantityInput = cells[3]?.querySelector('input');
+    var rateInput = cells[4]?.querySelector('input');
+    console.log(cells[3].textContent.trim(),"quantityInput")
+    var quantity = quantityInput ? parseInt(quantityInput.value, 10) || 0 : parseInt(cells[3].textContent.trim(), 10) || 0;
+    var rate = rateInput ? parseInt(rateInput.value, 10) || 0 : 0;
+
+    // Get available inventory from a hidden field (like 'nag1')
+    var availableInventoryElement = document.getElementById("nag1");
+    var availableInventory = availableInventoryElement ? parseInt(availableInventoryElement.value, 10) || 0 : 0;
+
+    // Check if quantity exceeds available inventory
+    if (quantity > availableInventory) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Inventory is not available for the entered quantity.',
+        });
+        if (quantityInput) quantityInput.value = availableInventory; // Reset quantity to max available inventory
+        quantity = availableInventory; // Update the quantity variable
+    }
+
+    // Calculate total as quantity * rate
+    var total = quantity * rate;
+
+    // Update the total in the table
+    cells[5].textContent = total;
+
+    // Update the hidden total field if needed (to reflect the updated total)
+    var totalField = document.getElementById("total");
+    if (totalField) {
+        totalField.value = total;
+    }
+}
+
+
+function cancelEdit(button, originalQuantity, originalRate) {
+    var row = button.parentElement.parentElement;
+    var cells = row.querySelectorAll('td');
+
+    // Restore the original quantity and rate
+    cells[3].innerHTML = originalQuantity; // Restore original quantity value
+    cells[4].innerHTML = originalRate;    // Restore original rate value
+
+    // Restore the original action buttons
+    cells[6].innerHTML = `
+        <button type="button" onclick="deleteUser(this, '${row.getAttribute('data-id')}','${cells[5].textContent}')">Delete</button>
+        <button type="button" onclick="editRow(this, '${row.getAttribute('data-id')}')">Edit</button>
+    `;
+
+    // Optional: Log or notify cancellation
+    console.log('Edit canceled. Values restored.');
+}
+
+
+
+function saveRow(button, id1, editable) {
+  console.log("editable", editable)
+    var row = button.parentElement.parentElement;
+    var cells = row.querySelectorAll('td');
+
+    var flag = editable == 0 ? false : true;
+    // if (editable == 0){
+    //   flag = false;
+    // }else{
+    //   flag = true;
+    // }
+
+    // Get updated values
+    var updatedQuantity = flag
+        ? parseInt(cells[3].querySelector('input').value, 10) || 0
+        : parseInt(cells[3].textContent, 10) || 0;
+
+    var updatedRate = parseInt(cells[4].querySelector('input').value, 10) || 0;
+    var updatedPrice = updatedQuantity * updatedRate;
+
+    // Update the table cells with new values
+    cells[3].innerHTML = updatedQuantity;
+    cells[4].innerHTML = updatedRate;
+    cells[5].innerHTML = updatedPrice;
+
+    // Restore original action buttons
+    cells[6].innerHTML = `
+        <button type="button" onclick="deleteUser(this, '${row.getAttribute('data-id')}','${updatedPrice}')">Delete</button>
+        <button type="button" onclick="editRow(this)">Edit</button>
+    `;
+
+    const id = row.getAttribute('data-id');
+
+    // Prepare API payload
+    const bill_id = document.getElementById('bill').value;  // Assuming the bill ID is available
+    const bata = cells[1].textContent;
+    const mark = cells[2].textContent;
+    const product = cells[0].textContent;
+
+    // Make an API call to save the changes
+    fetch('http://103.174.102.89:3000/saleproductData/updatesaleproduct', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id,
+            bill_id: bill_id,
+            bata: bata,
+            mark: mark,
+            product: product,
+            quantity: updatedQuantity,
+            rate: updatedRate,
+            price: updatedPrice
+        })
+    })
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+            if (!response.ok) throw new Error('Network response was not ok');
             return response.json();
         })
         .then(data => {
-            // Populate Select2 dropdown with API data
-            populateDropdownWithSelect2(data, dropdownId, field, selectedValue, readOnly);
+            Swal.fire({
+                icon: 'success',
+                title: 'Updated successfully',
+                text: 'Product details updated successfully!',
+                timer: 2000,
+                timerProgressBar: true,
+            });
         })
         .catch(error => {
-            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error updating product details.',
+            });
         });
 }
 
-function populateDropdownWithSelect2(data, dropdownId, field, selectedValue = null, readOnly = false) {
-    var dropdown = $('#' + dropdownId);
-    // Clear existing options
-    dropdown.empty();
 
-    // Add placeholder option
-    dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
-
-    // Populate dropdown with API data
-    data.forEach(function (item) {
-        dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
-    });
-
-    // Initialize Select2
-    dropdown.select2({
-        placeholder: 'Select components',
-        closeOnSelect: false,
-        allowClear: true,
-        templateResult: function (data) {
-            if (!data.id) {
-                return data.text;
-            }
-            var $element = $('<span>' + data.text + '</span>');
-            return $element;
-        }
-    });
-
-    // Set selected value if provided
-    if (selectedValue !== null) {
-        dropdown.val(selectedValue).trigger('change');
-    }
-
-    // Make the dropdown read-only if specified
-    if (readOnly) {
-        dropdown.prop('disabled', true);
-    }
-
-
-
-}
 
 function goToAccountPage(event) {
     event.preventDefault();
