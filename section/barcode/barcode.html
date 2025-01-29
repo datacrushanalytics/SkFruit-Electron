@@ -499,7 +499,7 @@ const year = istDate.getFullYear();
 const formattedISTDate = `${day}/${month}/${year}`;
 
 
-        var barcodeValue = 'Product Name:' + item['product_name'].split('(')[0] + ' \nBata:' + item['bata'] + ' ' + formattedISTDate;
+        var barcodeValue = 'Product Name:' + item['product_name'].split('(')[0] + ' \nBata:' + item['bata'];
         var popupContent = `
             <div class="popup">
             
@@ -517,8 +517,13 @@ const formattedISTDate = `${day}/${month}/${year}`;
         JsBarcode('#barcodeCanvas', barcodeValue, {
             format: "CODE128", // Adjust the barcode format as needed
             displayValue: true, // Hide text under the barcode 
-            width: 1, // Set the width of the bars
-            text: barcodeValue // Add text below the barcode
+            //width: 1, // Set the width of the bars
+            text: barcodeValue, // Add text below the barcode
+            width: 2, // Adjust bar width for better readability
+        height: 80, // Barcode height within 113px canvas
+        margin: 5,
+        fontSize: 12, // Adjust text size
+        textMargin: 4
         });
 
             // Create a download link for the barcode image
@@ -540,15 +545,12 @@ const formattedISTDate = `${day}/${month}/${year}`;
         //document.body.removeChild(link);
     });
 
-    // Print barcode logic
-    var printButton = document.getElementById('printButton');
-    printButton.addEventListener('click', function () {
-        printJS({
-            printable: 'barcodeCanvas', // ID of the element to print
-            type: 'html', // Type of content
-            scanStyles: true, // Scan for styles
-            targetStyles: ['*'] // Apply all styles
-        });
+    // Print Barcode Logic
+    document.getElementById('printButton').addEventListener('click', function () {
+        var printWindow = window.open('', '', 'width=283,height=113');
+        printWindow.document.write('<img src="' + document.getElementById('barcodeCanvas').toDataURL() + '"/>');
+        printWindow.document.close();
+        printWindow.print();
     });
 
         
@@ -864,10 +866,10 @@ function generateBarcodesAndDownloadPDF(items) {
     const { jsPDF } = window.jspdf;
 
     // Dimensions for labels and barcode
-    const pageWidth = 50; // Page width in mm
-    const pageHeight = 40; // Custom page height in mm
+    const pageWidth = 75; // Page width in mm
+    const pageHeight = 75; // Custom page height in mm
     const labelHeight = 30; // Label height
-    const barcodeWidth = 35; // Barcode width
+    const barcodeWidth = 60; // Barcode width
     const barcodeHeight = 20; // Barcode height
     const gap = 3; // Gap between labels in mm
     const labelWithGapHeight = labelHeight + gap;
