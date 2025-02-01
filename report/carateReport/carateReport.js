@@ -84,6 +84,9 @@ Swal.fire({
 
     }
     data.reports.forEach(function (item) {
+        if (item.out_carate_total === 0 && item.in_carate_total === 0) {
+            return;
+        }
         var row = tbody.insertRow();
         var cell = row.insertCell();
         cell.textContent = counter++;

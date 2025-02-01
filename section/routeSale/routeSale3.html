@@ -490,19 +490,19 @@
         <div class="carat-inputs">
           <div class="input-wrapper">
             <label for="carate100">100 :</label>
-            <input type="number" id="carate100" name="carate100" placeholder="100" onchange="carate()">
+            <input type="number" id="carate100" name="carate100" min="0" placeholder="100" onchange="carate()">
           </div>
           <div class="input-wrapper">
             <label for="carate150">150 :</label>
-            <input type="number" id="carate150" name="carate150" placeholder="150" onchange="carate()">
+            <input type="number" id="carate150" name="carate150" min="0" placeholder="150" onchange="carate()">
           </div>
           <div class="input-wrapper">
             <label for="carate250">250 :</label>
-            <input type="number" id="carate250" name="carate250" placeholder="250" onchange="carate()">
+            <input type="number" id="carate250" name="carate250" min="0" placeholder="250" onchange="carate()">
           </div>
           <div class="input-wrapper">
             <label for="carate350">350 :</label>
-            <input type="number" id="carate350" name="carate350" placeholder="350" onchange="carate()">
+            <input type="number" id="carate350" name="carate350" min="0" placeholder="350" onchange="carate()">
           </div>
         </div>
       </div>
@@ -548,19 +548,19 @@
         <div class="carat-inputs">
           <div class="input-wrapper">
             <label for="carate100">100 :</label>
-            <input type="number" id="carate1100" name="carate100" placeholder="100" onchange="carate1()">
+            <input type="number" id="carate1100" name="carate100" min="0" placeholder="100" onchange="carate1()">
           </div>
           <div class="input-wrapper">
             <label for="carate150">150 :</label>
-            <input type="number" id="carate1150" name="carate150" placeholder="150" onchange="carate1()">
+            <input type="number" id="carate1150" name="carate150" min="0" placeholder="150" onchange="carate1()">
           </div>
           <div class="input-wrapper">
             <label for="carate250">250 :</label>
-            <input type="number" id="carate1250" name="carate250" placeholder="250" onchange="carate1()">
+            <input type="number" id="carate1250" name="carate250" min="0" placeholder="250" onchange="carate1()">
           </div>
           <div class="input-wrapper">
             <label for="carate350">350 :</label>
-            <input type="number" id="carate1350" name="carate350" placeholder="350" onchange="carate1()">
+            <input type="number" id="carate1350" name="carate350" min="0" placeholder="350" onchange="carate1()">
           </div>
         </div>
       </div>
@@ -586,22 +586,22 @@
         <div class="carat-inputs">
           <div class="input-wrapper">
             <label for="carate100">100 :</label>
-            <input type="number" id="carate2100" name="carate2100" placeholder="100" readonly>
+            <input type="number" id="carate2100" name="carate2100" min="0" placeholder="100" readonly>
             <input type="hidden" id="carate22100" name="carate22100" placeholder="100" readonly>
           </div>
           <div class="input-wrapper">
             <label for="carate150">150 :</label>
-            <input type="number" id="carate2150" name="carate2150" placeholder="150" readonly>
+            <input type="number" id="carate2150" name="carate2150" min="0" placeholder="150" readonly>
             <input type="hidden" id="carate22150" name="carate22150" placeholder="150" readonly>
           </div>
           <div class="input-wrapper">
             <label for="carate250">250 :</label>
-            <input type="number" id="carate2250" name="carate2250" placeholder="250" readonly>
+            <input type="number" id="carate2250" name="carate2250" min="0" placeholder="250" readonly>
             <input type="hidden" id="carate22250" name="carate22250" placeholder="250" readonly>
           </div>
           <div class="input-wrapper">
             <label for="carate350">350 :</label>
-            <input type="number" id="carate2350" name="carate2350" placeholder="350" readonly>
+            <input type="number" id="carate2350" name="carate2350" min="0" placeholder="350" readonly>
             <input type="hidden" id="carate22350" name="carate22350" placeholder="350" readonly>
           </div>
         </div>
@@ -624,33 +624,86 @@
 
   document.addEventListener('DOMContentLoaded', async function () {
     // Fetch data from API and populate Select2 dropdowns
+     // Get the current date
+     var currentDate = new Date();
+    // Format the date as mm/dd/yyyy
+    var formattedDate = currentDate.getFullYear() + '-' + (String(currentDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(currentDate.getDate()).padStart(2, '0'));
+    // Set the placeholder of the input field to the formatted date
+    console.log(formattedDate);
+    document.getElementById('date').value = formattedDate;
+
+
+    fetch('http://103.174.102.89:3000/fetchSaleid')
+        .then(response => {
+            if (response.status === 404) {
+                loader.style.display = 'none';
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No data found.',
+                });
+                throw new Error('Data not found');
+            }
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Populate dropdown with API data
+            document.getElementById('bill').value = parseInt(data[0]['num']) + 1 || 1;
+            fetch('http://103.174.102.89:3000/saleproductData/' + (parseInt(data[0]['num']) + 1) || 1)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Populate dropdown with API data
+                    //populateDropdown3(data);
+                    data.forEach(function (item) {
+                        updateTable(item, item.id);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
 
     var sessionData = JSON.parse(localStorage.getItem('sessionData'));
     // Check if session data exists and if the user is an admin
     var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
         // Check if the user is an admin and show/hide the button accordingly
     if (isAdmin) {
-      fetchAndPopulateDropdown('http://103.174.102.89:3000/mobile', 'number', 'mobile_no');
-      fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'Route', 'route_name');
-      fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'grahk', 'name');
+      await fetchAndPopulateDropdown('http://103.174.102.89:3000/mobile', 'number', 'mobile_no');
+      await fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'Route', 'route_name');
+      await fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'grahk', 'name');
     }else{
       var route = sessionData[0].route;
-      fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'number','mobile_no',selectedValue = null,readOnly = true);     
+      await fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'number','mobile_no',selectedValue = null,readOnly = true);     
       var routeSaleData = localStorage.getItem('routeSaleData');
       var routeSale = JSON.parse(routeSaleData);
       console.log(routeSaleData)
       const cust_name = routeSale.name
       console.log("kfgkdfjk",cust_name)
-      fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'grahk','name',selectedValue=cust_name,readOnly = true);
-      fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'Route','route_name',selectedValue=route,readOnly = true);
+      await fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'grahk','name',selectedValue=cust_name,readOnly = true);
+      await fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'Route','route_name',selectedValue=route,readOnly = true);
     }
     
-    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'product', 'product_name');
-    fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'bta', 'bata');
-    fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'onlineAcc', 'name');
+    await fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'product', 'product_name');
+    await fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'bta', 'bata');
+    await fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'onlineAcc', 'name');
   
 
-    async function fetchAndPopulateDropdown(apiUrl, dropdownId, field,selectedValue = null, readOnly = false) {
+    
+});
+
+async function fetchAndPopulateDropdown(apiUrl, dropdownId, field,selectedValue = null, readOnly = false) {
         try {
             const response = await fetch(apiUrl);
             
@@ -706,7 +759,6 @@
   }
 
 
-});
 
   
 </script>

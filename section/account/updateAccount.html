@@ -161,6 +161,8 @@
                 <input type="text" id="optional_mobile" name="optional_mobile"> <br>
                 <label for="text"> prev_balance: </label>
                 <input type="text" id="preBalance" name="prev_balance" placeholder="Previous Balance" required>
+                <label for="text"> current_balance: </label>
+                <input type="text" id="current_balance" name="current_balance" placeholder="Current Balance" required>
 
                 <label>Ramaining Carate :</label>
                 <div class="row-container">
@@ -269,14 +271,16 @@
                 }
         
 
-
-
+                console.log("user.current_balance",user.current_balance)
+                document.getElementById("current_balance").value = user.current_balance;
                 document.getElementById("name").value = user.name;
                 document.getElementById("no").value = user.mobile_no; 
                 document.getElementById("optional_mobile").value = user.optional_mobile || 0;
                 document.getElementById("address").value = user.address;
                 document.getElementById("company").value= user.company || null;
                 document.getElementById("preBalance").value = user.prev_balance;
+                
+                
                 if (user.cr_dr_type = 'yes'){
                 document.getElementById("cr").checked = true;
                 }else{
@@ -332,6 +336,7 @@
                     cr_dr_type: status,
                     name : document.getElementById("name").value,
                     prev_balance : document.getElementById("preBalance").value,
+                    current_balance : document.getElementById("current_balance").value,
                     company : document.getElementById("company").value,
                     optional_mobile: document.getElementById("optional_mobile").value
                 };

@@ -93,7 +93,7 @@ function populateTable4(data) {
             cell.textContent = utcDate.toLocaleString('en-IN', options);
           } else if (key === 'online_amt') { 
             cell.textContent = item[key];
-            grandTotalQuantity += item[key]; 
+            grandTotalQuantity += parseInt(item[key]); 
           } else {
             cell.textContent = item[key];
           }

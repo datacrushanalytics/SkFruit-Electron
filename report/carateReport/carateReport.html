@@ -226,7 +226,7 @@ button[type="submit"]:hover {
                 <br>
 
                 <label for="userType">Route :</label>
-                <select class="drop" id="route"  name="name">
+                <select class="drop" id="route"  name="name" onchange="setCustomer()">
                     <!-- <option value="User" disabled selected>Select Account</option> -->
                 </select><br>
 
@@ -290,54 +290,80 @@ button[type="submit"]:hover {
         fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route');
         }else{
           var route = sessionData[0].route;
-          fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customer/' +route  , 'customer');
+          fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route,'customer');
+          fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route',selectedValue=route,readOnly = true);
+          fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/user', 'user',selectedValue=sessionData[0].name,readOnly = true);
+        //   fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customer/' +route  , 'customer');
           $('#customer').attr('required', 'required');
         }
         
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId) {
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+    async function fetchAndPopulateDropdown(apiUrl, dropdownId,selectedValue = null, readOnly = false) {
+        try {
+            const response = await fetch(apiUrl);
+            
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            
+            const data = await response.json();
+            populateDropdownWithSelect2(data, dropdownId,selectedValue, readOnly);
+            
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+  function populateDropdownWithSelect2(data, dropdownId,selectedValue = null, readOnly = false) {
+    var dropdown = $('#' + dropdownId);
+    // Clear existing options
+    dropdown.empty();
+
+    // Add placeholder option
+    dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+
+    // Populate dropdown with API data
+    data.forEach(function (item) {
+        dropdown.append($('<option></option>').attr('value', item.name || item.route_name || item.added_by).text(item.name || item.route_name || item.added_by));
+    });
+
+       // Initialize Select2
+       dropdown.select2({
+            placeholder: 'Select components',
+            closeOnSelect: false,
+            allowClear: true,
+            templateResult: function (data) {
+                if (!data.id) {
+                    return data.text;
                 }
-                return response.json();
-            })
-            .then(data => {
-                // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
-
-    function populateDropdownWithSelect2(data, dropdownId) {
-        var dropdown = $('#' + dropdownId);
-        // Clear existing options
-        dropdown.empty();
-
-        // Add placeholder option
-        dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
-
-        // Populate dropdown with API data
-        data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.name || item.cust_name || item.route_name).text(item.name || item.cust_name || item.route_name));
+                var $element = $('<span>' + data.text + '</span>');
+                return $element;
+            }
         });
 
-        // Initialize Select2
-        dropdown.select2({
-            placeholder: "Select " + dropdownId + " type",
-            allowClear: true
-        });
+        // Set selected value if provided
+        if (selectedValue !== null) {
+        dropdown.val(selectedValue).trigger('change');
+        }
+
+        // Make the dropdown read-only if specified
+        if (readOnly) {
+            dropdown.prop('disabled', true);
+        }
+
     }
-    
+
     $(document).on('select2:open', function(e) {
         window.setTimeout(function () {
             document.querySelector('input.select2-search__field').focus();
         }, 0);
     });
+
+    function setCustomer(){
+        var route = document.getElementById('route').value
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customersale/' +route  , 'customer');
+    }
 </script>
 
 

@@ -158,7 +158,7 @@
                 <br>
                 
                <label for="userType">Route :</label>
-               <select class="drop" id="route" name="name" multiple="multiple">
+               <select class="drop" id="route" name="name" multiple="multiple" onchange="setCustomer()">
                <!-- <option value="User" disabled selected>Select Account</option> -->
                </select>
                 <br>
@@ -304,6 +304,10 @@
         }, 0);
     });
 
+    function setCustomer(){
+        var route = document.getElementById('route').value
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customersale/' +route  , 'customer');
+    }
 </script>
 
 

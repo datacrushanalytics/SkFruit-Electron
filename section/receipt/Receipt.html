@@ -305,10 +305,10 @@
                 
                 <div class="first-row">
                      <label class="input-label"> मागील बाकी कॅरेट :</label>
-                    100 : <input type="number" id="carate2100" name="number" placeholder="100" readonly>
-                    150 : <input type="number" id="carate2150" name="number" placeholder="150" readonly>
-                    250 : <input type="number" id="carate2250" name="number" placeholder="250" readonly>
-                    350 : <input type="number" id="carate2350" name="number" placeholder="350" readonly>
+                    100 : <input type="number" id="carate2100" name="number" min="0" placeholder="100" readonly>
+                    150 : <input type="number" id="carate2150" name="number" min="0" placeholder="150" readonly>
+                    250 : <input type="number" id="carate2250" name="number" min="0" placeholder="250" readonly>
+                    350 : <input type="number" id="carate2350" name="number" min="0" placeholder="350" readonly>
                 </div>
 
                 <div class="first-row">
@@ -336,10 +336,10 @@
 
                 <div class="first-row">
                     <label class="input-label">जमा कॅरेट:</label>
-                    100 : <input type="number" id="carate100" name="number" placeholder="100" onchange="carate()"> 
-                    150 : <input type="number" id="carate150" name="number" placeholder="150" onchange="carate()"> 
-                    250 : <input type="number" id="carate250" name="number" placeholder="250" onchange="carate()"> 
-                    350 : <input type="number" id="carate350" name="number" placeholder="350" onchange="carate()"> 
+                    100 : <input type="number" id="carate100" name="number" min="0" placeholder="100" onchange="carate()"> 
+                    150 : <input type="number" id="carate150" name="number" min="0" placeholder="150" onchange="carate()"> 
+                    250 : <input type="number" id="carate250" name="number" min="0" placeholder="250" onchange="carate()"> 
+                    350 : <input type="number" id="carate350" name="number" min="0" placeholder="350" onchange="carate()"> 
                 </div>
 
                 <div class="first-row">
@@ -354,17 +354,17 @@
 
                 <div class="first-row">
                     <label class="input-label">एकून बाकी कॅरेट :</label>
-                    100 : <input type="number" id="carate3100" name="number" placeholder="100" readonly>
-                    150 : <input type="number" id="carate3150" name="number" placeholder="150" readonly>
-                    250 : <input type="number" id="carate3250" name="number" placeholder="250" readonly>
-                    350 : <input type="number" id="carate3350" name="number" placeholder="350" readonly>
+                    100 : <input type="number" id="carate3100" name="number" min="0" placeholder="100" readonly>
+                    150 : <input type="number" id="carate3150" name="number" min="0" placeholder="150" readonly>
+                    250 : <input type="number" id="carate3250" name="number" min="0" placeholder="250" readonly>
+                    350 : <input type="number" id="carate3350" name="number" min="0" placeholder="350" readonly>
                 </div>
 
 
                 <div class="fourth-row">
                     
                     <div class="button-container">
-                        <button class="border-hover1 button" style="background-color: #26a653;">Save</button>
+                        <button  class="border-hover1 button" style="background-color: #26a653;">Save</button>
                         <a href="../Menu.html"><button type="button" style="background-color: #ff355f;" class="border-hover1 button">Back</button></a>
                         <!-- <button class="border-hover2 button">Back</button> -->
                     </div>
@@ -487,6 +487,7 @@ function totalbill(){
                 console.log(data)
                 document.getElementById('custid').value = parseInt(data[0]['id']);
                 document.getElementById('input3').value = parseInt(data[0]['current_balance'] || 0);
+                totalbill();
             })
             .catch(error => {
                 console.error('Error:', error);

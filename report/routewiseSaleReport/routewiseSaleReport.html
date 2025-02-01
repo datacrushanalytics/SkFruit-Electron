@@ -337,13 +337,13 @@
                     <th class="hide">Route</th>
                     <th class="hide">Amount</th>
                     <th class="hide">Carate Amount</th>
-                    <th class="hide">Previous Balance</th>
                     <th class="hide">Total Kalam</th>
+                    <th class="hide">Previous Balance</th>
+                    <th class="hide">Paid Amount</th>
                     <th class="hide">Online Amount</th>
                     <th class="hide">Discount</th>
                     <th class="hide">In Carte</th>
                     <th class="hide">Balance</th>
-                    <th class="hide">Paid Amount</th>
                     <th class="hide">Comment</th>
                     <th class="hide">Products</th>
                     <th class="hide">BILL</th>
@@ -492,8 +492,10 @@
 
     function setCustomer(){
         var route = document.getElementById('route').value
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customer/' +route  , 'customer','cust_name');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'customer','name');
     }
+
+
 
     function selectProduct(){
         var bataId = document.getElementById('product').value;
@@ -503,6 +505,9 @@
         fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata/' + bataId, 'bata','bata');
         loader.style.display = 'none';
     }
+
+
+    
 </script>
 
 </html>

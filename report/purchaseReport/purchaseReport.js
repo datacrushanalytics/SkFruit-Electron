@@ -450,11 +450,14 @@ function openModal(item) {
             });
             
             var totalRow = itemsTableBody.insertRow();
-            for (let i = 0; i < columnsToDisplay.length; i++) {
+            for (let i = 0; i < columnsToDisplay.length - 1; i++) {
                 totalRow.insertCell();
             }
             var totalCell = totalRow.insertCell();
-            totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Amournt'];    
+            totalCell.textContent = 'Expenses: ' + data.reports[0].expenses; 
+            var totalCell = totalRow.insertCell();
+            totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Amournt']; 
+            
             
 
         })

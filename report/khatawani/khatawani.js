@@ -994,7 +994,7 @@ function openModal1(item) {
     closeButton.onclick = function () {
         modalContent.innerHTML = '';
         modal.style.display = 'none'; // Close the modal when close button is clicked
-        window.location.reload();
+        // window.location.reload();
     };
     modalContent.appendChild(closeButton);
    

@@ -1,4 +1,5 @@
-document.getElementById('login').addEventListener('submit', async function(event) {
+async function insertSale() {
+// document.getElementById('login').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
     var sessionData = JSON.parse(localStorage.getItem('sessionData'));
     var isAdmin = sessionData[0].name;
@@ -57,8 +58,8 @@ document.getElementById('login').addEventListener('submit', async function(event
     } catch (error) {
         console.error('Error:', error);
     }
-});
-
+// });
+}
 
 
 function openModal(item) {

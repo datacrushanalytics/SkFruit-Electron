@@ -385,7 +385,7 @@
 
 <script>
         
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', async function () {
         const now = new Date();
 
     // Adjust to IST (UTC+5:30)
@@ -398,16 +398,35 @@
     // Set the value of the date inputs to today's date in IST
     document.getElementById('fromdate').value = todayIST;
     document.getElementById('todate').value = todayIST;
-        // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route','route_name');
+
+
+    var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+        // Check if session data exists and if the user is an admin
+        var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+        // Check if the user is an admin and show/hide the button accordingly
+        if (isAdmin) {
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route','route_name');
         fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/user', 'user', 'added_by');
+            
+            // document.getElementById('user').style.display = none
+        }else{
+            var route = sessionData[0].route;
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'customer',readOnly=false);
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route','route_name',selectedValue=route,readOnly = true);
+            fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/user', 'user','added_by',selectedValue=sessionData[0].name,readOnly = true);
+        }
+        // Fetch data from API and populate Select2 dropdowns
+        // fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route','route_name');
+        // fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/user', 'user', 'added_by');
         var dailyReportData = JSON.parse(localStorage.getItem('dailyReportData'));
         if(dailyReportData){
             console.log("DailyReport",dailyReportData)
             fetchDataAndProcess(dailyReportData);
             //localStorage.removeItem('dailyReportData');
+        }else{
+            // fetchDataAndProcess();
         }
-        fetchDataAndProcess();
+       
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId, field,selectedValue = null, readOnly = false) {

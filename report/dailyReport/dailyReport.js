@@ -12,7 +12,7 @@ function formatDate(dateString) {
 }
 
 
-document.getElementById('loginForm1').addEventListener('submit', function(event) {
+document.getElementById('loginForm1').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent form submission
     fetchDataAndProcess();
 });

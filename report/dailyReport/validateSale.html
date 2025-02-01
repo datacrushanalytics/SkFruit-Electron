@@ -493,19 +493,19 @@
         <div class="carat-inputs">
           <div class="input-wrapper">
             <label for="carate100">100 :</label>
-            <input type="number" id="carate100" name="carate100" placeholder="100" onchange="carate()">
+            <input type="number" id="carate100" name="carate100" min="0" placeholder="100" onchange="carate()">
           </div>
           <div class="input-wrapper">
             <label for="carate150">150 :</label>
-            <input type="number" id="carate150" name="carate150" placeholder="150" onchange="carate()">
+            <input type="number" id="carate150" name="carate150" min="0" placeholder="150" onchange="carate()">
           </div>
           <div class="input-wrapper">
             <label for="carate250">250 :</label>
-            <input type="number" id="carate250" name="carate250" placeholder="250" onchange="carate()">
+            <input type="number" id="carate250" name="carate250" min="0" placeholder="250" onchange="carate()">
           </div>
           <div class="input-wrapper">
             <label for="carate350">350 :</label>
-            <input type="number" id="carate350" name="carate350" placeholder="350" onchange="carate()">
+            <input type="number" id="carate350" name="carate350" min="0" placeholder="350" onchange="carate()">
           </div>
         </div>
       </div>
@@ -551,19 +551,19 @@
         <div class="carat-inputs">
           <div class="input-wrapper">
             <label for="carate100">100 :</label>
-            <input type="number" id="carate1100" name="carate100" placeholder="100" onchange="carate1()">
+            <input type="number" id="carate1100" name="carate100" min="0" placeholder="100" onchange="carate1()">
           </div>
           <div class="input-wrapper">
             <label for="carate150">150 :</label>
-            <input type="number" id="carate1150" name="carate150" placeholder="150" onchange="carate1()">
+            <input type="number" id="carate1150" name="carate150" min="0" placeholder="150" onchange="carate1()">
           </div>
           <div class="input-wrapper">
             <label for="carate250">250 :</label>
-            <input type="number" id="carate1250" name="carate250" placeholder="250" onchange="carate1()">
+            <input type="number" id="carate1250" name="carate250" min="0" placeholder="250" onchange="carate1()">
           </div>
           <div class="input-wrapper">
             <label for="carate350">350 :</label>
-            <input type="number" id="carate1350" name="carate350" placeholder="350" onchange="carate1()">
+            <input type="number" id="carate1350" name="carate350" min="0" placeholder="350" onchange="carate1()">
           </div>
         </div>
       </div>
@@ -611,7 +611,7 @@
       </div>
 
       <button type="button" style="background-color: #26a653;" class="save" onclick="insertSale()">Save</button>
-      <button type="button" style="background-color: #ff355f;" class="save" onclick="confirmAndProceed()">Back</button>
+      <button type="button" style="background-color: #ff355f;" class="save" onclick="confirmAndProceed1()">Back</button>
   </div>
   </form>
 
@@ -626,6 +626,10 @@
 
 
 <script>
+  function confirmAndProceed1() {
+    window.location.href = "./dailyReport.html"; // Replace with your target URL
+}
+
 
   document.addEventListener('DOMContentLoaded', async function () {
     // Fetch data from API and populate Select2 dropdowns
@@ -690,7 +694,7 @@
     });
 
     
-
+    
 
 
     var saleData = localStorage.getItem('saleData');
