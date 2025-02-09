@@ -300,6 +300,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var sessionData = JSON.parse(localStorage.getItem('sessionData'));
     // Check if session data exists and if the user is an admin
     var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+    console.log("Admin",isAdmin)
     // Check if the user is an admin and show/hide the button accordingly
     if (!isAdmin) {
         document.getElementById('date').readOnly = true; // Hide the button for non-admin users
