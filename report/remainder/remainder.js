@@ -143,7 +143,7 @@ function populateTable(data) {
         
           
 
-        if (isAdmin) {
+        // if (isAdmin) {
             var editCell = row.insertCell();
             var editButton = document.createElement('button');
             editButton.className = 'button edit-button';
@@ -156,7 +156,7 @@ function populateTable(data) {
                 editUser(item); // Pass the user data to the edit function
             });
             editCell.appendChild(editButton);
-        }
+        // }
 
         var buttonCell = row.insertCell();
 
