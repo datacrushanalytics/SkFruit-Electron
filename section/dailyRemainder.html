@@ -249,6 +249,7 @@ th {
             var sessionData = JSON.parse(localStorage.getItem('sessionData'));
             document.getElementById('user').textContent = sessionData[0].name;
             var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+            var route = sessionData[0].route;
 
             // Display current date and time
             //var currentDateElement = document.getElementById('currentDate');
@@ -265,13 +266,17 @@ th {
             var loader = document.getElementById('loader');
             loader.style.display = 'block';
 
-            fetchData(); 
+            const url = isAdmin 
+    ? "http://103.174.102.89:3000/fetchData/remainder" 
+    : `http://103.174.102.89:3000/fetchData/remainder/${route}`;
+
+            fetchData(url); 
           });
 
-          function fetchData() {
+          function fetchData(url) {
             var tbody = document.getElementById('tableBody');
             tbody.innerHTML = ''; // Clear existing rows
-            fetch("http://103.174.102.89:3000/fetchData/remainder", {
+            fetch(url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
