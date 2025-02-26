@@ -1,3 +1,5 @@
+let accountInfo = [];
+
 document.getElementById('loginForm1').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
     fetchDataAndProcess();
@@ -47,8 +49,10 @@ function fetchDataAndProcess() {
     .then(result => {
         loader.style.display = 'none';
         console.log(result)
-        populateTable4(result)
+        accountInfo = result;
+        populateTable4(accountInfo)
         return result;
+
         // Optionally, you can darkgreyirect or show a success message here
     })
     .catch(error => {
@@ -96,3 +100,23 @@ function populateTable4(data) {
         });
     });
 }
+
+
+// Function to filter results based on the search input
+function searchData() {
+    console.log("accountInfo", accountInfo);
+
+    const query = document.getElementById('searchBox').value.toLowerCase();
+    
+    if (!accountInfo || !accountInfo.reports) {
+        console.error("Invalid accountInfo structure");
+        return;
+    }
+
+    const filteredResults = accountInfo.reports.filter(item => 
+        (item.name?.toLowerCase() ?? '').includes(query)
+    );
+
+    populateTable4({ reports: filteredResults }); // Pass as an object
+}
+

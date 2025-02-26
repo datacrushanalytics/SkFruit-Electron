@@ -98,6 +98,7 @@ function editRow(button, id,editable) {
     `;
 }
 
+
 function updateRowTotal(inputElement) {
     var row = inputElement.parentElement.parentElement;
     var cells = row.querySelectorAll('td');
@@ -105,7 +106,7 @@ function updateRowTotal(inputElement) {
     // Safely get quantity and rate input values
     var quantityInput = cells[3]?.querySelector('input');
     var rateInput = cells[4]?.querySelector('input');
-    console.log(cells[3].textContent.trim(),"quantityInput")
+
     var quantity = quantityInput ? parseInt(quantityInput.value, 10) || 0 : parseInt(cells[3].textContent.trim(), 10) || 0;
     var rate = rateInput ? parseInt(rateInput.value, 10) || 0 : 0;
 
@@ -124,18 +125,31 @@ function updateRowTotal(inputElement) {
         quantity = availableInventory; // Update the quantity variable
     }
 
-    // Calculate total as quantity * rate
+    // Get the previous total value from the cell
+    var previousTotal = parseInt(cells[5].textContent.trim(), 10) || 0;
+
+    // Calculate new total as quantity * rate
     var total = quantity * rate;
 
     // Update the total in the table
     cells[5].textContent = total;
 
-    // Update the hidden total field if needed (to reflect the updated total)
+    // Update the hidden total field if needed
     var totalField = document.getElementById("total");
     if (totalField) {
         totalField.value = total;
     }
+
+    // Update the overall bill1 value by subtracting the previous total and adding the new total
+    var billField = document.getElementById('bill1');
+    if (billField) {
+        billField.value = (parseInt(billField.value || 0) - previousTotal + total);
+    }
+
+    // Call totalBalance function to update the overall balance
+    totalBalance();
 }
+
 
 
 function cancelEdit(button, originalQuantity, originalRate) {
