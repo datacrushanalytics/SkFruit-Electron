@@ -198,7 +198,7 @@ function populateTable(data) {
         });
 
         // Add Delete button if user is admin
-        if (isSuperAdmin) {
+        if (isAdmin) {
             var deleteCell = row.insertCell();
             var deleteButton = document.createElement('button');
             deleteButton.className = 'button delete-button';

@@ -467,8 +467,47 @@
     }
 
     function setCustomer(){
-        var route = document.getElementById('route').value
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customersale/' +route  , 'customer','name');
+        // var route = document.getElementById('route').value
+        var selectedValues = $('#route').val();
+        console.log("routes", selectedValues)
+        // fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customersaleKhatawani/' +route  , 'customer','name');
+        
+
+        return fetch('http://103.174.102.89:3000/fetchData/customersaleKhatawani', {
+        method: 'POST',
+        body: JSON.stringify({
+            route : selectedValues || '*',
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.status === 404) {
+            loader.style.display = 'none';
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No data found.',
+              });
+            throw new Error('Data not found');
+        }
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(result => {
+        loader.style.display = 'none';
+        console.log(result);
+        // populateTable4(result);
+        // populateTable5(result);
+        populateDropdownWithSelect21(result, 'customer','name');
+        // return result;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
     }
 
 
