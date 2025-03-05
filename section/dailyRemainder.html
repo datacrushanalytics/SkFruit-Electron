@@ -1,499 +1,491 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
     <title>home page</title>
     <style>
-        .container {
-    text-align: center;
-    margin-bottom: 20px;
-}
+      .container {
+        text-align: center;
+        margin-bottom: 20px;
+      }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #fef7f7;
-    margin: 0;
-    padding: 20px;
-}
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fef7f7;
+        margin: 0;
+        padding: 20px;
+      }
 
-.container {
-    text-align: center;
-    margin-bottom: 20px;
-}
+      .container {
+        text-align: center;
+        margin-bottom: 20px;
+      }
 
-.container1 {
-    max-width: 900px;
-    margin: 0 auto;
-    background-color: rgba(255, 255, 255, 0.973);
-    padding: 7px;
-    border-radius: 30px;
-    box-shadow: 0 0 10px rgb(192 190 190 / 10%);
-    border: 4px solid #323131;
-}
+      .container1 {
+        max-width: 900px;
+        margin: 0 auto;
+        background-color: rgba(255, 255, 255, 0.973);
+        padding: 7px;
+        border-radius: 30px;
+        box-shadow: 0 0 10px rgb(192 190 190 / 10%);
+        border: 4px solid #323131;
+      }
 
-.scrollview {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-}
+      .scrollview {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+      }
 
+      .btn {
+        flex: 1; /* Takes equal space */
+        max-width: 200px; /* Maximum width */
+        min-width: 150px; /* Minimum width */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 25px; /* Increased padding for taller buttons */
+        margin: 10px;
+        border: none;
+        background-color: grey;
+        color: white;
+        cursor: pointer;
+        border-radius: 250px; /* Adjusted border-radius for a less extreme curve */
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow */
+      }
 
-.btn {
-    flex: 1; /* Takes equal space */
-    max-width: 200px; /* Maximum width */
-    min-width: 150px; /* Minimum width */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 25px; /* Increased padding for taller buttons */
-    margin: 10px;
-    border: none;
-    background-color: grey;
-    color: white;
-    cursor: pointer;
-    border-radius: 250px; /* Adjusted border-radius for a less extreme curve */
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow */
-}
+      .btn:hover {
+        background-color: rgb(249, 245, 245);
+        color: rgb(168, 168, 168);
+      }
 
-.btn:hover {
-    background-color: rgb(249, 245, 245);
-    color: rgb(168, 168, 168);
-}
+      h1,
+      h2,
+      h3 {
+        text-align: center;
+        margin-bottom: 10px;
+      }
 
-h1, h2, h3 {
-    text-align: center;
-    margin-bottom: 10px;
-}
+      /* Optional: Add some styles for the image if needed */
+      .btn-image img {
+        max-width: 50px; /* adjust as needed */
+        height: auto;
+      }
 
-/* Optional: Add some styles for the image if needed */
-.btn-image img {
-    max-width: 50px; /* adjust as needed */
-    height: auto;
-}
+      /* ... (your existing CSS) ... */
 
+      /* Added styles for datetime using Flexbox */
+      .datetime {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        font-size: 18px;
+        color: #555;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 10px;
+      }
 
-/* ... (your existing CSS) ... */
+      #currentDate,
+      #currentTime {
+        flex: 1;
+      }
 
-/* Added styles for datetime using Flexbox */
-.datetime {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    font-size: 18px;
-    color: #555;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 10px;
-}
+      .table-container {
+        max-width: 100%;
+        overflow-x: auto;
+        /* Enable horizontal scrolling */
+        margin: 0 auto;
+        /* min-width: 600px; */
+        /* Set a minimum width for the table container */
+        max-height: calc(100vh - 200px);
+        /* Set maximum height for the table container */
+        overflow-y: auto;
+        /* Enable vertical scrolling */
+      }
 
-#currentDate, #currentTime {
-    flex: 1;
-}
+      table {
+        width: auto;
+        min-width: 100%;
+        /* Ensure table expands to fit content */
+        border-collapse: collapse;
+        background-color: rgba(255, 255, 255, 0.8);
+        /* Transparent background */
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+      }
 
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 12px;
+      }
 
-.table-container {
-    max-width: 100%;
-    overflow-x: auto;
-    /* Enable horizontal scrolling */
-    margin: 0 auto;
-    /* min-width: 600px; */
-    /* Set a minimum width for the table container */
-    max-height: calc(100vh - 200px);
-    /* Set maximum height for the table container */
-    overflow-y: auto;
-    /* Enable vertical scrolling */
-}
+      th {
+        background-color: #f2f2f2;
+      }
 
-table {
-    width: auto;
-    min-width: 100%;
-    /* Ensure table expands to fit content */
-    border-collapse: collapse;
-    background-color: rgba(255, 255, 255, 0.8);
-    /* Transparent background */
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-}
+      /* Style the loader container */
+      #loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite; /* Apply animation */
+        display: none; /* Hide loader by default */
 
-th,
-td {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 12px;
-}
+        /* Center the loader */
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
 
-th {
-    background-color: #f2f2f2;
-}
-
-/* Style the loader container */
-#loader {
-    border: 4px solid #f3f3f3; /* Light grey */
-    border-top: 4px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite; /* Apply animation */
-    display: none; /* Hide loader by default */
-    
-    /* Center the loader */
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  /* Animation */
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  #user {
-    margin-left: 30%;
-}
-
-
-.button-container {
-            margin-bottom: 0px;
+      /* Animation */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
         }
-        .button i {
-            font-size: 20px; /* Adjust the size as needed */
+        100% {
+          transform: rotate(360deg);
         }
+      }
 
-        .button-container {
-            display: flex;
-            gap: 10px; /* Adjust the space between buttons */
-        }
+      #user {
+        margin-left: 30%;
+      }
 
-        .button {
-            padding: 12px 24px;
-            text-decoration: none;
-            color: white;
-            background-color: grey;
-            /* Grey color */
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin: 0 10px;
-        }
+      .button-container {
+        margin-bottom: 0px;
+      }
+      .button i {
+        font-size: 20px; /* Adjust the size as needed */
+      }
 
-        .button:hover {
-            background-color: darkgrey;
-            /* Darker grey on hover */
-        }
+      .button-container {
+        display: flex;
+        gap: 10px; /* Adjust the space between buttons */
+      }
 
-        .button a {
-            color: white;
-            text-decoration: none;
-        }
+      .button {
+        padding: 12px 24px;
+        text-decoration: none;
+        color: white;
+        background-color: grey;
+        /* Grey color */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin: 0 10px;
+      }
 
-  
+      .button:hover {
+        background-color: darkgrey;
+        /* Darker grey on hover */
+      }
 
-
+      .button a {
+        color: white;
+        text-decoration: none;
+      }
     </style>
-
-</head>
-<body>
+  </head>
+  <body>
     <div id="loader"></div>
-        <div class="container">
-            <div class="datetime" id="datetime">
-                <!-- <p id="currentDate"></p> -->
-                <p>
-                    <label for="currentDate">Date:</label>
-                    <input type="date" id="currentDate" onchange="fetchData()">
-                </p>
-                <h1 id="user">USER</h1>
-                <p id="currentTime"></p>
-            </div>
-            
-            <!-- <hr>
+    <div class="container">
+      <div class="datetime" id="datetime">
+        <!-- <p id="currentDate"></p> -->
+        <p>
+          <label for="currentDate">Date:</label>
+          <input type="date" id="currentDate" onchange="fetchData()" />
+        </p>
+        <h1 id="user">USER</h1>
+        <p id="currentTime"></p>
+      </div>
+
+      <!-- <hr>
             <br>
             <br> -->
 
-            
-        <div class="table-container">
-       <h1>Remainder </h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>NO.</th>
-        <th>NAME</th>
-        <th>Address</th>
-        <th>Mobile Number</th>
-        <th>Remainder Date</th>
-        <th>Current Balance</th>
-        <th>Communication</th>          
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <!-- Data will be inserted here -->
-                </tbody>
-            </table>
-        </div>
+      <div class="table-container">
+        <h1>Remainder</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>NO.</th>
+              <th>NAME</th>
+              <th>Address</th>
+              <th>Mobile Number</th>
+              <th>Remainder Date</th>
+              <th>Current Balance</th>
+              <th>Communication</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <!-- Data will be inserted here -->
+          </tbody>
+        </table>
+      </div>
     </div>
-    </body> 
+  </body>
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Display current date and time
+      //var currentDateElement = document.getElementById('currentDate');
+      var currentTimeElement = document.getElementById("currentTime");
 
-    <script>
+      var currentDate = new Date().toLocaleDateString();
+      var currentTime = new Date().toLocaleTimeString();
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Retrieve user data from localStorage
-            var sessionData = JSON.parse(localStorage.getItem('sessionData'));
-            document.getElementById('user').textContent = sessionData[0].name;
-            var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
-            var route = sessionData[0].route;
+      //currentDateElement.textContent = "Date: " + currentDate;
+      var currentDate = new Date();
+      document.getElementById("currentDate").value =
+        currentDate.getFullYear() +
+        "-" +
+        String(currentDate.getMonth() + 1).padStart(2, "0") +
+        "-" +
+        String(currentDate.getDate()).padStart(2, "0");
+      currentTimeElement.textContent = "Time: " + currentTime;
+      var currentDate1 = new Date();
+      var loader = document.getElementById("loader");
+      loader.style.display = "block";
 
-            // Display current date and time
-            //var currentDateElement = document.getElementById('currentDate');
-            var currentTimeElement = document.getElementById('currentTime');
+      fetchData();
+    });
 
-            var currentDate = new Date().toLocaleDateString();
-            var currentTime = new Date().toLocaleTimeString();
+    function fetchData() {
+      // Retrieve user data from localStorage
+      var sessionData = JSON.parse(localStorage.getItem("sessionData"));
+      document.getElementById("user").textContent = sessionData[0].name;
+      var isAdmin = sessionData && sessionData[0].usertype === "Admin";
+      var route = sessionData[0].route;
+      const url = isAdmin
+        ? "http://103.174.102.89:3000/fetchData/remainder"
+        : `http://103.174.102.89:3000/fetchData/remainder/${route}`;
 
-            //currentDateElement.textContent = "Date: " + currentDate;
-            var currentDate = new Date();
-            document.getElementById('currentDate').value = currentDate.getFullYear() + '-' + (String(currentDate.getMonth() + 1).padStart(2, '0')) + '-' + (String(currentDate.getDate()).padStart(2, '0'));
-            currentTimeElement.textContent = "Time: " + currentTime;
-            var currentDate1 = new Date();
-            var loader = document.getElementById('loader');
-            loader.style.display = 'block';
-
-            const url = isAdmin 
-    ? "http://103.174.102.89:3000/fetchData/remainder" 
-    : `http://103.174.102.89:3000/fetchData/remainder/${route}`;
-
-            fetchData(url); 
-          });
-
-          function fetchData(url) {
-            var tbody = document.getElementById('tableBody');
-            tbody.innerHTML = ''; // Clear existing rows
-            fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                   "date" : document.getElementById("currentDate").value
-                })
-            })
-            //"date" : 
-            .then(response => {
-                if (response.status === 404) {
-                    loader.style.display = 'none';
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'No data found.',
-                    });
-                    throw new Error('Data not found');
-                }
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Loop through the data received from the API
-                loader.style.display = 'none';
-                console.log(data)
-                console.log("data fetched");
-                populateTable(data)
-            })
-            .catch(error => {
-                console.error("Error fetching data:", error);
-            }); 
+      var tbody = document.getElementById("tableBody");
+      tbody.innerHTML = ""; // Clear existing rows
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          date: document.getElementById("currentDate").value,
+        }),
+      })
+        //"date" :
+        .then((response) => {
+          if (response.status === 404) {
+            loader.style.display = "none";
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "No data found.",
+            });
+            throw new Error("Data not found");
           }
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Loop through the data received from the API
+          loader.style.display = "none";
+          console.log(data);
+          console.log("data fetched");
+          populateTable(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
 
-          function populateTable(data) {
-            var tbody = document.getElementById('tableBody');
-            tbody.innerHTML = ''; // Clear existing rows
-            var columnsToDisplay = ['name','address','mobile_no',"last_update",'current_balance'];
-            var counter = 1;
-            data.forEach(function(item) {
-                var row = tbody.insertRow();
-                var cell = row.insertCell();
-                cell.textContent = counter++;
-                columnsToDisplay.forEach(function(key) {
-                    var cell = row.insertCell();
-        
-                    if (key === 'last_update') {
-                        if (item[key] === null || item[key] === undefined) {
-                            cell.textContent = 'null';
-                        } else {
-                            var utcDate = new Date(item[key]);
-                            var options = {
-                                year: 'numeric',
-                                month: '2-digit',
-                                day: '2-digit',
-                                timeZone: 'Asia/Kolkata'
-                            };
-                            cell.textContent = utcDate.toLocaleString('en-IN', options);
-                        }
-                    } else {
-                        cell.textContent = item[key];
-                    }
-                });
+    function populateTable(data) {
+      var tbody = document.getElementById("tableBody");
+      tbody.innerHTML = ""; // Clear existing rows
+      var columnsToDisplay = [
+        "name",
+        "address",
+        "mobile_no",
+        "last_update",
+        "current_balance",
+      ];
+      var counter = 1;
+      data.forEach(function (item) {
+        var row = tbody.insertRow();
+        var cell = row.insertCell();
+        cell.textContent = counter++;
+        columnsToDisplay.forEach(function (key) {
+          var cell = row.insertCell();
 
-                var buttonCell = row.insertCell();
+          if (key === "last_update") {
+            if (item[key] === null || item[key] === undefined) {
+              cell.textContent = "null";
+            } else {
+              var utcDate = new Date(item[key]);
+              var options = {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                timeZone: "Asia/Kolkata",
+              };
+              cell.textContent = utcDate.toLocaleString("en-IN", options);
+            }
+          } else {
+            cell.textContent = item[key];
+          }
+        });
+
+        var buttonCell = row.insertCell();
 
         // Container for the buttons
-        var buttonContainer = document.createElement('div');
-        buttonContainer.className = 'button-container';
+        var buttonContainer = document.createElement("div");
+        buttonContainer.className = "button-container";
 
-        var openPopupButton = document.createElement('button');
-        openPopupButton.className = 'button';
-        var billIcon = document.createElement('i');
-        billIcon.className = 'fa-sharp fa-regular fa-envelope'; 
-        openPopupButton.style.backgroundColor = '#C48B58';  
+        var openPopupButton = document.createElement("button");
+        openPopupButton.className = "button";
+        var billIcon = document.createElement("i");
+        billIcon.className = "fa-sharp fa-regular fa-envelope";
+        openPopupButton.style.backgroundColor = "#C48B58";
         openPopupButton.appendChild(billIcon);
         //openPopupButton.textContent = 'Bill';
-        openPopupButton.addEventListener('click', async function () {
-            
-            var loader = document.getElementById('loader');
-            loader.style.display = 'block';
-            await fetch('http://103.174.102.89:3000/sms/remainderMessage', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                        "mobile_no" : item.mobile_no,
-                        "name": item.name,
-                        "date": convertUTCToISTDate(item.last_update),
-                        "remaining": item.current_balance
-                })
-            })
-                .then(response => {
-                    console.log("DTAASS")
-                    if (!response.ok) {
-                        loader.style.display = 'none';
-    
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'SMS is failed with some error',
-                          });
-                        throw new Error('Network response was not ok');
-                        
-                    }
-                    return response.json();
-                })
-                .then(result => {
-                    loader.style.display = 'none';
-                    console.log('Entry added successfully:', result);
-            
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: 'SMS Sent Successfully',
-                        })
-                    //window.location.reload();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+        openPopupButton.addEventListener("click", async function () {
+          var loader = document.getElementById("loader");
+          loader.style.display = "block";
+          await fetch("http://103.174.102.89:3000/sms/remainderMessage", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              mobile_no: item.mobile_no,
+              name: item.name,
+              date: convertUTCToISTDate(item.last_update),
+              remaining: item.current_balance,
+            }),
+          })
+            .then((response) => {
+              console.log("DTAASS");
+              if (!response.ok) {
+                loader.style.display = "none";
 
+                Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "SMS is failed with some error",
+                });
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((result) => {
+              loader.style.display = "none";
+              console.log("Entry added successfully:", result);
+
+              Swal.fire({
+                icon: "success",
+                title: "Success!",
+                text: "SMS Sent Successfully",
+              });
+              //window.location.reload();
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
         });
         buttonContainer.appendChild(openPopupButton);
-        
+
         // Second button
-        var secondButton = document.createElement('button');
-        secondButton.className = 'button';
-        secondButton.style.backgroundColor = 'green'; 
-        var secondIcon = document.createElement('i');
-        secondIcon.className = 'fa-brands fa-whatsapp';
+        var secondButton = document.createElement("button");
+        secondButton.className = "button";
+        secondButton.style.backgroundColor = "green";
+        var secondIcon = document.createElement("i");
+        secondIcon.className = "fa-brands fa-whatsapp";
         secondButton.appendChild(secondIcon);
         //secondButton.textContent = 'Second Button'; // Change the text as needed
-        secondButton.addEventListener('click', async function () {
-
-            var loader = document.getElementById('loader');
-            loader.style.display = 'block';
-            await fetch('http://103.174.102.89:3000/whatsapp/remainderMessage', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "campaignName" : "SK_fruits_remainder",
-                    "mobile_no" : item.mobile_no,
-                    "userName" : item.name,
-                    "remainderDate" : convertUTCToISTDate(item.last_update),
-                    "remaining" : item.current_balance
-                })
-            })
-                .then(response => {
-                    console.log("DTAASS")
-                    if (!response.ok) {
-                        loader.style.display = 'none';
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Whatsapp message is failed with some error',
-                          });
-             
-                        throw new Error('Network response was not ok');
-                        
-                    }
-                    return response.json();
-                })
-                .then(result => {
-                    loader.style.display = 'none';
-                    console.log('Entry added successfully:', result);
-                 
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: 'Whatsapp message Sent Successfully',
-                        })
-                    //window.location.reload();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
+        secondButton.addEventListener("click", async function () {
+          var loader = document.getElementById("loader");
+          loader.style.display = "block";
+          await fetch("http://103.174.102.89:3000/whatsapp/remainderMessage", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              campaignName: "SK_fruits_remainder",
+              mobile_no: item.mobile_no,
+              userName: item.name,
+              remainderDate: convertUTCToISTDate(item.last_update),
+              remaining: item.current_balance,
+            }),
+          })
+            .then((response) => {
+              console.log("DTAASS");
+              if (!response.ok) {
+                loader.style.display = "none";
+                Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "Whatsapp message is failed with some error",
                 });
 
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((result) => {
+              loader.style.display = "none";
+              console.log("Entry added successfully:", result);
 
+              Swal.fire({
+                icon: "success",
+                title: "Success!",
+                text: "Whatsapp message Sent Successfully",
+              });
+              //window.location.reload();
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
         });
         buttonContainer.appendChild(secondButton);
 
         // Append the button container to the cell
         buttonCell.appendChild(buttonContainer);
+      });
+    }
 
-        
-            });
-        }
+    function convertUTCToISTDate(dateString) {
+      // Parse the date string
+      const date = new Date(dateString);
 
-        function convertUTCToISTDate(dateString) {
-            // Parse the date string
-            const date = new Date(dateString);
-          
-            // Calculate the IST time offset (UTC+5:30)
-            const offset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
-          
-            // Adjust for IST
-            const istDate = new Date(date.getTime() + offset);
-          
-            // Extract the date part (year, month, day)
-            const year = istDate.getUTCFullYear();
-            const month = ('0' + (istDate.getUTCMonth() + 1)).slice(-2); // Months are zero-based
-            const day = ('0' + istDate.getUTCDate()).slice(-2);
-          
-            // Return date in YYYY-MM-DD format
-            return `${year}-${month}-${day}`;
-          }
-          
+      // Calculate the IST time offset (UTC+5:30)
+      const offset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
 
-    </script>
+      // Adjust for IST
+      const istDate = new Date(date.getTime() + offset);
 
+      // Extract the date part (year, month, day)
+      const year = istDate.getUTCFullYear();
+      const month = ("0" + (istDate.getUTCMonth() + 1)).slice(-2); // Months are zero-based
+      const day = ("0" + istDate.getUTCDate()).slice(-2);
 
-
-
+      // Return date in YYYY-MM-DD format
+      return `${year}-${month}-${day}`;
+    }
+  </script>
 </html>
