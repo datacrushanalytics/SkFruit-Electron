@@ -499,7 +499,7 @@ const year = istDate.getFullYear();
 const formattedISTDate = `${day}/${month}/${year}`;
 
 
-        var barcodeValue = 'Product Name:' + item['product_name'].split('(')[0] + ' \nBata:' + item['bata'];
+        var barcodeValue = item['product_name'].split('(')[0] + ' \nBata: ' + item['bata'];
         var popupContent = `
             <div class="popup">
             
@@ -508,19 +508,22 @@ const formattedISTDate = `${day}/${month}/${year}`;
                     <img src="../../assets/img/logo.png" alt="Company Logo" id="companyLogo"> <!-- Updated company logo path -->
                 </div>
                 <canvas id="barcodeCanvas"></canvas>
+                
+
                 <button id="downloadButton">Download Barcode</button>
                 <button id="printButton">Print Barcode</button>
                 <button onclick="closePopup()">Close</button>
             </div>
         `;
+        // <canvas id="barcodeCanvas" width="885" height="472"></canvas>
         document.getElementById('popupContainer').innerHTML = popupContent;
         JsBarcode('#barcodeCanvas', barcodeValue, {
             format: "CODE128", // Adjust the barcode format as needed
             displayValue: true, // Hide text under the barcode 
             //width: 1, // Set the width of the bars
             text: barcodeValue, // Add text below the barcode
-            width: 2, // Adjust bar width for better readability
-        height: 80, // Barcode height within 113px canvas
+            width: 1, // Adjust bar width for better readability
+        height: 70, // Barcode height within 113px canvas
         margin: 5,
         fontSize: 12, // Adjust text size
         textMargin: 4
@@ -670,195 +673,6 @@ const formattedISTDate = `${day}/${month}/${year}`;
             loader.style.display = 'none';
         });
     }
-
-
-// function generateBarcodesAndDownloadPDF(items) {
-//     const { jsPDF } = window.jspdf;
-
-//      // Dimensions for labels and barcode
-//     const pageWidth = 50; // Page width in mm
-//     const labelHeight = 30; // Label height
-// //     const verticalMargin = 0; // Margin between labels
-
-// //     // Calculate total required height
-//     const gap = 3; // Gap between labels in mm
-//     const labelWithGapHeight = labelHeight + gap;
-//     const totalHeight = items.length * labelWithGapHeight;
-//     console.log(totalHeight, labelWithGapHeight , "totalHeight")
-//     // const totalHeight = items.length * labelHeight;
-
-//     // Sticker dimensions in mm
-//     const stickerWidth = 50; // Sticker width
-//     const stickerHeight = 30; // Sticker height
-
-//     // Barcode dimensions in mm
-//     const barcodeWidth = 35; // Barcode width
-//     const barcodeHeight = 20; // Barcode height
-
-//     // Logo dimensions in mm
-//     const logoWidth = 10; // Logo width
-//     const logoHeight = 10; // Logo height
-
-//     // Margins within the sticker
-//     const horizontalMargin = 4; // Horizontal margin
-//     const verticalMargin = 2; // Vertical margin
-
-//     // Number of stickers per row and column
-//     const stickersPerRow = Math.floor(210 / stickerWidth); // A4 width is 210mm
-//     const stickersPerColumn = Math.floor(297 / stickerHeight); // A4 height is 297mm
-//     const stickersPerPage = stickersPerRow * stickersPerColumn;
-
-//     // Create a new PDF instance
-//     const pdf = new jsPDF({
-//         unit: "mm",
-//         format: [pageWidth, totalHeight], // A4 size
-//     });
-
-//     items.forEach((item, index) => {
-//         const barcodeValue = `Product: ${item.product_name.split('(')[0]}\nBata: ${item.bata}`;
-
-//         // Create a canvas for the barcode
-//         const canvas = document.createElement('canvas');
-//         JsBarcode(canvas, barcodeValue, {
-//             format: "CODE128",
-//             displayValue: true,
-//             width: 1, // Adjust barcode bar width 
-//             textMargin: 1, // Space between barcode and text,
-//             text: barcodeValue,
-//         });
-
-//         // Convert the canvas to an image
-//         const barcodeImage = canvas.toDataURL('image/png');
-
-//         // Calculate row and column positions
-//         const rowIndex = Math.floor(index / stickersPerRow) % stickersPerColumn; // Current row
-//         const colIndex = index % stickersPerRow; // Current column
-
-//         // Calculate the x and y position for this sticker
-//         // const xOffset = colIndex * stickerWidth + horizontalMargin;
-//         // const yOffset = rowIndex * stickerHeight + verticalMargin;
-
-//         // Calculate the y position for this label
-//         const yOffset = index * labelHeight + (index > 0 ? 0 : 3 ) + verticalMargin;
-// //         console.log("index", index, yOffset , labelHeight, verticalMargin) 
-//         // Add the barcode image
-//         pdf.addImage(barcodeImage, "PNG", 4, yOffset, barcodeWidth, barcodeHeight);
-
-//         // Add a new page if the current page is full
-//         if ((index + 1) % stickersPerPage === 0 && index < items.length - 1) {
-//             pdf.addPage();
-//         }
-//     });
-
-//     // Save the PDF file
-//     pdf.save("barcodes.pdf");
-// }
-    
-
-// function generateBarcodesAndDownloadPDF(items) {
-//     const { jsPDF } = window.jspdf;
-
-//     // Page dimensions in mm
-//     // const pageWidth = 50; // Page width in mm
-//     // const pageHeight = 40; // Page height in mm
-
-//     // // Label dimensions in mm
-//     // const labelWidth = 50; // Label width
-//     // const labelHeight = 40; // Label height
-
-//     // // Barcode dimensions in mm
-//     // const barcodeWidth = 35; // Barcode width
-//     // const barcodeHeight = 20; // Barcode height
-
-//     // // Margins within each label
-//     // const horizontalMargin = 1; // Horizontal margin
-//     // const verticalMargin = 2; // Vertical margin
-
-//     // // Number of labels per row and column
-//     // const labelsPerRow = Math.floor(pageWidth / labelWidth);
-//     // const labelsPerColumn = Math.floor(pageHeight / labelHeight);
-
-//       // Dimensions for labels and barcode
-//     const pageWidth = 50; // Page width in mm
-//     const labelHeight = 40; // Label height
-//     const barcodeWidth = 35; // Barcode width
-//     const barcodeHeight = 20; // Barcode height
-//     const verticalMargin = 2; // Margin between labels
-
-
-//     // Number of stickers per row and column
-//     // const stickersPerRow = Math.floor(210 / stickerWidth); // A4 width is 210mm
-//     // const stickersPerColumn = Math.floor(297 / stickerHeight); // A4 height is 297mm
-//     // const stickersPerPage = stickersPerRow * stickersPerColumn;
-//     const totalHeight = items.length * labelHeight;
-
-//     // Create a new PDF instance
-//     const pdf = new jsPDF({
-//         unit: "mm",
-//         format: [pageWidth, totalHeight], // Set custom page size
-//     });
-
-//     items.forEach((item, index) => {
-//         // Format date
-//         const utcDate = new Date(item.p_date);
-//         const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
-//         const istDate = new Date(utcDate.getTime() + istOffset);
-
-//         const day = String(istDate.getDate()).padStart(2, '0');
-//         const month = String(istDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-//         const year = istDate.getFullYear();
-//         const formattedISTDate = `${day}/${month}/${year}`;
-
-//         // Barcode value
-//         const barcodeValue = `Product: ${item.product_name.split('(')[0]}\nBata: ${item.bata} ${formattedISTDate}`;
-
-//         // Create a canvas for the barcode
-//         const canvas = document.createElement('canvas');
-//         JsBarcode(canvas, barcodeValue, {
-//             format: "CODE128",
-//             displayValue: true,
-//             width: 1, // Adjust barcode width
-//             textMargin: 1, // Space between barcode and text
-//             text: barcodeValue,
-//         });
-
-//         // Convert the canvas to an image
-//         const image = canvas.toDataURL('image/png');
-
-//         // Calculate row and column positions
-//         // const rowIndex = Math.floor(index / labelsPerRow) % labelsPerColumn; // Current row
-//         // const colIndex = index % labelsPerRow; // Current column
-
-//         // // Calculate the x and y position for this label
-//         // const xOffset = colIndex * labelWidth + horizontalMargin;
-//         // const yOffset = rowIndex * labelHeight + verticalMargin;
-//         // console.log("xOffset", xOffset, "yOffset", yOffset)
-
-//         const yOffset = index * labelHeight + verticalMargin;
-
-
-//         // Add the barcode image to the PDF
-//         pdf.addImage(image, 'PNG', 3, yOffset + 1, barcodeWidth, barcodeHeight);
-
-//         // if (
-//         //     xOffset + labelWidth > pageWidth || // Horizontal space overflow
-//         //     yOffset + labelHeight > pageHeight // Vertical space overflow
-//         // ) {
-//         //     pdf.addPage();
-//         // }
-
-//         // if ((index + 1) % (labelsPerRow * labelsPerColumn) === 0 && index < items.length - 1) {
-//         //     console.log("labelsPerRow * labelsPerColumn",labelsPerRow * labelsPerColumn)
-//         //     pdf.addPage();
-//         // }
-
-
-//     });
-//     // Add a new page if the current page is full
-    
-//     // Save the PDF file
-//     pdf.save('barcodes.pdf');
-// }
 
 
 
