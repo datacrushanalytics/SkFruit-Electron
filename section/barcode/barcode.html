@@ -235,6 +235,47 @@
         margin-left: 10px;
     }
 
+    
+    
+    @media print {
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .popup {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 75mm;
+        height: 30mm;
+        padding: 2mm;
+        background: white;
+    }
+
+    #companyInfo {
+        text-align: center;
+        width: 100%;
+    }
+
+    #companyLogo {
+        max-width: 50mm;  /* Adjust logo width */
+        max-height: 10mm; /* Keep logo height reasonable */
+        display: block;
+        margin-bottom: 2mm; /* Space between logo and barcode */
+    }
+
+    #barcodeCanvas {
+        width: 70mm;  /* Ensure barcode does not exceed 75mm */
+        height: 20mm; /* Ensure barcode stays within 30mm total height */
+    }
+
+    button {
+        display: none; /* Hide buttons when printing */
+    }
+}
+
 
     </style>
 </head>
@@ -481,84 +522,159 @@
     
 
     
-    function displayBarcodePopup(item) {
-        console.log('barcode',item)
-        // Convert the date to a JavaScript Date object
-var utcDate = new Date(item.p_date);
+//     function displayBarcodePopup(item) {
+//         console.log('barcode',item)
+//         // Convert the date to a JavaScript Date object
+// var utcDate = new Date(item.p_date);
 
-// Convert the UTC date to IST (UTC+5:30)
-const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
-const istDate = new Date(utcDate.getTime() + istOffset);
+// // Convert the UTC date to IST (UTC+5:30)
+// const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
+// const istDate = new Date(utcDate.getTime() + istOffset);
 
-// Extract day, month, and year and format as DD/MM/YYYY
-const day = String(istDate.getDate()).padStart(2, '0');  // Add leading zero if needed
-const month = String(istDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-const year = istDate.getFullYear();
+// // Extract day, month, and year and format as DD/MM/YYYY
+// const day = String(istDate.getDate()).padStart(2, '0');  // Add leading zero if needed
+// const month = String(istDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+// const year = istDate.getFullYear();
 
-// Combine the parts into DD/MM/YYYY format
-const formattedISTDate = `${day}/${month}/${year}`;
+// // Combine the parts into DD/MM/YYYY format
+// const formattedISTDate = `${day}/${month}/${year}`;
 
 
-        var barcodeValue = item['product_name'].split('(')[0] + ' \nBata: ' + item['bata'];
-        var popupContent = `
-            <div class="popup">
+//         var barcodeValue = item['product_name'].split('(')[0] + ' \nBata: ' + item['bata'];
+//         var popupContent = `
+//             <div class="popup">
             
-                <div id="companyInfo">
-                    <p id="companyName">Savata Fruits</p> <!-- Added company name -->
-                    <img src="../../assets/img/logo.png" alt="Company Logo" id="companyLogo"> <!-- Updated company logo path -->
-                </div>
-                <canvas id="barcodeCanvas"></canvas>
+//                 <div id="companyInfo">
+//                     <p id="companyName">Savata Fruits</p> <!-- Added company name -->
+//                     <img src="../../assets/img/logo.png" alt="Company Logo" id="companyLogo"> <!-- Updated company logo path -->
+//                 </div>
+//                 <canvas id="barcodeCanvas"></canvas>
                 
 
-                <button id="downloadButton">Download Barcode</button>
-                <button id="printButton">Print Barcode</button>
-                <button onclick="closePopup()">Close</button>
+//                 <button id="downloadButton">Download Barcode</button>
+//                 <button id="printButton">Print Barcode</button>
+//                 <button onclick="closePopup()">Close</button>
+//             </div>
+//         `;
+//         // <canvas id="barcodeCanvas" width="885" height="472"></canvas>
+//         document.getElementById('popupContainer').innerHTML = popupContent;
+//         JsBarcode('#barcodeCanvas', barcodeValue, {
+//             format: "CODE128", // Adjust the barcode format as needed
+//             displayValue: true, // Hide text under the barcode 
+//             //width: 1, // Set the width of the bars
+//             text: barcodeValue, // Add text below the barcode
+//             width: 1, // Adjust bar width for better readability
+//         height: 70, // Barcode height within 113px canvas
+//         margin: 5,
+//         fontSize: 12, // Adjust text size
+//         textMargin: 4
+//         });
+
+//             // Create a download link for the barcode image
+//     var downloadButton = document.getElementById('downloadButton');
+//     downloadButton.addEventListener('click', function () {
+//         //var svg = document.getElementById('barcodeCanvas');
+//         var canvas = document.getElementById('barcodeCanvas');
+//         //var svgData = new XMLSerializer().serializeToString(svg);
+//         //var image = new Image();
+//         var image = canvas.toDataURL('image/png');
+//         //image.src = 'data:image/svg+xml;base64,' + btoa(svgData);
+
+//         // Trigger download
+//         var link = document.createElement('a');
+//         link.href = image;
+//         link.download = item['product_name'] + '_' + item['bata'] + '_barcode.png'; // Set the filename based on concatenated values
+//         //document.body.appendChild(link);
+//         //document.body.removeChild(link);
+//     });
+
+//     // Print Barcode Logic
+//     document.getElementById('printButton').addEventListener('click', function () {
+//         var printWindow = window.open('', '', 'width=213,height=85');
+//         // var printWindow = window.open('', '', 'width=283,height=113');
+//         printWindow.document.write('<img src="' + document.getElementById('barcodeCanvas').toDataURL() + '"/>');
+//         printWindow.document.close();
+//         printWindow.print();
+//     });
+
+        
+//         document.querySelector('.popup').style.display = 'block';
+//     }
+
+
+
+function displayBarcodePopup(item) {
+    console.log('barcode', item);
+
+    // Convert UTC date to IST format (DD/MM/YYYY)
+    var utcDate = new Date(item.p_date);
+    const istOffset = 5.5 * 60 * 60 * 1000;
+    const istDate = new Date(utcDate.getTime() + istOffset);
+    const formattedISTDate = `${String(istDate.getDate()).padStart(2, '0')}/` +
+                             `${String(istDate.getMonth() + 1).padStart(2, '0')}/` +
+                             `${istDate.getFullYear()}`;
+
+    var barcodeValue = item['product_name'].split('(')[0] + ' \nBata: ' + item['bata'];
+    var popupContent = `
+        <div class="popup">
+            <div id="companyInfo">
+                <p id="companyName">Savata Fruits</p>
+                <img src="../../assets/img/logo.png" alt="Company Logo" id="companyLogo">
             </div>
-        `;
-        // <canvas id="barcodeCanvas" width="885" height="472"></canvas>
-        document.getElementById('popupContainer').innerHTML = popupContent;
-        JsBarcode('#barcodeCanvas', barcodeValue, {
-            format: "CODE128", // Adjust the barcode format as needed
-            displayValue: true, // Hide text under the barcode 
-            //width: 1, // Set the width of the bars
-            text: barcodeValue, // Add text below the barcode
-            width: 1, // Adjust bar width for better readability
-        height: 70, // Barcode height within 113px canvas
+            <svg id="barcodeCanvas"></svg>
+            <button id="downloadButton">Download Barcode</button>
+            <button id="printButton">Print Barcode</button>
+            <button onclick="closePopup()">Close</button>
+        </div>
+    `;
+
+    document.getElementById('popupContainer').innerHTML = popupContent;
+
+    // Generate Barcode
+    JsBarcode('#barcodeCanvas', barcodeValue, {
+        format: "CODE128",
+        displayValue: true,
+        text: barcodeValue,
+        width: 2,  // Adjust bar width
+        height: 70, // Adjust height
         margin: 5,
-        fontSize: 12, // Adjust text size
+        fontSize: 12,
         textMargin: 4
-        });
-
-            // Create a download link for the barcode image
-    var downloadButton = document.getElementById('downloadButton');
-    downloadButton.addEventListener('click', function () {
-        //var svg = document.getElementById('barcodeCanvas');
-        var canvas = document.getElementById('barcodeCanvas');
-        //var svgData = new XMLSerializer().serializeToString(svg);
-        //var image = new Image();
-        var image = canvas.toDataURL('image/png');
-        //image.src = 'data:image/svg+xml;base64,' + btoa(svgData);
-
-        // Trigger download
-        var link = document.createElement('a');
-        link.href = image;
-        link.download = item['product_name'] + '_' + item['bata'] + '_barcode.png'; // Set the filename based on concatenated values
-        //document.body.appendChild(link);
-        link.click();
-        //document.body.removeChild(link);
     });
 
-    // Print Barcode Logic
+    // Download Barcode
+    document.getElementById('downloadButton').addEventListener('click', function () {
+        var svg = document.getElementById('barcodeCanvas');
+        var svgData = new XMLSerializer().serializeToString(svg);
+        var blob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+        var url = URL.createObjectURL(blob);
+
+        var link = document.createElement("a");
+        link.href = url;
+        link.download = item['product_name'] + '_' + item['bata'] + '_barcode.svg';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+
+    // Print Barcode
     document.getElementById('printButton').addEventListener('click', function () {
-        var printWindow = window.open('', '', 'width=283,height=113');
-        printWindow.document.write('<img src="' + document.getElementById('barcodeCanvas').toDataURL() + '"/>');
+        var svg = document.getElementById('barcodeCanvas');
+        var svgData = new XMLSerializer().serializeToString(svg);
+        var blob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+        var url = URL.createObjectURL(blob);
+
+        var printWindow = window.open('', '', 'width=213,height=85');
+        printWindow.document.write('<html><head><title>Print Barcode</title></head><body>');
+        printWindow.document.write('<img src="' + url + '" width="213" height="85"/>');
+        printWindow.document.write('</body></html>');
         printWindow.document.close();
         printWindow.print();
     });
 
-        
-        document.querySelector('.popup').style.display = 'block';
-    }
+    document.querySelector('.popup').style.display = 'block';
+}
+
 
 
 
