@@ -681,16 +681,67 @@ function displayBarcodePopup(item) {
     barcodeImage.src = svgUrl;
 });
 
-    // Print Barcode
-    document.getElementById('printButton').addEventListener('click', function () {
+
+
+
+
+
+document.getElementById('printButton').addEventListener('click', function () {
+    var barcodeSvg = document.getElementById('barcodeCanvas'); // Barcode SVG
+    var logoImg = document.getElementById('companyLogo'); // Logo Image
+
+    var serializer = new XMLSerializer();
+    var svgData = serializer.serializeToString(barcodeSvg);
+    var svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+    var svgUrl = URL.createObjectURL(svgBlob);
+
+    var barcodeImage = new Image();
+    barcodeImage.onload = function () {
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+
+        var width = 250;  // Set canvas width
+        var height = 100; // Set canvas height
+
+        canvas.width = width;
+        canvas.height = height;
+
+        // White background
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, width, height);
+
+        // Draw Logo
+        var logoWidth = 50;  // Adjust based on logo size
+        var logoHeight = 50; // Adjust based on logo size
+        ctx.drawImage(logoImg, 10, 10, logoWidth, logoHeight);
+
+        // Draw Barcode
+        var barcodeX = logoWidth + 20; // Position barcode after logo
+        var barcodeY = 10;
+        var barcodeWidth = width - barcodeX - 10; // Adjust width
+        var barcodeHeight = 50;
+        ctx.drawImage(barcodeImage, barcodeX, barcodeY, barcodeWidth, barcodeHeight);
+
+        // Release URL memory
+        URL.revokeObjectURL(svgUrl);
+
+        // Open Print Window
         var printWindow = window.open('', '', 'width=300,height=150');
         printWindow.document.write('<html><head><title>Print Barcode</title></head><body>');
         printWindow.document.write('<div style="text-align: center;">');
-        printWindow.document.write(document.getElementById('barcodeBox').outerHTML);
+
+        // Convert canvas to image for printing
+        var imgData = canvas.toDataURL("image/png");
+        printWindow.document.write('<img src="' + imgData + '" style="width:100%; max-width:250px;">');
+
         printWindow.document.write('</div></body></html>');
         printWindow.document.close();
         printWindow.print();
-    });
+    };
+
+    barcodeImage.src = svgUrl;
+});
+
 
     document.querySelector('.popup').style.display = 'block';
 }
