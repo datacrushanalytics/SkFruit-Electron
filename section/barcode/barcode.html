@@ -359,9 +359,9 @@
         document.getElementById('fromdate').value = todayIST;
         document.getElementById('todate').value = todayIST;
 
-        fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/purchaseproductData/product', 'grahk','product_name');
-        fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/purchaseproductData/bata', 'Route','bata');
-        fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/vehicleData', 'vehicle','vehicle_no');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'grahk','product_name');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'Route','bata');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle','vehicle_no');
         
 
    
@@ -505,7 +505,7 @@
         console.log(bataId)
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
-        fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/purchaseproductData/bata/' + bataId, 'Route','bata');
+        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata/' + bataId, 'Route','bata');
     }
 
     
@@ -601,7 +601,7 @@ function displayBarcodePopup(item) {
             <div class="barcode-container" id="barcodeBox">
                 <!-- Logo on Left -->
                 <div class="logo-section">
-                    <img src="../../assets/img/sk.png" alt="Company Logo" id="companyLogo"> 
+                    <img src="../../assets/img/logo-barcode.png" alt="Company Logo" id="companyLogo"> 
                 </div>
 
                 <!-- Barcode on Right -->
@@ -793,7 +793,7 @@ document.getElementById('printButton').addEventListener('click', function () {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
     
-        fetch('https://skfruit-backend.onrender.com/purchaseproductData', {
+        fetch('http://103.174.102.89:3000/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -840,7 +840,7 @@ document.getElementById('printButton').addEventListener('click', function () {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        fetch('https://skfruit-backend.onrender.com/purchaseproductData', {
+        fetch('http://103.174.102.89:3000/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
