@@ -183,10 +183,6 @@
     margin-bottom: 20px;
 }
 
-#companyLogo {
-    width: 100px; /* Adjust the width as needed */
-    height: auto; /* Maintain aspect ratio */
-}
 
 #companyName {
     font-size: 1.2em; /* Adjust the font size as needed */
@@ -236,53 +232,45 @@
     }
 
     
-    
-    @media print {
-    body {
-        margin: 0;
-        padding: 0;
-    }
 
-    .popup {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 75mm;
-        height: 30mm;
-        padding: 3mm;  /* 3mm margin on each side */
-        background: white;
-        box-sizing: border-box; /* Ensures the padding does not add extra space */
-    }
-
-    #companyInfo {
-        text-align: center;
-        width: 100%;
-    }
-
-    #companyLogo {
-        max-width: 45mm;  /* Adjusted logo width for margins */
-        max-height: 8mm;  /* Slightly smaller to fit */
-        display: block;
-        margin-bottom: 2mm; /* Space between logo and barcode */
-    }
-
-    #barcodeCanvas {
-        width: 66mm;  /* Adjusted to fit inside 69mm */
-        height: 18mm; /* Adjusted to fit inside 24mm */
-    }
-
-    button {
-        display: none; /* Hide buttons when printing */
-    }
+.barcode-container {
+    display: flex;
+    align-items: center;
+    /* padding: 10px;
+    width: 75mm;
+    height: 30mm; */
+    border: 1px solid #ccc;
+    background: white;
 }
+
+.logo-section img {
+    transform: translate(50%, 0%);
+    width: 50%;
+    max-height: 25mm;
+}
+
+.company-name {
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 2px;
+}
+
+.barcode-section {
+    width: 45mm;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+
+
 
 
     </style>
 </head>
 
 <body>
-    <body>
         <div id="loader"></div>
 
         <div class="container">
@@ -607,15 +595,21 @@
 function displayBarcodePopup(item) {
     console.log('barcode', item);
 
-
     var barcodeValue = item['product_name'].split('(')[0] + ': ' + item['bata'];
     var popupContent = `
         <div class="popup">
-            <div id="companyInfo">
-                <p id="companyName">Savata Fruits</p>
-                <img src="../../assets/img/logo.png" alt="Company Logo" id="companyLogo">
+            <div class="barcode-container" id="barcodeBox">
+                <!-- Logo on Left -->
+                <div class="logo-section">
+                    <img src="../../assets/img/logo.png" alt="Company Logo" id="companyLogo"> 
+                </div>
+
+                <!-- Barcode on Right -->
+                <div class="barcode-section">
+                    <svg id="barcodeCanvas"></svg>
+                </div>
             </div>
-            <svg id="barcodeCanvas"></svg>
+
             <button id="downloadButton">Download Barcode</button>
             <button id="printButton">Print Barcode</button>
             <button onclick="closePopup()">Close</button>
@@ -629,39 +623,71 @@ function displayBarcodePopup(item) {
         format: "CODE128",
         displayValue: true,
         text: barcodeValue,
-        width: 1,  // Adjust bar width
-        height: 25, // Adjust height
+        width: 1,
+        height: 25,
         margin: 0,
         fontSize: 4,
-        // textMargin: 4
     });
 
-    // Download Barcode
     document.getElementById('downloadButton').addEventListener('click', function () {
-        var svg = document.getElementById('barcodeCanvas');
-        var svgData = new XMLSerializer().serializeToString(svg);
-        var blob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
-        var url = URL.createObjectURL(blob);
+    var barcodeSvg = document.getElementById('barcodeCanvas'); // Barcode SVG
+    var logoImg = document.getElementById('companyLogo'); // Logo Image
 
+    var serializer = new XMLSerializer();
+    var svgData = serializer.serializeToString(barcodeSvg);
+    var svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+    var svgUrl = URL.createObjectURL(svgBlob);
+
+    var barcodeImage = new Image();
+    barcodeImage.onload = function () {
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+
+        var width = 250;  // Adjust canvas width based on design
+        var height = 100; // Adjust canvas height
+
+        canvas.width = width;
+        canvas.height = height;
+
+        // Draw white background
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, width, height);
+
+        // Draw logo (Assuming logo should be on the left)
+        var logoWidth = 50;  // Adjust based on your logo size
+        var logoHeight = 50; // Adjust based on your logo size
+        ctx.drawImage(logoImg, 10, 10, logoWidth, logoHeight);
+
+        // Draw barcode on the right
+        var barcodeX = logoWidth + 20; // Position barcode next to logo
+        var barcodeY = 10;
+        var barcodeWidth = width - barcodeX - 10; // Adjust to fit
+        var barcodeHeight = 50;
+        ctx.drawImage(barcodeImage, barcodeX, barcodeY, barcodeWidth, barcodeHeight);
+
+        // Release URL memory
+        URL.revokeObjectURL(svgUrl);
+
+        // Convert to PNG and download
+        var pngUrl = canvas.toDataURL("image/png");
         var link = document.createElement("a");
-        link.href = url;
-        link.download = item['product_name'] + '_' + item['bata'] + '_barcode.svg';
+        link.href = pngUrl;
+        link.download = "barcode_with_logo.png";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-    });
+    };
+
+    barcodeImage.src = svgUrl;
+});
 
     // Print Barcode
     document.getElementById('printButton').addEventListener('click', function () {
-        var svg = document.getElementById('barcodeCanvas');
-        var svgData = new XMLSerializer().serializeToString(svg);
-        var blob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
-        var url = URL.createObjectURL(blob);
-
-        var printWindow = window.open('', '', 'width=200,height=80');
+        var printWindow = window.open('', '', 'width=300,height=150');
         printWindow.document.write('<html><head><title>Print Barcode</title></head><body>');
-        printWindow.document.write('<img src="' + url + '" width="213" height="85"/>');
-        printWindow.document.write('</body></html>');
+        printWindow.document.write('<div style="text-align: center;">');
+        printWindow.document.write(document.getElementById('barcodeBox').outerHTML);
+        printWindow.document.write('</div></body></html>');
         printWindow.document.close();
         printWindow.print();
     });
