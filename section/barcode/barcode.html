@@ -359,9 +359,9 @@
         document.getElementById('fromdate').value = todayIST;
         document.getElementById('todate').value = todayIST;
 
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'grahk','product_name');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'Route','bata');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle','vehicle_no');
+        fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/purchaseproductData/product', 'grahk','product_name');
+        fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/purchaseproductData/bata', 'Route','bata');
+        fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/vehicleData', 'vehicle','vehicle_no');
         
 
    
@@ -505,7 +505,7 @@
         console.log(bataId)
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata/' + bataId, 'Route','bata');
+        fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/purchaseproductData/bata/' + bataId, 'Route','bata');
     }
 
     
@@ -793,7 +793,7 @@ document.getElementById('printButton').addEventListener('click', function () {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
     
-        fetch('http://103.174.102.89:3000/purchaseproductData', {
+        fetch('https://skfruit-backend.onrender.com/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -840,7 +840,7 @@ document.getElementById('printButton').addEventListener('click', function () {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        fetch('http://103.174.102.89:3000/purchaseproductData', {
+        fetch('https://skfruit-backend.onrender.com/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
