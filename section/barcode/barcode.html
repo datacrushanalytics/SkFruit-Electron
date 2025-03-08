@@ -250,8 +250,9 @@
         justify-content: center;
         width: 75mm;
         height: 30mm;
-        padding: 2mm;
+        padding: 3mm;  /* 3mm margin on each side */
         background: white;
+        box-sizing: border-box; /* Ensures the padding does not add extra space */
     }
 
     #companyInfo {
@@ -260,15 +261,15 @@
     }
 
     #companyLogo {
-        max-width: 50mm;  /* Adjust logo width */
-        max-height: 10mm; /* Keep logo height reasonable */
+        max-width: 45mm;  /* Adjusted logo width for margins */
+        max-height: 8mm;  /* Slightly smaller to fit */
         display: block;
         margin-bottom: 2mm; /* Space between logo and barcode */
     }
 
     #barcodeCanvas {
-        width: 70mm;  /* Ensure barcode does not exceed 75mm */
-        height: 20mm; /* Ensure barcode stays within 30mm total height */
+        width: 66mm;  /* Adjusted to fit inside 69mm */
+        height: 18mm; /* Adjusted to fit inside 24mm */
     }
 
     button {
@@ -370,9 +371,9 @@
         document.getElementById('fromdate').value = todayIST;
         document.getElementById('todate').value = todayIST;
 
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'grahk','product_name');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'Route','bata');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle','vehicle_no');
+        fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/purchaseproductData/product', 'grahk','product_name');
+        fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/purchaseproductData/bata', 'Route','bata');
+        fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/vehicleData', 'vehicle','vehicle_no');
         
 
    
@@ -516,7 +517,7 @@
         console.log(bataId)
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata/' + bataId, 'Route','bata');
+        fetchAndPopulateDropdown('https://skfruit-backend.onrender.com/purchaseproductData/bata/' + bataId, 'Route','bata');
     }
 
     
@@ -606,15 +607,8 @@
 function displayBarcodePopup(item) {
     console.log('barcode', item);
 
-    // Convert UTC date to IST format (DD/MM/YYYY)
-    var utcDate = new Date(item.p_date);
-    const istOffset = 5.5 * 60 * 60 * 1000;
-    const istDate = new Date(utcDate.getTime() + istOffset);
-    const formattedISTDate = `${String(istDate.getDate()).padStart(2, '0')}/` +
-                             `${String(istDate.getMonth() + 1).padStart(2, '0')}/` +
-                             `${istDate.getFullYear()}`;
 
-    var barcodeValue = item['product_name'].split('(')[0] + ' \nBata: ' + item['bata'];
+    var barcodeValue = item['product_name'].split('(')[0] + ': ' + item['bata'];
     var popupContent = `
         <div class="popup">
             <div id="companyInfo">
@@ -635,11 +629,11 @@ function displayBarcodePopup(item) {
         format: "CODE128",
         displayValue: true,
         text: barcodeValue,
-        width: 2,  // Adjust bar width
-        height: 70, // Adjust height
-        margin: 5,
-        fontSize: 12,
-        textMargin: 4
+        width: 1,  // Adjust bar width
+        height: 80, // Adjust height
+        // margin: 5,
+        // fontSize: 12,
+        // textMargin: 4
     });
 
     // Download Barcode
@@ -664,7 +658,7 @@ function displayBarcodePopup(item) {
         var blob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
         var url = URL.createObjectURL(blob);
 
-        var printWindow = window.open('', '', 'width=213,height=85');
+        var printWindow = window.open('', '', 'width=200,height=80');
         printWindow.document.write('<html><head><title>Print Barcode</title></head><body>');
         printWindow.document.write('<img src="' + url + '" width="213" height="85"/>');
         printWindow.document.write('</body></html>');
@@ -711,7 +705,7 @@ function displayBarcodePopup(item) {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
     
-        fetch('http://103.174.102.89:3000/purchaseproductData', {
+        fetch('https://skfruit-backend.onrender.com/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -758,7 +752,7 @@ function displayBarcodePopup(item) {
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        fetch('http://103.174.102.89:3000/purchaseproductData', {
+        fetch('https://skfruit-backend.onrender.com/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
