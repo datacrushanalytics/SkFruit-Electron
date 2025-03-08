@@ -629,6 +629,8 @@ function displayBarcodePopup(item) {
         fontSize: 4,
     });
 
+    
+
     document.getElementById('downloadButton').addEventListener('click', function () {
     var barcodeSvg = document.getElementById('barcodeCanvas'); // Barcode SVG
     var logoImg = document.getElementById('companyLogo'); // Logo Image
@@ -640,39 +642,44 @@ function displayBarcodePopup(item) {
 
     var barcodeImage = new Image();
     barcodeImage.onload = function () {
+        var scaleFactor = 3; // Scale for high resolution
+        var width = 250 * scaleFactor;
+        var height = 100 * scaleFactor;
+
         var canvas = document.createElement('canvas');
         var ctx = canvas.getContext('2d');
 
-        var width = 250;  // Adjust canvas width based on design
-        var height = 100; // Adjust canvas height
-
+        // Set High Resolution Canvas
         canvas.width = width;
         canvas.height = height;
+        ctx.scale(scaleFactor, scaleFactor); // Apply scaling
 
-        // Draw white background
+        // White Background
         ctx.fillStyle = "#FFFFFF";
-        ctx.fillRect(0, 0, width, height);
+        ctx.fillRect(0, 0, width / scaleFactor, height / scaleFactor);
 
-        // Draw logo (Assuming logo should be on the left)
-        var logoWidth = 50;  // Adjust based on your logo size
-        var logoHeight = 50; // Adjust based on your logo size
+        // Draw Logo (Ensure High Quality)
+        var logoWidth = 50;
+        var logoHeight = 50;
         ctx.drawImage(logoImg, 10, 10, logoWidth, logoHeight);
 
-        // Draw barcode on the right
-        var barcodeX = logoWidth + 20; // Position barcode next to logo
+        // Draw Barcode with High Resolution
+        var barcodeX = logoWidth + 20;
         var barcodeY = 10;
-        var barcodeWidth = width - barcodeX - 10; // Adjust to fit
+        var barcodeWidth = (width / scaleFactor) - barcodeX - 10;
         var barcodeHeight = 50;
         ctx.drawImage(barcodeImage, barcodeX, barcodeY, barcodeWidth, barcodeHeight);
 
         // Release URL memory
         URL.revokeObjectURL(svgUrl);
 
-        // Convert to PNG and download
+        // Convert High-Quality Canvas to PNG for Download
         var pngUrl = canvas.toDataURL("image/png");
+
+        // Create Download Link
         var link = document.createElement("a");
         link.href = pngUrl;
-        link.download = "barcode_with_logo.png";
+        link.download = "barcode.png";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -680,8 +687,6 @@ function displayBarcodePopup(item) {
 
     barcodeImage.src = svgUrl;
 });
-
-
 
 
 
@@ -697,28 +702,31 @@ document.getElementById('printButton').addEventListener('click', function () {
 
     var barcodeImage = new Image();
     barcodeImage.onload = function () {
+        var scaleFactor = 3; // Scale for high resolution
+        var width = 250 * scaleFactor;
+        var height = 100 * scaleFactor;
+
         var canvas = document.createElement('canvas');
         var ctx = canvas.getContext('2d');
 
-        var width = 250;  // Set canvas width
-        var height = 100; // Set canvas height
-
+        // Set High Resolution Canvas
         canvas.width = width;
         canvas.height = height;
+        ctx.scale(scaleFactor, scaleFactor); // Apply scaling
 
-        // White background
+        // White Background
         ctx.fillStyle = "#FFFFFF";
-        ctx.fillRect(0, 0, width, height);
+        ctx.fillRect(0, 0, width / scaleFactor, height / scaleFactor);
 
-        // Draw Logo
-        var logoWidth = 50;  // Adjust based on logo size
-        var logoHeight = 50; // Adjust based on logo size
+        // Draw Logo (Ensure High Quality)
+        var logoWidth = 50;
+        var logoHeight = 50;
         ctx.drawImage(logoImg, 10, 10, logoWidth, logoHeight);
 
-        // Draw Barcode
-        var barcodeX = logoWidth + 20; // Position barcode after logo
+        // Draw Barcode with High Resolution
+        var barcodeX = logoWidth + 20;
         var barcodeY = 10;
-        var barcodeWidth = width - barcodeX - 10; // Adjust width
+        var barcodeWidth = (width / scaleFactor) - barcodeX - 10;
         var barcodeHeight = 50;
         ctx.drawImage(barcodeImage, barcodeX, barcodeY, barcodeWidth, barcodeHeight);
 
@@ -730,7 +738,7 @@ document.getElementById('printButton').addEventListener('click', function () {
         printWindow.document.write('<html><head><title>Print Barcode</title></head><body>');
         printWindow.document.write('<div style="text-align: center;">');
 
-        // Convert canvas to image for printing
+        // Convert High-Quality Canvas to PNG for Printing
         var imgData = canvas.toDataURL("image/png");
         printWindow.document.write('<img src="' + imgData + '" style="width:100%; max-width:250px;">');
 
