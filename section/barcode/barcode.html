@@ -728,7 +728,8 @@ document.getElementById('printButton').addEventListener('click', function () {
 
         // Draw Barcode with High Resolution
         var barcodeX = logoWidth + 20;
-        var barcodeY = -50;
+        var barcodeY = -20;
+        // var barcodeY = 0; Able to scan
         var barcodeWidth = (width / scaleFactor) - barcodeX - 10;
         var barcodeHeight = 50;
         ctx.drawImage(barcodeImage, barcodeX, barcodeY, barcodeWidth, barcodeHeight);
