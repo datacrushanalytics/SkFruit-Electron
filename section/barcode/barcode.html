@@ -737,7 +737,7 @@ document.getElementById('printButton').addEventListener('click', function () {
         URL.revokeObjectURL(svgUrl);
 
         // Open Print Window
-        var printWindow = window.open('', '', 'width=300,height=100');
+        var printWindow = window.open('', '');
         printWindow.document.write('<html><head><title>Print Barcode</title></head><body>');
         printWindow.document.write('<div style="text-align: center;">');
 
