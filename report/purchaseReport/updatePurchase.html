@@ -184,6 +184,7 @@
                 <div style="margin-left: 400px;">
                     <label for="total">Total Amount :</label>
                     <input type="number" id="total" name="name" placeholder="Total Amount " required readonly>
+                    <input type="hidden" id="total1" name="name" placeholder="Total Amount" required readonly>
                 </div>
                 <br>
                 <div class="four-row">
@@ -320,7 +321,8 @@
 
                     data.forEach(function (item) {
                         updateTable(item,item.id);
-                    });  
+                    }); 
+
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -360,6 +362,10 @@
 
 
         <script>
+            function addamount(){
+                document.getElementById('total').value = parseInt(document.getElementById('total1').value || 0) + parseInt(document.getElementById('expenses').value)
+            }
+
 
             function myFunction() {
                 event.preventDefault();
@@ -375,7 +381,7 @@
                     quantity: parseInt(document.getElementById('quantity').value),
                     unit: document.getElementById('unit').value,
                     editable: document.getElementById('toggleTableCheckbox').checked,
-                    price: parseInt(document.getElementById('purchase').value) * parseInt(document.getElementById('quantity').value)
+                    price: parseInt(document.getElementById('purchase').value) * parseInt(document.getElementById('quantity').value)  + parseInt(document.getElementById('expenses').value)
                 };
 
                 console.log(formData)
@@ -430,6 +436,8 @@
               `;
 
                 document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) + entry.price;
+                document.getElementById('total1').value = parseInt(document.getElementById('total1').value || 0) + entry.price;
+                addamount()
                 tableBody.appendChild(newRow);
             }
 
