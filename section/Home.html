@@ -1,447 +1,424 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
 
-<head>
-  <meta charset="UTF-8" />
-  <title></title>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-    }
-
-    .hero-section {
-      flex: 1;
-      display: flex;
-    }
-
-
-
-    /* Styles for the header */
-h3 {
-  cursor: pointer; /* Changes cursor to a hand when hovering over the header */
-  display: flex; /* Makes the header content align horizontally */
-  align-items: center; /* Aligns items vertically in the center */
-  font-size: 24px; /* Sets font size */
-  color: #000000; /* Sets text color */
-  margin-left: 20%;
-}
-
-h3 img {
-  width: 13%; /* Sets the width of the logo image */
-  height: 13%; /* Sets the height of the logo image */
-  border-radius: 50%; /* Makes the logo image rounded */
-  margin-right: 5%;
-}
-
-    #sidebar-container {
-    /*  width: 20%;  Occupy 1/5 of the page */
-      background-color: #fff7c6;
-      color: white;
-      z-index: 999; /* Ensure sidebar is above other content */
-      overflow-y: auto; /* Add scrollbar to sidebar */
-      height: 100vh; /* Set sidebar height to full viewport height */
-    }
-
-    #main-container {
-      display: flex; /* Use flexbox */
-      flex: 4; /* Occupy remaining width */
-      overflow: hidden; /* Hide overflowing content */
-      position: relative; /* Set position to relative */
-    }
-
-    #pageContent {
-      width: 100%; /* Set iframe width to 100% */
-      height: 95%; /* Set iframe height to 90% */
-      position: absolute; /* Position iframe absolutely */
-      top: 0; /* Align iframe to the top */
-      left: 0; /* Align iframe to the left */
-      border: none; /* Remove iframe border */
-    }
-
-    .component {
-      height: 35px;
-      width: 100%; /* Adjust to fill the sidebar */
-      cursor: pointer;
-      margin-bottom: 10px;
-      color: #000000;
-      background-color: #f8a2a5;
-      padding: 10px;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-      font-weight: bold;
-    }
-
-    .component.active {
-      background-color:#eafffb; /* darkgrey color for active button */
-    }
-
-    .component:hover {
-      background-color: #eafffb;
-    }
-
-    .logout {
-      height: 35px;
-      width: 100%;
-      cursor: pointer;
-      margin-top: 20px;
-      color: #fff;
-      background-color: #c0392b; /* darkgrey color for logout button */
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-    }
-
-    .logout:hover {
-      background-color: #e74c3c; /* Darker darkgrey color on hover */
-    }
-
-    @media (max-width: 768px) {
-      /* Adjust as needed */
-      #sidebar-container {
-        width: auto; /* Adjust sidebar width for smaller screens */
-        padding-bottom: 20px; /* Add some space at the bottom */
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
       }
-    }
 
+      .hero-section {
+        flex: 1;
+        display: flex;
+      }
 
-    /* ... */
+      /* Styles for the header */
+      h3 {
+        cursor: pointer; /* Changes cursor to a hand when hovering over the header */
+        display: flex; /* Makes the header content align horizontally */
+        align-items: center; /* Aligns items vertically in the center */
+        font-size: 24px; /* Sets font size */
+        color: #000000; /* Sets text color */
+        margin-left: 20%;
+      }
 
-.sidebar-container {
-  width: 0;
-  background-color: #333;
-  color: white;
-  z-index: 999;
-  overflow-y: auto;
-  height: 100vh;
-  transition: width 0.3s ease; /* Smooth transition for width */
-}
+      h3 img {
+        width: 13%; /* Sets the width of the logo image */
+        height: 13%; /* Sets the height of the logo image */
+        border-radius: 50%; /* Makes the logo image rounded */
+        margin-right: 5%;
+      }
 
-.sidebar-container.active {
-  width: 20%; /* Width of the sidebar when active */
-}
+      #sidebar-container {
+        /*  width: 20%;  Occupy 1/5 of the page */
+        background-color: #fff7c6;
+        color: white;
+        z-index: 999; /* Ensure sidebar is above other content */
+        overflow-y: auto; /* Add scrollbar to sidebar */
+        height: 100vh; /* Set sidebar height to full viewport height */
+      }
 
-/* ... */
+      #main-container {
+        display: flex; /* Use flexbox */
+        flex: 4; /* Occupy remaining width */
+        overflow: hidden; /* Hide overflowing content */
+        position: relative; /* Set position to relative */
+      }
 
-.footer-link {
-  color: #ccc; /* Set initial color to grey */
-  text-decoration: none; /* Remove underline */
-  margin: 0 40px 40px 40px; /* Add margin between links */
-  transition: color 0.3s ease; /* Smooth transition for color change */
-}
+      #pageContent {
+        width: 100%; /* Set iframe width to 100% */
+        height: 95%; /* Set iframe height to 90% */
+        position: absolute; /* Position iframe absolutely */
+        top: 0; /* Align iframe to the top */
+        left: 0; /* Align iframe to the left */
+        border: none; /* Remove iframe border */
+      }
 
-.footer-link:hover {
-  color:darkgray; /* Change color to dark grey on hover */
-}
+      .component {
+        height: 35px;
+        width: 100%; /* Adjust to fill the sidebar */
+        cursor: pointer;
+        margin-bottom: 10px;
+        color: #000000;
+        background-color: #f8a2a5;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        font-weight: bold;
+      }
 
+      .component.active {
+        background-color: #eafffb; /* darkgrey color for active button */
+      }
 
-.footer {
-  background-color: #333333;
-  color: white;
-  text-align: center;
-  padding: 10px 0;
-  position: fixed; /* Position the footer */
-  bottom: 0; /* Stick to the bottom */
-  width: 100%; /* Full width */
-}
+      .component:hover {
+        background-color: #eafffb;
+      }
 
-/* Style the loader container */
-#loader {
-  border: 4px solid #f3f3f3; /* Light grey */
-  border-top: 4px solid #3498db; /* Blue */
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  animation: spin 1s linear infinite; /* Apply animation */
-  display: none; /* Hide loader by default */
-  
-  /* Center the loader */
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+      .logout {
+        height: 35px;
+        width: 100%;
+        cursor: pointer;
+        margin-top: 20px;
+        color: #fff;
+        background-color: #c0392b; /* darkgrey color for logout button */
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
 
-/* Animation */
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+      .logout:hover {
+        background-color: #e74c3c; /* Darker darkgrey color on hover */
+      }
 
-  </style>
-</head>
+      @media (max-width: 768px) {
+        /* Adjust as needed */
+        #sidebar-container {
+          width: auto; /* Adjust sidebar width for smaller screens */
+          padding-bottom: 20px; /* Add some space at the bottom */
+        }
+      }
 
+      /* ... */
 
+      .sidebar-container {
+        width: 0;
+        background-color: #333;
+        color: white;
+        z-index: 999;
+        overflow-y: auto;
+        height: 100vh;
+        transition: width 0.3s ease; /* Smooth transition for width */
+      }
 
-<body>
-  <div id="loader"></div>
-  <div class="hero-section">
-    <button class="toggle-sidebar-btn" onclick="toggleSidebar()">☰</button> <!-- Hamburger Button -->
-    <div class="sidebar-container" id="sidebar-container">
-      <!-- Sidebar content -->
-      <h3 onclick="openPage('home')">
-          <img src="../assets/img/logo.png" alt="Company Logo">
+      .sidebar-container.active {
+        width: 20%; /* Width of the sidebar when active */
+      }
+
+      /* ... */
+
+      .footer-link {
+        color: #ccc; /* Set initial color to grey */
+        text-decoration: none; /* Remove underline */
+        margin: 0 40px 40px 40px; /* Add margin between links */
+        transition: color 0.3s ease; /* Smooth transition for color change */
+      }
+
+      .footer-link:hover {
+        color: darkgray; /* Change color to dark grey on hover */
+      }
+
+      .footer {
+        background-color: #333333;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        position: fixed; /* Position the footer */
+        bottom: 0; /* Stick to the bottom */
+        width: 100%; /* Full width */
+      }
+
+      /* Style the loader container */
+      #loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite; /* Apply animation */
+        display: none; /* Hide loader by default */
+
+        /* Center the loader */
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* Animation */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="loader"></div>
+    <div class="hero-section">
+      <button class="toggle-sidebar-btn" onclick="toggleSidebar()">☰</button>
+      <!-- Hamburger Button -->
+      <div class="sidebar-container" id="sidebar-container">
+        <!-- Sidebar content -->
+        <h3 onclick="openPage('home')">
+          <img src="../assets/img/logo.png" alt="Company Logo" />
           SK Fruit
-      </h3>
+        </h3>
+      </div>
+      <div id="main-container">
+        <iframe id="pageContent" src="./Menu.html" frameborder="0"></iframe>
 
-    </div>
-    <div id="main-container">
-      <iframe id="pageContent" src="./Menu.html" frameborder="0"></iframe>
-
-      <!-- Footer within main-container -->
-      <div class="footer" id="footer">
-        <!-- <a href="#" class="footer-link" onclick="loadPage('./Menu.html')"><i class="fas fa-home"></i> Home</a>
+        <!-- Footer within main-container -->
+        <div class="footer" id="footer">
+          <!-- <a href="#" class="footer-link" onclick="loadPage('./Menu.html')"><i class="fas fa-home"></i> Home</a>
         <a href="#" class="footer-link" onclick="loadPage('../section/sale/sale3.html')"><i class="fas fa-tag"></i> Sale</a>
         <a href="#" class="footer-link" onclick="loadPage('../section/receipt/Receipt.html')"><i class="fas fa-receipt"></i> Receipt</a>
         <a href="#" class="footer-link" onclick="loadPage('../section/payment/Payment.html')"><i class="fas fa-money-check-alt"></i> Payment</a> -->
+        </div>
       </div>
-      
     </div>
-  </div>
-<!-- ... -->
+    <!-- ... -->
 
-  <!-- Footer -->
- 
+    <!-- Footer -->
 
+    <script>
+      function loadPage(pageUrl) {
+        document.getElementById("pageContent").src = pageUrl;
+      }
 
-  <script>
-
-    function loadPage(pageUrl) {
-     document.getElementById('pageContent').src = pageUrl;
-  }
-
-      document.addEventListener('DOMContentLoaded', function() {
-        var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+      document.addEventListener("DOMContentLoaded", function () {
+        var loader = document.getElementById("loader");
+        loader.style.display = "block";
         // Retrieve user data from localStorage
-        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
-        var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
+        var sessionData = JSON.parse(localStorage.getItem("sessionData"));
+        var isAdmin = sessionData && sessionData[0].usertype === "Admin";
 
-        console.log(localStorage.getItem('sessionData'))
-        console.log(sessionData[0].usertype)
+        console.log(localStorage.getItem("sessionData"));
+        console.log(sessionData[0].usertype);
 
-        var url = 'http://103.174.102.89:3000/adminaccessconfigData';
-        if(isAdmin){
-          var url = 'http://103.174.102.89:3000/adminaccessconfigData';
-        }else{
-          var url = 'http://103.174.102.89:3000/accessconfigData';
+        var url = "http://94.136.190.129:3000/adminaccessconfigData";
+        if (isAdmin) {
+          var url = "http://94.136.190.129:3000/adminaccessconfigData";
+        } else {
+          var url = "http://94.136.190.129:3000/accessconfigData";
         }
 
         // Fetch data from API and dynamically generate buttons
         fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          loader.style.display = 'none';
-          var sidebarContainer = document.getElementById('sidebar-container');
+          .then((response) => response.json())
+          .then((data) => {
+            loader.style.display = "none";
+            var sidebarContainer = document.getElementById("sidebar-container");
 
+            function createButton(menuName) {
+              const button = document.createElement("button");
+              button.classList.add("component");
+              button.textContent = menuName;
+              button.onclick = handleButtonClick; // Use the handleButtonClick function
+              sidebarContainer.appendChild(button);
+            }
 
-        function createButton(menuName) {
-          const button = document.createElement('button');
-          button.classList.add('component');
-          button.textContent = menuName;
-          button.onclick = handleButtonClick; // Use the handleButtonClick function
-          sidebarContainer.appendChild(button);
-        }
-
-        data.forEach(menu => {
-            // Skip if 'User' menu and the session status is not 'Super'
-            if (menu.name === 'User' && sessionData[0].status !== 'Super') {
+            data.forEach((menu) => {
+              // Skip if 'User' menu and the session status is not 'Super'
+              if (menu.name === "User" && sessionData[0].status !== "Super") {
                 return;
-            }
+              }
 
-            if (sessionData[0].status === 'Super' || menu.status === 'active') {
+              if (
+                sessionData[0].status === "Super" ||
+                menu.status === "active"
+              ) {
                 createButton(menu.name);
-            }
-        });
+              }
+            });
 
-
-
-
-          // Add logout button at the bottom
-        var logoutButton = document.createElement('button');
-        logoutButton.href = "../section/Log_in.html";
-        logoutButton.classList.add('logout');
-        logoutButton.textContent = "Log Out";
-        logoutButton.onclick = function() {
-          localStorage.removeItem('sessionData');
-          window.location.href = "../section/Log_in.html";
-        };
-        sidebarContainer.appendChild(logoutButton);
-
-
-        })
-
-
-        fetch("http://103.174.102.89:3000/footerconfigData")
-        .then(response => response.json())
-        .then(data => {
-          loader.style.display = 'none';
-          var footerContainer = document.getElementById('footer');
-
-          data.forEach(menu => {
-        if (isAdmin || menu.status === 'active') {
-          var footerLink = document.createElement('a');
-          footerLink.href = menu.link || "#"; // Use appropriate link from data
-          footerLink.classList.add('footer-link');
-          footerLink.textContent = menu.name;
-          footerLink.onclick = handleButtonClick;
-
-          // Optionally, add icons or other HTML elements here
-          if (menu.icon) {
-            var icon = document.createElement('i');
-            icon.classList.add('fas', `fa-${menu.icon}`);
-            footerLink.insertBefore(icon, footerLink.firstChild);
-          }
-
-          footerContainer.appendChild(footerLink);
-        }
-
+            // Add logout button at the bottom
+            var logoutButton = document.createElement("button");
+            logoutButton.href = "../section/Log_in.html";
+            logoutButton.classList.add("logout");
+            logoutButton.textContent = "Log Out";
+            logoutButton.onclick = function () {
+              localStorage.removeItem("sessionData");
+              window.location.href = "../section/Log_in.html";
+            };
+            sidebarContainer.appendChild(logoutButton);
           });
-        })
 
+        fetch("http://94.136.190.129:3000/footerconfigData")
+          .then((response) => response.json())
+          .then((data) => {
+            loader.style.display = "none";
+            var footerContainer = document.getElementById("footer");
 
+            data.forEach((menu) => {
+              if (isAdmin || menu.status === "active") {
+                var footerLink = document.createElement("a");
+                footerLink.href = menu.link || "#"; // Use appropriate link from data
+                footerLink.classList.add("footer-link");
+                footerLink.textContent = menu.name;
+                footerLink.onclick = handleButtonClick;
 
-        .catch(error => {
-          console.error("Error fetching data:", error);
-        });
+                // Optionally, add icons or other HTML elements here
+                if (menu.icon) {
+                  var icon = document.createElement("i");
+                  icon.classList.add("fas", `fa-${menu.icon}`);
+                  footerLink.insertBefore(icon, footerLink.firstChild);
+                }
+
+                footerContainer.appendChild(footerLink);
+              }
+            });
+          })
+
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
       });
     </script>
-  
 
-  <script>
-
-    function toggleSidebar() {
-      var sidebar = document.getElementById('sidebar-container');
-      var footer = document.getElementById('footer');
-      if (sidebar.style.width === '0%' || sidebar.style.width === '') {
-        sidebar.style.width = '20%'; // Show sidebar
-        document.querySelector('.footer').style.flex = '0 0 20px'; 
-      } else {
-        sidebar.style.width = '0%'; // Hide sidebar
-        document.querySelector('.footer').style.flex = '0 0 50px';
+    <script>
+      function toggleSidebar() {
+        var sidebar = document.getElementById("sidebar-container");
+        var footer = document.getElementById("footer");
+        if (sidebar.style.width === "0%" || sidebar.style.width === "") {
+          sidebar.style.width = "20%"; // Show sidebar
+          document.querySelector(".footer").style.flex = "0 0 20px";
+        } else {
+          sidebar.style.width = "0%"; // Hide sidebar
+          document.querySelector(".footer").style.flex = "0 0 50px";
+        }
       }
-    }
 
-
-    function openPage(pageName) {
-      var pageUrl;
-      switch (pageName) {
-        case 'home':
-          pageUrl = './Menu.html';
-          break;
-        case 'User':
-          pageUrl = "./user/user.html";
-          break;
-        case 'Product':
-          pageUrl = './product/product.html';
-          break;
-        case 'Account':
-          pageUrl = './account/account.html';
-          break;
-        case 'Route':
-          pageUrl = './route/Root_Details.html';
-          break;
-        case 'Purchase':
-          pageUrl = './purchase/Purchase.html'
-          break;
-        case 'Sale':
-          pageUrl = './sale/sale3.html'
-          break;
-        case 'Vehicle':
-          pageUrl = './vehicle/Vehicle_Details.html'
-          break;
-        case 'Barcode':
-          pageUrl = './barcode/barcode.html'
-          break;
-        case 'Receipt':
-          pageUrl = './receipt/Receipt.html'
-          break;
-        case 'Payment':
-          pageUrl = './payment/Payment.html'
-          break;
-        case 'Purchase Report':
-          pageUrl = '../report/purchaseReport/purchaseReport.html'
-          break;
-        case 'Sale Report':
-          pageUrl = '../report/routewiseSaleReport/routewiseSaleReport.html'
-          break;
-        case 'Stock Report':
-          pageUrl = '../report/stockReport/stockReport.html'
-          break;
-        // case 'Batawise Sale Report':
-        //   pageUrl = '../report/batawiseSaleReport/batawiseSaleReport.html'
-        //   break;
-        case 'Khatawani':
-          pageUrl = '../report/khatawani/khatawani.html'
-          break;
-        case 'Daily Report':
-          pageUrl = '../report/dailyReport/dailyReport.html'
-          break;
-        case 'Receipt Report':
-          pageUrl = '../report/receiptReport/receiptReport.html'
-          break;
-        case 'Ledger Report':
-          pageUrl = '../report/ledgerReport/ledger.html'
-          break;
-        case 'Customer Outstanding':
-          pageUrl = '../report/customerOutstanding/customerOutstanding.html'
-          break;
-        case 'Supplier Outstanding':
-          pageUrl = '../report/supplierOutstanding/supplierOutstanding.html'
-          break;
-        case 'Carate Report':
-          pageUrl = '../report/carateReport/carateReport.html'
-          break;
-        case 'Remainder':
-          pageUrl = '../report/remainder/remainder.html'
-          break;
-        case 'Profit Loss Report':
-          pageUrl = '../report/profitLossReport/profit_loss_report.html'
-          break;
-        case 'Supplier Ledger Report':
-          pageUrl = '../report/supplierLedgerReport/supplierLedger.html'
-          break;
-        case 'Route Sale':
-          pageUrl = './routeSale/routeSale.html'
-          break;
-        case 'Account Ledger Report':
-          pageUrl = '../report/AccountLedgerReport/accountLedger.html'
-          break;
-        case 'Sale Product':
-          pageUrl = './saleProduct/saleProduct.html'
-          break;
+      function openPage(pageName) {
+        var pageUrl;
+        switch (pageName) {
+          case "home":
+            pageUrl = "./Menu.html";
+            break;
+          case "User":
+            pageUrl = "./user/user.html";
+            break;
+          case "Product":
+            pageUrl = "./product/product.html";
+            break;
+          case "Account":
+            pageUrl = "./account/account.html";
+            break;
+          case "Route":
+            pageUrl = "./route/Root_Details.html";
+            break;
+          case "Purchase":
+            pageUrl = "./purchase/Purchase.html";
+            break;
+          case "Sale":
+            pageUrl = "./sale/sale3.html";
+            break;
+          case "Vehicle":
+            pageUrl = "./vehicle/Vehicle_Details.html";
+            break;
+          case "Barcode":
+            pageUrl = "./barcode/barcode.html";
+            break;
+          case "Receipt":
+            pageUrl = "./receipt/Receipt.html";
+            break;
+          case "Payment":
+            pageUrl = "./payment/Payment.html";
+            break;
+          case "Purchase Report":
+            pageUrl = "../report/purchaseReport/purchaseReport.html";
+            break;
+          case "Sale Report":
+            pageUrl = "../report/routewiseSaleReport/routewiseSaleReport.html";
+            break;
+          case "Stock Report":
+            pageUrl = "../report/stockReport/stockReport.html";
+            break;
+          // case 'Batawise Sale Report':
+          //   pageUrl = '../report/batawiseSaleReport/batawiseSaleReport.html'
+          //   break;
+          case "Khatawani":
+            pageUrl = "../report/khatawani/khatawani.html";
+            break;
+          case "Daily Report":
+            pageUrl = "../report/dailyReport/dailyReport.html";
+            break;
+          case "Receipt Report":
+            pageUrl = "../report/receiptReport/receiptReport.html";
+            break;
+          case "Ledger Report":
+            pageUrl = "../report/ledgerReport/ledger.html";
+            break;
+          case "Customer Outstanding":
+            pageUrl = "../report/customerOutstanding/customerOutstanding.html";
+            break;
+          case "Supplier Outstanding":
+            pageUrl = "../report/supplierOutstanding/supplierOutstanding.html";
+            break;
+          case "Carate Report":
+            pageUrl = "../report/carateReport/carateReport.html";
+            break;
+          case "Remainder":
+            pageUrl = "../report/remainder/remainder.html";
+            break;
+          case "Profit Loss Report":
+            pageUrl = "../report/profitLossReport/profit_loss_report.html";
+            break;
+          case "Supplier Ledger Report":
+            pageUrl = "../report/supplierLedgerReport/supplierLedger.html";
+            break;
+          case "Route Sale":
+            pageUrl = "./routeSale/routeSale.html";
+            break;
+          case "Account Ledger Report":
+            pageUrl = "../report/AccountLedgerReport/accountLedger.html";
+            break;
+          case "Sale Product":
+            pageUrl = "./saleProduct/saleProduct.html";
+            break;
           // Add other cases as needed
-        default:
-          pageUrl = './Menu.html';
+          default:
+            pageUrl = "./Menu.html";
+        }
+        document.getElementById("pageContent").src = pageUrl;
       }
-      document.getElementById('pageContent').src = pageUrl;
 
-    }
+      function handleButtonClick(event) {
+        // Remove active class from all buttons
+        var buttons = document.querySelectorAll(".component");
+        buttons.forEach(function (button) {
+          button.classList.remove("active");
+        });
 
-    function handleButtonClick(event) {
-      // Remove active class from all buttons
-      var buttons = document.querySelectorAll('.component');
-      buttons.forEach(function(button) {
-        button.classList.remove('active');
-      });
-    
-      // Add active class to the clicked button
-      event.target.classList.add('active');
-    
-      // Retrieve the page name from the clicked button's text content
-      var pageName = event.target.textContent;
-      
-      // Call the openPage function with the page name
-      openPage(pageName);
-    }
-    
-    
+        // Add active class to the clicked button
+        event.target.classList.add("active");
 
-  </script>
-</body>
+        // Retrieve the page name from the clicked button's text content
+        var pageName = event.target.textContent;
 
+        // Call the openPage function with the page name
+        openPage(pageName);
+      }
+    </script>
+  </body>
 </html>

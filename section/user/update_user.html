@@ -1,270 +1,322 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <title>User Form in Electron</title>
 
-
     <style>
+      .container {
+        margin: 20px auto;
+        max-width: 600px;
+        padding: 20px;
+        background-color: #fef7f7;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
 
-        .container {
-            margin: 20px auto;
-            max-width: 600px;
-            padding: 20px;
-            background-color: #fef7f7;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        h1 {
-            text-align: center;
-        }
-        
-        hr {
-            margin-top: 10px;
-            margin-bottom: 20px;
-            border: 0;
-            border-top: 1px solid #ccc;
-        }
-        
-        label {
-            display: block;
-            margin-top: 4%;
-            margin-bottom: 5px;
-        }
-        
-        input[type="text"],
-        input[type="password"],
-        select {
-            width: calc(100% - 20px);
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        
-        input[type="radio"] {
-            margin-right: 5px;
-        }
-        
-        .first-row,
-        .second-row,
-        .third-row {
-            margin-bottom: 20px;
-        }
-        
-        .container1 {
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .button-container {
-            text-align: center;
-        }
-        
-        .border-hover {
-            padding: 10px 20px;
-            margin: 0 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: darkgrey;
-            cursor: pointer;
-        }
-        
-        .border-hover:hover {
-            background-color: darkdarkgrey;
-        }
-        
-        .radio-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .radio-container label {
-            margin-right: 10px;
-        }
-        
+      h1 {
+        text-align: center;
+      }
 
-        /* Style the loader container */
-#loader {
-    border: 4px solid #f3f3f3; /* Light grey */
-    border-top: 4px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite; /* Apply animation */
-    display: none; /* Hide loader by default */
-    
-    /* Center the loader */
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  /* Animation */
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-            </style>
-        
+      hr {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        border: 0;
+        border-top: 1px solid #ccc;
+      }
 
+      label {
+        display: block;
+        margin-top: 4%;
+        margin-bottom: 5px;
+      }
 
+      input[type="text"],
+      input[type="password"],
+      select {
+        width: calc(100% - 20px);
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
 
-</head>
+      input[type="radio"] {
+        margin-right: 5px;
+      }
 
+      .first-row,
+      .second-row,
+      .third-row {
+        margin-bottom: 20px;
+      }
 
-<body>
+      .container1 {
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .button-container {
+        text-align: center;
+      }
+
+      .border-hover {
+        padding: 10px 20px;
+        margin: 0 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: darkgrey;
+        cursor: pointer;
+      }
+
+      .border-hover:hover {
+        background-color: darkdarkgrey;
+      }
+
+      .radio-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .radio-container label {
+        margin-right: 10px;
+      }
+
+      /* Style the loader container */
+      #loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite; /* Apply animation */
+        display: none; /* Hide loader by default */
+
+        /* Center the loader */
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* Animation */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
     <div id="loader"></div>
     <div class="container">
-        <h1 align="center">User Master</h1> <hr>
+      <h1 align="center">User Master</h1>
+      <hr />
 
-        <div class="container1">
+      <div class="container1">
         <form id="loginForm">
-    
-        <div class="first-row">
-        <label for="Id">ID :</label>
-        <input type="text" id="id" name="id" placeholder="ID" value = "" required readonly> 
-        <!-- <input type="text" id="usertype" name="usertype" placeholder="User Type"> -->
-        <label for="userType">User Type :</label>
-        <select id="usertype" name="usertype" placeholder="UserType" required>
-            <option value="User" selected>User</option>
-            <option value="Admin">Admin</option>
-            <!-- Add more options as needed -->
-        </select>
-        </div>
-        <!-- <input type="text" id="name" name="name" placeholder="Name"> <br><br> -->
-        <label for="userType">Name &nbsp; &nbsp;&nbsp;</label>
-        <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
-        <select id="name" id="name" name="name" required>
+          <div class="first-row">
+            <label for="Id">ID :</label>
+            <input
+              type="text"
+              id="id"
+              name="id"
+              placeholder="ID"
+              value=""
+              required
+              readonly
+            />
+            <!-- <input type="text" id="usertype" name="usertype" placeholder="User Type"> -->
+            <label for="userType">User Type :</label>
+            <select
+              id="usertype"
+              name="usertype"
+              placeholder="UserType"
+              required
+            >
+              <option value="User" selected>User</option>
+              <option value="Admin">Admin</option>
+              <!-- Add more options as needed -->
+            </select>
+          </div>
+          <!-- <input type="text" id="name" name="name" placeholder="Name"> <br><br> -->
+          <label for="userType">Name &nbsp; &nbsp;&nbsp;</label>
+          <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
+          <select id="name" id="name" name="name" required>
             <!-- <option value="User" disabled selected>Select Account</option> -->
-        </select>
-        <br>
+          </select>
+          <br />
 
-        <label for="userType">Route &nbsp; &nbsp;&nbsp;</label>
-        <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
-        <select id="route" id="route" name="route" required>
+          <label for="userType">Route &nbsp; &nbsp;&nbsp;</label>
+          <!-- <input type="text" id="usertype" name="id" placeholder="User Type"> -->
+          <select id="route" id="route" name="route" required>
             <!-- <option value="User" disabled selected>Select Account</option> -->
-        </select>
-        <br>
+          </select>
+          <br />
 
+          <label fro="username">Username :</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Username"
+            required
+          />
+          <br />
 
-        <label fro="username">Username :</label>
-        <input type="text" id="username" name="username" placeholder="Username" required> <br>
+          <label for="password">Password :</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <br />
+          <!-- Your HTML -->
+          <div class="second-row">
+            <div class="radio-container">
+              <input type="radio" id="isActive" name="isActive" required />
+              <label for="isActive">Active</label>
+              <input type="radio" id="isActive" name="isActive" required />
+              <label for="isdeActive">Deactive</label>
+            </div>
+          </div>
 
-        <label for="password">Password :</label>
-        <input type="password" id="password" name="password" placeholder="Password" required> <br>
-<!-- Your HTML -->
-<div class="second-row">
-    <div class="radio-container">
-        <input type="radio" id="isActive" name="isActive" required>
-        <label for="isActive">Active</label>
-        <input type="radio" id="isActive" name="isActive" required>
-        <label for="isdeActive">Deactive</label>
-    </div>
-</div>
-
-        <div class="third-row">
-        <button type="submit" id="updateButton" style="background-color: #26a653;" class="border-hover">Update</button>
-        <a href="./user.html"><button type='button' style="background-color: #ff355f;"  class="border-hover">Back</button></a>
-    </div>
-    </form>
-    </div>
+          <div class="third-row">
+            <button
+              type="submit"
+              id="updateButton"
+              style="background-color: #26a653"
+              class="border-hover"
+            >
+              Update
+            </button>
+            <a href="./user.html"
+              ><button
+                type="button"
+                style="background-color: #ff355f"
+                class="border-hover"
+              >
+                Back
+              </button></a
+            >
+          </div>
+        </form>
+      </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Retrieve user data from localStorage
-            await fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Worker', 'name', 'name');
-            await fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route', 'route_name');
-        
-            async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
-                try {
-                    const response = await fetch(apiUrl);
-                    
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    
-                    const data = await response.json();
-                    populateDropdownWithSelect2(data, dropdownId, field);
-                    
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-            }
-        
-            function populateDropdownWithSelect2(data, dropdownId, field) {
-                var dropdown = $('#' + dropdownId);
-                // Clear existing options
-                dropdown.empty();
-        
-                // Add placeholder option
-                dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
-        
-                // Populate dropdown with API data
-                data.forEach(function(item) {
-                    dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
-                });
-        
-                // Initialize Select2
-                dropdown.select2({
-                    placeholder: "Select " + dropdownId + " type",
-                    allowClear: true
-                });
-            }
-        
-            var userData = localStorage.getItem('userData');
-        
-            if (userData) {
-                // Parse the user data
-                var user = JSON.parse(userData);
-        
-                // Populate form fields with user data
-                document.getElementById("id").value = user.id;
-                var $productDropdown = $('#name');
-                // Set the value of the Select2 dropdown if it's different
-                if ($productDropdown.val() !== user.name) {
-                    $productDropdown.val(user.name).trigger('change');
-                }
+      document.addEventListener("DOMContentLoaded", async function () {
+        // Retrieve user data from localStorage
+        await fetchAndPopulateDropdown(
+          "http://94.136.190.129:3000/list/Worker",
+          "name",
+          "name"
+        );
+        await fetchAndPopulateDropdown(
+          "http://94.136.190.129:3000/routeData",
+          "route",
+          "route_name"
+        );
 
-                var $productDropdown = $('#route');
-                // Set the value of the Select2 dropdown if it's different
-                if ($productDropdown.val() !== user.route) {
-                    $productDropdown.val(user.route).trigger('change');
-                }
-        
-                document.getElementById("username").value = user.username;
-                document.getElementById("password").value = user.password;
-                document.getElementById("usertype").value = user.usertype;
-                if (user.status === '1') {
-                    document.getElementById("isActive").checked = true;
-                }
-                // Clear user data from localStorage (optional)
-                localStorage.removeItem('userData');
+        async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
+          try {
+            const response = await fetch(apiUrl);
+
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
             }
-        });
-        
-        $(document).on('select2:open', function(e) {
-            window.setTimeout(function () {
-                document.querySelector('input.select2-search__field').focus();
-            }, 0);
-        });
+
+            const data = await response.json();
+            populateDropdownWithSelect2(data, dropdownId, field);
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        }
+
+        function populateDropdownWithSelect2(data, dropdownId, field) {
+          var dropdown = $("#" + dropdownId);
+          // Clear existing options
+          dropdown.empty();
+
+          // Add placeholder option
+          dropdown.append(
+            $("<option></option>")
+              .attr("value", "")
+              .text("Select " + dropdownId + " type")
+              .prop("disabled", true)
+              .prop("selected", true)
+          );
+
+          // Populate dropdown with API data
+          data.forEach(function (item) {
+            dropdown.append(
+              $("<option></option>")
+                .attr("value", item[field])
+                .text(item[field])
+            );
+          });
+
+          // Initialize Select2
+          dropdown.select2({
+            placeholder: "Select " + dropdownId + " type",
+            allowClear: true,
+          });
+        }
+
+        var userData = localStorage.getItem("userData");
+
+        if (userData) {
+          // Parse the user data
+          var user = JSON.parse(userData);
+
+          // Populate form fields with user data
+          document.getElementById("id").value = user.id;
+          var $productDropdown = $("#name");
+          // Set the value of the Select2 dropdown if it's different
+          if ($productDropdown.val() !== user.name) {
+            $productDropdown.val(user.name).trigger("change");
+          }
+
+          var $productDropdown = $("#route");
+          // Set the value of the Select2 dropdown if it's different
+          if ($productDropdown.val() !== user.route) {
+            $productDropdown.val(user.route).trigger("change");
+          }
+
+          document.getElementById("username").value = user.username;
+          document.getElementById("password").value = user.password;
+          document.getElementById("usertype").value = user.usertype;
+          if (user.status === "1") {
+            document.getElementById("isActive").checked = true;
+          }
+          // Clear user data from localStorage (optional)
+          localStorage.removeItem("userData");
+        }
+      });
+
+      $(document).on("select2:open", function (e) {
+        window.setTimeout(function () {
+          document.querySelector("input.select2-search__field").focus();
+        }, 0);
+      });
     </script>
     <script src="./update_user.js"></script>
-
-
-
-</body>
+  </body>
 </html>
-
-

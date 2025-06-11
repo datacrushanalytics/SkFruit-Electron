@@ -249,7 +249,12 @@
           ><br /><br />
           <!-- <div class="third-row"> -->
           <!-- <button class="border-hover" >Save</button> -->
-          <input type="text" id="searchBox" placeholder="Search" oninput="searchData()">
+          <input
+            type="text"
+            id="searchBox"
+            placeholder="Search"
+            oninput="searchData()"
+          />
           <button
             type="submit"
             style="background-color: #26a653"
@@ -288,8 +293,8 @@
   <script>
     document.addEventListener("DOMContentLoaded", async function () {
       // Fetch data from API and populate Select2 dropdowns
-      // fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'customer');
-      fetchAndPopulateDropdown("http://103.174.102.89:3000/routeData", "route");
+      // fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Customer', 'customer');
+      fetchAndPopulateDropdown("http://94.136.190.129:3000/routeData", "route");
 
       function setDefaultDate() {
         var today = new Date();
@@ -308,14 +313,14 @@
       // Check if the user is an admin and show/hide the button accordingly
       if (isAdmin) {
         fetchAndPopulateDropdown(
-          "http://103.174.102.89:3000/routeData",
+          "http://94.136.190.129:3000/routeData",
           "route",
           "route_name"
         );
       } else {
         var route = sessionData[0].route;
         await fetchAndPopulateDropdown(
-          "http://103.174.102.89:3000/routeData",
+          "http://94.136.190.129:3000/routeData",
           "route",
           "route_name",
           (selectedValue = route),

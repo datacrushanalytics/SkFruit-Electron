@@ -1,85 +1,85 @@
 function getElementValueWithDefault(id, defaultValue) {
-    var element = document.getElementById(id);
-    return element && element.value ? element.value : defaultValue;
+  var element = document.getElementById(id);
+  return element && element.value ? element.value : defaultValue;
 }
 
 function formatDate(dateString) {
-    var date = new Date(dateString);
-    var year = date.getFullYear();
-    var month = ('0' + (date.getMonth() + 1)).slice(-2);
-    var day = ('0' + date.getDate()).slice(-2);
-    return year + '-' + month + '-' + day;
+  var date = new Date(dateString);
+  var year = date.getFullYear();
+  var month = ("0" + (date.getMonth() + 1)).slice(-2);
+  var day = ("0" + date.getDate()).slice(-2);
+  return year + "-" + month + "-" + day;
 }
 
-document.getElementById('loginForm1').addEventListener('submit', function(event) {
+document
+  .getElementById("loginForm1")
+  .addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent form submission
     fetchDataAndProcess();
-});
+  });
 
 function fetchDataAndProcess() {
-    var data = {
-        from_date: formatDate(document.getElementById("fromdate").value),
-        to_date: formatDate(document.getElementById("todate").value),
-        customer: getElementValueWithDefault('customer', '*'),
-        vehicle: getElementValueWithDefault('vehicle', '*'),
-        bata: getElementValueWithDefault('bata', '*'),
-        user: getElementValueWithDefault('user', '*'),
-        route: getElementValueWithDefault('route', '*'),
-        product: getElementValueWithDefault('product', '*')
-    };
-    console.log(data);
-    var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+  var data = {
+    from_date: formatDate(document.getElementById("fromdate").value),
+    to_date: formatDate(document.getElementById("todate").value),
+    customer: getElementValueWithDefault("customer", "*"),
+    vehicle: getElementValueWithDefault("vehicle", "*"),
+    bata: getElementValueWithDefault("bata", "*"),
+    user: getElementValueWithDefault("user", "*"),
+    route: getElementValueWithDefault("route", "*"),
+    product: getElementValueWithDefault("product", "*"),
+  };
+  console.log(data);
+  var loader = document.getElementById("loader");
+  loader.style.display = "block";
 
-    
-    const isChecked = document.getElementById('toggleTableCheckbox').checked;
-    if (isChecked){
-        var url = "http://103.174.102.89:3000/profitLossReport/undetail"
-    }else{
-        var url = "http://103.174.102.89:3000/profitLossReport/detail"
-    }
+  const isChecked = document.getElementById("toggleTableCheckbox").checked;
+  if (isChecked) {
+    var url = "http://94.136.190.129:3000/profitLossReport/undetail";
+  } else {
+    var url = "http://94.136.190.129:3000/profitLossReport/detail";
+  }
 
-    return fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (response.status === 404) {
-        loader.style.display = 'none';
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (response.status === 404) {
+        loader.style.display = "none";
         Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'No data found.',
-          });
-
-            throw new Error('Data not found');
-        }
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-        .then(result => {
-        loader.style.display = 'none';
-            console.log(result);
-            // populateTable4(result);
-            if (isChecked){
-                populateTable5(result);
-            }else{
-                populateTable4(result);
-            }
-            return result;
-            // Optionally, you can redirect or show a success message here
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            // Optionally, you can display an error message here
+          icon: "error",
+          title: "Oops...",
+          text: "No data found.",
         });
-}
 
+        throw new Error("Data not found");
+      }
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((result) => {
+      loader.style.display = "none";
+      console.log(result);
+      // populateTable4(result);
+      if (isChecked) {
+        populateTable5(result);
+      } else {
+        populateTable4(result);
+      }
+      return result;
+      // Optionally, you can redirect or show a success message here
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      // Optionally, you can display an error message here
+    });
+}
 
 // function populateTable4(data) {
 //     var tbody = document.getElementById('tableBody');
@@ -119,7 +119,7 @@ function fetchDataAndProcess() {
 
 //     // Create the grand total row
 //     var totalRow = tbody.insertRow();
-    
+
 //     // Create cell for 'Grand Total' heading
 //     var headingCell = totalRow.insertCell();
 //     headingCell.textContent = 'Grand Total';
@@ -142,191 +142,232 @@ function fetchDataAndProcess() {
 //     });
 // }
 
-
-
-
 function populateTable4(data) {
-    var tbody = document.getElementById('tableBody');
-    tbody.innerHTML = ''; // Clear existing rows
-    // const isChecked = document.getElementById('toggleTableCheckbox').checked;
-    // if (isChecked){
-    //     var columnsToDisplay = ['bata', 'product', 'total_sold_quantity', 'total_purchase_price', 'total_amount', 'net_profit_loss'];
-    // }else{
-        var columnsToDisplay = ['bill_no','date', 'gadi_number','cust_name', 'bata', 'product', 'sold_quantity', 'purchase_price', 'Amount', 'profit_loss'];
-    // }
-    
-    var counter = 1;
-    var grandTotals = {
-        sold_quantity: 0,
-        purchase_price: 0,
-        selling_price: 0,
-        Amount: 0,
-        profit_loss: 0
-    };
-    console.log(data.reports);
-    if (data.reports.length === 0) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'No data found.',
-          });
+  var tbody = document.getElementById("tableBody");
+  tbody.innerHTML = ""; // Clear existing rows
+  // const isChecked = document.getElementById('toggleTableCheckbox').checked;
+  // if (isChecked){
+  //     var columnsToDisplay = ['bata', 'product', 'total_sold_quantity', 'total_purchase_price', 'total_amount', 'net_profit_loss'];
+  // }else{
+  var columnsToDisplay = [
+    "bill_no",
+    "date",
+    "gadi_number",
+    "cust_name",
+    "bata",
+    "product",
+    "sold_quantity",
+    "purchase_price",
+    "Amount",
+    "profit_loss",
+  ];
+  // }
 
-        return;
-    }
-    data.reports.forEach(function (item) {
-        var row = tbody.insertRow();
-        var cell = row.insertCell();
-        cell.textContent = counter++;
-        columnsToDisplay.forEach(function (key) {
-            var cell = row.insertCell();
-            if (key === 'profit_loss') {
-                if (item[key].startsWith('Loss')) {
-                    cell.style.color = 'red';
-                    grandTotals[key] -= parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
-                } else {
-                    cell.style.color = 'green';
-                    grandTotals[key] += parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
-                }
-                // grandTotals[key] += parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
-            } else if (['sold_quantity', 'purchase_price', "selling_price", 'Amount'].includes(key)) {
-                grandTotals[key] += parseFloat(item[key]) || 0;
-            }
-            if (key == 'date') {
-                console.log(item[key])
-                var utcDate = new Date(item[key]);
-                var options = {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    timeZone: 'Asia/Kolkata'
-                };
-                console.log( "Date",utcDate.toLocaleString('en-IN', options))
-                cell.textContent = utcDate.toLocaleString('en-IN', options);
-            }else{
-                cell.textContent = item[key];
-            }
-            console.log("grandTotals",grandTotals)
-        });
+  var counter = 1;
+  var grandTotals = {
+    sold_quantity: 0,
+    purchase_price: 0,
+    selling_price: 0,
+    Amount: 0,
+    profit_loss: 0,
+  };
+  console.log(data.reports);
+  if (data.reports.length === 0) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "No data found.",
     });
 
-    // Create the grand total row
-    var totalRow = tbody.insertRow();
-    
-    // Create cell for 'Grand Total' heading
-    var headingCell = totalRow.insertCell();
-    headingCell.textContent = 'Grand Total';
-    headingCell.style.fontWeight = 'bold';
-    headingCell.colSpan = 4; // Span across the first four columns
-
-    // Create an empty cell to shift the totals to the right
-    var emptyCell = totalRow.insertCell();
-    emptyCell.textContent = ''; // Empty cell to shift totals to the right
-
-    // Create cells for the total values
-    columnsToDisplay.forEach(function (key, index) {
-        if (index >= 4) { // Start populating totals after the first four columns
-            var cell = totalRow.insertCell();
-            if (['sold_quantity', 'purchase_price', "selling_price", 'Amount','profit_loss'].includes(key)) {
-                if (key === 'profit_loss') {
-                    cell.style.color = grandTotals[key] < 0 ? 'red' : 'green';
-                }
-                cell.textContent = grandTotals[key].toFixed(2); // Format the total to 2 decimal places
-            } else {
-                cell.textContent = ''; // Empty cells for the specified columns
-            }
+    return;
+  }
+  data.reports.forEach(function (item) {
+    var row = tbody.insertRow();
+    var cell = row.insertCell();
+    cell.textContent = counter++;
+    columnsToDisplay.forEach(function (key) {
+      var cell = row.insertCell();
+      if (key === "profit_loss") {
+        if (item[key].startsWith("Loss")) {
+          cell.style.color = "red";
+          grandTotals[key] -=
+            parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
+        } else {
+          cell.style.color = "green";
+          grandTotals[key] +=
+            parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
         }
+        // grandTotals[key] += parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
+      } else if (
+        ["sold_quantity", "purchase_price", "selling_price", "Amount"].includes(
+          key
+        )
+      ) {
+        grandTotals[key] += parseFloat(item[key]) || 0;
+      }
+      if (key == "date") {
+        console.log(item[key]);
+        var utcDate = new Date(item[key]);
+        var options = {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          timeZone: "Asia/Kolkata",
+        };
+        console.log("Date", utcDate.toLocaleString("en-IN", options));
+        cell.textContent = utcDate.toLocaleString("en-IN", options);
+      } else {
+        cell.textContent = item[key];
+      }
+      console.log("grandTotals", grandTotals);
     });
-}
+  });
 
+  // Create the grand total row
+  var totalRow = tbody.insertRow();
+
+  // Create cell for 'Grand Total' heading
+  var headingCell = totalRow.insertCell();
+  headingCell.textContent = "Grand Total";
+  headingCell.style.fontWeight = "bold";
+  headingCell.colSpan = 4; // Span across the first four columns
+
+  // Create an empty cell to shift the totals to the right
+  var emptyCell = totalRow.insertCell();
+  emptyCell.textContent = ""; // Empty cell to shift totals to the right
+
+  // Create cells for the total values
+  columnsToDisplay.forEach(function (key, index) {
+    if (index >= 4) {
+      // Start populating totals after the first four columns
+      var cell = totalRow.insertCell();
+      if (
+        [
+          "sold_quantity",
+          "purchase_price",
+          "selling_price",
+          "Amount",
+          "profit_loss",
+        ].includes(key)
+      ) {
+        if (key === "profit_loss") {
+          cell.style.color = grandTotals[key] < 0 ? "red" : "green";
+        }
+        cell.textContent = grandTotals[key].toFixed(2); // Format the total to 2 decimal places
+      } else {
+        cell.textContent = ""; // Empty cells for the specified columns
+      }
+    }
+  });
+}
 
 function populateTable5(data) {
-    var tbody = document.getElementById('tableBody');
-    tbody.innerHTML = ''; // Clear existing rows
-    // const isChecked = document.getElementById('toggleTableCheckbox').checked;
-    // if (isChecked){
-        var columnsToDisplay = ['bata', 'product', 'total_sold_quantity', 'total_purchase_price', 'total_amount', 'net_profit_loss'];
-    // }else{
-    //     var columnsToDisplay = ['bill_no', 'gadi_number','cust_name', 'bata', 'product', 'sold_quantity', 'purchase_price', 'Amount', 'profit_loss'];
-    // }
-    
-    var counter = 1;
-    var grandTotals = {
-        sold_quantity: 0,
-        purchase_price: 0,
-        selling_price: 0,
-        Amount: 0,
-        profit_loss: 0,
-        total_sold_quantity: 0,
-        total_purchase_price: 0,
-        total_amount: 0,
-        net_profit_loss: 0
-    };
-    console.log(data.reports);
-    if (data.reports.length === 0) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'No data found.',
-          });
+  var tbody = document.getElementById("tableBody");
+  tbody.innerHTML = ""; // Clear existing rows
+  // const isChecked = document.getElementById('toggleTableCheckbox').checked;
+  // if (isChecked){
+  var columnsToDisplay = [
+    "bata",
+    "product",
+    "total_sold_quantity",
+    "total_purchase_price",
+    "total_amount",
+    "net_profit_loss",
+  ];
+  // }else{
+  //     var columnsToDisplay = ['bill_no', 'gadi_number','cust_name', 'bata', 'product', 'sold_quantity', 'purchase_price', 'Amount', 'profit_loss'];
+  // }
 
-        return;
-    }
-    data.reports.forEach(function (item) {
-        var row = tbody.insertRow();
-        var cell = row.insertCell();
-        cell.textContent = counter++;
-        columnsToDisplay.forEach(function (key) {
-            var cell = row.insertCell();
-            if (key === 'net_profit_loss') {
-                if (item[key].startsWith('Loss')) {
-                    cell.style.color = 'red';
-                    grandTotals[key] -= parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
-                } else {
-                    cell.style.color = 'green';
-                    grandTotals[key] += parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
-                }
-                // grandTotals[key] += parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
-            } else if (['total_sold_quantity', 'total_purchase_price', 'total_amount', 'net_profit_loss'].includes(key)) {
-                grandTotals[key] += parseFloat(item[key]) || 0;
-            }
-            cell.textContent = item[key];
-            console.log("grandTotals",grandTotals)
-        });
+  var counter = 1;
+  var grandTotals = {
+    sold_quantity: 0,
+    purchase_price: 0,
+    selling_price: 0,
+    Amount: 0,
+    profit_loss: 0,
+    total_sold_quantity: 0,
+    total_purchase_price: 0,
+    total_amount: 0,
+    net_profit_loss: 0,
+  };
+  console.log(data.reports);
+  if (data.reports.length === 0) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "No data found.",
     });
 
-    // Create the grand total row
-    var totalRow = tbody.insertRow();
-    
-    // Create cell for 'Grand Total' heading
-    var headingCell = totalRow.insertCell();
-    headingCell.textContent = 'Grand Total';
-    headingCell.style.fontWeight = 'bold';
-    headingCell.colSpan = 2; // Span across the first four columns
-
-    // Create an empty cell to shift the totals to the right
-    var emptyCell = totalRow.insertCell();
-    emptyCell.textContent = ''; // Empty cell to shift totals to the right
-
-    // Create cells for the total values
-    columnsToDisplay.forEach(function (key, index) {
-        if (index >= 2) { // Start populating totals after the first four columns
-            var cell = totalRow.insertCell();
-            if (['total_sold_quantity', 'total_purchase_price', 'total_amount', 'net_profit_loss'].includes(key)) {
-                if (key === 'net_profit_loss') {
-                    cell.style.color = grandTotals[key] < 0 ? 'red' : 'green';
-                }
-                cell.textContent = grandTotals[key].toFixed(2); // Format the total to 2 decimal places
-            } else {
-                cell.textContent = ''; // Empty cells for the specified columns
-            }
+    return;
+  }
+  data.reports.forEach(function (item) {
+    var row = tbody.insertRow();
+    var cell = row.insertCell();
+    cell.textContent = counter++;
+    columnsToDisplay.forEach(function (key) {
+      var cell = row.insertCell();
+      if (key === "net_profit_loss") {
+        if (item[key].startsWith("Loss")) {
+          cell.style.color = "red";
+          grandTotals[key] -=
+            parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
+        } else {
+          cell.style.color = "green";
+          grandTotals[key] +=
+            parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
         }
+        // grandTotals[key] += parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
+      } else if (
+        [
+          "total_sold_quantity",
+          "total_purchase_price",
+          "total_amount",
+          "net_profit_loss",
+        ].includes(key)
+      ) {
+        grandTotals[key] += parseFloat(item[key]) || 0;
+      }
+      cell.textContent = item[key];
+      console.log("grandTotals", grandTotals);
     });
+  });
+
+  // Create the grand total row
+  var totalRow = tbody.insertRow();
+
+  // Create cell for 'Grand Total' heading
+  var headingCell = totalRow.insertCell();
+  headingCell.textContent = "Grand Total";
+  headingCell.style.fontWeight = "bold";
+  headingCell.colSpan = 2; // Span across the first four columns
+
+  // Create an empty cell to shift the totals to the right
+  var emptyCell = totalRow.insertCell();
+  emptyCell.textContent = ""; // Empty cell to shift totals to the right
+
+  // Create cells for the total values
+  columnsToDisplay.forEach(function (key, index) {
+    if (index >= 2) {
+      // Start populating totals after the first four columns
+      var cell = totalRow.insertCell();
+      if (
+        [
+          "total_sold_quantity",
+          "total_purchase_price",
+          "total_amount",
+          "net_profit_loss",
+        ].includes(key)
+      ) {
+        if (key === "net_profit_loss") {
+          cell.style.color = grandTotals[key] < 0 ? "red" : "green";
+        }
+        cell.textContent = grandTotals[key].toFixed(2); // Format the total to 2 decimal places
+      } else {
+        cell.textContent = ""; // Empty cells for the specified columns
+      }
+    }
+  });
 }
-
-
-
-
-
 
 // async function exportToExcel() {
 //     let customHeaders; // Define customHeaders outside the try block
@@ -338,7 +379,7 @@ function populateTable5(data) {
 //         const doc = new jsPDF();
 
 //         customHeaders = ['bill_no','gadi_number','bata', 'product', 'sold_quantity', 'purchase_price', "selling_price", 'Amount', 'profit_loss']; // Assign customHeaders value here
-        
+
 //         // Adding header details
 //         doc.setFontSize(10);
 //         doc.text('Mobile:- 9960607512', 10, 10);
@@ -348,9 +389,9 @@ function populateTable5(data) {
 //         doc.setFontSize(12);
 //         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
 //         doc.text('Mobile NO:- 9860601102  / 9922676380 / 9156409970', 50, 40);
-        
+
 //         let startY = 50;
-        
+
 //         // Map data for autoTable
 //         const reportData = data.reports.map(report => [
 //             report.bill_no,
@@ -368,8 +409,7 @@ function populateTable5(data) {
 //         // Calculate grand totals
 //         const grandTotalAmount = data.reports.reduce((total, report) => total + parseFloat(report.purchase_price), 0);
 //         const grandTotalQuantity = data.reports.reduce((total, report) => total + parseFloat(report.selling_price), 0);
-        
-    
+
 //         // Add grand totals row to reportData
 //         reportData.push(['Grand Total:', '', '', '','', grandTotalAmount.toFixed(2), grandTotalQuantity.toFixed(2)]);
 
@@ -389,73 +429,66 @@ function populateTable5(data) {
 //     }
 // }
 
-
 async function exportToExcel() {
-    try {
-        const data = await fetchDataAndProcess();
+  try {
+    const data = await fetchDataAndProcess();
 
-        var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+    var loader = document.getElementById("loader");
+    loader.style.display = "block";
 
-        return fetch('http://103.174.102.89:3000/profitLossReport/generate-pdf', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => {
-            if (response.status === 404) {
-                loader.style.display = 'none';
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'No data found.',
-                  });
-
-                throw new Error('Data not found');
-            }
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.blob(); // Get the response as a Blob
-        })
-        .then(blob => {
-            loader.style.display = 'none';
-
-            // Create a URL for the Blob and trigger a download
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = url;
-            a.download = 'ProfitLossReport.pdf'; // Set the desired file name
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url); // Release the URL
-
-            console.log('PDF downloaded successfully');
-        })
-        .catch(error => {
-            loader.style.display = 'none';
-            console.error('Error:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Error generating PDF. Please try again.',
-              });
-    
-        });
-    } catch (error) {
-        console.error('Error:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Error generating PDF. Please try again.',
+    return fetch("http://94.136.190.129:3000/profitLossReport/generate-pdf", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.status === 404) {
+          loader.style.display = "none";
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "No data found.",
           });
 
-    }
+          throw new Error("Data not found");
+        }
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.blob(); // Get the response as a Blob
+      })
+      .then((blob) => {
+        loader.style.display = "none";
+
+        // Create a URL for the Blob and trigger a download
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = "ProfitLossReport.pdf"; // Set the desired file name
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url); // Release the URL
+
+        console.log("PDF downloaded successfully");
+      })
+      .catch((error) => {
+        loader.style.display = "none";
+        console.error("Error:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Error generating PDF. Please try again.",
+        });
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Error generating PDF. Please try again.",
+    });
+  }
 }
-
-
-
-

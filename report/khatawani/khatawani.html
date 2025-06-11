@@ -1,516 +1,605 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>User Form in Electron</title>
     <style>
-        /* Add border to the second form */
+      /* Add border to the second form */
 
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fef7f7;
+        /* Transparent background */
+        margin: 0;
+        padding: 20px;
+        overflow-x: hidden;
+        /* Hide horizontal scrollbar */
+      }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fef7f7;
-            /* Transparent background */
-            margin: 0;
-            padding: 20px;
-            overflow-x: hidden;
-            /* Hide horizontal scrollbar */
+      .container {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .container h1 {
+        margin-top: 1%;
+      }
+
+      .first-row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .first-row label {
+        margin-right: 10px;
+        margin-top: 9px;
+      }
+
+      .first-row input,
+      .first-row select {
+        margin-right: 10px;
+      }
+
+      #fromdate {
+        /* border-radius: 8px; */
+        height: 30px;
+        width: 250px;
+        margin-left: 0%;
+      }
+
+      label {
+        margin-left: 3%;
+      }
+
+      #todate {
+        /* border-radius: 8px; */
+        height: 35px;
+        width: 320px;
+        margin-left: 0%;
+      }
+
+      .drop,
+      .drop1 {
+        border: 1px solid transparent;
+        box-shadow: 5px 10px 8px grey;
+        border-radius: 8px;
+        width: 60%;
+        height: 35px;
+        text-indent: 10%;
+        margin-left: 4%;
+      }
+
+      #customer,
+      #route,
+      #user {
+        border: 1px solid transparent;
+        /* box-shadow: 5px 10px 8px grey; */
+        border-radius: 8px;
+        width: 40%;
+        height: 35px;
+        text-indent: 10%;
+        margin-left: 3%;
+      }
+
+      #lable1111 {
+        margin-left: 6%;
+      }
+
+      .button-container {
+        margin-bottom: 20px;
+      }
+
+      .button {
+        padding: 12px 24px;
+        text-decoration: none;
+        color: white;
+        background-color: grey;
+        /* Grey color */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin: 0 10px;
+      }
+
+      .button:hover {
+        background-color: darkgrey;
+        /* Darker grey on hover */
+      }
+
+      .button a {
+        color: white;
+        text-decoration: none;
+      }
+
+      .table-container {
+        max-width: 100%;
+        overflow-x: auto;
+        /* Enable horizontal scrolling */
+        margin: 0 auto;
+        max-height: calc(100vh - 200px);
+        /* Adjust the height as needed */
+        overflow-y: auto;
+        /* Enable vertical scrolling */
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #c7d5d3;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+      }
+
+      th,
+      td {
+        border: 1px solid #dddddd;
+        background-color: #eafffb;
+        text-align: left;
+        padding: 12px;
+      }
+
+      th {
+        background-color: #c7d5d3;
+      }
+
+      /* Style the loader container */
+      #loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite; /* Apply animation */
+        display: none; /* Hide loader by default */
+
+        /* Center the loader */
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* Animation */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
         }
-
-        .container {
-            text-align: center;
-            margin-bottom: 20px;
+        100% {
+          transform: rotate(360deg);
         }
+      }
 
-        .container h1 {
-            margin-top: 1%;
-        }
+      /* CSS */
+      .popup {
+        /* Existing styles */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
 
-        .first-row {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
+      /* Styles for the modal */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
 
-        .first-row label {
-            margin-right: 10px;
-            margin-top: 9px;
-        }
+      /* Styles for the modal content */
+      .modal-content {
+        background-color: #fefefe;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        position: relative;
+        /* Position relative for the close button */
+      }
 
-        .first-row input,
-        .first-row select {
-            margin-right: 10px;
-        }
+      /* Close button style */
+      .close {
+        color: #aaa;
+        position: absolute;
+        top: 8px;
+        right: 16px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
 
-        #fromdate {
-            /* border-radius: 8px; */
-            height: 30px;
-            width: 250px;
-            margin-left:0%;
-        }
-
-        label {
-            margin-left: 3%;
-        }
-
-        #todate {
-            /* border-radius: 8px; */
-            height: 35px;
-            width: 320px;
-            margin-left:0%;
-        }
-
-        .drop,
-        .drop1 {
-            border: 1px solid transparent;
-            box-shadow: 5px 10px 8px grey;
-            border-radius: 8px;
-            width: 60%;
-            height: 35px;
-            text-indent: 10%;
-            margin-left: 4%;
-        }
-
-        #customer,
-        #route, #user {
-            border: 1px solid transparent;
-            /* box-shadow: 5px 10px 8px grey; */
-            border-radius: 8px;
-            width: 40%;
-            height: 35px;
-            text-indent: 10%;
-            margin-left: 3%;
-        }
-
-        #lable1111 {
-            margin-left: 6%;
-        }
-
-        .button-container {
-            margin-bottom: 20px;
-        }
-
-        .button {
-            padding: 12px 24px;
-            text-decoration: none;
-            color: white;
-            background-color: grey;
-            /* Grey color */
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin: 0 10px;
-        }
-
-        .button:hover {
-            background-color: darkgrey;
-            /* Darker grey on hover */
-        }
-
-
-        .button a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .table-container {
-            max-width: 100%;
-            overflow-x: auto;
-            /* Enable horizontal scrolling */
-            margin: 0 auto;
-            max-height: calc(100vh - 200px);
-            /* Adjust the height as needed */
-            overflow-y: auto;
-            /* Enable vertical scrolling */
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #c7d5d3;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-        }
-
-        th,
-        td {
-            border: 1px solid #dddddd;
-            background-color: #eafffb;
-            text-align: left;
-            padding: 12px;
-        }
-
-        th {
-            background-color: #c7d5d3;
-        }
-
-        /* Style the loader container */
-#loader {
-    border: 4px solid #f3f3f3; /* Light grey */
-    border-top: 4px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite; /* Apply animation */
-    display: none; /* Hide loader by default */
-    
-    /* Center the loader */
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  /* Animation */
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-    /* CSS */
-.popup {
-    /* Existing styles */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-  
-
-
-        /* Styles for the modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        /* Styles for the modal content */
-        .modal-content {
-            background-color: #fefefe;
-            margin: 10% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-            position: relative;
-            /* Position relative for the close button */
-        }
-
-        /* Close button style */
-        .close {
-            color: #aaa;
-            position: absolute;
-            top: 8px;
-            right: 16px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="loader"></div>
     <div class="container">
-        <h1 align="center">Khatawani</h1>
-        <hr>
-        <br>
-        <div class="container1">
-            <form id="loginForm1">
+      <h1 align="center">Khatawani</h1>
+      <hr />
+      <br />
+      <div class="container1">
+        <form id="loginForm1">
+          <div class="first-row">
+            <label for="userType">From Date :</label>
+            <input
+              type="date"
+              id="fromdate"
+              name="date"
+              placeholder="From Date"
+              required
+            />
+            <br />
+            <label for="userType">To Date :</label>
+            <input
+              type="date"
+              id="todate"
+              name="date"
+              placeholder="To Date"
+              required
+            />
+          </div>
 
-                <div class="first-row">
-                    <label for="userType">From Date :</label>
-                    <input type="date" id="fromdate" name="date" placeholder="From Date" required>
-                    <br>
-                    <label for="userType">To Date :</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date" required>
-                </div>
+          <br />
 
-                <br>
+          <label for="userType">Route : </label>
+          <select
+            class="drop"
+            id="route"
+            name="name"
+            multiple="multiple"
+            onchange="setCustomer()"
+          >
+            <!-- <option value="" disabled>Select Route</option> -->
+            <!-- <option value="User" disabled selected>Select Account</option> -->
+          </select>
+          <br />
+          <br />
 
-                <label for="userType">Route : </label>
-                <select class="drop" id="route" name="name" multiple="multiple" onchange="setCustomer()">
-                    <!-- <option value="" disabled>Select Route</option> -->
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select>
-                <br>
-                <br>
+          <label for="userType"> Customer : </label>
+          <select class="drop" id="customer" name="name">
+            <!-- <option value="User" disabled sele÷cted>Select Account</option> -->
+          </select>
 
+          <br /><br />
 
-                <label for="userType"> Customer : </label>
-                <select class="drop" id="customer" name="name">
-                    <!-- <option value="User" disabled sele÷cted>Select Account</option> -->
-                </select>
+          <label for="userType">User :</label>
+          <select class="drop" id="user">
+            <!-- <option value="User" disabled selected>Select Account</option> -->
+          </select>
+          <br /><br />
+          <div class="third-row">
+            <!-- <button class="border-hover" >Save</button> -->
+            <button
+              type="submit"
+              style="background-color: #26a653"
+              class="button"
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              style="background-color: #ff355f"
+              class="button"
+              onclick="exportToExcel()"
+              id="button2"
+            >
+              Export
+            </button>
+            <a href="../../section/Menu.html"
+              ><button
+                type="button"
+                style="background-color: #ff355f"
+                class="button"
+              >
+                Back
+              </button></a
+            >
+          </div>
+        </form>
+        <br />
+        <br />
+        <div class="table-container">
+          <table>
+            <tr>
+              <th>Sr. No</th>
+              <th>Summary</th>
+              <th>DATE</th>
+              <th>Customer Name</th>
+              <th>Route</th>
+              <th>Amount</th>
+              <th>Carate Amount</th>
+              <th>Total Kalam</th>
+              <th>Cash</th>
+              <th>Online Bank</th>
+              <th>Online Amount</th>
+              <th>Discount</th>
+              <th>In Carte</th>
+              <th>Balance</th>
+            </tr>
+            <tfoot>
+              <tr>
+                <!-- <td colspan="13" style="text-align: right; font-weight: bold;">Grand Total</td> -->
+                <td colspan="2" id="grandTotalCell"></td>
+              </tr>
+            </tfoot>
 
-                <br><br>
-
-                <label for="userType">User :</label>
-                <select class="drop" id="user">
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select>
-                <br><br>
-                <div class="third-row">
-                    <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" style="background-color: #26a653;" class="button">Submit</button>
-                    <button type='button' style="background-color: #ff355f;" class="button" onclick="exportToExcel()" id="button2">Export</button>
-                    <a href="../../section/Menu.html"><button type="button" style="background-color: #ff355f;" class="button">Back</button></a>
-                </div>
-            </form>
-            <br>
-            <br>
-            <div class="table-container">
-                <table>
-                    <tr>
-                        <th>Sr. No</th>
-                    <th>Summary</th>
-                    <th>DATE</th>
-                    <th>Customer Name</th>
-                    <th>Route</th>
-                    <th>Amount</th>
-                    <th>Carate Amount</th>
-                    <th>Total Kalam</th>
-                    <th>Cash</th>
-                    <th>Online Bank</th>
-                    <th>Online Amount</th>
-                    <th>Discount</th>
-                    <th>In Carte</th>
-                    <th>Balance</th>
-                    </tr>
-                    <tfoot>
-                        <tr>
-                            <!-- <td colspan="13" style="text-align: right; font-weight: bold;">Grand Total</td> -->
-                            <td colspan="2" id="grandTotalCell"></td>
-                        </tr>
-                    </tfoot>
-
-                    <!-- Add more rows as needed -->
-                    <tbody id="tableBody">
-                        <!-- Data will be inserted here -->
-                    </tbody>
-                    <div id="popupContainer"></div>
-                </table>
-            </div>
+            <!-- Add more rows as needed -->
+            <tbody id="tableBody">
+              <!-- Data will be inserted here -->
+            </tbody>
+            <div id="popupContainer"></div>
+          </table>
         </div>
+      </div>
     </div>
+  </body>
+  <script src="./khatawani.js"></script>
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Fetch data from API and populate Select2 dropdowns
+      const now = new Date();
 
+      // Adjust to IST (UTC+5:30)
+      const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
+      const istTime = new Date(now.getTime() + istOffset);
 
+      // Format the date to YYYY-MM-DD
+      const todayIST = istTime.toISOString().split("T")[0];
 
-</body>
-<script src="./khatawani.js"></script>
+      // Set the value of the date inputs to today's date in IST
+      document.getElementById("fromdate").value = todayIST;
+      document.getElementById("todate").value = todayIST;
 
-<script>
-        
-    document.addEventListener('DOMContentLoaded', function () {
-        // Fetch data from API and populate Select2 dropdowns
-        const now = new Date();
+      var sessionData = JSON.parse(localStorage.getItem("sessionData"));
+      // Check if session data exists and if the user is an admin
+      var isAdmin = sessionData && sessionData[0].usertype === "Admin";
+      // Check if the user is an admin and show/hide the button accordingly
+      if (isAdmin) {
+        fetchAndPopulateDropdown1(
+          "http://94.136.190.129:3000/fetchData/user",
+          "user",
+          "added_by"
+        );
+        fetchAndPopulateDropdown(
+          "http://94.136.190.129:3000/routeData",
+          "route"
+        );
+        fetchAndPopulateDropdown(
+          "http://94.136.190.129:3000/list/Customer",
+          "customer"
+        );
 
-    // Adjust to IST (UTC+5:30)
-    const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
-    const istTime = new Date(now.getTime() + istOffset);
-
-    // Format the date to YYYY-MM-DD
-    const todayIST = istTime.toISOString().split('T')[0];
-
-    // Set the value of the date inputs to today's date in IST
-    document.getElementById('fromdate').value = todayIST;
-    document.getElementById('todate').value = todayIST;
-
-        var sessionData = JSON.parse(localStorage.getItem('sessionData'));
-        // Check if session data exists and if the user is an admin
-        var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
-        // Check if the user is an admin and show/hide the button accordingly
-        if (isAdmin) {
-            fetchAndPopulateDropdown1('http://103.174.102.89:3000/fetchData/user', 'user','added_by');
-            fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route');
-            fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'customer');
-            
-            // document.getElementById('user').style.display = none
-        }else{
-            var route = sessionData[0].route;
-            fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customer/' +route  , 'customer',readOnly=false);
-            fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route',selectedValue=route,readOnly = true);
-            fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/user', 'user',selectedValue=sessionData[0].name,readOnly = true);
-        }
-        
-        
+        // document.getElementById('user').style.display = none
+      } else {
+        var route = sessionData[0].route;
+        fetchAndPopulateDropdown(
+          "http://94.136.190.129:3000/fetchData/customer/" + route,
+          "customer",
+          (readOnly = false)
+        );
+        fetchAndPopulateDropdown(
+          "http://94.136.190.129:3000/routeData",
+          "route",
+          (selectedValue = route),
+          (readOnly = true)
+        );
+        fetchAndPopulateDropdown(
+          "http://94.136.190.129:3000/fetchData/user",
+          "user",
+          (selectedValue = sessionData[0].name),
+          (readOnly = true)
+        );
+      }
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId,selectedValue = null, readOnly = false) {
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId, selectedValue, readOnly);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+    function fetchAndPopulateDropdown(
+      apiUrl,
+      dropdownId,
+      selectedValue = null,
+      readOnly = false
+    ) {
+      fetch(apiUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Populate Select2 dropdown with API data
+          populateDropdownWithSelect2(
+            data,
+            dropdownId,
+            selectedValue,
+            readOnly
+          );
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }
 
-    function populateDropdownWithSelect2(data, dropdownId, selectedValue = null, readOnly = false) {
-        var dropdown = $('#' + dropdownId);
-        // Clear existing options
-        dropdown.empty();
+    function populateDropdownWithSelect2(
+      data,
+      dropdownId,
+      selectedValue = null,
+      readOnly = false
+    ) {
+      var dropdown = $("#" + dropdownId);
+      // Clear existing options
+      dropdown.empty();
 
-        // Add placeholder option
-        if (dropdownId== 'customer'){
-            dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
-        }
-        // Populate dropdown with API data
-        data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item.name || item.route_name || item.cust_name || item.added_by).text(item.name || item.route_name || item.cust_name || item.added_by));
-        });
+      // Add placeholder option
+      if (dropdownId == "customer") {
+        dropdown.append(
+          $("<option></option>")
+            .attr("value", "")
+            .text("Select " + dropdownId + " type")
+            .prop("disabled", true)
+            .prop("selected", true)
+        );
+      }
+      // Populate dropdown with API data
+      data.forEach(function (item) {
+        dropdown.append(
+          $("<option></option>")
+            .attr(
+              "value",
+              item.name || item.route_name || item.cust_name || item.added_by
+            )
+            .text(
+              item.name || item.route_name || item.cust_name || item.added_by
+            )
+        );
+      });
 
-        // Initialize Select2
-        dropdown.select2({
-            placeholder: 'Select components',
-            closeOnSelect: false,
-            allowClear: true,
-            templateResult: function (data) {
-                if (!data.id) {
-                    return data.text;
-                }
-                var $element = $('<span>' + data.text + '</span>');
-                return $element;
-            }
-        });
+      // Initialize Select2
+      dropdown.select2({
+        placeholder: "Select components",
+        closeOnSelect: false,
+        allowClear: true,
+        templateResult: function (data) {
+          if (!data.id) {
+            return data.text;
+          }
+          var $element = $("<span>" + data.text + "</span>");
+          return $element;
+        },
+      });
 
-        // Set selected value if provided
-        if (selectedValue !== null) {
-            dropdown.val(selectedValue).trigger('change');
-        }
+      // Set selected value if provided
+      if (selectedValue !== null) {
+        dropdown.val(selectedValue).trigger("change");
+      }
 
-        // Make the dropdown read-only if specified
-        if (readOnly) {
-            dropdown.prop('disabled', true);
-        }
-
-
+      // Make the dropdown read-only if specified
+      if (readOnly) {
+        dropdown.prop("disabled", true);
+      }
     }
 
-    $(document).on('select2:open', function(e) {
-        window.setTimeout(function () {
-            document.querySelector('input.select2-search__field').focus();
-        }, 0);
+    $(document).on("select2:open", function (e) {
+      window.setTimeout(function () {
+        document.querySelector("input.select2-search__field").focus();
+      }, 0);
     });
-
-
-
 
     function fetchAndPopulateDropdown1(apiUrl, dropdownId, field) {
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Populate Select2 dropdown with API data
-                populateDropdownWithSelect21(data, dropdownId, field);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+      fetch(apiUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Populate Select2 dropdown with API data
+          populateDropdownWithSelect21(data, dropdownId, field);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }
 
     function populateDropdownWithSelect21(data, dropdownId, field) {
-        var dropdown = $('#' + dropdownId);
-        // Clear existing options
-        dropdown.empty();
+      var dropdown = $("#" + dropdownId);
+      // Clear existing options
+      dropdown.empty();
 
-        // Add placeholder option
-        dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+      // Add placeholder option
+      dropdown.append(
+        $("<option></option>")
+          .attr("value", "")
+          .text("Select " + dropdownId + " type")
+          .prop("disabled", true)
+          .prop("selected", true)
+      );
 
-        // Populate dropdown with API data
-        data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
-        });
+      // Populate dropdown with API data
+      data.forEach(function (item) {
+        dropdown.append(
+          $("<option></option>").attr("value", item[field]).text(item[field])
+        );
+      });
 
-        // Initialize Select2
-        dropdown.select2({
-            placeholder: "Select " + dropdownId + " type",
-            allowClear: true
-        });
+      // Initialize Select2
+      dropdown.select2({
+        placeholder: "Select " + dropdownId + " type",
+        allowClear: true,
+      });
     }
 
-    function setCustomer(){
-        // var route = document.getElementById('route').value
-        var selectedValues = $('#route').val();
-        console.log("routes", selectedValues)
-        // fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customersaleKhatawani/' +route  , 'customer','name');
-        
+    function setCustomer() {
+      // var route = document.getElementById('route').value
+      var selectedValues = $("#route").val();
+      console.log("routes", selectedValues);
+      // fetchAndPopulateDropdown('http://94.136.190.129:3000/fetchData/customersaleKhatawani/' +route  , 'customer','name');
 
-        return fetch('http://103.174.102.89:3000/fetchData/customersaleKhatawani', {
-        method: 'POST',
-        body: JSON.stringify({
-            route : selectedValues || '*',
-        }),
-        headers: {
-            'Content-Type': 'application/json'
+      return fetch(
+        "http://94.136.190.129:3000/fetchData/customersaleKhatawani",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            route: selectedValues || "*",
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-    })
-    .then(response => {
-        if (response.status === 404) {
-            loader.style.display = 'none';
+      )
+        .then((response) => {
+          if (response.status === 404) {
+            loader.style.display = "none";
             Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'No data found.',
-              });
-            throw new Error('Data not found');
-        }
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        loader.style.display = 'none';
-        console.log(result);
-        // populateTable4(result);
-        // populateTable5(result);
-        populateDropdownWithSelect21(result, 'customer','name');
-        // return result;
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+              icon: "error",
+              title: "Oops...",
+              text: "No data found.",
+            });
+            throw new Error("Data not found");
+          }
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((result) => {
+          loader.style.display = "none";
+          console.log(result);
+          // populateTable4(result);
+          // populateTable5(result);
+          populateDropdownWithSelect21(result, "customer", "name");
+          // return result;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }
-
-
-</script>
-
+  </script>
 </html>

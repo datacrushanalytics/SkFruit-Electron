@@ -1,406 +1,516 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+      rel="stylesheet"
+    />
     <title>Account Master</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fef7f7;
-            margin: 0;
-            padding: 20px;
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fef7f7;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      hr {
+        border: 0;
+        height: 1px;
+        background-color: #ddd;
+        margin-bottom: 20px;
+      }
+
+      .container1 {
+        text-align: left;
+        margin-bottom: 20px;
+      }
+
+      .container1 select,
+      .container1 input[type="text"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+
+      .second-row {
+        margin-top: 10px;
+        margin-bottom: 20px;
+      }
+
+      .second-row input[type="radio"] {
+        margin-right: 10px;
+      }
+
+      .third-row button {
+        padding: 10px 20px;
+        background-color: #808080;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .third-row button:hover {
+        background-color: #555;
+      }
+
+      .third-row a button {
+        margin-left: 10px;
+      }
+
+      /* Style the loader container */
+      #loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite; /* Apply animation */
+        display: none; /* Hide loader by default */
+
+        /* Center the loader */
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* Animation */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
         }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
+        100% {
+          transform: rotate(360deg);
         }
+      }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
+      .row-container {
+        display: flex;
+        align-items: center; /* Align items vertically */
+        margin-bottom: 10px; /* Add margin between the row container and other elements */
+      }
 
-        hr {
-            border: 0;
-            height: 1px;
-            background-color: #ddd;
-            margin-bottom: 20px;
-        }
+      .row-container label {
+        margin-right: 10px; /* Add space between label and inputs */
+      }
 
-        .container1 {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-
-        .container1 select,
-        .container1 input[type="text"] {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        .second-row {
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
-
-        .second-row input[type="radio"] {
-            margin-right: 10px;
-        }
-
-        .third-row button {
-            padding: 10px 20px;
-            background-color: #808080;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .third-row button:hover {
-            background-color: #555;
-        }
-
-        .third-row a button {
-            margin-left: 10px;
-        }
-
-        /* Style the loader container */
-#loader {
-    border: 4px solid #f3f3f3; /* Light grey */
-    border-top: 4px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite; /* Apply animation */
-    display: none; /* Hide loader by default */
-    
-    /* Center the loader */
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  /* Animation */
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-
-  .row-container {
-    display: flex;
-    align-items: center; /* Align items vertically */
-    margin-bottom: 10px; /* Add margin between the row container and other elements */
-  }
-  
-  .row-container label {
-    margin-right: 10px; /* Add space between label and inputs */
-  }
-  
-  .row-container .carat-inputs {
-    display: flex;
-    align-items: left; /* Align items vertically */
-  }
+      .row-container .carat-inputs {
+        display: flex;
+        align-items: left; /* Align items vertically */
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="loader"></div>
     <div class="container">
-        <h1>ACCOUNT MASTER</h1>
-        <hr>
-        <div class="container1">
-            <form id="loginForm" method="POST">
-                <div class="first-row">
-                    <label for="ID">ID :</label>
-                    <input type="text" id="id" name="id" placeholder="ID" value="" required readonly>
-                </div>
-                <!-- <input type="text" id="account_group" name="account_group" placeholder="Account Group">
+      <h1>ACCOUNT MASTER</h1>
+      <hr />
+      <div class="container1">
+        <form id="loginForm" method="POST">
+          <div class="first-row">
+            <label for="ID">ID :</label>
+            <input
+              type="text"
+              id="id"
+              name="id"
+              placeholder="ID"
+              value=""
+              required
+              readonly
+            />
+          </div>
+          <!-- <input type="text" id="account_group" name="account_group" placeholder="Account Group">
                 <input type="text" id="route_detail" name="route_detail" placeholder="Route Detail">
  -->
 
-                <label for="account_group">Account Group :</label>
-                <select class="drop" id="account_group" name="account_group" required><br>
-                    <!-- Options will be dynamically populated -->
-                </select>
-                <br>
-                <br>
-                <label for="route_detail">Route Details :</label>
-                <select class="drop" id="route_detail" name="route_detail">
-                    <!-- Options will be dynamically populated -->
-                </select>
-                <br> <br>
+          <label for="account_group">Account Group :</label>
+          <select class="drop" id="account_group" name="account_group" required>
+            <br />
+            <!-- Options will be dynamically populated -->
+          </select>
+          <br />
+          <br />
+          <label for="route_detail">Route Details :</label>
+          <select class="drop" id="route_detail" name="route_detail">
+            <!-- Options will be dynamically populated -->
+          </select>
+          <br />
+          <br />
 
-                <label for="text"> Name: </label>
-                <input type="text" id="name" name="name" placeholder="Name" required>
-                <label for="name">Company Name :</label>
-                <input type="text" id="company" name="company"><br>
-                <label for="text"> Address: </label>
-                <input type="text" id="address" name="address" placeholder="Address" required>
-                <label for="text"> mobile_no: </label>
-                <input type="text" id="no" name="mobile_no" placeholder="Mobile No" required>
-                <label for="no">Optional Mobile No :</label>
-                <input type="text" id="optional_mobile" name="optional_mobile"> <br>
-                <label for="text"> prev_balance: </label>
-                <input type="text" id="preBalance" name="prev_balance" placeholder="Previous Balance" required>
-                <label for="text"> current_balance: </label>
-                <input type="text" id="current_balance" name="current_balance" placeholder="Current Balance" required>
+          <label for="text"> Name: </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Name"
+            required
+          />
+          <label for="name">Company Name :</label>
+          <input type="text" id="company" name="company" /><br />
+          <label for="text"> Address: </label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            placeholder="Address"
+            required
+          />
+          <label for="text"> mobile_no: </label>
+          <input
+            type="text"
+            id="no"
+            name="mobile_no"
+            placeholder="Mobile No"
+            required
+          />
+          <label for="no">Optional Mobile No :</label>
+          <input type="text" id="optional_mobile" name="optional_mobile" />
+          <br />
+          <label for="text"> prev_balance: </label>
+          <input
+            type="text"
+            id="preBalance"
+            name="prev_balance"
+            placeholder="Previous Balance"
+            required
+          />
+          <label for="text"> current_balance: </label>
+          <input
+            type="text"
+            id="current_balance"
+            name="current_balance"
+            placeholder="Current Balance"
+            required
+          />
 
-                <label>Ramaining Carate :</label>
-                <div class="row-container">
-                    <div class="carat-inputs">
-                      <div class="input-wrapper">
-                        <label for="carate100">100 :</label>
-                        <input type="number" style="width: 93%;" id="carate2100" name="carate2100" placeholder="100" >
-                      </div>
-                      <div class="input-wrapper">
-                        <label for="carate150">150 :</label>
-                        <input type="number" style="width: 93%;" id="carate2150" name="carate2150" placeholder="150" >
-                      </div>
-                      <div class="input-wrapper">
-                        <label for="carate250">250 :</label>
-                        <input type="number" style="width: 93%;" id="carate2250" name="carate2250" placeholder="250" >
-                      </div>
-                      <div class="input-wrapper">
-                        <label for="carate350">350 :</label>
-                        <input type="number" style="width: 93%;" id="carate2350" name="carate2350" placeholder="350" >
-                      </div>
-                    </div>
-                  </div>
+          <label>Ramaining Carate :</label>
+          <div class="row-container">
+            <div class="carat-inputs">
+              <div class="input-wrapper">
+                <label for="carate100">100 :</label>
+                <input
+                  type="number"
+                  style="width: 93%"
+                  id="carate2100"
+                  name="carate2100"
+                  placeholder="100"
+                />
+              </div>
+              <div class="input-wrapper">
+                <label for="carate150">150 :</label>
+                <input
+                  type="number"
+                  style="width: 93%"
+                  id="carate2150"
+                  name="carate2150"
+                  placeholder="150"
+                />
+              </div>
+              <div class="input-wrapper">
+                <label for="carate250">250 :</label>
+                <input
+                  type="number"
+                  style="width: 93%"
+                  id="carate2250"
+                  name="carate2250"
+                  placeholder="250"
+                />
+              </div>
+              <div class="input-wrapper">
+                <label for="carate350">350 :</label>
+                <input
+                  type="number"
+                  style="width: 93%"
+                  id="carate2350"
+                  name="carate2350"
+                  placeholder="350"
+                />
+              </div>
+            </div>
+          </div>
 
-                <div class="second-row">
-                    Carate Bill : 
-                    <input type="radio" id="cr" name="cr_dr_type" value="yes">
-                    <label for="cr">Carate with payment</label>
-                    <input type="radio" id="dr" name="cr_dr_type" value="no">
-                    <label for="dr">Carate without payment</label>
-                </div>
-                <div class="third-row">
-                    <button type="submit" style="background-color:#26a653;" id="updateButton">Save</button>
-                    <a href="./account.html"><button type="button" style="background-color: #ff355f;">Back</button></a>
-                </div>
-            </form>
-        </div>
+          <div class="second-row">
+            Carate Bill :
+            <input type="radio" id="cr" name="cr_dr_type" value="yes" />
+            <label for="cr">Carate with payment</label>
+            <input type="radio" id="dr" name="cr_dr_type" value="no" />
+            <label for="dr">Carate without payment</label>
+          </div>
+          <div class="third-row">
+            <button
+              type="submit"
+              style="background-color: #26a653"
+              id="updateButton"
+            >
+              Save
+            </button>
+            <a href="./account.html"
+              ><button type="button" style="background-color: #ff355f">
+                Back
+              </button></a
+            >
+          </div>
+        </form>
+      </div>
     </div>
 
     <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        // Retrieve user data from localStorage
+        await fetchAndPopulateDropdown(
+          "http://94.136.190.129:3000/accountgroupData",
+          "account_group",
+          "name"
+        );
+        await fetchAndPopulateDropdown(
+          "http://94.136.190.129:3000/routeData",
+          "route_detail",
+          "route_name"
+        );
 
+        async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
+          try {
+            const response = await fetch(apiUrl);
 
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Retrieve user data from localStorage
-            await fetchAndPopulateDropdown('http://103.174.102.89:3000/accountgroupData', 'account_group','name');
-            await fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route_detail','route_name');
-        
-            async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
-                try {
-                    const response = await fetch(apiUrl);
-                    
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    
-                    const data = await response.json();
-                    populateDropdownWithSelect2(data, dropdownId, field);
-                    
-                } catch (error) {
-                    console.error('Error:', error);
-                }
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
             }
-        
-            function populateDropdownWithSelect2(data, dropdownId, field) {
-                var dropdown = $('#' + dropdownId);
-                // Clear existing options
-                dropdown.empty();
-        
-                // Add placeholder option
-                dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
-        
-                // Populate dropdown with API data
-                data.forEach(function(item) {
-                    dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
-                });
-        
-                // Initialize Select2
-                dropdown.select2({
-                    placeholder: "Select " + dropdownId + " type",
-                    allowClear: true
-                });
-            }
-        
-            var userData = localStorage.getItem('userData');
 
-            if (userData) {
-                // Parse the user data
-                var user = JSON.parse(userData);
-                console.log("lapajcowjfocjwoj")
-                console.log(user)
-
-                // Populate form fields with user data
-                document.getElementById("id").value = user.id;
-                // document.getElementById("account_group").value = user.account_group;
-                // document.getElementById("route_detail").value = user.route_detail;
-                
-                var $productDropdown = $('#account_group');
-                // Set the value of the Select2 dropdown if it's different
-                if ($productDropdown.val() !== user.account_group) {
-                    $productDropdown.val(user.account_group).trigger('change');
-                }
-        
-                var $productDropdown = $('#route_detail');
-                // Set the value of the Select2 dropdown if it's different
-                if ($productDropdown.val() !== user.route_detail) {
-                    $productDropdown.val(user.route_detail).trigger('change');
-                }
-        
-
-                console.log("user.current_balance",user.current_balance)
-                document.getElementById("current_balance").value = user.current_balance;
-                document.getElementById("name").value = user.name;
-                document.getElementById("no").value = user.mobile_no; 
-                document.getElementById("optional_mobile").value = user.optional_mobile || 0;
-                document.getElementById("address").value = user.address;
-                document.getElementById("company").value= user.company || null;
-                document.getElementById("preBalance").value = user.prev_balance;
-                
-                
-                if (user.cr_dr_type = 'yes'){
-                document.getElementById("cr").checked = true;
-                }else{
-                    document.getElementById("dr").checked = true;
-                }
-
-                fetch('http://103.174.102.89:3000/carateuserData/' + user.name)
-                .then(response => {
-                if (response.status === 404) {
-                    loader.style.display = 'none';
-                    throw new Error('Data not found');
-                }
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-      }).then(data => {
-        console.log(data)
-        // Populate Select2 dropdown with API data
-            document.getElementById("carate2100").value = data[0].carate_100 || 0,
-            document.getElementById("carate2150").value = data[0].carate_150 || 0,
-            document.getElementById("carate2250").value = data[0].carate_250|| 0,
-            document.getElementById("carate2350").value = data[0].carate_350 || 0
-    })
-
-
-
-                // Clear user data from localStorage (optional)
-                localStorage.removeItem('userData');
-            }
-        });
-
-
-        $(document).on('select2:open', function(e) {
-            window.setTimeout(function () {
-                document.querySelector('input.select2-search__field').focus();
-            }, 0);
-        });
-        
-
-
-        async function updateUser() {
-            try {
-                // Determine status based on radio button value
-                var status = document.querySelector('input[name="cr_dr_type"]:checked').value === 'yes' ? 'yes' : 'no';
-                console.log('status',status)
-                var userData = {
-                    id: parseInt(document.getElementById("id").value),
-                    account_group: document.getElementById("account_group").value,
-                    route_detail: document.getElementById("route_detail").value,
-                    address: document.getElementById("address").value,
-                    mobile_no: document.getElementById("no").value,
-                    cr_dr_type: status,
-                    name : document.getElementById("name").value,
-                    prev_balance : document.getElementById("preBalance").value,
-                    current_balance : document.getElementById("current_balance").value,
-                    company : document.getElementById("company").value,
-                    optional_mobile: document.getElementById("optional_mobile").value
-                };
-        
-                var loader = document.getElementById('loader');
-                loader.style.display = 'block';
-                const response = await fetch('http://103.174.102.89:3000/accountData/updateAccount/'+ userData.id, {
-                    method: 'PUT',
-                    body: JSON.stringify(userData),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-        
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                form2 = {
-                    userName : document.getElementById("name").value,
-                    carate_100 : parseInt(document.getElementById("carate2100").value) || 0,
-                    carate_150 : parseInt(document.getElementById("carate2150").value) || 0,
-                    carate_250 : parseInt(document.getElementById("carate2250").value) || 0,
-                    carate_350 : parseInt(document.getElementById("carate2350").value) || 0
-                }
-                console.log(form2)
-                const response1 =  fetch('http://103.174.102.89:3000/carateuserData/updateCarateuser/' +form2.userName , {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(form2)
-                });
-                       
-                const result = await response.json();
-                loader.style.display = 'none';
-                console.log('Data added successfully:', result);
-         
-                Swal.fire({
-                            icon: 'success',
-                            title: 'Success!',
-                            text: 'Data Updated successfully',
-                            })
-                
-                // Optionally, you can darkgreyirect or show a success message here
-            } catch (error) {
-                console.error('Error:', error);
-                // Optionally, you can display an error message here
-            }
-        
-            // Perform the update operation (e.g., send data to server)
-            console.log("Update user:", userData);
-            window.location.href = './account.html';
+            const data = await response.json();
+            populateDropdownWithSelect2(data, dropdownId, field);
+          } catch (error) {
+            console.error("Error:", error);
+          }
         }
-        
-        // Add event listener to the "Update" button
-        document.getElementById("updateButton").addEventListener("click", function(event) {
-            event.preventDefault(); // Prevent form submission
-            updateUser(); // Call the updateUser function to handle the update operation
-        });
-        
-        
-    </script>
 
-    
-</body>
+        function populateDropdownWithSelect2(data, dropdownId, field) {
+          var dropdown = $("#" + dropdownId);
+          // Clear existing options
+          dropdown.empty();
+
+          // Add placeholder option
+          dropdown.append(
+            $("<option></option>")
+              .attr("value", "")
+              .text("Select " + dropdownId + " type")
+              .prop("disabled", true)
+              .prop("selected", true)
+          );
+
+          // Populate dropdown with API data
+          data.forEach(function (item) {
+            dropdown.append(
+              $("<option></option>")
+                .attr("value", item[field])
+                .text(item[field])
+            );
+          });
+
+          // Initialize Select2
+          dropdown.select2({
+            placeholder: "Select " + dropdownId + " type",
+            allowClear: true,
+          });
+        }
+
+        var userData = localStorage.getItem("userData");
+
+        if (userData) {
+          // Parse the user data
+          var user = JSON.parse(userData);
+          console.log("lapajcowjfocjwoj");
+          console.log(user);
+
+          // Populate form fields with user data
+          document.getElementById("id").value = user.id;
+          // document.getElementById("account_group").value = user.account_group;
+          // document.getElementById("route_detail").value = user.route_detail;
+
+          var $productDropdown = $("#account_group");
+          // Set the value of the Select2 dropdown if it's different
+          if ($productDropdown.val() !== user.account_group) {
+            $productDropdown.val(user.account_group).trigger("change");
+          }
+
+          var $productDropdown = $("#route_detail");
+          // Set the value of the Select2 dropdown if it's different
+          if ($productDropdown.val() !== user.route_detail) {
+            $productDropdown.val(user.route_detail).trigger("change");
+          }
+
+          console.log("user.current_balance", user.current_balance);
+          document.getElementById("current_balance").value =
+            user.current_balance;
+          document.getElementById("name").value = user.name;
+          document.getElementById("no").value = user.mobile_no;
+          document.getElementById("optional_mobile").value =
+            user.optional_mobile || 0;
+          document.getElementById("address").value = user.address;
+          document.getElementById("company").value = user.company || null;
+          document.getElementById("preBalance").value = user.prev_balance;
+
+          if ((user.cr_dr_type = "yes")) {
+            document.getElementById("cr").checked = true;
+          } else {
+            document.getElementById("dr").checked = true;
+          }
+
+          fetch("http://94.136.190.129:3000/carateuserData/" + user.name)
+            .then((response) => {
+              if (response.status === 404) {
+                loader.style.display = "none";
+                throw new Error("Data not found");
+              }
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log(data);
+              // Populate Select2 dropdown with API data
+              (document.getElementById("carate2100").value =
+                data[0].carate_100 || 0),
+                (document.getElementById("carate2150").value =
+                  data[0].carate_150 || 0),
+                (document.getElementById("carate2250").value =
+                  data[0].carate_250 || 0),
+                (document.getElementById("carate2350").value =
+                  data[0].carate_350 || 0);
+            });
+
+          // Clear user data from localStorage (optional)
+          localStorage.removeItem("userData");
+        }
+      });
+
+      $(document).on("select2:open", function (e) {
+        window.setTimeout(function () {
+          document.querySelector("input.select2-search__field").focus();
+        }, 0);
+      });
+
+      async function updateUser() {
+        try {
+          // Determine status based on radio button value
+          var status =
+            document.querySelector('input[name="cr_dr_type"]:checked').value ===
+            "yes"
+              ? "yes"
+              : "no";
+          console.log("status", status);
+          var userData = {
+            id: parseInt(document.getElementById("id").value),
+            account_group: document.getElementById("account_group").value,
+            route_detail: document.getElementById("route_detail").value,
+            address: document.getElementById("address").value,
+            mobile_no: document.getElementById("no").value,
+            cr_dr_type: status,
+            name: document.getElementById("name").value,
+            prev_balance: document.getElementById("preBalance").value,
+            current_balance: document.getElementById("current_balance").value,
+            company: document.getElementById("company").value,
+            optional_mobile: document.getElementById("optional_mobile").value,
+          };
+
+          var loader = document.getElementById("loader");
+          loader.style.display = "block";
+          const response = await fetch(
+            "http://94.136.190.129:3000/accountData/updateAccount/" +
+              userData.id,
+            {
+              method: "PUT",
+              body: JSON.stringify(userData),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+
+          form2 = {
+            userName: document.getElementById("name").value,
+            carate_100:
+              parseInt(document.getElementById("carate2100").value) || 0,
+            carate_150:
+              parseInt(document.getElementById("carate2150").value) || 0,
+            carate_250:
+              parseInt(document.getElementById("carate2250").value) || 0,
+            carate_350:
+              parseInt(document.getElementById("carate2350").value) || 0,
+          };
+          console.log(form2);
+          const response1 = fetch(
+            "http://94.136.190.129:3000/carateuserData/updateCarateuser/" +
+              form2.userName,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(form2),
+            }
+          );
+
+          const result = await response.json();
+          loader.style.display = "none";
+          console.log("Data added successfully:", result);
+
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "Data Updated successfully",
+          });
+
+          // Optionally, you can darkgreyirect or show a success message here
+        } catch (error) {
+          console.error("Error:", error);
+          // Optionally, you can display an error message here
+        }
+
+        // Perform the update operation (e.g., send data to server)
+        console.log("Update user:", userData);
+        window.location.href = "./account.html";
+      }
+
+      // Add event listener to the "Update" button
+      document
+        .getElementById("updateButton")
+        .addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent form submission
+          updateUser(); // Call the updateUser function to handle the update operation
+        });
+    </script>
+  </body>
 </html>

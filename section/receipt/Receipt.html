@@ -449,7 +449,7 @@ function totalbill(){
     console.log("totalbill")
     console.log(document.getElementById("custid").value)
   
-    fetch('http://103.174.102.89:3000/accountData/' + parseInt(document.getElementById("custid").value))
+    fetch('http://94.136.190.129:3000/accountData/' + parseInt(document.getElementById("custid").value))
           .then(response => {
             if (!response.ok) {
                 loader.style.display = 'none';
@@ -475,7 +475,7 @@ function totalbill(){
   
     function previousbalance() {
         const name = document.getElementById("account_group").value
-        fetch('http://103.174.102.89:3000/fetchpv/' + name)
+        fetch('http://94.136.190.129:3000/fetchpv/' + name)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -494,7 +494,7 @@ function totalbill(){
             });
 
 
-            fetch('http://103.174.102.89:3000/fetchName/name/' + name)
+            fetch('http://94.136.190.129:3000/fetchName/name/' + name)
                   .then(response => {
                     if (!response.ok) {
                         loader.style.display = 'none';
@@ -518,7 +518,7 @@ function totalbill(){
 
 
 
-    fetch('http://103.174.102.89:3000/carateuserData/' + name)
+    fetch('http://94.136.190.129:3000/carateuserData/' + name)
   .then(response => {
       if (!response.ok) {
         loader.style.display = 'none';
@@ -551,7 +551,7 @@ function totalbill(){
     function getCust() {
         var number = document.getElementById('mob').value;
         console.log(number)
-        fetch('http://103.174.102.89:3000/fetchName/mobile/' + number)
+        fetch('http://94.136.190.129:3000/fetchName/mobile/' + number)
             .then(response => {
                 if (!response.ok) {
                     loader.style.display = 'none';
@@ -587,16 +587,16 @@ function totalbill(){
     var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
         // Check if the user is an admin and show/hide the button accordingly
     if (isAdmin) {
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'account_group','name');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/mobile', 'mob','mobile_no');
+        fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Customer', 'account_group','name');
+        fetchAndPopulateDropdown('http://94.136.190.129:3000/mobile', 'mob','mobile_no');
         }else{
           var route = sessionData[0].route;
-          fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'account_group','name');
-          fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/customerSale/' +route  , 'mob','mobile_no');
+          fetchAndPopulateDropdown('http://94.136.190.129:3000/fetchData/customerSale/' +route  , 'account_group','name');
+          fetchAndPopulateDropdown('http://94.136.190.129:3000/fetchData/customerSale/' +route  , 'mob','mobile_no');
         }
 
-        // fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'route_detail','Account');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'input1','name');
+        // fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Bank Account', 'route_detail','Account');
+        fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Bank Account', 'input1','name');
     });
 
     function fetchAndPopulateDropdown(apiUrl, dropdownId,name,selectedValue = null, readOnly = false) {

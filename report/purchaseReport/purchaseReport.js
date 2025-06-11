@@ -1,224 +1,215 @@
 function getElementValueWithDefault(id, defaultValue) {
-    var element = document.getElementById(id);
-    return element && element.value ? element.value : defaultValue;
+  var element = document.getElementById(id);
+  return element && element.value ? element.value : defaultValue;
 }
 
 function formatDate(dateString) {
-    var date = new Date(dateString);
-    var year = date.getFullYear();
-    var month = ('0' + (date.getMonth() + 1)).slice(-2);
-    var day = ('0' + date.getDate()).slice(-2);
-    return year + '-' + month + '-' + day;
+  var date = new Date(dateString);
+  var year = date.getFullYear();
+  var month = ("0" + (date.getMonth() + 1)).slice(-2);
+  var day = ("0" + date.getDate()).slice(-2);
+  return year + "-" + month + "-" + day;
 }
 
-
-
-document.getElementById('loginForm1').addEventListener('submit', function(event) {
+document
+  .getElementById("loginForm1")
+  .addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent form submission
     fetchDataAndProcess();
-});
+  });
 
 function fetchDataAndProcess() {
-    var data = {
-        from_date : formatDate(document.getElementById("fromdate").value),
-        to_date : formatDate(document.getElementById("todate").value),
-        supplier_name : getElementValueWithDefault('supplier', '*') , 
-        bata : getElementValueWithDefault('bata', '*') , 
-        product : getElementValueWithDefault('product', '*') , 
-        gadi_number : getElementValueWithDefault('vehicleNumber', '*'),
-        purchase_id : getElementValueWithDefault('purchase_id', '*') 
-    };
-    var loader = document.getElementById('loader');
-    loader.style.display = 'block';
+  var data = {
+    from_date: formatDate(document.getElementById("fromdate").value),
+    to_date: formatDate(document.getElementById("todate").value),
+    supplier_name: getElementValueWithDefault("supplier", "*"),
+    bata: getElementValueWithDefault("bata", "*"),
+    product: getElementValueWithDefault("product", "*"),
+    gadi_number: getElementValueWithDefault("vehicleNumber", "*"),
+    purchase_id: getElementValueWithDefault("purchase_id", "*"),
+  };
+  var loader = document.getElementById("loader");
+  loader.style.display = "block";
 
-    return fetch('http://103.174.102.89:3000/purchaseReport', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (response.status === 404) {
-        loader.style.display = 'none';
+  return fetch("http://94.136.190.129:3000/purchaseReport", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (response.status === 404) {
+        loader.style.display = "none";
 
         Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'No data found.',
-          });
-            throw new Error('Data not found');
-        }
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
+          icon: "error",
+          title: "Oops...",
+          text: "No data found.",
+        });
+        throw new Error("Data not found");
+      }
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
     })
-    .then(result => {
-        loader.style.display = 'none';
+    .then((result) => {
+      loader.style.display = "none";
 
-        console.log(result)
-        populateTable4(result)
-        return result;
-        // Optionally, you can darkgreyirect or show a success message here
+      console.log(result);
+      populateTable4(result);
+      return result;
+      // Optionally, you can darkgreyirect or show a success message here
     })
-    .catch(error => {
-        console.error('Error:', error);
-        // Optionally, you can display an error message here
+    .catch((error) => {
+      console.error("Error:", error);
+      // Optionally, you can display an error message here
     });
 }
-
-
-
 
 function populateTable4(data) {
-    var tbody = document.getElementById('tableBody');
-    tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['id', 'date', 'gadi_number', 'supplier_name', 'expenses','BillAmount', 'TotalQuantity'];
-    var counter = 1;
-    var isAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].usertype === 'Admin';
-    var isSuperAdmin = JSON.parse(localStorage.getItem('sessionData'))[0].status === 'Super';
-    console.log(data.reports);
+  var tbody = document.getElementById("tableBody");
+  tbody.innerHTML = ""; // Clear existing rows
+  var columnsToDisplay = [
+    "id",
+    "date",
+    "gadi_number",
+    "supplier_name",
+    "expenses",
+    "BillAmount",
+    "TotalQuantity",
+  ];
+  var counter = 1;
+  var isAdmin =
+    JSON.parse(localStorage.getItem("sessionData"))[0].usertype === "Admin";
+  var isSuperAdmin =
+    JSON.parse(localStorage.getItem("sessionData"))[0].status === "Super";
+  console.log(data.reports);
 
-    if (data.reports.length === 0) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'No data found.',
-          });
-    }
+  if (data.reports.length === 0) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "No data found.",
+    });
+  }
 
-    var grandTotalBillAmount = 0;
-    var grandTotalQuantity = 0;
+  var grandTotalBillAmount = 0;
+  var grandTotalQuantity = 0;
 
-    data.reports.forEach(function(item) {
-        var row = tbody.insertRow();
-        var cell = row.insertCell();
-        cell.textContent = counter++;
+  data.reports.forEach(function (item) {
+    var row = tbody.insertRow();
+    var cell = row.insertCell();
+    cell.textContent = counter++;
 
-        columnsToDisplay.forEach(function(key) {
-            var cell = row.insertCell();
-            if (key == 'date') {
-                var utcDate = new Date(item[key]);
-                var options = { 
-                    year: 'numeric', 
-                    month: '2-digit', 
-                    day: '2-digit', 
-                    timeZone: 'Asia/Kolkata' 
-                };
-                cell.textContent = utcDate.toLocaleString('en-IN', options);
-            } else {
-                cell.textContent = item[key];
-                // Align BillAmount and TotalQuantity to the right
-                if (key == 'BillAmount' || key == 'TotalQuantity') {
-                    cell.classList.add('right-align');
-                }
-                // Calculate grand totals
-                if (key == 'BillAmount') {
-                    grandTotalBillAmount += parseFloat(item[key]) || 0;
-                }
-                if (key == 'TotalQuantity') {
-                    grandTotalQuantity += parseFloat(item[key]) || 0;
-                }
-            }
-        });
-
-        // Add button to open popup
-        var buttonCell = row.insertCell();
-        var openPopupButton = document.createElement('button');
-        openPopupButton.className = 'button';
-        openPopupButton.textContent = 'View';
-        openPopupButton.addEventListener('click', function () {
-            openModal(item); // Pass the data item to the openPopup function
-        });
-        buttonCell.appendChild(openPopupButton);
-
-        // Add Edit button if user is admin
-        if (isSuperAdmin) {
-            var editCell = row.insertCell();
-            var editButton = document.createElement('button');
-            editButton.className = 'button edit-button';
-            editButton.style.backgroundColor = '#26a653';
-            editButton.style.textDecorationColor = 'white';
-            var editLink = document.createElement('a');
-            editLink.href = './updatePurchase.html'; // Edit link destination
-            editLink.textContent = 'Edit';
-            editButton.appendChild(editLink);
-            editButton.addEventListener('click', function() {
-                editAccount(item); // Pass the user data to the edit function
-            });
-            editCell.appendChild(editButton);
+    columnsToDisplay.forEach(function (key) {
+      var cell = row.insertCell();
+      if (key == "date") {
+        var utcDate = new Date(item[key]);
+        var options = {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          timeZone: "Asia/Kolkata",
+        };
+        cell.textContent = utcDate.toLocaleString("en-IN", options);
+      } else {
+        cell.textContent = item[key];
+        // Align BillAmount and TotalQuantity to the right
+        if (key == "BillAmount" || key == "TotalQuantity") {
+          cell.classList.add("right-align");
         }
-
-        // Add Delete button if user is admin
-        if (isSuperAdmin) {
-            var deleteCell = row.insertCell();
-            var deleteButton = document.createElement('button');
-            deleteButton.className = 'button delete-button';
-            deleteButton.style.backgroundColor = '#ff355f';
-            deleteButton.textContent = 'Delete';
-            deleteButton.addEventListener('click', function () {
-                // deleteaccount(item.id); // Pass the user id to the delete function
-                // SweetAlert2 confirmation dialog
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "Do you really want to delete this Purchase Record?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Call the deleteUser function only if confirmed
-                        deleteaccount(item.id); // Pass the user id to the delete function
-        
-                        // Optional: Show success message
-                        Swal.fire(
-                            'Deleted!',
-                            'The Purchase has been deleted.',
-                            'success'
-                        );
-                    }
-                });
-
-
-
-
-
-
-
-
-
-
-
-
-            });
-            deleteCell.appendChild(deleteButton);
+        // Calculate grand totals
+        if (key == "BillAmount") {
+          grandTotalBillAmount += parseFloat(item[key]) || 0;
         }
+        if (key == "TotalQuantity") {
+          grandTotalQuantity += parseFloat(item[key]) || 0;
+        }
+      }
     });
 
-    // Add row for grand total
-    var totalRow = tbody.insertRow();
-    var totalCell = totalRow.insertCell();
-    totalCell.colSpan = columnsToDisplay.length - 2; // Span the totalCell across all columns except the last two
+    // Add button to open popup
+    var buttonCell = row.insertCell();
+    var openPopupButton = document.createElement("button");
+    openPopupButton.className = "button";
+    openPopupButton.textContent = "View";
+    openPopupButton.addEventListener("click", function () {
+      openModal(item); // Pass the data item to the openPopup function
+    });
+    buttonCell.appendChild(openPopupButton);
 
-    var emptyCell = totalRow.insertCell(); // Add an additional empty cell to shift the grand total one more column to the right
+    // Add Edit button if user is admin
+    if (isSuperAdmin) {
+      var editCell = row.insertCell();
+      var editButton = document.createElement("button");
+      editButton.className = "button edit-button";
+      editButton.style.backgroundColor = "#26a653";
+      editButton.style.textDecorationColor = "white";
+      var editLink = document.createElement("a");
+      editLink.href = "./updatePurchase.html"; // Edit link destination
+      editLink.textContent = "Edit";
+      editButton.appendChild(editLink);
+      editButton.addEventListener("click", function () {
+        editAccount(item); // Pass the user data to the edit function
+      });
+      editCell.appendChild(editButton);
+    }
 
-    var billAmountCell = totalRow.insertCell();
-    billAmountCell.textContent = 'Grand Total: ' + grandTotalBillAmount.toFixed(2) + ' (BillAmount)';
-    billAmountCell.style.fontWeight = 'bold'; // Make label text bold
-    billAmountCell.classList.add('right-align');
+    // Add Delete button if user is admin
+    if (isSuperAdmin) {
+      var deleteCell = row.insertCell();
+      var deleteButton = document.createElement("button");
+      deleteButton.className = "button delete-button";
+      deleteButton.style.backgroundColor = "#ff355f";
+      deleteButton.textContent = "Delete";
+      deleteButton.addEventListener("click", function () {
+        // deleteaccount(item.id); // Pass the user id to the delete function
+        // SweetAlert2 confirmation dialog
+        Swal.fire({
+          title: "Are you sure?",
+          text: "Do you really want to delete this Purchase Record?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Call the deleteUser function only if confirmed
+            deleteaccount(item.id); // Pass the user id to the delete function
 
-    var quantityCell = totalRow.insertCell();
-    quantityCell.textContent = grandTotalQuantity.toFixed(2) + ' (TotalQuantity)';
-    quantityCell.style.fontWeight = 'bold'; // Make label text bold
-    quantityCell.classList.add('right-align');
+            // Optional: Show success message
+            Swal.fire("Deleted!", "The Purchase has been deleted.", "success");
+          }
+        });
+      });
+      deleteCell.appendChild(deleteButton);
+    }
+  });
+
+  // Add row for grand total
+  var totalRow = tbody.insertRow();
+  var totalCell = totalRow.insertCell();
+  totalCell.colSpan = columnsToDisplay.length - 2; // Span the totalCell across all columns except the last two
+
+  var emptyCell = totalRow.insertCell(); // Add an additional empty cell to shift the grand total one more column to the right
+
+  var billAmountCell = totalRow.insertCell();
+  billAmountCell.textContent =
+    "Grand Total: " + grandTotalBillAmount.toFixed(2) + " (BillAmount)";
+  billAmountCell.style.fontWeight = "bold"; // Make label text bold
+  billAmountCell.classList.add("right-align");
+
+  var quantityCell = totalRow.insertCell();
+  quantityCell.textContent = grandTotalQuantity.toFixed(2) + " (TotalQuantity)";
+  quantityCell.style.fontWeight = "bold"; // Make label text bold
+  quantityCell.classList.add("right-align");
 }
 
-
 // Add CSS for right alignment
-const style = document.createElement('style');
+const style = document.createElement("style");
 style.innerHTML = `
     .right-align {
         text-align: right;
@@ -226,40 +217,39 @@ style.innerHTML = `
 `;
 document.head.appendChild(style);
 
-
 function editAccount(user) {
-    localStorage.removeItem('purchaseData');
-    console.log('Editing user: ' + JSON.stringify(user));
-    localStorage.setItem('purchaseData', JSON.stringify(user));
-     // darkgreyirect to user_update.html
-     window.location.href = './updatePurchase.html';
-  }
-
-
-function deleteaccount(userId) {
-    // Perform delete operation based on userId
-    fetch('http://103.174.102.89:3000/purchaseReport/deletePurchaseReport/' + userId, {
-        method: 'DELETE'
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: 'Record is successfully Deleted',
-                })
-            console.log('REcord deleted successfully');
-            // Refresh the table or update UI as needed
-            fetchDataAndProcess(); // Assuming you want to refresh the table after delete
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+  localStorage.removeItem("purchaseData");
+  console.log("Editing user: " + JSON.stringify(user));
+  localStorage.setItem("purchaseData", JSON.stringify(user));
+  // darkgreyirect to user_update.html
+  window.location.href = "./updatePurchase.html";
 }
 
-
+function deleteaccount(userId) {
+  // Perform delete operation based on userId
+  fetch(
+    "http://94.136.190.129:3000/purchaseReport/deletePurchaseReport/" + userId,
+    {
+      method: "DELETE",
+    }
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Record is successfully Deleted",
+      });
+      console.log("REcord deleted successfully");
+      // Refresh the table or update UI as needed
+      fetchDataAndProcess(); // Assuming you want to refresh the table after delete
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
 
 // async function exportToExcel() {
 //     let customHeaders; // Define customHeaders outside the try block
@@ -271,7 +261,7 @@ function deleteaccount(userId) {
 //         const doc = new jsPDF();
 
 //         customHeaders = ['id', 'date', 'gadi_number', 'bata', 'supplier_name', 'BillAmount', 'TotalQuantity']; // Assign customHeaders value here
-        
+
 //         // Adding header details
 //         doc.setFontSize(10);
 //         doc.text('Mobile:- 9960607512', 10, 10);
@@ -281,9 +271,9 @@ function deleteaccount(userId) {
 //         doc.setFontSize(12);
 //         doc.text('At post Kasthi Tal: Shreegonda, District Ahamadnagar - 414701', 50, 30);
 //         doc.text('Mobile NO:- 9860601102  / 9922676380 / 9156409970', 50, 40);
-        
+
 //         let startY = 50;
-        
+
 //         // Map data for autoTable
 //         const reportData = data.reports.map(report => [
 //             report.id,
@@ -319,173 +309,177 @@ function deleteaccount(userId) {
 // }
 
 async function exportToExcel() {
-    try {
-        const data = await fetchDataAndProcess();
+  try {
+    const data = await fetchDataAndProcess();
 
-        var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+    var loader = document.getElementById("loader");
+    loader.style.display = "block";
 
-        return fetch('http://103.174.102.89:3000/purchaseReport/generate-pdf', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => {
-            if (response.status === 404) {
-                loader.style.display = 'none';
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'No data found.',
-                  });
-                throw new Error('Data not found');
-            }
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.blob(); // Get the response as a Blob
-        })
-        .then(blob => {
-            loader.style.display = 'none';
-
-            // Create a URL for the Blob and trigger a download
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = url;
-            a.download = 'purchaseReport.pdf'; // Set the desidarkgrey file name
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url); // Release the URL
-
-            console.log('PDF downloaded successfully');
-        })
-        .catch(error => {
-            loader.style.display = 'none';
-            console.error('Error:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Error generating PDF. Please try again.',
-              });
-        });
-    } catch (error) {
-        console.error('Error:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Error generating PDF. Please try again.',
+    return fetch("http://94.136.190.129:3000/purchaseReport/generate-pdf", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.status === 404) {
+          loader.style.display = "none";
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "No data found.",
           });
-    }
+          throw new Error("Data not found");
+        }
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.blob(); // Get the response as a Blob
+      })
+      .then((blob) => {
+        loader.style.display = "none";
+
+        // Create a URL for the Blob and trigger a download
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = "purchaseReport.pdf"; // Set the desidarkgrey file name
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url); // Release the URL
+
+        console.log("PDF downloaded successfully");
+      })
+      .catch((error) => {
+        loader.style.display = "none";
+        console.error("Error:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Error generating PDF. Please try again.",
+        });
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Error generating PDF. Please try again.",
+    });
+  }
 }
 
-
-
-
-
-
-
 function openModal(item) {
-    // Your code to open the modal with the data from 'item'
-    console.log("Opening modal for item:", item.id);
-    var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+  // Your code to open the modal with the data from 'item'
+  console.log("Opening modal for item:", item.id);
+  var loader = document.getElementById("loader");
+  loader.style.display = "block";
 
-    fetch('http://103.174.102.89:3000/purchaseReport/' + item.id)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Populate dropdown with API data
-            console.log(data)
-            loader.style.display = 'none';
-            var utcDate = new Date(data.reports[0].date);
-            var options = {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                timeZone: 'Asia/Kolkata'
-            };
+  fetch("http://94.136.190.129:3000/purchaseReport/" + item.id)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // Populate dropdown with API data
+      console.log(data);
+      loader.style.display = "none";
+      var utcDate = new Date(data.reports[0].date);
+      var options = {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        timeZone: "Asia/Kolkata",
+      };
 
+      var tableBody = document.getElementById("TableBody");
+      tableBody.innerHTML = ""; // Clear existing rows
 
-            var tableBody = document.getElementById("TableBody");
-            tableBody.innerHTML = ""; // Clear existing rows
+      var billDetails = [
+        {
+          label: "बिल क्र.:   " + data.reports[0].id,
+          value: "तारीख:    " + utcDate.toLocaleString("en-IN", options),
+        },
+        {
+          label: "सप्लायर नाव:   " + data.reports[0].supplier_name,
+          value: "गाडी नंबर:    " + data.reports[0].gadi_number,
+        },
+        {
+          label: "संपर्क क्र.:   " + data.reports[0].mobile_no,
+          value: "पत्ता:   " + data.reports[0].address,
+        },
+        // Add other bill details similarly
+      ];
 
-            var billDetails = [
-                { label: "बिल क्र.:   " + data.reports[0].id, value: "तारीख:    "+ utcDate.toLocaleString('en-IN', options) },
-                { label: "सप्लायर नाव:   " + data.reports[0].supplier_name, value: "गाडी नंबर:    "+ data.reports[0].gadi_number},
-                { label: "संपर्क क्र.:   " + data.reports[0].mobile_no,  value: "पत्ता:   " + data.reports[0].address},
-                // Add other bill details similarly
-            ];
-
-            billDetails.forEach(function (detail) {
-                var row = document.createElement("tr");
-                row.innerHTML = `
+      billDetails.forEach(function (detail) {
+        var row = document.createElement("tr");
+        row.innerHTML = `
                         <td><b>${detail.label}</b></td>
                         <td>${detail.value}</td>
                     `;
-                tableBody.appendChild(row);
-            });
+        tableBody.appendChild(row);
+      });
 
+      // Populate table with fetched data
+      var itemsTableBody = document.getElementById("itemsTableBody");
+      itemsTableBody.innerHTML = ""; // Clear existing rows
+      var columnsToDisplay = [
+        "product_name",
+        "bata",
+        "mark",
+        "quantity",
+        "purchase_price",
+        "price",
+      ];
+      var counter = 1;
+      data.Receipt.forEach(function (item) {
+        var row = itemsTableBody.insertRow();
+        var cell = row.insertCell();
+        cell.textContent = counter++;
+        columnsToDisplay.forEach(function (key) {
+          var cell = row.insertCell();
 
-            // Populate table with fetched data
-            var itemsTableBody = document.getElementById("itemsTableBody");
-            itemsTableBody.innerHTML = ""; // Clear existing rows
-            var columnsToDisplay = ['product_name', 'bata','mark','quantity', 'purchase_price', 'price'];
-            var counter = 1;
-            data.Receipt.forEach(function (item) {
-                var row = itemsTableBody.insertRow();
-                var cell = row.insertCell();
-                cell.textContent = counter++;
-                columnsToDisplay.forEach(function (key) {
-                    var cell = row.insertCell();
-
-                    cell.textContent = item[key];
-                });
-            });
-            
-            var totalRow = itemsTableBody.insertRow();
-            for (let i = 0; i < columnsToDisplay.length - 1; i++) {
-                totalRow.insertCell();
-            }
-            var totalCell = totalRow.insertCell();
-            totalCell.textContent = 'Expenses: ' + data.reports[0].expenses; 
-            var totalCell = totalRow.insertCell();
-            totalCell.textContent = 'Grand Total: ' + data.Grand['Grand Amournt']; 
-            
-            
-
-        })
-        .catch(error => {
-            console.error('Error:', error);
+          cell.textContent = item[key];
         });
+      });
 
-    // Create a modal element
-    var modal = document.createElement('div');
-    modal.className = 'modal';
+      var totalRow = itemsTableBody.insertRow();
+      for (let i = 0; i < columnsToDisplay.length - 1; i++) {
+        totalRow.insertCell();
+      }
+      var totalCell = totalRow.insertCell();
+      totalCell.textContent = "Expenses: " + data.reports[0].expenses;
+      var totalCell = totalRow.insertCell();
+      totalCell.textContent = "Grand Total: " + data.Grand["Grand Amournt"];
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 
-    // Create modal content
-    var modalContent = document.createElement('div');
-    modalContent.className = 'modal-content';
-    // Add close button
-    var closeButton = document.createElement('span');
-    closeButton.className = 'close';
-    closeButton.innerHTML = '&times;';
-    closeButton.onclick = function () {
-        modalContent.innerHTML = '';
-        modal.style.display = 'none'; // Close the modal when close button is clicked
-    };
-    modalContent.appendChild(closeButton);
-   
+  // Create a modal element
+  var modal = document.createElement("div");
+  modal.className = "modal";
 
-    // Add item data to modal content
-    var itemData = document.createElement('div');
-    itemData.innerHTML = `
+  // Create modal content
+  var modalContent = document.createElement("div");
+  modalContent.className = "modal-content";
+  // Add close button
+  var closeButton = document.createElement("span");
+  closeButton.className = "close";
+  closeButton.innerHTML = "&times;";
+  closeButton.onclick = function () {
+    modalContent.innerHTML = "";
+    modal.style.display = "none"; // Close the modal when close button is clicked
+  };
+  modalContent.appendChild(closeButton);
+
+  // Add item data to modal content
+  var itemData = document.createElement("div");
+  itemData.innerHTML = `
         <style> 
             body {
         font-family: Arial, sans-serif;
@@ -628,37 +622,30 @@ function openModal(item) {
 
     `;
 
-    // Assign ID to itemData
-    itemData.id = 'printContent';
-    // Append modal content to modal
-    modalContent.appendChild(itemData);
+  // Assign ID to itemData
+  itemData.id = "printContent";
+  // Append modal content to modal
+  modalContent.appendChild(itemData);
 
-    // Append modal content to modal
-    modal.appendChild(modalContent);
+  // Append modal content to modal
+  modal.appendChild(modalContent);
 
-    // Display the modal
-    document.body.appendChild(modal);
-    modal.style.display = 'block';
+  // Display the modal
+  document.body.appendChild(modal);
+  modal.style.display = "block";
 
-    // Add event listener to the print button
-    var printButton = document.getElementById('printButton');
-    printButton.addEventListener('click', function () {
-        printJS({
-            printable: 'printContent', // ID of the element to print
-            type: 'html', // Type of content
-            scanStyles: true, // Scan for styles
-            targetStyles: ['*'] // Apply all styles
-        });
+  // Add event listener to the print button
+  var printButton = document.getElementById("printButton");
+  printButton.addEventListener("click", function () {
+    printJS({
+      printable: "printContent", // ID of the element to print
+      type: "html", // Type of content
+      scanStyles: true, // Scan for styles
+      targetStyles: ["*"], // Apply all styles
     });
+  });
 }
 
 function closePopup() {
-    document.querySelector('.popup').style.display = 'none';
+  document.querySelector(".popup").style.display = "none";
 }
-
-
-
-
-
-
-
