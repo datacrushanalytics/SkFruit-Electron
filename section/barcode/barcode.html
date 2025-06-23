@@ -334,6 +334,9 @@
             </div>
           
 <div id="popupContainer"></div>
+<iframe id="printFrame" style="display:none;"></iframe>
+
+
 
     
     
@@ -693,7 +696,6 @@ function displayBarcodePopup(item) {
 
 
 
-
 document.getElementById('printButton').addEventListener('click', function () {
     var barcodeSvg = document.getElementById('barcodeCanvas'); // Barcode SVG
     var logoImg = document.getElementById('companyLogo'); // Logo Image
@@ -767,12 +769,20 @@ printWindow.document.write(`
     </html>
 `);
 printWindow.document.close();
-printWindow.print();
+
+// Add delay to allow rendering before print
+setTimeout(() => {
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
+}, 1000); // 1000ms delay — adjust as needed
 
     };
 
     barcodeImage.src = svgUrl;
 });
+
+
 document.querySelector('.popup').style.display = 'block';
 }
 
