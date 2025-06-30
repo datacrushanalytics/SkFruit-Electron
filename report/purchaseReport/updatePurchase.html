@@ -320,6 +320,7 @@
                     // populateDropdown3(data);
 
                     data.forEach(function (item) {
+                        console.log("item",item)
                         updateTable(item,item.id);
                     }); 
 
@@ -422,6 +423,7 @@
             function updateTable(entry, result) {
                 var tableBody = document.getElementById('tableBody1');
                 var newRow = document.createElement('tr');
+                console.log("result", result)
                 newRow.innerHTML = `
                   <td>${entry.product_name}</td>
                   <td>${entry.bata}</td>
@@ -443,6 +445,7 @@
 
             function deleteUser(button, userId, price) {
                 // Perform delete operation based on userId
+                console.log(price,"Usrere")
                 var button = event.target;
                 var row = button.parentNode.parentNode;
                 fetch('http://94.136.190.129:3000/purchaseproductData/deletepurchaseproductId/' + userId, {
