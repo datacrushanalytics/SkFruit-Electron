@@ -94,8 +94,9 @@ function populateTable4(data) {
 
   let grandTotalQuantity = 0;
   let lastBalance = 0; // Variable to store the last balance value
-
-  data.reports.forEach(function (item) {
+  var isSuperAdmin =
+    JSON.parse(localStorage.getItem("sessionData"))[0].status === "Super";
+  data.reports.forEach(function (item, index) {
     var row = tbody.insertRow();
     var cell = row.insertCell();
     cell.textContent = counter++;
@@ -120,6 +121,42 @@ function populateTable4(data) {
         }
       }
     });
+
+    // Add Delete button if user is admin
+    if (isSuperAdmin && index !== 0) {
+      var deleteCell = row.insertCell();
+      var deleteButton = document.createElement("button");
+      deleteButton.className = "button delete-button";
+      deleteButton.style.backgroundColor = "#ff355f";
+      deleteButton.textContent = "Delete";
+      deleteButton.addEventListener("click", function () {
+        // deleteaccount(item.receipt_id); // Pass the user id to the delete function
+        // SweetAlert2 confirmation dialog
+        Swal.fire({
+          title: "Are you sure?",
+          text: "Do you really want to delete this user?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Use record type to decide delete function
+            if (item.type === "purchase") {
+              deletePurchase(item.record_id);
+            } else if (item.type === "payment") {
+              deletePayment(item.record_id);
+            } else {
+              Swal.fire("Error", "Unknown record type: " + item.type, "error");
+            }
+            // Optional: Show success message
+            Swal.fire("Deleted!", "The Product has been deleted.", "success");
+          }
+        });
+      });
+      deleteCell.appendChild(deleteButton);
+    }
   });
 
   // Append grand total row
@@ -146,6 +183,55 @@ function populateTable4(data) {
   var valueCell = row.insertCell();
   valueCell.textContent = lastBalance; // Display the last balance value
   valueCell.style.fontWeight = "bold"; // Make value text bold
+}
+
+function deletePurchase(userId) {
+  // Perform delete operation based on userId
+  fetch(
+    "http://94.136.190.129:3000/purchaseReport/deletePurchaseReport/" + userId,
+    {
+      method: "DELETE",
+    }
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Record is successfully Deleted",
+      });
+      console.log("Record deleted successfully");
+      // Refresh the table or update UI as needed
+      fetchDataAndProcess(); // Assuming you want to refresh the table after delete
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
+function deletePayment(userId) {
+  // Perform delete operation based on userId
+  fetch("http://94.136.190.129:3000/paymentData/deletePayment/" + userId, {
+    method: "DELETE",
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Record is successfully Deleted",
+      });
+      console.log("Record deleted successfully");
+      // Refresh the table or update UI as needed
+      fetchDataAndProcess(); // Assuming you want to refresh the table after delete
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
 
 async function exportToExcel() {
