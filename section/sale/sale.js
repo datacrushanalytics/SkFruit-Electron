@@ -81,7 +81,7 @@ function editRow(button, id, editable) {
   // Save current values of quantity and rate
   const originalQuantity = cells[3].textContent;
   const originalRate = cells[4].textContent;
-
+  editable = parseInt(editable);
   // Conditionally render input fields based on the `editable` flag
   if (editable) {
     cells[3].innerHTML = `<input type="number" value="${originalQuantity}" min="1" style="width: 60px;" onchange="updateRowTotal(this)">`;
@@ -100,7 +100,7 @@ function editRow(button, id, editable) {
   // Replace action buttons with "Save" and "Cancel"
   cells[6].innerHTML = `
         <button type="button" onclick="saveRow(this,'${id}', '${editable}')">Save</button>
-        <button type="button" onclick="cancelEdit(this, '${originalQuantity}', '${originalRate}')">Cancel</button>
+        <button type="button" onclick="cancelEdit(this, '${originalQuantity}', '${originalRate}','${editable}')">Cancel</button>
     `;
 }
 
@@ -124,15 +124,16 @@ function updateRowTotal(inputElement) {
     : 0;
 
   // Check if quantity exceeds available inventory
-  if (quantity > availableInventory) {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Inventory is not available for the entered quantity.",
-    });
-    if (quantityInput) quantityInput.value = availableInventory; // Reset quantity to max available inventory
-    quantity = availableInventory; // Update the quantity variable
-  }
+  console.log("Quantity check", quantity, availableInventory);
+  // if (quantity > availableInventory) {
+  //   Swal.fire({
+  //     icon: "error",
+  //     title: "Oops...",
+  //     text: "Inventory is not available for the entered quantity.",
+  //   });
+  //   if (quantityInput) quantityInput.value = availableInventory; // Reset quantity to max available inventory
+  //   quantity = availableInventory; // Update the quantity variable
+  // }
 
   // Get the previous total value from the cell
   var previousTotal = parseInt(cells[5].textContent.trim(), 10) || 0;
@@ -159,7 +160,7 @@ function updateRowTotal(inputElement) {
   totalBalance();
 }
 
-function cancelEdit(button, originalQuantity, originalRate) {
+function cancelEdit(button, originalQuantity, originalRate, editable) {
   var row = button.parentElement.parentElement;
   var cells = row.querySelectorAll("td");
 
@@ -174,7 +175,7 @@ function cancelEdit(button, originalQuantity, originalRate) {
         )}','${cells[5].textContent}')">Delete</button>
         <button type="button" onclick="editRow(this, '${row.getAttribute(
           "data-id"
-        )}')">Edit</button>
+        )}','${editable}')">Edit</button>
     `;
 
   // Optional: Log or notify cancellation
@@ -182,7 +183,7 @@ function cancelEdit(button, originalQuantity, originalRate) {
 }
 
 function saveRow(button, id1, editable) {
-  console.log("editable", editable);
+  console.log("editable inside save", editable);
   var row = button.parentElement.parentElement;
   var cells = row.querySelectorAll("td");
 
@@ -194,6 +195,7 @@ function saveRow(button, id1, editable) {
   // }
 
   // Get updated values
+  console.log("Flag", flag, cells[3].textContent.trim());
   var updatedQuantity = flag
     ? parseInt(cells[3].querySelector("input").value, 10) || 0
     : parseInt(cells[3].textContent, 10) || 0;
@@ -201,17 +203,21 @@ function saveRow(button, id1, editable) {
   var updatedRate = parseInt(cells[4].querySelector("input").value, 10) || 0;
   var updatedPrice = updatedQuantity * updatedRate;
 
+  console.log("Fields", updatedRate, updatedQuantity);
+
   // Update the table cells with new values
   cells[3].innerHTML = updatedQuantity;
   cells[4].innerHTML = updatedRate;
   cells[5].innerHTML = updatedPrice;
-
+  console.log("Data of cells", cells[3].innerHTML);
   // Restore original action buttons
   cells[6].innerHTML = `
         <button type="button" onclick="deleteUser(this, '${row.getAttribute(
           "data-id"
         )}','${updatedPrice}')">Delete</button>
-        <button type="button" onclick="editRow(this)">Edit</button>
+        <button type="button" onclick="editRow(this, '${row.getAttribute(
+          "data-id"
+        )}', '${editable}')">Edit</button>
     `;
 
   const id = row.getAttribute("data-id");
