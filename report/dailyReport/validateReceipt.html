@@ -518,10 +518,10 @@ function totalbill(){
   .then(data => {
       // Populate dropdown with API data
       console.log(data)
-      document.getElementById('carate2100').value = parseInt(data[0]['carate_100']);
-      document.getElementById('carate2150').value = parseInt(data[0]['carate_150']);
-      document.getElementById('carate2250').value = parseInt(data[0]['carate_250']);
-      document.getElementById('carate2350').value = parseInt(data[0]['carate_350']);
+    //   document.getElementById('carate2100').value = parseInt(data[0]['carate_100']);
+    //   document.getElementById('carate2150').value = parseInt(data[0]['carate_150']);
+    //   document.getElementById('carate2250').value = parseInt(data[0]['carate_250']);
+    //   document.getElementById('carate2350').value = parseInt(data[0]['carate_350']);
       document.getElementById('carate3100').value = parseInt(data[0]['carate_100']);
       document.getElementById('carate3150').value = parseInt(data[0]['carate_150']);
       document.getElementById('carate3250').value = parseInt(data[0]['carate_250']);
@@ -678,6 +678,12 @@ function totalbill(){
       document.getElementById("carate150").value = receipt.carate_150 || 0;
       document.getElementById("carate250").value = receipt.carate_250 || 0;
       document.getElementById("carate350").value = receipt.carate_350 || 0;
+      
+      // previous carates 
+      document.getElementById("carate2100").value = receipt.previous_baki_100 || 0;
+      document.getElementById("carate2150").value = receipt.previous_baki_150 || 0;
+      document.getElementById("carate2250").value = receipt.previous_baki_250 || 0;
+      document.getElementById("carate2350").value = receipt.previous_baki_350 || 0;
       //carate();
       // document.getElementById("carate1100").value = sale.out_carate_100 || 0;
       // document.getElementById("carate1150").value = sale.out_carate_150 || 0;
@@ -712,10 +718,10 @@ function totalbill(){
     .then(data => {
         // Populate dropdown with API data
         console.log(data)
-        document.getElementById('carate2100').value = parseInt(data[0]['carate_100']);
-        document.getElementById('carate2150').value = parseInt(data[0]['carate_150']);
-        document.getElementById('carate2250').value = parseInt(data[0]['carate_250']);
-        document.getElementById('carate2350').value = parseInt(data[0]['carate_350']);
+        // document.getElementById('carate2100').value = parseInt(data[0]['carate_100']);
+        // document.getElementById('carate2150').value = parseInt(data[0]['carate_150']);
+        // document.getElementById('carate2250').value = parseInt(data[0]['carate_250']);
+        // document.getElementById('carate2350').value = parseInt(data[0]['carate_350']);
         document.getElementById('carate3100').value = parseInt(data[0]['carate_100']);
         document.getElementById('carate3150').value = parseInt(data[0]['carate_150']);
         document.getElementById('carate3250').value = parseInt(data[0]['carate_250']);

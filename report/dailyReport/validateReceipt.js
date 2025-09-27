@@ -53,6 +53,10 @@ document
       carate_150: parseInt(document.getElementById("carate150").value) || 0,
       carate_250: parseInt(document.getElementById("carate250").value) || 0,
       carate_350: parseInt(document.getElementById("carate350").value) || 0,
+      baki_100: parseInt(document.getElementById("carate3100").value) || 0,
+      baki_150: parseInt(document.getElementById("carate3150").value) || 0,
+      baki_250: parseInt(document.getElementById("carate3250").value) || 0,
+      baki_350: parseInt(document.getElementById("carate3350").value) || 0,
       deposite_carate_price:
         parseInt(document.getElementById("input4").value) || 0,
       remaining: parseInt(document.getElementById("input5").value) || 0,
