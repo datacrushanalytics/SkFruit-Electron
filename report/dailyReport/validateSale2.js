@@ -36,6 +36,10 @@ async function insertSale() {
     out_carate_250: parseInt(document.getElementById("carate1250").value) || 0,
     out_carate_350: parseInt(document.getElementById("carate1350").value) || 0,
     added_by: isAdmin,
+    baki_100: parseInt(document.getElementById("carate2100").value) || 0,
+    baki_150: parseInt(document.getElementById("carate2150").value) || 0,
+    baki_250: parseInt(document.getElementById("carate2250").value) || 0,
+    baki_350: parseInt(document.getElementById("carate2350").value) || 0,
   };
 
   try {

@@ -494,18 +494,22 @@
           <div class="input-wrapper">
             <label for="carate100">100 :</label>
             <input type="number" id="carate100" name="carate100" min="0" placeholder="100" onchange="carate()">
+            <input type="hidden" id="carate44100" name="carate44100" placeholder="100" readonly>
           </div>
           <div class="input-wrapper">
             <label for="carate150">150 :</label>
             <input type="number" id="carate150" name="carate150" min="0" placeholder="150" onchange="carate()">
+            <input type="hidden" id="carate44150" name="carate44150" placeholder="100" readonly>
           </div>
           <div class="input-wrapper">
             <label for="carate250">250 :</label>
             <input type="number" id="carate250" name="carate250" min="0" placeholder="250" onchange="carate()">
+            <input type="hidden" id="carate44250" name="carate44250" placeholder="100" readonly>
           </div>
           <div class="input-wrapper">
             <label for="carate350">350 :</label>
             <input type="number" id="carate350" name="carate350" min="0" placeholder="350" onchange="carate()">
+            <input type="hidden" id="carate44350" name="carate44350" placeholder="100" readonly>
           </div>
         </div>
       </div>
@@ -552,18 +556,22 @@
           <div class="input-wrapper">
             <label for="carate100">100 :</label>
             <input type="number" id="carate1100" name="carate100" min="0" placeholder="100" onchange="carate1()">
+            <input type="hidden" id="carate55100" name="carate55100" placeholder="100" readonly>
           </div>
           <div class="input-wrapper">
             <label for="carate150">150 :</label>
             <input type="number" id="carate1150" name="carate150" min="0" placeholder="150" onchange="carate1()">
+            <input type="hidden" id="carate55150" name="carate55150" placeholder="100" readonly>
           </div>
           <div class="input-wrapper">
             <label for="carate250">250 :</label>
             <input type="number" id="carate1250" name="carate250" min="0" placeholder="250" onchange="carate1()">
+            <input type="hidden" id="carate55250" name="carate55250" placeholder="100" readonly>
           </div>
           <div class="input-wrapper">
             <label for="carate350">350 :</label>
             <input type="number" id="carate1350" name="carate350" min="0" placeholder="350" onchange="carate1()">
+            <input type="hidden" id="carate55350" name="carate55350" placeholder="100" readonly>
           </div>
         </div>
       </div>
@@ -617,7 +625,7 @@
 
 </body>
 <script src="./validateSale.js"></script>
-<script src="../../section/sale/sale.js"></script>
+<!-- <script src="../../section/sale/sale.js"></script> -->
 <script src="./validateSale2.js"></script>
 <!-- <script src="./sale2.js"></script> -->
 <!-- <Script src="../../report/routewiseSaleReport/routewiseSaleReport.js"></Script> -->
@@ -716,11 +724,19 @@
       document.getElementById("carate150").value = sale.in_carate_150 || 0;
       document.getElementById("carate250").value = sale.in_carate_250 || 0;
       document.getElementById("carate350").value = sale.in_carate_350 || 0;
+      document.getElementById("carate44100").value = sale.in_carate_100 || 0;
+      document.getElementById("carate44150").value = sale.in_carate_150 || 0;
+      document.getElementById("carate44250").value = sale.in_carate_250 || 0;
+      document.getElementById("carate44350").value = sale.in_carate_350 || 0;
       carate();
       document.getElementById("carate1100").value = sale.out_carate_100 || 0;
       document.getElementById("carate1150").value = sale.out_carate_150 || 0;
       document.getElementById("carate1250").value = sale.out_carate_250 || 0;
       document.getElementById("carate1350").value = sale.out_carate_350 || 0;
+      document.getElementById("carate55100").value = sale.out_carate_100 || 0;
+      document.getElementById("carate55150").value = sale.out_carate_150 || 0;
+      document.getElementById("carate55250").value = sale.out_carate_250 || 0;
+      document.getElementById("carate55350").value = sale.out_carate_350 || 0;
       carate1();
       document.getElementById("previousBalance").value = sale.pre_balance || 0;
       document.getElementById("bill_cash").value = sale.cash || 0;

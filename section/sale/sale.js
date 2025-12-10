@@ -679,7 +679,8 @@ function carate() {
   var value1150 = parseInt(document.getElementById("carate1150").value) || 0;
   var value1250 = parseInt(document.getElementById("carate1250").value) || 0;
   var value1350 = parseInt(document.getElementById("carate1350").value) || 0;
-
+  console.log("Data1",value100)
+  console.log("Data2",value1100)
   document.getElementById("total1").value =
     value100 * 100 + value150 * 150 + value250 * 250 + value350 * 350;
   document.getElementById("carate2100").value =
