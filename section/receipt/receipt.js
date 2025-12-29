@@ -19,20 +19,52 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("date").readOnly = true; // Hide the button for non-admin users
   }
 
-  fetch("http://94.136.190.129:3000/fetchReceiptid")
+  // fetch("http://94.136.190.129:3000/fetchReceiptid")
+  //   .then((response) => {
+  //     if (!response.ok) {
+  //       throw new Error("Network response was not ok");
+  //     }
+  //     return response.json();
+  //   })
+  //   .then((data) => {
+  //     // Populate dropdown with API data
+  //     document.getElementById("pavti").value =
+  //       parseInt(data[0]["num"]) + 1 || 1;
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error:", error);
+  //   });
+
+  const addedBy = sessionData[0]?.name || "Unknown"; // Or wherever you capture user_id
+
+  fetch("http://94.136.190.129:3000/fetchReceiptid/generate-bill-id", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ user_id: addedBy }),
+  })
     .then((response) => {
       if (!response.ok) {
+        if (response.status === 404) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "No bill ID found.",
+          });
+        }
         throw new Error("Network response was not ok");
       }
       return response.json();
     })
     .then((data) => {
-      // Populate dropdown with API data
-      document.getElementById("pavti").value =
-        parseInt(data[0]["num"]) + 1 || 1;
+      const billId = parseInt(data.bill_id);
+      // Set bill ID into form
+      // document.getElementById('bill').value = billId;
+      document.getElementById("pavti").value = billId;
     })
     .catch((error) => {
-      console.error("Error:", error);
+      console.error("Bill ID fetch error:", error);
     });
 });
 
