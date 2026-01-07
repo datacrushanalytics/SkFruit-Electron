@@ -317,7 +317,7 @@ function updateRowTotal(inputElement) {
   var quantity = quantityInput
     ? parseInt(quantityInput.value, 10) || 0
     : parseInt(cells[3].textContent.trim(), 10) || 0;
-  var rate = rateInput ? parseInt(rateInput.value, 10) || 0 : 0;
+  var rate = rateInput ? parseFloat(rateInput.value, 10) || 0 : 0;
 
   // Get available inventory from a hidden field (like 'nag1')
   var availableInventoryElement = document.getElementById("nag1");
@@ -338,7 +338,7 @@ function updateRowTotal(inputElement) {
   // }
 
   // Get the previous total value from the cell
-  var previousTotal = parseInt(cells[5].textContent.trim(), 10) || 0;
+  var previousTotal = parseFloat(cells[5].textContent.trim(), 10) || 0;
 
   // Calculate new total as quantity * rate
   var total = quantity * rate;
@@ -355,7 +355,7 @@ function updateRowTotal(inputElement) {
   // Update the overall bill1 value by subtracting the previous total and adding the new total
   var billField = document.getElementById("bill1");
   if (billField) {
-    billField.value = parseInt(billField.value || 0) - previousTotal + total;
+    billField.value = parseFloat(billField.value || 0) - previousTotal + total;
   }
 
   // Call totalBalance function to update the overall balance
@@ -402,7 +402,7 @@ function saveRow(button, id1, editable) {
     ? parseInt(cells[3].querySelector("input").value, 10) || 0
     : parseInt(cells[3].textContent, 10) || 0;
 
-  var updatedRate = parseInt(cells[4].querySelector("input").value, 10) || 0;
+  var updatedRate = parseFloat(cells[4].querySelector("input").value, 10) || 0;
   var updatedPrice = updatedQuantity * updatedRate;
 
   console.log("Fields", updatedRate, updatedQuantity);
@@ -737,10 +737,10 @@ function toggleReadonly() {
 
 function totalBalance() {
   console.log("Hello Deva");
-  var balance = parseInt(document.getElementById("bill1").value) || 0;
+  var balance = parseFloat(document.getElementById("bill1").value) || 0;
   var preBalance =
-    parseInt(document.getElementById("previousBalance").value) || 0;
-  var total1 = parseInt(document.getElementById("total1").value) || 0;
+    parseFloat(document.getElementById("previousBalance").value) || 0;
+  var total1 = parseFloat(document.getElementById("total1").value) || 0;
 
   fetch(
     "http://94.136.190.129:3000/accountData/" +
@@ -819,7 +819,7 @@ function previousbalance() {
       // Populate dropdown with API data
       console.log(data);
       document.getElementById("custid").value = parseInt(data[0]["id"]);
-      document.getElementById("previousBalance").value = parseInt(
+      document.getElementById("previousBalance").value = par(
         data[0]["current_balance"] || 0
       );
       totalBalance();
@@ -1034,18 +1034,18 @@ function totalbill() {
       var set = 0;
       if (data[0].cr_dr_type == "no") {
         set =
-          parseInt(document.getElementById("totalBill").value || 0) -
-          parseInt(document.getElementById("bill_cash").value || 0) -
-          parseInt(document.getElementById("online").value || 0) -
-          parseInt(document.getElementById("discount").value || 0);
+          parseFloat(document.getElementById("totalBill").value || 0) -
+          parseFloat(document.getElementById("bill_cash").value || 0) -
+          parseFloat(document.getElementById("online").value || 0) -
+          parseFloat(document.getElementById("discount").value || 0);
         // document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0);
       } else {
         set =
-          parseInt(document.getElementById("totalBill").value || 0) -
-          parseInt(document.getElementById("bill_cash").value || 0) -
-          parseInt(document.getElementById("online").value || 0) -
-          parseInt(document.getElementById("discount").value || 0) -
-          parseInt(document.getElementById("total2").value || 0);
+          parseFloat(document.getElementById("totalBill").value || 0) -
+          parseFloat(document.getElementById("bill_cash").value || 0) -
+          parseFloat(document.getElementById("online").value || 0) -
+          parseFloat(document.getElementById("discount").value || 0) -
+          parseFloat(document.getElementById("total2").value || 0);
         // document.getElementById("baki").value = parseInt(document.getElementById("totalBill").value || 0) - parseInt(document.getElementById("bill_cash").value || 0) - parseInt(document.getElementById("online").value || 0) - parseInt(document.getElementById("discount").value || 0) - parseInt(document.getElementById("total2").value || 0);
       }
       if (set < 0) {
@@ -1076,8 +1076,8 @@ async function myFunction() {
     mark: document.getElementById("mark").value,
     product: document.getElementById("product").value,
     quantity: parseInt(document.getElementById("nag").value),
-    rate: parseInt(document.getElementById("kimmat").value),
-    price: parseInt(document.getElementById("total").value),
+    rate: parseFloat(document.getElementById("kimmat").value),
+    price: parseFloat(document.getElementById("total").value),
   };
 
   console.log(formData);
@@ -1189,7 +1189,7 @@ function updateTable(entry, result) {
 
   // Update the bill total
   var billInput = document.getElementById("bill1");
-  billInput.value = parseInt(billInput.value || 0) + entry.price;
+  billInput.value = parseFloat(billInput.value || 0) + entry.price;
 
   // Debugging: Log the updated bill total
   console.log("Updated Bill Total:", billInput.value);
@@ -1206,7 +1206,7 @@ function deleteUser(button, userId, price) {
   console.log(price);
   console.log(userId);
   document.getElementById("bill1").value =
-    parseInt(document.getElementById("bill1").value || 0) - price;
+    parseFloat(document.getElementById("bill1").value || 0) - price;
   totalBalance();
   var button = event.target;
   var row = button.parentNode.parentNode;

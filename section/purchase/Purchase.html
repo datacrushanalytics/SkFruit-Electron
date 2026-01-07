@@ -297,7 +297,7 @@ function confirmAndProceed() {
         </script>
         <script>
             function addamount(){
-                document.getElementById('total').value = parseInt(document.getElementById('total1').value || 0) + parseInt(document.getElementById('expenses').value)
+                document.getElementById('total').value = parseFloat(document.getElementById('total1').value || 0) + parseFloat(document.getElementById('expenses').value)
             }
 
 
@@ -311,12 +311,12 @@ function confirmAndProceed() {
                     mark: document.getElementById('mark').value,
                     p_date: document.getElementById('date').value,
                     product_name: document.getElementById('product').value,
-                    purchase_price: parseInt(document.getElementById('purchase').value),
-                    selling_price: parseInt(document.getElementById('sale').value),
+                    purchase_price: parseFloat(document.getElementById('purchase').value),
+                    selling_price: parseFloat(document.getElementById('sale').value),
                     quantity: parseInt(document.getElementById('quantity').value),
                     editable: document.getElementById('toggleTableCheckbox').checked,
                     unit: document.getElementById('unit').value,
-                    price: parseInt(document.getElementById('purchase').value) * parseInt(document.getElementById('quantity').value)
+                    price: parseFloat(document.getElementById('purchase').value) * parseInt(document.getElementById('quantity').value)
                 };
 
                 console.log(formData)
@@ -381,8 +381,8 @@ function confirmAndProceed() {
                   <td><button type="button" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button></td>
               `;
 
-                document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) + entry.price;
-                document.getElementById('total1').value = parseInt(document.getElementById('total1').value || 0) + entry.price;
+                document.getElementById('total').value = parseFloat(document.getElementById('total').value || 0) + entry.price;
+                document.getElementById('total1').value = parseFloat(document.getElementById('total1').value || 0) + entry.price;
                 tableBody.appendChild(newRow);
             }
 
@@ -397,8 +397,8 @@ function confirmAndProceed() {
                             throw new Error('Network response was not ok');
                         }
                         console.log('User deleted successfully');
-                        document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) - price;
-                        document.getElementById('total1').value = parseInt(document.getElementById('total1').value || 0) - price;
+                        document.getElementById('total').value = parseFloat(document.getElementById('total').value || 0) - price;
+                        document.getElementById('total1').value = parseFloat(document.getElementById('total1').value || 0) - price;
                         row.remove();
                     })
                     .catch(error => {

@@ -165,7 +165,7 @@ function insertAccount() {
     const mobileNo = parseInt(document.querySelector(".no input").value);
     const accountGroup = document.getElementById("account1").value;
     const routeDetails = document.getElementById("route1").value;
-    const prevBalance = parseInt(
+    const prevBalance = parseFloat(
       document.querySelector(".balance input").value
     );
     const crDrType = document.querySelector(
