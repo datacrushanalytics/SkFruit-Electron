@@ -364,7 +364,7 @@
 
         <script>
             function addamount(){
-                document.getElementById('total').value = parseInt(document.getElementById('total1').value || 0) + parseInt(document.getElementById('expenses').value)
+                document.getElementById('total').value = parseFloat(document.getElementById('total1').value || 0) + parseFloat(document.getElementById('expenses').value)
             }
 
 
@@ -377,12 +377,12 @@
                     mark: document.getElementById('mark').value,
                     p_date: document.getElementById('date').value,
                     product_name: document.getElementById('product').value,
-                    purchase_price: parseInt(document.getElementById('purchase').value),
-                    selling_price: parseInt(document.getElementById('sale').value),
+                    purchase_price: parseFloat(document.getElementById('purchase').value),
+                    selling_price: parseFloat(document.getElementById('sale').value),
                     quantity: parseInt(document.getElementById('quantity').value),
                     unit: document.getElementById('unit').value,
                     editable: document.getElementById('toggleTableCheckbox').checked,
-                    price: parseInt(document.getElementById('purchase').value) * parseInt(document.getElementById('quantity').value)
+                    price: parseFloat(document.getElementById('purchase').value) * parseInt(document.getElementById('quantity').value)
                 };
 
                 console.log(formData)
@@ -437,8 +437,8 @@
                   <td><button type="button" style="background-color:#ff355f;" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button></td>
               `;
 
-                document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) + entry.price;
-                document.getElementById('total1').value = parseInt(document.getElementById('total1').value || 0) + entry.price;
+                document.getElementById('total').value = parseFloat(document.getElementById('total').value || 0) + entry.price;
+                document.getElementById('total1').value = parseFloat(document.getElementById('total1').value || 0) + entry.price;
                 addamount()
                 tableBody.appendChild(newRow);
             }
@@ -456,8 +456,8 @@
                             throw new Error('Network response was not ok');
                         }
                         console.log('User deleted successfully');
-                        document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) - price;
-                        document.getElementById('total1').value = parseInt(document.getElementById('total1').value || 0) - price;
+                        document.getElementById('total').value = parseFloat(document.getElementById('total').value || 0) - price;
+                        document.getElementById('total1').value = parseFloat(document.getElementById('total1').value || 0) - price;
                         // Refresh the table or update UI as needed
                         //newRow.remove();
                         row.remove();
@@ -480,7 +480,7 @@
         //date: document.getElementById('date').value,
         supplier_name: document.getElementById('supplier').value,
         //gadi_number: document.getElementById('vehicle').value,
-        total_quantity: parseInt(document.getElementById('total').value) || 0
+        total_quantity: parseFloat(document.getElementById('total').value) || 0
     };
     var loader = document.getElementById('loader');
         loader.style.display = 'block';

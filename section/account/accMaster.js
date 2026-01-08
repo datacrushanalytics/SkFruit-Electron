@@ -1,14 +1,14 @@
 document
   .getElementById("loginForm")
   .addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent form submission
+    event.preventDefault();
 
     var formData = new FormData(document.getElementById("loginForm"));
     var data = {};
     formData.forEach((value, key) => {
       data[key] = value;
     });
-    console.log(data);
+
     var loader = document.getElementById("loader");
     loader.style.display = "block";
 
@@ -19,12 +19,19 @@ document
         "Content-Type": "application/json",
       },
     })
-      .then((response) => {
+      .then(async (response) => {
+        const result = await response.json();
+
+        // ❌ Handle error responses
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw {
+            status: response.status,
+            message: result.message || "Something went wrong",
+          };
         }
 
-        form2 = {
+        // ✅ Success → second API call
+        const form2 = {
           userName: document.getElementById("name").value,
           carate_100:
             parseInt(document.getElementById("carate2100").value) || 0,
@@ -35,8 +42,8 @@ document
           carate_350:
             parseInt(document.getElementById("carate2350").value) || 0,
         };
-        console.log(form2);
-        const response1 = fetch(
+
+        await fetch(
           "http://94.136.190.129:3000/carateuserData/insertcarateuser",
           {
             method: "POST",
@@ -47,22 +54,37 @@ document
           }
         );
 
-        return response.json();
+        return result;
       })
       .then((result) => {
         loader.style.display = "none";
-        console.log("Data added successfully:", result);
 
         Swal.fire({
           icon: "success",
           title: "Success!",
-          text: "Account is successfully Added",
+          text: "Account is successfully added",
         });
+
         window.location.href = "./account.html";
-        // Optionally, you can darkgreyirect or show a success message here
       })
       .catch((error) => {
+        loader.style.display = "none";
+
+        // 🎯 Handle specific backend errors
+        if (error.status === 409) {
+          Swal.fire({
+            icon: "warning",
+            title: "Duplicate Mobile Number",
+            text: error.message, // "Mobile number already exists"
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: error.message || "Something went wrong",
+          });
+        }
+
         console.error("Error:", error);
-        // Optionally, you can display an error message here
       });
   });

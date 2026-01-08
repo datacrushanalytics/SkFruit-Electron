@@ -582,7 +582,7 @@ function populateTable5(data) {
           campaignName: "SK_fruits_Reciept",
           mobile_no: item.mobile_no,
           userName: item.Customer,
-          paid: parseInt(item.cash) + parseInt(item.online),
+          paid: parseFloat(item.cash) + parseFloat(item.online),
           remaining: item.remaining,
         }),
       })

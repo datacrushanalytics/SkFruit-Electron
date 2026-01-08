@@ -203,13 +203,13 @@
 
             <div class="second-row">
                 <label for="previousBalance">Prev. Balance :</label>
-                <input type="number" id="previousBalance" name="previous_balance" readonly>
+                <input type="number" id="previousBalance"  step="0.01" name="previous_balance" readonly>
                 <br>
             </div>
 
             <div class="row-container1">
                 <label for="totalCarat">Cash :</label>
-                <input type="number" id="bill_cash" name="number" placeholder="Cash" onchange="totalBalance()">
+                <input type="number" id="bill_cash" name="number"  step="0.01" placeholder="Cash" onchange="totalBalance()">
               </div>
 
             <label for="product">Bank Account :</label>
@@ -219,7 +219,7 @@
             <br>
             <div class="row-container1">
                 <label for="totalCarat">Online Payment :</label>
-                <input type="number" id="online" name="number" placeholder="Online Payment" onchange="totalBalance()" readonly>
+                <input type="number" id="online" name="number" placeholder="Online Payment"   step="0.01" onchange="totalBalance()" readonly>
               </div>
             <br>
             <div class="form-group">
@@ -228,13 +228,13 @@
             </select>
 
             <label for="amount"> Discount :</label>
-            <input type="number" id="discount" name="amount"  onchange="totalBalance()">
+            <input type="number" id="discount" name="amount" step="0.01"  onchange="totalBalance()">
 
             
             <br>
 
             <label for="amount">Remaining Amount :</label>
-            <input type="number" id="amount" name="amount" required readonly>
+            <input type="number" id="amount" name="amount"  step="0.01" required readonly>
           
             <br>
             <label for="comment">Comment :</label>
@@ -299,7 +299,7 @@
 
 function totalBalance(){
     var total = 0;
-    total = parseInt(document.getElementById('bill_cash').value || 0) + parseInt(document.getElementById('online').value || 0) + parseInt(document.getElementById('discount').value || 0)
+    total = parseFloat(document.getElementById('bill_cash').value || 0) + parseFloat(document.getElementById('online').value || 0) + parseFloat(document.getElementById('discount').value || 0)
     document.getElementById('amount').value = document.getElementById('previousBalance').value- total 
     if(document.getElementById('previousBalance').value - total < 0){
         Swal.fire({
@@ -374,7 +374,7 @@ function toggleReadonly(){
                 .then(data => {
                     // Populate dropdown with API data
                     console.log(data)
-                    document.getElementById('previousBalance').value = parseInt(data[0]['current_balance'] || 0);
+                    document.getElementById('previousBalance').value = parseFloat(data[0]['current_balance'] || 0);
                 })
                 .catch(error => {
                     console.error('Error:', error);

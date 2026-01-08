@@ -419,14 +419,16 @@
       });
 
       async function updateUser() {
+        var loader = document.getElementById("loader");
+
         try {
-          // Determine status based on radio button value
+          // Determine status
           var status =
             document.querySelector('input[name="cr_dr_type"]:checked').value ===
             "yes"
               ? "yes"
               : "no";
-          console.log("status", status);
+
           var userData = {
             id: parseInt(document.getElementById("id").value),
             account_group: document.getElementById("account_group").value,
@@ -441,8 +443,8 @@
             optional_mobile: document.getElementById("optional_mobile").value,
           };
 
-          var loader = document.getElementById("loader");
           loader.style.display = "block";
+
           const response = await fetch(
             "http://94.136.190.129:3000/accountData/updateAccount/" +
               userData.id,
@@ -455,11 +457,18 @@
             }
           );
 
+          const result = await response.json();
+
+          // ❌ Handle backend errors
           if (!response.ok) {
-            throw new Error("Network response was not ok");
+            throw {
+              status: response.status,
+              message: result.message || "Update failed",
+            };
           }
 
-          form2 = {
+          // ✅ Update carate user only if account update succeeds
+          const form2 = {
             userName: document.getElementById("name").value,
             carate_100:
               parseInt(document.getElementById("carate2100").value) || 0,
@@ -470,8 +479,8 @@
             carate_350:
               parseInt(document.getElementById("carate2350").value) || 0,
           };
-          console.log(form2);
-          const response1 = fetch(
+
+          await fetch(
             "http://94.136.190.129:3000/carateuserData/updateCarateuser/" +
               form2.userName,
             {
@@ -483,25 +492,41 @@
             }
           );
 
-          const result = await response.json();
           loader.style.display = "none";
-          console.log("Data added successfully:", result);
 
           Swal.fire({
             icon: "success",
             title: "Success!",
-            text: "Data Updated successfully",
+            text: "Data updated successfully",
+          }).then(() => {
+            window.location.href = "./account.html";
           });
-
-          // Optionally, you can darkgreyirect or show a success message here
         } catch (error) {
-          console.error("Error:", error);
-          // Optionally, you can display an error message here
-        }
+          loader.style.display = "none";
 
-        // Perform the update operation (e.g., send data to server)
-        console.log("Update user:", userData);
-        window.location.href = "./account.html";
+          // 🎯 Handle specific errors
+          if (error.status === 409) {
+            Swal.fire({
+              icon: "warning",
+              title: "Duplicate Mobile Number",
+              text: error.message, // from backend
+            });
+          } else if (error.status === 404) {
+            Swal.fire({
+              icon: "error",
+              title: "Not Found",
+              text: error.message,
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: error.message || "Something went wrong",
+            });
+          }
+
+          console.error("Error:", error);
+        }
       }
 
       // Add event listener to the "Update" button

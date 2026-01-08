@@ -460,9 +460,9 @@ function totalbill(){
           .then(data => {
               console.log(data[0].cr_dr_type)
               if(data[0].cr_dr_type == 'no'){
-                document.getElementById("input5").value = parseInt(document.getElementById("input3").value || 0) - parseInt(document.getElementById("input6").value || 0) - parseInt(document.getElementById("input7").value || 0) - parseInt(document.getElementById("input8").value || 0);
+                document.getElementById("input5").value = parseFloat(document.getElementById("input3").value || 0) - parseFloat(document.getElementById("input6").value || 0) - parseFloat(document.getElementById("input7").value || 0) - parseFloat(document.getElementById("input8").value || 0);
               }else{
-                document.getElementById("input5").value = parseInt(document.getElementById("input3").value || 0) - parseInt(document.getElementById("input6").value || 0) - parseInt(document.getElementById("input7").value || 0) - parseInt(document.getElementById("input8").value || 0) - parseInt(document.getElementById("input4").value || 0);
+                document.getElementById("input5").value = parseFloat(document.getElementById("input3").value || 0) - parseFloat(document.getElementById("input6").value || 0) - parseFloat(document.getElementById("input7").value || 0) - parseFloat(document.getElementById("input8").value || 0) - parseFloat(document.getElementById("input4").value || 0);
               }
           })
           .catch(error => {
@@ -486,7 +486,7 @@ function totalbill(){
                 // Populate dropdown with API data
                 console.log(data)
                 document.getElementById('custid').value = parseInt(data[0]['id']);
-                document.getElementById('input3').value = parseInt(data[0]['current_balance'] || 0);
+                document.getElementById('input3').value = parseFloat(data[0]['current_balance'] || 0);
                 totalbill();
             })
             .catch(error => {

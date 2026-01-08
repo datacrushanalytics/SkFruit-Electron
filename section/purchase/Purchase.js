@@ -70,7 +70,7 @@ document
       date: document.getElementById("date").value,
       supplier_name: document.getElementById("supplier").value,
       gadi_number: document.getElementById("vehicle").value || "Dummy",
-      total_quantity: parseInt(document.getElementById("total").value) || 0,
+      total_quantity: parseFloat(document.getElementById("total").value) || 0,
       added_by: sessionData[0].name,
       expenses: document.getElementById("expenses").value || 0,
     };
