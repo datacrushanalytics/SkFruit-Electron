@@ -450,9 +450,9 @@ function totalbill(){
           .then(data => {
               console.log(data[0].cr_dr_type)
               if(data[0].cr_dr_type == 'no'){
-                document.getElementById("input5").value = parseFloat(document.getElementById("input3").value || 0) - parseFloat(document.getElementById("input6").value || 0) - parseFloat(document.getElementById("input7").value || 0) - parseFloat(document.getElementById("input8").value || 0);
+                document.getElementById("input5").value = parseFloat(document.getElementById("input3").value || 0) - parseFloat(parseFloat(document.getElementById("input6").value || 0).toFixed(2)) - parseFloat(parseFloat(document.getElementById("input7").value || 0).toFixed(2)) - parseFloat(parseFloat(document.getElementById("input8").value || 0).toFixed(2));
               }else{
-                document.getElementById("input5").value = parseFloat(document.getElementById("input3").value || 0) - parseFloat(document.getElementById("input6").value || 0) - parseFloat(document.getElementById("input7").value || 0) - parseFloat(document.getElementById("input8").value || 0) - parseFloat(document.getElementById("input4").value || 0);
+                document.getElementById("input5").value = parseFloat(document.getElementById("input3").value || 0) - parseFloat(parseFloat(document.getElementById("input6").value || 0).toFixed(2)) - parseFloat(parseFloat(document.getElementById("input7").value || 0).toFixed(2)) - parseFloat(parseFloat(document.getElementById("input8").value || 0).toFixed(2)) - parseFloat(parseFloat(document.getElementById("input4").value || 0).toFixed(2));
               }
           })
           .catch(error => {

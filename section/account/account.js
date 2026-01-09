@@ -166,7 +166,7 @@ function insertAccount() {
     const accountGroup = document.getElementById("account1").value;
     const routeDetails = document.getElementById("route1").value;
     const prevBalance = parseFloat(
-      document.querySelector(".balance input").value
+      parseFloat(document.querySelector(".balance input").value).toFixed(2)
     );
     const crDrType = document.querySelector(
       'input[name="cr_dr_type"]:checked'

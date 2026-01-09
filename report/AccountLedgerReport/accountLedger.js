@@ -107,7 +107,7 @@ function populateTable4(data) {
           cell.textContent = utcDate.toLocaleString("en-IN", options);
         } else if (key === "online_amt") {
           cell.textContent = item[key];
-          grandTotalQuantity += parseFloat(item[key]);
+          grandTotalQuantity += parseFloat(parseFloat(item[key]).toFixed(2));
         } else {
           cell.textContent = item[key];
         }
@@ -255,7 +255,7 @@ function populateTable5(data) {
       } else {
         cell.textContent = item[key];
         if (key === "prev_balance") {
-          grandTotalPreBalance += parseFloat(item[key] || 0);
+          grandTotalPreBalance += parseFloat(parseFloat(item[key] || 0).toFixed(2));
         }
         if (key === "amounr") {
           grandTotalAmounr += item[key];

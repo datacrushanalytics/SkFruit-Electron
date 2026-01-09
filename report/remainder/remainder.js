@@ -142,7 +142,7 @@ function populateTable(data) {
       } else {
         cell.textContent = item[key];
         if (key === "current_balance") {
-          totalCurrentBalance += parseFloat(item[key]);
+          totalCurrentBalance += parseFloat(parseFloat(item[key]).toFixed(2));
         }
       }
     });

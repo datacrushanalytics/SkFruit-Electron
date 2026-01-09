@@ -122,10 +122,10 @@ function populateTable4(data) {
         }
         // Calculate grand totals
         if (key == "BillAmount") {
-          grandTotalBillAmount += parseFloat(item[key]) || 0;
+          grandTotalBillAmount += parseFloat(parseFloat(item[key]).toFixed(2)) || 0;
         }
         if (key == "TotalQuantity") {
-          grandTotalQuantity += parseFloat(item[key]) || 0;
+          grandTotalQuantity += parseFloat(parseFloat(item[key]).toFixed(2)) || 0;
         }
       }
     });

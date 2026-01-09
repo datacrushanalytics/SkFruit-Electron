@@ -191,11 +191,11 @@ function populateTable4(data) {
         if (item[key].startsWith("Loss")) {
           cell.style.color = "red";
           grandTotals[key] -=
-            parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
+            parseFloat(parseFloat(item[key].replace(/[^0-9.-]+/g, "")).toFixed(2)) || 0;
         } else {
           cell.style.color = "green";
           grandTotals[key] +=
-            parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
+            parseFloat(parseFloat(item[key].replace(/[^0-9.-]+/g, "")).toFixed(2)) || 0;
         }
         // grandTotals[key] += parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
       } else if (
@@ -203,7 +203,7 @@ function populateTable4(data) {
           key
         )
       ) {
-        grandTotals[key] += parseFloat(item[key]) || 0;
+        grandTotals[key] += parseFloat(parseFloat(item[key]).toFixed(2)) || 0;
       }
       if (key == "date") {
         console.log(item[key]);
@@ -310,11 +310,11 @@ function populateTable5(data) {
         if (item[key].startsWith("Loss")) {
           cell.style.color = "red";
           grandTotals[key] -=
-            parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
+            parseFloat(parseFloat(item[key].replace(/[^0-9.-]+/g, "")).toFixed(2)) || 0;
         } else {
           cell.style.color = "green";
           grandTotals[key] +=
-            parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
+            parseFloat(parseFloat(item[key].replace(/[^0-9.-]+/g, "")).toFixed(2)) || 0;
         }
         // grandTotals[key] += parseFloat(item[key].replace(/[^0-9.-]+/g, "")) || 0;
       } else if (
@@ -325,7 +325,7 @@ function populateTable5(data) {
           "net_profit_loss",
         ].includes(key)
       ) {
-        grandTotals[key] += parseFloat(item[key]) || 0;
+        grandTotals[key] += parseFloat(parseFloat(item[key]).toFixed(2)) || 0;
       }
       cell.textContent = item[key];
       console.log("grandTotals", grandTotals);

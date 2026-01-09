@@ -317,7 +317,7 @@ function updateRowTotal(inputElement) {
   var quantity = quantityInput
     ? parseInt(quantityInput.value, 10) || 0
     : parseInt(cells[3].textContent.trim(), 10) || 0;
-  var rate = rateInput ? parseFloat(rateInput.value, 10) || 0 : 0;
+  var rate = rateInput ? parseFloat(parseFloat(rateInput.value, 10).toFixed(2)) || 0 : 0;
 
   // Get available inventory from a hidden field (like 'nag1')
   var availableInventoryElement = document.getElementById("nag1");
@@ -338,7 +338,7 @@ function updateRowTotal(inputElement) {
   // }
 
   // Get the previous total value from the cell
-  var previousTotal = parseFloat(cells[5].textContent.trim(), 10) || 0;
+  var previousTotal = parseFloat(parseFloat(cells[5].textContent.trim(), 10).toFixed(2)) || 0;
 
   // Calculate new total as quantity * rate
   var total = quantity * rate;
@@ -355,7 +355,7 @@ function updateRowTotal(inputElement) {
   // Update the overall bill1 value by subtracting the previous total and adding the new total
   var billField = document.getElementById("bill1");
   if (billField) {
-    billField.value = parseFloat(billField.value || 0) - previousTotal + total;
+    billField.value = parseFloat(parseFloat(billField.value || 0).toFixed(2)) - previousTotal + total;
   }
 
   // Call totalBalance function to update the overall balance
@@ -402,7 +402,7 @@ function saveRow(button, id1, editable) {
     ? parseInt(cells[3].querySelector("input").value, 10) || 0
     : parseInt(cells[3].textContent, 10) || 0;
 
-  var updatedRate = parseFloat(cells[4].querySelector("input").value, 10) || 0;
+  var updatedRate = parseFloat(parseFloat(cells[4].querySelector("input").value, 10).toFixed(2)) || 0;
   var updatedPrice = updatedQuantity * updatedRate;
 
   console.log("Fields", updatedRate, updatedQuantity);
@@ -737,10 +737,10 @@ function toggleReadonly() {
 
 function totalBalance() {
   console.log("Hello Deva");
-  var balance = parseFloat(document.getElementById("bill1").value) || 0;
+  var balance = parseFloat(parseFloat(document.getElementById("bill1").value).toFixed(2)) || 0;
   var preBalance =
-    parseFloat(document.getElementById("previousBalance").value) || 0;
-  var total1 = parseFloat(document.getElementById("total1").value) || 0;
+    parseFloat(parseFloat(document.getElementById("previousBalance").value).toFixed(2)) || 0;
+  var total1 = parseFloat(parseFloat(document.getElementById("total1").value).toFixed(2)) || 0;
 
   fetch(
     "http://94.136.190.129:3000/accountData/" +

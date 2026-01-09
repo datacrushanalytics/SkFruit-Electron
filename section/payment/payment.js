@@ -59,13 +59,13 @@ document
       comment: document.getElementById("comment").value,
       mobile_no: document.getElementById("number").value,
       prev_balance:
-        parseFloat(document.getElementById("previousBalance").value) || 0,
-      amounr: parseFloat(document.getElementById("amount").value) || 0,
-      cash: parseFloat(document.getElementById("bill_cash").value) || 0,
-      online: parseFloat(document.getElementById("online").value) || 0,
+        parseFloat(parseFloat(document.getElementById("previousBalance").value).toFixed(2)) || 0,
+      amounr: parseFloat(parseFloat(document.getElementById("amount").value).toFixed(2)) || 0,
+      cash: parseFloat(parseFloat(document.getElementById("bill_cash").value).toFixed(2)) || 0,
+      online: parseFloat(parseFloat(document.getElementById("online").value).toFixed(2)) || 0,
       SupplierAccount:
         document.getElementById("SupplierAccount").value || "Dummy",
-      discount: parseFloat(document.getElementById("discount").value) || 0,
+      discount: parseFloat(parseFloat(document.getElementById("discount").value).toFixed(2)) || 0,
       added_by: sessionData[0].name,
     };
     var loader = document.getElementById("loader");

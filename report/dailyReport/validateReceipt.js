@@ -44,11 +44,11 @@ document
       from_account: document.getElementById("account_group").value,
       to_account: document.getElementById("mob").value,
       note: document.getElementById("message").value,
-      previous_balance: parseFloat(document.getElementById("input3").value) || 0,
-      deposite: parseFloat(document.getElementById("input6").value) || 0,
+      previous_balance: parseFloat(parseFloat(document.getElementById("input3").value).toFixed(2)) || 0,
+      deposite: parseFloat(parseFloat(document.getElementById("input6").value).toFixed(2)) || 0,
       online_deposite_bank: document.getElementById("input1").value,
-      online_deposite: parseFloat(document.getElementById("input7").value) || 0,
-      discount: parseFloat(document.getElementById("input8").value) || 0,
+      online_deposite: parseFloat(parseFloat(document.getElementById("input7").value).toFixed(2)) || 0,
+      discount: parseFloat(parseFloat(document.getElementById("input8").value).toFixed(2)) || 0,
       carate_100: parseInt(document.getElementById("carate100").value) || 0,
       carate_150: parseInt(document.getElementById("carate150").value) || 0,
       carate_250: parseInt(document.getElementById("carate250").value) || 0,
@@ -58,8 +58,8 @@ document
       baki_250: parseInt(document.getElementById("carate3250").value) || 0,
       baki_350: parseInt(document.getElementById("carate3350").value) || 0,
       deposite_carate_price:
-        parseFloat(document.getElementById("input4").value) || 0,
-      remaining: parseFloat(document.getElementById("input5").value) || 0,
+        parseFloat(parseFloat(document.getElementById("input4").value).toFixed(2)) || 0,
+      remaining: parseFloat(parseFloat(document.getElementById("input5").value).toFixed(2)) || 0,
       added_by: isAdmin,
     };
     var loader = document.getElementById("loader");

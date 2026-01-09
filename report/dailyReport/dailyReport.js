@@ -204,7 +204,7 @@ function populateTable4(data) {
             "carate_amount",
           ].includes(key)
         ) {
-          grandTotals[key] += parseFloat(item[key]) || 0;
+          grandTotals[key] += parseFloat(parseFloat(item[key]).toFixed(2)) || 0;
         }
       }
     });
@@ -486,7 +486,7 @@ function populateTable5(data) {
       } else {
         cell.textContent = item[key];
         if (["cash", "online", "discount", "inCarat", "Amt"].includes(key)) {
-          grandTotals[key] += parseFloat(item[key]) || 0;
+          grandTotals[key] += parseFloat(parseFloat(item[key]).toFixed(2)) || 0;
         }
       }
     });
@@ -582,7 +582,7 @@ function populateTable5(data) {
           campaignName: "SK_fruits_Reciept",
           mobile_no: item.mobile_no,
           userName: item.Customer,
-          paid: parseFloat(item.cash) + parseFloat(item.online),
+          paid: parseFloat(parseFloat(item.cash).toFixed(2)) + parseFloat(parseFloat(item.online).toFixed(2)),
           remaining: item.remaining,
         }),
       })

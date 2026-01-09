@@ -297,7 +297,7 @@ function confirmAndProceed() {
         </script>
         <script>
             function addamount(){
-                document.getElementById('total').value = parseFloat(document.getElementById('total1').value || 0) + parseFloat(document.getElementById('expenses').value)
+                document.getElementById('total').value = parseFloat(document.getElementById('total1').value || 0) + parseFloat(parseFloat(document.getElementById('expenses').value).toFixed(2))
             }
 
 
@@ -311,12 +311,12 @@ function confirmAndProceed() {
                     mark: document.getElementById('mark').value,
                     p_date: document.getElementById('date').value,
                     product_name: document.getElementById('product').value,
-                    purchase_price: parseFloat(document.getElementById('purchase').value),
-                    selling_price: parseFloat(document.getElementById('sale').value),
+                    purchase_price: parseFloat(parseFloat(document.getElementById('purchase').value).toFixed(2)),
+                    selling_price: parseFloat(parseFloat(document.getElementById('sale').value).toFixed(2)),
                     quantity: parseInt(document.getElementById('quantity').value),
                     editable: document.getElementById('toggleTableCheckbox').checked,
                     unit: document.getElementById('unit').value,
-                    price: parseFloat(document.getElementById('purchase').value) * parseInt(document.getElementById('quantity').value)
+                    price: parseFloat(parseFloat(document.getElementById('purchase').value).toFixed(2)) * parseInt(document.getElementById('quantity').value)
                 };
 
                 console.log(formData)

@@ -142,7 +142,7 @@ function populateTable4(data) {
       } else {
         cell.textContent = item[key];
         if (key in grandTotals) {
-          grandTotals[key] += parseFloat(item[key]) || 0;
+          grandTotals[key] += parseFloat(parseFloat(item[key]).toFixed(2)) || 0;
         }
       }
     });
