@@ -2,7 +2,7 @@ function user() {
   console.log("user function executed");
   var loader = document.getElementById("loader");
   loader.style.display = "block";
-  fetch("http://94.136.190.129:3000/userData")
+  fetch("http://localhost:3000/userData")
     .then((response) => {
       if (response.status === 404) {
         loader.style.display = "none";
@@ -122,7 +122,7 @@ function editUser(user) {
 
 function deleteUser(userId) {
   // Perform delete operation based on userId
-  fetch("http://94.136.190.129:3000/userData/deleteUser/" + userId, {
+  fetch("http://localhost:3000/userData/deleteUser/" + userId, {
     method: "DELETE",
   })
     .then((response) => {

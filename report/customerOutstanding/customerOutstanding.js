@@ -36,7 +36,7 @@ function fetchDataAndProcess() {
   var loader = document.getElementById("loader");
   loader.style.display = "block";
 
-  return fetch("http://94.136.190.129:3000/customerOutstandingReport", {
+  return fetch("http://localhost:3000/customerOutstandingReport", {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
@@ -148,7 +148,7 @@ function populateTable4(data) {
     openPopupButton.addEventListener("click", async function () {
       var loader = document.getElementById("loader");
       loader.style.display = "block";
-      await fetch("http://94.136.190.129:3000/sms/remainderMessage", {
+      await fetch("http://localhost:3000/sms/remainderMessage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -202,7 +202,7 @@ function populateTable4(data) {
     secondButton.addEventListener("click", async function () {
       var loader = document.getElementById("loader");
       loader.style.display = "block";
-      await fetch("http://94.136.190.129:3000/whatsapp/remainderMessage", {
+      await fetch("http://localhost:3000/whatsapp/remainderMessage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -348,8 +348,8 @@ async function sendMessagesToAll(type) {
 
       const endpoint =
         type === "sms"
-          ? "http://94.136.190.129:3000/sms/remainderMessage"
-          : "http://94.136.190.129:3000/whatsapp/remainderMessage";
+          ? "http://localhost:3000/sms/remainderMessage"
+          : "http://localhost:3000/whatsapp/remainderMessage";
 
       const response = await fetch(endpoint, {
         method: "POST",
@@ -444,7 +444,7 @@ async function exportToExcel() {
     loader.style.display = "block";
 
     return fetch(
-      "http://94.136.190.129:3000/customerOutstandingReport/generate-pdf",
+      "http://localhost:3000/customerOutstandingReport/generate-pdf",
       {
         method: "POST",
         body: JSON.stringify(data),

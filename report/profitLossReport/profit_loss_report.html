@@ -375,32 +375,32 @@
       document.getElementById("todate").value = todayIST;
       // Fetch data from API and populate Select2 dropdowns
       fetchAndPopulateDropdown(
-        "http://94.136.190.129:3000/vehicleData",
+        "http://localhost:3000/vehicleData",
         "vehicle",
         "vehicle_no"
       );
       fetchAndPopulateDropdown(
-        "http://94.136.190.129:3000/list/Customer",
+        "http://localhost:3000/list/Customer",
         "customer",
         "name"
       );
       fetchAndPopulateDropdown(
-        "http://94.136.190.129:3000/purchaseproductData/bata",
+        "http://localhost:3000/purchaseproductData/bata",
         "bata",
         "bata"
       );
       fetchAndPopulateDropdown(
-        "http://94.136.190.129:3000/fetchData/user",
+        "http://localhost:3000/fetchData/user",
         "user",
         "added_by"
       );
       fetchAndPopulateDropdown(
-        "http://94.136.190.129:3000/routeData",
+        "http://localhost:3000/routeData",
         "route",
         "route_name"
       );
       fetchAndPopulateDropdown(
-        "http://94.136.190.129:3000/purchaseproductData/product",
+        "http://localhost:3000/purchaseproductData/product",
         "product",
         "product_name"
       );
@@ -460,7 +460,7 @@
     function setCustomer() {
       var route = document.getElementById("route").value;
       fetchAndPopulateDropdown(
-        "http://94.136.190.129:3000/fetchData/customerSale/" + route,
+        "http://localhost:3000/fetchData/customerSale/" + route,
         "customer",
         "name"
       );
@@ -472,7 +472,7 @@
       var loader = document.getElementById("loader");
       loader.style.display = "block";
       fetchAndPopulateDropdown(
-        "http://94.136.190.129:3000/purchaseproductData/bata/" + bataId,
+        "http://localhost:3000/purchaseproductData/bata/" + bataId,
         "bata",
         "bata"
       );

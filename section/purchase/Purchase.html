@@ -170,9 +170,9 @@
         <script src="./Purchase.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Supplier', 'supplier', 'name');
-                fetchAndPopulateDropdown('http://94.136.190.129:3000/productData/', 'product', 'name');
-                fetchAndPopulateDropdown('http://94.136.190.129:3000/vehicleData', 'vehicle', 'vehicle_no');
+                fetchAndPopulateDropdown('http://localhost:3000/list/Supplier', 'supplier', 'name');
+                fetchAndPopulateDropdown('http://localhost:3000/productData/', 'product', 'name');
+                fetchAndPopulateDropdown('http://localhost:3000/vehicleData', 'vehicle', 'vehicle_no');
             });
 
 
@@ -196,7 +196,7 @@ function confirmAndProceed() {
             allowNavigation = true; // Mark that navigation is confirmed
 
             // Call the GET API to fetch the IDs
-            fetch(`http://94.136.190.129:3000/fetchData/purchaseProduct/${document.getElementById('no').value}`, {
+            fetch(`http://localhost:3000/fetchData/purchaseProduct/${document.getElementById('no').value}`, {
                 method: 'GET',
                 keepalive: true, // Ensures the request completes
             })
@@ -209,7 +209,7 @@ function confirmAndProceed() {
             .then(data => {
                 // Loop through IDs and call the DELETE API for each
                 const deletePromises = data.map(item => {
-                    return fetch(`http://94.136.190.129:3000/purchaseproductData/deletepurchaseproductId/${item.id}`, {
+                    return fetch(`http://localhost:3000/purchaseproductData/deletepurchaseproductId/${item.id}`, {
                         method: 'DELETE',
                         keepalive: true
                     })
@@ -321,7 +321,7 @@ function confirmAndProceed() {
 
                 console.log(formData)
 
-                fetch('http://94.136.190.129:3000/purchaseproductData/insertPurchaseproduct', {
+                fetch('http://localhost:3000/purchaseproductData/insertPurchaseproduct', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -389,7 +389,7 @@ function confirmAndProceed() {
             function deleteUser(button, userId, price) {
                 var button = event.target;
                 var row = button.parentNode.parentNode;
-                fetch('http://94.136.190.129:3000/purchaseproductData/deletepurchaseproductId/' + userId, {
+                fetch('http://localhost:3000/purchaseproductData/deletepurchaseproductId/' + userId, {
                     method: 'DELETE'
                 })
                     .then(response => {

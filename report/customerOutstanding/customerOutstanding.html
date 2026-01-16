@@ -244,22 +244,22 @@
       // Check if the user is an admin and show/hide the button accordingly
       if (isAdmin) {
         await fetchAndPopulateDropdown(
-          "http://94.136.190.129:3000/routeData",
+          "http://localhost:3000/routeData",
           "route"
         );
         await fetchAndPopulateDropdown(
-          "http://94.136.190.129:3000/list/Customer",
+          "http://localhost:3000/list/Customer",
           "customer"
         );
         await fetchDataAndProcess();
       } else {
         var route = sessionData[0].route;
         await fetchAndPopulateDropdown(
-          "http://94.136.190.129:3000/fetchData/customerSale/" + route,
+          "http://localhost:3000/fetchData/customerSale/" + route,
           "customer"
         );
         await fetchAndPopulateDropdown(
-          "http://94.136.190.129:3000/routeData",
+          "http://localhost:3000/routeData",
           "route",
           (selectedValue = route),
           (readOnly = true)
@@ -363,7 +363,7 @@
     function setCustomer() {
       var route = document.getElementById("route").value;
       fetchAndPopulateDropdown(
-        "http://94.136.190.129:3000/fetchData/customersale/" + route,
+        "http://localhost:3000/fetchData/customersale/" + route,
         "customer"
       );
     }

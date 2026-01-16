@@ -237,15 +237,15 @@
         // Check if the user is an admin and show/hide the button accordingly
         // if (isAdmin) {
         fetchAndPopulateDropdown(
-          "http://94.136.190.129:3000/list/Customer",
+          "http://localhost:3000/list/Customer",
           "customer",
           "name"
         );
-        // fetchAndPopulateDropdown('http://94.136.190.129:3000/routeData', 'route','route_name');
-        //     fetchAndPopulateDropdown('http://94.136.190.129:3000/fetchData/user', 'user', 'added_by');
+        // fetchAndPopulateDropdown('http://localhost:3000/routeData', 'route','route_name');
+        //     fetchAndPopulateDropdown('http://localhost:3000/fetchData/user', 'user', 'added_by');
         // }else{
         //   var route = sessionData[0].route;
-        //   fetchAndPopulateDropdown('http://94.136.190.129:3000/fetchData/customerSale/' +route,'customer');
+        //   fetchAndPopulateDropdown('http://localhost:3000/fetchData/customerSale/' +route,'customer');
         //   $('#customer').attr('required', 'required');
         // }
       });
@@ -317,7 +317,7 @@
 
       // function setCustomer(){
       //     var route = document.getElementById('route').value
-      //     fetchAndPopulateDropdown('http://94.136.190.129:3000/fetchData/customer/' +route  , 'customer','cust_name');
+      //     fetchAndPopulateDropdown('http://localhost:3000/fetchData/customer/' +route  , 'customer','cust_name');
       // }
     </script>
   </body>

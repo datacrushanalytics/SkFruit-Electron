@@ -74,7 +74,7 @@
         });
 
         function checkQRAccess() {
-            fetch('http://94.136.190.129:3000/accessconfigData/checkQrAccess')
+            fetch('http://localhost:3000/accessconfigData/checkQrAccess')
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('loader').style.display = 'none';

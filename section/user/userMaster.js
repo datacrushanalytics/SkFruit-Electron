@@ -12,7 +12,7 @@ document
     });
     console.log(data);
 
-    fetch("http://94.136.190.129:3000/userData/insertUser", {
+    fetch("http://localhost:3000/userData/insertUser", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
