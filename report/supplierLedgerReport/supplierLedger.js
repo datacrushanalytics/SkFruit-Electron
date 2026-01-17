@@ -28,7 +28,7 @@ function fetchDataAndProcess() {
   var loader = document.getElementById("loader");
   loader.style.display = "block";
 
-  return fetch("http://localhost:3000/supplierLedger", {
+  return fetch("http://94.136.190.129:3000/supplierLedger", {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
@@ -188,7 +188,7 @@ function populateTable4(data) {
 function deletePurchase(userId) {
   // Perform delete operation based on userId
   fetch(
-    "http://localhost:3000/purchaseReport/deletePurchaseReport/" + userId,
+    "http://94.136.190.129:3000/purchaseReport/deletePurchaseReport/" + userId,
     {
       method: "DELETE",
     }
@@ -213,7 +213,7 @@ function deletePurchase(userId) {
 
 function deletePayment(userId) {
   // Perform delete operation based on userId
-  fetch("http://localhost:3000/paymentData/deletePayment/" + userId, {
+  fetch("http://94.136.190.129:3000/paymentData/deletePayment/" + userId, {
     method: "DELETE",
   })
     .then((response) => {
@@ -241,7 +241,7 @@ async function exportToExcel() {
     var loader = document.getElementById("loader");
     loader.style.display = "block";
 
-    return fetch("http://localhost:3000/supplierLedger/generate-pdf", {
+    return fetch("http://94.136.190.129:3000/supplierLedger/generate-pdf", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

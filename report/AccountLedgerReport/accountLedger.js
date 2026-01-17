@@ -28,7 +28,7 @@ function fetchDataAndProcess() {
   var loader = document.getElementById("loader");
   loader.style.display = "block";
 
-  return fetch("http://localhost:3000/accountLedger", {
+  return fetch("http://94.136.190.129:3000/accountLedger", {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
@@ -290,7 +290,7 @@ async function exportToExcel() {
     var loader = document.getElementById("loader");
     loader.style.display = "block";
 
-    return fetch("http://localhost:3000/accountLedger/generate-pdf", {
+    return fetch("http://94.136.190.129:3000/accountLedger/generate-pdf", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

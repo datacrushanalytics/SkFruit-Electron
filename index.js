@@ -62,7 +62,7 @@
 //     webPreferences: {
 //       preload: path.join(__dirname, 'preload.js'),
 //       // Allow all operations on the specified IP address
-//       contentSecurityPolicy: "default-src 'self' http://localhost:3000:*",
+//       contentSecurityPolicy: "default-src 'self' http://94.136.190.129:3000:*",
 //     },
 //   });
 

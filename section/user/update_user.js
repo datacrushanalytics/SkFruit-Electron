@@ -13,7 +13,7 @@ async function updateUser() {
     };
 
     const response = await fetch(
-      "http://localhost:3000/userData/updateUser/" +
+      "http://94.136.190.129:3000/userData/updateUser/" +
         parseInt(document.getElementById("id").value),
       {
         method: "PUT",

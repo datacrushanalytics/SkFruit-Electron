@@ -383,16 +383,16 @@
       // Check if the user is an admin and show/hide the button accordingly
       if (isAdmin) {
         fetchAndPopulateDropdown1(
-          "http://localhost:3000/fetchData/user",
+          "http://94.136.190.129:3000/fetchData/user",
           "user",
           "added_by"
         );
         fetchAndPopulateDropdown(
-          "http://localhost:3000/routeData",
+          "http://94.136.190.129:3000/routeData",
           "route"
         );
         fetchAndPopulateDropdown(
-          "http://localhost:3000/list/Customer",
+          "http://94.136.190.129:3000/list/Customer",
           "customer"
         );
 
@@ -400,18 +400,18 @@
       } else {
         var route = sessionData[0].route;
         fetchAndPopulateDropdown(
-          "http://localhost:3000/fetchData/customer/" + route,
+          "http://94.136.190.129:3000/fetchData/customer/" + route,
           "customer",
           (readOnly = false)
         );
         fetchAndPopulateDropdown(
-          "http://localhost:3000/routeData",
+          "http://94.136.190.129:3000/routeData",
           "route",
           (selectedValue = route),
           (readOnly = true)
         );
         fetchAndPopulateDropdown(
-          "http://localhost:3000/fetchData/user",
+          "http://94.136.190.129:3000/fetchData/user",
           "user",
           (selectedValue = sessionData[0].name),
           (readOnly = true)
@@ -560,10 +560,10 @@
       // var route = document.getElementById('route').value
       var selectedValues = $("#route").val();
       console.log("routes", selectedValues);
-      // fetchAndPopulateDropdown('http://localhost:3000/fetchData/customersaleKhatawani/' +route  , 'customer','name');
+      // fetchAndPopulateDropdown('http://94.136.190.129:3000/fetchData/customersaleKhatawani/' +route  , 'customer','name');
 
       return fetch(
-        "http://localhost:3000/fetchData/customersaleKhatawani",
+        "http://94.136.190.129:3000/fetchData/customersaleKhatawani",
         {
           method: "POST",
           body: JSON.stringify({

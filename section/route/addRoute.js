@@ -12,7 +12,7 @@ document
     var loader = document.getElementById("loader");
     loader.style.display = "block";
 
-    fetch("http://localhost:3000/routeData/insertroute", {
+    fetch("http://94.136.190.129:3000/routeData/insertroute", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

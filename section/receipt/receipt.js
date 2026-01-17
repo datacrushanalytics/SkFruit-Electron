@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("date").readOnly = true; // Hide the button for non-admin users
   }
 
-  // fetch("http://localhost:3000/fetchReceiptid")
+  // fetch("http://94.136.190.129:3000/fetchReceiptid")
   //   .then((response) => {
   //     if (!response.ok) {
   //       throw new Error("Network response was not ok");
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const addedBy = sessionData[0]?.name || "Unknown"; // Or wherever you capture user_id
 
-  fetch("http://localhost:3000/fetchReceiptid/generate-bill-id", {
+  fetch("http://94.136.190.129:3000/fetchReceiptid/generate-bill-id", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -102,7 +102,7 @@ document
     };
     var loader = document.getElementById("loader");
     loader.style.display = "block";
-    await fetch("http://localhost:3000/receiptData/insertReceipt", {
+    await fetch("http://94.136.190.129:3000/receiptData/insertReceipt", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -134,7 +134,7 @@ function openModal(item) {
   var loader = document.getElementById("loader");
   loader.style.display = "block";
 
-  fetch("http://localhost:3000/receiptReport/" + item.receipt_id)
+  fetch("http://94.136.190.129:3000/receiptReport/" + item.receipt_id)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");

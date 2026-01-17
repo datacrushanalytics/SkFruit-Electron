@@ -35,9 +35,9 @@ function fetchDataAndProcess() {
 
   const isChecked = document.getElementById("toggleTableCheckbox").checked;
   if (isChecked) {
-    var url = "http://localhost:3000/profitLossReport/undetail";
+    var url = "http://94.136.190.129:3000/profitLossReport/undetail";
   } else {
-    var url = "http://localhost:3000/profitLossReport/detail";
+    var url = "http://94.136.190.129:3000/profitLossReport/detail";
   }
 
   return fetch(url, {
@@ -436,7 +436,7 @@ async function exportToExcel() {
     var loader = document.getElementById("loader");
     loader.style.display = "block";
 
-    return fetch("http://localhost:3000/profitLossReport/generate-pdf", {
+    return fetch("http://94.136.190.129:3000/profitLossReport/generate-pdf", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

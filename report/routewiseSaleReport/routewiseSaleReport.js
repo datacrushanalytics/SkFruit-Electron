@@ -38,13 +38,13 @@ function fetchDataAndProcess() {
 
   const isChecked = document.getElementById("toggleTableCheckbox").checked;
   if (isChecked) {
-    var url = "http://localhost:3000/routewiseSaleReport/undetail";
+    var url = "http://94.136.190.129:3000/routewiseSaleReport/undetail";
     const element = document.querySelectorAll(".hide");
     const element1 = document.querySelectorAll(".toggle-hide");
     toggleVisibility(element, false);
     toggleVisibility(element1, true);
   } else {
-    var url = "http://localhost:3000/routewiseSaleReport/detail";
+    var url = "http://94.136.190.129:3000/routewiseSaleReport/detail";
     const element = document.querySelectorAll(".toggle-hide");
     const element1 = document.querySelectorAll(".hide");
     toggleVisibility(element, false);
@@ -326,7 +326,7 @@ function populateTable5(data) {
 }
 
 function deleteRecord(bill_no) {
-  fetch(`http://localhost:3000/fetchData/saleProduct/${bill_no}`, {
+  fetch(`http://94.136.190.129:3000/fetchData/saleProduct/${bill_no}`, {
     method: "GET",
   })
     .then((response) => {
@@ -341,7 +341,7 @@ function deleteRecord(bill_no) {
         console.log(item.id); // Fetch and log the id from each item
 
         fetch(
-          `http://localhost:3000/saleproductData/deletesaleproduct/${item.id}`,
+          `http://94.136.190.129:3000/saleproductData/deletesaleproduct/${item.id}`,
           {
             method: "DELETE",
           }
@@ -365,7 +365,7 @@ function deleteRecord(bill_no) {
     });
 
   // Perform delete operation based on bill_no
-  fetch(`http://localhost:3000/saleData/deletesaleId/${bill_no}`, {
+  fetch(`http://94.136.190.129:3000/saleData/deletesaleId/${bill_no}`, {
     method: "DELETE",
   })
     .then((response) => {
@@ -393,7 +393,7 @@ function openPopup(item) {
   // var iframe = document.getElementById('popupIframe');
   // iframe.src = './billDetails.html?bill_no=' + encodeURIComponent(item.bill_no);
 
-  fetch("http://localhost:3000/saleproductData/" + String(item.bill_no))
+  fetch("http://94.136.190.129:3000/saleproductData/" + String(item.bill_no))
     .then((response) => response.json())
     .then((data) => {
       populatePopupTable(data);
@@ -445,7 +445,7 @@ function openModal(item) {
   // Your code to open the modal with the data from 'item'
   console.log("Opening modal for item:", item.bill_no);
 
-  fetch("http://localhost:3000/bill/" + item.bill_no)
+  fetch("http://94.136.190.129:3000/bill/" + item.bill_no)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -1028,7 +1028,7 @@ async function exportToExcel() {
     loader.style.display = "block";
 
     return fetch(
-      "http://localhost:3000/routewiseSaleReport/generate-pdf",
+      "http://94.136.190.129:3000/routewiseSaleReport/generate-pdf",
       {
         method: "POST",
         body: JSON.stringify(data),

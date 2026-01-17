@@ -305,32 +305,32 @@
       // Check if the user is an admin and show/hide the button accordingly
       if (isAdmin) {
         fetchAndPopulateDropdown(
-          "http://localhost:3000/list/Customer",
+          "http://94.136.190.129:3000/list/Customer",
           "customer"
         );
         fetchAndPopulateDropdown(
-          "http://localhost:3000/routeData",
+          "http://94.136.190.129:3000/routeData",
           "route"
         );
       } else {
         var route = sessionData[0].route;
         fetchAndPopulateDropdown(
-          "http://localhost:3000/fetchData/customerSale/" + route,
+          "http://94.136.190.129:3000/fetchData/customerSale/" + route,
           "customer"
         );
         fetchAndPopulateDropdown(
-          "http://localhost:3000/routeData",
+          "http://94.136.190.129:3000/routeData",
           "route",
           (selectedValue = route),
           (readOnly = true)
         );
         fetchAndPopulateDropdown(
-          "http://localhost:3000/fetchData/user",
+          "http://94.136.190.129:3000/fetchData/user",
           "user",
           (selectedValue = sessionData[0].name),
           (readOnly = true)
         );
-        //   fetchAndPopulateDropdown('http://localhost:3000/fetchData/customer/' +route  , 'customer');
+        //   fetchAndPopulateDropdown('http://94.136.190.129:3000/fetchData/customer/' +route  , 'customer');
         $("#customer").attr("required", "required");
       }
     });
@@ -417,7 +417,7 @@
     function setCustomer() {
       var route = document.getElementById("route").value;
       fetchAndPopulateDropdown(
-        "http://localhost:3000/fetchData/customersale/" + route,
+        "http://94.136.190.129:3000/fetchData/customersale/" + route,
         "customer"
       );
     }

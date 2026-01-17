@@ -26,7 +26,7 @@ async function fetchDataAndProcess() {
   var loader = document.getElementById("loader");
   loader.style.display = "block";
   try {
-    const response = await fetch("http://localhost:3000/ledgerReport", {
+    const response = await fetch("http://94.136.190.129:3000/ledgerReport", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -185,7 +185,7 @@ function populateTable4(data) {
   if (document.getElementById("customer").value !== "") {
     console.log("Customer selected");
     fetch(
-      "http://localhost:3000/carateuserData/" +
+      "http://94.136.190.129:3000/carateuserData/" +
         document.getElementById("customer").value
     )
       .then((response) => {
@@ -225,7 +225,7 @@ async function exportToExcel() {
     var loader = document.getElementById("loader");
     loader.style.display = "block";
 
-    return fetch("http://localhost:3000/ledgerReport/generate-pdf", {
+    return fetch("http://94.136.190.129:3000/ledgerReport/generate-pdf", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

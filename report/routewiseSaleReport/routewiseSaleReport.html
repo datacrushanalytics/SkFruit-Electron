@@ -445,32 +445,32 @@
       // Check if the user is an admin and show/hide the button accordingly
       if (isAdmin) {
         fetchAndPopulateDropdown(
-          "http://localhost:3000/list/Customer",
+          "http://94.136.190.129:3000/list/Customer",
           "customer",
           "name"
         );
         fetchAndPopulateDropdown(
-          "http://localhost:3000/routeData",
+          "http://94.136.190.129:3000/routeData",
           "route",
           "route_name"
         );
         fetchAndPopulateDropdown(
-          "http://localhost:3000/fetchData/user",
+          "http://94.136.190.129:3000/fetchData/user",
           "user",
           "added_by"
         );
         fetchAndPopulateDropdown(
-          "http://localhost:3000/purchaseproductData/product",
+          "http://94.136.190.129:3000/purchaseproductData/product",
           "product",
           "product_name"
         );
         fetchAndPopulateDropdown(
-          "http://localhost:3000/purchaseproductData/bata",
+          "http://94.136.190.129:3000/purchaseproductData/bata",
           "bata",
           "bata"
         );
         fetchAndPopulateDropdown(
-          "http://localhost:3000/vehicleData",
+          "http://94.136.190.129:3000/vehicleData",
           "vehicle",
           "vehicle_no"
         );
@@ -478,40 +478,40 @@
         var route = sessionData[0].route;
         var user = sessionData[0].name;
         fetchAndPopulateDropdown(
-          "http://localhost:3000/fetchData/customer/" + route,
+          "http://94.136.190.129:3000/fetchData/customer/" + route,
           "customer",
           "cust_name"
         );
         fetchAndPopulateDropdown(
-          "http://localhost:3000/routeData",
+          "http://94.136.190.129:3000/routeData",
           "route",
           "route_name",
           (selectedValue = route),
           (readOnly = true)
         );
         fetchAndPopulateDropdown(
-          "http://localhost:3000/fetchData/user",
+          "http://94.136.190.129:3000/fetchData/user",
           "user",
           "added_by",
           (selectedValue = user),
           (readOnly = true)
         );
         fetchAndPopulateDropdown(
-          "http://localhost:3000/purchaseproductData/product",
+          "http://94.136.190.129:3000/purchaseproductData/product",
           "product",
           "product_name",
           (selectedValue = null),
           (readOnly = true)
         );
         fetchAndPopulateDropdown(
-          "http://localhost:3000/purchaseproductData/bata",
+          "http://94.136.190.129:3000/purchaseproductData/bata",
           "bata",
           "bata",
           (selectedValue = null),
           (readOnly = true)
         );
         fetchAndPopulateDropdown(
-          "http://localhost:3000/vehicleData",
+          "http://94.136.190.129:3000/vehicleData",
           "vehicle",
           "vehicle_no",
           (selectedValue = null),
@@ -616,7 +616,7 @@
     function setCustomer() {
       var route = document.getElementById("route").value;
       fetchAndPopulateDropdown(
-        "http://localhost:3000/fetchData/customerSale/" + route,
+        "http://94.136.190.129:3000/fetchData/customerSale/" + route,
         "customer",
         "name"
       );
@@ -628,7 +628,7 @@
       var loader = document.getElementById("loader");
       loader.style.display = "block";
       fetchAndPopulateDropdown(
-        "http://localhost:3000/purchaseproductData/bata/" + bataId,
+        "http://94.136.190.129:3000/purchaseproductData/bata/" + bataId,
         "bata",
         "bata"
       );

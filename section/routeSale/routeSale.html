@@ -293,8 +293,8 @@
   <script>
     document.addEventListener("DOMContentLoaded", async function () {
       // Fetch data from API and populate Select2 dropdowns
-      // fetchAndPopulateDropdown('http://localhost:3000/list/Customer', 'customer');
-      fetchAndPopulateDropdown("http://localhost:3000/routeData", "route");
+      // fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Customer', 'customer');
+      fetchAndPopulateDropdown("http://94.136.190.129:3000/routeData", "route");
 
       function setDefaultDate() {
         var today = new Date();
@@ -313,14 +313,14 @@
       // Check if the user is an admin and show/hide the button accordingly
       if (isAdmin) {
         fetchAndPopulateDropdown(
-          "http://localhost:3000/routeData",
+          "http://94.136.190.129:3000/routeData",
           "route",
           "route_name"
         );
       } else {
         var route = sessionData[0].route;
         await fetchAndPopulateDropdown(
-          "http://localhost:3000/routeData",
+          "http://94.136.190.129:3000/routeData",
           "route",
           "route_name",
           (selectedValue = route),
