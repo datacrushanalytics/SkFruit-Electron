@@ -64,6 +64,9 @@ function fetchDataAndProcess(data = null) {
 }
 
 function populateTable4(data) {
+    // Get user session data edit and verify for super only
+  var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+  var isSuperAdmin = sessionData && sessionData[0].status === 'Super';
   var tbody = document.getElementById("tableBody");
   tbody.innerHTML = ""; // Clear existing rows
   var columnsToDisplay = [
@@ -116,24 +119,30 @@ function populateTable4(data) {
         if (item[key] == "Pending") {
           //let buttonContainer = document.getElementById('buttonContainer');
 
-          var buttonContainer = document.createElement("div");
+     
+
+
+
+
+          // Only show Edit and Verify buttons for Super Admin
+    if (isSuperAdmin) {
+           var buttonContainer = document.createElement("div");
           buttonContainer.className = "button-container";
+      // Edit button
+      let button = document.createElement("button");
+      button.textContent = "Edit";
+      button.className = "button";
+      button.style.backgroundColor = "#26a653";
+      button.onclick = function () {
+        localStorage.removeItem("saleData");
+        console.log("Editing Sale: " + JSON.stringify(item));
+        localStorage.setItem("saleData", JSON.stringify(item));
+        window.location.href = "./validateSale.html";
+      };
+      buttonContainer.appendChild(button);
+      
 
-          let button = document.createElement("button");
-          button.textContent = "Edit";
-          button.className = "button";
-          button.style.backgroundColor = "#26a653";
-          button.onclick = function () {
-            localStorage.removeItem("saleData");
-            console.log("Editing Sale: " + JSON.stringify(item));
-            localStorage.setItem("saleData", JSON.stringify(item));
-            window.location.href = "./validateSale.html";
-          };
-
-          buttonContainer.appendChild(button);
-          //cell.appendChild(button);
-
-          // Create the second button
+          // Create the second button  Verify button
           let button2 = document.createElement("button");
           button2.textContent = "Verify"; // Change this to the desidarkgrey button text
           button2.className = "button";
@@ -188,7 +197,12 @@ function populateTable4(data) {
 
           buttonContainer.appendChild(button2);
           cell.appendChild(buttonContainer);
-        } else {
+        } else{
+          // For non-Super Admin users, just show "Pending" text
+            cell.textContent = item[key];
+        } }
+        
+        else {
           cell.textContent = item[key];
           row.style.backgroundColor = "#90EE90";
         }
@@ -338,7 +352,9 @@ function populateTable4(data) {
 
     // Append the button container to the cell
     buttonCell.appendChild(buttonContainer);
-  });
+  }
+
+);
   // Add row for grand total
   var totalRow = tbody.insertRow();
   totalRow.insertCell(); // Add empty cell for counter column
@@ -357,6 +373,10 @@ function populateTable4(data) {
 }
 
 function populateTable5(data) {
+  // Get user session data
+  var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+  var isSuperAdmin = sessionData && sessionData[0].status === 'Super';
+
   var tbody = document.getElementById("tableBody1");
   tbody.innerHTML = ""; // Clear existing rows
   var columnsToDisplay = [
@@ -409,7 +429,7 @@ function populateTable5(data) {
 
           var buttonContainer = document.createElement("div");
           buttonContainer.className = "button-container";
-
+          if(isSuperAdmin){
           let button1 = document.createElement("button");
           button1.textContent = "Edit";
           button1.style.backgroundColor = "#26a653";
@@ -479,7 +499,12 @@ function populateTable5(data) {
           buttonContainer.appendChild(button2);
 
           cell.appendChild(buttonContainer);
-        } else {
+        }else{
+          // For non-Super Admin users, just show "Pending" text
+    cell.textContent = item[key];
+        }
+        
+      }else {
           cell.textContent = item[key];
           row.style.backgroundColor = "#90EE90";
         }
@@ -619,6 +644,7 @@ function populateTable5(data) {
 
     // Append the button container to the cell
     buttonCell.appendChild(buttonContainer);
+  
   });
   // Add row for grand total
   var totalRow = tbody.insertRow();
