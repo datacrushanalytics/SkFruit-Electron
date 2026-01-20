@@ -188,6 +188,10 @@ function openModal(item) {
           label: "पत्ता:   " + data.reports[0].address,
           value: "Time:   " + convertToIST(data.reports[0].created_at),
         },
+         {
+    label: "संदर्भ:   " + (data.reports[0].note || ""),
+    value: "",
+  },
       ];
       billDetails.forEach(function (detail) {
         var row = document.createElement("tr");

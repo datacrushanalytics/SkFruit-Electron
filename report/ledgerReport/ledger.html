@@ -304,13 +304,15 @@
       // Set the value of the date inputs to today's date in IST
       document.getElementById("fromdate").value = todayIST;
       document.getElementById("todate").value = todayIST;
-      // Fetch data from API and populate Select2 dropdowns
+      
+      // Get session data for access control
       var sessionData = JSON.parse(localStorage.getItem("sessionData"));
-      // Check if session data exists and if the user is an admin
       var isAdmin = sessionData && sessionData[0].usertype === "Admin";
+      var isSuper = sessionData && sessionData[0].status === "Super";
+      
       // Check if the user is an admin and show/hide the button accordingly
-      if (isAdmin) {
-        fetchAndPopulateDropdown(
+      if (isAdmin || isSuper) {
+        fetchAndPopulateDropdownWithAllRoute(
           "http://94.136.190.129:3000/routeData",
           "route",
           "route_name"
@@ -414,6 +416,61 @@
       if (readOnly) {
         dropdown.prop("disabled", true);
       }
+    }
+
+    async function fetchAndPopulateDropdownWithAllRoute(apiUrl, dropdownId, field) {
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        populateDropdownWithSelect2AndAllRoute(data, dropdownId, field);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+
+    function populateDropdownWithSelect2AndAllRoute(data, dropdownId, field) {
+      var dropdown = $("#" + dropdownId);
+      dropdown.empty();
+
+      // Add "All Route" option first
+      dropdown.append(
+        $("<option></option>")
+          .attr("value", "*")
+          .text("All Route")
+      );
+
+      // Add placeholder option
+      dropdown.append(
+        $("<option></option>")
+          .attr("value", "")
+          .text("Select " + dropdownId + " type")
+          .prop("disabled", true)
+          .prop("selected", true)
+      );
+
+      // Populate dropdown with API data
+      data.forEach(function (item) {
+        dropdown.append(
+          $("<option></option>").attr("value", item[field]).text(item[field])
+        );
+      });
+
+      // Initialize Select2
+      dropdown.select2({
+        placeholder: "Select components",
+        closeOnSelect: false,
+        allowClear: true,
+        templateResult: function (data) {
+          if (!data.id) {
+            return data.text;
+          }
+          var $element = $("<span>" + data.text + "</span>");
+          return $element;
+        },
+      });
     }
 
     $(document).on("select2:open", function (e) {

@@ -305,6 +305,15 @@
       // Clear existing options
       dropdown.empty();
 
+// Add "All Route" option for route dropdown
+  if (dropdownId == "route") {
+    dropdown.append(
+      $("<option></option>")
+        .attr("value", "*")
+        .text("All Route")
+    );
+  }
+
       // Add placeholder option
       if (dropdownId == "customer") {
         dropdown.append(

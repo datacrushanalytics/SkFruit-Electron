@@ -373,6 +373,12 @@
       // Set the value of the date inputs to today's date in IST
       document.getElementById("fromdate").value = todayIST;
       document.getElementById("todate").value = todayIST;
+      
+      // Get session data for access control
+      var sessionData = JSON.parse(localStorage.getItem("sessionData"));
+      var isAdmin = sessionData && sessionData[0].usertype === "Admin";
+      var isSuper = sessionData && sessionData[0].status === "Super";
+      
       // Fetch data from API and populate Select2 dropdowns
       fetchAndPopulateDropdown(
         "http://94.136.190.129:3000/vehicleData",
@@ -394,11 +400,27 @@
         "user",
         "added_by"
       );
-      fetchAndPopulateDropdown(
-        "http://94.136.190.129:3000/routeData",
-        "route",
-        "route_name"
-      );
+      
+      // Route dropdown with access control
+      if (isAdmin || isSuper) {
+        fetchAndPopulateDropdownWithAllRoute(
+          "http://94.136.190.129:3000/routeData",
+          "route",
+          "route_name"
+        );
+      } else {
+        var userRoute = sessionData[0].route;
+        fetchAndPopulateDropdown(
+          "http://94.136.190.129:3000/routeData",
+          "route",
+          "route_name"
+        );
+        // Set user's route and make read-only
+        setTimeout(() => {
+          $("#route").val(userRoute).trigger("change").prop("disabled", true);
+        }, 500);
+      }
+      
       fetchAndPopulateDropdown(
         "http://94.136.190.129:3000/purchaseproductData/product",
         "product",
@@ -427,6 +449,56 @@
       var dropdown = $("#" + dropdownId);
       // Clear existing options
       dropdown.empty();
+
+      // Add placeholder option
+      dropdown.append(
+        $("<option></option>")
+          .attr("value", "")
+          .text("Select " + dropdownId + " type")
+          .prop("disabled", true)
+          .prop("selected", true)
+      );
+
+      // Populate dropdown with API data
+      data.forEach(function (item) {
+        dropdown.append(
+          $("<option></option>").attr("value", item[field]).text(item[field])
+        );
+      });
+
+      // Initialize Select2
+      dropdown.select2({
+        placeholder: "Select " + dropdownId + " type",
+        allowClear: true,
+      });
+    }
+
+    function fetchAndPopulateDropdownWithAllRoute(apiUrl, dropdownId, field) {
+      fetch(apiUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          populateDropdownWithSelect2AndAllRoute(data, dropdownId, field);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+
+    function populateDropdownWithSelect2AndAllRoute(data, dropdownId, field) {
+      var dropdown = $("#" + dropdownId);
+      dropdown.empty();
+
+      // Add "All Route" option first
+      dropdown.append(
+        $("<option></option>")
+          .attr("value", "*")
+          .text("All Route")
+      );
 
       // Add placeholder option
       dropdown.append(
