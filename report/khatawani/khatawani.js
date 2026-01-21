@@ -127,6 +127,10 @@ function populateTable4(data) {
     var row = tbody.insertRow();
     var cell = row.insertCell();
     cell.textContent = counter++;
+    
+    // Check if this row is a receipt
+    const isReceipt = item.summary && item.summary.toLowerCase().includes('receipt');
+    
     columnsToDisplay.forEach(function (key) {
       var cell = row.insertCell();
       if (key === "date") {
@@ -139,9 +143,13 @@ function populateTable4(data) {
           timeZone: "Asia/Kolkata",
         };
         cell.textContent = utcDate.toLocaleString("en-IN", options);
+      } else if (key === "total_balance" && isReceipt) {
+        // Hide Total Kalam data for receipt rows only
+        cell.textContent = "-";
+        cell.style.color = "#999";
       } else {
         cell.textContent = item[key];
-        if (key in grandTotals) {
+        if (key in grandTotals && !isReceipt) {
           grandTotals[key] += parseFloat(parseFloat(item[key]).toFixed(2)) || 0;
         }
       }
