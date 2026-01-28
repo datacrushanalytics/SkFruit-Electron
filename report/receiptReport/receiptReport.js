@@ -322,6 +322,14 @@ function openModal(item) {
           value: "Time:   " + convertToIST(data.reports[0].created_at),
         },
       ];
+      
+      // Add note if it exists
+      if (data.reports[0].note && data.reports[0].note.trim() !== '') {
+        billDetails.push({
+          label: "संदर्भ:   " + data.reports[0].note,
+          value: "",
+        });
+      }
       billDetails.forEach(function (detail) {
         var row = document.createElement("tr");
         row.innerHTML = `

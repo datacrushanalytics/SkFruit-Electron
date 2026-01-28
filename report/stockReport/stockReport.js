@@ -72,6 +72,7 @@ function populateTable4(data) {
   tbody.innerHTML = ""; // Clear existing rows
   var columnsToDisplay = [
     "purchase_id",
+    "Date",
     "gadi_number",
     "supplier_name",
     "bata",
@@ -156,6 +157,7 @@ async function exportToPdf() {
     const columns = [
       "S.No",
       "Purchase ID",
+      "Date",
       "Gadi Number",
       "Supplier Name",
       "Bata",
@@ -174,6 +176,7 @@ async function exportToPdf() {
       const row = [
         counter++,
         item.purchase_id,
+        item.date ? new Date(item.date).toLocaleDateString('en-IN') : '',
         item.gadi_number,
         item.supplier_name,
         item.bata,
