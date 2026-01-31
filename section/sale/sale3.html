@@ -369,19 +369,18 @@ fetch('http://94.136.190.129:3000/fetchSaleid/generate-bill-id', {
     // Check if the user is an admin and show/hide the button accordingly
     if (isAdmin) {
         fetchAndPopulateDropdown('http://94.136.190.129:3000/mobile', 'number', 'mobile_no');
-        fetchAndPopulateDropdown('http://94.136.190.129:3000/routeData', 'Route', 'route_name');
+        fetchUserBasedRoutes('Route');
         fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Customer', 'grahk', 'name');
     } else {
         var route = sessionData[0].route;   
-        if(route == "All root"){
+        if(route == "ALL"){
           fetchAndPopulateDropdown('http://94.136.190.129:3000/mobile', 'number', 'mobile_no');
           fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Customer', 'grahk', 'name');
-
         }else{
           fetchAndPopulateDropdown('http://94.136.190.129:3000/fetchData/customerSale/' + route, 'grahk', 'name');
-        fetchAndPopulateDropdown('http://94.136.190.129:3000/fetchData/customerSale/' + route, 'number', 'mobile_no');
+          fetchAndPopulateDropdown('http://94.136.190.129:3000/fetchData/customerSale/' + route, 'number', 'mobile_no');
         }
-        fetchAndPopulateDropdown('http://94.136.190.129:3000/routeData', 'Route', 'route_name', selectedValue = route, readOnly = true);
+        fetchUserBasedRoutes('Route');
     }
 
     fetchAndPopulateDropdown('http://94.136.190.129:3000/purchaseproductData/product', 'product', 'product_name');
@@ -389,6 +388,71 @@ fetch('http://94.136.190.129:3000/fetchSaleid/generate-bill-id', {
     fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Bank Account', 'onlineAcc', 'name');
 
 });
+
+async function fetchUserBasedRoutes(dropdownId, includeAllOption = true) {
+  try {
+    const sessionData = JSON.parse(localStorage.getItem("sessionData"));
+    const userId = sessionData[0].id;
+    
+    const response = await fetch(`http://94.136.190.129:3000/routeData/user-routes/${userId}`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const routes = await response.json();
+    
+    var dropdown = $("#" + dropdownId);
+    dropdown.empty();
+    
+    // Add placeholder option
+    dropdown.append(
+      $("<option></option>")
+        .attr("value", "")
+        .text("Select " + dropdownId + " type")
+        .prop("disabled", true)
+        .prop("selected", true)
+    );
+    
+    // Add "All Route" option if user has ALL access
+    if (sessionData[0].route === 'ALL' && includeAllOption) {
+      dropdown.append(
+        $("<option></option>")
+          .attr("value", "*")
+          .text("All Route")
+      );
+    }
+    
+    // Populate dropdown with user's accessible routes
+    routes.forEach(function (route) {
+      dropdown.append(
+        $("<option></option>")
+          .attr("value", route.route_name)
+          .text(route.route_name)
+      );
+    });
+    
+    // Initialize Select2
+    dropdown.select2({
+      placeholder: "Select components",
+      closeOnSelect: false,
+      allowClear: true,
+      templateResult: function (data) {
+        if (!data.id) {
+          return data.text;
+        }
+        var $element = $("<span>" + data.text + "</span>");
+        return $element;
+      },
+    });
+    
+    // If user doesn't have ALL access, set their route as selected and readonly
+    if (sessionData[0].route !== 'ALL') {
+      dropdown.val(sessionData[0].route).trigger("change");
+      dropdown.prop("disabled", true);
+    }
+  } catch (error) {
+    console.error("Error loading user routes:", error);
+  }
+}
 
 function fetchAndPopulateDropdown(apiUrl, dropdownId, field, selectedValue = null, readOnly = false) {
     fetch(apiUrl)

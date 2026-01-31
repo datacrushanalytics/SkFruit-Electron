@@ -243,6 +243,11 @@
             // Add placeholder option
             dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
 
+            // Add "All Route" option for route dropdown
+            if (dropdownId === 'route') {
+                dropdown.append($('<option></option>').attr('value', 'ALL').text('All Route'));
+            }
+
             // Populate dropdown with API data
             data.forEach(function (item) {
                 dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));

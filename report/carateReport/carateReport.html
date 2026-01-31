@@ -310,22 +310,14 @@
           "http://94.136.190.129:3000/list/Customer",
           "customer"
         );
-        fetchAndPopulateDropdownWithAllRoute(
-          "http://94.136.190.129:3000/routeData",
-          "route"
-        );
+        fetchUserBasedRoutes("route");
       } else {
         var route = sessionData[0].route;
         fetchAndPopulateDropdown(
           "http://94.136.190.129:3000/fetchData/customerSale/" + route,
           "customer"
         );
-        fetchAndPopulateDropdown(
-          "http://94.136.190.129:3000/routeData",
-          "route",
-          (selectedValue = route),
-          (readOnly = true)
-        );
+        fetchUserBasedRoutes("route");
         fetchAndPopulateDropdown(
           "http://94.136.190.129:3000/fetchData/user",
           "user",
@@ -409,61 +401,55 @@
       }
     }
 
-    async function fetchAndPopulateDropdownWithAllRoute(apiUrl, dropdownId) {
+
+
+    async function fetchUserBasedRoutes(dropdownId, includeAllOption = true) {
       try {
-        const response = await fetch(apiUrl);
+        const sessionData = JSON.parse(localStorage.getItem("sessionData"));
+        const userId = sessionData[0].id;
+        
+        const response = await fetch(`http://94.136.190.129:3000/routeData/user-routes/${userId}`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        const data = await response.json();
-        populateDropdownWithSelect2AndAllRoute(data, dropdownId);
+        const routes = await response.json();
+        
+        var dropdown = $("#" + dropdownId);
+        dropdown.empty();
+        
+        // Add "All Route" option if user has ALL access
+        if (sessionData[0].route === 'ALL' && includeAllOption) {
+          dropdown.append(
+            $("<option></option>")
+              .attr("value", "*")
+              .text("All Route")
+          );
+        }
+        
+        // Populate dropdown with user's accessible routes
+        routes.forEach(function (route) {
+          dropdown.append(
+            $("<option></option>")
+              .attr("value", route.route_name)
+              .text(route.route_name)
+          );
+        });
+        
+        // Initialize Select2 for multi-select
+        dropdown.select2({
+          placeholder: "Select routes",
+          closeOnSelect: false,
+          allowClear: true
+        });
+        
+        // If user doesn't have ALL access, set their route as selected and readonly
+        if (sessionData[0].route !== 'ALL') {
+          dropdown.val([sessionData[0].route]).trigger("change");
+          dropdown.prop("disabled", true);
+        }
       } catch (error) {
-        console.error("Error:", error);
+        console.error("Error loading user routes:", error);
       }
-    }
-
-    function populateDropdownWithSelect2AndAllRoute(data, dropdownId) {
-      var dropdown = $("#" + dropdownId);
-      dropdown.empty();
-
-      // Add "All Route" option first
-      dropdown.append(
-        $("<option></option>")
-          .attr("value", "*")
-          .text("All Route")
-      );
-
-      // Add placeholder option
-      dropdown.append(
-        $("<option></option>")
-          .attr("value", "")
-          .text("Select " + dropdownId + " type")
-          .prop("disabled", true)
-          .prop("selected", true)
-      );
-
-      // Populate dropdown with API data
-      data.forEach(function (item) {
-        dropdown.append(
-          $("<option></option>")
-            .attr("value", item.name || item.route_name || item.added_by)
-            .text(item.name || item.route_name || item.added_by)
-        );
-      });
-
-      // Initialize Select2
-      dropdown.select2({
-        placeholder: "Select components",
-        closeOnSelect: false,
-        allowClear: true,
-        templateResult: function (data) {
-          if (!data.id) {
-            return data.text;
-          }
-          var $element = $("<span>" + data.text + "</span>");
-          return $element;
-        },
-      });
     }
 
     $(document).on("select2:open", function (e) {

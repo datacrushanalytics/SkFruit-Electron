@@ -382,19 +382,17 @@
       var isAdmin = sessionData && sessionData[0].usertype === "Admin";
       // Check if the user is an admin and show/hide the button accordingly
       if (isAdmin) {
+        // For admin users, preselect current user and make it readonly
         fetchAndPopulateDropdown1(
           "http://94.136.190.129:3000/fetchData/user",
           "user",
-          "added_by"
+          "added_by",
+          sessionData[0].name,
+          true
         );
-        fetchAndPopulateDropdown(
-          "http://94.136.190.129:3000/routeData",
-          "route"
-        );
-        fetchAndPopulateDropdown(
-          "http://94.136.190.129:3000/list/Customer",
-          "customer"
-        );
+        fetchUserBasedRoutes("route");
+        // For ALL route users, don't load customers initially - let setCustomer() handle it
+        // This ensures customers are loaded based on route selection
 
         // document.getElementById('user').style.display = none
       } else {
@@ -404,20 +402,70 @@
           "customer",
           (readOnly = false)
         );
-        fetchAndPopulateDropdown(
-          "http://94.136.190.129:3000/routeData",
-          "route",
-          (selectedValue = route),
-          (readOnly = true)
-        );
-        fetchAndPopulateDropdown(
+        fetchUserBasedRoutes("route");
+        fetchAndPopulateDropdown1(
           "http://94.136.190.129:3000/fetchData/user",
           "user",
-          (selectedValue = sessionData[0].name),
-          (readOnly = true)
+          "added_by",
+          sessionData[0].name,
+          true
         );
       }
     });
+
+    async function fetchUserBasedRoutes(dropdownId, includeAllOption = true) {
+      try {
+        const sessionData = JSON.parse(localStorage.getItem("sessionData"));
+        const userId = sessionData[0].id;
+        
+        const response = await fetch(`http://94.136.190.129:3000/routeData/user-routes/${userId}`);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const routes = await response.json();
+        
+        var dropdown = $("#" + dropdownId);
+        dropdown.empty();
+        
+        // Add "All Route" option if user has ALL access
+        if (sessionData[0].route === 'ALL' && includeAllOption) {
+          dropdown.append(
+            $("<option></option>")
+              .attr("value", "*")
+              .text("All Route")
+          );
+        }
+        
+        // Populate dropdown with user's accessible routes
+        routes.forEach(function (route) {
+          dropdown.append(
+            $("<option></option>")
+              .attr("value", route.route_name)
+              .text(route.route_name)
+          );
+        });
+        
+        // Initialize Select2 for multi-select
+        dropdown.select2({
+          placeholder: "Select routes",
+          closeOnSelect: false,
+          allowClear: true
+        });
+        
+        // If user doesn't have ALL access, set their route as selected and readonly
+        if (sessionData[0].route !== 'ALL') {
+          dropdown.val([sessionData[0].route]).trigger("change");
+          dropdown.prop("disabled", true);
+          // Trigger setCustomer for specific route users
+          setTimeout(() => setCustomer(), 500);
+        } else {
+          // For ALL route users, trigger setCustomer to load all customers initially
+          setTimeout(() => setCustomer(), 500);
+        }
+      } catch (error) {
+        console.error("Error loading user routes:", error);
+      }
+    }
 
     function fetchAndPopulateDropdown(
       apiUrl,
@@ -511,7 +559,7 @@
       }, 0);
     });
 
-    function fetchAndPopulateDropdown1(apiUrl, dropdownId, field) {
+    function fetchAndPopulateDropdown1(apiUrl, dropdownId, field, selectedValue = null, readOnly = false) {
       fetch(apiUrl)
         .then((response) => {
           if (!response.ok) {
@@ -521,14 +569,14 @@
         })
         .then((data) => {
           // Populate Select2 dropdown with API data
-          populateDropdownWithSelect21(data, dropdownId, field);
+          populateDropdownWithSelect21(data, dropdownId, field, selectedValue, readOnly);
         })
         .catch((error) => {
           console.error("Error:", error);
         });
     }
 
-    function populateDropdownWithSelect21(data, dropdownId, field) {
+    function populateDropdownWithSelect21(data, dropdownId, field, selectedValue = null, readOnly = false) {
       var dropdown = $("#" + dropdownId);
       // Clear existing options
       dropdown.empty();
@@ -554,20 +602,34 @@
         placeholder: "Select " + dropdownId + " type",
         allowClear: true,
       });
+      
+      // Set selected value if provided
+      if (selectedValue !== null) {
+        dropdown.val(selectedValue).trigger("change");
+      }
+
+      // Make the dropdown read-only if specified
+      if (readOnly) {
+        dropdown.prop("disabled", true);
+      }
     }
 
     function setCustomer() {
-      // var route = document.getElementById('route').value
       var selectedValues = $("#route").val();
       console.log("routes", selectedValues);
-      // fetchAndPopulateDropdown('http://94.136.190.129:3000/fetchData/customersaleKhatawani/' +route  , 'customer','name');
+      
+      // If no routes selected or "All Route" selected, use "*" to get all customers
+      var routeParam = selectedValues;
+      if (!selectedValues || selectedValues.length === 0 || selectedValues.includes("*")) {
+        routeParam = "*";
+      }
 
       return fetch(
         "http://94.136.190.129:3000/fetchData/customersaleKhatawani",
         {
           method: "POST",
           body: JSON.stringify({
-            route: selectedValues || "*",
+            route: routeParam,
           }),
           headers: {
             "Content-Type": "application/json",
@@ -576,7 +638,6 @@
       )
         .then((response) => {
           if (response.status === 404) {
-            loader.style.display = "none";
             Swal.fire({
               icon: "error",
               title: "Oops...",
@@ -590,12 +651,8 @@
           return response.json();
         })
         .then((result) => {
-          loader.style.display = "none";
-          console.log(result);
-          // populateTable4(result);
-          // populateTable5(result);
+          console.log("Customer data:", result);
           populateDropdownWithSelect21(result, "customer", "name");
-          // return result;
         })
         .catch((error) => {
           console.error("Error:", error);
