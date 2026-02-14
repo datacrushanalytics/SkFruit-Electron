@@ -644,7 +644,31 @@ function populateTable5(data) {
 
     // Append the button container to the cell
     buttonCell.appendChild(buttonContainer);
-  
+
+    // Add Delete button for Super Admin
+    if (isSuperAdmin) {
+      var deleteCell = row.insertCell();
+      var deleteButton = document.createElement("button");
+      deleteButton.className = "button";
+      deleteButton.style.backgroundColor = "#ff355f";
+      deleteButton.textContent = "Delete";
+      deleteButton.addEventListener("click", function () {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "Do you really want to delete this receipt?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            deleteReceipt(item.receipt_id);
+          }
+        });
+      });
+      deleteCell.appendChild(deleteButton);
+    }
   });
   // Add row for grand total
   var totalRow = tbody.insertRow();
@@ -716,6 +740,31 @@ function populateTable5(data) {
     data.GrandSale["saleOnline"];
   // document.getElementById('grandInCarate').textContent = data.GrandSale['saleInCarat']+ data.GrandReceipt['receiptInCarat'];
   // document.getElementById('grandOutCarate').textContent =  data.GrandSale['saleCarate']
+}
+
+function deleteReceipt(receiptId) {
+  fetch("http://94.136.190.129:3000/receiptReport/deleteReceiptReport/" + receiptId, {
+    method: "DELETE",
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Receipt deleted successfully",
+      });
+      fetchDataAndProcess();
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "Failed to delete receipt",
+      });
+    });
 }
 
 async function exportToExcel() {
