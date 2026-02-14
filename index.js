@@ -16,8 +16,6 @@
 //     },
 //   });
 
-  
-
 //   // and load the index.html of the app.
 //   mainWindow.loadFile(path.join(__dirname, "section/index.html"));
 
@@ -47,11 +45,6 @@
 //   }
 // });
 
-
-
-
-
-
 // const { app, BrowserWindow } = require('electron');
 // const path = require('path');
 
@@ -69,7 +62,7 @@
 //     webPreferences: {
 //       preload: path.join(__dirname, 'preload.js'),
 //       // Allow all operations on the specified IP address
-//       contentSecurityPolicy: "default-src 'self' http://103.174.102.89:3000:*",
+//       contentSecurityPolicy: "default-src 'self' http://94.136.190.129:3000:*",
 //     },
 //   });
 
@@ -99,37 +92,31 @@
 //   }
 // });
 
-
-
-
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
+const { app, BrowserWindow } = require("electron");
+const path = require("path");
 
 function createWindow() {
-    const mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
-        // Set the icon for the application
-        icon: path.join(__dirname, './assets/img/logo.png'), // Adjust the path accordingly
-        webPreferences: {
-            nodeIntegration: true
-        }
-    });
+  const mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    // Set the icon for the application
+    icon: path.join(__dirname, "./assets/img/logo.png"), // Adjust the path accordingly
+    webPreferences: {
+      nodeIntegration: true,
+    },
+  });
 
-    mainWindow.loadFile('section/index.html');
+  mainWindow.loadFile("section/index.html");
 }
 
 app.whenReady().then(() => {
-    createWindow();
+  createWindow();
 
-    app.on('activate', function () {
-        if (BrowserWindow.getAllWindows().length === 0) createWindow();
-    });
+  app.on("activate", function () {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
 });
 
-app.on('window-all-closed', function () {
-    if (process.platform !== 'darwin') app.quit();
+app.on("window-all-closed", function () {
+  if (process.platform !== "darwin") app.quit();
 });
-
-
-

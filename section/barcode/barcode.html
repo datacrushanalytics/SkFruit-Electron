@@ -183,10 +183,6 @@
     margin-bottom: 20px;
 }
 
-#companyLogo {
-    width: 100px; /* Adjust the width as needed */
-    height: auto; /* Maintain aspect ratio */
-}
 
 #companyName {
     font-size: 1.2em; /* Adjust the font size as needed */
@@ -235,12 +231,46 @@
         margin-left: 10px;
     }
 
+    
+
+.barcode-container {
+    display: flex;
+    align-items: center;
+    /* padding: 10px;
+    width: 75mm;
+    height: 30mm; */
+    border: 1px solid #ccc;
+    background: white;
+}
+
+.logo-section img {
+    transform: translate(50%, 0%);
+    width: 50%;
+    max-height: 25mm;
+}
+
+.company-name {
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 2px;
+}
+
+.barcode-section {
+    width: 45mm;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+
+
+
 
     </style>
 </head>
 
 <body>
-    <body>
         <div id="loader"></div>
 
         <div class="container">
@@ -304,6 +334,9 @@
             </div>
           
 <div id="popupContainer"></div>
+<iframe id="printFrame" style="display:none;"></iframe>
+
+
 
     
     
@@ -329,9 +362,9 @@
         document.getElementById('fromdate').value = todayIST;
         document.getElementById('todate').value = todayIST;
 
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/product', 'grahk','product_name');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'Route','bata');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle','vehicle_no');
+        fetchAndPopulateDropdown('http://94.136.190.129:3000/purchaseproductData/product', 'grahk','product_name');
+        fetchAndPopulateDropdown('http://94.136.190.129:3000/purchaseproductData/bata', 'Route','bata');
+        fetchAndPopulateDropdown('http://94.136.190.129:3000/vehicleData', 'vehicle','vehicle_no');
         
 
    
@@ -475,85 +508,284 @@
         console.log(bataId)
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata/' + bataId, 'Route','bata');
+        fetchAndPopulateDropdown('http://94.136.190.129:3000/purchaseproductData/bata/' + bataId, 'Route','bata');
     }
 
     
 
     
-    function displayBarcodePopup(item) {
-        console.log('barcode',item)
-        // Convert the date to a JavaScript Date object
-var utcDate = new Date(item.p_date);
+//     function displayBarcodePopup(item) {
+//         console.log('barcode',item)
+//         // Convert the date to a JavaScript Date object
+// var utcDate = new Date(item.p_date);
 
-// Convert the UTC date to IST (UTC+5:30)
-const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
-const istDate = new Date(utcDate.getTime() + istOffset);
+// // Convert the UTC date to IST (UTC+5:30)
+// const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
+// const istDate = new Date(utcDate.getTime() + istOffset);
 
-// Extract day, month, and year and format as DD/MM/YYYY
-const day = String(istDate.getDate()).padStart(2, '0');  // Add leading zero if needed
-const month = String(istDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-const year = istDate.getFullYear();
+// // Extract day, month, and year and format as DD/MM/YYYY
+// const day = String(istDate.getDate()).padStart(2, '0');  // Add leading zero if needed
+// const month = String(istDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+// const year = istDate.getFullYear();
 
-// Combine the parts into DD/MM/YYYY format
-const formattedISTDate = `${day}/${month}/${year}`;
+// // Combine the parts into DD/MM/YYYY format
+// const formattedISTDate = `${day}/${month}/${year}`;
 
 
-        var barcodeValue = 'Product Name:' + item['product_name'].split('(')[0] + ' \nBata:' + item['bata'] + ' ' + formattedISTDate;
-        var popupContent = `
-            <div class="popup">
+//         var barcodeValue = item['product_name'].split('(')[0] + ' \nBata: ' + item['bata'];
+//         var popupContent = `
+//             <div class="popup">
             
-                <div id="companyInfo">
-                    <p id="companyName">Savata Fruits</p> <!-- Added company name -->
-                    <img src="../../assets/img/logo.png" alt="Company Logo" id="companyLogo"> <!-- Updated company logo path -->
-                </div>
-                <canvas id="barcodeCanvas"></canvas>
-                <button id="downloadButton">Download Barcode</button>
-                <button id="printButton">Print Barcode</button>
-                <button onclick="closePopup()">Close</button>
-            </div>
-        `;
-        document.getElementById('popupContainer').innerHTML = popupContent;
-        JsBarcode('#barcodeCanvas', barcodeValue, {
-            format: "CODE128", // Adjust the barcode format as needed
-            displayValue: true, // Hide text under the barcode 
-            width: 1, // Set the width of the bars
-            text: barcodeValue // Add text below the barcode
-        });
+//                 <div id="companyInfo">
+//                     <p id="companyName">Savata Fruits</p> <!-- Added company name -->
+//                     <img src="../../assets/img/logo.png" alt="Company Logo" id="companyLogo"> <!-- Updated company logo path -->
+//                 </div>
+//                 <canvas id="barcodeCanvas"></canvas>
+                
 
-            // Create a download link for the barcode image
-    var downloadButton = document.getElementById('downloadButton');
-    downloadButton.addEventListener('click', function () {
-        //var svg = document.getElementById('barcodeCanvas');
-        var canvas = document.getElementById('barcodeCanvas');
-        //var svgData = new XMLSerializer().serializeToString(svg);
-        //var image = new Image();
-        var image = canvas.toDataURL('image/png');
-        //image.src = 'data:image/svg+xml;base64,' + btoa(svgData);
+//                 <button id="downloadButton">Download Barcode</button>
+//                 <button id="printButton">Print Barcode</button>
+//                 <button onclick="closePopup()">Close</button>
+//             </div>
+//         `;
+//         // <canvas id="barcodeCanvas" width="885" height="472"></canvas>
+//         document.getElementById('popupContainer').innerHTML = popupContent;
+//         JsBarcode('#barcodeCanvas', barcodeValue, {
+//             format: "CODE128", // Adjust the barcode format as needed
+//             displayValue: true, // Hide text under the barcode 
+//             //width: 1, // Set the width of the bars
+//             text: barcodeValue, // Add text below the barcode
+//             width: 1, // Adjust bar width for better readability
+//         height: 70, // Barcode height within 113px canvas
+//         margin: 5,
+//         fontSize: 12, // Adjust text size
+//         textMargin: 4
+//         });
 
-        // Trigger download
-        var link = document.createElement('a');
-        link.href = image;
-        link.download = item['product_name'] + '_' + item['bata'] + '_barcode.png'; // Set the filename based on concatenated values
-        //document.body.appendChild(link);
-        link.click();
-        //document.body.removeChild(link);
-    });
+//             // Create a download link for the barcode image
+//     var downloadButton = document.getElementById('downloadButton');
+//     downloadButton.addEventListener('click', function () {
+//         //var svg = document.getElementById('barcodeCanvas');
+//         var canvas = document.getElementById('barcodeCanvas');
+//         //var svgData = new XMLSerializer().serializeToString(svg);
+//         //var image = new Image();
+//         var image = canvas.toDataURL('image/png');
+//         //image.src = 'data:image/svg+xml;base64,' + btoa(svgData);
 
-    // Print barcode logic
-    var printButton = document.getElementById('printButton');
-    printButton.addEventListener('click', function () {
-        printJS({
-            printable: 'barcodeCanvas', // ID of the element to print
-            type: 'html', // Type of content
-            scanStyles: true, // Scan for styles
-            targetStyles: ['*'] // Apply all styles
-        });
-    });
+//         // Trigger download
+//         var link = document.createElement('a');
+//         link.href = image;
+//         link.download = item['product_name'] + '_' + item['bata'] + '_barcode.png'; // Set the filename based on concatenated values
+//         //document.body.appendChild(link);
+//         //document.body.removeChild(link);
+//     });
+
+//     // Print Barcode Logic
+//     document.getElementById('printButton').addEventListener('click', function () {
+//         var printWindow = window.open('', '', 'width=213,height=85');
+//         // var printWindow = window.open('', '', 'width=283,height=113');
+//         printWindow.document.write('<img src="' + document.getElementById('barcodeCanvas').toDataURL() + '"/>');
+//         printWindow.document.close();
+//         printWindow.print();
+//     });
 
         
-        document.querySelector('.popup').style.display = 'block';
-    }
+//         document.querySelector('.popup').style.display = 'block';
+//     }
+
+
+
+function displayBarcodePopup(item) {
+    console.log('barcode', item);
+
+    var barcodeValue = item['product_name'].split('(')[0] + ': ' + item['bata'];
+    var popupContent = `
+        <div class="popup">
+            <div class="barcode-container" id="barcodeBox">
+                <!-- Logo on Left -->
+                <div class="logo-section">
+                    <img src="../../assets/img/logo-barcode.png" alt="Company Logo" id="companyLogo"> 
+                </div>
+
+                <!-- Barcode on Right -->
+                <div class="barcode-section">
+                    <svg id="barcodeCanvas"></svg>
+                </div>
+            </div>
+
+            <button id="downloadButton">Download Barcode</button>
+            <button id="printButton">Print Barcode</button>
+            <button onclick="closePopup()">Close</button>
+        </div>
+    `;
+
+    document.getElementById('popupContainer').innerHTML = popupContent;
+
+    // Generate Barcode
+    JsBarcode('#barcodeCanvas', barcodeValue, {
+        format: "CODE128",
+        displayValue: true,
+        text: barcodeValue,
+        width: 1,
+        height: 25,
+        margin: 2,
+        // fontSize: 4,
+        fontSize: 15,  // <-- Increase this value (Default is around 10)
+    fontOptions: "bold", // Optional: Makes the text bold
+    textMargin: 1 // Optional: Adjusts the spacing between barcode and text
+    });
+
+
+
+    document.getElementById('downloadButton').addEventListener('click', function () {
+    var barcodeSvg = document.getElementById('barcodeCanvas'); // Barcode SVG
+    var logoImg = document.getElementById('companyLogo'); // Logo Image
+
+    var serializer = new XMLSerializer();
+    var svgData = serializer.serializeToString(barcodeSvg);
+    var svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+    var svgUrl = URL.createObjectURL(svgBlob);
+
+    var barcodeImage = new Image();
+    barcodeImage.onload = function () {
+        var scaleFactor = 3; // Scale for high resolution
+        var width = 250 * scaleFactor;
+        var height = 100 * scaleFactor;
+
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+
+        // Set High Resolution Canvas
+        canvas.width = width;
+        canvas.height = height;
+        ctx.scale(scaleFactor, scaleFactor); // Apply scaling
+
+        // White Background
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, width / scaleFactor, height / scaleFactor);
+
+        // Draw Logo (Ensure High Quality)
+        var logoWidth = 50;
+        var logoHeight = 50;
+        ctx.drawImage(logoImg, 10, 10, logoWidth, logoHeight);
+
+        // Draw Barcode with High Resolution
+        var barcodeX = logoWidth + 20;
+        var barcodeY = 10;
+        var barcodeWidth = (width / scaleFactor) - barcodeX - 10;
+        var barcodeHeight = 50;
+        ctx.drawImage(barcodeImage, barcodeX, barcodeY, barcodeWidth, barcodeHeight);
+
+        // Release URL memory
+        URL.revokeObjectURL(svgUrl);
+
+        // Convert High-Quality Canvas to PNG for Download
+        var pngUrl = canvas.toDataURL("image/png");
+
+        // Create Download Link
+        var link = document.createElement("a");
+        link.href = pngUrl;
+        link.download = "barcode.png";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    barcodeImage.src = svgUrl;
+});
+
+
+
+document.getElementById('printButton').addEventListener('click', function () {
+    var barcodeSvg = document.getElementById('barcodeCanvas'); // Barcode SVG
+    var logoImg = document.getElementById('companyLogo'); // Logo Image
+
+    var serializer = new XMLSerializer();
+    var svgData = serializer.serializeToString(barcodeSvg);
+    var svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+    var svgUrl = URL.createObjectURL(svgBlob);
+
+    var barcodeImage = new Image();
+    barcodeImage.onload = function () {
+        var scaleFactor = 3; // Scale for high resolution
+        var width = 250 * scaleFactor;
+        var height = 100 * scaleFactor;
+
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+
+        // Set High Resolution Canvas
+        canvas.width = width;
+        canvas.height = height;
+        ctx.scale(scaleFactor, scaleFactor); // Apply scaling
+
+        // White Background
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, width / scaleFactor, height / scaleFactor);
+
+        // Draw Logo (Ensure High Quality)
+        var logoWidth = 50;
+        var logoHeight = 50;
+        ctx.drawImage(logoImg, 10, 10, logoWidth, logoHeight);
+
+        // Draw Barcode with High Resolution
+        var barcodeX = logoWidth + 20;
+        var barcodeY = 10;
+        var barcodeWidth = (width / scaleFactor) - barcodeX - 10;
+        var barcodeHeight = 50;
+        ctx.drawImage(barcodeImage, barcodeX, barcodeY, barcodeWidth, barcodeHeight);
+
+        // Release URL memory
+        URL.revokeObjectURL(svgUrl);
+
+        // // Open Print Window
+        // var printWindow = window.open('', '');
+        // printWindow.document.write('<html><head><title>Print Barcode</title></head><body>');
+        // printWindow.document.write('<div style="text-align: center;">');
+
+        // // Convert High-Quality Canvas to PNG for Printing
+        // var imgData = canvas.toDataURL("image/png");
+        // // printWindow.document.write('<img src="' + imgData + '" style="width:100%; max-width:250px;">');
+        // printWindow.document.write('<img src="' + imgData );
+        // printWindow.document.write('</div></body></html>');
+        // printWindow.document.close();
+        // printWindow.print();
+
+        // Open Print Window
+var printWindow = window.open('', '');
+printWindow.document.write(`
+    <html>
+    <head>
+        <title>Print Barcode</title>
+        <style>
+            @page { margin: 0; } /* Remove page margins */
+            body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
+            img { width: 100%; max-width: 250px; display: block; margin: 50px auto; }
+        </style>
+    </head>
+    <body>
+        <img src="${canvas.toDataURL("image/png")}" />
+    </body>
+    </html>
+`);
+printWindow.document.close();
+
+// Add delay to allow rendering before print
+setTimeout(() => {
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
+}, 1000); // 1000ms delay — adjust as needed
+
+    };
+
+    barcodeImage.src = svgUrl;
+});
+
+
+document.querySelector('.popup').style.display = 'block';
+}
+
 
 
 
@@ -590,7 +822,7 @@ const formattedISTDate = `${day}/${month}/${year}`;
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
     
-        fetch('http://103.174.102.89:3000/purchaseproductData', {
+        fetch('http://94.136.190.129:3000/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -625,18 +857,19 @@ const formattedISTDate = `${day}/${month}/${year}`;
 
     function download() {
         var data = {
-            from_date: formatDate(document.getElementById("fromdate").value),
-            to_date: formatDate(document.getElementById("todate").value),
-            product: getElementValueWithDefault('grahk', '*'),
-            bata: getElementValueWithDefault('Route', '*'),
-            gadi_number: getElementValueWithDefault('vehicle', '*'),
-            barcode: 'yes'
+            fromdate: formatDate(document.getElementById("fromdate").value),
+            todate: formatDate(document.getElementById("todate").value),
+            product : getElementValueWithDefault('grahk', '*') , 
+            bata : getElementValueWithDefault('Route', '*'),
+            gadi_number : getElementValueWithDefault('vehicle', '*'),
+            barcode : 'yes',
+            date : 'yes'
         };
         console.log(data);
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        fetch('http://103.174.102.89:3000/purchaseproductData', {
+        fetch('http://94.136.190.129:3000/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -669,52 +902,153 @@ const formattedISTDate = `${day}/${month}/${year}`;
     }
 
 
-    function generateBarcodesAndDownloadPDF(items) {
-            const { jsPDF } = window.jspdf;
-            const barcodeWidth = 80; // Adjust the width to fit two barcodes in a row
-            const barcodeHeight = 40;
-            const itemsPerRow = 2; // Two items per row
-            const rowsPerPage = 5; // Adjust this to fit the number of rows per page
-            const itemsPerPage = itemsPerRow * rowsPerPage; // Calculate total items per page
-            const spacing = 10; // Space between barcodes
 
-            var pdf = new jsPDF(); // Create a new jsPDF instance
+function generateBarcodesAndDownloadPDF(items) {
+    const { jsPDF } = window.jspdf;
 
-            items.forEach((item, index) => {
-                var barcodeValue = 'Product Name:' + item['product_name'].split('(')[0] + ' \nBata:' + item['bata'];
+    // Dimensions for labels and barcode
+    const pageWidth = 75; // Page width in mm
+    const pageHeight = 75; // Custom page height in mm
+    const labelHeight = 30; // Label height
+    const barcodeWidth = 60; // Barcode width
+    const barcodeHeight = 20; // Barcode height
+    const gap = 3; // Gap between labels in mm
+    const labelWithGapHeight = labelHeight + gap;
 
-                // Create a canvas element for each barcode
-                var canvas = document.createElement('canvas');
-                JsBarcode(canvas, barcodeValue, {
-                    format: "CODE128", // Adjust the barcode format as needed
-                    displayValue: true, // Show text under the barcode
-                    width: 1, // Set the width of the bars
-                    text: barcodeValue // Add text below the barcode
-                });
+    // Create a new PDF instance with the specified page size
+    const pdf = new jsPDF({
+        unit: "mm",
+        format: [pageWidth, pageHeight],
+        orientation: "p",
+    });
 
-                // Convert the canvas to an image
-                var image = canvas.toDataURL('image/png');
+    let yOffset = 3.5; // Start position on the first page
 
-                // Calculate position for this barcode on the page
-                const rowIndex = Math.floor((index % itemsPerPage) / itemsPerRow);
-                const colIndex = index % itemsPerRow;
+    items.forEach((item, index) => {
+        // Format date
+        const utcDate = new Date(item.p_date);
+        const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
+        const istDate = new Date(utcDate.getTime() + istOffset);
 
-                const xOffset = 10 + (colIndex * (barcodeWidth + spacing));
-                const yOffset = 20 + (rowIndex * (barcodeHeight + spacing));
+        const day = String(istDate.getDate()).padStart(2, '0');
+        const month = String(istDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const year = istDate.getFullYear();
+        const formattedISTDate = `${day}/${month}/${year}`;
 
-                // Add the barcode image
-                pdf.addImage(image, 'PNG', xOffset, yOffset, barcodeWidth, barcodeHeight); // Adjust position and size as needed
+        // Barcode value
+        const barcodeValue = `${item.product_name.split('(')[0]}: ${item.bata}`;
+        const barcodeValue1 = `Product: ${item.product_name.split('(')[0]}\nBata: ${item.bata} `;
 
-                // Add a new page if we've added itemsPerPage barcodes to the current page
-                if ((index + 1) % itemsPerPage === 0 && index < items.length - 1) {
-                    pdf.addPage();
-                }
-            });
+        // Create a canvas for the barcode
+        const canvas = document.createElement('canvas');
+        JsBarcode(canvas, barcodeValue, {
+            format: "CODE128",
+            displayValue: true,
+            width: 5, // Adjust barcode width
+            textMargin: 1, // Space between barcode and text
+            text: barcodeValue1,
+        });
 
-            // Save the PDF
-            pdf.save('barcodes.pdf');
+        // Convert the canvas to an image
+        const image = canvas.toDataURL('image/png');
+
+        // Check if the barcode fits on the current page
+        if (yOffset + labelWithGapHeight > 40 * 2) {
+            pdf.addPage(); // Add a new page
+            yOffset = 3.5; // Reset yOffset for the new page
         }
 
+        // Add the barcode image to the PDF
+        console.log(index, 3, yOffset, barcodeWidth, barcodeHeight)
+        pdf.addImage(image, 'PNG', 3.5, yOffset, barcodeWidth, barcodeHeight);
+
+        // Update yOffset for the next barcode
+        yOffset += labelHeight - 3.5;
+    });
+
+    // Trigger the print operation
+    pdf.autoPrint();
+    window.open(pdf.output('bloburl'), '_blank');
+}
+
+
+
+
+// function generateBarcodesAndDownloadPDF(items) {
+//     const { jsPDF } = window.jspdf;
+
+//     // Sticker dimensions in mm
+//     const stickerWidth = 38; // Sticker width
+//     const stickerHeight = 25; // Sticker height
+
+//     // Barcode dimensions in mm
+//     const barcodeWidth = 30; // Barcode width
+//     const barcodeHeight = 10; // Barcode height
+
+//     // Logo dimensions in mm
+//     const logoWidth = 10; // Logo width
+//     const logoHeight = 10; // Logo height
+
+//     // Margins within the sticker
+//     const horizontalMargin = 4; // Horizontal margin
+//     const verticalMargin = 2; // Vertical margin
+
+//     // Number of stickers per row and column
+//     const stickersPerRow = Math.floor(210 / stickerWidth); // A4 width is 210mm
+//     const stickersPerColumn = Math.floor(297 / stickerHeight); // A4 height is 297mm
+//     const stickersPerPage = stickersPerRow * stickersPerColumn;
+
+//     // Create a new PDF instance
+//     const pdf = new jsPDF({
+//         unit: "mm",
+//         format: "a4", // A4 size
+//     });
+
+//     items.forEach((item, index) => {
+//         const barcodeValue = `Product: ${item.product_name.split('(')[0]}\nBata: ${item.bata}`;
+
+//         // Create a canvas for the barcode
+//         const canvas = document.createElement('canvas');
+//         JsBarcode(canvas, barcodeValue, {
+//             format: "CODE128",
+//             displayValue: true,
+//             width: 1, // Adjust barcode bar width
+//             height: barcodeHeight, // Barcode height
+//             textMargin: 2, // Space between barcode and text
+//             fontSize: 8, // Text font size
+//         });
+
+//         // Convert the canvas to an image
+//         const barcodeImage = canvas.toDataURL('image/png');
+
+//         // Calculate row and column positions
+//         const rowIndex = Math.floor(index / stickersPerRow) % stickersPerColumn; // Current row
+//         const colIndex = index % stickersPerRow; // Current column
+
+//         // Calculate the x and y position for this sticker
+//         const xOffset = colIndex * stickerWidth + horizontalMargin;
+//         const yOffset = rowIndex * stickerHeight + verticalMargin;
+
+//         // Add logo to the PDF
+//         pdf.addImage("../../assets/img/logo.png", "PNG", xOffset + 4, yOffset, logoWidth, logoHeight);
+
+//         // Add company name below the logo
+//         pdf.setFontSize(8);
+//         pdf.text("Savata Fruits", xOffset + logoWidth + 2, yOffset + 6);
+
+//         // Add the barcode image
+//         pdf.addImage(barcodeImage, "PNG", xOffset + 4, yOffset + logoHeight + 2, barcodeWidth, barcodeHeight);
+
+//         // Add a new page if the current page is full
+//         if ((index + 1) % stickersPerPage === 0 && index < items.length - 1) {
+//             pdf.addPage();
+//         }
+//     });
+
+//     // Save the PDF file
+//     pdf.save("barcodes.pdf");
+// }
+    
     
 
 </script>

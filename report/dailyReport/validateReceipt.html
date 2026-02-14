@@ -307,10 +307,10 @@
                 
                 <div class="first-row">
                     <label class="input-label"> मागील बाकी कॅरेट :</label>
-                    <input type="number" id="carate2100" name="number" placeholder="100" readonly>
-                    <input type="number" id="carate2150" name="number" placeholder="150" readonly>
-                    <input type="number" id="carate2250" name="number" placeholder="250" readonly>
-                    <input type="number" id="carate2350" name="number" placeholder="350" readonly>
+                    <input type="number" id="carate2100" name="number" min="0" placeholder="100" readonly>
+                    <input type="number" id="carate2150" name="number" min="0" placeholder="150" readonly>
+                    <input type="number" id="carate2250" name="number" min="0" placeholder="250" readonly>
+                    <input type="number" id="carate2350" name="number" min="0" placeholder="350" readonly>
                 </div>
 
                 <div class="first-row">
@@ -338,10 +338,10 @@
 
                 <div class="first-row">
                     <label class="input-label">जमा कॅरेट:</label>
-                    <input type="number" id="carate100" name="number" placeholder="100" onchange="carate()">
-                    <input type="number" id="carate150" name="number" placeholder="150" onchange="carate()">
-                    <input type="number" id="carate250" name="number" placeholder="250" onchange="carate()">
-                    <input type="number" id="carate350" name="number" placeholder="350" onchange="carate()">
+                    <input type="number" id="carate100" name="number" min="0" placeholder="100" onchange="carate()">
+                    <input type="number" id="carate150" name="number" min="0" placeholder="150" onchange="carate()">
+                    <input type="number" id="carate250" name="number" min="0" placeholder="250" onchange="carate()">
+                    <input type="number" id="carate350" name="number" min="0" placeholder="350" onchange="carate()">
                 </div>
 
                 <div class="first-row">
@@ -351,15 +351,15 @@
 
                 <div class="first-row">
                     <label for="input5" class="input-label">बाकी रक्कम :</label>
-                    <input type="text" id="input5" name="input1">
+                    <input type="text" id="input5" name="input1" readonly>
                 </div>
 
                 <div class="first-row">
                     <label class="input-label">एकून बाकी कॅरेट :</label>
-                    <input type="number" id="carate3100" name="number" placeholder="100" readonly>
-                    <input type="number" id="carate3150" name="number" placeholder="150" readonly>
-                    <input type="number" id="carate3250" name="number" placeholder="250" readonly>
-                    <input type="number" id="carate3350" name="number" placeholder="350" readonly>
+                    <input type="number" id="carate3100" name="number" min="0" placeholder="100" readonly>
+                    <input type="number" id="carate3150" name="number" min="0" placeholder="150" readonly>
+                    <input type="number" id="carate3250" name="number" min="0" placeholder="250" readonly>
+                    <input type="number" id="carate3350" name="number" min="0" placeholder="350" readonly>
                 </div>
 
 
@@ -439,7 +439,7 @@ function totalbill(){
     console.log("totalbill")
     console.log(document.getElementById("custid").value)
   
-    fetch('http://103.174.102.89:3000/accountData/' + parseInt(document.getElementById("custid").value))
+    fetch('http://94.136.190.129:3000/accountData/' + parseInt(document.getElementById("custid").value))
           .then(response => {
             if (!response.ok) {
                 loader.style.display = 'none';
@@ -450,9 +450,9 @@ function totalbill(){
           .then(data => {
               console.log(data[0].cr_dr_type)
               if(data[0].cr_dr_type == 'no'){
-                document.getElementById("input5").value = parseInt(document.getElementById("input3").value || 0) - parseInt(document.getElementById("input6").value || 0) - parseInt(document.getElementById("input7").value || 0) - parseInt(document.getElementById("input8").value || 0);
+                document.getElementById("input5").value = parseFloat(document.getElementById("input3").value || 0) - parseFloat(parseFloat(document.getElementById("input6").value || 0).toFixed(2)) - parseFloat(parseFloat(document.getElementById("input7").value || 0).toFixed(2)) - parseFloat(parseFloat(document.getElementById("input8").value || 0).toFixed(2));
               }else{
-                document.getElementById("input5").value = parseInt(document.getElementById("input3").value || 0) - parseInt(document.getElementById("input6").value || 0) - parseInt(document.getElementById("input7").value || 0) - parseInt(document.getElementById("input8").value || 0) - parseInt(document.getElementById("input4").value || 0);
+                document.getElementById("input5").value = parseFloat(document.getElementById("input3").value || 0) - parseFloat(parseFloat(document.getElementById("input6").value || 0).toFixed(2)) - parseFloat(parseFloat(document.getElementById("input7").value || 0).toFixed(2)) - parseFloat(parseFloat(document.getElementById("input8").value || 0).toFixed(2)) - parseFloat(parseFloat(document.getElementById("input4").value || 0).toFixed(2));
               }
           })
           .catch(error => {
@@ -466,7 +466,7 @@ function totalbill(){
     function previousbalance() {
         const name = document.getElementById("account_group").value
         //const name = receipt.Customer
-        fetch('http://103.174.102.89:3000/fetchpv/' + name)
+        fetch('http://94.136.190.129:3000/fetchpv/' + name)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -476,15 +476,15 @@ function totalbill(){
             .then(data => {
                 // Populate dropdown with API data
                 console.log(data)
-                document.getElementById('custid').value = parseInt(data[0]['id']);
-                //document.getElementById('input3').value = parseInt(data[0]['current_balance'] || 0);
+                document.getElementById('custid').value = parseFloat(data[0]['id']);
+                //document.getElementById('input3').value = parseFloat(data[0]['current_balance'] || 0);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
 
 
-            fetch('http://103.174.102.89:3000/fetchName/name/' + name)
+            fetch('http://94.136.190.129:3000/fetchName/name/' + name)
                   .then(response => {
                     if (!response.ok) {
                         loader.style.display = 'none';
@@ -507,7 +507,7 @@ function totalbill(){
 
 
 
-    fetch('http://103.174.102.89:3000/carateuserData/' + name)
+    fetch('http://94.136.190.129:3000/carateuserData/' + name)
   .then(response => {
       if (!response.ok) {
         loader.style.display = 'none';
@@ -518,10 +518,10 @@ function totalbill(){
   .then(data => {
       // Populate dropdown with API data
       console.log(data)
-      document.getElementById('carate2100').value = parseInt(data[0]['carate_100']);
-      document.getElementById('carate2150').value = parseInt(data[0]['carate_150']);
-      document.getElementById('carate2250').value = parseInt(data[0]['carate_250']);
-      document.getElementById('carate2350').value = parseInt(data[0]['carate_350']);
+    //   document.getElementById('carate2100').value = parseInt(data[0]['carate_100']);
+    //   document.getElementById('carate2150').value = parseInt(data[0]['carate_150']);
+    //   document.getElementById('carate2250').value = parseInt(data[0]['carate_250']);
+    //   document.getElementById('carate2350').value = parseInt(data[0]['carate_350']);
       document.getElementById('carate3100').value = parseInt(data[0]['carate_100']);
       document.getElementById('carate3150').value = parseInt(data[0]['carate_150']);
       document.getElementById('carate3250').value = parseInt(data[0]['carate_250']);
@@ -540,7 +540,7 @@ function totalbill(){
     function getCust() {
         var number = document.getElementById('mob').value;
         console.log(number)
-        fetch('http://103.174.102.89:3000/fetchName/mobile/' + number)
+        fetch('http://94.136.190.129:3000/fetchName/mobile/' + number)
             .then(response => {
                 if (!response.ok) {
                     loader.style.display = 'none';
@@ -570,10 +570,10 @@ function totalbill(){
         
     document.addEventListener('DOMContentLoaded', async function () {
         // Fetch data from API and populate Select2 dropdowns
-        //await fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Customer', 'account_group','customer');
-        //await fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'route_detail','Account');
-        await fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'input1','Account');
-        //await fetchAndPopulateDropdown('http://103.174.102.89:3000/mobile', 'mob','mobile_no');
+        //await fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Customer', 'account_group','customer');
+        //await fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Bank Account', 'route_detail','Account');
+        await fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Bank Account', 'input1','Account');
+        //await fetchAndPopulateDropdown('http://94.136.190.129:3000/mobile', 'mob','mobile_no');
     
 
         async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
@@ -636,7 +636,7 @@ function totalbill(){
       //}
       
 
-      fetch('http://103.174.102.89:3000/fetchpv/' + receipt.Customer)
+      fetch('http://94.136.190.129:3000/fetchpv/' + receipt.Customer)
       .then(response => {
         if (!response.ok) {
           loader.style.display = 'none';
@@ -678,6 +678,12 @@ function totalbill(){
       document.getElementById("carate150").value = receipt.carate_150 || 0;
       document.getElementById("carate250").value = receipt.carate_250 || 0;
       document.getElementById("carate350").value = receipt.carate_350 || 0;
+      
+      // previous carates 
+      document.getElementById("carate2100").value = receipt.previous_baki_100 || 0;
+      document.getElementById("carate2150").value = receipt.previous_baki_150 || 0;
+      document.getElementById("carate2250").value = receipt.previous_baki_250 || 0;
+      document.getElementById("carate2350").value = receipt.previous_baki_350 || 0;
       //carate();
       // document.getElementById("carate1100").value = sale.out_carate_100 || 0;
       // document.getElementById("carate1150").value = sale.out_carate_150 || 0;
@@ -685,7 +691,7 @@ function totalbill(){
       // document.getElementById("carate1350").value = sale.out_carate_350 || 0;
       // carate1();
       // document.getElementById("previousBalance").value = sale.pre_balance || 0;
-      document.getElementById("input6").value = receipt.deposite || 0;
+      document.getElementById("input6").value = receipt.cash || 0;
 
       var $routeDropdown = $('#input1');
       // Set the value of the Select2 dropdown if it's different
@@ -701,7 +707,7 @@ function totalbill(){
 
       
 
-    fetch('http://103.174.102.89:3000/carateuserData/' + receipt.Customer)
+    fetch('http://94.136.190.129:3000/carateuserData/' + receipt.Customer)
     .then(response => {
         if (!response.ok) {
           loader.style.display = 'none';
@@ -712,10 +718,10 @@ function totalbill(){
     .then(data => {
         // Populate dropdown with API data
         console.log(data)
-        document.getElementById('carate2100').value = parseInt(data[0]['carate_100']);
-        document.getElementById('carate2150').value = parseInt(data[0]['carate_150']);
-        document.getElementById('carate2250').value = parseInt(data[0]['carate_250']);
-        document.getElementById('carate2350').value = parseInt(data[0]['carate_350']);
+        // document.getElementById('carate2100').value = parseInt(data[0]['carate_100']);
+        // document.getElementById('carate2150').value = parseInt(data[0]['carate_150']);
+        // document.getElementById('carate2250').value = parseInt(data[0]['carate_250']);
+        // document.getElementById('carate2350').value = parseInt(data[0]['carate_350']);
         document.getElementById('carate3100').value = parseInt(data[0]['carate_100']);
         document.getElementById('carate3150').value = parseInt(data[0]['carate_150']);
         document.getElementById('carate3250').value = parseInt(data[0]['carate_250']);

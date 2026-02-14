@@ -203,13 +203,13 @@
 
             <div class="second-row">
                 <label for="previousBalance">Prev. Balance :</label>
-                <input type="number" id="previousBalance" name="previous_balance" readonly>
+                <input type="number" id="previousBalance"  step="0.01" name="previous_balance" readonly>
                 <br>
             </div>
 
             <div class="row-container1">
                 <label for="totalCarat">Cash :</label>
-                <input type="number" id="bill_cash" name="number" placeholder="Cash" onchange="totalBalance()">
+                <input type="number" id="bill_cash" name="number"  step="0.01" placeholder="Cash" onchange="totalBalance()">
               </div>
 
             <label for="product">Bank Account :</label>
@@ -219,7 +219,7 @@
             <br>
             <div class="row-container1">
                 <label for="totalCarat">Online Payment :</label>
-                <input type="number" id="online" name="number" placeholder="Online Payment" onchange="totalBalance()" readonly>
+                <input type="number" id="online" name="number" placeholder="Online Payment"   step="0.01" onchange="totalBalance()" readonly>
               </div>
             <br>
             <div class="form-group">
@@ -228,13 +228,13 @@
             </select>
 
             <label for="amount"> Discount :</label>
-            <input type="number" id="discount" name="amount"  onchange="totalBalance()">
+            <input type="number" id="discount" name="amount" step="0.01"  onchange="totalBalance()">
 
             
             <br>
 
             <label for="amount">Remaining Amount :</label>
-            <input type="number" id="amount" name="amount" required readonly>
+            <input type="number" id="amount" name="amount"  step="0.01" required readonly>
           
             <br>
             <label for="comment">Comment :</label>
@@ -250,7 +250,7 @@
     <script src="./payment.js"></script>
 
     <script>
-        fetch('http://103.174.102.89:3000/fetchPaymentid')
+        fetch('http://94.136.190.129:3000/fetchPaymentid')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -299,16 +299,17 @@
 
 function totalBalance(){
     var total = 0;
-    total = parseInt(document.getElementById('bill_cash').value || 0) + parseInt(document.getElementById('online').value || 0) + parseInt(document.getElementById('discount').value || 0)
+    total = parseFloat(parseFloat(document.getElementById('bill_cash').value || 0).toFixed(2)) + parseFloat(parseFloat(document.getElementById('online').value || 0).toFixed(2)) + parseFloat(parseFloat(document.getElementById('discount').value || 0).toFixed(2))
     document.getElementById('amount').value = document.getElementById('previousBalance').value- total 
-    // if(document.getElementById('previousBalance').value - total < 0){
-    //     Swal.fire({
-    //           icon: 'error',
-    //           title: 'Oops...',
-    //           text: "Value Should be Grater than Zero",
-    //         });
+    if(document.getElementById('previousBalance').value - total < 0){
+        Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Value Should be Grater than Zero",
+            });
 
-    // }else{
+    }
+    //else{
     //     document.getElementById('amount').value = document.getElementById('previousBalance').value- total 
     // }
 
@@ -329,7 +330,7 @@ function toggleReadonly(){
         function previousbalance() {
             const name = document.getElementById("bata").value
 
-            fetch('http://103.174.102.89:3000/fetchName/name/' + name)
+            fetch('http://94.136.190.129:3000/fetchName/name/' + name)
       .then(response => {
         if (!response.ok) {
           loader.style.display = 'none';
@@ -363,7 +364,7 @@ function toggleReadonly(){
 
 
 
-            fetch('http://103.174.102.89:3000/fetchpv/' + name)
+            fetch('http://94.136.190.129:3000/fetchpv/' + name)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -373,7 +374,7 @@ function toggleReadonly(){
                 .then(data => {
                     // Populate dropdown with API data
                     console.log(data)
-                    document.getElementById('previousBalance').value = parseInt(data[0]['current_balance'] || 0);
+                    document.getElementById('previousBalance').value = parseFloat(parseFloat(data[0]['current_balance'] || 0).toFixed(2));
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -385,7 +386,7 @@ function toggleReadonly(){
         function getCust() {
     var number = document.getElementById('number').value;
     console.log(number)
-    fetch('http://103.174.102.89:3000/fetchName/mobile/' + number)
+    fetch('http://94.136.190.129:3000/fetchName/mobile/' + number)
         .then(response => {
             if (!response.ok) {
                 loader.style.display = 'none';
@@ -413,10 +414,10 @@ function toggleReadonly(){
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Fetch data from API and populate Select2 dropdowns
-            fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Supplier', 'bata', 'name');
-            fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Bank Account', 'product', 'name');
-            fetchAndPopulateDropdown('http://103.174.102.89:3000/mobile/supplier', 'number', 'mobile_no');
-            fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/SupplierAccount', 'SupplierAccount','supplier_bank_account');
+            fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Supplier', 'bata', 'name');
+            fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Bank Account', 'product', 'name');
+            fetchAndPopulateDropdown('http://94.136.190.129:3000/mobile/supplier', 'number', 'mobile_no');
+            fetchAndPopulateDropdown('http://94.136.190.129:3000/fetchData/SupplierAccount', 'SupplierAccount','supplier_bank_account');
         });
 
         function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {

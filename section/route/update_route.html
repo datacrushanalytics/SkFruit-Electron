@@ -1,199 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>User Form in Electron</title>
     <style>
-         body {
-            font-family: Arial, sans-serif;
-            background-color: #fef7f7;
-            /* Transparent background */
-            margin: 0;
-            padding: 20px;
-            overflow-x: hidden; /* Hide horizontal scrollbar */
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: left;
-        }
-        h1 {
-            margin-top: 20px;
-            text-align: center;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fef7f7;
+        /* Transparent background */
+        margin: 0;
+        padding: 20px;
+        overflow-x: hidden; /* Hide horizontal scrollbar */
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: left;
+      }
+      h1 {
+        margin-top: 20px;
+        text-align: center;
+      }
 
-        .container1 label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+      .container1 label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
 
-        .container1 select,
-        .container1 input[type="text"] {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
+      .container1 select,
+      .container1 input[type="text"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
 
-        input[type="text"] {
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+      input[type="text"] {
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
 
-        .third-row {
-            margin-top: 20px;
-            text-align: center;
-        }
+      .third-row {
+        margin-top: 20px;
+        text-align: center;
+      }
 
-        .border-hover {
-            padding: 10px 20px;
-            text-decoration: none;
-            color: white;
-            background-color: #808080;
-            /* Grey color */
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-right: 10px;
-        }
+      .border-hover {
+        padding: 10px 20px;
+        text-decoration: none;
+        color: white;
+        background-color: #808080;
+        /* Grey color */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-right: 10px;
+      }
 
-        .border-hover:hover {
-            background-color: #555;
-            /* Darker grey on hover */
-        }
+      .border-hover:hover {
+        background-color: #555;
+        /* Darker grey on hover */
+      }
 
-        /* Style the loader container */
-#loader {
-    border: 4px solid #f3f3f3; /* Light grey */
-    border-top: 4px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite; /* Apply animation */
-    display: none; /* Hide loader by default */
-    
-    /* Center the loader */
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  /* Animation */
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+      /* Style the loader container */
+      #loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite; /* Apply animation */
+        display: none; /* Hide loader by default */
+
+        /* Center the loader */
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* Animation */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="loader"></div>
     <div class="container">
-        <h1>Add Route</h1>
-        <hr>
-        <div class="container1">
-            <form id="loginForm" method="POST">
-                <lable for="routeId">ID :</lable>
-                <input type="text" id="routeId" name="routeId" placeholder="ID" required readonly> <br>
+      <h1>Add Route</h1>
+      <hr />
+      <div class="container1">
+        <form id="loginForm" method="POST">
+          <lable for="routeId">ID :</lable>
+          <input
+            type="text"
+            id="routeId"
+            name="routeId"
+            placeholder="ID"
+            required
+            readonly
+          />
+          <br />
 
-                <lable for="route_name">Route Name :</lable>
-                <input type="text" id="route_name" name="route_name" placeholder="Route Name" required> <br>
+          <lable for="route_name">Route Name :</lable>
+          <input
+            type="text"
+            id="route_name"
+            name="route_name"
+            placeholder="Route Name"
+            required
+          />
+          <br />
 
-                <lable for="details">Details :</lable>
-                <input type="text" id="details" name="details" placeholder="Details" required> <br>
+          <lable for="details">Details :</lable>
+          <input
+            type="text"
+            id="details"
+            name="details"
+            placeholder="Details"
+            required
+          />
+          <br />
 
-                <lable for="mobile_no">Mobile No :</lable>
-                <input type="text" id="mobile_no" name="mobile_no" placeholder="Mobile No" required> <br>
-                <div class="third-row">
-                    <button type="Update" style="background-color: #26a653;" id="updateButton" class="border-hover">Save</button>
-                    <!-- <a href="./Root_Details.html"><button type='button' class="border-hover">Back</button></a> -->
-                </div>
-            </form>
-        </div>
+          <lable for="mobile_no">Mobile No :</lable>
+          <input
+            type="text"
+            id="mobile_no"
+            name="mobile_no"
+            placeholder="Mobile No"
+            required
+          />
+          <br />
+          <div class="third-row">
+            <button
+              type="Update"
+              style="background-color: #26a653"
+              id="updateButton"
+              class="border-hover"
+            >
+              Save
+            </button>
+            <!-- <a href="./Root_Details.html"><button type='button' class="border-hover">Back</button></a> -->
+          </div>
+        </form>
+      </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Retrieve user data from localStorage
-            var userData = localStorage.getItem('userData');
+      document.addEventListener("DOMContentLoaded", function () {
+        // Retrieve user data from localStorage
+        var userData = localStorage.getItem("userData");
 
-            if (userData) {
-                // Parse the user data
-                var user = JSON.parse(userData);
+        if (userData) {
+          // Parse the user data
+          var user = JSON.parse(userData);
 
-                // Populate form fields with user data
-                document.getElementById("routeId").value = user.id;
-                document.getElementById("route_name").value = user.route_name;
-                document.getElementById("details").value = user.details;
-                document.getElementById("mobile_no").value = user.mobile_no;
-                // Clear user data from localStorage (optional)
-                localStorage.removeItem('userData');
-            }
-        });
-
-        async function updateUser() {
-            try {
-                var userData = {
-                    routeId: parseInt(document.getElementById("routeId").value),
-                    route_name: document.getElementById("route_name").value,
-                    details: document.getElementById("details").value,
-                    mobile_no: document.getElementById("mobile_no").value
-                };
-                var loader = document.getElementById('loader');
-                loader.style.display = 'block';
-                const response = await fetch('http://103.174.102.89:3000/routeData/updateRoute/' + userData.routeId, {
-                    method: 'PUT',
-                    body: JSON.stringify(userData),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-        
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-        
-                const result = await response.json();
-                loader.style.display = 'none';
-                console.log('Data added successfully:', result);
-            
-                Swal.fire({
-                            icon: 'success',
-                            title: 'Success!',
-                            text: 'Data Updated successfully',
-                            })
-                // Optionally, you can darkgreyirect or show a success message here
-            } catch (error) {
-                console.error('Error:', error);
-                // Optionally, you can display an error message here
-            }
-        
-            // Perform the update operation (e.g., send data to server)
-            console.log("Update Route:", userData);
-            window.location.href = './Root_Details.html';
+          // Populate form fields with user data
+          document.getElementById("routeId").value = user.id;
+          document.getElementById("route_name").value = user.route_name;
+          document.getElementById("details").value = user.details;
+          document.getElementById("mobile_no").value = user.mobile_no;
+          // Clear user data from localStorage (optional)
+          localStorage.removeItem("userData");
         }
-        
-        // Add event listener to the "Update" button
-        document.getElementById("updateButton").addEventListener("click", async function (event) {
-            event.preventDefault(); // Prevent form submission
-            await updateUser(); // Call the updateUser function to handle the update operation
+      });
+
+      async function updateUser() {
+        try {
+          var userData = {
+            routeId: parseInt(document.getElementById("routeId").value),
+            route_name: document.getElementById("route_name").value,
+            details: document.getElementById("details").value,
+            mobile_no: document.getElementById("mobile_no").value,
+          };
+          var loader = document.getElementById("loader");
+          loader.style.display = "block";
+          const response = await fetch(
+            "http://94.136.190.129:3000/routeData/updateRoute/" +
+              userData.routeId,
+            {
+              method: "PUT",
+              body: JSON.stringify(userData),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+
+          const result = await response.json();
+          loader.style.display = "none";
+          console.log("Data added successfully:", result);
+
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "Data Updated successfully",
+          });
+          // Optionally, you can darkgreyirect or show a success message here
+        } catch (error) {
+          console.error("Error:", error);
+          // Optionally, you can display an error message here
+        }
+
+        // Perform the update operation (e.g., send data to server)
+        console.log("Update Route:", userData);
+        window.location.href = "./Root_Details.html";
+      }
+
+      // Add event listener to the "Update" button
+      document
+        .getElementById("updateButton")
+        .addEventListener("click", async function (event) {
+          event.preventDefault(); // Prevent form submission
+          await updateUser(); // Call the updateUser function to handle the update operation
         });
-        
-
     </script>
-</body>
-
+  </body>
 </html>

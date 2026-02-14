@@ -1,197 +1,188 @@
-
 function populateDropdown(data) {
-    var userNameDropdown = document.getElementById('bata');
-    userNameDropdown.innerHTML = ''; // Clear existing options
+  var userNameDropdown = document.getElementById("bata");
+  userNameDropdown.innerHTML = ""; // Clear existing options
 
-    // Create and append new options based on API data
-    data.forEach(function (item) {
-        var option = document.createElement('option');
-        option.value = item.name; // Set the value
-        option.textContent = item.name; // Set the display text
-        userNameDropdown.appendChild(option);
-    });
+  // Create and append new options based on API data
+  data.forEach(function (item) {
+    var option = document.createElement("option");
+    option.value = item.name; // Set the value
+    option.textContent = item.name; // Set the display text
+    userNameDropdown.appendChild(option);
+  });
 
-    // Add a placeholder option
-    var placeholderOption = document.createElement('option');
-    placeholderOption.value = ""; // Set an empty value
-    placeholderOption.textContent = "Select Supplier Name"; // Set placeholder text
-    placeholderOption.disabled = true; // Disable the option
-    placeholderOption.selected = true; // Select the option by default
-    userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
+  // Add a placeholder option
+  var placeholderOption = document.createElement("option");
+  placeholderOption.value = ""; // Set an empty value
+  placeholderOption.textContent = "Select Supplier Name"; // Set placeholder text
+  placeholderOption.disabled = true; // Disable the option
+  placeholderOption.selected = true; // Select the option by default
+  userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
 }
 
 function populateDropdown1(data) {
-    var userNameDropdown = document.getElementById('product');
-    userNameDropdown.innerHTML = ''; // Clear existing options
-    // Add a hardcoded option
-    var hardcodedOption = document.createElement('option');
-    hardcodedOption.value = "CASH"; // Set the value for the hardcoded option
-    hardcodedOption.textContent = "CASH"; // Set the display text for the hardcoded option
-    userNameDropdown.appendChild(hardcodedOption);
+  var userNameDropdown = document.getElementById("product");
+  userNameDropdown.innerHTML = ""; // Clear existing options
+  // Add a hardcoded option
+  var hardcodedOption = document.createElement("option");
+  hardcodedOption.value = "CASH"; // Set the value for the hardcoded option
+  hardcodedOption.textContent = "CASH"; // Set the display text for the hardcoded option
+  userNameDropdown.appendChild(hardcodedOption);
 
-    // Create and append new options based on API data
-    data.forEach(function (item) {
-        var option = document.createElement('option');
-        option.value = item.name; // Set the value
-        option.textContent = item.name; // Set the display text
-        userNameDropdown.appendChild(option);
-    });
+  // Create and append new options based on API data
+  data.forEach(function (item) {
+    var option = document.createElement("option");
+    option.value = item.name; // Set the value
+    option.textContent = item.name; // Set the display text
+    userNameDropdown.appendChild(option);
+  });
 
-    // Add a placeholder option
-    var placeholderOption = document.createElement('option');
-    placeholderOption.value = ""; // Set an empty value
-    placeholderOption.textContent = "Select Online Account"; // Set placeholder text
-    placeholderOption.disabled = true; // Disable the option
-    placeholderOption.selected = true; // Select the option by default
-    userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
+  // Add a placeholder option
+  var placeholderOption = document.createElement("option");
+  placeholderOption.value = ""; // Set an empty value
+  placeholderOption.textContent = "Select Online Account"; // Set placeholder text
+  placeholderOption.disabled = true; // Disable the option
+  placeholderOption.selected = true; // Select the option by default
+  userNameDropdown.insertBefore(placeholderOption, userNameDropdown.firstChild);
 }
 
-
-
-document.getElementById('paymentForm').addEventListener('submit', async function(event) {
+document
+  .getElementById("paymentForm")
+  .addEventListener("submit", async function (event) {
     event.preventDefault(); // Prevent default form submission
-console.log("jahsafhfa")
-var sessionData = JSON.parse(localStorage.getItem('sessionData'));
-// function form2(){
+    console.log("jahsafhfa");
+    var sessionData = JSON.parse(localStorage.getItem("sessionData"));
+    // function form2(){
     var formData = {
-        date: document.getElementById('date').value,
-        from_account: document.getElementById('product').value,
-        to_account: document.getElementById('bata').value,
-        comment: document.getElementById('comment').value,
-        mobile_no: document.getElementById('number').value,
-        prev_balance: parseInt(document.getElementById('previousBalance').value) || 0,
-        amounr: parseInt(document.getElementById('amount').value) || 0 ,
-        cash: parseInt(document.getElementById('bill_cash').value) || 0 ,
-        online: parseInt(document.getElementById('online').value) || 0 ,
-        SupplierAccount:  document.getElementById('SupplierAccount').value || "Dummy",
-        discount: parseInt(document.getElementById('discount').value) || 0 ,
-        added_by: sessionData[0].name     
+      date: document.getElementById("date").value,
+      from_account: document.getElementById("product").value,
+      to_account: document.getElementById("bata").value,
+      comment: document.getElementById("comment").value,
+      mobile_no: document.getElementById("number").value,
+      prev_balance:
+        parseFloat(parseFloat(document.getElementById("previousBalance").value).toFixed(2)) || 0,
+      amounr: parseFloat(parseFloat(document.getElementById("amount").value).toFixed(2)) || 0,
+      cash: parseFloat(parseFloat(document.getElementById("bill_cash").value).toFixed(2)) || 0,
+      online: parseFloat(parseFloat(document.getElementById("online").value).toFixed(2)) || 0,
+      SupplierAccount:
+        document.getElementById("SupplierAccount").value || "Dummy",
+      discount: parseFloat(parseFloat(document.getElementById("discount").value).toFixed(2)) || 0,
+      added_by: sessionData[0].name,
     };
-    var loader = document.getElementById('loader');
-    loader.style.display = 'block';
+    var loader = document.getElementById("loader");
+    loader.style.display = "block";
 
-
-    await fetch('http://103.174.102.89:3000/paymentData/insertPayment', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
+    await fetch("http://94.136.190.129:3000/paymentData/insertPayment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
     })
-    .then(response => {
-        console.log("DTAASS")
+      .then((response) => {
+        console.log("DTAASS");
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json();
-    })
-    .then(result => {
-        loader.style.display = 'none';
-        console.log('Entry added successfully:', result);
-        console.log(result.insertId)
-        openModal(result.insertId)
+      })
+      .then((result) => {
+        loader.style.display = "none";
+        console.log("Entry added successfully:", result);
+        console.log(result.insertId);
+        openModal(result.insertId);
         // Swal.fire({
         //     icon: 'success',
         //     title: 'Success!',
         //     text: 'Payment Data is added Successfully',
         //     })
         // window.location.reload();
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-
-});
-
-
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  });
 
 function openModal(item) {
-    // Your code to open the modal with the data from 'item'
-    console.log("Opening modal for item:", item);
-    var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+  // Your code to open the modal with the data from 'item'
+  console.log("Opening modal for item:", item);
+  var loader = document.getElementById("loader");
+  loader.style.display = "block";
 
-    fetch('http://103.174.102.89:3000/paymentData/' + String(item))
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Populate dropdown with API data
-            console.log("AJAJAJ",data[0].date)
-            loader.style.display = 'none';
-            var utcDate = new Date(data[0].date);
-            var options = {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                timeZone: 'Asia/Kolkata'
-            };
+  fetch("http://94.136.190.129:3000/paymentData/" + String(item))
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // Populate dropdown with API data
+      console.log("AJAJAJ", data[0].date);
+      loader.style.display = "none";
+      var utcDate = new Date(data[0].date);
+      var options = {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        timeZone: "Asia/Kolkata",
+      };
 
+      var tableBody = document.getElementById("TableBody");
+      tableBody.innerHTML = ""; // Clear existing rows
 
-            var tableBody = document.getElementById("TableBody");
-            tableBody.innerHTML = ""; // Clear existing rows
+      var billDetails = [
+        { label: "तारीख:", value: utcDate.toLocaleString("en-IN", options) },
+        { label: "Payment Id", value: data[0].p_id },
+        { label: "Supplier:", value: data[0].to_account },
+        { label: "prev_balance", value: data[0].prev_balance },
+        { label: "Cash", value: data[0].cash },
+        { label: "Bank Account:", value: data[0].from_account },
+        { label: "Online", value: data[0].online },
+        { label: "Discount", value: data[0].discount },
+        { label: "comment", value: data[0].comment },
+        { label: "Net balance", value: data[0].amounr },
+        // Add other bill details similarly
+      ];
 
-            var billDetails = [
-                
-                { label: "तारीख:", value: utcDate.toLocaleString('en-IN', options) },
-                { label: "Payment Id", value:  data[0].p_id},
-                { label: "Supplier:", value: data[0].to_account },
-                { label: "prev_balance", value: data[0].prev_balance },
-                { label: "Cash", value: data[0].cash },
-                { label: "Bank Account:", value: data[0].from_account },
-                { label: "Online", value: data[0].online },
-                { label: "Discount", value: data[0].discount },
-                { label: "comment", value: data[0].comment },
-                { label: "Net balance", value: data[0].amounr }
-                // Add other bill details similarly
-            ];
-
-            billDetails.forEach(function (detail) {
-                var row = document.createElement("tr");
-                row.innerHTML = `
+      billDetails.forEach(function (detail) {
+        var row = document.createElement("tr");
+        row.innerHTML = `
                         <td><b>${detail.label}</b></td>
                         <td>${detail.value}</td>
                     `;
-                tableBody.appendChild(row);
-            });
+        tableBody.appendChild(row);
+      });
 
-            // document.getElementById('carate3100').textContent = data.reports[0].carate_100;
-            // document.getElementById('carate3150').textContent = data.reports[0].carate_150;
-            // document.getElementById('carate3250').textContent = data.reports[0].carate_250;
-            // document.getElementById('carate3350').textContent = data.reports[0].carate_350;
+      // document.getElementById('carate3100').textContent = data.reports[0].carate_100;
+      // document.getElementById('carate3150').textContent = data.reports[0].carate_150;
+      // document.getElementById('carate3250').textContent = data.reports[0].carate_250;
+      // document.getElementById('carate3350').textContent = data.reports[0].carate_350;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 
+  // Create a modal element
+  var modal = document.createElement("div");
+  modal.className = "modal";
 
+  // Create modal content
+  var modalContent = document.createElement("div");
+  modalContent.className = "modal-content";
+  // Add close button
+  var closeButton = document.createElement("span");
+  closeButton.className = "close";
+  closeButton.innerHTML = "&times;";
+  closeButton.onclick = function () {
+    modalContent.innerHTML = "";
+    modal.style.display = "none"; // Close the modal when close button is clicked
+    window.location.reload();
+  };
+  modalContent.appendChild(closeButton);
 
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-    // Create a modal element
-    var modal = document.createElement('div');
-    modal.className = 'modal';
-
-    // Create modal content
-    var modalContent = document.createElement('div');
-    modalContent.className = 'modal-content';
-    // Add close button
-    var closeButton = document.createElement('span');
-    closeButton.className = 'close';
-    closeButton.innerHTML = '&times;';
-    closeButton.onclick = function () {
-        modalContent.innerHTML = '';
-        modal.style.display = 'none'; // Close the modal when close button is clicked
-        window.location.reload();
-    };
-    modalContent.appendChild(closeButton);
-   
-
-    // Add item data to modal content
-    var itemData = document.createElement('div');
-    itemData.innerHTML = `
+  // Add item data to modal content
+  var itemData = document.createElement("div");
+  itemData.innerHTML = `
     <style>
     body {
         font-family: Arial, sans-serif;
@@ -233,6 +224,16 @@ function openModal(item) {
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 12px; /* Adjust font size */
+    }
+
+    .container2::after {
+    content: url("../../assets/img/logo.png"); /* Replace with your watermark image path */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the watermark */
+    opacity: 0.2; /* Adjust watermark opacity (0 for transparent, 1 for solid) */
+    z-index: -0; /* Place the watermark behind the content */
     }
 
     table {
@@ -360,29 +361,26 @@ function openModal(item) {
 
     `;
 
-    // Assign ID to itemData
-    itemData.id = 'printContent';
-    // Append modal content to modal
-    modalContent.appendChild(itemData);
+  // Assign ID to itemData
+  itemData.id = "printContent";
+  // Append modal content to modal
+  modalContent.appendChild(itemData);
 
-    // Append modal content to modal
-    modal.appendChild(modalContent);
+  // Append modal content to modal
+  modal.appendChild(modalContent);
 
-    // Display the modal
-    document.body.appendChild(modal);
-    modal.style.display = 'block';
+  // Display the modal
+  document.body.appendChild(modal);
+  modal.style.display = "block";
 
-    // Add event listener to the print button
-    var printButton = document.getElementById('printButton');
-    printButton.addEventListener('click', function () {
-        printJS({
-            printable: 'printContent', // ID of the element to print
-            type: 'html', // Type of content
-            scanStyles: true, // Scan for styles
-            targetStyles: ['*'] // Apply all styles
-        });
+  // Add event listener to the print button
+  var printButton = document.getElementById("printButton");
+  printButton.addEventListener("click", function () {
+    printJS({
+      printable: "printContent", // ID of the element to print
+      type: "html", // Type of content
+      scanStyles: true, // Scan for styles
+      targetStyles: ["*"], // Apply all styles
     });
+  });
 }
-
-
-

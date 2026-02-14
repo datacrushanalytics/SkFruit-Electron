@@ -1,920 +1,1135 @@
-
 function getElementValueWithDefault(id, defaultValue) {
-    var element = document.getElementById(id);
-    return element && element.value ? element.value : defaultValue;
+  var element = document.getElementById(id);
+  return element && element.value ? element.value : defaultValue;
 }
 function formatDate(dateString) {
-    var date = new Date(dateString);
-    var year = date.getFullYear();
-    var month = ('0' + (date.getMonth() + 1)).slice(-2);
-    var day = ('0' + date.getDate()).slice(-2);
-    return year + '-' + month + '-' + day;
+  var date = new Date(dateString);
+  var year = date.getFullYear();
+  var month = ("0" + (date.getMonth() + 1)).slice(-2);
+  var day = ("0" + date.getDate()).slice(-2);
+  return year + "-" + month + "-" + day;
 }
 
-
-document.getElementById('loginForm1').addEventListener('submit', function(event) {
+document
+  .getElementById("loginForm1")
+  .addEventListener("submit", async function (event) {
     event.preventDefault(); // Prevent form submission
     fetchDataAndProcess();
-});
-
+  });
 
 function fetchDataAndProcess(data = null) {
-    if(!data){
-        var data = {
-            from_date: formatDate(document.getElementById("fromdate").value),
-            to_date: formatDate(document.getElementById("todate").value),
-            added_by : getElementValueWithDefault('user', '*'),
-            route: getElementValueWithDefault('route', '*')
-        };
-    }
-    
-    var loader = document.getElementById('loader');
-    loader.style.display = 'block';
-    return fetch('http://103.174.102.89:3000/dailyReport', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json'
-        }
+  if (!data) {
+    var data = {
+      from_date: formatDate(document.getElementById("fromdate").value),
+      to_date: formatDate(document.getElementById("todate").value),
+      added_by: getElementValueWithDefault("user", "*"),
+      route: getElementValueWithDefault("route", "*"),
+    };
+  }
+
+  var loader = document.getElementById("loader");
+  loader.style.display = "block";
+  return fetch("http://94.136.190.129:3000/dailyReport", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (response.status === 404) {
+        loader.style.display = "none";
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No data found.",
+        });
+        throw new Error("Data not found");
+      }
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
     })
-    .then(response => {
-        if (response.status === 404) {
-            loader.style.display = 'none';
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'No data found.',
-              });
-            throw new Error('Data not found');
-        }
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
+    .then((result) => {
+      loader.style.display = "none";
+      console.log(result);
+      populateTable4(result);
+      populateTable5(result);
+      return result;
     })
-    .then(result => {
-        loader.style.display = 'none';
-        console.log(result);
-        populateTable4(result);
-        populateTable5(result);
-        return result;
-    })
-    .catch(error => {
-        console.error('Error:', error);
+    .catch((error) => {
+      console.error("Error:", error);
     });
 }
 
-
 function populateTable4(data) {
-    var tbody = document.getElementById('tableBody');
-    tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['added_by','bill_no', 'date', 'cust_name', 'route','amount', 'cash', 'online_amt', 'discount', 'inCarat', 'carate_amount','balance','validate'];
-    var counter = 1;
-    if (data.reports.length === 0) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'No data found.',
-          });       
-    }
-    var grandTotals = {
-        amount: 0,
-        cash: 0,
-        online_amt: 0,
-        discount: 0,
-        inCarat: 0,
-        carate_amount: 0
-    };
-    data.reports.forEach(function(item) {
-        var row = tbody.insertRow();
-        var cell = row.insertCell();
-        cell.textContent = counter++;
-        columnsToDisplay.forEach(function(key) {
-            var cell = row.insertCell();
-            if (key === 'date') {
-                var utcDate = new Date(item[key]);
-                var options = {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    timeZone: 'Asia/Kolkata'
-                };
-                cell.textContent = utcDate.toLocaleString('en-IN', options);
-            } else if(key === 'validate') {
-                if(item[key]=='Pending'){
-                    //let buttonContainer = document.getElementById('buttonContainer');
+    // Get user session data edit and verify for super only
+  var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+  var isSuperAdmin = sessionData && sessionData[0].status === 'Super';
+  var tbody = document.getElementById("tableBody");
+  tbody.innerHTML = ""; // Clear existing rows
+  var columnsToDisplay = [
+    "added_by",
+    "bill_no",
+    "date",
+    "cust_name",
+    "route",
+    "amount",
+    "cash",
+    "online_amt",
+    "discount",
+    "inCarat",
+    "carate_amount",
+    "balance",
+    "validate",
+  ];
+  var counter = 1;
+  if (data.reports.length === 0) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "No data found.",
+    });
+  }
+  var grandTotals = {
+    amount: 0,
+    cash: 0,
+    online_amt: 0,
+    discount: 0,
+    inCarat: 0,
+    carate_amount: 0,
+  };
+  data.reports.forEach(function (item) {
+    var row = tbody.insertRow();
+    var cell = row.insertCell();
+    cell.textContent = counter++;
+    columnsToDisplay.forEach(function (key) {
+      var cell = row.insertCell();
+      if (key === "date") {
+        var utcDate = new Date(item[key]);
+        var options = {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          timeZone: "Asia/Kolkata",
+        };
+        cell.textContent = utcDate.toLocaleString("en-IN", options);
+      } else if (key === "validate") {
+        if (item[key] == "Pending") {
+          //let buttonContainer = document.getElementById('buttonContainer');
 
-                    var buttonContainer = document.createElement('div');
-                    buttonContainer.className = 'button-container';
+     
 
 
-                    let button = document.createElement('button');
-                    button.textContent = "Edit";
-                    button.className = 'button';
-                    button.style.backgroundColor = '#26a653';
-                    button.onclick = function() {
-                        localStorage.removeItem('saleData');
-                        console.log('Editing Sale: ' + JSON.stringify(item));
-                        localStorage.setItem('saleData', JSON.stringify(item));
-                        window.location.href = './validateSale.html';
-                    };
-
-                    buttonContainer.appendChild(button);
-                    //cell.appendChild(button);
 
 
-                    // Create the second button
-                    let button2 = document.createElement('button');
-                    button2.textContent = "Verify"; // Change this to the desidarkgrey button text
-                    button2.className = 'button';
-                    button2.style.backgroundColor = '#18b3a4';
-                    button2.onclick = async function() {
-                        // Add the functionality for the second button here
-                        console.log('Another action for receipt: ' + JSON.stringify(item));
-                        // You can add more actions or navigation here
+          // Only show Edit and Verify buttons for Super Admin
+    if (isSuperAdmin) {
+           var buttonContainer = document.createElement("div");
+          buttonContainer.className = "button-container";
+      // Edit button
+      let button = document.createElement("button");
+      button.textContent = "Edit";
+      button.className = "button";
+      button.style.backgroundColor = "#26a653";
+      button.onclick = function () {
+        localStorage.removeItem("saleData");
+        console.log("Editing Sale: " + JSON.stringify(item));
+        localStorage.setItem("saleData", JSON.stringify(item));
+        window.location.href = "./validateSale.html";
+      };
+      buttonContainer.appendChild(button);
+      
 
-                        var loader = document.getElementById('loader');
-            loader.style.display = 'block';
-            await fetch('http://103.174.102.89:3000/saleData/validate/'+ String(item.bill_no), {
-                method: 'GET',
+          // Create the second button  Verify button
+          let button2 = document.createElement("button");
+          button2.textContent = "Verify"; // Change this to the desidarkgrey button text
+          button2.className = "button";
+          button2.style.backgroundColor = "#18b3a4";
+          button2.onclick = async function () {
+            // Add the functionality for the second button here
+            console.log("Another action for receipt: " + JSON.stringify(item));
+            // You can add more actions or navigation here
+
+            var loader = document.getElementById("loader");
+            loader.style.display = "block";
+            await fetch(
+              "http://94.136.190.129:3000/saleData/validate/" +
+                String(item.bill_no),
+              {
+                method: "GET",
                 headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => {
-                    console.log("DTAASS")
-                    if (!response.ok) {
-                        loader.style.display = 'none';
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: "Sale Bill is not Verified",
-                          });
-                        throw new Error('Network response was not ok');
-                        
-                    }
-                    return response.json();
-                })
-                .then(result => {
-                    loader.style.display = 'none';
-                    console.log('Entry added successfully:', result);
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: 'Sale Bill is Verified Successfully',
-                        })
-            
-                    fetchDataAndProcess();
-                    // window.location.reload();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-
-                    };
-
-                    buttonContainer.appendChild(button2);
-                    cell.appendChild(buttonContainer);
-
-
-                }else {
-                    cell.textContent = item[key];
-                    row.style.backgroundColor = "#90EE90";
-                }
-            } else {
-                cell.textContent = item[key];
-                if (['amount', 'cash', 'online_amt', 'discount', 'inCarat', 'carate_amount'].includes(key)) {
-                    grandTotals[key] += parseFloat(item[key]) || 0;
-                }
-            }
-        });
-
-
-        // Add button to open popup
-        var buttonCell = row.insertCell();
-        var openPopupButton = document.createElement('button');
-        openPopupButton.className = 'button';
-        openPopupButton.style.backgroundColor = '#26a653';
-        openPopupButton.textContent = 'View';
-        openPopupButton.addEventListener('click', function () {
-            // console.log(item.summary.split('(')[0])
-            openModal(item.bill_no); // Pass the data item to the openPopup function for Sale
-            //openModal(item); // Pass the data item to the openPopup function
-        });
-        buttonCell.appendChild(openPopupButton);
-
-
-        var buttonCell = row.insertCell();
-        // Container for the buttons
-        var buttonContainer = document.createElement('div');
-        buttonContainer.className = 'button-container';
-
-        var openPopupButton = document.createElement('button');
-        openPopupButton.className = 'button';
-        openPopupButton.style.backgroundColor = '#C48B58';
-        var billIcon = document.createElement('i');
-        billIcon.className = 'fa-sharp fa-regular fa-envelope'; 
-        openPopupButton.appendChild(billIcon);
-        //openPopupButton.textContent = 'Bill';
-        openPopupButton.addEventListener('click', async function () {
-            
-            var loader = document.getElementById('loader');
-            loader.style.display = 'block';
-            await fetch('http://103.174.102.89:3000/sms/saleMessage', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
+                  "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                        "mobile_no" : item.mobile_no,
-                        "orderValue": item.amount,
-                        "paid": item.cash + item.online_amt,
-                        "remaining": item.balance
-                })
-            })
-                .then(response => {
-                    console.log("DTAASS")
-                    if (!response.ok) {
-                        loader.style.display = 'none';
-              
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'SMS is failed with some error',
-                          });
-                        throw new Error('Network response was not ok');
-                        
-                    }
-                    return response.json();
-                })
-                .then(result => {
-                    loader.style.display = 'none';
-                    console.log('Entry added successfully:', result);
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: 'SMS Sent Successfully',
-                        })
-                    //window.location.reload();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
+              }
+            )
+              .then((response) => {
+                console.log("DTAASS");
+                if (!response.ok) {
+                  loader.style.display = "none";
+                  Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Sale Bill is not Verified",
+                  });
+                  throw new Error("Network response was not ok");
+                }
+                return response.json();
+              })
+              .then((result) => {
+                loader.style.display = "none";
+                console.log("Entry added successfully:", result);
+
+                Swal.fire({
+                  icon: "success",
+                  title: "Success!",
+                  text: "Sale Bill is Verified Successfully",
                 });
 
-        });
-        buttonContainer.appendChild(openPopupButton);
+                fetchDataAndProcess();
+                // window.location.reload();
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+              });
+          };
+
+          buttonContainer.appendChild(button2);
+          cell.appendChild(buttonContainer);
+        } else{
+          // For non-Super Admin users, just show "Pending" text
+            cell.textContent = item[key];
+        } }
         
-        // Second button
-        var secondButton = document.createElement('button');
-        secondButton.className = 'button';
-        secondButton.style.backgroundColor = 'green';
-        var secondIcon = document.createElement('i');
-        secondIcon.className = 'fa-brands fa-whatsapp';
-        secondButton.appendChild(secondIcon);
-        //secondButton.textContent = 'Second Button'; // Change the text as needed
-        secondButton.addEventListener('click', async function () {
+        else {
+          cell.textContent = item[key];
+          row.style.backgroundColor = "#90EE90";
+        }
+      } else {
+        cell.textContent = item[key];
+        if (
+          [
+            "amount",
+            "cash",
+            "online_amt",
+            "discount",
+            "inCarat",
+            "carate_amount",
+          ].includes(key)
+        ) {
+          grandTotals[key] += parseFloat(parseFloat(item[key]).toFixed(2)) || 0;
+        }
+      }
+    });
 
-            var loader = document.getElementById('loader');
-            loader.style.display = 'block';
-            await fetch('http://103.174.102.89:3000/whatsapp/saleMessage', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "campaignName" : "SK_fruit_2",
-                    "mobile_no" : item.mobile_no,
-                    "userName" : item.cust_name,
-                    "orderValue" : item.amount,
-                    "paid" : item.cash + item.online_amt,
-                    "remaining" : item.balance
-                
-                })
-            })
-                .then(response => {
-                    console.log("DTAASS")
-                    if (!response.ok) {
-                        loader.style.display = 'none';
+    // Add button to open popup
+    var buttonCell = row.insertCell();
+    var openPopupButton = document.createElement("button");
+    openPopupButton.className = "button";
+    openPopupButton.style.backgroundColor = "#26a653";
+    openPopupButton.textContent = "View";
+    openPopupButton.addEventListener("click", function () {
+      // console.log(item.summary.split('(')[0])
+      openModal(item.bill_no); // Pass the data item to the openPopup function for Sale
+      //openModal(item); // Pass the data item to the openPopup function
+    });
+    buttonCell.appendChild(openPopupButton);
 
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Whatsapp message is failed with some error',
-                          });
-                        throw new Error('Network response was not ok');
-                        
-                    }
-                    return response.json();
-                })
-                .then(result => {
-                    loader.style.display = 'none';
-                    console.log('Entry added successfully:', result);
+    var buttonCell = row.insertCell();
+    // Container for the buttons
+    var buttonContainer = document.createElement("div");
+    buttonContainer.className = "button-container";
 
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: 'Whatsapp message Sent Successfully',
-                        })
-                    //window.location.reload();
-                    // fetchDataAndProcess();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+    var openPopupButton = document.createElement("button");
+    openPopupButton.className = "button";
+    openPopupButton.style.backgroundColor = "#C48B58";
+    var billIcon = document.createElement("i");
+    billIcon.className = "fa-sharp fa-regular fa-envelope";
+    openPopupButton.appendChild(billIcon);
+    //openPopupButton.textContent = 'Bill';
+    openPopupButton.addEventListener("click", async function () {
+      var loader = document.getElementById("loader");
+      loader.style.display = "block";
+      await fetch("http://94.136.190.129:3000/sms/saleMessage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          mobile_no: item.mobile_no,
+          orderValue: item.amount,
+          paid: item.cash + item.online_amt,
+          remaining: item.balance,
+        }),
+      })
+        .then((response) => {
+          console.log("DTAASS");
+          if (!response.ok) {
+            loader.style.display = "none";
 
-
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "SMS is failed with some error",
+            });
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((result) => {
+          loader.style.display = "none";
+          console.log("Entry added successfully:", result);
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "SMS Sent Successfully",
+          });
+          //window.location.reload();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
         });
-        buttonContainer.appendChild(secondButton);
-
-        // Append the button container to the cell
-        buttonCell.appendChild(buttonContainer);
-
-
-
     });
-    // Add row for grand total
-    var totalRow = tbody.insertRow();
-    totalRow.insertCell(); // Add empty cell for counter column
-    totalRow.insertCell(); // Add empty cell for date column
-    totalRow.insertCell(); // Add empty cell for customer name column
-    totalRow.insertCell(); // Add empty cell for route column
-    var grandTotalLabelCell = totalRow.insertCell();
-    grandTotalLabelCell.textContent = 'Grand Total';
-    grandTotalLabelCell.style.fontWeight = 'bold'; // Make "Grand Total" label bold
+    buttonContainer.appendChild(openPopupButton);
 
-    columnsToDisplay.slice(4).forEach(function(key) {
-        var totalCell = totalRow.insertCell();
-        totalCell.textContent = grandTotals[key] || '';
-        totalCell.style.fontWeight = 'bold'; // Make grand total values bold
+    // Second button
+    var secondButton = document.createElement("button");
+    secondButton.className = "button";
+    secondButton.style.backgroundColor = "green";
+    var secondIcon = document.createElement("i");
+    secondIcon.className = "fa-brands fa-whatsapp";
+    secondButton.appendChild(secondIcon);
+    //secondButton.textContent = 'Second Button'; // Change the text as needed
+    secondButton.addEventListener("click", async function () {
+      var loader = document.getElementById("loader");
+      loader.style.display = "block";
+      await fetch("http://94.136.190.129:3000/whatsapp/saleMessage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          campaignName: "SK_fruit_2",
+          mobile_no: item.mobile_no,
+          userName: item.cust_name,
+          orderValue: item.amount,
+          paid: item.cash + item.online_amt,
+          remaining: item.balance,
+        }),
+      })
+        .then((response) => {
+          console.log("DTAASS");
+          if (!response.ok) {
+            loader.style.display = "none";
+
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Whatsapp message is failed with some error",
+            });
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((result) => {
+          loader.style.display = "none";
+          console.log("Entry added successfully:", result);
+
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "Whatsapp message Sent Successfully",
+          });
+          //window.location.reload();
+          // fetchDataAndProcess();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     });
+    buttonContainer.appendChild(secondButton);
+
+    // Append the button container to the cell
+    buttonCell.appendChild(buttonContainer);
+
+    // Add Delete button for Super Admin
+    if (isSuperAdmin) {
+      var deleteCell = row.insertCell();
+      var deleteButton = document.createElement("button");
+      deleteButton.className = "button";
+      deleteButton.style.backgroundColor = "#ff355f";
+      deleteButton.textContent = "Delete";
+      deleteButton.addEventListener("click", function () {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "Do you really want to delete this sale?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            deleteSale(item.bill_no);
+          }
+        });
+      });
+      deleteCell.appendChild(deleteButton);
+    }
+  }
+
+);
+  // Add row for grand total
+  var totalRow = tbody.insertRow();
+  totalRow.insertCell(); // Add empty cell for counter column
+  totalRow.insertCell(); // Add empty cell for date column
+  totalRow.insertCell(); // Add empty cell for customer name column
+  totalRow.insertCell(); // Add empty cell for route column
+  var grandTotalLabelCell = totalRow.insertCell();
+  grandTotalLabelCell.textContent = "Grand Total";
+  grandTotalLabelCell.style.fontWeight = "bold"; // Make "Grand Total" label bold
+
+  columnsToDisplay.slice(4).forEach(function (key) {
+    var totalCell = totalRow.insertCell();
+    totalCell.textContent = grandTotals[key] || "";
+    totalCell.style.fontWeight = "bold"; // Make grand total values bold
+  });
 }
 
 function populateTable5(data) {
-    var tbody = document.getElementById('tableBody1');
-    tbody.innerHTML = ''; // Clear existing rows
-    var columnsToDisplay = ['receipt_id', 'added_by','date', 'Customer','cash', 'online_deposite_bank','online', 'discount', 'inCarat','note','previous_balance','validate'];
-    var counter = 1;
-    if (data.Receipt.length === 0) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'No data found.',
-          });
-    }
-    var grandTotals = {
-        cash: 0,
-        online: 0,
-        discount: 0,
-        inCarat: 0,
-        Amt: 0
-    };
-    data.Receipt.forEach(function(item) {
-        var row = tbody.insertRow();
-        var cell = row.insertCell();
-        cell.textContent = counter++;
-        columnsToDisplay.forEach(function(key) {
-            var cell = row.insertCell();
-            if (key === 'date') {
-                var utcDate = new Date(item[key]);
-                var options = {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    timeZone: 'Asia/Kolkata'
-                };
-                cell.textContent = utcDate.toLocaleString('en-IN', options);
-            } else if(key === 'validate') {
-                if(item[key]=='Pending'){
-                    //let buttonContainer = document.getElementById('buttonContainer');
+  // Get user session data
+  var sessionData = JSON.parse(localStorage.getItem('sessionData'));
+  var isSuperAdmin = sessionData && sessionData[0].status === 'Super';
 
-
-                    var buttonContainer = document.createElement('div');
-                    buttonContainer.className = 'button-container';
-
-                    let button1 = document.createElement('button');
-                    button1.textContent = "Edit";
-                    button1.style.backgroundColor = '#26a653';
-                    button1.className = 'button';
-                    button1.onclick = function() {
-                        localStorage.removeItem('receiptData');
-                        console.log('Editing receipt: ' + JSON.stringify(item));
-                        localStorage.setItem('receiptData', JSON.stringify(item));
-                        window.location.href = './validateReceipt.html';
-                    };
-
-                    buttonContainer.appendChild(button1);
-                    // cell.appendChild(button1);
-
-                    // Create the second button
-                    let button2 = document.createElement('button');
-                    button2.textContent = "Verify"; // Change this to the desidarkgrey button text
-                    button2.className = 'button';
-                    button2.style.backgroundColor = '#18b3a4';
-                    button2.onclick = async function() {
-                        // Add the functionality for the second button here
-                        console.log('Another action for receipt: ' + JSON.stringify(item));
-                        // You can add more actions or navigation here
-
-                        var loader = document.getElementById('loader');
-            loader.style.display = 'block';
-            await fetch('http://103.174.102.89:3000/receiptData/validate/'+ String(item.receipt_id), {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => {
-                    console.log("DTAASS")
-                    if (!response.ok) {
-                        loader.style.display = 'none';
-            
-
- Swal.fire({
-    icon: 'error',
-    title: 'Oops...',
-    text: 'Receipt is not Verified',
-  });
-                        throw new Error('Network response was not ok');
-                        
-                    }
-                    return response.json();
-                })
-                .then(result => {
-                    loader.style.display = 'none';
-                    console.log('Entry added successfully:', result);
-       
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: 'Receipt is Verified Successfully',
-                        })
-                    fetchDataAndProcess();
-                    
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-
-                    };
-
-                    buttonContainer.appendChild(button2);
-
-                    cell.appendChild(buttonContainer);
-                    
-                }else {
-                    cell.textContent = item[key];
-                    row.style.backgroundColor = "#90EE90";
-                }
-            } else {
-                cell.textContent = item[key];
-                if (['cash', 'online', 'discount', 'inCarat', 'Amt'].includes(key)) {
-                    grandTotals[key] += parseFloat(item[key]) || 0;
-                }
-            }
-        });
-
-
-        // Add button to open popup
-        var buttonCell = row.insertCell();
-        var openPopupButton = document.createElement('button');
-        openPopupButton.className = 'button';
-        openPopupButton.style.backgroundColor = '#26a653';
-        openPopupButton.textContent = 'View';
-        openPopupButton.addEventListener('click', function () {
-            // console.log(item.summary.split('(')[0])
-            openModal1(item); // Pass the data item to the openPopup function for Sale
-            //openModal(item); // Pass the data item to the openPopup function
-        });
-        buttonCell.appendChild(openPopupButton);
-
-
-        var buttonCell = row.insertCell();
-
-        // Container for the buttons
-        var buttonContainer = document.createElement('div');
-        buttonContainer.className = 'button-container';
-
-        var openPopupButton = document.createElement('button');
-        openPopupButton.className = 'button';
-        openPopupButton.style.backgroundColor = '#C48B58';
-        var billIcon = document.createElement('i');
-        billIcon.className = 'fa-sharp fa-regular fa-envelope'; 
-        openPopupButton.appendChild(billIcon);
-        //openPopupButton.textContent = 'Bill';
-        openPopupButton.addEventListener('click', async function () {
-            
-            var loader = document.getElementById('loader');
-            loader.style.display = 'block';
-            await fetch('http://103.174.102.89:3000/sms/receiptMessage', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "mobile_no" : item.mobile_no,
-                    "cash": item.cash,
-                    "online": item.online,
-                    "remaining": item.remaining
-                })
-            })
-                .then(response => {
-                    console.log("DTAASS")
-                    if (!response.ok) {
-                        loader.style.display = 'none';
-                    
-
- Swal.fire({
-    icon: 'error',
-    title: 'Oops...',
-    text: "SMS is failed with some error",
-  });
-                        throw new Error('Network response was not ok');
-                        
-                    }
-                    return response.json();
-                })
-                .then(result => {
-                    loader.style.display = 'none';
-                    console.log('Entry added successfully:', result);
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: 'SMS Sent Successfully',
-                        })
-                    //window.location.reload();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-
-        });
-        buttonContainer.appendChild(openPopupButton);
-        
-        // Second button
-        var secondButton = document.createElement('button');
-        secondButton.className = 'button';
-        secondButton.style.backgroundColor = 'green';
-        var secondIcon = document.createElement('i');
-        secondIcon.className = 'fa-brands fa-whatsapp';
-        secondButton.appendChild(secondIcon);
-        //secondButton.textContent = 'Second Button'; // Change the text as needed
-        secondButton.addEventListener('click', async function () {
-
-            var loader = document.getElementById('loader');
-            loader.style.display = 'block';
-            await fetch('http://103.174.102.89:3000/whatsapp/receiptMessage', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "campaignName" : "SK_fruits_Reciept",
-                    "mobile_no" : item.mobile_no,
-                    "userName" : item.Customer,
-                    "paid" : parseInt(item.cash) + parseInt(item.online),
-                    "remaining" : item.remaining
-                })
-            })
-                .then(response => {
-                    console.log("DTAASS")
-                    if (!response.ok) {
-                        loader.style.display = 'none';
-                    
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: "Whatsapp message is failed with some error",
-                          });
-                        throw new Error('Network response was not ok');
-                        
-                    }
-                    return response.json();
-                })
-                .then(result => {
-                    loader.style.display = 'none';
-                    console.log('Entry added successfully:', result);
-            
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: 'Whatsapp message Sent Successfully',
-                        })
-                    //window.location.reload();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-
-
-        });
-        buttonContainer.appendChild(secondButton);
-
-        // Append the button container to the cell
-        buttonCell.appendChild(buttonContainer);
-
+  var tbody = document.getElementById("tableBody1");
+  tbody.innerHTML = ""; // Clear existing rows
+  var columnsToDisplay = [
+    "receipt_id",
+    "added_by",
+    "date",
+    "Customer",
+    "cash",
+    "online_deposite_bank",
+    "online",
+    "discount",
+    "inCarat",
+    "note",
+    "remaining",
+    "validate",
+  ];
+  var counter = 1;
+  if (data.Receipt.length === 0) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "No data found.",
     });
-    // Add row for grand total
-    var totalRow = tbody.insertRow();
-    totalRow.insertCell(); // Add empty cell for counter column
-    totalRow.insertCell(); // Add empty cell for date column
-    totalRow.insertCell(); // Add empty cell for customer column
-    totalRow.insertCell(); // Add empty cell for mobile number column
-    totalRow.insertCell(); // Add empty cell for note column
-    var grandTotalLabelCell = totalRow.insertCell();
-    grandTotalLabelCell.textContent = 'Grand Total';
-    grandTotalLabelCell.style.fontWeight = 'bold'; // Make "Grand Total" label bold
+  }
+  var grandTotals = {
+    cash: 0,
+    online: 0,
+    discount: 0,
+    inCarat: 0,
+    Amt: 0,
+  };
+  data.Receipt.forEach(function (item) {
+    var row = tbody.insertRow();
+    var cell = row.insertCell();
+    cell.textContent = counter++;
+    columnsToDisplay.forEach(function (key) {
+      var cell = row.insertCell();
+      if (key === "date") {
+        var utcDate = new Date(item[key]);
+        var options = {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          timeZone: "Asia/Kolkata",
+        };
+        cell.textContent = utcDate.toLocaleString("en-IN", options);
+      } else if (key === "validate") {
+        if (item[key] == "Pending") {
+          //let buttonContainer = document.getElementById('buttonContainer');
 
-    columnsToDisplay.slice(5).forEach(function(key) {
-        var totalCell = totalRow.insertCell();
-        switch (key) {
-            case 'Amt':
-                totalCell.textContent = data.GrandReceipt['receiptAmt'];
-                break;
-            case 'online':
-                totalCell.textContent = data.GrandReceipt['receiptOnline'];
-                break;
-            case 'cash':
-                totalCell.textContent = data.GrandReceipt['receiptCash'];
-                break;
-            case 'discount':
-                totalCell.textContent = data.GrandReceipt['receiptDiscount'];
-                break;
-            case 'inCarat':
-                totalCell.textContent = data.GrandReceipt['receiptInCarat'];
-                break;
-            default:
-                totalCell.textContent = '';
+          var buttonContainer = document.createElement("div");
+          buttonContainer.className = "button-container";
+          if(isSuperAdmin){
+          let button1 = document.createElement("button");
+          button1.textContent = "Edit";
+          button1.style.backgroundColor = "#26a653";
+          button1.className = "button";
+          button1.onclick = function () {
+            localStorage.removeItem("receiptData");
+            console.log("Editing receipt: " + JSON.stringify(item));
+            localStorage.setItem("receiptData", JSON.stringify(item));
+            window.location.href = "./validateReceipt.html";
+          };
+
+          buttonContainer.appendChild(button1);
+          // cell.appendChild(button1);
+
+          // Create the second button
+          let button2 = document.createElement("button");
+          button2.textContent = "Verify"; // Change this to the desidarkgrey button text
+          button2.className = "button";
+          button2.style.backgroundColor = "#18b3a4";
+          button2.onclick = async function () {
+            // Add the functionality for the second button here
+            console.log("Another action for receipt: " + JSON.stringify(item));
+            // You can add more actions or navigation here
+
+            var loader = document.getElementById("loader");
+            loader.style.display = "block";
+            await fetch(
+              "http://94.136.190.129:3000/receiptData/validate/" +
+                String(item.receipt_id),
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            )
+              .then((response) => {
+                console.log("DTAASS");
+                if (!response.ok) {
+                  loader.style.display = "none";
+
+                  Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Receipt is not Verified",
+                  });
+                  throw new Error("Network response was not ok");
+                }
+                return response.json();
+              })
+              .then((result) => {
+                loader.style.display = "none";
+                console.log("Entry added successfully:", result);
+
+                Swal.fire({
+                  icon: "success",
+                  title: "Success!",
+                  text: "Receipt is Verified Successfully",
+                });
+                fetchDataAndProcess();
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+              });
+          };
+
+          buttonContainer.appendChild(button2);
+
+          cell.appendChild(buttonContainer);
+        }else{
+          // For non-Super Admin users, just show "Pending" text
+    cell.textContent = item[key];
         }
-        totalCell.style.fontWeight = 'bold'; // Make grand total values bold
+        
+      }else {
+          cell.textContent = item[key];
+          row.style.backgroundColor = "#90EE90";
+        }
+      } else {
+        cell.textContent = item[key];
+        if (["cash", "online", "discount", "inCarat", "Amt"].includes(key)) {
+          grandTotals[key] += parseFloat(parseFloat(item[key]).toFixed(2)) || 0;
+        }
+      }
     });
 
+    // Add button to open popup
+    var buttonCell = row.insertCell();
+    var openPopupButton = document.createElement("button");
+    openPopupButton.className = "button";
+    openPopupButton.style.backgroundColor = "#26a653";
+    openPopupButton.textContent = "View";
+    openPopupButton.addEventListener("click", function () {
+      // console.log(item.summary.split('(')[0])
+      openModal1(item); // Pass the data item to the openPopup function for Sale
+      //openModal(item); // Pass the data item to the openPopup function
+    });
+    buttonCell.appendChild(openPopupButton);
 
+    var buttonCell = row.insertCell();
 
-    document.getElementById('sale').textContent = data.GrandSale['saleAmount'] || 0;
-    document.getElementById('saleCash').textContent =data.GrandSale['saleCash'] || 0;
-    document.getElementById('receiptCash').textContent = data.GrandReceipt['receiptCash'] || 0;
-    document.getElementById('receiptOnline').textContent = data.GrandReceipt['receiptOnline'] || 0;
-    document.getElementById('saleOnline').textContent = data.GrandSale['saleOnline'] || 0;
-    document.getElementById('saleDiscount').textContent = data.GrandSale['saleDiscount'] || 0;
-    document.getElementById('saleInCarat').textContent = data.GrandSale['saleInCarat'] || 0;
-    document.getElementById('saleCarate').textContent = data.GrandSale['saleCarate'] || 0;
-    document.getElementById('receiptDiscount').textContent = data.GrandReceipt['receiptDiscount'] || 0;
-    document.getElementById('receiptInCarat').textContent = data.GrandReceipt['receiptInCarat'] || 0;
-    document.getElementById('grandSale').textContent = data.GrandSale['saleAmount'] || 0;
-    document.getElementById('grandCash').textContent = data.GrandSale['saleCash'] + data.GrandReceipt['receiptCash'];
-    document.getElementById('grandOnline').textContent = data.GrandReceipt['receiptOnline'] + data.GrandSale['saleOnline'];
-    document.getElementById('grandDiscount').textContent = data.GrandReceipt['receiptDiscount'] + data.GrandSale['saleDiscount'];
-    document.getElementById('grandTotal').textContent = data.GrandSale['saleCash'] + data.GrandReceipt['receiptCash'] + data.GrandReceipt['receiptOnline'] + data.GrandSale['saleOnline'];
-    document.getElementById('grandInCarate').textContent = data.GrandSale['saleInCarat']+ data.GrandReceipt['receiptInCarat'];
-    document.getElementById('grandOutCarate').textContent =  data.GrandSale['saleCarate'] 
+    // Container for the buttons
+    var buttonContainer = document.createElement("div");
+    buttonContainer.className = "button-container";
 
+    var openPopupButton = document.createElement("button");
+    openPopupButton.className = "button";
+    openPopupButton.style.backgroundColor = "#C48B58";
+    var billIcon = document.createElement("i");
+    billIcon.className = "fa-sharp fa-regular fa-envelope";
+    openPopupButton.appendChild(billIcon);
+    //openPopupButton.textContent = 'Bill';
+    openPopupButton.addEventListener("click", async function () {
+      var loader = document.getElementById("loader");
+      loader.style.display = "block";
+      await fetch("http://94.136.190.129:3000/sms/receiptMessage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          mobile_no: item.mobile_no,
+          cash: item.cash,
+          online: item.online,
+          remaining: item.remaining,
+        }),
+      })
+        .then((response) => {
+          console.log("DTAASS");
+          if (!response.ok) {
+            loader.style.display = "none";
+
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "SMS is failed with some error",
+            });
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((result) => {
+          loader.style.display = "none";
+          console.log("Entry added successfully:", result);
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "SMS Sent Successfully",
+          });
+          //window.location.reload();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+    buttonContainer.appendChild(openPopupButton);
+
+    // Second button
+    var secondButton = document.createElement("button");
+    secondButton.className = "button";
+    secondButton.style.backgroundColor = "green";
+    var secondIcon = document.createElement("i");
+    secondIcon.className = "fa-brands fa-whatsapp";
+    secondButton.appendChild(secondIcon);
+    //secondButton.textContent = 'Second Button'; // Change the text as needed
+    secondButton.addEventListener("click", async function () {
+      var loader = document.getElementById("loader");
+      loader.style.display = "block";
+      await fetch("http://94.136.190.129:3000/whatsapp/receiptMessage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          campaignName: "SK_fruits_Reciept",
+          mobile_no: item.mobile_no,
+          userName: item.Customer,
+          paid: parseFloat(parseFloat(item.cash).toFixed(2)) + parseFloat(parseFloat(item.online).toFixed(2)),
+          remaining: item.remaining,
+        }),
+      })
+        .then((response) => {
+          console.log("DTAASS");
+          if (!response.ok) {
+            loader.style.display = "none";
+
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Whatsapp message is failed with some error",
+            });
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((result) => {
+          loader.style.display = "none";
+          console.log("Entry added successfully:", result);
+
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "Whatsapp message Sent Successfully",
+          });
+          //window.location.reload();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+    buttonContainer.appendChild(secondButton);
+
+    // Append the button container to the cell
+    buttonCell.appendChild(buttonContainer);
+
+    // Add Delete button for Super Admin
+    if (isSuperAdmin) {
+      var deleteCell = row.insertCell();
+      var deleteButton = document.createElement("button");
+      deleteButton.className = "button";
+      deleteButton.style.backgroundColor = "#ff355f";
+      deleteButton.textContent = "Delete";
+      deleteButton.addEventListener("click", function () {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "Do you really want to delete this receipt?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            deleteReceipt(item.receipt_id);
+          }
+        });
+      });
+      deleteCell.appendChild(deleteButton);
+    }
+  });
+  // Add row for grand total
+  var totalRow = tbody.insertRow();
+  totalRow.insertCell(); // Add empty cell for counter column
+  totalRow.insertCell(); // Add empty cell for date column
+  totalRow.insertCell(); // Add empty cell for customer column
+  totalRow.insertCell(); // Add empty cell for mobile number column
+  totalRow.insertCell(); // Add empty cell for note column
+  var grandTotalLabelCell = totalRow.insertCell();
+  grandTotalLabelCell.textContent = "Grand Total";
+  grandTotalLabelCell.style.fontWeight = "bold"; // Make "Grand Total" label bold
+
+  columnsToDisplay.slice(5).forEach(function (key) {
+    var totalCell = totalRow.insertCell();
+    switch (key) {
+      case "Amt":
+        totalCell.textContent = data.GrandReceipt["receiptAmt"];
+        break;
+      case "online":
+        totalCell.textContent = data.GrandReceipt["receiptOnline"];
+        break;
+      case "cash":
+        totalCell.textContent = data.GrandReceipt["receiptCash"];
+        break;
+      case "discount":
+        totalCell.textContent = data.GrandReceipt["receiptDiscount"];
+        break;
+      case "inCarat":
+        totalCell.textContent = data.GrandReceipt["receiptInCarat"];
+        break;
+      default:
+        totalCell.textContent = "";
+    }
+    totalCell.style.fontWeight = "bold"; // Make grand total values bold
+  });
+
+  document.getElementById("sale").textContent =
+    data.GrandSale["saleAmount"] || 0;
+  document.getElementById("saleCash").textContent =
+    data.GrandSale["saleCash"] || 0;
+  document.getElementById("receiptCash").textContent =
+    data.GrandReceipt["receiptCash"] || 0;
+  document.getElementById("receiptOnline").textContent =
+    data.GrandReceipt["receiptOnline"] || 0;
+  document.getElementById("saleOnline").textContent =
+    data.GrandSale["saleOnline"] || 0;
+  document.getElementById("saleDiscount").textContent =
+    data.GrandSale["saleDiscount"] || 0;
+  document.getElementById("saleInCarat").textContent =
+    data.GrandSale["saleInCarat"] || 0;
+  document.getElementById("saleCarate").textContent =
+    data.GrandSale["saleCarate"] || 0;
+  document.getElementById("receiptDiscount").textContent =
+    data.GrandReceipt["receiptDiscount"] || 0;
+  document.getElementById("receiptInCarat").textContent =
+    data.GrandReceipt["receiptInCarat"] || 0;
+  document.getElementById("grandSale").textContent =
+    data.GrandSale["saleAmount"] || 0;
+  document.getElementById("grandCash").textContent =
+    data.GrandSale["saleCash"] + data.GrandReceipt["receiptCash"];
+  document.getElementById("grandOnline").textContent =
+    data.GrandReceipt["receiptOnline"] + data.GrandSale["saleOnline"];
+  document.getElementById("grandDiscount").textContent =
+    data.GrandReceipt["receiptDiscount"] + data.GrandSale["saleDiscount"];
+  document.getElementById("grandTotal").textContent =
+    data.GrandSale["saleCash"] +
+    data.GrandReceipt["receiptCash"] +
+    data.GrandReceipt["receiptOnline"] +
+    data.GrandSale["saleOnline"];
+  // document.getElementById('grandInCarate').textContent = data.GrandSale['saleInCarat']+ data.GrandReceipt['receiptInCarat'];
+  // document.getElementById('grandOutCarate').textContent =  data.GrandSale['saleCarate']
+}
+
+function deleteReceipt(receiptId) {
+  fetch("http://94.136.190.129:3000/receiptReport/deleteReceiptReport/" + receiptId, {
+    method: "DELETE",
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Receipt deleted successfully",
+      });
+      fetchDataAndProcess();
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "Failed to delete receipt",
+      });
+    });
+}
+
+function deleteSale(billNo) {
+  fetch("http://94.136.190.129:3000/saleData/deletesaleId/" + billNo, {
+    method: "DELETE",
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Sale deleted successfully",
+      });
+      fetchDataAndProcess();
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "Failed to delete sale",
+      });
+    });
 }
 
 async function exportToExcel() {
-    try {
-        const data = await fetchDataAndProcess();
+  try {
+    const data = await fetchDataAndProcess();
 
-        var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+    var loader = document.getElementById("loader");
+    loader.style.display = "block";
 
-        return fetch('http://103.174.102.89:3000/dailyReport/generate-pdf', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => {
-            if (response.status === 404) {
-                loader.style.display = 'none';
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'No data found.',
-                  });
-                throw new Error('Data not found');
-            }
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.blob(); // Get the response as a Blob
-        })
-        .then(blob => {
-            loader.style.display = 'none';
-
-            // Create a URL for the Blob and trigger a download
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = url;
-            a.download = 'dailyReport.pdf'; // Set the desidarkgrey file name
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url); // Release the URL
-
-            console.log('PDF downloaded successfully');
-        })
-        .catch(error => {
-            loader.style.display = 'none';
-            console.error('Error:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Error generating PDF. Please try again.',
-              });
-        });
-    } catch (error) {
-        console.error('Error:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Error generating PDF. Please try again.',
+    return fetch("http://94.136.190.129:3000/dailyReport/generate-pdf", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.status === 404) {
+          loader.style.display = "none";
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "No data found.",
           });
-    }
+          throw new Error("Data not found");
+        }
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.blob(); // Get the response as a Blob
+      })
+      .then((blob) => {
+        loader.style.display = "none";
+
+        // Create a URL for the Blob and trigger a download
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = "dailyReport.pdf"; // Set the desidarkgrey file name
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url); // Release the URL
+
+        console.log("PDF downloaded successfully");
+      })
+      .catch((error) => {
+        loader.style.display = "none";
+        console.error("Error:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Error generating PDF. Please try again.",
+        });
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Error generating PDF. Please try again.",
+    });
+  }
 }
 
-
-
-
 function openModal(item) {
-    // Your code to open the modal with the data from 'item'
-    console.log("Opening modal for item:", item);
-    
+  // Your code to open the modal with the data from 'item'
+  console.log("Opening modal for item:", item);
 
-    fetch('http://103.174.102.89:3000/bill/' + item)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
+  fetch("http://94.136.190.129:3000/bill/" + item)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
     })
-    .then(data => {
-        // Populate dropdown with API data
-        console.log(data)
+    .then((data) => {
+      // Populate dropdown with API data
+      console.log(data);
 
-        var utcDate = new Date(data.results[0].date);
-        var options = {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            timeZone: 'Asia/Kolkata'
+      var utcDate = new Date(data.results[0].date);
+      var options = {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        timeZone: "Asia/Kolkata",
+      };
+
+      function convertToIST(dateString) {
+        const utcDate = new Date(dateString); // Parse the UTC date
+        const options = {
+          timeZone: "Asia/Kolkata",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
         };
+        return utcDate.toLocaleString("en-IN", options);
+      }
 
+      var tableBody = document.getElementById("TableBody");
+      tableBody.innerHTML = ""; // Clear existing rows
+      const currentDate = new Date(); // Get the current date and time
+      const timestamp = currentDate.toLocaleString("en-IN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+      }); // Format onl
+      var billDetails = [
+        {
+          label: "बिल क्र.:" + item,
+          value:
+            "तारीख:" +
+            utcDate.toLocaleString("en-IN", options) +
+            " (" +
+            convertToIST(data.results[0].created_at) +
+            ")",
+        },
+        {
+          label: "ग्राहकाचे नाव:" + data.results[0].cust_name,
+          value: "संपर्क क्र.:" + data.results[0].mobile_no,
+        },
+        {
+          label: "पत्ता:" + data.results[0].address,
+          value: "संदर्भ :  " + data.results[0].comment,
+        },
+        // Add other bill details similarly
+      ];
 
-        function convertToIST(dateString) {
-            const utcDate = new Date(dateString); // Parse the UTC date
-            const options = {
-                timeZone: 'Asia/Kolkata',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: true
-            };
-            return utcDate.toLocaleString('en-IN', options);
-        }
-
-        var tableBody = document.getElementById("TableBody");
-        tableBody.innerHTML = ""; // Clear existing rows
-        const currentDate = new Date(); // Get the current date and time
-        const timestamp = currentDate.toLocaleString('en-IN', { 
-            hour: '2-digit', 
-            minute: '2-digit', 
-            second: '2-digit', 
-            hour12: true 
-        }); // Format onl
-        var billDetails = [
-            { label: "बिल क्र.:" + item.bill_no, value: "तारीख:" + utcDate.toLocaleString('en-IN', options) },
-            { label: "ग्राहकाचे नाव:"+ data.results[0].cust_name, value: "संपर्क क्र.:" + data.results[0].mobile_no },
-            { label: "पत्ता:" + data.results[0].address,   value: "Time:   " + convertToIST(data.results[0].created_at) },
-            // Add other bill details similarly
-        ];
-
-        billDetails.forEach(function (detail) {
-            var row = document.createElement("tr");
-            row.innerHTML = `
+      billDetails.forEach(function (detail) {
+        var row = document.createElement("tr");
+        row.innerHTML = `
                     <td><b>${detail.label}</b></td>
                     <td>${detail.value}</td>
                 `;
-            tableBody.appendChild(row);
+        tableBody.appendChild(row);
+      });
+
+      var tablefooter = document.getElementById("tablefooter");
+      tablefooter.innerHTML = ""; // Clear existing rows
+
+      const label =
+        "आत्ता पर्यंतचे येणे बाकी कॅरेट : " +
+        (data.results[0].baki_100 > 0
+          ? "100 X " + data.results[0].baki_100 + " "
+          : "") +
+        (data.results[0].baki_150 > 0
+          ? "150 X " + data.results[0].baki_150 + " "
+          : "") +
+        (data.results[0].baki_250 > 0
+          ? "250 X " + data.results[0].baki_250 + " "
+          : "") +
+        (data.results[0].baki_350 > 0
+          ? "350 X " + data.results[0].baki_350
+          : "");
+
+      const label1 =
+        "गेलेले कॅरेट : " +
+        (data.results[0].in_carate_100 > 0
+          ? "100 X " + data.results[0].in_carate_100 + " "
+          : "") +
+        (data.results[0].in_carate_150 > 0
+          ? "150 X " + data.results[0].in_carate_150 + " "
+          : "") +
+        (data.results[0].in_carate_250 > 0
+          ? "250 X " + data.results[0].in_carate_250 + " "
+          : "") +
+        (data.results[0].in_carate_350 > 0
+          ? "350 X " + data.results[0].in_carate_350
+          : "");
+
+      const label2 =
+        "जमा कॅरेट : " +
+        (data.results[0].out_carate_100 > 0
+          ? "100 X " + data.results[0].out_carate_100 + " "
+          : "") +
+        (data.results[0].out_carate_150 > 0
+          ? "150 X " + data.results[0].out_carate_150 + " "
+          : "") +
+        (data.results[0].out_carate_250 > 0
+          ? "250 X " + data.results[0].out_carate_250 + " "
+          : "") +
+        (data.results[0].out_carate_350 > 0
+          ? "350 X " + data.results[0].out_carate_350
+          : "");
+
+      var showLabels = true;
+      if (data.results[0].cr_dr_type == "no") {
+        showLabels = false;
+      }
+
+      var footerDetails = [
+        // { label: "गेलेले कॅरेट : 100 X  " + data.results[0].in_carate_100 + "  150 X  " + data.results[0].in_carate_150 + "  250 X  " + data.results[0].in_carate_250 + "  350 X  " +  data.results[0].in_carate_350, value: data.results[0].carate_amount },
+        {
+          label: label1.trim(),
+          value: data.results[0].carate_amount,
+          visible: showLabels,
+        },
+        {
+          label: "चालू कलम रक्कम:",
+          value: data.results[0].amount,
+          visible: true,
+        },
+        {
+          label: "मागील बाकी:",
+          value: data.results[0].pre_balance,
+          visible: true,
+        },
+        {
+          label: "एकूण रक्कम:",
+          value: data.results[0].total_amount,
+          visible: true,
+        },
+        { label: "रोख जमा रक्कम:", value: data.results[0].cash, visible: true },
+        {
+          label: "ऑनलाईन जमा रक्कम (जमा बँक) :",
+          value:
+            data.results[0].online_amt + "(" + data.results[0].online_acc + ")",
+          visible: true,
+        },
+        // { label: "ऑनलाईन जमा बँक :", value: data.results[0].online_acc, visible: true },
+        // { label: "ऑनलाईन जमा रक्कम:", value: data.results[0].online_amt, visible: true },
+        { label: "सूट रक्कम:", value: data.results[0].discount, visible: true },
+        // { label: "जमा कॅरेट: 100 X  " + data.results[0].out_carate_100 + "  150 X  " + data.results[0].out_carate_150 + "  250 X  " + data.results[0].out_carate_250 + "  350 X  " +  data.results[0].out_carate_350, value: data.results[0].inCarat },
+        {
+          label: label2.trim(),
+          value: data.results[0].inCarat,
+          visible: showLabels,
+        },
+        { label: label.trim(), value: "", visible: showLabels },
+        {
+          label: "आत्ता पर्यंतचे येणे बाकी:",
+          value: data.results[0].balance,
+          visible: true,
+        },
+        //{ label: "बाकी कॅरेट : 100 X  " + data.results[0].carate_100 + "  150 X  " + data.results[0].carate_150 + "  250 X  " + data.results[0].carate_250 + "  350 X  " +  data.results[0].carate_350, value: ''}
+
+        // Add other bill details similarly
+      ];
+
+      footerDetails.forEach(function (detail) {
+        var row = document.createElement("tr");
+        row.innerHTML = `
+                    <td align="right" colspan="6" style="text-align:right;"><font color="black">${detail.label}</font></td>
+                    `;
+
+        if (detail.visible) {
+          row.innerHTML += `<td align="right" colspan="1" style="text-align:right;"><font color="black">${detail.value}</font></td>`;
+        }
+        tablefooter.appendChild(row);
+      });
+
+      // document.getElementById('carate1100').textContent = data.results[0].in_carate_100;
+      // document.getElementById('carate1150').textContent = data.results[0].in_carate_150;
+      // document.getElementById('carate1250').textContent = data.results[0].in_carate_250;
+      // document.getElementById('carate1350').textContent = data.results[0].in_carate_350;
+      // document.getElementById('carate2100').textContent = data.results[0].out_carate_100;
+      // document.getElementById('carate2150').textContent = data.results[0].out_carate_150;
+      // document.getElementById('carate2250').textContent = data.results[0].out_carate_250;
+      // document.getElementById('carate2350').textContent = data.results[0].out_carate_350;
+      // document.getElementById('carate3100').textContent = data.results[0].carate_100;
+      // document.getElementById('carate3150').textContent = data.results[0].carate_150;
+      // document.getElementById('carate3250').textContent = data.results[0].carate_250;
+      // document.getElementById('carate3350').textContent = data.results[0].carate_350;
+
+      // Populate table with fetched data
+      var itemsTableBody = document.getElementById("itemsTableBody");
+      itemsTableBody.innerHTML = ""; // Clear existing rows
+      var columnsToDisplay = [
+        "product",
+        "bata",
+        "mark",
+        "quantity",
+        "rate",
+        "price",
+      ];
+      var counter = 1;
+      itemsTableBody.classList.add("align-right");
+      data.products.forEach(function (item) {
+        var row = itemsTableBody.insertRow();
+        var cell = row.insertCell();
+        cell.textContent = counter++;
+        cell.style.textAlign = "right"; // Align text to the right
+        columnsToDisplay.forEach(function (key) {
+          var cell = row.insertCell();
+          cell.textContent = item[key];
+          cell.style.textAlign = "right"; // Align text to the right
         });
-
-
-        var tablefooter = document.getElementById("tablefooter");
-        tablefooter.innerHTML = ""; // Clear existing rows
-
-        const label = 
-            "आत्ता पर्यंतचे येणे बाकी कॅरेट : " +
-            (data.results[0].baki_100 > 0 ? "100 X " + data.results[0].baki_100 + " " : "") +
-            (data.results[0].baki_150 > 0 ? "150 X " + data.results[0].baki_150 + " " : "") +
-            (data.results[0].baki_250 > 0 ? "250 X " + data.results[0].baki_250 + " " : "") +
-            (data.results[0].baki_350 > 0 ? "350 X " + data.results[0].baki_350 : "");
-
-        const label1 = 
-            "गेलेले कॅरेट : " +
-            (data.results[0].in_carate_100 > 0 ? "100 X " + data.results[0].in_carate_100 + " " : "") +
-            (data.results[0].in_carate_150 > 0 ? "150 X " + data.results[0].in_carate_150 + " " : "") +
-            (data.results[0].in_carate_250 > 0 ? "250 X " + data.results[0].in_carate_250 + " " : "") +
-            (data.results[0].in_carate_350 > 0 ? "350 X " + data.results[0].in_carate_350 : "");
-
-        const label2 = 
-            "जमा कॅरेट : " +
-            (data.results[0].out_carate_100 > 0 ? "100 X " + data.results[0].out_carate_100 + " " : "") +
-            (data.results[0].out_carate_150 > 0 ? "150 X " + data.results[0].out_carate_150 + " " : "") +
-            (data.results[0].out_carate_250 > 0 ? "250 X " + data.results[0].out_carate_250 + " " : "") +
-            (data.results[0].out_carate_350 > 0 ? "350 X " + data.results[0].out_carate_350 : "");
-
-        var showLabels  = true
-        if (data.results[0].cr_dr_type == 'no') { showLabels = false }
-
-        var footerDetails = [
-            // { label: "गेलेले कॅरेट : 100 X  " + data.results[0].in_carate_100 + "  150 X  " + data.results[0].in_carate_150 + "  250 X  " + data.results[0].in_carate_250 + "  350 X  " +  data.results[0].in_carate_350, value: data.results[0].carate_amount },
-            { label: label1.trim(), value: data.results[0].carate_amount, visible: showLabels },
-            { label: "चालू कलम रक्कम:", value: data.results[0].amount, visible: true },
-            { label: "मागील बाकी:", value: data.results[0].pre_balance , visible: true},
-            { label: "एकूण रक्कम:", value: data.results[0].total_amount, visible: true },
-            { label: "रोख जमा रक्कम:", value: data.results[0].cash, visible: true },
-            { label: "ऑनलाईन जमा बँक (जमा रक्कम) :", value: data.results[0].online_acc + '(' + data.results[0].online_amt + ')', visible: true },
-            // { label: "ऑनलाईन जमा बँक :", value: data.results[0].online_acc, visible: true },
-            // { label: "ऑनलाईन जमा रक्कम:", value: data.results[0].online_amt, visible: true },
-            { label: "सूट रक्कम:", value: data.results[0].discount, visible: true },
-            // { label: "जमा कॅरेट: 100 X  " + data.results[0].out_carate_100 + "  150 X  " + data.results[0].out_carate_150 + "  250 X  " + data.results[0].out_carate_250 + "  350 X  " +  data.results[0].out_carate_350, value: data.results[0].inCarat },
-            { label: label2.trim(), value: data.results[0].inCarat, visible: showLabels },
-            { label: label.trim(), value: '', visible: showLabels},
-            { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.results[0].balance, visible: true },
-            //{ label: "बाकी कॅरेट : 100 X  " + data.results[0].carate_100 + "  150 X  " + data.results[0].carate_150 + "  250 X  " + data.results[0].carate_250 + "  350 X  " +  data.results[0].carate_350, value: ''} 
-            
-            // Add other bill details similarly
-        ];
-
-        footerDetails.forEach(function (detail) {
-            var row = document.createElement("tr");
-            row.innerHTML = `
-                <td align="right" colspan="6" style="text-align:right;"><font color="black">${detail.label}</font></td>
-                <td align="right" colspan="1" style="text-align:right;"><font color="black">${detail.value}</font></td>
-                `;
-            tablefooter.appendChild(row);
-        });
-
-        // document.getElementById('carate1100').textContent = data.results[0].in_carate_100;
-        // document.getElementById('carate1150').textContent = data.results[0].in_carate_150;
-        // document.getElementById('carate1250').textContent = data.results[0].in_carate_250;
-        // document.getElementById('carate1350').textContent = data.results[0].in_carate_350;
-        // document.getElementById('carate2100').textContent = data.results[0].out_carate_100;
-        // document.getElementById('carate2150').textContent = data.results[0].out_carate_150;
-        // document.getElementById('carate2250').textContent = data.results[0].out_carate_250;
-        // document.getElementById('carate2350').textContent = data.results[0].out_carate_350;
-        // document.getElementById('carate3100').textContent = data.results[0].carate_100;
-        // document.getElementById('carate3150').textContent = data.results[0].carate_150;
-        // document.getElementById('carate3250').textContent = data.results[0].carate_250;
-        // document.getElementById('carate3350').textContent = data.results[0].carate_350;
-
-
-        // Populate table with fetched data
-        var itemsTableBody = document.getElementById("itemsTableBody");
-        itemsTableBody.innerHTML = ""; // Clear existing rows
-        var columnsToDisplay = ['product','bata', 'mark','quantity', 'rate', 'price'];
-        var counter = 1;
-        itemsTableBody.classList.add('align-right');
-        data.products.forEach(function (item) {
-            var row = itemsTableBody.insertRow();
-            var cell = row.insertCell();
-            cell.textContent = counter++;
-            cell.style.textAlign = "right"; // Align text to the right
-            columnsToDisplay.forEach(function (key) {
-                var cell = row.insertCell();
-                cell.textContent = item[key];
-                cell.style.textAlign = "right"; // Align text to the right
-            });
-        });
-
-
+      });
     })
-    .catch(error => {
-        console.error('Error:', error);
+    .catch((error) => {
+      console.error("Error:", error);
     });
 
-// Create a modal element
-var modal = document.createElement('div');
-modal.className = 'modal';
+  // Create a modal element
+  var modal = document.createElement("div");
+  modal.className = "modal";
 
-// Create modal content
-var modalContent = document.createElement('div');
-modalContent.className = 'modal-content';
-// Add close button
-var closeButton = document.createElement('span');
-closeButton.className = 'close';
-closeButton.innerHTML = '&times;';
-closeButton.onclick = function () {
-    modalContent.innerHTML = '';
-    modal.style.display = 'none'; // Close the modal when close button is clicked
-};
-modalContent.appendChild(closeButton);
+  // Create modal content
+  var modalContent = document.createElement("div");
+  modalContent.className = "modal-content";
+  // Add close button
+  var closeButton = document.createElement("span");
+  closeButton.className = "close";
+  closeButton.innerHTML = "&times;";
+  closeButton.onclick = function () {
+    modalContent.innerHTML = "";
+    modal.style.display = "none"; // Close the modal when close button is clicked
+  };
+  modalContent.appendChild(closeButton);
 
-
-// Add item data to modal content
-var itemData = document.createElement('div');
-itemData.innerHTML = `
+  // Add item data to modal content
+  var itemData = document.createElement("div");
+  itemData.innerHTML = `
 <style>   
 body {
     font-family: Arial, sans-serif;
@@ -1005,6 +1220,16 @@ border: none; /* Removes the table's border */
     font-size: 12px; /* Adjust font size */
     font-weight: bold;
 }
+    .container2::after {
+    content: url("../../assets/img/logo.png"); /* Replace with your watermark image path */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the watermark */
+    opacity: 0.2; /* Adjust watermark opacity (0 for transparent, 1 for solid) */
+    z-index: -0; /* Place the watermark behind the content */
+    }
+
 .tablefooter {
     width: 100%;
     border-collapse: separate;
@@ -1042,85 +1267,98 @@ cursor: pointer;
 transition: background-color 0.3s;
 }
 
-
-
 @media print {
-  @page {
-    size: A5 portrait; /* A5 paper size in portrait orientation */
-    margin: 5mm; /* Reduced margins */
-  }
 
-  .details, .header-details, .close {
-    display: none; /* Hide unnecessary elements when printing */
-  }
-
-  body {
-    border: 2px solid #000; /* Black border surrounding the entire content */
-    margin: 0;
-    padding: 0;
-    background-color: #e8e6e4; /* Light gray background */
-    width: 156mm;
-    height: 210mm;
-    box-sizing: border-box; /* Include borders in width/height calculations */
-    -webkit-print-color-adjust: exact; /* Ensure background color prints in WebKit-based browsers */
-    color-adjust: exact; /* Standard property for consistent printing */
-  }
-
-  .content {
-    background-color: #e8e6e4; /* Light gray background for the bill content */
-    border: 2px solid #000; /* Black border surrounding the content */
-    border-radius: 5px;
-    width: 138mm; /* Fit within reduced margins */
-    height: auto;
-    margin: 0 auto;
-    padding: 10px; /* Internal padding for spacing */
-    box-sizing: border-box; /* Ensure padding doesn't affect width */
-    -webkit-print-color-adjust: exact; /* Ensure content background color prints */
-    color-adjust: exact;
-  }
-
-  header {
-    text-align: center;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #000; /* Bottom border for the header */
-    padding-bottom: 5px;
-  }
-
-  header img {
-    display: block;
-    margin: 0 auto; /* Center the image */
-    max-width: 100%; /* Ensure the image is responsive */
-    width: 100%; /* Full width of the content area */
-    height: auto;
-    box-sizing: border-box; /* Ensure image width fits within the border */
-  }
-
-  table {
-    width: 100%; /* Full width for table */
-    border-collapse: collapse; /* Remove gaps between cells */
-    margin-top: 10px;
-    border: none;
-  }
-
-  th, td {
-    padding: 5px; /* Optimized padding for reduced page size */
-    text-align: left;
-    font-size: 11px; /* Slightly smaller font size to fit content */
-  }
-
-  th {
-    background-color: #e8e6e4; /* Light gray background for headers */
-    font-size: 12px;
-    -webkit-print-color-adjust: exact; /* Ensure header background color prints */
-    color-adjust: exact;
-  }
-
-  footer {
-    margin-top: 15px;
-    text-align: center;
-    font-size: 11px; /* Footer font size adjusted */
-  }
+@page {
+size: A5 portrait; /* A5 paper size in portrait orientation */
+margin: 5mm; /* Reduced margins */
 }
+
+.details, .header-details, .close {
+display: none; /* Hide unnecessary elements when printing */
+}
+
+body {
+border: 2px solid #000; /* Black border surrounding the entire content */
+margin: 0;
+padding: 0;
+background-color: #e8e6e4; /* Light gray background */
+width: 156mm;
+height: 210mm;
+box-sizing: border-box; /* Include borders in width/height calculations */
+-webkit-print-color-adjust: exact; /* Ensure background color prints in WebKit-based browsers */
+color-adjust: exact; /* Standard property for consistent printing */
+}
+
+.content {
+background-color: #e8e6e4; /* Light gray background for the bill content */
+border: 2px solid #000; /* Black border surrounding the content */
+border-radius: 5px;
+width: 138mm; /* Fit within reduced margins */
+height: auto;
+margin: 0 auto;
+padding: 10px; /* Internal padding for spacing */
+box-sizing: border-box; /* Ensure padding doesn't affect width */
+-webkit-print-color-adjust: exact; /* Ensure content background color prints */
+color-adjust: exact;
+}
+
+.content::after {
+    content: url("../../assets/img/logo.png"); /* Replace with your watermark image path */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the watermark */
+    opacity: 0.2; /* Adjust watermark opacity (0 for transparent, 1 for solid) */
+    z-index: -0; /* Place the watermark behind the content */
+    }
+
+header {
+text-align: center;
+margin-bottom: 10px;
+border-bottom: 1px solid #000; /* Bottom border for the header */
+padding-bottom: 5px;
+}
+
+header img {
+display: block;
+margin: 0 auto; /* Center the image */
+max-width: 100%; /* Ensure the image is responsive */
+width: 100%; /* Full width of the content area */
+height: auto;
+box-sizing: border-box; /* Ensure image width fits within the border */
+}
+
+
+
+table {
+width: 100%; /* Full width for table */
+border-collapse: collapse; /* Remove gaps between cells */
+margin-top: 10px;
+border: none;
+}
+
+th, td {
+padding: 5px; /* Optimized padding for reduced page size */
+text-align: left;
+font-size: 11px; /* Slightly smaller font size to fit content */
+}
+
+th {
+background-color: #e8e6e4; /* Light gray background for headers */
+font-size: 12px;
+-webkit-print-color-adjust: exact; /* Ensure header background color prints */
+color-adjust: exact;
+}
+
+footer {
+margin-top: 15px;
+text-align: center;
+font-size: 11px; /* Footer font size adjusted */
+}
+
+}
+
 
 
 
@@ -1197,174 +1435,230 @@ color: #666;
 
 `;
 
-// Assign ID to itemData
-itemData.id = 'printContent';
-// Append modal content to modal
-modalContent.appendChild(itemData);
+  // Assign ID to itemData
+  itemData.id = "printContent";
+  // Append modal content to modal
+  modalContent.appendChild(itemData);
 
-// Append modal content to modal
-modal.appendChild(modalContent);
+  // Append modal content to modal
+  modal.appendChild(modalContent);
 
-// Display the modal
-document.body.appendChild(modal);
-modal.style.display = 'block';
+  // Display the modal
+  document.body.appendChild(modal);
+  modal.style.display = "block";
 
-// Add event listener to the print button
-var printButton = document.getElementById('printButton');
-printButton.addEventListener('click', function () {
+  // Add event listener to the print button
+  var printButton = document.getElementById("printButton");
+  printButton.addEventListener("click", function () {
     printJS({
-        printable: 'printContent', // ID of the element to print
-        type: 'html', // Type of content
-        scanStyles: true, // Scan for styles
-        targetStyles: ['*'] // Apply all styles
+      printable: "printContent", // ID of the element to print
+      type: "html", // Type of content
+      scanStyles: true, // Scan for styles
+      targetStyles: ["*"], // Apply all styles
     });
-});
+  });
 }
 
-
-
 function openModal1(item) {
-    // Your code to open the modal with the data from 'item'
-    console.log("Opening receipt modal for item:", item);
-    var loader = document.getElementById('loader');
-        loader.style.display = 'block';
+  // Your code to open the modal with the data from 'item'
+  console.log("Opening receipt modal for item:", item);
+  var loader = document.getElementById("loader");
+  loader.style.display = "block";
 
-        fetch('http://103.174.102.89:3000/receiptReport/' + item.receipt_id)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Populate dropdown with API data
-            console.log(data)
-            loader.style.display = 'none';
-            var utcDate = new Date(data.reports[0].date);
-            var options = {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                timeZone: 'Asia/Kolkata'
-            };
+  fetch("http://94.136.190.129:3000/receiptReport/" + item.receipt_id)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // Populate dropdown with API data
+      console.log(data);
+      loader.style.display = "none";
+      var utcDate = new Date(data.reports[0].date);
+      var options = {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        timeZone: "Asia/Kolkata",
+      };
 
+      function convertToIST(dateString) {
+        const utcDate = new Date(dateString); // Parse the UTC date
+        const options = {
+          timeZone: "Asia/Kolkata",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        };
+        return utcDate.toLocaleString("en-IN", options);
+      }
 
-            function convertToIST(dateString) {
-                const utcDate = new Date(dateString); // Parse the UTC date
-                const options = {
-                    timeZone: 'Asia/Kolkata',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit',
-                    hour12: true
-                };
-                return utcDate.toLocaleString('en-IN', options);
-            }
+      var tableBody = document.getElementById("TableBody");
+      tableBody.innerHTML = ""; // Clear existing rows
 
-            var tableBody = document.getElementById("TableBody");
-            tableBody.innerHTML = ""; // Clear existing rows
-
-            const currentDate = new Date(); // Get the current date and time
-            const timestamp = currentDate.toLocaleString('en-IN', { 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                second: '2-digit', 
-                hour12: true 
-            }); // Format only the time (HH:MM:SS AM/PM)
-            var billDetails = [
-                { label: "जमा पावती क्र.:   " + item.receipt_id, value: "तारीख:   " + utcDate.toLocaleString('en-IN', options) },
-                { label: "ग्राहकाचे नाव:   " + data.reports[0].Customer, value: "संपर्क क्र.:   " + data.reports[0].mobile_no },
-                { label: "पत्ता:   " + data.reports[0].address, value: "Time:   " + convertToIST(data.reports[0].created_at) },
-            ];
-            billDetails.forEach(function (detail) {
-                var row = document.createElement("tr");
-                row.innerHTML = `
+      const currentDate = new Date(); // Get the current date and time
+      const timestamp = currentDate.toLocaleString("en-IN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+      }); // Format only the time (HH:MM:SS AM/PM)
+      var billDetails = [
+        {
+          label: "जमा पावती क्र.:   " + item.receipt_id,
+          value: "तारीख:   " + utcDate.toLocaleString("en-IN", options),
+        },
+        {
+          label: "ग्राहकाचे नाव:   " + data.reports[0].Customer,
+          value: "संपर्क क्र.:   " + data.reports[0].mobile_no,
+        },
+        {
+          label: "पत्ता:   " + data.reports[0].address,
+          value: "Time:   " + convertToIST(data.reports[0].created_at),
+        },
+      ];
+      billDetails.forEach(function (detail) {
+        var row = document.createElement("tr");
+        row.innerHTML = `
                         <td><b>${detail.label}</b></td>
                         <td>${detail.value}</td>
                     `;
-                tableBody.appendChild(row);
-            });
+        tableBody.appendChild(row);
+      });
 
-            var tablefooter = document.getElementById("tablefooter");
-            tablefooter.innerHTML = ""; // Clear existing rows
+      var tablefooter = document.getElementById("tablefooter");
+      tablefooter.innerHTML = ""; // Clear existing rows
 
+      const label =
+        "बाकी कॅरेट : " +
+        (data.reports[0].carate_100 > 0
+          ? "100 X " + data.reports[0].carate_100 + " "
+          : "") +
+        (data.reports[0].carate_150 > 0
+          ? "150 X " + data.reports[0].carate_150 + " "
+          : "") +
+        (data.reports[0].carate_250 > 0
+          ? "250 X " + data.reports[0].carate_250 + " "
+          : "") +
+        (data.reports[0].carate_350 > 0
+          ? "350 X " + data.reports[0].carate_350
+          : "");
 
-            const label = 
-                "बाकी कॅरेट : " +
-                (data.reports[0].carate_100 > 0 ? "100 X " + data.reports[0].carate_100 + " " : "") +
-                (data.reports[0].carate_150 > 0 ? "150 X " + data.reports[0].carate_150 + " " : "") +
-                (data.reports[0].carate_250 > 0 ? "250 X " + data.reports[0].carate_250 + " " : "") +
-                (data.reports[0].carate_350 > 0 ? "350 X " + data.reports[0].carate_350 : "");
+      const label1 =
+        "जमा कॅरेट : " +
+        (data.reports[0].c100 > 0
+          ? "100 X " + data.reports[0].c100 + " "
+          : "") +
+        (data.reports[0].c150 > 0
+          ? "150 X " + data.reports[0].c150 + " "
+          : "") +
+        (data.reports[0].c250 > 0
+          ? "250 X " + data.reports[0].c250 + " "
+          : "") +
+        (data.reports[0].c350 > 0 ? "350 X " + data.reports[0].c350 : "");
 
-            const label1 = 
-                "जमा कॅरेट : " +
-                (data.reports[0].c100 > 0 ? "100 X " + data.reports[0].c100 + " " : "") +
-                (data.reports[0].c150 > 0 ? "150 X " + data.reports[0].c150 + " " : "") +
-                (data.reports[0].c250 > 0 ? "250 X " + data.reports[0].c250 + " " : "") +
-                (data.reports[0].c350 > 0 ? "350 X " + data.reports[0].c350 : "");
+      const label2 =
+        "आत्ता पर्यंतचे येणे बाकी कॅरेट: " +
+        (data.reports[0].baki_100 > 0
+          ? "100 X " + data.reports[0].baki_100 + " "
+          : "") +
+        (data.reports[0].baki_150 > 0
+          ? "150 X " + data.reports[0].baki_150 + " "
+          : "") +
+        (data.reports[0].baki_250 > 0
+          ? "250 X " + data.reports[0].baki_250 + " "
+          : "") +
+        (data.reports[0].baki_350 > 0
+          ? "350 X " + data.reports[0].baki_350
+          : "");
 
-            const label2 = 
-                "आत्ता पर्यंतचे येणे बाकी कॅरेट: " +
-                (data.reports[0].baki_100 > 0 ? "100 X " + data.reports[0].baki_100 + " " : "") +
-                (data.reports[0].baki_150 > 0 ? "150 X " + data.reports[0].baki_150 + " " : "") +
-                (data.reports[0].baki_250 > 0 ? "250 X " + data.reports[0].baki_250 + " " : "") +
-                (data.reports[0].baki_350 > 0 ? "350 X " + data.reports[0].baki_350 : "");
+      var showLabels = true;
+      if (data.reports[0].cr_dr_type == "no") {
+        showLabels = false;
+      }
 
-            var footerDetails = [
-                //{ label: "गेलेले कॅरेट : +", value: data.results[0].carate_amount },
-                //{ label: "चालू कलम रक्कम:", value: data.results[0].amount },
-                { label: "मागील बाकी:", value: data.reports[0].previous_balance },
-                // { label: "बाकी कॅरेट : 100 X  " + data.reports[0].carate_100 + "  150 X  " + data.reports[0].carate_150 + "  250 X  " + data.reports[0].carate_250 + "  350 X  " +  data.reports[0].carate_350, value: ''},
-                { label: label.trim(), value: ''},
-                //{ label: "एकूण रक्कम:", value: data.results[0].total_amount },
-                { label: "रोख जमा रक्कम:", value: data.reports[0].PaidAmt },
-                { label: "ऑनलाईन जमा बँक (जमा रक्कम) :", value: data.reports[0].online_deposite_bank + '(' + data.reports[0].onlineAmt + ')' },
-                // { label: "ऑनलाईन जमा रक्कम:", value: data.reports[0].onlineAmt },
-                { label: "सूट रक्कम:", value: data.reports[0].discount },
-                // { label: "जमा कॅरेट:  -" + "100 * " +data.reports[0].c100 +" | 150 * " + data.reports[0].c150+ " | 250 * " +data.reports[0].c250 + " | 350 * " + data.reports[0].c350, value: data.reports[0].inCarat },
-                { label: label1.trim(), value: data.reports[0].inCarat },
-                { label: label2.trim(), value: '' },  
-                { label: "आत्ता पर्यंतचे येणे बाकी:", value: data.reports[0].Balance },  
-                // Add other bill details similarly
-            ];
-            
+      var footerDetails = [
+        //{ label: "गेलेले कॅरेट : +", value: data.results[0].carate_amount },
+        //{ label: "चालू कलम रक्कम:", value: data.results[0].amount },
+        {
+          label: "मागील बाकी:",
+          value: data.reports[0].previous_balance,
+          visible: true,
+        },
+        // { label: "बाकी कॅरेट : 100 X  " + data.reports[0].carate_100 + "  150 X  " + data.reports[0].carate_150 + "  250 X  " + data.reports[0].carate_250 + "  350 X  " +  data.reports[0].carate_350, value: ''},
+        { label: label.trim(), value: "", visible: showLabels },
+        //{ label: "एकूण रक्कम:", value: data.results[0].total_amount },
+        {
+          label: "रोख जमा रक्कम:",
+          value: data.reports[0].PaidAmt,
+          visible: true,
+        },
+        {
+          label: "जमा रक्कम  (ऑनलाईन जमा बँक) :",
+          value:
+            data.reports[0].onlineAmt +
+            "(" +
+            data.reports[0].online_deposite_bank +
+            ")",
+          visible: true,
+        },
+        // { label: "ऑनलाईन जमा रक्कम:", value: data.reports[0].onlineAmt },
+        { label: "सूट रक्कम:", value: data.reports[0].discount, visible: true },
+        // { label: "जमा कॅरेट:  -" + "100 * " +data.reports[0].c100 +" | 150 * " + data.reports[0].c150+ " | 250 * " +data.reports[0].c250 + " | 350 * " + data.reports[0].c350, value: data.reports[0].inCarat },
+        {
+          label: label1.trim(),
+          value: data.reports[0].inCarat,
+          visible: showLabels,
+        },
+        { label: label2.trim(), value: "", visible: showLabels },
+        {
+          label: "आत्ता पर्यंतचे येणे बाकी:",
+          value: data.reports[0].Balance,
+          visible: true,
+        },
+        // Add other bill details similarly
+      ];
 
-            footerDetails.forEach(function (detail) {
-                var row = document.createElement("tr");
-                row.innerHTML = `
-                    <td align="right" colspan="6" style="text-align: right;"><font color="black" >${detail.label}</font></td>
-                    <td align="right" colspan="1"><font color="black">${detail.value}</font></td>
-                    `;
-                tablefooter.appendChild(row);
-            });
+      footerDetails.forEach(function (detail) {
+        var row = document.createElement("tr");
+        row.innerHTML = `
+                            <td align="right" colspan="6" style="text-align:right;"><font color="black">${detail.label}</font></td>
+                            `;
 
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        if (detail.visible) {
+          row.innerHTML += `<td align="right" colspan="1" style="text-align:right;"><font color="black">${detail.value}</font></td>`;
+        }
+        tablefooter.appendChild(row);
+      });
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 
-    // Create a modal element
-    var modal = document.createElement('div');
-    modal.className = 'modal';
+  // Create a modal element
+  var modal = document.createElement("div");
+  modal.className = "modal";
 
-    // Create modal content
-    var modalContent = document.createElement('div');
-    modalContent.className = 'modal-content';
-    // Add close button
-    var closeButton = document.createElement('span');
-    closeButton.className = 'close';
-    closeButton.innerHTML = '&times;';
-    closeButton.onclick = function () {
-        modalContent.innerHTML = '';
-        modal.style.display = 'none'; // Close the modal when close button is clicked
-        window.location.reload();
-    };
-    modalContent.appendChild(closeButton);
-   
+  // Create modal content
+  var modalContent = document.createElement("div");
+  modalContent.className = "modal-content";
+  // Add close button
+  var closeButton = document.createElement("span");
+  closeButton.className = "close";
+  closeButton.innerHTML = "&times;";
+  closeButton.onclick = function () {
+    modalContent.innerHTML = "";
+    modal.style.display = "none"; // Close the modal when close button is clicked
+    window.location.reload();
+  };
+  modalContent.appendChild(closeButton);
 
-    // Add item data to modal content
-    var itemData = document.createElement('div');
-    itemData.innerHTML = `
+  // Add item data to modal content
+  var itemData = document.createElement("div");
+  itemData.innerHTML = `
     <style>
     body {
         font-family: Arial, sans-serif;
@@ -1395,6 +1689,18 @@ function openModal1(item) {
         font-size: 12px; /* Adjust font size */
         font-weight: bold;
     }
+
+    .container2::after {
+        content: url("../../assets/img/logo.png"); /* Replace with your watermark image path */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Center the watermark */
+        opacity: 0.2; /* Adjust watermark opacity (0 for transparent, 1 for solid) */
+        z-index: -0; /* Place the watermark behind the content */
+        }
+
+
 
     table {
         width: 100%;
@@ -1427,8 +1733,8 @@ function openModal1(item) {
         transition: background-color 0.3s;
     }
 
-
-    @media print {
+    
+   @media print {
   @page {
     size: A5 portrait; /* A5 paper size in portrait orientation */
     margin: 5mm; /* Reduced margins */
@@ -1462,6 +1768,16 @@ function openModal1(item) {
     -webkit-print-color-adjust: exact; /* Ensure content background color prints */
     color-adjust: exact;
   }
+
+    .content::after {
+        content: url("../../assets/img/logo.png"); /* Replace with your watermark image path */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Center the watermark */
+        opacity: 0.2; /* Adjust watermark opacity (0 for transparent, 1 for solid) */
+        z-index: -0; /* Place the watermark behind the content */
+        }
 
   header {
     text-align: center;
@@ -1507,9 +1823,10 @@ function openModal1(item) {
 }
 
 
-   
 
 
+
+      
     .container3 {
         max-width: 800px;
         margin: 0 auto;
@@ -1598,33 +1915,26 @@ function openModal1(item) {
 
     `;
 
-    // Assign ID to itemData
-    itemData.id = 'printContent';
-    // Append modal content to modal
-    modalContent.appendChild(itemData);
+  // Assign ID to itemData
+  itemData.id = "printContent";
+  // Append modal content to modal
+  modalContent.appendChild(itemData);
 
-    // Append modal content to modal
-    modal.appendChild(modalContent);
+  // Append modal content to modal
+  modal.appendChild(modalContent);
 
-    // Display the modal
-    document.body.appendChild(modal);
-    modal.style.display = 'block';
+  // Display the modal
+  document.body.appendChild(modal);
+  modal.style.display = "block";
 
-    // Add event listener to the print button
-    var printButton = document.getElementById('printButton');
-    printButton.addEventListener('click', function () {
-        printJS({
-            printable: 'printContent', // ID of the element to print
-            type: 'html', // Type of content
-            scanStyles: true, // Scan for styles
-            targetStyles: ['*'] // Apply all styles
-        });
+  // Add event listener to the print button
+  var printButton = document.getElementById("printButton");
+  printButton.addEventListener("click", function () {
+    printJS({
+      printable: "printContent", // ID of the element to print
+      type: "html", // Type of content
+      scanStyles: true, // Scan for styles
+      targetStyles: ["*"], // Apply all styles
     });
+  });
 }
-
-
-
-
-
-
-

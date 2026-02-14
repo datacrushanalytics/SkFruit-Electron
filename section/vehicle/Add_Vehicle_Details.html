@@ -1,160 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>User Form in Electron</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fef7f7;
-            /* Transparent background */
-            margin: 0;
-            padding: 20px;
-            overflow-x: hidden; /* Hide horizontal scrollbar */
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fef7f7;
+        /* Transparent background */
+        margin: 0;
+        padding: 20px;
+        overflow-x: hidden; /* Hide horizontal scrollbar */
+      }
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
 
-        .container1 {
-            margin-top: 20px;
-        }
+      .container1 {
+        margin-top: 20px;
+      }
 
-        .first-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+      .first-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+      }
 
-        input[type="text"],
-        input[type="number"] {
-            padding: 10px;
-            margin-right: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+      input[type="text"],
+      input[type="number"] {
+        padding: 10px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
 
-        .third-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+      .third-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-        .border-hover {
-            padding: 10px 20px;
-            text-decoration: none;
-            color: white;
-            background-color: #808080;
-            /* Grey color */
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-right: 10px;
-        }
+      .border-hover {
+        padding: 10px 20px;
+        text-decoration: none;
+        color: white;
+        background-color: #808080;
+        /* Grey color */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-right: 10px;
+      }
 
-        .border-hover:hover {
-            background-color: #555;
-            /* Darker grey on hover */
-        }
+      .border-hover:hover {
+        background-color: #555;
+        /* Darker grey on hover */
+      }
 
-        /* Style the loader container */
-#loader {
-    border: 4px solid #f3f3f3; /* Light grey */
-    border-top: 4px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite; /* Apply animation */
-    display: none; /* Hide loader by default */
-    
-    /* Center the loader */
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  /* Animation */
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+      /* Style the loader container */
+      #loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite; /* Apply animation */
+        display: none; /* Hide loader by default */
+
+        /* Center the loader */
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* Animation */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="loader"></div>
     <div class="container">
-        <h1>VEHICLE DETAILS</h1>
-        <hr>
-        <div class="container1">
-            <form id="loginForm" method="POST">
-                <div class="first-row">
-                    <lable for="name">VEHICLE NAME :</lable>
-                    <input type="text" id="name" name="name" placeholder="VEHICLE NAME" required>
+      <h1>VEHICLE DETAILS</h1>
+      <hr />
+      <div class="container1">
+        <form id="loginForm" method="POST">
+          <div class="first-row">
+            <lable for="name">VEHICLE NAME :</lable>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="VEHICLE NAME"
+              required
+            />
 
-                    <lable for="number">VEHICLE NO :</lable>
-                    <input type="number" id="number" name="number" placeholder="VEHICLE NO" required>
-                </div>
-                <div class="third-row">
-                    <button type="submit" style="background-color: green;" class="border-hover">Save</button>
-                    <a href="./Vehicle_Details.html"><button type="button" style="background-color: green;" class="border-hover">Back</button></a>
-                </div>
-            </form>
-        </div>
+            <lable for="number">VEHICLE NO :</lable>
+            <input
+              type="number"
+              id="number"
+              name="number"
+              placeholder="VEHICLE NO"
+              required
+            />
+          </div>
+          <div class="third-row">
+            <button
+              type="submit"
+              style="background-color: green"
+              class="border-hover"
+            >
+              Save
+            </button>
+            <a href="./Vehicle_Details.html"
+              ><button
+                type="button"
+                style="background-color: green"
+                class="border-hover"
+              >
+                Back
+              </button></a
+            >
+          </div>
+        </form>
+      </div>
     </div>
-</body>
-<script>
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
+  </body>
+  <script>
+    document
+      .getElementById("loginForm")
+      .addEventListener("submit", function (event) {
         event.preventDefault(); // Prevent form submission
-    
+
         var formData = {
-            name: document.getElementById('name').value,
-            vehicle_no: document.getElementById('number').value,
-            is_active: 1
+          name: document.getElementById("name").value,
+          vehicle_no: document.getElementById("number").value,
+          is_active: 1,
         };
-    
-        var loader = document.getElementById('loader');
-        loader.style.display = 'block';
-    
-        fetch('http://103.174.102.89:3000/vehicleData/insertVehicle', {
-            method: 'POST',
-            body: JSON.stringify(formData),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+
+        var loader = document.getElementById("loader");
+        loader.style.display = "block";
+
+        fetch("http://94.136.190.129:3000/vehicleData/insertVehicle", {
+          method: "POST",
+          body: JSON.stringify(formData),
+          headers: {
+            "Content-Type": "application/json",
+          },
         })
-        .then(response => {
+          .then((response) => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+              throw new Error("Network response was not ok");
             }
             return response.json();
-        })
-        .then(result => {
-        loader.style.display = 'none';
-            console.log('Data added successfully:', result);
+          })
+          .then((result) => {
+            loader.style.display = "none";
+            console.log("Data added successfully:", result);
             Swal.fire({
-                            icon: 'success',
-                            title: 'Success!',
-                            text: 'vehicle is successfully Added',
-                            })
-            window.location.href = './Vehicle_Details.html';
+              icon: "success",
+              title: "Success!",
+              text: "vehicle is successfully Added",
+            });
+            window.location.href = "./Vehicle_Details.html";
             // Optionally, you can darkgreyirect or show a success message here
-        })
-        .catch(error => {
-            console.error('Error:', error);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
             // Optionally, you can display an error message here
-        });
-    });
-</script>
+          });
+      });
+  </script>
 </html>

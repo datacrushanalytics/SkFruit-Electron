@@ -1,61 +1,90 @@
+document
+  .getElementById("loginForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
 
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent form submission
-
-    var formData = new FormData(document.getElementById('loginForm'));
+    var formData = new FormData(document.getElementById("loginForm"));
     var data = {};
     formData.forEach((value, key) => {
-        data[key] = value;
+      data[key] = value;
     });
-    console.log(data);
-    var loader = document.getElementById('loader');
-        loader.style.display = 'block';
 
-    fetch('http://103.174.102.89:3000/accountData/insertaccount', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json'
-        }
+    var loader = document.getElementById("loader");
+    loader.style.display = "block";
+
+    fetch("http://94.136.190.129:3000/accountData/insertaccount", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
-    .then(response => {
+      .then(async (response) => {
+        const result = await response.json();
+
+        // ❌ Handle error responses
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+          throw {
+            status: response.status,
+            message: result.message || "Something went wrong",
+          };
         }
 
-        form2 = {
-            userName : document.getElementById("name").value,
-            carate_100 : parseInt(document.getElementById("carate2100").value) || 0,
-            carate_150 : parseInt(document.getElementById("carate2150").value) || 0,
-            carate_250 : parseInt(document.getElementById("carate2250").value) || 0,
-            carate_350 : parseInt(document.getElementById("carate2350").value) || 0
-        }
-        console.log(form2)
-        const response1 =  fetch('http://103.174.102.89:3000/carateuserData/insertcarateuser', {
-            method: 'POST',
+        // ✅ Success → second API call
+        const form2 = {
+          userName: document.getElementById("name").value,
+          carate_100:
+            parseInt(document.getElementById("carate2100").value) || 0,
+          carate_150:
+            parseInt(document.getElementById("carate2150").value) || 0,
+          carate_250:
+            parseInt(document.getElementById("carate2250").value) || 0,
+          carate_350:
+            parseInt(document.getElementById("carate2350").value) || 0,
+        };
+
+        await fetch(
+          "http://94.136.190.129:3000/carateuserData/insertcarateuser",
+          {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify(form2)
-        });
-       
-        return response.json();
-        
-    })
-    .then(result => {
-        loader.style.display = 'none';
-        console.log('Data added successfully:', result);
-    
+            body: JSON.stringify(form2),
+          }
+        );
+
+        return result;
+      })
+      .then((result) => {
+        loader.style.display = "none";
+
         Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: 'Account is successfully Added',
-            })
-        window.location.href = './account.html';
-        // Optionally, you can darkgreyirect or show a success message here
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        // Optionally, you can display an error message here
-    });
-});
+          icon: "success",
+          title: "Success!",
+          text: "Account is successfully added",
+        });
+
+        window.location.href = "./account.html";
+      })
+      .catch((error) => {
+        loader.style.display = "none";
+
+        // 🎯 Handle specific backend errors
+        if (error.status === 409) {
+          Swal.fire({
+            icon: "warning",
+            title: "Duplicate Mobile Number",
+            text: error.message, // "Mobile number already exists"
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: error.message || "Something went wrong",
+          });
+        }
+
+        console.error("Error:", error);
+      });
+  });

@@ -7,82 +7,102 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
-    <img src="../assets/img/Sk_fruits1.jpeg" alt="Background image" style="height: 100%; width: 100%; object-fit: cover;">
-    
+    <img
+      src="../assets/img/Sk_fruits1.jpeg"
+      alt="Background image"
+      style="height: 100%; width: 100%; object-fit: cover"
+    />
+
     <div class="login-container">
-      <img class="logo" src="../assets/img/logo.png" alt="Example Image">
+      <img class="logo" src="../assets/img/logo.png" alt="Example Image" />
       <form id="loginForm" method="post">
-        <input type="text" id="username" name="username" required placeholder="User Name" required>
-  
-        <input type="password" id="password" name="password" required placeholder="Password" required>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          required
+          placeholder="User Name"
+          required
+        />
+
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          placeholder="Password"
+          required
+        />
         <div class="loginbtn">
-        <!-- <a href="../section/Home.html"><button type="button" type="submit" onclick="login()" style="text-decoration: none;">LOGIN</button> </a>  -->
-       <button type="button" id= "submitButton" type="submit" onclick="login()" style="text-decoration: none;">LOGIN</button>
-    </div>  
+          <!-- <a href="../section/Home.html"><button type="button" type="submit" onclick="login()" style="text-decoration: none;">LOGIN</button> </a>  -->
+          <button
+            type="button"
+            id="submitButton"
+            type="submit"
+            onclick="login()"
+            style="text-decoration: none"
+          >
+            LOGIN
+          </button>
+        </div>
       </form>
     </div>
     <!-- </div> -->
 
-    
     <div id="footer">
       <p>SK-Fruits</p>
-      
-  </div>
-  <script>
+    </div>
+    <script>
+      document
+        .getElementById("password")
+        .addEventListener("keypress", function (event) {
+          console.log("kbdvkfkj");
+          if (event.keyCode === 13) {
+            event.preventDefault(); // Prevents default form submission behavior
+            document.getElementById("submitButton").click();
+          }
+        });
 
-    document.getElementById("password").addEventListener("keypress", function(event) {
-      console.log("kbdvkfkj")
-      if (event.keyCode === 13) {
-        event.preventDefault(); // Prevents default form submission behavior
-        document.getElementById("submitButton").click();
+      function login() {
+        localStorage.removeItem("sessionData");
+
+        fetch("http://94.136.190.129:3000/user/login", {
+          method: "POST",
+          body: JSON.stringify({
+            name: document.getElementById("username").value,
+            password: document.getElementById("password").value,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Please enter valid username and password",
+              });
+              document.getElementById("username").value = null;
+              document.getElementById("password").value = null;
+              throw new Error("Network response was not ok");
+            }
+
+            return response.json();
+          })
+          .then((result) => {
+            console.log(result);
+            localStorage.setItem("sessionData", JSON.stringify(result));
+            document.getElementById("username").value = null;
+            document.getElementById("password").value = null;
+            window.location.href = "./Home.html";
+            // Optionally, you can darkgreyirect or show a success message here
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            // Optionally, you can display an error message here
+          });
       }
-    });
-
-function login() {
-  localStorage.removeItem('sessionData');
-
-      fetch('http://103.174.102.89:3000/user/login', {
-        method: 'POST',
-        body: JSON.stringify({
-          name: document.getElementById("username").value,
-          password : document.getElementById("password").value
-        }),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-          
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Please enter valid username and password',
-            });
-            document.getElementById("username").value = null
-            document.getElementById("password").value = null
-            throw new Error('Network response was not ok');
-        }
-
-        return response.json();
-
-    })
-    .then(result => {
-        console.log(result)
-        localStorage.setItem('sessionData', JSON.stringify(result));
-        document.getElementById("username").value = null
-        document.getElementById("password").value = null
-        window.location.href = './Home.html';
-        // Optionally, you can darkgreyirect or show a success message here
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        // Optionally, you can display an error message here
-    });
-
-     
-    }
-  </script>
-    
+    </script>
   </body>
 </html>

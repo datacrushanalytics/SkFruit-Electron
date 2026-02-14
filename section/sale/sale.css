@@ -1,0 +1,341 @@
+#input13 {
+    margin: 1px;
+    width: auto;
+    text-align: left;
+  }
+
+
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #fef7f7;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  .container {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 0 20px;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    margin: 0 auto;
+    max-width: 100%;
+    min-width: 600px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  table {
+    width: 100%;
+    min-width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
+
+  th,
+  td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 12px;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  button {
+    background-color: #ff355f;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: darkgrey;
+  }
+
+  /* Adjustments for input elements */
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  select {
+    height: 40px;
+    width: calc(100% - 20px);
+    /* Adjusted width */
+    margin: 10px;
+    padding: 0 10px;
+    /* Adjusted padding */
+    border-radius: 5px;
+    /* Added border-radius */
+    box-sizing: border-box;
+  }
+
+  /* Adjustments for labels */
+  label {
+    margin: 10px;
+  }
+
+  /* Adjustments for buttons */
+  .save {
+    margin: 20px;
+    /* Added margin */
+  }
+
+  /* Adjustments for table rows */
+  .table-row {
+    text-align: center;
+    /* Center align table rows */
+  }
+
+  /* CSS for bill and date container */
+  .bill-date-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  /* CSS for individual input wrappers */
+  .input-wrapper {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    margin: 0 5px;
+    /* darkgreyuce the margin between input wrappers */
+  }
+
+  /* Adjustments for input elements */
+  .input-wrapper input[type="text"],
+  .input-wrapper input[type="number"],
+  .input-wrapper input[type="date"],
+  .input-wrapper select {
+    flex: 1;
+    margin-right: 0;
+    /* Remove margin between input boxes */
+  }
+
+  /* Adjustments for labels */
+  .input-wrapper label {
+    margin-right: 10px;
+    /* Add margin between label and input box */
+    width: 100px;
+    /* Fixed width for labels */
+    text-align: right;
+    /* Align label text to the right */
+  }
+
+  /* Adjustments for individual input wrappers */
+  #bill-wrapper,
+  #date-wrapper {
+    margin-right: 10px;
+    /* darkgreyuce the margin between input wrappers */
+  }
+
+  .dropdown-container {
+    display: flex;
+    justify-content: space-between;
+    /* Distribute space evenly between dropdowns */
+    margin-bottom: 10px;
+    /* Add margin between the dropdown container and other elements */
+  }
+
+  .dropdown-container .input-wrapper {
+    flex: 1;
+    /* Each dropdown takes equal width */
+    margin-right: 10px;
+    /* Add space between dropdowns */
+  }
+
+  .dropdown-container .input-wrapper:last-child {
+    margin-right: 0;
+    /* Remove margin from the last dropdown */
+  }
+
+
+
+  .row-container .input-wrapper {
+    flex: 1;
+    /* Each dropdown takes equal width */
+    margin-right: 10px;
+    /* Add space between dropdown and button */
+  }
+
+  .row-container .button-wrapper {
+    flex: 1;
+    /* Button takes equal width as dropdown */
+  }
+
+  .row-container {
+    display: flex;
+    align-items: center;
+    /* Align items vertically */
+    margin-bottom: 10px;
+    /* Add margin between the row container and other elements */
+  }
+
+  .row-container label {
+    margin-right: 10px;
+    /* Add space between label and inputs */
+  }
+
+  .row-container .carat-inputs {
+    display: flex;
+    align-items: left;
+    /* Align items vertically */
+  }
+
+  .row-container .input-wrapper:last-child {
+    margin-right: 0;
+    /* Remove margin for the last input wrapper */
+  }
+
+  .totalCarat {
+    margin-left: auto;
+    /* Push the total carat container to the right */
+  }
+
+  .row-container1 {
+    display: flex;
+    margin-bottom: 10px;
+    /* Add margin between rows */
+    margin-left: 50%;
+    margin-right: 10%;
+  }
+
+  .row-container1 label {
+    margin-left: auto;
+    /* Move the label to the right side */
+    margin-right: 10px;
+    /* Add space between label and input */
+  }
+
+  /* Style the loader container */
+  #loader {
+    border: 4px solid #f3f3f3;
+    /* Light grey */
+    border-top: 4px solid #3498db;
+    /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    /* Apply animation */
+    display: none;
+    /* Hide loader by default */
+
+    /* Center the loader */
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Animation */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+
+  .popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    width: 80%;
+    /* Adjust the width as desidarkgrey */
+    height: 80%;
+    /* Adjust the height as desidarkgrey */
+    max-width: 90vw;
+    /* Set maximum width relative to viewport width */
+    max-height: 90vh;
+    /* Set maximum height relative to viewport height */
+    overflow: auto;
+    /* Add scrollbars if content overflows */
+  }
+
+  .popup-content {
+    width: 100%;
+    /* Adjust the width as desidarkgrey */
+    height: 100%;
+    /* Adjust the height as desidarkgrey */
+  }
+
+  .popup-content iframe {
+    width: 100%;
+    /* Adjust the width as desidarkgrey */
+    height: 100%;
+    /* Adjust the height as desidarkgrey */
+  }
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+
+  /* Styles for the modal */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+
+  /* Styles for the modal content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+    /* Position relative for the close button */
+  }
+
+
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .scanner-icon {
+    cursor: pointer;
+    font-size: 1.5em;
+    border: 2px solid #000;
+    /* Add border to the icon */
+    padding: 5px;
+    /* Add padding inside the border */
+    border-radius: 5px;
+    /* Optional: make the corners rounded */
+  }
+  

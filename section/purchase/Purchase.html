@@ -100,6 +100,7 @@
                     <label for="mark">Mark:</label>
                     <input type="text" id="mark" name="name" placeholder="Mark">
                 </div>
+                <input type="checkbox" id = 'toggleTableCheckbox' style="position: relative; left: -245px; top: 35px;  transform: scale(1.5);">
                 <div class="form-group">
                     <label for="unit">Unit:</label>
                     <select id="unit">
@@ -139,6 +140,7 @@
                                 <th>खरेदी किंमत</th>
                                 <th>विक्री किंमत</th>
                                 <th>नग</th>
+                                <th>Editable</th>
                                 <th>यूनिट</th>
                                 <th>रक्कम</th>
                             </tr>
@@ -168,9 +170,9 @@
         <script src="./Purchase.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Supplier', 'supplier', 'name');
-                fetchAndPopulateDropdown('http://103.174.102.89:3000/productData/', 'product', 'name');
-                fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle', 'vehicle_no');
+                fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Supplier', 'supplier', 'name');
+                fetchAndPopulateDropdown('http://94.136.190.129:3000/productData/', 'product', 'name');
+                fetchAndPopulateDropdown('http://94.136.190.129:3000/vehicleData', 'vehicle', 'vehicle_no');
             });
 
 
@@ -194,7 +196,7 @@ function confirmAndProceed() {
             allowNavigation = true; // Mark that navigation is confirmed
 
             // Call the GET API to fetch the IDs
-            fetch(`http://103.174.102.89:3000/fetchData/purchaseProduct/${document.getElementById('no').value}`, {
+            fetch(`http://94.136.190.129:3000/fetchData/purchaseProduct/${document.getElementById('no').value}`, {
                 method: 'GET',
                 keepalive: true, // Ensures the request completes
             })
@@ -207,7 +209,7 @@ function confirmAndProceed() {
             .then(data => {
                 // Loop through IDs and call the DELETE API for each
                 const deletePromises = data.map(item => {
-                    return fetch(`http://103.174.102.89:3000/purchaseproductData/deletepurchaseproductId/${item.id}`, {
+                    return fetch(`http://94.136.190.129:3000/purchaseproductData/deletepurchaseproductId/${item.id}`, {
                         method: 'DELETE',
                         keepalive: true
                     })
@@ -295,7 +297,7 @@ function confirmAndProceed() {
         </script>
         <script>
             function addamount(){
-                document.getElementById('total').value = parseInt(document.getElementById('total1').value || 0) + parseInt(document.getElementById('expenses').value)
+                document.getElementById('total').value = parseFloat(document.getElementById('total1').value || 0) + parseFloat(parseFloat(document.getElementById('expenses').value).toFixed(2))
             }
 
 
@@ -309,16 +311,17 @@ function confirmAndProceed() {
                     mark: document.getElementById('mark').value,
                     p_date: document.getElementById('date').value,
                     product_name: document.getElementById('product').value,
-                    purchase_price: parseInt(document.getElementById('purchase').value),
-                    selling_price: parseInt(document.getElementById('sale').value),
+                    purchase_price: parseFloat(parseFloat(document.getElementById('purchase').value).toFixed(2)),
+                    selling_price: parseFloat(parseFloat(document.getElementById('sale').value).toFixed(2)),
                     quantity: parseInt(document.getElementById('quantity').value),
+                    editable: document.getElementById('toggleTableCheckbox').checked,
                     unit: document.getElementById('unit').value,
-                    price: parseInt(document.getElementById('purchase').value) * parseInt(document.getElementById('quantity').value)
+                    price: parseFloat(parseFloat(document.getElementById('purchase').value).toFixed(2)) * parseInt(document.getElementById('quantity').value)
                 };
 
                 console.log(formData)
 
-                fetch('http://103.174.102.89:3000/purchaseproductData/insertPurchaseproduct', {
+                fetch('http://94.136.190.129:3000/purchaseproductData/insertPurchaseproduct', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -342,6 +345,7 @@ function confirmAndProceed() {
                         document.getElementById('sale').value = '';
                         document.getElementById('quantity').value = '';
                         document.getElementById('unit').value = '';
+                        document.getElementById('toggleTableCheckbox').checked = false;
                         $('#product').val('').trigger('change');
 
                         // Show success message using SweetAlert2
@@ -371,20 +375,21 @@ function confirmAndProceed() {
                   <td>${entry.purchase_price}</td>
                   <td>${entry.selling_price}</td>
                   <td>${entry.quantity}</td>
+                  <td>${entry.editable}</td>
                   <td>${entry.unit}</td>
                   <td>${entry.price}</td>
                   <td><button type="button" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button></td>
               `;
 
-                document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) + entry.price;
-                document.getElementById('total1').value = parseInt(document.getElementById('total1').value || 0) + entry.price;
+                document.getElementById('total').value = parseFloat(document.getElementById('total').value || 0) + entry.price;
+                document.getElementById('total1').value = parseFloat(document.getElementById('total1').value || 0) + entry.price;
                 tableBody.appendChild(newRow);
             }
 
             function deleteUser(button, userId, price) {
                 var button = event.target;
                 var row = button.parentNode.parentNode;
-                fetch('http://103.174.102.89:3000/purchaseproductData/deletepurchaseproductId/' + userId, {
+                fetch('http://94.136.190.129:3000/purchaseproductData/deletepurchaseproductId/' + userId, {
                     method: 'DELETE'
                 })
                     .then(response => {
@@ -392,7 +397,8 @@ function confirmAndProceed() {
                             throw new Error('Network response was not ok');
                         }
                         console.log('User deleted successfully');
-                        document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) - price;
+                        document.getElementById('total').value = parseFloat(document.getElementById('total').value || 0) - price;
+                        document.getElementById('total1').value = parseFloat(document.getElementById('total1').value || 0) - price;
                         row.remove();
                     })
                     .catch(error => {

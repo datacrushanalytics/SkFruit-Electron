@@ -44,6 +44,22 @@
                 transform: rotate(360deg);
             }
         }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            margin-right: 10px;
+            width: 150px; /* Adjust as necessary */
+        }
+
+        .form-group input,
+        .form-group select {
+            flex: 1;
+        }
     </style>
 </head>
 
@@ -55,26 +71,24 @@
         <br>
         <div class="container1">
             <form id="Form">
-                <div class="first-row">
-                    <div style="margin-left: 3%;">
+                    <div class="form-group">
                         <label for="no">Bill No:</label>
                         <input type="number" id="no" name="number" placeholder="Bill No" required>
                     </div>
-                    <div style="margin-left:50px;">
+                    <div class="form-group">
                         <label for="date">Date:</label>
                         <input type="date" id="date" name="date" required>
                     </div>
-                </div>
                 <br>
-                <div class="second-row">
-                    <div style="margin-left: 50px;">
+                <!-- <div class="second-row"> -->
+                    <div class="form-group">
                         <label for="dropdown">Supplier Name: </label>
                         <input type="supplier" id="supplier" name="supplier" readonly>
                         <!-- <select id="supplier" name="supplier" class="drop" required>
 
                         </select> <br> -->
                     </div> <br>
-                    <div style="margin-left:50px;">
+                    <div class="form-group">
                         <label for="number">vehicle no : </label>
                         <input type="vehicle" id="vehicle" name="vehicle" readonly>
                         <!-- <select id="vehicle" name="vehicle" required>
@@ -82,28 +96,29 @@
                         </select> -->
                     </div>
 
-                </div>
+                <!-- </div> -->
                 <br>
-                <div class="third-row">
-                    <div style="margin-left: 50px;">
+                <!-- <div class="third-row"> -->
+                    <div class="form-group">
                         <label for="dropdown">Product:</label>
                         <select id="product">
                             <br>
                         </select>
                     </div>
-                    <div style="margin-left: 50px;">
+                    <div class="form-group">
                         <label for="bata">Bata:</label>
                         <input type="text" id="bata" name="name" placeholder="Bata">
                         <br>
                         </select>
                     </div>
-                    <div style="margin-left: 50px;">
+                    <div class="form-group">
                         <label for="mark">Mark:</label>
                         <input type="text" id="mark" name="name" placeholder="Mark">
                     </div>
-                </div>
+                <!-- </div> -->
+                <input type="checkbox" id = 'toggleTableCheckbox' style="position: relative; left: -245px; top: 35px;  transform: scale(1.5);">
                 <br>
-                <div style="margin-left: 3%;">
+                <div class="form-group">
                     <label for="dropdown1"> Unit :</label>
                     <select id="unit">
                         <option>यूनिट</option>
@@ -116,7 +131,7 @@
                         <option value="पेटी">पेटी</option>
                     </select>
                 </div><br><br>
-                <div class="fourth-row">
+                <!-- <div class="fourth-row"> -->
                     <div style="display: flex;">
                         <div style="margin-left: 4%;">
                             <label for="purchase">Purchase Rate:</label>
@@ -132,7 +147,7 @@
                         </div>
                         <div>
                         </div>
-                    </div>
+                    <!-- </div> -->
                     <br>
 
                     <button type="submit" style="background-color: #26a653;" class="border-hover" onclick="myFunction()">ADD</button></a>
@@ -149,6 +164,7 @@
                                 <th>खरेदी किंमत</th>
                                 <th>विक्री किंमत</th>
                                 <th>नग</th>
+                                <th>Editable</th>
                                 <th>यूनिट</th>
                                 <th>रक्कम</th>
                             </tr>
@@ -163,11 +179,12 @@
                 <br>
                 <div style="margin-left: 400px;">
                     <label for="total">Expenses :</label>
-                    <input type="number" id="expenses" name="expenses" placeholder="Expenses" required readonly>
+                    <input type="number" id="expenses" name="expenses" placeholder="Expenses" required oninput="addamount()" >
                 </div>
                 <div style="margin-left: 400px;">
                     <label for="total">Total Amount :</label>
                     <input type="number" id="total" name="name" placeholder="Total Amount " required readonly>
+                    <input type="hidden" id="total1" name="name" placeholder="Total Amount" required readonly>
                 </div>
                 <br>
                 <div class="four-row">
@@ -180,9 +197,9 @@
 
             document.addEventListener('DOMContentLoaded', async function () {
                 // Fetch data from API and populate Select2 dropdowns
-                // await fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Supplier', 'supplier', 'name');
-                await fetchAndPopulateDropdown('http://103.174.102.89:3000/productData/', 'product', 'name');
-                // await fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicle', 'vehicle_no');
+                // await fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Supplier', 'supplier', 'name');
+                await fetchAndPopulateDropdown('http://94.136.190.129:3000/productData/', 'product', 'name');
+                // await fetchAndPopulateDropdown('http://94.136.190.129:3000/vehicleData', 'vehicle', 'vehicle_no');
                 
 
         
@@ -290,7 +307,7 @@
                     // setDropdownValue('vehicle', user.gadi_number);
 
                     
-            fetch('http://103.174.102.89:3000/purchaseproductData/' + (user.id))
+            fetch('http://94.136.190.129:3000/purchaseproductData/' + (user.id))
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -303,8 +320,10 @@
                     // populateDropdown3(data);
 
                     data.forEach(function (item) {
+                        console.log("item",item)
                         updateTable(item,item.id);
-                    });  
+                    }); 
+
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -344,6 +363,10 @@
 
 
         <script>
+            function addamount(){
+                document.getElementById('total').value = parseFloat(document.getElementById('total1').value || 0) + parseFloat(parseFloat(document.getElementById('expenses').value).toFixed(2))
+            }
+
 
             function myFunction() {
                 event.preventDefault();
@@ -354,16 +377,17 @@
                     mark: document.getElementById('mark').value,
                     p_date: document.getElementById('date').value,
                     product_name: document.getElementById('product').value,
-                    purchase_price: parseInt(document.getElementById('purchase').value),
-                    selling_price: parseInt(document.getElementById('sale').value),
+                    purchase_price: parseFloat(parseFloat(document.getElementById('purchase').value).toFixed(2)),
+                    selling_price: parseFloat(parseFloat(document.getElementById('sale').value).toFixed(2)),
                     quantity: parseInt(document.getElementById('quantity').value),
                     unit: document.getElementById('unit').value,
-                    price: parseInt(document.getElementById('purchase').value) * parseInt(document.getElementById('quantity').value)
+                    editable: document.getElementById('toggleTableCheckbox').checked,
+                    price: parseFloat(parseFloat(document.getElementById('purchase').value).toFixed(2)) * parseInt(document.getElementById('quantity').value)
                 };
 
                 console.log(formData)
 
-                fetch('http://103.174.102.89:3000/purchaseproductData/insertPurchaseproduct', {
+                fetch('http://94.136.190.129:3000/purchaseproductData/insertPurchaseproduct', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -399,6 +423,7 @@
             function updateTable(entry, result) {
                 var tableBody = document.getElementById('tableBody1');
                 var newRow = document.createElement('tr');
+                console.log("result", result)
                 newRow.innerHTML = `
                   <td>${entry.product_name}</td>
                   <td>${entry.bata}</td>
@@ -406,20 +431,27 @@
                   <td>${entry.purchase_price}</td>
                   <td>${entry.selling_price}</td>
                   <td>${entry.quantity}</td>
+                  <td>${entry.editable}</td>
                   <td>${entry.unit}</td>
                   <td>${entry.price}</td>
-                  <td><button type="button" style="background-color:#ff355f;" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button></td>
+                  <td>
+                    <button type="button" style="background-color:#4CAF50;" onclick="editRow(this, ${result}, ${entry.price})">Edit</button>
+                    <button type="button" style="background-color:#ff355f;" onclick="deleteUser(this, ${result}, ${entry.price})">Delete</button>
+                  </td>
               `;
 
-                document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) + entry.price;
+                document.getElementById('total').value = parseFloat(document.getElementById('total').value || 0) + entry.price;
+                document.getElementById('total1').value = parseFloat(document.getElementById('total1').value || 0) + entry.price;
+                addamount()
                 tableBody.appendChild(newRow);
             }
 
             function deleteUser(button, userId, price) {
                 // Perform delete operation based on userId
+                console.log(price,"Usrere")
                 var button = event.target;
                 var row = button.parentNode.parentNode;
-                fetch('http://103.174.102.89:3000/purchaseproductData/deletepurchaseproductId/' + userId, {
+                fetch('http://94.136.190.129:3000/purchaseproductData/deletepurchaseproductId/' + userId, {
                     method: 'DELETE'
                 })
                     .then(response => {
@@ -427,7 +459,8 @@
                             throw new Error('Network response was not ok');
                         }
                         console.log('User deleted successfully');
-                        document.getElementById('total').value = parseInt(document.getElementById('total').value || 0) - price;
+                        document.getElementById('total').value = parseFloat(document.getElementById('total').value || 0) - price;
+                        document.getElementById('total1').value = parseFloat(document.getElementById('total1').value || 0) - price;
                         // Refresh the table or update UI as needed
                         //newRow.remove();
                         row.remove();
@@ -436,6 +469,145 @@
                         console.error('Error:', error);
                     });
             }
+
+            //logic for edit profuct in prchase report 
+// Edit row function - converts table cells to input fields
+function editRow(button, id, oldPrice) {
+    const row = button.parentNode.parentNode;
+    const cells = row.cells;
+    
+    // Store original values in data attributes
+    row.setAttribute('data-original', JSON.stringify({
+        product_name: cells[0].textContent,
+        bata: cells[1].textContent,
+        mark: cells[2].textContent,
+        purchase_price: cells[3].textContent,
+        selling_price: cells[4].textContent,
+        quantity: cells[5].textContent,
+        editable: cells[6].textContent,
+        unit: cells[7].textContent,
+        price: cells[8].textContent
+    }));
+    
+    // Replace cells with input fields
+    cells[0].innerHTML = `<input type="text" value="${cells[0].textContent}" style="width:100%">`;
+    cells[1].innerHTML = `<input type="text" value="${cells[1].textContent}" style="width:100%">`;
+    cells[2].innerHTML = `<input type="text" value="${cells[2].textContent}" style="width:100%">`;
+    cells[3].innerHTML = `<input type="number" step="0.01" value="${cells[3].textContent}" style="width:100%" oninput="recalculatePrice(this)">`;
+    cells[4].innerHTML = `<input type="number" step="0.01" value="${cells[4].textContent}" style="width:100%">`;
+    cells[5].innerHTML = `<input type="number" value="${cells[5].textContent}" style="width:100%" oninput="recalculatePrice(this)">`;
+    cells[6].innerHTML = `<input type="checkbox" ${cells[6].textContent === 'true' ? 'checked' : ''}>`;
+    cells[7].innerHTML = `<input type="text" value="${cells[7].textContent}" style="width:100%">`;
+    cells[8].innerHTML = `<span id="calc-price-${id}">${cells[8].textContent}</span>`;
+    
+    // Replace buttons with Save and Cancel
+    cells[9].innerHTML = `
+        <button type="button" style="background-color:#2196F3;" onclick="saveRow(this, ${id}, ${oldPrice})">Save</button>
+        <button type="button" style="background-color:#9E9E9E;" onclick="cancelEdit(this)">Cancel</button>
+    `;
+}
+
+// Recalculate price when purchase_price or quantity changes
+function recalculatePrice(input) {
+    const row = input.parentNode.parentNode;
+    const cells = row.cells;
+    const purchasePrice = parseFloat(cells[3].querySelector('input').value) || 0;
+    const quantity = parseInt(cells[5].querySelector('input').value) || 0;
+    const newPrice = (purchasePrice * quantity).toFixed(2);
+    
+    // Find the price span and update it
+    const priceSpan = cells[8].querySelector('span');
+    if (priceSpan) {
+        priceSpan.textContent = newPrice;
+    }
+}
+
+// Save edited row
+function saveRow(button, id, oldPrice) {
+    const row = button.parentNode.parentNode;
+    const cells = row.cells;
+    
+    // Collect values from input fields
+    const updatedData = {
+        product_name: cells[0].querySelector('input').value,
+        bata: cells[1].querySelector('input').value,
+        mark: cells[2].querySelector('input').value,
+        purchase_price: parseFloat(cells[3].querySelector('input').value),
+        selling_price: parseFloat(cells[4].querySelector('input').value),
+        quantity: parseInt(cells[5].querySelector('input').value),
+        editable: cells[6].querySelector('input').checked,
+        unit: cells[7].querySelector('input').value,
+        purchase_id: parseInt(document.getElementById('no').value)
+    };
+    
+    // Calculate price
+    updatedData.price = parseFloat((updatedData.purchase_price * updatedData.quantity).toFixed(2));
+    
+    // Call API to update
+    fetch(`http://94.136.190.129:3000/purchaseproductData/updatePurchaseproduct/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedData)
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log('Updated successfully:', result);
+        
+        // Update totals
+        const priceDiff = updatedData.price - parseFloat(oldPrice);
+        document.getElementById('total1').value = parseFloat(document.getElementById('total1').value || 0) + priceDiff;
+        addamount();
+        
+        // Update row display
+        cells[0].textContent = updatedData.product_name;
+        cells[1].textContent = updatedData.bata;
+        cells[2].textContent = updatedData.mark;
+        cells[3].textContent = updatedData.purchase_price;
+        cells[4].textContent = updatedData.selling_price;
+        cells[5].textContent = updatedData.quantity;
+        cells[6].textContent = updatedData.editable;
+        cells[7].textContent = updatedData.unit;
+        cells[8].textContent = updatedData.price;
+        
+        // Restore buttons
+        cells[9].innerHTML = `
+            <button type="button" style="background-color:#4CAF50;" onclick="editRow(this, ${id}, ${updatedData.price})">Edit</button>
+            <button type="button" style="background-color:#ff355f;" onclick="deleteUser(this, ${id}, ${updatedData.price})">Delete</button>
+        `;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to update. Please try again.');
+    });
+}
+
+// Cancel edit and restore original values
+function cancelEdit(button) {
+    const row = button.parentNode.parentNode;
+    const cells = row.cells;
+    const originalData = JSON.parse(row.getAttribute('data-original'));
+    
+    // Restore original values
+    cells[0].textContent = originalData.product_name;
+    cells[1].textContent = originalData.bata;
+    cells[2].textContent = originalData.mark;
+    cells[3].textContent = originalData.purchase_price;
+    cells[4].textContent = originalData.selling_price;
+    cells[5].textContent = originalData.quantity;
+    cells[6].textContent = originalData.editable;
+    cells[7].textContent = originalData.unit;
+    cells[8].textContent = originalData.price;
+    
+    // Extract id from the row's data or reconstruct buttons
+    const onclickMatch = button.parentNode.innerHTML.match(/saveRow\(this,\s*(\d+)/);
+    const id = onclickMatch ? onclickMatch[1] : 0;
+    
+    // Restore buttons
+    cells[9].innerHTML = `
+        <button type="button" style="background-color:#4CAF50;" onclick="editRow(this, ${id}, ${originalData.price})">Edit</button>
+        <button type="button" style="background-color:#ff355f;" onclick="deleteUser(this, ${id}, ${originalData.price})">Delete</button>
+    `;
+}
 
 
 
@@ -450,12 +622,14 @@
         //date: document.getElementById('date').value,
         supplier_name: document.getElementById('supplier').value,
         //gadi_number: document.getElementById('vehicle').value,
-        total_quantity: parseInt(document.getElementById('total').value) || 0
+        total_quantity: parseFloat(parseFloat(document.getElementById('total').value).toFixed(2)) || 0,
+    //for modified total expenses 
+        expenses: parseFloat(parseFloat(document.getElementById('expenses').value).toFixed(2)) || 0
     };
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    await fetch('http://103.174.102.89:3000/purchaseData/updatePurchase/' + formData.purchase_id, {
+    await fetch('http://94.136.190.129:3000/purchaseData/updatePurchase/' + formData.purchase_id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'

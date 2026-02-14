@@ -1,232 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Product Master</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fef7f7;
-            margin: 0;
-            padding: 20px;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fef7f7;
+        margin: 0;
+        padding: 20px;
+      }
 
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+      }
 
-h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-.container1 select,
-.container1 input[type="text"] {
+      .container1 select,
+      .container1 input[type="text"] {
         width: calc(100% - 20px);
         padding: 10px;
         margin-bottom: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
         box-sizing: border-box;
-        }
+      }
 
-hr {
-    border: 0;
-    height: 1px;
-    background-color: #ddd;
-    margin-bottom: 20px;
-}
+      hr {
+        border: 0;
+        height: 1px;
+        background-color: #ddd;
+        margin-bottom: 20px;
+      }
 
-form {
-    text-align: left;
-}
+      form {
+        text-align: left;
+      }
 
-label {
-    display: block;
-    margin-bottom: 5px;
-}
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
 
+      input[type="checkbox"] {
+        margin-right: 5px;
+      }
 
-input[type="checkbox"] {
-    margin-right: 5px;
-}
-
-/* .first-row{
+      /* .first-row{
     margin-top: 10px;
     margin-bottom: 20px;
 
 } */
 
+      .second-row {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        text-align: left;
+      }
 
+      .third-row {
+        text-align: center;
+      }
 
-.second-row {
-    margin-top: 10px;
-    margin-bottom: 20px;
-    text-align: left;
-}
+      .border-hover {
+        padding: 10px 20px;
+        text-decoration: none;
+        color: white;
+        background-color: #808080;
+        /* Grey color */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-right: 10px;
+      }
 
-.third-row {
-    text-align: center;
-}
+      .border-hover:hover {
+        background-color: #555;
+        /* Darker grey on hover */
+      }
+      /* Style the loader container */
+      #loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite; /* Apply animation */
+        display: none; /* Hide loader by default */
 
-.border-hover {
-    padding: 10px 20px;
-    text-decoration: none;
-    color: white;
-    background-color: #808080;
-    /* Grey color */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-right: 10px;
-}
+        /* Center the loader */
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
 
-.border-hover:hover {
-    background-color: #555;
-    /* Darker grey on hover */
-}
-/* Style the loader container */
-#loader {
-    border: 4px solid #f3f3f3; /* Light grey */
-    border-top: 4px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite; /* Apply animation */
-    display: none; /* Hide loader by default */
-    
-    /* Center the loader */
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  /* Animation */
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
+      /* Animation */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="loader"></div>
     <div class="container">
-        <h1>Product Master</h1>
-        <hr>
+      <h1>Product Master</h1>
+      <hr />
 
-        <div class="container1">
-            <form id="loginForm" method="POST">
-                <div class="first-row">
-                    <label for="category">Category</label>
-                    <select id="category" name="category" placeholder="Category" required>
-                        <br>
-                        <br>
-                        
-                        <!-- Add options here -->
-                    </select>
-                </div> <br>
-                <label for="name">Product Name :</label>
-                <input type="text" id="name" name="name" placeholder="Product Name" required>
-                <br>
+      <div class="container1">
+        <form id="loginForm" method="POST">
+          <div class="first-row">
+            <label for="category">Category</label>
+            <select
+              id="category"
+              name="category"
+              placeholder="Category"
+              required
+            >
+              <br />
+              <br />
 
-                <label for="rate">Rate :</label>
-                <input type="text" id="rate" name="rate" placeholder="Rate" required>
-                <br>
+              <!-- Add options here -->
+            </select>
+          </div>
+          <br />
+          <label for="name">Product Name :</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Product Name"
+            required
+          />
+          <br />
 
-                <lable for="w_rate">W Rate :</lable>
-                <input type="text" id="w_rate" name="w_rate" placeholder="W Rate" required>
-                <br>
+          <label for="rate">Rate :</label>
+          <input
+            type="text"
+            id="rate"
+            name="rate"
+            placeholder="Rate"
+            required
+          />
+          <br />
 
-                <label for="minimum_stock">Minimum Stock :</label>
-                <input type="text" id="minimum_stock" name="minimum_stock" placeholder="Minimum Stock" required>
-                <br>
+          <lable for="w_rate">W Rate :</lable>
+          <input
+            type="text"
+            id="w_rate"
+            name="w_rate"
+            placeholder="W Rate"
+            required
+          />
+          <br />
 
-                <div class="second-row">
-                    <input type="checkbox" id="rate_editable" name="rate_editable" value="1" >
-                    <label for="rate_editable">Rate Editable</label>
-                    <br>
-                </div>
+          <label for="minimum_stock">Minimum Stock :</label>
+          <input
+            type="text"
+            id="minimum_stock"
+            name="minimum_stock"
+            placeholder="Minimum Stock"
+            required
+          />
+          <br />
 
-                <div class="third-row">
-                    <button type="submit" style="background-color: #26a653;" class="border-hover">Save</button>
-                    <a href="./product.html"><button type="button" style="background-color: #ff355f;" class="border-hover">Back</button></a>
-                </div>
-            </form>
-        </div>
+          <div class="second-row">
+            <input
+              type="checkbox"
+              id="rate_editable"
+              name="rate_editable"
+              value="1"
+            />
+            <label for="rate_editable">Rate Editable</label>
+            <br />
+          </div>
+
+          <div class="third-row">
+            <button
+              type="submit"
+              style="background-color: #26a653"
+              class="border-hover"
+            >
+              Save
+            </button>
+            <a href="./product.html"
+              ><button
+                type="button"
+                style="background-color: #ff355f"
+                class="border-hover"
+              >
+                Back
+              </button></a
+            >
+          </div>
+        </form>
+      </div>
     </div>
     <script src="./productMaster.js"></script>
 
-
-<script>
-        
-    document.addEventListener('DOMContentLoaded', function () {
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/categoryData', 'category','name');
-    });
+        fetchAndPopulateDropdown(
+          "http://94.136.190.129:3000/categoryData",
+          "category",
+          "name"
+        );
+      });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
+      function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
         fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId,field);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Populate Select2 dropdown with API data
+            populateDropdownWithSelect2(data, dropdownId, field);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
 
-    function populateDropdownWithSelect2(data, dropdownId, field) {
-        var dropdown = $('#' + dropdownId);
+      function populateDropdownWithSelect2(data, dropdownId, field) {
+        var dropdown = $("#" + dropdownId);
         // Clear existing options
         dropdown.empty();
 
         // Add placeholder option
-        dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
+        dropdown.append(
+          $("<option></option>")
+            .attr("value", "")
+            .text("Select " + dropdownId + " type")
+            .prop("disabled", true)
+            .prop("selected", true)
+        );
 
         // Populate dropdown with API data
         data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
+          dropdown.append(
+            $("<option></option>").attr("value", item[field]).text(item[field])
+          );
         });
 
         // Initialize Select2
         dropdown.select2({
-            placeholder: "Select " + dropdownId + " type",
-            allowClear: true
+          placeholder: "Select " + dropdownId + " type",
+          allowClear: true,
         });
-    }
+      }
 
-    $(document).on('select2:open', function(e) {
+      $(document).on("select2:open", function (e) {
         window.setTimeout(function () {
-            document.querySelector('input.select2-search__field').focus();
+          document.querySelector("input.select2-search__field").focus();
         }, 0);
-    });
-
-</script>
-
-</body>
-
+      });
+    </script>
+  </body>
 </html>

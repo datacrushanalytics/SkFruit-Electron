@@ -1,426 +1,487 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>User Form in Electron</title>
     <style>
-        /* Add border to the second form */
-        .form1 {
-            border: 1px solid black;
-            padding: 10px;
-            margin-top: 20px;
-        }
+      /* Add border to the second form */
+      .form1 {
+        border: 1px solid black;
+        padding: 10px;
+        margin-top: 20px;
+      }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fef7f7;
-            /* Transparent background */
-            margin: 0;
-            padding: 20px;
-            overflow-x: hidden;
-            /* Hide horizontal scrollbar */
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fef7f7;
+        /* Transparent background */
+        margin: 0;
+        padding: 20px;
+        overflow-x: hidden;
+        /* Hide horizontal scrollbar */
+      }
 
-        .container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+      .container {
+        text-align: center;
+        margin-bottom: 20px;
+      }
 
-        #fromdate {
-            /* border-radius: 8px; */
-            height: 30px;
-            width: 200px;
-            /* box-shadow: 5px 10px 8px grey; */
-            /* border-color: rgb(24, 24, 24); */
-            text-indent: 10%;
-            margin-right: 8%;
-            margin-left: 10px;
+      #fromdate {
+        /* border-radius: 8px; */
+        height: 30px;
+        width: 200px;
+        /* box-shadow: 5px 10px 8px grey; */
+        /* border-color: rgb(24, 24, 24); */
+        text-indent: 10%;
+        margin-right: 8%;
+        margin-left: 10px;
+      }
 
-        }
+      #todate {
+        /* border-radius: 8px; */
+        height: 30px;
+        width: 200px;
+        /* box-shadow: 5px 10px 8px grey; */
+        /* border-color: rgb(24, 24, 24); */
+        text-indent: 10%;
+        margin-left: 10px;
+      }
 
-        #todate {
-            /* border-radius: 8px; */
-            height: 30px;
-            width: 200px;
-            /* box-shadow: 5px 10px 8px grey; */
-            /* border-color: rgb(24, 24, 24); */
-            text-indent: 10%;
-            margin-left: 10px;
-        }
+      .first-row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
 
-        .first-row {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        
-        .first-row label {
-            margin-right: 10px;
-            margin-top: 9px;
-        }
-        
-        .first-row input,
-        .first-row select {
-            margin-right: 10px;
-        }
-        
-        .drop {
-            border: 1px solid transparent;
-            /* box-shadow: 5px 10px 8px grey; */
-            /* border-radius: 8px; */
-            width: 60%;
-            height: 35px;
-            text-indent: 10%;
-            margin-left: 4%;
-        }
-        
-        .border-hover {
-            padding: 5px 20px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-            margin: 10px;
-            border-radius: 5px;
-            outline: none;
-            width: 100px;
-        }
-        
-        
-        #vehicleNumber {
-            border: 1px solid transparent;
-            /* box-shadow: 5px 10px 8px grey;
+      .first-row label {
+        margin-right: 10px;
+        margin-top: 9px;
+      }
+
+      .first-row input,
+      .first-row select {
+        margin-right: 10px;
+      }
+
+      .drop {
+        border: 1px solid transparent;
+        /* box-shadow: 5px 10px 8px grey; */
+        /* border-radius: 8px; */
+        width: 60%;
+        height: 35px;
+        text-indent: 10%;
+        margin-left: 4%;
+      }
+
+      .border-hover {
+        padding: 5px 20px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        margin: 10px;
+        border-radius: 5px;
+        outline: none;
+        width: 100px;
+      }
+
+      #vehicleNumber {
+        border: 1px solid transparent;
+        /* box-shadow: 5px 10px 8px grey;
             border-radius: 8px; */
-            width: 55%;
-            height: 35px;
-            text-indent: 10%;
-            margin-left: 4%;
-        }
+        width: 55%;
+        height: 35px;
+        text-indent: 10%;
+        margin-left: 4%;
+      }
 
-        #supplier {
-            border: 1px solid transparent;
-            /* box-shadow: 5px 10px 8px grey;
+      #supplier {
+        border: 1px solid transparent;
+        /* box-shadow: 5px 10px 8px grey;
             border-radius: 8px; */
-            width: 60%;
-            height: 35px;
-            text-indent: 10%;
-            margin-left: 4%;
-        }
+        width: 60%;
+        height: 35px;
+        text-indent: 10%;
+        margin-left: 4%;
+      }
 
-        #bata {
-            border: 1px solid transparent;
-            /* box-shadow: 5px 10px 8px grey;
+      #bata {
+        border: 1px solid transparent;
+        /* box-shadow: 5px 10px 8px grey;
             border-radius: 8px; */
-            width: 60%;
-            height: 35px;
-            text-indent: 10%;
-            margin-left: 4%;
-        }
+        width: 60%;
+        height: 35px;
+        text-indent: 10%;
+        margin-left: 4%;
+      }
 
-        button {
-            padding: 12px 24px;
-            text-decoration: none;
-            color: white;
-            background-color: #18b3a4;
-            /* Grey color */
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin: 0 10px;
+      button {
+        padding: 12px 24px;
+        text-decoration: none;
+        color: white;
+        background-color: #18b3a4;
+        /* Grey color */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin: 0 10px;
+      }
+      #label {
+        margin-left: 70px;
+      }
 
-        }
-        #label {
-            margin-left: 70px;
-        }
+      .border-hover {
+        padding: 12px 24px;
+        text-decoration: none;
+        color: white;
+        background-color: #808080;
+        /* Grey color */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin: 0 10px;
+      }
 
-        .border-hover {
-            padding: 12px 24px;
-            text-decoration: none;
-            color: white;
-            background-color: #808080;
-            /* Grey color */
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin: 0 10px;
-        }
+      .border-hover:hover {
+        border-color: darkgray;
+      }
 
-        .border-hover:hover {
-            border-color:darkgray;
-        }
+      .table-container {
+        max-width: 100%;
+        overflow-x: auto; /* Enable horizontal scrolling */
+        margin: 0 auto;
+        max-height: calc(100vh - 200px); /* Adjust the height as needed */
+        overflow-y: auto; /* Enable vertical scrolling */
+      }
 
-        .table-container {
-            max-width: 100%;
-            overflow-x: auto; /* Enable horizontal scrolling */
-            margin: 0 auto;
-            max-height: calc(100vh - 200px); /* Adjust the height as needed */
-            overflow-y: auto; /* Enable vertical scrolling */
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #c7d5d3;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-        }
-        
-        th,
-    td {
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #c7d5d3;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+      }
+
+      th,
+      td {
         border: 1px solid #dddddd;
         background-color: #eafffb;
         text-align: left;
         padding: 12px;
-    }
-        
-        th {
-            background-color: #c7d5d3;
+      }
+
+      th {
+        background-color: #c7d5d3;
+      }
+      /* Style the loader container */
+      #loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite; /* Apply animation */
+        display: none; /* Hide loader by default */
+
+        /* Center the loader */
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* Animation */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
         }
-        /* Style the loader container */
-#loader {
-    border: 4px solid #f3f3f3; /* Light grey */
-    border-top: 4px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite; /* Apply animation */
-    display: none; /* Hide loader by default */
-    
-    /* Center the loader */
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  /* Animation */
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
 
-    /* CSS */
-.popup {
-    /* Existing styles */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
+      /* CSS */
+      .popup {
+        /* Existing styles */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
 
-#companyInfo {
-    margin-bottom: 20px;
-}
+      #companyInfo {
+        margin-bottom: 20px;
+      }
 
-#companyLogo {
-    width: 100px; /* Adjust the width as needed */
-    height: auto; /* Maintain aspect ratio */
-}
+      #companyLogo {
+        width: 100px; /* Adjust the width as needed */
+        height: auto; /* Maintain aspect ratio */
+      }
 
-#companyName {
-    font-size: 1.2em; /* Adjust the font size as needed */
-}
+      #companyName {
+        font-size: 1.2em; /* Adjust the font size as needed */
+      }
 
-#barcodeCanvas {
-    /* Existing styles */
-    margin-top: 20px; /* Add margin for spacing */
-    width: 220px;
-}
-/* Styles for the modal */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
-}
+      #barcodeCanvas {
+        /* Existing styles */
+        margin-top: 20px; /* Add margin for spacing */
+        width: 220px;
+      }
+      /* Styles for the modal */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
 
-/* Styles for the modal content */
-.modal-content {
-    background-color: #fefefe;
-    margin: 10% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-    position: relative;
-    /* Position relative for the close button */
-}
+      /* Styles for the modal content */
+      .modal-content {
+        background-color: #fefefe;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        position: relative;
+        /* Position relative for the close button */
+      }
 
-/* Close button style */
-.close {
-    color: #aaa;
-    position: absolute;
-    top: 8px;
-    right: 16px;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
+      /* Close button style */
+      .close {
+        color: #aaa;
+        position: absolute;
+        top: 8px;
+        right: 16px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-
-  
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="loader"></div>
     <div class="container">
-        <h1 align="center">Purchase Report</h1>
-        <hr>
-        <br>
-        <div class="container1">
-            <form id="loginForm1">
-                <div class="first-row">
-                    <label for="userType">From Date :</label>
-                    <input type="date" id="fromdate" name="date" placeholder="From Date" required>
-                    <br>
-                    <label for="userType">To Date :</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date" required>
-                </div>
-                <br>
-                <label for="userType">Vehicle Number :</label>
-                <select class="drop" id="vehicleNumber" name="name">
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select>
-                <br><br>
-                <label for="userType">Supplier Name :</label>
-                <select class="drop" id="supplier" id="name" name="name">
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select>
-                <br><br>
-                <label id='label' for="userType">Bata :</label>
-                <select class="drop" id="bata" id="bata" name="name">
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select> 
-                <br>
-                <br>
-                <label for="userType">Purchase Id :</label>
-                <select class="drop" id="purchase_id" id="purchase_id" name="name">
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select>
-                <br> <br>
-                <div class="third-row">
-                    <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" style="background-color:#26a653;" class="border-hover">Submit</button>
-                    <button type='button' style="background-color: #ff355f;" class="border-hover" onclick="exportToExcel()" id="button2">Export</button>
-                </div> <br>
-            </form>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Sr. No</th>
-                            <th>PURCHASE ID</th>
-                            <th>DATE</th>
-                            <th>Gadi Number</th>
-                            <!-- <th>Bata</th> -->
-                            <th>SUPPLIER_NAME</th>
-                            <th>EXPENSES</th>
-                            <th>BILL AMT</th>
-                            <th>TOTAL QTY</th>
-                            <th>VIEW</th>
-                        </tr>
-                    </thead>
-                    <!-- Add more rows as needed -->
-                    <tbody id="tableBody">
-                        <!-- Data will be inserted here -->
-                    </tbody>
-                    <div id="popupContainer"></div>
-                </table>
-            </div>
+      <h1 align="center">Purchase Report</h1>
+      <hr />
+      <br />
+      <div class="container1">
+        <form id="loginForm1">
+          <div class="first-row">
+            <label for="userType">From Date :</label>
+            <input
+              type="date"
+              id="fromdate"
+              name="date"
+              placeholder="From Date"
+              required
+            />
+            <br />
+            <label for="userType">To Date :</label>
+            <input
+              type="date"
+              id="todate"
+              name="date"
+              placeholder="To Date"
+              required
+            />
+          </div>
+          <br />
+          <label for="userType">Vehicle Number :</label>
+          <select class="drop" id="vehicleNumber" name="name">
+            <!-- <option value="User" disabled selected>Select Account</option> -->
+          </select>
+          <br /><br />
+          <label for="userType">Supplier Name :</label>
+          <select class="drop" id="supplier" id="name" name="name">
+            <!-- <option value="User" disabled selected>Select Account</option> -->
+          </select>
+          <br /><br />
+          <label id="label" for="userType">Bata :</label>
+          <select class="drop" id="bata" id="bata" name="name">
+            <!-- <option value="User" disabled selected>Select Account</option> -->
+          </select>
+          <br />
+          <br />
+          <label id="label" for="userType">Product :</label>
+          <select class="drop" id="product" id="product" name="name">
+            <!-- <option value="User" disabled selected>Select Account</option> -->
+          </select>
+          <br />
+          <br />
+
+          <label for="userType">Purchase Id :</label>
+          <select class="drop" id="purchase_id" id="purchase_id" name="name">
+            <!-- <option value="User" disabled selected>Select Account</option> -->
+          </select>
+          <br />
+          <br />
+          <div class="third-row">
+            <!-- <button class="border-hover" >Save</button> -->
+            <button
+              type="submit"
+              style="background-color: #26a653"
+              class="border-hover"
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              style="background-color: #ff355f"
+              class="border-hover"
+              onclick="exportToExcel()"
+              id="button2"
+            >
+              Export
+            </button>
+          </div>
+          <br />
+        </form>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Sr. No</th>
+                <th>PURCHASE ID</th>
+                <th>DATE</th>
+                <th>Gadi Number</th>
+                <!-- <th>Bata</th> -->
+                <th>SUPPLIER_NAME</th>
+                <th>EXPENSES</th>
+                <th>BILL AMT</th>
+                <th>TOTAL QTY</th>
+                <th>VIEW</th>
+              </tr>
+            </thead>
+            <!-- Add more rows as needed -->
+            <tbody id="tableBody">
+              <!-- Data will be inserted here -->
+            </tbody>
+            <div id="popupContainer"></div>
+          </table>
         </div>
+      </div>
     </div>
-</body>
-<script src="./purchaseReport.js"></script>
+  </body>
+  <script src="./purchaseReport.js"></script>
 
-<script>
-        
-    document.addEventListener('DOMContentLoaded', function () {
-        const now = new Date();
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const now = new Date();
 
-// Adjust to IST (UTC+5:30)
-const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
-const istTime = new Date(now.getTime() + istOffset);
+      // Adjust to IST (UTC+5:30)
+      const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
+      const istTime = new Date(now.getTime() + istOffset);
 
-// Format the date to YYYY-MM-DD
-const todayIST = istTime.toISOString().split('T')[0];
+      // Format the date to YYYY-MM-DD
+      const todayIST = istTime.toISOString().split("T")[0];
 
-// Set the value of the date inputs to today's date in IST
-document.getElementById('fromdate').value = todayIST;
-document.getElementById('todate').value = todayIST;
-        // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/vehicleData', 'vehicleNumber','vehicle_no');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/list/Supplier', 'supplier','name');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/bata', 'bata','bata');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/purchaseproductData/purchaseId', 'purchase_id', 'purchase_id');
+      // Set the value of the date inputs to today's date in IST
+      document.getElementById("fromdate").value = todayIST;
+      document.getElementById("todate").value = todayIST;
+      // Fetch data from API and populate Select2 dropdowns
+      fetchAndPopulateDropdown(
+        "http://94.136.190.129:3000/vehicleData",
+        "vehicleNumber",
+        "vehicle_no"
+      );
+      fetchAndPopulateDropdown(
+        "http://94.136.190.129:3000/list/Supplier",
+        "supplier",
+        "name"
+      );
+      fetchAndPopulateDropdown(
+        "http://94.136.190.129:3000/purchaseproductData/bata",
+        "bata",
+        "bata"
+      );
+      fetchAndPopulateDropdown(
+        "http://94.136.190.129:3000/purchaseproductData/product",
+        "product",
+        "product_name"
+      );
+      fetchAndPopulateDropdown(
+        "http://94.136.190.129:3000/purchaseproductData/purchaseId",
+        "purchase_id",
+        "purchase_id"
+      );
     });
 
-    function fetchAndPopulateDropdown(apiUrl, dropdownId,field) {
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId, field);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
-
-    function populateDropdownWithSelect2(data, dropdownId,field) {
-        var dropdown = $('#' + dropdownId);
-        // Clear existing options
-        dropdown.empty();
-
-        // Add placeholder option
-        dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
-
-        // Populate dropdown with API data
-        data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
-        });
-
-        // Initialize Select2
-        dropdown.select2({
-            placeholder: "Select " + dropdownId + " type",
-            allowClear: true
+    function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
+      fetch(apiUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Populate Select2 dropdown with API data
+          populateDropdownWithSelect2(data, dropdownId, field);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
         });
     }
 
-    $(document).on('select2:open', function(e) {
-        window.setTimeout(function () {
-            document.querySelector('input.select2-search__field').focus();
-        }, 0);
+    function populateDropdownWithSelect2(data, dropdownId, field) {
+      var dropdown = $("#" + dropdownId);
+      // Clear existing options
+      dropdown.empty();
+
+      // Add placeholder option
+      dropdown.append(
+        $("<option></option>")
+          .attr("value", "")
+          .text("Select " + dropdownId + " type")
+          .prop("disabled", true)
+          .prop("selected", true)
+      );
+
+      // Populate dropdown with API data
+      data.forEach(function (item) {
+        dropdown.append(
+          $("<option></option>").attr("value", item[field]).text(item[field])
+        );
+      });
+
+      // Initialize Select2
+      dropdown.select2({
+        placeholder: "Select " + dropdownId + " type",
+        allowClear: true,
+      });
+    }
+
+    $(document).on("select2:open", function (e) {
+      window.setTimeout(function () {
+        document.querySelector("input.select2-search__field").focus();
+      }, 0);
     });
-
-</script>
-
+  </script>
 </html>

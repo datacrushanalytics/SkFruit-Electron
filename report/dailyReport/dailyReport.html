@@ -1,348 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>User Form in Electron</title>
     <style>
-        /* Add border to the second form */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fef7f7;
-            /* Transparent background */
-            margin: 0;
-            padding: 20px;
-            overflow-x: hidden;
-            /* Hide horizontal scrollbar */
-        }
-
-        .container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .container h1{
-         margin-top: 1%;
+      /* Add border to the second form */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fef7f7;
+        /* Transparent background */
+        margin: 0;
+        padding: 20px;
+        overflow-x: hidden;
+        /* Hide horizontal scrollbar */
       }
-        
+
+      .container {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .container h1 {
+        margin-top: 1%;
+      }
+
       .first-row {
         display: flex;
         justify-content: center;
         margin-bottom: 20px;
-    }
-    
-    .first-row label {
+      }
+
+      .first-row label {
         margin-right: 10px;
         margin-top: 9px;
-    }
-    
-    .first-row input,
-    .first-row select {
+      }
+
+      .first-row input,
+      .first-row select {
         margin-right: 10px;
-    }
-  
-  #fromdate{
-    /* border-radius: 8px; */
-    height: 35px;
-    width: 320px;
-    margin-left: 0%; 
-  }
+      }
 
-  label{
-    margin-left: 3%;
-  }
-  
-  #todate{
-    /* border-radius: 8px; */
-    height: 35px;
-    width: 320px;
-    margin-left: 0%;
-  }
+      #fromdate {
+        /* border-radius: 8px; */
+        height: 35px;
+        width: 320px;
+        margin-left: 0%;
+      }
 
-  #route, #user{
-  /* border-radius: 8px; */
-  height: 35px;
-  width: 600px;
-  margin-left: 1%;
-}
+      label {
+        margin-left: 3%;
+      }
 
+      #todate {
+        /* border-radius: 8px; */
+        height: 35px;
+        width: 320px;
+        margin-left: 0%;
+      }
 
-  .drop1{
-  margin-left: 2rem;
-}
-        .button-container {
-            margin-bottom: 0px;
-        }
+      #route,
+      #user {
+        /* border-radius: 8px; */
+        height: 35px;
+        width: 600px;
+        margin-left: 1%;
+      }
 
-        .button {
-            padding: 12px 24px;
-            text-decoration: none;
-            color: white;
-            background-color: grey;
-            /* Grey color */
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin: 0 10px;
-        }
-        .button i {
-            font-size: 20px; /* Adjust the size as needed */
-        }
+      .drop1 {
+        margin-left: 2rem;
+      }
+      .button-container {
+        margin-bottom: 0px;
+      }
 
-        .button:hover {
-            background-color: darkgrey;
-            /* Darker grey on hover */
-        }
-        .button a {
-            color: white;
-            text-decoration: none;
-        }
-        .button-container {
-            display: flex;
-            gap: 10px; /* Adjust the space between buttons */
-        }
+      .button {
+        padding: 12px 24px;
+        text-decoration: none;
+        color: white;
+        background-color: grey;
+        /* Grey color */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin: 0 10px;
+      }
+      .button i {
+        font-size: 20px; /* Adjust the size as needed */
+      }
 
-        .table-container {
-            max-width: 100%;
-            overflow-x: auto; /* Enable horizontal scrolling */
-            margin: 0 auto;
-            max-height: calc(100vh - 200px); /* Adjust the height as needed */
-            overflow-y: auto; /* Enable vertical scrolling */
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: rgba(255, 255, 255, 0.8);
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-        }
-        
-        th,
-    td {
+      .button:hover {
+        background-color: darkgrey;
+        /* Darker grey on hover */
+      }
+      .button a {
+        color: white;
+        text-decoration: none;
+      }
+      .button-container {
+        display: flex;
+        gap: 10px; /* Adjust the space between buttons */
+      }
+
+      .table-container {
+        max-width: 100%;
+        overflow-x: auto; /* Enable horizontal scrolling */
+        margin: 0 auto;
+        max-height: calc(100vh - 200px); /* Adjust the height as needed */
+        overflow-y: auto; /* Enable vertical scrolling */
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+      }
+
+      th,
+      td {
         border: 1px solid #dddddd;
         /* background-color: #eafffb; */
         text-align: left;
         padding: 12px;
-    }
-        
-        th {
-            background-color: #c7d5d3;
-        }
+      }
 
-        /* Style the loader container */
-#loader {
-    border: 4px solid #f3f3f3; /* Light grey */
-    border-top: 4px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite; /* Apply animation */
-    display: none; /* Hide loader by default */
-    
-    /* Center the loader */
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  /* Animation */
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
+      th {
+        background-color: #c7d5d3;
+      }
+
+      /* Style the loader container */
+      #loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite; /* Apply animation */
+        display: none; /* Hide loader by default */
+
+        /* Center the loader */
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* Animation */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
 
       /* CSS */
-.popup {
-    /* Existing styles */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-  
+      .popup {
+        /* Existing styles */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
 
+      /* Styles for the modal */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
 
-        /* Styles for the modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
+      /* Styles for the modal content */
+      .modal-content {
+        background-color: #fefefe;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        position: relative;
+        /* Position relative for the close button */
+      }
 
-        /* Styles for the modal content */
-        .modal-content {
-            background-color: #fefefe;
-            margin: 10% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-            position: relative;
-            /* Position relative for the close button */
-        }
+      /* Close button style */
+      .close {
+        color: #aaa;
+        position: absolute;
+        top: 8px;
+        right: 16px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
 
-        /* Close button style */
-        .close {
-            color: #aaa;
-            position: absolute;
-            top: 8px;
-            right: 16px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="loader"></div>
     <div class="container">
-        <h1 align="center">Daily Report</h1><br>
-        <hr style="position: relative; top: -25px;">
-        <br>
-        <div class="container1">
-            <form id="loginForm1">
+      <h1 align="center">Daily Report</h1>
+      <br />
+      <hr style="position: relative; top: -25px" />
+      <br />
+      <div class="container1">
+        <form id="loginForm1">
+          <div class="first-row">
+            <label for="userType">From Date</label>
+            <input
+              type="date"
+              id="fromdate"
+              name="date"
+              placeholder="From Date"
+              required
+            />
+            <br />
+            <label for="userType">To Date</label>
+            <input
+              type="date"
+              id="todate"
+              name="date"
+              placeholder="To Date"
+              required
+            />
+          </div>
+          <br />
 
-                <div class="first-row">
-                    <label for="userType">From Date</label>
-                    <input type="date" id="fromdate" name="date" placeholder="From Date" required>
-                    <br>
-                    <label for="userType">To Date</label>
-                    <input type="date" id="todate" name="date" placeholder="To Date" required>
-                </div><br>
+          <label id="lable1111" for="userType">Route :</label>
+          <select class="drop1" id="route" name="name">
+            <!-- <option value="User" disabled selected>Select Account</option> --></select
+          ><br /><br />
 
-                <label id='lable1111' for="userType">Route :</label>
-                <select class="drop1" id="route" name="name">
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select><br><br>
+          <label for="userType">User :</label>
+          <select class="drop1" id="user" name="user">
+            <!-- <option value="User" disabled selected>Select Account</option> --></select
+          ><br /><br />
 
-                <label for="userType">User :</label>
-                <select class="drop1" id="user" name="user">
-                    <!-- <option value="User" disabled selected>Select Account</option> -->
-                </select><br><br>
-              
-            <br>
+          <br />
 
-                <!-- <div class="third-row"> -->
-                    <!-- <button class="border-hover" >Save</button> -->
-                    <button type="submit" style="background-color: #26a653;" class="button">Submit</button>
-                    <button type='button' style="background-color: #ff355f;" class="button" onclick="exportToExcel()" id="button2">Export</button>
-                <!-- </div> -->
-            </form>
-            <br>
-            <div class="table-container">
-            <b>Daily Sale Details</b>
-            <table>
-                <tr>
-                    <th>Sr. No</th>
-                    <th>User Name</th>
-                    <th>BILL NO</th>
-                    <th>DATE</th>
-                    <th>Customer Name</th>
-                    <th>Route</th>
-                    <th>Sale Amount</th>
-                    <th>Cash</th>
-                    <th>Online Amount</th>
-                    <th>Discount</th>
-                    <th>In Carate</th>
-                    <th>Out Carate</th>
-                    <th>Balance</th>
-                    <th>Validate</th>
-                    <th>Bill</th>
-                    <th>Communication</th>
-                </tr>
-                <!-- Add more rows as needed -->
-                <tbody id="tableBody">
-                    <!-- Data will be inserted here -->
-                </tbody>
-            </table>
+          <!-- <div class="third-row"> -->
+          <!-- <button class="border-hover" >Save</button> -->
+          <button
+            type="submit"
+            style="background-color: #26a653"
+            class="button"
+          >
+            Submit
+          </button>
+          <button
+            type="button"
+            style="background-color: #ff355f"
+            class="button"
+            onclick="exportToExcel()"
+            id="button2"
+          >
+            Export
+          </button>
+          <!-- </div> -->
+        </form>
+        <br />
+        <div class="table-container">
+          <b>Daily Sale Details</b>
+          <table>
+            <tr>
+              <th>Sr. No</th>
+              <th>User Name</th>
+              <th>BILL NO</th>
+              <th>DATE</th>
+              <th>Customer Name</th>
+              <th>Route</th>
+              <th>Sale Amount</th>
+              <th>Cash</th>
+              <th>Online Amount</th>
+              <th>Discount</th>
+              <th>In Carate</th>
+              <th>Out Carate</th>
+              <th>Balance</th>
+              <th>Validate</th>
+              <th>Bill</th>
+              <th>Communication</th>
+              <th>Action</th>
+            </tr>
+            <!-- Add more rows as needed -->
+            <tbody id="tableBody">
+              <!-- Data will be inserted here -->
+            </tbody>
+          </table>
 
-            <br>
-            <br>
-            <br>
+          <br />
+          <br />
+          <br />
 
-            <b>Daily Receipt Details</b>
-            <table>
-                <tr>
-                    <th>Sr. No</th>
-                    <th>Receipt ID</th>
-                    <th>User</th>
-                    <th>DATE</th>
-                    <th>Customer Name</th>
-                    <th>Cash</th>
-                    <th>Bank Details</th>
-                    <th>Online Amount</th>
-                    <th>Discount</th>
-                    <th>In Carate</th>
-                    <!-- <th>Amount</th> -->
-                    <th>Note</th>
-                    <th>Remaining Balance</th>
-                    <th>Validate</th>
-                    <th>Bill</th>
-                    <th>Communication</th>
-                </tr>
+          <b>Daily Receipt Details</b>
+          <table>
+            <tr>
+              <th>Sr. No</th>
+              <th>Receipt ID</th>
+              <th>User</th>
+              <th>DATE</th>
+              <th>Customer Name</th>
+              <th>Cash</th>
+              <th>Bank Details</th>
+              <th>Online Amount</th>
+              <th>Discount</th>
+              <th>In Carate</th>
+              <!-- <th>Amount</th> -->
+              <th>Note</th>
+              <th>Remaining Balance</th>
+              <th>Validate</th>
+              <th>Bill</th>
+              <th>Communication</th>
+              <th>Action</th>
+            </tr>
 
-                <!-- Add more rows as needed -->
-                <tbody id="tableBody1">
-                    <!-- Data will be inserted here -->
-                </tbody>
-            </table>
+            <!-- Add more rows as needed -->
+            <tbody id="tableBody1">
+              <!-- Data will be inserted here -->
+            </tbody>
+          </table>
 
-            <br>
-            <br>
-            <br>
-            <b>Daily Collection Details</b>
-            <table>
-                <tr>
-                    <th>Particular</th>
-                    <th>SALE</th>
-                    <th>CASH</th>
-                    <th>Online</th>
-                    <th>Discount</th>
-                    <th>In Carate</th>
-                    <th>Out Carate</th>
-                    <th>Total Amount</th>
-                </tr>
-                <tr>
-                    <th>Sale</th>
-                    <td id='sale'></td>
-                    <td id="saleCash"></td>
-                    <td id="saleOnline"></td>
-                    <td id="saleDiscount"></td>
-                    <td id="saleInCarat"></td>
-                    <td id="saleCarate"></td>
-                    <td></td>
-                </tr>
-                <!-- <tr>
+          <br />
+          <br />
+          <br />
+          <b>Daily Collection Details</b>
+          <table>
+            <tr>
+              <th>Particular</th>
+              <th>SALE</th>
+              <th>CASH</th>
+              <th>Online</th>
+              <th>Discount</th>
+              <th>In Carate</th>
+              <th>Out Carate</th>
+              <th>Total Amount</th>
+            </tr>
+            <tr>
+              <th>Sale</th>
+              <td id="sale"></td>
+              <td id="saleCash"></td>
+              <td id="saleOnline"></td>
+              <td id="saleDiscount"></td>
+              <td id="saleInCarat"></td>
+              <td id="saleCarate"></td>
+              <td></td>
+            </tr>
+            <!-- <tr>
                     <th>Total Cash</th>
                     <td></td>
                     <td id="saleCash"></td>
@@ -350,133 +383,305 @@
                     <td></td>
                     <td></td>
                 </tr> -->
-                <tr>
-                    <th>Receipt</th>
-                    <td></td>
-                    <td id="receiptCash"></td>
-                    <td id="receiptOnline"></td>
-                    <td id="receiptDiscount"></td>
-                    <td id="receiptInCarat"></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>Total</th>
-                    <th id="grandSale"></th>
-                    <th id="grandCash"></th>
-                    <th id="grandOnline"></th>
-                    <th id="grandDiscount"></th>
-                    <th id="grandInCarate"></th>
-                    <th id="grandOutCarate"></th>
-                    <th id="grandTotal"></th>
-                    
-                </tr>
-
-            </table>
-         </div>
+            <tr>
+              <th>Receipt</th>
+              <td></td>
+              <td id="receiptCash"></td>
+              <td id="receiptOnline"></td>
+              <td id="receiptDiscount"></td>
+              <td id="receiptInCarat"></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Total</th>
+              <th id="grandSale"></th>
+              <th id="grandCash"></th>
+              <th id="grandOnline"></th>
+              <th id="grandDiscount"></th>
+              <th id="grandInCarate"></th>
+              <th id="grandOutCarate"></th>
+              <th id="grandTotal"></th>
+            </tr>
+          </table>
         </div>
+      </div>
     </div>
+  </body>
+  <script src="./dailyReport.js"></script>
 
+  <script>
+    document.addEventListener("DOMContentLoaded", async function () {
+      const now = new Date();
 
+      // Adjust to IST (UTC+5:30)
+      const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
+      const istTime = new Date(now.getTime() + istOffset);
 
+      // Format the date to YYYY-MM-DD
+      const todayIST = istTime.toISOString().split("T")[0];
 
-</body>
-<script src="./dailyReport.js"></script>
+      // Set the value of the date inputs to today's date in IST
+      document.getElementById("fromdate").value = todayIST;
+      document.getElementById("todate").value = todayIST;
 
-<script>
+      // Get session data for access control
+      var sessionData = JSON.parse(localStorage.getItem("sessionData"));
+      var isAdmin = sessionData && sessionData[0].usertype === "Admin";
+      var isSuper = sessionData && sessionData[0].status === "Super";
+      
+      // Check if the user is an admin and show/hide the button accordingly
+      if (isAdmin || isSuper) {
+        fetchUserBasedRoutes("route");
+        fetchAndPopulateDropdown(
+          "http://94.136.190.129:3000/fetchData/user",
+          "user",
+          "added_by"
+        );
+      } else {
+        var route = sessionData[0].route;
+        fetchAndPopulateDropdown(
+          "http://94.136.190.129:3000/fetchData/customerSale/" + route,
+          "customer",
+          (readOnly = false)
+        );
+        fetchUserBasedRoutes("route");
+        fetchAndPopulateDropdown(
+          "http://94.136.190.129:3000/fetchData/user",
+          "user",
+          "added_by",
+          (selectedValue = sessionData[0].name),
+          (readOnly = true)
+        );
+      }
+      
+      var dailyReportData = JSON.parse(localStorage.getItem("dailyReportData"));
+      if (dailyReportData) {
+        console.log("DailyReport", dailyReportData);
+        fetchDataAndProcess(dailyReportData);
+      }
+    });
+
+    function fetchAndPopulateDropdown(
+      apiUrl,
+      dropdownId,
+      field,
+      selectedValue = null,
+      readOnly = false
+    ) {
+      fetch(apiUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Populate Select2 dropdown with API data
+          populateDropdownWithSelect2(
+            data,
+            dropdownId,
+            field,
+            selectedValue,
+            readOnly
+          );
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+
+    function populateDropdownWithSelect2(
+      data,
+      dropdownId,
+      field,
+      selectedValue = null,
+      readOnly = false
+    ) {
+      var dropdown = $("#" + dropdownId);
+      // Clear existing options
+      dropdown.empty();
+
+      // Add placeholder option
+      dropdown.append(
+        $("<option></option>")
+          .attr("value", "")
+          .text("Select " + dropdownId + " type")
+          .prop("disabled", true)
+          .prop("selected", true)
+      );
+
+      // Populate dropdown with API data
+      data.forEach(function (item) {
+        dropdown.append(
+          $("<option></option>").attr("value", item[field]).text(item[field])
+        );
+      });
+
+      // Initialize Select2
+      dropdown.select2({
+        placeholder: "Select components",
+        closeOnSelect: false,
+        allowClear: true,
+        templateResult: function (data) {
+          if (!data.id) {
+            return data.text;
+          }
+          var $element = $("<span>" + data.text + "</span>");
+          return $element;
+        },
+      });
+
+      // Set selected value if provided
+      if (selectedValue !== null) {
+        dropdown.val(selectedValue).trigger("change");
+      }
+
+      // Make the dropdown read-only if specified
+      if (readOnly) {
+        dropdown.prop("disabled", true);
+      }
+    }
+
+    function fetchAndPopulateDropdownWithAllRoute(
+      apiUrl,
+      dropdownId,
+      field,
+      selectedValue = null,
+      readOnly = false
+    ) {
+      fetch(apiUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          populateDropdownWithSelect2AndAllRoute(
+            data,
+            dropdownId,
+            field,
+            selectedValue,
+            readOnly
+          );
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+
+    function populateDropdownWithSelect2AndAllRoute(
+      data,
+      dropdownId,
+      field,
+      selectedValue = null,
+      readOnly = false
+    ) {
+      var dropdown = $("#" + dropdownId);
+      dropdown.empty();
+
+      // Add "All Route" option first
+      dropdown.append(
+        $("<option></option>")
+          .attr("value", "*")
+          .text("All Route")
+      );
+
+      // Add placeholder option
+      dropdown.append(
+        $("<option></option>")
+          .attr("value", "")
+          .text("Select " + dropdownId + " type")
+          .prop("disabled", true)
+          .prop("selected", true)
+      );
+
+      // Populate dropdown with API data
+      data.forEach(function (item) {
+        dropdown.append(
+          $("<option></option>").attr("value", item[field]).text(item[field])
+        );
+      });
+
+      // Initialize Select2
+      dropdown.select2({
+        placeholder: "Select components",
+        closeOnSelect: false,
+        allowClear: true,
+        templateResult: function (data) {
+          if (!data.id) {
+            return data.text;
+          }
+          var $element = $("<span>" + data.text + "</span>");
+          return $element;
+        },
+      });
+
+      // Set selected value if provided
+      if (selectedValue !== null) {
+        dropdown.val(selectedValue).trigger("change");
+      }
+
+      // Make the dropdown read-only if specified
+      if (readOnly) {
+        dropdown.prop("disabled", true);
+      }
+    }
+
+    async function fetchUserBasedRoutes(dropdownId, includeAllOption = true) {
+      try {
+        const sessionData = JSON.parse(localStorage.getItem("sessionData"));
+        const userId = sessionData[0].id;
         
-    document.addEventListener('DOMContentLoaded', function () {
-        const now = new Date();
-
-    // Adjust to IST (UTC+5:30)
-    const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
-    const istTime = new Date(now.getTime() + istOffset);
-
-    // Format the date to YYYY-MM-DD
-    const todayIST = istTime.toISOString().split('T')[0];
-
-    // Set the value of the date inputs to today's date in IST
-    document.getElementById('fromdate').value = todayIST;
-    document.getElementById('todate').value = todayIST;
-        // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/routeData', 'route','route_name');
-        fetchAndPopulateDropdown('http://103.174.102.89:3000/fetchData/user', 'user', 'added_by');
-        var dailyReportData = JSON.parse(localStorage.getItem('dailyReportData'));
-        if(dailyReportData){
-            console.log("DailyReport",dailyReportData)
-            fetchDataAndProcess(dailyReportData);
-            //localStorage.removeItem('dailyReportData');
+        const response = await fetch(`http://94.136.190.129:3000/routeData/user-routes/${userId}`);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
         }
-        fetchDataAndProcess();
-    });
-
-    function fetchAndPopulateDropdown(apiUrl, dropdownId, field,selectedValue = null, readOnly = false) {
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Populate Select2 dropdown with API data
-                populateDropdownWithSelect2(data, dropdownId, field, selectedValue , readOnly);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
-
-    function populateDropdownWithSelect2(data, dropdownId, field,selectedValue = null, readOnly = false) {
-        var dropdown = $('#' + dropdownId);
-        // Clear existing options
+        const routes = await response.json();
+        
+        var dropdown = $("#" + dropdownId);
         dropdown.empty();
-
-        // Add placeholder option
-        dropdown.append($('<option></option>').attr('value', '').text('Select ' + dropdownId + ' type').prop('disabled', true).prop('selected', true));
-
-        // Populate dropdown with API data
-        data.forEach(function (item) {
-            dropdown.append($('<option></option>').attr('value', item[field]).text(item[field]));
+        
+        // Add "All Route" option if user has ALL access
+        if (sessionData[0].route === 'ALL' && includeAllOption) {
+          dropdown.append(
+            $("<option></option>")
+              .attr("value", "*")
+              .text("All Route")
+          );
+        }
+        
+        // Populate dropdown with user's accessible routes
+        routes.forEach(function (route) {
+          dropdown.append(
+            $("<option></option>")
+              .attr("value", route.route_name)
+              .text(route.route_name)
+          );
         });
-
-        // Initialize Select2
+        
+        // Initialize Select2 for multi-select
         dropdown.select2({
-            placeholder: 'Select components',
-            closeOnSelect: false,
-            allowClear: true,
-            templateResult: function (data) {
-                if (!data.id) {
-                    return data.text;
-                }
-                var $element = $('<span>' + data.text + '</span>');
-                return $element;
-            }
+          placeholder: "Select routes",
+          closeOnSelect: false,
+          allowClear: true
         });
-
-
-        // Set selected value if provided
-        if (selectedValue !== null) {
-            dropdown.val(selectedValue).trigger('change');
+        
+        // If user doesn't have ALL access, set their route as selected and readonly
+        if (sessionData[0].route !== 'ALL') {
+          dropdown.val([sessionData[0].route]).trigger("change");
+          dropdown.prop("disabled", true);
         }
-
-        // Make the dropdown read-only if specified
-        if (readOnly) {
-            dropdown.prop('disabled', true);
-        }
-
-        // // Initialize Select2
-        // dropdown.select2({
-        //     placeholder: "Select " + dropdownId + " type",
-        //     allowClear: true
-        // });
+      } catch (error) {
+        console.error("Error loading user routes:", error);
+      }
     }
 
-    $(document).on('select2:open', function(e) {
-        window.setTimeout(function () {
-            document.querySelector('input.select2-search__field').focus();
-        }, 0);
+    $(document).on("select2:open", function (e) {
+      window.setTimeout(function () {
+        document.querySelector("input.select2-search__field").focus();
+      }, 0);
     });
-</script>
-
+  </script>
 </html>
