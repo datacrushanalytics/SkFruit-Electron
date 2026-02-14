@@ -352,6 +352,31 @@ function populateTable4(data) {
 
     // Append the button container to the cell
     buttonCell.appendChild(buttonContainer);
+
+    // Add Delete button for Super Admin
+    if (isSuperAdmin) {
+      var deleteCell = row.insertCell();
+      var deleteButton = document.createElement("button");
+      deleteButton.className = "button";
+      deleteButton.style.backgroundColor = "#ff355f";
+      deleteButton.textContent = "Delete";
+      deleteButton.addEventListener("click", function () {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "Do you really want to delete this sale?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            deleteSale(item.bill_no);
+          }
+        });
+      });
+      deleteCell.appendChild(deleteButton);
+    }
   }
 
 );
@@ -763,6 +788,31 @@ function deleteReceipt(receiptId) {
         icon: "error",
         title: "Error!",
         text: "Failed to delete receipt",
+      });
+    });
+}
+
+function deleteSale(billNo) {
+  fetch("http://94.136.190.129:3000/saleData/deletesaleId/" + billNo, {
+    method: "DELETE",
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Sale deleted successfully",
+      });
+      fetchDataAndProcess();
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "Failed to delete sale",
       });
     });
 }
