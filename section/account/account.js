@@ -5,7 +5,7 @@ function account() {
   var loader = document.getElementById("loader");
   loader.style.display = "block";
 
-  fetch("http://94.136.190.129:3000/accountData")
+  fetch("http://localhost:3000/accountData")
     .then((response) => {
       if (response.status === 404) {
         loader.style.display = "none";
@@ -132,7 +132,7 @@ function editAccount(user) {
 
 function deleteaccount(userId) {
   // Perform delete operation based on userId
-  fetch("http://94.136.190.129:3000/accountData/deleteaccountId/" + userId, {
+  fetch("http://localhost:3000/accountData/deleteaccountId/" + userId, {
     method: "DELETE",
   })
     .then((response) => {

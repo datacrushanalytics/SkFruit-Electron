@@ -10,7 +10,7 @@ async function fetchUserBasedRoutes(dropdownId, includeAllOption = true) {
     const sessionData = JSON.parse(localStorage.getItem("sessionData"));
     const userId = sessionData[0].id;
     
-    const response = await fetch(`http://94.136.190.129:3000/routeData/user-routes/${userId}`);
+    const response = await fetch(`http://localhost:3000/routeData/user-routes/${userId}`);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }

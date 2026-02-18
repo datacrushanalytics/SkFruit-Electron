@@ -214,10 +214,10 @@
         
     document.addEventListener('DOMContentLoaded', function () {
         // Fetch data from API and populate Select2 dropdowns
-        fetchAndPopulateDropdown('http://94.136.190.129:3000/accountgroupData', 'account_group','name');
-        fetchAndPopulateDropdown('http://94.136.190.129:3000/routeData', 'route_detail','route_name');
+        fetchAndPopulateDropdown('http://localhost:3000/accountgroupData', 'account_group','name');
+        fetchAndPopulateDropdown('http://localhost:3000/routeData', 'route_detail','route_name');
 
-        fetch('http://94.136.190.129:3000/fetchAccountid')
+        fetch('http://localhost:3000/fetchAccountid')
     .then(response => {
         if (response.status === 404) {
             loader.style.display = 'none';

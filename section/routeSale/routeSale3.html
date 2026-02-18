@@ -645,7 +645,7 @@
 
      const addedBy = sessionData[0]?.name || "Unknown"; // Or wherever you capture user_id
 
-fetch('http://94.136.190.129:3000/fetchSaleid/generate-bill-id', {
+fetch('http://localhost:3000/fetchSaleid/generate-bill-id', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -670,7 +670,7 @@ fetch('http://94.136.190.129:3000/fetchSaleid/generate-bill-id', {
             const billId = parseInt(data.bill_id);
             // document.getElementById('bill').value = parseInt(data[0]['num']) + 1 || 1;
             document.getElementById('bill').value = billId;
-            fetch('http://94.136.190.129:3000/saleproductData/' + billId || 1)
+            fetch('http://localhost:3000/saleproductData/' + billId || 1)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -698,28 +698,28 @@ fetch('http://94.136.190.129:3000/fetchSaleid/generate-bill-id', {
     var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
         // Check if the user is an admin and show/hide the button accordingly
     if (isAdmin) {
-      await fetchAndPopulateDropdown('http://94.136.190.129:3000/mobile', 'number', 'mobile_no');
-      await fetchAndPopulateDropdown('http://94.136.190.129:3000/routeData', 'Route', 'route_name');
+      await fetchAndPopulateDropdown('http://localhost:3000/mobile', 'number', 'mobile_no');
+      await fetchAndPopulateDropdown('http://localhost:3000/routeData', 'Route', 'route_name');
       var routeSaleData = localStorage.getItem('routeSaleData');
       var routeSale = JSON.parse(routeSaleData);
       console.log(routeSaleData)
       const cust_name = routeSale.name
-      await fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Customer', 'grahk', 'name',selectedValue=cust_name,readOnly = true);
+      await fetchAndPopulateDropdown('http://localhost:3000/list/Customer', 'grahk', 'name',selectedValue=cust_name,readOnly = true);
     }else{
       var route = sessionData[0].route;
-      await fetchAndPopulateDropdown('http://94.136.190.129:3000/fetchData/customerSale/' +route  , 'number','mobile_no',selectedValue = null,readOnly = true);     
+      await fetchAndPopulateDropdown('http://localhost:3000/fetchData/customerSale/' +route  , 'number','mobile_no',selectedValue = null,readOnly = true);     
       var routeSaleData = localStorage.getItem('routeSaleData');
       var routeSale = JSON.parse(routeSaleData);
       console.log(routeSaleData)
       const cust_name = routeSale.name
       console.log("kfgkdfjk",cust_name)
-      await fetchAndPopulateDropdown('http://94.136.190.129:3000/fetchData/customerSale/' +route  , 'grahk','name',selectedValue=cust_name,readOnly = true);
-      await fetchAndPopulateDropdown('http://94.136.190.129:3000/routeData', 'Route','route_name',selectedValue=route,readOnly = true);
+      await fetchAndPopulateDropdown('http://localhost:3000/fetchData/customerSale/' +route  , 'grahk','name',selectedValue=cust_name,readOnly = true);
+      await fetchAndPopulateDropdown('http://localhost:3000/routeData', 'Route','route_name',selectedValue=route,readOnly = true);
     }
     
-    await fetchAndPopulateDropdown('http://94.136.190.129:3000/purchaseproductData/product', 'product', 'product_name');
-    await fetchAndPopulateDropdown('http://94.136.190.129:3000/purchaseproductData/bata', 'bta', 'bata');
-    await fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Bank Account', 'onlineAcc', 'name');
+    await fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData/product', 'product', 'product_name');
+    await fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData/bata', 'bta', 'bata');
+    await fetchAndPopulateDropdown('http://localhost:3000/list/Bank Account', 'onlineAcc', 'name');
   
 
     

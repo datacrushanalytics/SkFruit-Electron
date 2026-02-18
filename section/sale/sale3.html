@@ -309,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const addedBy = sessionData[0]?.name || "Unknown"; // Or wherever you capture user_id
 
-fetch('http://94.136.190.129:3000/fetchSaleid/generate-bill-id', {
+fetch('http://localhost:3000/fetchSaleid/generate-bill-id', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -336,7 +336,7 @@ fetch('http://94.136.190.129:3000/fetchSaleid/generate-bill-id', {
     document.getElementById('bill').value = billId;
 
     // Fetch sale product data (if needed)
-    fetch('http://94.136.190.129:3000/saleproductData/' + billId)
+    fetch('http://localhost:3000/saleproductData/' + billId)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Failed to fetch sale product data');
@@ -368,24 +368,24 @@ fetch('http://94.136.190.129:3000/fetchSaleid/generate-bill-id', {
     var isAdmin = sessionData && sessionData[0].usertype === 'Admin';
     // Check if the user is an admin and show/hide the button accordingly
     if (isAdmin) {
-        fetchAndPopulateDropdown('http://94.136.190.129:3000/mobile', 'number', 'mobile_no');
+        fetchAndPopulateDropdown('http://localhost:3000/mobile', 'number', 'mobile_no');
         fetchUserBasedRoutes('Route');
-        fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Customer', 'grahk', 'name');
+        fetchAndPopulateDropdown('http://localhost:3000/list/Customer', 'grahk', 'name');
     } else {
         var route = sessionData[0].route;   
         if(route == "ALL"){
-          fetchAndPopulateDropdown('http://94.136.190.129:3000/mobile', 'number', 'mobile_no');
-          fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Customer', 'grahk', 'name');
+          fetchAndPopulateDropdown('http://localhost:3000/mobile', 'number', 'mobile_no');
+          fetchAndPopulateDropdown('http://localhost:3000/list/Customer', 'grahk', 'name');
         }else{
-          fetchAndPopulateDropdown('http://94.136.190.129:3000/fetchData/customerSale/' + route, 'grahk', 'name');
-          fetchAndPopulateDropdown('http://94.136.190.129:3000/fetchData/customerSale/' + route, 'number', 'mobile_no');
+          fetchAndPopulateDropdown('http://localhost:3000/fetchData/customerSale/' + route, 'grahk', 'name');
+          fetchAndPopulateDropdown('http://localhost:3000/fetchData/customerSale/' + route, 'number', 'mobile_no');
         }
         fetchUserBasedRoutes('Route');
     }
 
-    fetchAndPopulateDropdown('http://94.136.190.129:3000/purchaseproductData/product', 'product', 'product_name');
-    fetchAndPopulateDropdown('http://94.136.190.129:3000/purchaseproductData/bata', 'bta', 'bata');
-    fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Bank Account', 'onlineAcc', 'name');
+    fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData/product', 'product', 'product_name');
+    fetchAndPopulateDropdown('http://localhost:3000/purchaseproductData/bata', 'bta', 'bata');
+    fetchAndPopulateDropdown('http://localhost:3000/list/Bank Account', 'onlineAcc', 'name');
 
 });
 
@@ -394,7 +394,7 @@ async function fetchUserBasedRoutes(dropdownId, includeAllOption = true) {
     const sessionData = JSON.parse(localStorage.getItem("sessionData"));
     const userId = sessionData[0].id;
     
-    const response = await fetch(`http://94.136.190.129:3000/routeData/user-routes/${userId}`);
+    const response = await fetch(`http://localhost:3000/routeData/user-routes/${userId}`);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }

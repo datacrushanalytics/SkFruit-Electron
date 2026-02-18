@@ -29,7 +29,7 @@ function fetchDataAndProcess(data = null) {
 
   var loader = document.getElementById("loader");
   loader.style.display = "block";
-  return fetch("http://94.136.190.129:3000/dailyReport", {
+  return fetch("http://localhost:3000/dailyReport", {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
@@ -155,7 +155,7 @@ function populateTable4(data) {
             var loader = document.getElementById("loader");
             loader.style.display = "block";
             await fetch(
-              "http://94.136.190.129:3000/saleData/validate/" +
+              "http://localhost:3000/saleData/validate/" +
                 String(item.bill_no),
               {
                 method: "GET",
@@ -251,7 +251,7 @@ function populateTable4(data) {
     openPopupButton.addEventListener("click", async function () {
       var loader = document.getElementById("loader");
       loader.style.display = "block";
-      await fetch("http://94.136.190.129:3000/sms/saleMessage", {
+      await fetch("http://localhost:3000/sms/saleMessage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -304,7 +304,7 @@ function populateTable4(data) {
     secondButton.addEventListener("click", async function () {
       var loader = document.getElementById("loader");
       loader.style.display = "block";
-      await fetch("http://94.136.190.129:3000/whatsapp/saleMessage", {
+      await fetch("http://localhost:3000/whatsapp/saleMessage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -482,7 +482,7 @@ function populateTable5(data) {
             var loader = document.getElementById("loader");
             loader.style.display = "block";
             await fetch(
-              "http://94.136.190.129:3000/receiptData/validate/" +
+              "http://localhost:3000/receiptData/validate/" +
                 String(item.receipt_id),
               {
                 method: "GET",
@@ -570,7 +570,7 @@ function populateTable5(data) {
     openPopupButton.addEventListener("click", async function () {
       var loader = document.getElementById("loader");
       loader.style.display = "block";
-      await fetch("http://94.136.190.129:3000/sms/receiptMessage", {
+      await fetch("http://localhost:3000/sms/receiptMessage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -623,7 +623,7 @@ function populateTable5(data) {
     secondButton.addEventListener("click", async function () {
       var loader = document.getElementById("loader");
       loader.style.display = "block";
-      await fetch("http://94.136.190.129:3000/whatsapp/receiptMessage", {
+      await fetch("http://localhost:3000/whatsapp/receiptMessage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -768,7 +768,7 @@ function populateTable5(data) {
 }
 
 function deleteReceipt(receiptId) {
-  fetch("http://94.136.190.129:3000/receiptReport/deleteReceiptReport/" + receiptId, {
+  fetch("http://localhost:3000/receiptReport/deleteReceiptReport/" + receiptId, {
     method: "DELETE",
   })
     .then((response) => {
@@ -793,7 +793,7 @@ function deleteReceipt(receiptId) {
 }
 
 function deleteSale(billNo) {
-  fetch("http://94.136.190.129:3000/saleData/deletesaleId/" + billNo, {
+  fetch("http://localhost:3000/saleData/deletesaleId/" + billNo, {
     method: "DELETE",
   })
     .then((response) => {
@@ -824,7 +824,7 @@ async function exportToExcel() {
     var loader = document.getElementById("loader");
     loader.style.display = "block";
 
-    return fetch("http://94.136.190.129:3000/dailyReport/generate-pdf", {
+    return fetch("http://localhost:3000/dailyReport/generate-pdf", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -884,7 +884,7 @@ function openModal(item) {
   // Your code to open the modal with the data from 'item'
   console.log("Opening modal for item:", item);
 
-  fetch("http://94.136.190.129:3000/bill/" + item)
+  fetch("http://localhost:3000/bill/" + item)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -1465,7 +1465,7 @@ function openModal1(item) {
   var loader = document.getElementById("loader");
   loader.style.display = "block";
 
-  fetch("http://94.136.190.129:3000/receiptReport/" + item.receipt_id)
+  fetch("http://localhost:3000/receiptReport/" + item.receipt_id)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");

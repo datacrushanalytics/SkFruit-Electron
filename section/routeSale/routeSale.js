@@ -25,7 +25,7 @@ function fetchDataAndProcess() {
 
   var loader = document.getElementById("loader");
   loader.style.display = "block";
-  return fetch("http://94.136.190.129:3000/routeSale/sale", {
+  return fetch("http://localhost:3000/routeSale/sale", {
     method: "POST",
     body: JSON.stringify(data),
     headers: {

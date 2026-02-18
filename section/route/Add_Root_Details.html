@@ -173,7 +173,7 @@
     <script src="./addRoute.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        fetch("http://94.136.190.129:3000/fetchRouteid")
+        fetch("http://localhost:3000/fetchRouteid")
           .then((response) => {
             if (response.status === 404) {
               loader.style.display = "none";

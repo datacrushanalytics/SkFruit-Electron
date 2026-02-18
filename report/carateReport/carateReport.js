@@ -28,7 +28,7 @@ function fetchDataAndProcess() {
   var loader = document.getElementById("loader");
   loader.style.display = "block";
 
-  return fetch("http://94.136.190.129:3000/carateReport", {
+  return fetch("http://localhost:3000/carateReport", {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
@@ -142,7 +142,7 @@ function populateTable4(data) {
 
   if (document.getElementById("customer").value !== "") {
     fetch(
-      "http://94.136.190.129:3000/carateuserData/" +
+      "http://localhost:3000/carateuserData/" +
         document.getElementById("customer").value
     )
       .then((response) => {
@@ -175,7 +175,7 @@ function populateTable4(data) {
       });
   } else if (document.getElementById("route").value !== "") {
     fetch(
-      "http://94.136.190.129:3000/carateuserData/route/" +
+      "http://localhost:3000/carateuserData/route/" +
         document.getElementById("route").value
     )
       .then((response) => {
@@ -207,7 +207,7 @@ function populateTable4(data) {
           data1[0]["carate_350"];
       });
   } else {
-    fetch("http://94.136.190.129:3000/carateuserData")
+    fetch("http://localhost:3000/carateuserData")
       .then((response) => {
         if (!response.ok) {
           loader.style.display = "none";
@@ -246,7 +246,7 @@ async function exportToExcel() {
     var loader = document.getElementById("loader");
     loader.style.display = "block";
 
-    return fetch("http://94.136.190.129:3000/carateReport/generate-pdf", {
+    return fetch("http://localhost:3000/carateReport/generate-pdf", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

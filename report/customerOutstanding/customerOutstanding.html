@@ -245,14 +245,14 @@
       if (isAdmin) {
         await fetchUserBasedRoutes("route");
         await fetchAndPopulateDropdown(
-          "http://94.136.190.129:3000/list/Customer",
+          "http://localhost:3000/list/Customer",
           "customer"
         );
         await fetchDataAndProcess();
       } else {
         var route = sessionData[0].route;
         await fetchAndPopulateDropdown(
-          "http://94.136.190.129:3000/fetchData/customerSale/" + route,
+          "http://localhost:3000/fetchData/customerSale/" + route,
           "customer"
         );
         await fetchUserBasedRoutes("route");
@@ -351,7 +351,7 @@
         const sessionData = JSON.parse(localStorage.getItem("sessionData"));
         const userId = sessionData[0].id;
         
-        const response = await fetch(`http://94.136.190.129:3000/routeData/user-routes/${userId}`);
+        const response = await fetch(`http://localhost:3000/routeData/user-routes/${userId}`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -404,7 +404,7 @@
     function setCustomer() {
       var route = document.getElementById("route").value;
       fetchAndPopulateDropdown(
-        "http://94.136.190.129:3000/fetchData/customersale/" + route,
+        "http://localhost:3000/fetchData/customersale/" + route,
         "customer"
       );
     }

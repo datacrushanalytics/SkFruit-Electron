@@ -30,7 +30,7 @@ function fetchDataAndProcess() {
   var loader = document.getElementById("loader");
   loader.style.display = "block";
 
-  return fetch("http://94.136.190.129:3000/receiptReport", {
+  return fetch("http://localhost:3000/receiptReport", {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
@@ -176,7 +176,7 @@ function populateTable4(data) {
 function deleteaccount(userId) {
   // Perform delete operation based on userId
   fetch(
-    "http://94.136.190.129:3000/receiptReport/deleteReceiptReport/" + userId,
+    "http://localhost:3000/receiptReport/deleteReceiptReport/" + userId,
     {
       method: "DELETE",
     }
@@ -206,7 +206,7 @@ async function exportToExcel() {
     var loader = document.getElementById("loader");
     loader.style.display = "block";
 
-    return fetch("http://94.136.190.129:3000/receiptReport/generate-pdf", {
+    return fetch("http://localhost:3000/receiptReport/generate-pdf", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -267,7 +267,7 @@ function openModal(item) {
   console.log("Opening receipt modal for item:", item);
   var loader = document.getElementById("loader");
   loader.style.display = "block";
-  fetch("http://94.136.190.129:3000/receiptReport/" + item.receipt_id)
+  fetch("http://localhost:3000/receiptReport/" + item.receipt_id)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");

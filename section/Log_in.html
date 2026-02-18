@@ -66,7 +66,7 @@
       function login() {
         localStorage.removeItem("sessionData");
 
-        fetch("http://94.136.190.129:3000/user/login", {
+        fetch("http://localhost:3000/user/login", {
           method: "POST",
           body: JSON.stringify({
             name: document.getElementById("username").value,
