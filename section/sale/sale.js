@@ -431,13 +431,26 @@ function selectOption(value) {
 
 function getProducts() {
   var bataId = document.getElementById("bta").value;
+  
+  // Check if bata is selected
+  if (!bataId) {
+    console.log("No bata selected");
+    return;
+  }
+  
   console.log(bataId);
   var loader = document.getElementById("loader");
   loader.style.display = "block";
   fetch(
     "http://localhost:3000/purchaseproductData/getBataProduct/" + bataId
   )
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        loader.style.display = "none";
+        throw new Error("Product not found");
+      }
+      return response.json();
+    })
     .then((data) => {
       loader.style.display = "none";
       console.log(data[0].product_name);
@@ -453,6 +466,7 @@ function getProducts() {
       document.getElementById("mark").readOnly = true;
     })
     .catch((error) => {
+      loader.style.display = "none";
       console.error("Error:", error);
     });
 
@@ -848,7 +862,20 @@ function totalbill() {
 }
 
 async function myFunction() {
-  // event.preventDefault();
+  // Validate required fields before submitting
+  if (!document.getElementById("bta").value || 
+      !document.getElementById("mark").value || 
+      !document.getElementById("product").value || 
+      !document.getElementById("kimmat").value) {
+    Swal.fire({
+      icon: "warning",
+      title: "Missing Information",
+      text: "Please select a product first",
+      timer: 2000
+    });
+    return;
+  }
+
   var loader = document.getElementById("loader");
   loader.style.display = "block";
 
@@ -922,8 +949,11 @@ async function myFunction() {
           });
       }
       
+      $("#bta").val("").trigger("change");
       $("#product").val("").trigger("change");
+      $("#product").prop("disabled", false);
       document.getElementById("mark").value = "";
+      document.getElementById("mark").readOnly = false;
       document.getElementById("nag").value = 1;
       document.getElementById("kimmat").value = "";
       document.getElementById("total").value = "";
