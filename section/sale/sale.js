@@ -250,6 +250,22 @@ function saveRow(button, id1, editable) {
       return response.json();
     })
     .then((data) => {
+      // Log edit history
+      const sessionData = JSON.parse(localStorage.getItem('sessionData'));
+      fetch('http://localhost:3000/editHistory/log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'sale',
+          bill_no: bill_id,
+          customer_name: document.getElementById('grahk').value,
+          product_details: `${product} (${bata})`,
+          old_quantity: parseInt(cells[3].textContent),
+          new_quantity: updatedQuantity,
+          edited_by: sessionData[0].name
+        })
+      }).catch(err => console.log('Edit log failed:', err));
+
       Swal.fire({
         icon: "success",
         title: "Updated successfully",

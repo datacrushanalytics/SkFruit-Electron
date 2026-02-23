@@ -323,7 +323,7 @@
 
                 <div class="first-row">
                     <label for="input1" class="input-label"> ऑनलाईन :</label>
-                    <input type="text" id="input7" name="input2" onchange="totalbill()" ></select>
+                    <input type="number" id="input7" name="input2" step="0.01" onchange="totalbill()" readonly>
                 </div>
 
                
@@ -379,14 +379,16 @@
 
 function toggleReadonly(){
   var inputField = document.getElementById("input7");
-      
-      // Check if 'readonly' is set, and toggle it
-      if (inputField.hasAttribute("readonly")) {
-        inputField.removeAttribute("readonly");  // Make it editable
-        inputField.focus();  // Optional: Focus on the input field
-      } else {
-        inputField.setAttribute("readonly", true);  // Make it read-only again
-      }
+  var bankSelect = document.getElementById("input1");
+  
+  // Enable input7 if a bank account is selected, disable if not
+  if (bankSelect.value && bankSelect.value !== '') {
+    inputField.removeAttribute("readonly");  // Make it editable
+    inputField.focus();  // Focus on the input field
+  } else {
+    inputField.setAttribute("readonly", true);  // Make it read-only
+    inputField.value = '';  // Clear the value
+  }
 }
     // JavaScript functions remain unchanged
     function carate() {

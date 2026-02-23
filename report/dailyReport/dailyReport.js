@@ -77,6 +77,7 @@ function populateTable4(data) {
     "route",
     "amount",
     "cash",
+    "online_acc",
     "online_amt",
     "discount",
     "inCarat",
