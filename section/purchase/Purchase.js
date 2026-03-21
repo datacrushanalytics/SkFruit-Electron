@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("date").readOnly = true; // Hide the button for non-admin users
   }
 
-  fetch("http://localhost:3000/fetchPurchaseid")
+  fetch("http://192.168.1.19:3000/fetchPurchaseid")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Populate dropdown with API data
       document.getElementById("no").value = parseInt(data[0]["num"]) + 1 || 1;
       fetch(
-        "http://localhost:3000/purchaseproductData/productBata/" +
+        "http://192.168.1.19:3000/purchaseproductData/productBata/" +
           (parseInt(data[0]["num"]) + 1)
       )
         .then((response) => {
@@ -77,7 +77,7 @@ document
     var loader = document.getElementById("loader");
     loader.style.display = "block";
 
-    await fetch("http://localhost:3000/purchaseData/insertPurchase", {
+    await fetch("http://192.168.1.19:3000/purchaseData/insertPurchase", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

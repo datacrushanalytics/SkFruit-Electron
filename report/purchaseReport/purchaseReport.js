@@ -31,7 +31,7 @@ function fetchDataAndProcess() {
   var loader = document.getElementById("loader");
   loader.style.display = "block";
 
-  return fetch("http://localhost:3000/purchaseReport", {
+  return fetch("http://192.168.1.19:3000/purchaseReport", {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
@@ -228,7 +228,7 @@ function editAccount(user) {
 function deleteaccount(userId) {
   // Perform delete operation based on userId
   fetch(
-    "http://localhost:3000/purchaseReport/deletePurchaseReport/" + userId,
+    "http://192.168.1.19:3000/purchaseReport/deletePurchaseReport/" + userId,
     {
       method: "DELETE",
     }
@@ -315,7 +315,7 @@ async function exportToExcel() {
     var loader = document.getElementById("loader");
     loader.style.display = "block";
 
-    return fetch("http://localhost:3000/purchaseReport/generate-pdf", {
+    return fetch("http://192.168.1.19:3000/purchaseReport/generate-pdf", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -377,7 +377,7 @@ function openModal(item) {
   var loader = document.getElementById("loader");
   loader.style.display = "block";
 
-  fetch("http://localhost:3000/purchaseReport/" + item.id)
+  fetch("http://192.168.1.19:3000/purchaseReport/" + item.id)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");

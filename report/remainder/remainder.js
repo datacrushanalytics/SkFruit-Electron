@@ -22,8 +22,8 @@ async function remainder() {
     const isAdmin = sessionData && sessionData[0].usertype === "Admin";
 
     const url = isAdmin
-      ? "http://localhost:3000/remainderReport"
-      : `http://localhost:3000/remainderReport/${sessionData[0].route}`;
+      ? "http://192.168.1.19:3000/remainderReport"
+      : `http://192.168.1.19:3000/remainderReport/${sessionData[0].route}`;
 
     var data1 = {
       customer: getElementValueWithDefault("customer", "*"),
@@ -178,7 +178,7 @@ function populateTable(data) {
     openPopupButton.addEventListener("click", async function () {
       var loader = document.getElementById("loader");
       loader.style.display = "block";
-      await fetch("http://localhost:3000/sms/remainderMessage", {
+      await fetch("http://192.168.1.19:3000/sms/remainderMessage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -232,7 +232,7 @@ function populateTable(data) {
     secondButton.addEventListener("click", async function () {
       var loader = document.getElementById("loader");
       loader.style.display = "block";
-      await fetch("http://localhost:3000/whatsapp/remainderMessage", {
+      await fetch("http://192.168.1.19:3000/whatsapp/remainderMessage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -375,8 +375,8 @@ async function sendMessagesToAll(type) {
 
       const endpoint =
         type === "sms"
-          ? "http://localhost:3000/sms/remainderMessage"
-          : "http://localhost:3000/whatsapp/remainderMessage";
+          ? "http://192.168.1.19:3000/sms/remainderMessage"
+          : "http://192.168.1.19:3000/whatsapp/remainderMessage";
 
       const response = await fetch(endpoint, {
         method: "POST",
@@ -421,7 +421,7 @@ async function exportToExcel() {
     var loader = document.getElementById("loader");
     loader.style.display = "block";
 
-    return fetch("http://localhost:3000/remainderReport/generate-pdf", {
+    return fetch("http://192.168.1.19:3000/remainderReport/generate-pdf", {
       method: "POST",
       body: JSON.stringify(data1),
       headers: {

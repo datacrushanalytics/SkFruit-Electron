@@ -176,7 +176,7 @@
       console.log("product function executed");
       var loader = document.getElementById("loader");
       loader.style.display = "block";
-      fetch("http://localhost:3000/fetchData/noBillData")
+      fetch("http://192.168.1.19:3000/fetchData/noBillData")
         .then((response) => {
           if (response.status === 404) {
             loader.style.display = "none";
@@ -278,7 +278,7 @@
     function deleteProduct(userId) {
       // Perform delete operation based on userId
       fetch(
-        "http://localhost:3000/saleproductData/deletesaleproduct/" +
+        "http://192.168.1.19:3000/saleproductData/deletesaleproduct/" +
         userId,
         {
           method: "DELETE",
@@ -331,7 +331,7 @@ function deleteAllProducts() {
       
       // Create array of delete promises
       const deletePromises = allProducts.map(item => 
-        fetch('http://localhost:3000/saleproductData/deletesaleproduct/' + item.id, {
+        fetch('http://192.168.1.19:3000/saleproductData/deletesaleproduct/' + item.id, {
           method: 'DELETE'
         })
         .then(response => {

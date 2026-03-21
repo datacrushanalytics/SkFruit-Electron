@@ -382,13 +382,13 @@
       var isAdmin = sessionData && sessionData[0].usertype === "Admin";
       // Check if the user is an admin and show/hide the button accordingly
       if (isAdmin) {
-        // For admin users, preselect current user and make it readonly
+        // For admin users, allow user selection with search
         fetchAndPopulateDropdown1(
-          "http://localhost:3000/fetchData/user",
+          "http://192.168.1.19:3000/fetchData/user",
           "user",
           "added_by",
-          sessionData[0].name,
-          true
+          null,
+          false
         );
         fetchUserBasedRoutes("route");
         // For ALL route users, don't load customers initially - let setCustomer() handle it
@@ -398,13 +398,13 @@
       } else {
         var route = sessionData[0].route;
         fetchAndPopulateDropdown(
-          "http://localhost:3000/fetchData/customer/" + route,
+          "http://192.168.1.19:3000/fetchData/customer/" + route,
           "customer",
           (readOnly = false)
         );
         fetchUserBasedRoutes("route");
         fetchAndPopulateDropdown1(
-          "http://localhost:3000/fetchData/user",
+          "http://192.168.1.19:3000/fetchData/user",
           "user",
           "added_by",
           sessionData[0].name,
@@ -418,7 +418,7 @@
         const sessionData = JSON.parse(localStorage.getItem("sessionData"));
         const userId = sessionData[0].id;
         
-        const response = await fetch(`http://localhost:3000/routeData/user-routes/${userId}`);
+        const response = await fetch(`http://192.168.1.19:3000/routeData/user-routes/${userId}`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -581,6 +581,15 @@
       // Clear existing options
       dropdown.empty();
 
+      // Add "All Users" option for user dropdown
+      if (dropdownId === "user") {
+        dropdown.append(
+          $("<option></option>")
+            .attr("value", "*")
+            .text("All Users")
+        );
+      }
+
       // Add placeholder option
       dropdown.append(
         $("<option></option>")
@@ -597,10 +606,11 @@
         );
       });
 
-      // Initialize Select2
+      // Initialize Select2 with search enabled
       dropdown.select2({
         placeholder: "Select " + dropdownId + " type",
         allowClear: true,
+        width: '100%'
       });
       
       // Set selected value if provided
@@ -625,7 +635,7 @@
       }
 
       return fetch(
-        "http://localhost:3000/fetchData/customersaleKhatawani",
+        "http://192.168.1.19:3000/fetchData/customersaleKhatawani",
         {
           method: "POST",
           body: JSON.stringify({

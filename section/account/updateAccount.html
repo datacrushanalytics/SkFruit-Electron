@@ -286,12 +286,12 @@
       document.addEventListener("DOMContentLoaded", async function () {
         // Retrieve user data from localStorage
         await fetchAndPopulateDropdown(
-          "http://localhost:3000/accountgroupData",
+          "http://192.168.1.19:3000/accountgroupData",
           "account_group",
           "name"
         );
         await fetchAndPopulateDropdown(
-          "http://localhost:3000/routeData",
+          "http://192.168.1.19:3000/routeData",
           "route_detail",
           "route_name"
         );
@@ -383,7 +383,7 @@
             document.getElementById("dr").checked = true;
           }
 
-          fetch("http://localhost:3000/carateuserData/" + user.name)
+          fetch("http://192.168.1.19:3000/carateuserData/" + user.name)
             .then((response) => {
               if (response.status === 404) {
                 loader.style.display = "none";
@@ -446,7 +446,7 @@
           loader.style.display = "block";
 
           const response = await fetch(
-            "http://localhost:3000/accountData/updateAccount/" +
+            "http://192.168.1.19:3000/accountData/updateAccount/" +
               userData.id,
             {
               method: "PUT",
@@ -481,7 +481,7 @@
           };
 
           await fetch(
-            "http://localhost:3000/carateuserData/updateCarateuser/" +
+            "http://192.168.1.19:3000/carateuserData/updateCarateuser/" +
               form2.userName,
             {
               method: "PUT",

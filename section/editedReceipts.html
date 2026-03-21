@@ -58,7 +58,7 @@
             if (!startDate || !endDate) { Swal.fire({ icon: 'error', title: 'Oops...', text: 'Please select both start and end dates' }); return; }
             const loader = document.getElementById('loader');
             loader.style.display = 'block';
-            fetch('http://localhost:3000/editHistory/edited-receipts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ startDate, endDate }) })
+            fetch('http://192.168.1.19:3000/editHistory/edited-receipts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ startDate, endDate }) })
             .then(response => { if (response.status === 404) { loader.style.display = 'none'; Swal.fire({ icon: 'info', title: 'No Data', text: 'No edited receipts found for the selected date range' }); document.getElementById('tableBody').innerHTML = ''; throw new Error('No data found'); } if (!response.ok) { throw new Error('Network response was not ok'); } return response.json(); })
             .then(data => { loader.style.display = 'none'; populateTable(data); })
             .catch(error => { loader.style.display = 'none'; console.error('Error:', error); });

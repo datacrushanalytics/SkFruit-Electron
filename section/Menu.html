@@ -437,26 +437,26 @@
           await Promise.all([
             renderData(),
             fetchAPI(
-              "http://localhost:3000/fetchTotal/purchase",
+              "http://192.168.1.19:3000/fetchTotal/purchase",
               "purhcaseTotal"
             ),
-            fetchAPI("http://localhost:3000/fetchTotal/sale", "saleTotal"),
+            fetchAPI("http://192.168.1.19:3000/fetchTotal/sale", "saleTotal"),
             fetchAPI(
-              "http://localhost:3000/fetchTotal/receipt",
+              "http://192.168.1.19:3000/fetchTotal/receipt",
               "receiptTotal"
             ),
             fetchAPI(
-              "http://localhost:3000/fetchTotal/payment",
+              "http://192.168.1.19:3000/fetchTotal/payment",
               "paymentTotal"
             ),
           ]);
         } else {
           fetchAPI(
-            `http://localhost:3000/fetchTotal/saleuser/${sessionData[0].name}`,
+            `http://192.168.1.19:3000/fetchTotal/saleuser/${sessionData[0].name}`,
             "saleTotal2"
           ),
             fetchAPI(
-              `http://localhost:3000/fetchTotal/receiptuser/${sessionData[0].name}`,
+              `http://192.168.1.19:3000/fetchTotal/receiptuser/${sessionData[0].name}`,
               "receiptTotal2"
             );
         }
@@ -468,7 +468,7 @@
     // Function to fetch data from API
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:3000/list/Worker"); // Replace with your API URL
+        const response = await fetch("http://192.168.1.19:3000/list/Worker"); // Replace with your API URL
         const data = await response.json();
         return data;
       } catch (error) {
@@ -496,7 +496,7 @@
           // Send POST request to update data (you can handle the response if needed)
           try {
             const response = await fetch(
-              `http://localhost:3000/fetchTotal/worker/`,
+              `http://192.168.1.19:3000/fetchTotal/worker/`,
               {
                 method: "POST",
                 headers: {
@@ -567,7 +567,7 @@
 
     //     var loader = document.getElementById('loader');
     //         loader.style.display = 'block';
-    //     return fetch('http://localhost:3000/routeSale/sale', {
+    //     return fetch('http://192.168.1.19:3000/routeSale/sale', {
     //         method: 'POST',
     //         body: JSON.stringify(data),
     //         headers: {

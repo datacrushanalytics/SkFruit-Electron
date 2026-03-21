@@ -12,7 +12,7 @@ document
     var loader = document.getElementById("loader");
     loader.style.display = "block";
 
-    fetch("http://localhost:3000/productData/insertProduct", {
+    fetch("http://192.168.1.19:3000/productData/insertProduct", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

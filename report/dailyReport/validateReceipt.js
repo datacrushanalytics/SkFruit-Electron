@@ -14,7 +14,7 @@
 //         document.getElementById('date').readOnly = true; // Hide the button for non-admin users
 //     }
 
-//     fetch('http://localhost:3000/fetchReceiptid')
+//     fetch('http://192.168.1.19:3000/fetchReceiptid')
 //     .then(response => {
 //         if (!response.ok) {
 //             throw new Error('Network response was not ok');
@@ -65,7 +65,7 @@ document
     var loader = document.getElementById("loader");
     loader.style.display = "block";
     await fetch(
-      "http://localhost:3000/receiptData/updateReceipt/" +
+      "http://192.168.1.19:3000/receiptData/updateReceipt/" +
         formData.receiptId,
       {
         method: "PUT",
@@ -99,7 +99,7 @@ function openModal(item) {
   var loader = document.getElementById("loader");
   loader.style.display = "block";
 
-  fetch("http://localhost:3000/receiptReport/" + item.receipt_id)
+  fetch("http://192.168.1.19:3000/receiptReport/" + item.receipt_id)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");

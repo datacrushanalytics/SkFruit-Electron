@@ -216,11 +216,11 @@
         console.log(localStorage.getItem("sessionData"));
         console.log(sessionData[0].usertype);
 
-        var url = "http://localhost:3000/adminaccessconfigData";
+        var url = "http://192.168.1.19:3000/adminaccessconfigData";
         if (isAdmin) {
-          var url = "http://localhost:3000/adminaccessconfigData";
+          var url = "http://192.168.1.19:3000/adminaccessconfigData";
         } else {
-          var url = "http://localhost:3000/accessconfigData";
+          var url = "http://192.168.1.19:3000/accessconfigData";
         }
 
         // Fetch data from API and dynamically generate buttons
@@ -264,7 +264,7 @@
             sidebarContainer.appendChild(logoutButton);
           });
 
-        fetch("http://localhost:3000/footerconfigData")
+        fetch("http://192.168.1.19:3000/footerconfigData")
           .then((response) => response.json())
           .then((data) => {
             loader.style.display = "none";

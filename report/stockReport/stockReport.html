@@ -320,27 +320,27 @@
       document.getElementById("todate").value = todayIST;
       // Fetch data from API and populate Select2 dropdowns
       fetchAndPopulateDropdown(
-        "http://localhost:3000/purchaseproductData/product",
+        "http://192.168.1.19:3000/purchaseproductData/product",
         "product",
         "product_name"
       );
       fetchAndPopulateDropdown(
-        "http://localhost:3000/purchaseproductData/bata",
+        "http://192.168.1.19:3000/purchaseproductData/bata",
         "bata",
         "bata"
       );
       fetchAndPopulateDropdown(
-        "http://localhost:3000/vehicleData",
+        "http://192.168.1.19:3000/vehicleData",
         "vehicle",
         "vehicle_no"
       );
       fetchAndPopulateDropdown(
-        "http://localhost:3000/list/Supplier",
+        "http://192.168.1.19:3000/list/Supplier",
         "supplier",
         "name"
       );
       fetchAndPopulateDropdown(
-        "http://localhost:3000/purchaseproductData/purchaseId",
+        "http://192.168.1.19:3000/purchaseproductData/purchaseId",
         "purchase_id",
         "purchase_id"
       );
@@ -403,7 +403,7 @@
       var loader = document.getElementById("loader");
       loader.style.display = "block";
       fetchAndPopulateDropdown(
-        "http://localhost:3000/purchaseproductData/bata/" + bataId,
+        "http://192.168.1.19:3000/purchaseproductData/bata/" + bataId,
         "bata",
         "bata"
       );

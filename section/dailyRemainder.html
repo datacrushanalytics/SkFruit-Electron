@@ -272,8 +272,8 @@
       var isAdmin = sessionData && sessionData[0].usertype === "Admin";
       var route = sessionData[0].route;
       const url = isAdmin
-        ? "http://localhost:3000/fetchData/remainder"
-        : `http://localhost:3000/fetchData/remainder/${route}`;
+        ? "http://192.168.1.19:3000/fetchData/remainder"
+        : `http://192.168.1.19:3000/fetchData/remainder/${route}`;
 
       var tbody = document.getElementById("tableBody");
       tbody.innerHTML = ""; // Clear existing rows
@@ -366,7 +366,7 @@
         openPopupButton.addEventListener("click", async function () {
           var loader = document.getElementById("loader");
           loader.style.display = "block";
-          await fetch("http://localhost:3000/sms/remainderMessage", {
+          await fetch("http://192.168.1.19:3000/sms/remainderMessage", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -420,7 +420,7 @@
         secondButton.addEventListener("click", async function () {
           var loader = document.getElementById("loader");
           loader.style.display = "block";
-          await fetch("http://localhost:3000/whatsapp/remainderMessage", {
+          await fetch("http://192.168.1.19:3000/whatsapp/remainderMessage", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

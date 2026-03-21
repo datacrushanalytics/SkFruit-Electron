@@ -12,7 +12,7 @@ document
     var loader = document.getElementById("loader");
     loader.style.display = "block";
 
-    fetch("http://localhost:3000/accountData/insertaccount", {
+    fetch("http://192.168.1.19:3000/accountData/insertaccount", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -44,7 +44,7 @@ document
         };
 
         await fetch(
-          "http://localhost:3000/carateuserData/insertcarateuser",
+          "http://192.168.1.19:3000/carateuserData/insertcarateuser",
           {
             method: "POST",
             headers: {
