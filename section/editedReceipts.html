@@ -24,7 +24,7 @@
 <body>
     <div id="loader"></div>
     <div class="container">
-        <h1>Edited Receipts</h1>
+        <h1>Edited / Deleted Receipts</h1>
         <hr>
         <div class="date-filter">
             <label for="startDate">From Date:</label>
@@ -38,7 +38,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>No.</th><th>Receipt ID</th><th>Date</th><th>Customer Name</th><th>Mobile No</th><th>Cash</th><th>Online</th><th>Discount</th><th>In Carat</th><th>Remaining</th><th>Edited By</th><th>Edit Date</th><th>Edit Time</th><th>Status</th>
+                        <th>No.</th><th>Receipt ID</th><th>Date</th><th>Customer Name</th><th>Mobile No</th><th>Cash</th><th>Online</th><th>Discount</th><th>In Carat</th><th>Previous Remaining</th><th>Remaining</th><th>Edited By</th><th>Edit Date</th><th>Edit Time</th><th>Status</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
@@ -59,7 +59,7 @@
             const loader = document.getElementById('loader');
             loader.style.display = 'block';
             fetch('http://192.168.1.19:3000/editHistory/edited-receipts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ startDate, endDate }) })
-            .then(response => { if (response.status === 404) { loader.style.display = 'none'; Swal.fire({ icon: 'info', title: 'No Data', text: 'No edited receipts found for the selected date range' }); document.getElementById('tableBody').innerHTML = ''; throw new Error('No data found'); } if (!response.ok) { throw new Error('Network response was not ok'); } return response.json(); })
+            .then(response => { if (response.status === 404) { loader.style.display = 'none'; Swal.fire({ icon: 'info', title: 'No Data', text: 'No edited or deleted receipts found for the selected date range' }); document.getElementById('tableBody').innerHTML = ''; throw new Error('No data found'); } if (!response.ok) { throw new Error('Network response was not ok'); } return response.json(); })
             .then(data => { loader.style.display = 'none'; populateTable(data); })
             .catch(error => { loader.style.display = 'none'; console.error('Error:', error); });
         }
@@ -80,6 +80,7 @@
                 row.insertCell().textContent = item.online || 0;
                 row.insertCell().textContent = item.discount || 0;
                 row.insertCell().textContent = item.inCarat || 0;
+                row.insertCell().textContent = item.previous_remaining || '-';
                 row.insertCell().textContent = item.remaining || 0;
                 row.insertCell().textContent = item.edited_by;
                 const editDateCell = row.insertCell();
@@ -93,8 +94,9 @@
                     editTimeCell.textContent = '-';
                 }
                 const statusCell = row.insertCell();
-                statusCell.textContent = item.validate;
-                if (item.validate === 'Verified') { row.style.backgroundColor = '#90EE90'; }
+                statusCell.textContent = item.history_status || item.validate;
+                if ((item.history_status || item.validate) === 'Verified') { row.style.backgroundColor = '#90EE90'; }
+                if ((item.history_status || item.validate) === 'Deleted') { row.style.backgroundColor = '#ffd6d6'; }
             });
         }
     </script>
