@@ -362,9 +362,9 @@
         document.getElementById('fromdate').value = todayIST;
         document.getElementById('todate').value = todayIST;
 
-        fetchAndPopulateDropdown('http://192.168.1.19:3000/purchaseproductData/product', 'grahk','product_name');
-        fetchAndPopulateDropdown('http://192.168.1.19:3000/purchaseproductData/bata', 'Route','bata');
-        fetchAndPopulateDropdown('http://192.168.1.19:3000/vehicleData', 'vehicle','vehicle_no');
+        fetchAndPopulateDropdown('http://94.136.190.129:3000/purchaseproductData/product', 'grahk','product_name');
+        fetchAndPopulateDropdown('http://94.136.190.129:3000/purchaseproductData/bata', 'Route','bata');
+        fetchAndPopulateDropdown('http://94.136.190.129:3000/vehicleData', 'vehicle','vehicle_no');
         
 
    
@@ -508,7 +508,7 @@
         console.log(bataId)
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
-        fetchAndPopulateDropdown('http://192.168.1.19:3000/purchaseproductData/bata/' + bataId, 'Route','bata');
+        fetchAndPopulateDropdown('http://94.136.190.129:3000/purchaseproductData/bata/' + bataId, 'Route','bata');
     }
 
     
@@ -822,7 +822,7 @@ document.querySelector('.popup').style.display = 'block';
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
     
-        fetch('http://192.168.1.19:3000/purchaseproductData', {
+        fetch('http://94.136.190.129:3000/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -869,7 +869,7 @@ document.querySelector('.popup').style.display = 'block';
         var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-        fetch('http://192.168.1.19:3000/purchaseproductData', {
+        fetch('http://94.136.190.129:3000/purchaseproductData', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

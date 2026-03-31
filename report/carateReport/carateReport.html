@@ -307,19 +307,19 @@
       // Check if the user is an admin and show/hide the button accordingly
       if (isAdmin || isSuper) {
         fetchAndPopulateDropdown(
-          "http://192.168.1.19:3000/list/Customer",
+          "http://94.136.190.129:3000/list/Customer",
           "customer"
         );
         fetchUserBasedRoutes("route");
       } else {
         var route = sessionData[0].route;
         fetchAndPopulateDropdown(
-          "http://192.168.1.19:3000/fetchData/customerSale/" + route,
+          "http://94.136.190.129:3000/fetchData/customerSale/" + route,
           "customer"
         );
         fetchUserBasedRoutes("route");
         fetchAndPopulateDropdown(
-          "http://192.168.1.19:3000/fetchData/user",
+          "http://94.136.190.129:3000/fetchData/user",
           "user",
           (selectedValue = sessionData[0].name),
           (readOnly = true)
@@ -408,7 +408,7 @@
         const sessionData = JSON.parse(localStorage.getItem("sessionData"));
         const userId = sessionData[0].id;
         
-        const response = await fetch(`http://192.168.1.19:3000/routeData/user-routes/${userId}`);
+        const response = await fetch(`http://94.136.190.129:3000/routeData/user-routes/${userId}`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -461,7 +461,7 @@
     function setCustomer() {
       var route = document.getElementById("route").value;
       fetchAndPopulateDropdown(
-        "http://192.168.1.19:3000/fetchData/customersale/" + route,
+        "http://94.136.190.129:3000/fetchData/customersale/" + route,
         "customer"
       );
     }

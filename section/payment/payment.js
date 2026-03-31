@@ -71,7 +71,7 @@ document
     var loader = document.getElementById("loader");
     loader.style.display = "block";
 
-    await fetch("http://192.168.1.19:3000/paymentData/insertPayment", {
+    await fetch("http://94.136.190.129:3000/paymentData/insertPayment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -108,7 +108,7 @@ function openModal(item) {
   var loader = document.getElementById("loader");
   loader.style.display = "block";
 
-  fetch("http://192.168.1.19:3000/paymentData/" + String(item))
+  fetch("http://94.136.190.129:3000/paymentData/" + String(item))
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");

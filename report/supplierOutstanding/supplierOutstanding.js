@@ -18,7 +18,7 @@ function fetchDataAndProcess() {
 
   var loader = document.getElementById("loader");
   loader.style.display = "block";
-  return fetch("http://192.168.1.19:3000/supplierOutstanding", {
+  return fetch("http://94.136.190.129:3000/supplierOutstanding", {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
@@ -164,7 +164,7 @@ async function exportToExcel() {
     loader.style.display = "block";
 
     return fetch(
-      "http://192.168.1.19:3000/supplierOutstanding/generate-pdf",
+      "http://94.136.190.129:3000/supplierOutstanding/generate-pdf",
       {
         method: "POST",
         body: JSON.stringify(data),

@@ -2,7 +2,7 @@ function product() {
   console.log("product function executed");
   var loader = document.getElementById("loader");
   loader.style.display = "block";
-  fetch("http://192.168.1.19:3000/productData")
+  fetch("http://94.136.190.129:3000/productData")
     .then((response) => {
       if (response.status === 404) {
         loader.style.display = "none";
@@ -102,7 +102,7 @@ function editProduct(user) {
 
 function deleteProduct(userId) {
   // Perform delete operation based on userId
-  fetch("http://192.168.1.19:3000/productData/deleteproductId/" + userId, {
+  fetch("http://94.136.190.129:3000/productData/deleteproductId/" + userId, {
     method: "DELETE",
   })
     .then((response) => {

@@ -375,9 +375,9 @@
 
             document.addEventListener('DOMContentLoaded', async function () {
                 // Fetch data from API and populate Select2 dropdowns
-                // await fetchAndPopulateDropdown('http://192.168.1.19:3000/list/Supplier', 'supplier', 'name');
-                await fetchAndPopulateDropdown('http://192.168.1.19:3000/productData/', 'product', 'name');
-                // await fetchAndPopulateDropdown('http://192.168.1.19:3000/vehicleData', 'vehicle', 'vehicle_no');
+                // await fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Supplier', 'supplier', 'name');
+                await fetchAndPopulateDropdown('http://94.136.190.129:3000/productData/', 'product', 'name');
+                // await fetchAndPopulateDropdown('http://94.136.190.129:3000/vehicleData', 'vehicle', 'vehicle_no');
                 
 
         
@@ -485,7 +485,7 @@
                     // setDropdownValue('vehicle', user.gadi_number);
 
                     
-            fetch('http://192.168.1.19:3000/purchaseproductData/' + (user.id))
+            fetch('http://94.136.190.129:3000/purchaseproductData/' + (user.id))
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -565,7 +565,7 @@
 
                 console.log(formData)
 
-                fetch('http://192.168.1.19:3000/purchaseproductData/insertPurchaseproduct', {
+                fetch('http://94.136.190.129:3000/purchaseproductData/insertPurchaseproduct', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -629,7 +629,7 @@
                 console.log(price,"Usrere")
                 var button = event.target;
                 var row = button.parentNode.parentNode;
-                fetch('http://192.168.1.19:3000/purchaseproductData/deletepurchaseproductId/' + userId, {
+                fetch('http://94.136.190.129:3000/purchaseproductData/deletepurchaseproductId/' + userId, {
                     method: 'DELETE'
                 })
                     .then(response => {
@@ -723,7 +723,7 @@ function saveEditedProduct() {
     updatedData.price = parseFloat((updatedData.purchase_price * updatedData.quantity).toFixed(2));
     
     // Call API to update
-    fetch(`http://192.168.1.19:3000/purchaseproductData/updatePurchaseproduct/${currentEditData.id}`, {
+    fetch(`http://94.136.190.129:3000/purchaseproductData/updatePurchaseproduct/${currentEditData.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedData)
@@ -805,7 +805,7 @@ window.onclick = function(event) {
     var loader = document.getElementById('loader');
         loader.style.display = 'block';
 
-    await fetch('http://192.168.1.19:3000/purchaseData/updatePurchase/' + formData.purchase_id, {
+    await fetch('http://94.136.190.129:3000/purchaseData/updatePurchase/' + formData.purchase_id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'

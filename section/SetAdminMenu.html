@@ -170,7 +170,7 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                fetchDataAndUpdateCheckboxes('userMenuTable', 'http://192.168.1.19:3000/adminaccessconfigData');
+                fetchDataAndUpdateCheckboxes('userMenuTable', 'http://94.136.190.129:3000/adminaccessconfigData');
             });
     
             function fetchDataAndUpdateCheckboxes(tableId, apiUrl) {
@@ -210,7 +210,7 @@
     
             document.getElementById("submitButton").addEventListener("click", function() {
                 // Gather data from checkboxes in the User Menu table
-                gatherAndSendData('userMenuTable', 'http://192.168.1.19:3000/adminaccessconfigData/updateAccessconfig');
+                gatherAndSendData('userMenuTable', 'http://94.136.190.129:3000/adminaccessconfigData/updateAccessconfig');
             });
     
     

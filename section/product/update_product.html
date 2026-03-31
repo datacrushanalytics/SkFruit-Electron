@@ -225,7 +225,7 @@
       document.addEventListener("DOMContentLoaded", async function () {
         // Retrieve user data from localStorage
         await fetchAndPopulateDropdown(
-          "http://192.168.1.19:3000/categoryData",
+          "http://94.136.190.129:3000/categoryData",
           "category",
           "name"
         );
@@ -326,7 +326,7 @@
           var loader = document.getElementById("loader");
           loader.style.display = "block";
           const response = await fetch(
-            "http://192.168.1.19:3000/productData/updateProduct/" +
+            "http://94.136.190.129:3000/productData/updateProduct/" +
               userData.id,
             {
               method: "PUT",

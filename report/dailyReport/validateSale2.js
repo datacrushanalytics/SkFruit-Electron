@@ -44,7 +44,7 @@ async function insertSale() {
 
   try {
     const response = await fetch(
-      "http://192.168.1.19:3000/saleData/updateSale/" + formData.bill_no,
+      "http://94.136.190.129:3000/saleData/updateSale/" + formData.bill_no,
       {
         method: "PUT",
         headers: {
@@ -73,7 +73,7 @@ function openModal(item) {
   // Your code to open the modal with the data from 'item'
   console.log("Opening modal for item:", item.bill_no);
 
-  fetch("http://192.168.1.19:3000/bill/" + item.bill_no)
+  fetch("http://94.136.190.129:3000/bill/" + item.bill_no)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");

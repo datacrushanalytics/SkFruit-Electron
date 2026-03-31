@@ -384,7 +384,7 @@
       if (isAdmin) {
         // For admin users, allow user selection with search
         fetchAndPopulateDropdown1(
-          "http://192.168.1.19:3000/fetchData/user",
+          "http://94.136.190.129:3000/fetchData/user",
           "user",
           "added_by",
           null,
@@ -398,13 +398,13 @@
       } else {
         var route = sessionData[0].route;
         fetchAndPopulateDropdown(
-          "http://192.168.1.19:3000/fetchData/customer/" + route,
+          "http://94.136.190.129:3000/fetchData/customer/" + route,
           "customer",
           (readOnly = false)
         );
         fetchUserBasedRoutes("route");
         fetchAndPopulateDropdown1(
-          "http://192.168.1.19:3000/fetchData/user",
+          "http://94.136.190.129:3000/fetchData/user",
           "user",
           "added_by",
           sessionData[0].name,
@@ -418,7 +418,7 @@
         const sessionData = JSON.parse(localStorage.getItem("sessionData"));
         const userId = sessionData[0].id;
         
-        const response = await fetch(`http://192.168.1.19:3000/routeData/user-routes/${userId}`);
+        const response = await fetch(`http://94.136.190.129:3000/routeData/user-routes/${userId}`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -635,7 +635,7 @@
       }
 
       return fetch(
-        "http://192.168.1.19:3000/fetchData/customersaleKhatawani",
+        "http://94.136.190.129:3000/fetchData/customersaleKhatawani",
         {
           method: "POST",
           body: JSON.stringify({

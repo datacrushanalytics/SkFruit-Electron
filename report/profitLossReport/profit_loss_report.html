@@ -381,22 +381,22 @@
       
       // Fetch data from API and populate Select2 dropdowns
       fetchAndPopulateDropdown(
-        "http://192.168.1.19:3000/vehicleData",
+        "http://94.136.190.129:3000/vehicleData",
         "vehicle",
         "vehicle_no"
       );
       fetchAndPopulateDropdown(
-        "http://192.168.1.19:3000/list/Customer",
+        "http://94.136.190.129:3000/list/Customer",
         "customer",
         "name"
       );
       fetchAndPopulateDropdown(
-        "http://192.168.1.19:3000/purchaseproductData/bata",
+        "http://94.136.190.129:3000/purchaseproductData/bata",
         "bata",
         "bata"
       );
       fetchAndPopulateDropdown(
-        "http://192.168.1.19:3000/fetchData/user",
+        "http://94.136.190.129:3000/fetchData/user",
         "user",
         "added_by"
       );
@@ -404,14 +404,14 @@
       // Route dropdown with access control
       if (isAdmin || isSuper) {
         fetchAndPopulateDropdownWithAllRoute(
-          "http://192.168.1.19:3000/routeData",
+          "http://94.136.190.129:3000/routeData",
           "route",
           "route_name"
         );
       } else {
         var userRoute = sessionData[0].route;
         fetchAndPopulateDropdown(
-          "http://192.168.1.19:3000/routeData",
+          "http://94.136.190.129:3000/routeData",
           "route",
           "route_name"
         );
@@ -422,7 +422,7 @@
       }
       
       fetchAndPopulateDropdown(
-        "http://192.168.1.19:3000/purchaseproductData/product",
+        "http://94.136.190.129:3000/purchaseproductData/product",
         "product",
         "product_name"
       );
@@ -532,7 +532,7 @@
     function setCustomer() {
       var route = document.getElementById("route").value;
       fetchAndPopulateDropdown(
-        "http://192.168.1.19:3000/fetchData/customerSale/" + route,
+        "http://94.136.190.129:3000/fetchData/customerSale/" + route,
         "customer",
         "name"
       );
@@ -544,7 +544,7 @@
       var loader = document.getElementById("loader");
       loader.style.display = "block";
       fetchAndPopulateDropdown(
-        "http://192.168.1.19:3000/purchaseproductData/bata/" + bataId,
+        "http://94.136.190.129:3000/purchaseproductData/bata/" + bataId,
         "bata",
         "bata"
       );

@@ -17,7 +17,7 @@
 //}
 
 function saleProduct(num) {
-  // fetch('http://192.168.1.19:3000/fetchSaleid')
+  // fetch('http://94.136.190.129:3000/fetchSaleid')
   // .then(response => {
   //     if (response.status === 404) {
   //         loader.style.display = 'none';
@@ -31,7 +31,7 @@ function saleProduct(num) {
   //     .then(data => {
   //         // Populate dropdown with API data
   //document.getElementById('bill').value = parseInt(data[0]['num']) + 1;
-  fetch("http://192.168.1.19:3000/saleproductData/" + num)
+  fetch("http://94.136.190.129:3000/saleproductData/" + num)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -88,7 +88,7 @@ function populateDropdown3(data) {
 function deleteUser(userId) {
   // Perform delete operation based on userId
   fetch(
-    "http://192.168.1.19:3000/saleproductData/deletesaleproduct/" + userId,
+    "http://94.136.190.129:3000/saleproductData/deletesaleproduct/" + userId,
     {
       method: "DELETE",
     }
@@ -117,7 +117,7 @@ function getProducts() {
   var loader = document.getElementById("loader");
   loader.style.display = "block";
   fetch(
-    "http://192.168.1.19:3000/purchaseproductData/getBataProduct/" + bataId
+    "http://94.136.190.129:3000/purchaseproductData/getBataProduct/" + bataId
   )
     .then((response) => response.json())
     .then((data) => {
@@ -136,7 +136,7 @@ function getProducts() {
       console.error("Error:", error);
     });
 
-  fetch("http://192.168.1.19:3000/fetchStock/" + bataId)
+  fetch("http://94.136.190.129:3000/fetchStock/" + bataId)
     .then((response) => {
       if (!response.ok) {
         loader.style.display = "none";
@@ -175,7 +175,7 @@ function updateTotal() {
 function getCust() {
   var number = document.getElementById("number").value;
   console.log(number);
-  fetch("http://192.168.1.19:3000/fetchName/mobile/" + number)
+  fetch("http://94.136.190.129:3000/fetchName/mobile/" + number)
     .then((response) => {
       if (!response.ok) {
         loader.style.display = "none";
@@ -223,7 +223,7 @@ function confirmAndProceed() {
 
       // Call the GET API to fetch the IDs
       fetch(
-        `http://192.168.1.19:3000/fetchData/saleProduct/${
+        `http://94.136.190.129:3000/fetchData/saleProduct/${
           document.getElementById("bill").value
         }`,
         {
@@ -241,7 +241,7 @@ function confirmAndProceed() {
           // Loop through IDs and call the DELETE API for each
           const deletePromises = data.map((item) => {
             return fetch(
-              `http://192.168.1.19:3000/saleproductData/deletesaleproduct/${item.id}`,
+              `http://94.136.190.129:3000/saleproductData/deletesaleproduct/${item.id}`,
               {
                 method: "DELETE",
                 keepalive: true,
@@ -431,7 +431,7 @@ function saveRow(button, id1, editable) {
   const product = cells[0].textContent;
 
   // Make an API call to save the changes
-  fetch("http://192.168.1.19:3000/saleproductData/updatesaleproduct", {
+  fetch("http://94.136.190.129:3000/saleproductData/updatesaleproduct", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -490,7 +490,7 @@ function setCustomer() {
 
   if (!grahkDropdown.value) {
     fetchAndPopulateDropdown(
-      "http://192.168.1.19:3000/fetchData/customerSale/" + route,
+      "http://94.136.190.129:3000/fetchData/customerSale/" + route,
       "grahk",
       "name"
     );
@@ -498,7 +498,7 @@ function setCustomer() {
 
   if (!numberDropdown.value) {
     fetchAndPopulateDropdown(
-      "http://192.168.1.19:3000/fetchData/customerSale/" + route,
+      "http://94.136.190.129:3000/fetchData/customerSale/" + route,
       "number",
       "mobile_no"
     );
@@ -609,7 +609,7 @@ function selectOption(value) {
 
 // function deleteUser(userId) {
 //     // Perform delete operation based on userId
-//     fetch('http://192.168.1.19:3000/saleproductData/deletesaleproduct/' + userId, {
+//     fetch('http://94.136.190.129:3000/saleproductData/deletesaleproduct/' + userId, {
 //         method: 'DELETE'
 //     })
 //         .then(response => {
@@ -637,7 +637,7 @@ function getProducts() {
   var loader = document.getElementById("loader");
   loader.style.display = "block";
   fetch(
-    "http://192.168.1.19:3000/purchaseproductData/getBataProduct/" + bataId
+    "http://94.136.190.129:3000/purchaseproductData/getBataProduct/" + bataId
   )
     .then((response) => response.json())
     .then((data) => {
@@ -658,7 +658,7 @@ function getProducts() {
       console.error("Error:", error);
     });
 
-  fetch("http://192.168.1.19:3000/fetchStock/" + bataId)
+  fetch("http://94.136.190.129:3000/fetchStock/" + bataId)
     .then((response) => {
       if (!response.ok) {
         loader.style.display = "none";
@@ -700,7 +700,7 @@ function updateTotal() {
 function getCust() {
   var number = document.getElementById("number").value;
   console.log(number);
-  fetch("http://192.168.1.19:3000/fetchName/mobile/" + number)
+  fetch("http://94.136.190.129:3000/fetchName/mobile/" + number)
     .then((response) => {
       if (!response.ok) {
         loader.style.display = "none";
@@ -743,7 +743,7 @@ function totalBalance() {
   var total1 = parseFloat(parseFloat(document.getElementById("total1").value).toFixed(2)) || 0;
 
   fetch(
-    "http://192.168.1.19:3000/accountData/" +
+    "http://94.136.190.129:3000/accountData/" +
       parseInt(document.getElementById("custid").value)
   )
     .then((response) => {
@@ -776,7 +776,7 @@ function previousbalance() {
   const name = document.getElementById("grahk").value;
   console.log("Name", name);
 
-  fetch("http://192.168.1.19:3000/fetchName/name/" + name)
+  fetch("http://94.136.190.129:3000/fetchName/name/" + name)
     .then((response) => {
       if (!response.ok) {
         loader.style.display = "none";
@@ -807,7 +807,7 @@ function previousbalance() {
       console.error("Error:", error);
     });
 
-  fetch("http://192.168.1.19:3000/fetchpv/" + name)
+  fetch("http://94.136.190.129:3000/fetchpv/" + name)
     .then((response) => {
       if (!response.ok) {
         loader.style.display = "none";
@@ -829,7 +829,7 @@ function previousbalance() {
       console.error("Error:", error);
     });
 
-  fetch("http://192.168.1.19:3000/carateuserData/" + name)
+  fetch("http://94.136.190.129:3000/carateuserData/" + name)
     .then((response) => {
       if (!response.ok) {
         loader.style.display = "none";
@@ -1019,7 +1019,7 @@ function totalbill() {
   console.log(document.getElementById("custid").value);
 
   fetch(
-    "http://192.168.1.19:3000/accountData/" +
+    "http://94.136.190.129:3000/accountData/" +
       parseInt(document.getElementById("custid").value)
   )
     .then((response) => {
@@ -1082,7 +1082,7 @@ async function myFunction() {
 
   console.log(formData);
 
-  fetch("http://192.168.1.19:3000/saleproductData/insertsaleproduct", {
+  fetch("http://94.136.190.129:3000/saleproductData/insertsaleproduct", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -1101,7 +1101,7 @@ async function myFunction() {
       // document.getElementById('bill1').value = parseInt(document.getElementById('bill1').value || 0) + parseInt(document.getElementById('total').value);
       // totalBalance()
       // updateTable(formData, result.insertId);
-      fetch("http://192.168.1.19:3000/saleproductData/" + formData.bill_id)
+      fetch("http://94.136.190.129:3000/saleproductData/" + formData.bill_id)
         .then((response) => {
           if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -1211,7 +1211,7 @@ function deleteUser(button, userId, price) {
   var button = event.target;
   var row = button.parentNode.parentNode;
   fetch(
-    "http://192.168.1.19:3000/saleproductData/deletesaleproduct/" + userId,
+    "http://94.136.190.129:3000/saleproductData/deletesaleproduct/" + userId,
     {
       method: "DELETE",
     }

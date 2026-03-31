@@ -641,11 +641,11 @@
 
   document.addEventListener('DOMContentLoaded', async function () {
     // Fetch data from API and populate Select2 dropdowns
-    // await fetchAndPopulateDropdown('http://192.168.1.19:3000/list/Customer', 'grahk', 'name');
-    fetchAndPopulateDropdown('http://192.168.1.19:3000/purchaseproductData/product', 'product', 'product_name');
-    fetchAndPopulateDropdown('http://192.168.1.19:3000/purchaseproductData/bata', 'bta', 'bata');
-    fetchAndPopulateDropdown('http://192.168.1.19:3000/list/Bank Account', 'onlineAcc', 'name');
-    // await fetchAndPopulateDropdown('http://192.168.1.19:3000/mobile', 'number', 'mobile_no');
+    // await fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Customer', 'grahk', 'name');
+    fetchAndPopulateDropdown('http://94.136.190.129:3000/purchaseproductData/product', 'product', 'product_name');
+    fetchAndPopulateDropdown('http://94.136.190.129:3000/purchaseproductData/bata', 'bta', 'bata');
+    fetchAndPopulateDropdown('http://94.136.190.129:3000/list/Bank Account', 'onlineAcc', 'name');
+    // await fetchAndPopulateDropdown('http://94.136.190.129:3000/mobile', 'number', 'mobile_no');
 
 
     async function fetchAndPopulateDropdown(apiUrl, dropdownId, field) {
@@ -750,7 +750,7 @@
       // document.getElementById('date').value = formattedDate;
       saleProduct(sale.bill_no);
 
-      fetch('http://192.168.1.19:3000/fetchpv/' + sale.cust_name)
+      fetch('http://94.136.190.129:3000/fetchpv/' + sale.cust_name)
       .then(response => {
         if (!response.ok) {
           loader.style.display = 'none';
@@ -772,7 +772,7 @@
       });
 
 
-      fetch('http://192.168.1.19:3000/carateuserData/' + sale.cust_name)
+      fetch('http://94.136.190.129:3000/carateuserData/' + sale.cust_name)
       .then(response => {
         if (!response.ok) {
           loader.style.display = 'none';
