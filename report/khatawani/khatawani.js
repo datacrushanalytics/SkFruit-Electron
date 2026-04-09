@@ -20,9 +20,12 @@ document
 
 function fetchDataAndProcess() {
   var selectedValues = $("#route").val();
-  // if (selectedValues = []){ selectedValues ="*"; }
-  // console.log('Selected values:', selectedValues);
-  if (selectedValues.length === 0) {
+  // If no route is selected, fetch across all routes.
+  if (
+    !selectedValues ||
+    selectedValues.length === 0 ||
+    selectedValues.includes("*")
+  ) {
     selectedValues = "*";
   }
   var data = {
@@ -65,6 +68,7 @@ function fetchDataAndProcess() {
       // Optionally, you can darkgreyirect or show a success message here
     })
     .catch((error) => {
+      loader.style.display = "none";
       console.error("Error:", error);
       // Optionally, you can display an error message here
     });

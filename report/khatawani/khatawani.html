@@ -391,8 +391,6 @@
           false
         );
         fetchUserBasedRoutes("route");
-        // For ALL route users, don't load customers initially - let setCustomer() handle it
-        // This ensures customers are loaded based on route selection
 
         // document.getElementById('user').style.display = none
       } else {
@@ -456,15 +454,21 @@
         if (sessionData[0].route !== 'ALL') {
           dropdown.val([sessionData[0].route]).trigger("change");
           dropdown.prop("disabled", true);
-          // Trigger setCustomer for specific route users
-          setTimeout(() => setCustomer(), 500);
+          // Load customer list and report automatically for fixed-route users.
+          setTimeout(() => initializeKhatawaniData(), 500);
         } else {
-          // For ALL route users, trigger setCustomer to load all customers initially
-          setTimeout(() => setCustomer(), 500);
+          // Load customer list and report automatically without requiring route selection.
+          setTimeout(() => initializeKhatawaniData(), 500);
         }
       } catch (error) {
         console.error("Error loading user routes:", error);
       }
+    }
+
+    function initializeKhatawaniData() {
+      setCustomer().finally(() => {
+        fetchDataAndProcess();
+      });
     }
 
     function fetchAndPopulateDropdown(
